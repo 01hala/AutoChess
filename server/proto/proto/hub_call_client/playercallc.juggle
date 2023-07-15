@@ -1,0 +1,5 @@
+import common
+
+module player_client{
+	archive_sync ntf(UserData info);
+}

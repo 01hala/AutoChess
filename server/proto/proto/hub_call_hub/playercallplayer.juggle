@@ -1,0 +1,4 @@
+
+module player_player_offline_msg{
+    player_have_offline_msg ntf(int64 guid);
+}

@@ -1,0 +1,68 @@
+struct UserInformation
+{
+	string UserName; // 用户名
+	int32 UserUid; // 用户uid
+}
+
+struct Role
+{
+	int32 RoleID; // 角色id
+	string RoleName; // 角色名
+	bool IsLook; // 是否解锁
+	float Heath; // 生命值
+	float AttNum; // 攻击力
+}
+
+struct Monster
+{
+	int32 MsId; // 怪物id
+	string MonsterName; // 怪物名
+	bool IsLook; // 是否解锁
+}
+
+struct Skill
+{
+	int32 SkID; // 技能id
+	string SkillName; // 技能名（非中文）
+	bool IsLook; // 是否解锁
+}
+
+struct Prop
+{
+	int32 PropID; // 道具id
+	string PropName; // 道具名
+	int32 Count; // 数量
+}
+
+enum EMChestType {
+	Normal = 1;
+	Rare = 2;
+	Epic = 3;
+	Legend = 4;
+}
+
+enum EMCostCoinPath {
+	BuyRole = 1;
+	UpdateRole = 2;
+}
+
+struct UserData
+{
+	UserInformation User; // 用户信息
+	int32 Coin; // 金币
+	int32 Strength; // 体力
+	int32 NormalChest; // 拥有普通箱子数
+	int32 RareChest; // 拥有稀有箱子数
+	int32 EpicChest; // 拥有史诗箱子数
+	int32 LegendChest; // 拥有传奇箱子数
+	Role[] RoleList; // 角色列表
+	Prop[] PropList; // 拥有道具
+	Skill[] SkList; // 技能图鉴
+	Monster[] MsList; // 怪物图鉴数据
+}
+
+struct svr_info
+{
+	int32 tick_time;
+	int32 player_num;
+}

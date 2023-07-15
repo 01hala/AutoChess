@@ -1,0 +1,17 @@
+import common
+
+module player_login {
+	player_login req(string token, string nick_name) rsp(UserData info) err(int32 err);
+	create_role req(string name, string nick_name) rsp(UserData info) err(int32 err);
+}
+
+module player_archive {
+    cost_strength req(int32 strength) rsp(UserData info) err(int32 err);
+	cost_coin req(int32 cost_amount, EMCostCoinPath cost_path, int32 role_id) rsp(UserData info) err(int32 err);
+	cost_prop req(int32 prop_id) rsp(UserData info) err(int32 err);
+	open_chest req(EMChestType chest_type) rsp(UserData info) err(int32 err);
+	add_coin req(int32 coin) rsp(UserData info) err(int32 err);
+	add_strength req(int32 strength) rsp(UserData info) err(int32 err);
+	add_skill req(Skill skill) rsp(UserData info) err(int32 err);
+	add_monster req(Monster monster) rsp(UserData info) err(int32 err);
+}

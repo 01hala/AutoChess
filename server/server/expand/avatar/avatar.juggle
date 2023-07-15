@@ -1,0 +1,3 @@
+module avatar {
+	get_remote_avatar req(int64 guid) rsp(bin doc) err();
+}
