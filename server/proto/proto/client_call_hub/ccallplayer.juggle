@@ -5,13 +5,7 @@ module player_login {
 	create_role req(string name, string nick_name) rsp(UserData info) err(int32 err);
 }
 
-module player_archive {
-    cost_strength req(int32 strength) rsp(UserData info) err(int32 err);
-	cost_coin req(int32 cost_amount, EMCostCoinPath cost_path, int32 role_id) rsp(UserData info) err(int32 err);
-	cost_prop req(int32 prop_id) rsp(UserData info) err(int32 err);
-	open_chest req(EMChestType chest_type) rsp(UserData info) err(int32 err);
-	add_coin req(int32 coin) rsp(UserData info) err(int32 err);
-	add_strength req(int32 strength) rsp(UserData info) err(int32 err);
-	add_skill req(Skill skill) rsp(UserData info) err(int32 err);
-	add_monster req(Monster monster) rsp(UserData info) err(int32 err);
+module player_battle {
+    set_battle_role_list req(int32[] role_list) rsp(UserBattleData info) err(int32 err);
+	start_battle req() rsp(string match_name) err(int32 err);
 }

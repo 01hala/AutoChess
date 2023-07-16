@@ -15,12 +15,7 @@ namespace Abelkhan
         server_busy = 1,
         unregistered_palyer = 2,
         login_dy_faild = 3,
-        no_enough_strength = 4,
-        no_enough_coin = 5,
-        no_enough_prop = 6,
-        no_enough_chest = 7,
-        already_have_role = 8,
-        unlock_role = 9
+        no_enough_strength = 4
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
 /*this module code is codegen by abelkhan codegen for c#*/

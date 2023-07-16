@@ -285,791 +285,203 @@ namespace Abelkhan
         }
 
     }
-    public class player_archive_cost_strength_cb
+    public class player_battle_set_battle_role_list_cb
     {
         private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
+        private player_battle_rsp_cb module_rsp_cb;
 
-        public player_archive_cost_strength_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
+        public player_battle_set_battle_role_list_cb(UInt64 _cb_uuid, player_battle_rsp_cb _module_rsp_cb)
         {
             cb_uuid = _cb_uuid;
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<UserData> on_cost_strength_cb;
-        public event Action<Int32> on_cost_strength_err;
-        public event Action on_cost_strength_timeout;
+        public event Action<UserBattleData> on_set_battle_role_list_cb;
+        public event Action<Int32> on_set_battle_role_list_err;
+        public event Action on_set_battle_role_list_timeout;
 
-        public player_archive_cost_strength_cb callBack(Action<UserData> cb, Action<Int32> err)
+        public player_battle_set_battle_role_list_cb callBack(Action<UserBattleData> cb, Action<Int32> err)
         {
-            on_cost_strength_cb += cb;
-            on_cost_strength_err += err;
+            on_set_battle_role_list_cb += cb;
+            on_set_battle_role_list_err += err;
             return this;
         }
 
         public void timeout(UInt64 tick, Action timeout_cb)
         {
             TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.cost_strength_timeout(cb_uuid);
+                module_rsp_cb.set_battle_role_list_timeout(cb_uuid);
             });
-            on_cost_strength_timeout += timeout_cb;
+            on_set_battle_role_list_timeout += timeout_cb;
         }
 
-        public void call_cb(UserData info)
+        public void call_cb(UserBattleData info)
         {
-            if (on_cost_strength_cb != null)
+            if (on_set_battle_role_list_cb != null)
             {
-                on_cost_strength_cb(info);
+                on_set_battle_role_list_cb(info);
             }
         }
 
         public void call_err(Int32 err)
         {
-            if (on_cost_strength_err != null)
+            if (on_set_battle_role_list_err != null)
             {
-                on_cost_strength_err(err);
+                on_set_battle_role_list_err(err);
             }
         }
 
         public void call_timeout()
         {
-            if (on_cost_strength_timeout != null)
+            if (on_set_battle_role_list_timeout != null)
             {
-                on_cost_strength_timeout();
+                on_set_battle_role_list_timeout();
             }
         }
 
     }
 
-    public class player_archive_cost_coin_cb
+    public class player_battle_start_battle_cb
     {
         private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
+        private player_battle_rsp_cb module_rsp_cb;
 
-        public player_archive_cost_coin_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
+        public player_battle_start_battle_cb(UInt64 _cb_uuid, player_battle_rsp_cb _module_rsp_cb)
         {
             cb_uuid = _cb_uuid;
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<UserData> on_cost_coin_cb;
-        public event Action<Int32> on_cost_coin_err;
-        public event Action on_cost_coin_timeout;
+        public event Action<string> on_start_battle_cb;
+        public event Action<Int32> on_start_battle_err;
+        public event Action on_start_battle_timeout;
 
-        public player_archive_cost_coin_cb callBack(Action<UserData> cb, Action<Int32> err)
+        public player_battle_start_battle_cb callBack(Action<string> cb, Action<Int32> err)
         {
-            on_cost_coin_cb += cb;
-            on_cost_coin_err += err;
+            on_start_battle_cb += cb;
+            on_start_battle_err += err;
             return this;
         }
 
         public void timeout(UInt64 tick, Action timeout_cb)
         {
             TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.cost_coin_timeout(cb_uuid);
+                module_rsp_cb.start_battle_timeout(cb_uuid);
             });
-            on_cost_coin_timeout += timeout_cb;
+            on_start_battle_timeout += timeout_cb;
         }
 
-        public void call_cb(UserData info)
+        public void call_cb(string match_name)
         {
-            if (on_cost_coin_cb != null)
+            if (on_start_battle_cb != null)
             {
-                on_cost_coin_cb(info);
+                on_start_battle_cb(match_name);
             }
         }
 
         public void call_err(Int32 err)
         {
-            if (on_cost_coin_err != null)
+            if (on_start_battle_err != null)
             {
-                on_cost_coin_err(err);
+                on_start_battle_err(err);
             }
         }
 
         public void call_timeout()
         {
-            if (on_cost_coin_timeout != null)
+            if (on_start_battle_timeout != null)
             {
-                on_cost_coin_timeout();
-            }
-        }
-
-    }
-
-    public class player_archive_cost_prop_cb
-    {
-        private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
-
-        public player_archive_cost_prop_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
-        {
-            cb_uuid = _cb_uuid;
-            module_rsp_cb = _module_rsp_cb;
-        }
-
-        public event Action<UserData> on_cost_prop_cb;
-        public event Action<Int32> on_cost_prop_err;
-        public event Action on_cost_prop_timeout;
-
-        public player_archive_cost_prop_cb callBack(Action<UserData> cb, Action<Int32> err)
-        {
-            on_cost_prop_cb += cb;
-            on_cost_prop_err += err;
-            return this;
-        }
-
-        public void timeout(UInt64 tick, Action timeout_cb)
-        {
-            TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.cost_prop_timeout(cb_uuid);
-            });
-            on_cost_prop_timeout += timeout_cb;
-        }
-
-        public void call_cb(UserData info)
-        {
-            if (on_cost_prop_cb != null)
-            {
-                on_cost_prop_cb(info);
-            }
-        }
-
-        public void call_err(Int32 err)
-        {
-            if (on_cost_prop_err != null)
-            {
-                on_cost_prop_err(err);
-            }
-        }
-
-        public void call_timeout()
-        {
-            if (on_cost_prop_timeout != null)
-            {
-                on_cost_prop_timeout();
-            }
-        }
-
-    }
-
-    public class player_archive_open_chest_cb
-    {
-        private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
-
-        public player_archive_open_chest_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
-        {
-            cb_uuid = _cb_uuid;
-            module_rsp_cb = _module_rsp_cb;
-        }
-
-        public event Action<UserData> on_open_chest_cb;
-        public event Action<Int32> on_open_chest_err;
-        public event Action on_open_chest_timeout;
-
-        public player_archive_open_chest_cb callBack(Action<UserData> cb, Action<Int32> err)
-        {
-            on_open_chest_cb += cb;
-            on_open_chest_err += err;
-            return this;
-        }
-
-        public void timeout(UInt64 tick, Action timeout_cb)
-        {
-            TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.open_chest_timeout(cb_uuid);
-            });
-            on_open_chest_timeout += timeout_cb;
-        }
-
-        public void call_cb(UserData info)
-        {
-            if (on_open_chest_cb != null)
-            {
-                on_open_chest_cb(info);
-            }
-        }
-
-        public void call_err(Int32 err)
-        {
-            if (on_open_chest_err != null)
-            {
-                on_open_chest_err(err);
-            }
-        }
-
-        public void call_timeout()
-        {
-            if (on_open_chest_timeout != null)
-            {
-                on_open_chest_timeout();
-            }
-        }
-
-    }
-
-    public class player_archive_add_coin_cb
-    {
-        private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
-
-        public player_archive_add_coin_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
-        {
-            cb_uuid = _cb_uuid;
-            module_rsp_cb = _module_rsp_cb;
-        }
-
-        public event Action<UserData> on_add_coin_cb;
-        public event Action<Int32> on_add_coin_err;
-        public event Action on_add_coin_timeout;
-
-        public player_archive_add_coin_cb callBack(Action<UserData> cb, Action<Int32> err)
-        {
-            on_add_coin_cb += cb;
-            on_add_coin_err += err;
-            return this;
-        }
-
-        public void timeout(UInt64 tick, Action timeout_cb)
-        {
-            TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.add_coin_timeout(cb_uuid);
-            });
-            on_add_coin_timeout += timeout_cb;
-        }
-
-        public void call_cb(UserData info)
-        {
-            if (on_add_coin_cb != null)
-            {
-                on_add_coin_cb(info);
-            }
-        }
-
-        public void call_err(Int32 err)
-        {
-            if (on_add_coin_err != null)
-            {
-                on_add_coin_err(err);
-            }
-        }
-
-        public void call_timeout()
-        {
-            if (on_add_coin_timeout != null)
-            {
-                on_add_coin_timeout();
-            }
-        }
-
-    }
-
-    public class player_archive_add_strength_cb
-    {
-        private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
-
-        public player_archive_add_strength_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
-        {
-            cb_uuid = _cb_uuid;
-            module_rsp_cb = _module_rsp_cb;
-        }
-
-        public event Action<UserData> on_add_strength_cb;
-        public event Action<Int32> on_add_strength_err;
-        public event Action on_add_strength_timeout;
-
-        public player_archive_add_strength_cb callBack(Action<UserData> cb, Action<Int32> err)
-        {
-            on_add_strength_cb += cb;
-            on_add_strength_err += err;
-            return this;
-        }
-
-        public void timeout(UInt64 tick, Action timeout_cb)
-        {
-            TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.add_strength_timeout(cb_uuid);
-            });
-            on_add_strength_timeout += timeout_cb;
-        }
-
-        public void call_cb(UserData info)
-        {
-            if (on_add_strength_cb != null)
-            {
-                on_add_strength_cb(info);
-            }
-        }
-
-        public void call_err(Int32 err)
-        {
-            if (on_add_strength_err != null)
-            {
-                on_add_strength_err(err);
-            }
-        }
-
-        public void call_timeout()
-        {
-            if (on_add_strength_timeout != null)
-            {
-                on_add_strength_timeout();
-            }
-        }
-
-    }
-
-    public class player_archive_add_skill_cb
-    {
-        private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
-
-        public player_archive_add_skill_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
-        {
-            cb_uuid = _cb_uuid;
-            module_rsp_cb = _module_rsp_cb;
-        }
-
-        public event Action<UserData> on_add_skill_cb;
-        public event Action<Int32> on_add_skill_err;
-        public event Action on_add_skill_timeout;
-
-        public player_archive_add_skill_cb callBack(Action<UserData> cb, Action<Int32> err)
-        {
-            on_add_skill_cb += cb;
-            on_add_skill_err += err;
-            return this;
-        }
-
-        public void timeout(UInt64 tick, Action timeout_cb)
-        {
-            TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.add_skill_timeout(cb_uuid);
-            });
-            on_add_skill_timeout += timeout_cb;
-        }
-
-        public void call_cb(UserData info)
-        {
-            if (on_add_skill_cb != null)
-            {
-                on_add_skill_cb(info);
-            }
-        }
-
-        public void call_err(Int32 err)
-        {
-            if (on_add_skill_err != null)
-            {
-                on_add_skill_err(err);
-            }
-        }
-
-        public void call_timeout()
-        {
-            if (on_add_skill_timeout != null)
-            {
-                on_add_skill_timeout();
-            }
-        }
-
-    }
-
-    public class player_archive_add_monster_cb
-    {
-        private UInt64 cb_uuid;
-        private player_archive_rsp_cb module_rsp_cb;
-
-        public player_archive_add_monster_cb(UInt64 _cb_uuid, player_archive_rsp_cb _module_rsp_cb)
-        {
-            cb_uuid = _cb_uuid;
-            module_rsp_cb = _module_rsp_cb;
-        }
-
-        public event Action<UserData> on_add_monster_cb;
-        public event Action<Int32> on_add_monster_err;
-        public event Action on_add_monster_timeout;
-
-        public player_archive_add_monster_cb callBack(Action<UserData> cb, Action<Int32> err)
-        {
-            on_add_monster_cb += cb;
-            on_add_monster_err += err;
-            return this;
-        }
-
-        public void timeout(UInt64 tick, Action timeout_cb)
-        {
-            TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.add_monster_timeout(cb_uuid);
-            });
-            on_add_monster_timeout += timeout_cb;
-        }
-
-        public void call_cb(UserData info)
-        {
-            if (on_add_monster_cb != null)
-            {
-                on_add_monster_cb(info);
-            }
-        }
-
-        public void call_err(Int32 err)
-        {
-            if (on_add_monster_err != null)
-            {
-                on_add_monster_err(err);
-            }
-        }
-
-        public void call_timeout()
-        {
-            if (on_add_monster_timeout != null)
-            {
-                on_add_monster_timeout();
+                on_start_battle_timeout();
             }
         }
 
     }
 
 /*this cb code is codegen by abelkhan for c#*/
-    public class player_archive_rsp_cb : Common.IModule {
-        public Dictionary<UInt64, player_archive_cost_strength_cb> map_cost_strength;
-        public Dictionary<UInt64, player_archive_cost_coin_cb> map_cost_coin;
-        public Dictionary<UInt64, player_archive_cost_prop_cb> map_cost_prop;
-        public Dictionary<UInt64, player_archive_open_chest_cb> map_open_chest;
-        public Dictionary<UInt64, player_archive_add_coin_cb> map_add_coin;
-        public Dictionary<UInt64, player_archive_add_strength_cb> map_add_strength;
-        public Dictionary<UInt64, player_archive_add_skill_cb> map_add_skill;
-        public Dictionary<UInt64, player_archive_add_monster_cb> map_add_monster;
-        public player_archive_rsp_cb(Common.ModuleManager modules)
+    public class player_battle_rsp_cb : Common.IModule {
+        public Dictionary<UInt64, player_battle_set_battle_role_list_cb> map_set_battle_role_list;
+        public Dictionary<UInt64, player_battle_start_battle_cb> map_start_battle;
+        public player_battle_rsp_cb(Common.ModuleManager modules)
         {
-            map_cost_strength = new Dictionary<UInt64, player_archive_cost_strength_cb>();
-            modules.add_mothed("player_archive_rsp_cb_cost_strength_rsp", cost_strength_rsp);
-            modules.add_mothed("player_archive_rsp_cb_cost_strength_err", cost_strength_err);
-            map_cost_coin = new Dictionary<UInt64, player_archive_cost_coin_cb>();
-            modules.add_mothed("player_archive_rsp_cb_cost_coin_rsp", cost_coin_rsp);
-            modules.add_mothed("player_archive_rsp_cb_cost_coin_err", cost_coin_err);
-            map_cost_prop = new Dictionary<UInt64, player_archive_cost_prop_cb>();
-            modules.add_mothed("player_archive_rsp_cb_cost_prop_rsp", cost_prop_rsp);
-            modules.add_mothed("player_archive_rsp_cb_cost_prop_err", cost_prop_err);
-            map_open_chest = new Dictionary<UInt64, player_archive_open_chest_cb>();
-            modules.add_mothed("player_archive_rsp_cb_open_chest_rsp", open_chest_rsp);
-            modules.add_mothed("player_archive_rsp_cb_open_chest_err", open_chest_err);
-            map_add_coin = new Dictionary<UInt64, player_archive_add_coin_cb>();
-            modules.add_mothed("player_archive_rsp_cb_add_coin_rsp", add_coin_rsp);
-            modules.add_mothed("player_archive_rsp_cb_add_coin_err", add_coin_err);
-            map_add_strength = new Dictionary<UInt64, player_archive_add_strength_cb>();
-            modules.add_mothed("player_archive_rsp_cb_add_strength_rsp", add_strength_rsp);
-            modules.add_mothed("player_archive_rsp_cb_add_strength_err", add_strength_err);
-            map_add_skill = new Dictionary<UInt64, player_archive_add_skill_cb>();
-            modules.add_mothed("player_archive_rsp_cb_add_skill_rsp", add_skill_rsp);
-            modules.add_mothed("player_archive_rsp_cb_add_skill_err", add_skill_err);
-            map_add_monster = new Dictionary<UInt64, player_archive_add_monster_cb>();
-            modules.add_mothed("player_archive_rsp_cb_add_monster_rsp", add_monster_rsp);
-            modules.add_mothed("player_archive_rsp_cb_add_monster_err", add_monster_err);
+            map_set_battle_role_list = new Dictionary<UInt64, player_battle_set_battle_role_list_cb>();
+            modules.add_mothed("player_battle_rsp_cb_set_battle_role_list_rsp", set_battle_role_list_rsp);
+            modules.add_mothed("player_battle_rsp_cb_set_battle_role_list_err", set_battle_role_list_err);
+            map_start_battle = new Dictionary<UInt64, player_battle_start_battle_cb>();
+            modules.add_mothed("player_battle_rsp_cb_start_battle_rsp", start_battle_rsp);
+            modules.add_mothed("player_battle_rsp_cb_start_battle_err", start_battle_err);
         }
 
-        public void cost_strength_rsp(IList<MsgPack.MessagePackObject> inArray){
+        public void set_battle_role_list_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_cost_strength_cb(uuid);
+            var _info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var rsp = try_get_and_del_set_battle_role_list_cb(uuid);
             if (rsp != null)
             {
                 rsp.call_cb(_info);
             }
         }
 
-        public void cost_strength_err(IList<MsgPack.MessagePackObject> inArray){
+        public void set_battle_role_list_err(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_cost_strength_cb(uuid);
+            var rsp = try_get_and_del_set_battle_role_list_cb(uuid);
             if (rsp != null)
             {
                 rsp.call_err(_err);
             }
         }
 
-        public void cost_strength_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_cost_strength_cb(cb_uuid);
+        public void set_battle_role_list_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_set_battle_role_list_cb(cb_uuid);
             if (rsp != null){
                 rsp.call_timeout();
             }
         }
 
-        private player_archive_cost_strength_cb try_get_and_del_cost_strength_cb(UInt64 uuid){
-            lock(map_cost_strength)
+        private player_battle_set_battle_role_list_cb try_get_and_del_set_battle_role_list_cb(UInt64 uuid){
+            lock(map_set_battle_role_list)
             {
-                if (map_cost_strength.TryGetValue(uuid, out player_archive_cost_strength_cb rsp))
+                if (map_set_battle_role_list.TryGetValue(uuid, out player_battle_set_battle_role_list_cb rsp))
                 {
-                    map_cost_strength.Remove(uuid);
+                    map_set_battle_role_list.Remove(uuid);
                 }
                 return rsp;
             }
         }
 
-        public void cost_coin_rsp(IList<MsgPack.MessagePackObject> inArray){
+        public void start_battle_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_cost_coin_cb(uuid);
+            var _match_name = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var rsp = try_get_and_del_start_battle_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_info);
+                rsp.call_cb(_match_name);
             }
         }
 
-        public void cost_coin_err(IList<MsgPack.MessagePackObject> inArray){
+        public void start_battle_err(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_cost_coin_cb(uuid);
+            var rsp = try_get_and_del_start_battle_cb(uuid);
             if (rsp != null)
             {
                 rsp.call_err(_err);
             }
         }
 
-        public void cost_coin_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_cost_coin_cb(cb_uuid);
+        public void start_battle_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_start_battle_cb(cb_uuid);
             if (rsp != null){
                 rsp.call_timeout();
             }
         }
 
-        private player_archive_cost_coin_cb try_get_and_del_cost_coin_cb(UInt64 uuid){
-            lock(map_cost_coin)
+        private player_battle_start_battle_cb try_get_and_del_start_battle_cb(UInt64 uuid){
+            lock(map_start_battle)
             {
-                if (map_cost_coin.TryGetValue(uuid, out player_archive_cost_coin_cb rsp))
+                if (map_start_battle.TryGetValue(uuid, out player_battle_start_battle_cb rsp))
                 {
-                    map_cost_coin.Remove(uuid);
-                }
-                return rsp;
-            }
-        }
-
-        public void cost_prop_rsp(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_cost_prop_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_cb(_info);
-            }
-        }
-
-        public void cost_prop_err(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_cost_prop_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_err(_err);
-            }
-        }
-
-        public void cost_prop_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_cost_prop_cb(cb_uuid);
-            if (rsp != null){
-                rsp.call_timeout();
-            }
-        }
-
-        private player_archive_cost_prop_cb try_get_and_del_cost_prop_cb(UInt64 uuid){
-            lock(map_cost_prop)
-            {
-                if (map_cost_prop.TryGetValue(uuid, out player_archive_cost_prop_cb rsp))
-                {
-                    map_cost_prop.Remove(uuid);
-                }
-                return rsp;
-            }
-        }
-
-        public void open_chest_rsp(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_open_chest_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_cb(_info);
-            }
-        }
-
-        public void open_chest_err(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_open_chest_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_err(_err);
-            }
-        }
-
-        public void open_chest_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_open_chest_cb(cb_uuid);
-            if (rsp != null){
-                rsp.call_timeout();
-            }
-        }
-
-        private player_archive_open_chest_cb try_get_and_del_open_chest_cb(UInt64 uuid){
-            lock(map_open_chest)
-            {
-                if (map_open_chest.TryGetValue(uuid, out player_archive_open_chest_cb rsp))
-                {
-                    map_open_chest.Remove(uuid);
-                }
-                return rsp;
-            }
-        }
-
-        public void add_coin_rsp(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_add_coin_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_cb(_info);
-            }
-        }
-
-        public void add_coin_err(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_add_coin_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_err(_err);
-            }
-        }
-
-        public void add_coin_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_add_coin_cb(cb_uuid);
-            if (rsp != null){
-                rsp.call_timeout();
-            }
-        }
-
-        private player_archive_add_coin_cb try_get_and_del_add_coin_cb(UInt64 uuid){
-            lock(map_add_coin)
-            {
-                if (map_add_coin.TryGetValue(uuid, out player_archive_add_coin_cb rsp))
-                {
-                    map_add_coin.Remove(uuid);
-                }
-                return rsp;
-            }
-        }
-
-        public void add_strength_rsp(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_add_strength_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_cb(_info);
-            }
-        }
-
-        public void add_strength_err(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_add_strength_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_err(_err);
-            }
-        }
-
-        public void add_strength_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_add_strength_cb(cb_uuid);
-            if (rsp != null){
-                rsp.call_timeout();
-            }
-        }
-
-        private player_archive_add_strength_cb try_get_and_del_add_strength_cb(UInt64 uuid){
-            lock(map_add_strength)
-            {
-                if (map_add_strength.TryGetValue(uuid, out player_archive_add_strength_cb rsp))
-                {
-                    map_add_strength.Remove(uuid);
-                }
-                return rsp;
-            }
-        }
-
-        public void add_skill_rsp(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_add_skill_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_cb(_info);
-            }
-        }
-
-        public void add_skill_err(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_add_skill_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_err(_err);
-            }
-        }
-
-        public void add_skill_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_add_skill_cb(cb_uuid);
-            if (rsp != null){
-                rsp.call_timeout();
-            }
-        }
-
-        private player_archive_add_skill_cb try_get_and_del_add_skill_cb(UInt64 uuid){
-            lock(map_add_skill)
-            {
-                if (map_add_skill.TryGetValue(uuid, out player_archive_add_skill_cb rsp))
-                {
-                    map_add_skill.Remove(uuid);
-                }
-                return rsp;
-            }
-        }
-
-        public void add_monster_rsp(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_add_monster_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_cb(_info);
-            }
-        }
-
-        public void add_monster_err(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_add_monster_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_err(_err);
-            }
-        }
-
-        public void add_monster_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_add_monster_cb(cb_uuid);
-            if (rsp != null){
-                rsp.call_timeout();
-            }
-        }
-
-        private player_archive_add_monster_cb try_get_and_del_add_monster_cb(UInt64 uuid){
-            lock(map_add_monster)
-            {
-                if (map_add_monster.TryGetValue(uuid, out player_archive_add_monster_cb rsp))
-                {
-                    map_add_monster.Remove(uuid);
+                    map_start_battle.Remove(uuid);
                 }
                 return rsp;
             }
@@ -1077,158 +489,75 @@ namespace Abelkhan
 
     }
 
-    public class player_archive_caller {
-        public static player_archive_rsp_cb rsp_cb_player_archive_handle = null;
-        private ThreadLocal<player_archive_hubproxy> _hubproxy;
+    public class player_battle_caller {
+        public static player_battle_rsp_cb rsp_cb_player_battle_handle = null;
+        private ThreadLocal<player_battle_hubproxy> _hubproxy;
         public Client.Client _client_handle;
-        public player_archive_caller(Client.Client client_handle_) 
+        public player_battle_caller(Client.Client client_handle_) 
         {
             _client_handle = client_handle_;
-            if (rsp_cb_player_archive_handle == null)
+            if (rsp_cb_player_battle_handle == null)
             {
-                rsp_cb_player_archive_handle = new player_archive_rsp_cb(_client_handle.modulemanager);
+                rsp_cb_player_battle_handle = new player_battle_rsp_cb(_client_handle.modulemanager);
             }
 
-            _hubproxy = new ThreadLocal<player_archive_hubproxy>();
+            _hubproxy = new ThreadLocal<player_battle_hubproxy>();
         }
 
-        public player_archive_hubproxy get_hub(string hub_name)
+        public player_battle_hubproxy get_hub(string hub_name)
         {
             if (_hubproxy.Value == null)
 {
-                _hubproxy.Value = new player_archive_hubproxy(_client_handle, rsp_cb_player_archive_handle);
+                _hubproxy.Value = new player_battle_hubproxy(_client_handle, rsp_cb_player_battle_handle);
             }
-            _hubproxy.Value.hub_name_229b670b_b203_3780_89af_1bc6486bd86f = hub_name;
+            _hubproxy.Value.hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192 = hub_name;
             return _hubproxy.Value;
         }
 
     }
 
-    public class player_archive_hubproxy {
-        public string hub_name_229b670b_b203_3780_89af_1bc6486bd86f;
-        private Int32 uuid_229b670b_b203_3780_89af_1bc6486bd86f = (Int32)RandomUUID.random();
+    public class player_battle_hubproxy {
+        public string hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192;
+        private Int32 uuid_4ffbb290_f238_38f6_b774_75ba1cccb192 = (Int32)RandomUUID.random();
 
         public Client.Client _client_handle;
-        public player_archive_rsp_cb rsp_cb_player_archive_handle;
+        public player_battle_rsp_cb rsp_cb_player_battle_handle;
 
-        public player_archive_hubproxy(Client.Client client_handle_, player_archive_rsp_cb rsp_cb_player_archive_handle_)
+        public player_battle_hubproxy(Client.Client client_handle_, player_battle_rsp_cb rsp_cb_player_battle_handle_)
         {
             _client_handle = client_handle_;
-            rsp_cb_player_archive_handle = rsp_cb_player_archive_handle_;
+            rsp_cb_player_battle_handle = rsp_cb_player_battle_handle_;
         }
 
-        public player_archive_cost_strength_cb cost_strength(Int32 strength){
-            var uuid_20fc04b0_1384_5a5e_a1ce_d79c07d25765 = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
+        public player_battle_set_battle_role_list_cb set_battle_role_list(List<Int32> role_list){
+            var uuid_07711fd0_cccd_53ab_9f0e_77899092db11 = (UInt64)Interlocked.Increment(ref uuid_4ffbb290_f238_38f6_b774_75ba1cccb192);
 
-            var _argv_c1f5a2a8_b494_3f28_8814_9be35e02be6a = new ArrayList();
-            _argv_c1f5a2a8_b494_3f28_8814_9be35e02be6a.Add(uuid_20fc04b0_1384_5a5e_a1ce_d79c07d25765);
-            _argv_c1f5a2a8_b494_3f28_8814_9be35e02be6a.Add(strength);
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_cost_strength", _argv_c1f5a2a8_b494_3f28_8814_9be35e02be6a);
+            var _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2 = new ArrayList();
+            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(uuid_07711fd0_cccd_53ab_9f0e_77899092db11);
+            var _array_03c6cb48_755d_38f0_a566_1b564ef0e78d = new ArrayList();
+            foreach(var v_9c7e0c91_5849_58a5_953e_3924ee9819a9 in role_list){
+                _array_03c6cb48_755d_38f0_a566_1b564ef0e78d.Add(v_9c7e0c91_5849_58a5_953e_3924ee9819a9);
+            }
+            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(_array_03c6cb48_755d_38f0_a566_1b564ef0e78d);
+            _client_handle.call_hub(hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_set_battle_role_list", _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2);
 
-            var cb_cost_strength_obj = new player_archive_cost_strength_cb(uuid_20fc04b0_1384_5a5e_a1ce_d79c07d25765, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_cost_strength)
-            {                rsp_cb_player_archive_handle.map_cost_strength.Add(uuid_20fc04b0_1384_5a5e_a1ce_d79c07d25765, cb_cost_strength_obj);
-            }            return cb_cost_strength_obj;
+            var cb_set_battle_role_list_obj = new player_battle_set_battle_role_list_cb(uuid_07711fd0_cccd_53ab_9f0e_77899092db11, rsp_cb_player_battle_handle);
+            lock(rsp_cb_player_battle_handle.map_set_battle_role_list)
+            {                rsp_cb_player_battle_handle.map_set_battle_role_list.Add(uuid_07711fd0_cccd_53ab_9f0e_77899092db11, cb_set_battle_role_list_obj);
+            }            return cb_set_battle_role_list_obj;
         }
 
-        public player_archive_cost_coin_cb cost_coin(Int32 cost_amount, EMCostCoinPath cost_path, Int32 role_id){
-            var uuid_dd194c99_4357_5e15_ada5_e1b081535e5b = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
+        public player_battle_start_battle_cb start_battle(){
+            var uuid_21a74a63_a13c_539e_b2bc_ef5069375dba = (UInt64)Interlocked.Increment(ref uuid_4ffbb290_f238_38f6_b774_75ba1cccb192);
 
-            var _argv_ad552213_ca1e_3b02_b853_b56e3a935d76 = new ArrayList();
-            _argv_ad552213_ca1e_3b02_b853_b56e3a935d76.Add(uuid_dd194c99_4357_5e15_ada5_e1b081535e5b);
-            _argv_ad552213_ca1e_3b02_b853_b56e3a935d76.Add(cost_amount);
-            _argv_ad552213_ca1e_3b02_b853_b56e3a935d76.Add((int)cost_path);
-            _argv_ad552213_ca1e_3b02_b853_b56e3a935d76.Add(role_id);
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_cost_coin", _argv_ad552213_ca1e_3b02_b853_b56e3a935d76);
+            var _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873 = new ArrayList();
+            _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba);
+            _client_handle.call_hub(hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_start_battle", _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873);
 
-            var cb_cost_coin_obj = new player_archive_cost_coin_cb(uuid_dd194c99_4357_5e15_ada5_e1b081535e5b, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_cost_coin)
-            {                rsp_cb_player_archive_handle.map_cost_coin.Add(uuid_dd194c99_4357_5e15_ada5_e1b081535e5b, cb_cost_coin_obj);
-            }            return cb_cost_coin_obj;
-        }
-
-        public player_archive_cost_prop_cb cost_prop(Int32 prop_id){
-            var uuid_14d1bbdf_0ef3_5a64_b0a6_cf2b3566c509 = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
-
-            var _argv_04acb15b_4368_3e92_b7d5_054cc5c47f8c = new ArrayList();
-            _argv_04acb15b_4368_3e92_b7d5_054cc5c47f8c.Add(uuid_14d1bbdf_0ef3_5a64_b0a6_cf2b3566c509);
-            _argv_04acb15b_4368_3e92_b7d5_054cc5c47f8c.Add(prop_id);
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_cost_prop", _argv_04acb15b_4368_3e92_b7d5_054cc5c47f8c);
-
-            var cb_cost_prop_obj = new player_archive_cost_prop_cb(uuid_14d1bbdf_0ef3_5a64_b0a6_cf2b3566c509, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_cost_prop)
-            {                rsp_cb_player_archive_handle.map_cost_prop.Add(uuid_14d1bbdf_0ef3_5a64_b0a6_cf2b3566c509, cb_cost_prop_obj);
-            }            return cb_cost_prop_obj;
-        }
-
-        public player_archive_open_chest_cb open_chest(EMChestType chest_type){
-            var uuid_614c6a3c_6143_5270_b88b_6692c403f7c2 = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
-
-            var _argv_d0593737_5916_31e8_815b_8e30421f4a32 = new ArrayList();
-            _argv_d0593737_5916_31e8_815b_8e30421f4a32.Add(uuid_614c6a3c_6143_5270_b88b_6692c403f7c2);
-            _argv_d0593737_5916_31e8_815b_8e30421f4a32.Add((int)chest_type);
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_open_chest", _argv_d0593737_5916_31e8_815b_8e30421f4a32);
-
-            var cb_open_chest_obj = new player_archive_open_chest_cb(uuid_614c6a3c_6143_5270_b88b_6692c403f7c2, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_open_chest)
-            {                rsp_cb_player_archive_handle.map_open_chest.Add(uuid_614c6a3c_6143_5270_b88b_6692c403f7c2, cb_open_chest_obj);
-            }            return cb_open_chest_obj;
-        }
-
-        public player_archive_add_coin_cb add_coin(Int32 coin){
-            var uuid_7e673e35_4856_5782_bc09_f374dc03f12f = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
-
-            var _argv_68d61429_8f03_329b_a588_1069fa6d4cff = new ArrayList();
-            _argv_68d61429_8f03_329b_a588_1069fa6d4cff.Add(uuid_7e673e35_4856_5782_bc09_f374dc03f12f);
-            _argv_68d61429_8f03_329b_a588_1069fa6d4cff.Add(coin);
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_add_coin", _argv_68d61429_8f03_329b_a588_1069fa6d4cff);
-
-            var cb_add_coin_obj = new player_archive_add_coin_cb(uuid_7e673e35_4856_5782_bc09_f374dc03f12f, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_add_coin)
-            {                rsp_cb_player_archive_handle.map_add_coin.Add(uuid_7e673e35_4856_5782_bc09_f374dc03f12f, cb_add_coin_obj);
-            }            return cb_add_coin_obj;
-        }
-
-        public player_archive_add_strength_cb add_strength(Int32 strength){
-            var uuid_4c903a19_b7bb_53ab_85de_0271356f2cf8 = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
-
-            var _argv_424d3381_ff2c_37eb_a44a_fd95f504b1e4 = new ArrayList();
-            _argv_424d3381_ff2c_37eb_a44a_fd95f504b1e4.Add(uuid_4c903a19_b7bb_53ab_85de_0271356f2cf8);
-            _argv_424d3381_ff2c_37eb_a44a_fd95f504b1e4.Add(strength);
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_add_strength", _argv_424d3381_ff2c_37eb_a44a_fd95f504b1e4);
-
-            var cb_add_strength_obj = new player_archive_add_strength_cb(uuid_4c903a19_b7bb_53ab_85de_0271356f2cf8, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_add_strength)
-            {                rsp_cb_player_archive_handle.map_add_strength.Add(uuid_4c903a19_b7bb_53ab_85de_0271356f2cf8, cb_add_strength_obj);
-            }            return cb_add_strength_obj;
-        }
-
-        public player_archive_add_skill_cb add_skill(Skill skill){
-            var uuid_b925041d_3191_59c3_8f48_cfd7449f18bf = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
-
-            var _argv_5a9f41f9_9c1b_31ee_abed_09712facbd18 = new ArrayList();
-            _argv_5a9f41f9_9c1b_31ee_abed_09712facbd18.Add(uuid_b925041d_3191_59c3_8f48_cfd7449f18bf);
-            _argv_5a9f41f9_9c1b_31ee_abed_09712facbd18.Add(Skill.Skill_to_protcol(skill));
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_add_skill", _argv_5a9f41f9_9c1b_31ee_abed_09712facbd18);
-
-            var cb_add_skill_obj = new player_archive_add_skill_cb(uuid_b925041d_3191_59c3_8f48_cfd7449f18bf, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_add_skill)
-            {                rsp_cb_player_archive_handle.map_add_skill.Add(uuid_b925041d_3191_59c3_8f48_cfd7449f18bf, cb_add_skill_obj);
-            }            return cb_add_skill_obj;
-        }
-
-        public player_archive_add_monster_cb add_monster(Monster monster){
-            var uuid_9804a865_66e7_5add_a0c5_87003e361e6f = (UInt64)Interlocked.Increment(ref uuid_229b670b_b203_3780_89af_1bc6486bd86f);
-
-            var _argv_3557bc3e_9709_3cfd_ae3e_a29771974a96 = new ArrayList();
-            _argv_3557bc3e_9709_3cfd_ae3e_a29771974a96.Add(uuid_9804a865_66e7_5add_a0c5_87003e361e6f);
-            _argv_3557bc3e_9709_3cfd_ae3e_a29771974a96.Add(Monster.Monster_to_protcol(monster));
-            _client_handle.call_hub(hub_name_229b670b_b203_3780_89af_1bc6486bd86f, "player_archive_add_monster", _argv_3557bc3e_9709_3cfd_ae3e_a29771974a96);
-
-            var cb_add_monster_obj = new player_archive_add_monster_cb(uuid_9804a865_66e7_5add_a0c5_87003e361e6f, rsp_cb_player_archive_handle);
-            lock(rsp_cb_player_archive_handle.map_add_monster)
-            {                rsp_cb_player_archive_handle.map_add_monster.Add(uuid_9804a865_66e7_5add_a0c5_87003e361e6f, cb_add_monster_obj);
-            }            return cb_add_monster_obj;
+            var cb_start_battle_obj = new player_battle_start_battle_cb(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba, rsp_cb_player_battle_handle);
+            lock(rsp_cb_player_battle_handle.map_start_battle)
+            {                rsp_cb_player_battle_handle.map_start_battle.Add(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba, cb_start_battle_obj);
+            }            return cb_start_battle_obj;
         }
 
     }

@@ -8,16 +8,6 @@ namespace Abelkhan
 {
 /*this enum code is codegen by abelkhan codegen for c#*/
 
-    public enum EMChestType{
-        Normal = 1,
-        Rare = 2,
-        Epic = 3,
-        Legend = 4
-    }
-    public enum EMCostCoinPath{
-        BuyRole = 1,
-        UpdateRole = 2
-    }
 /*this struct code is codegen by abelkhan codegen for c#*/
     public class UserInformation
     {
@@ -43,181 +33,21 @@ namespace Abelkhan
         }
     }
 
-    public class Role
-    {
-        public Int32 RoleID;
-        public string RoleName;
-        public bool IsLook;
-        public float Heath;
-        public float AttNum;
-        public static MsgPack.MessagePackObjectDictionary Role_to_protcol(Role _struct){
-            var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("RoleID", _struct.RoleID);
-            _protocol.Add("RoleName", _struct.RoleName);
-            _protocol.Add("IsLook", _struct.IsLook);
-            _protocol.Add("Heath", _struct.Heath);
-            _protocol.Add("AttNum", _struct.AttNum);
-            return _protocol;
-        }
-        public static Role protcol_to_Role(MsgPack.MessagePackObjectDictionary _protocol){
-            var _structe15dab07_4671_3806_9f26_9880fe20019d = new Role();
-            foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleName"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.RoleName = ((MsgPack.MessagePackObject)i.Value).AsString();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "IsLook"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.IsLook = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Heath"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.Heath = ((MsgPack.MessagePackObject)i.Value).AsSingle();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "AttNum"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.AttNum = ((MsgPack.MessagePackObject)i.Value).AsSingle();
-                }
-            }
-            return _structe15dab07_4671_3806_9f26_9880fe20019d;
-        }
-    }
-
-    public class Monster
-    {
-        public Int32 MsId;
-        public string MonsterName;
-        public bool IsLook;
-        public static MsgPack.MessagePackObjectDictionary Monster_to_protcol(Monster _struct){
-            var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("MsId", _struct.MsId);
-            _protocol.Add("MonsterName", _struct.MonsterName);
-            _protocol.Add("IsLook", _struct.IsLook);
-            return _protocol;
-        }
-        public static Monster protcol_to_Monster(MsgPack.MessagePackObjectDictionary _protocol){
-            var _struct76875566_832c_332d_9ed9_9a7e11724c81 = new Monster();
-            foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "MsId"){
-                    _struct76875566_832c_332d_9ed9_9a7e11724c81.MsId = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "MonsterName"){
-                    _struct76875566_832c_332d_9ed9_9a7e11724c81.MonsterName = ((MsgPack.MessagePackObject)i.Value).AsString();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "IsLook"){
-                    _struct76875566_832c_332d_9ed9_9a7e11724c81.IsLook = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
-                }
-            }
-            return _struct76875566_832c_332d_9ed9_9a7e11724c81;
-        }
-    }
-
-    public class Skill
-    {
-        public Int32 SkID;
-        public string SkillName;
-        public bool IsLook;
-        public static MsgPack.MessagePackObjectDictionary Skill_to_protcol(Skill _struct){
-            var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("SkID", _struct.SkID);
-            _protocol.Add("SkillName", _struct.SkillName);
-            _protocol.Add("IsLook", _struct.IsLook);
-            return _protocol;
-        }
-        public static Skill protcol_to_Skill(MsgPack.MessagePackObjectDictionary _protocol){
-            var _struct6296b77e_5319_35bd_ba32_48548b0a19f8 = new Skill();
-            foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkID"){
-                    _struct6296b77e_5319_35bd_ba32_48548b0a19f8.SkID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkillName"){
-                    _struct6296b77e_5319_35bd_ba32_48548b0a19f8.SkillName = ((MsgPack.MessagePackObject)i.Value).AsString();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "IsLook"){
-                    _struct6296b77e_5319_35bd_ba32_48548b0a19f8.IsLook = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
-                }
-            }
-            return _struct6296b77e_5319_35bd_ba32_48548b0a19f8;
-        }
-    }
-
-    public class Prop
-    {
-        public Int32 PropID;
-        public string PropName;
-        public Int32 Count;
-        public static MsgPack.MessagePackObjectDictionary Prop_to_protcol(Prop _struct){
-            var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("PropID", _struct.PropID);
-            _protocol.Add("PropName", _struct.PropName);
-            _protocol.Add("Count", _struct.Count);
-            return _protocol;
-        }
-        public static Prop protcol_to_Prop(MsgPack.MessagePackObjectDictionary _protocol){
-            var _structaefeaa85_18d7_3b34_816c_1d95b23f7cbb = new Prop();
-            foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "PropID"){
-                    _structaefeaa85_18d7_3b34_816c_1d95b23f7cbb.PropID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "PropName"){
-                    _structaefeaa85_18d7_3b34_816c_1d95b23f7cbb.PropName = ((MsgPack.MessagePackObject)i.Value).AsString();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Count"){
-                    _structaefeaa85_18d7_3b34_816c_1d95b23f7cbb.Count = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-            }
-            return _structaefeaa85_18d7_3b34_816c_1d95b23f7cbb;
-        }
-    }
-
     public class UserData
     {
         public UserInformation User;
-        public Int32 Coin;
         public Int32 Strength;
-        public Int32 NormalChest;
-        public Int32 RareChest;
-        public Int32 EpicChest;
-        public Int32 LegendChest;
-        public List<Role> RoleList;
-        public List<Prop> PropList;
-        public List<Skill> SkList;
-        public List<Monster> MsList;
+        public List<Int32> RoleList;
         public static MsgPack.MessagePackObjectDictionary UserData_to_protcol(UserData _struct){
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
-            _protocol.Add("Coin", _struct.Coin);
             _protocol.Add("Strength", _struct.Strength);
-            _protocol.Add("NormalChest", _struct.NormalChest);
-            _protocol.Add("RareChest", _struct.RareChest);
-            _protocol.Add("EpicChest", _struct.EpicChest);
-            _protocol.Add("LegendChest", _struct.LegendChest);
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
-                    _array_RoleList.Add( new MsgPack.MessagePackObject(Role.Role_to_protcol(v_)));
+                    _array_RoleList.Add(v_);
                 }
                 _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
-            }
-            if (_struct.PropList != null) {
-                var _array_PropList = new List<MsgPack.MessagePackObject>();
-                foreach(var v_ in _struct.PropList){
-                    _array_PropList.Add( new MsgPack.MessagePackObject(Prop.Prop_to_protcol(v_)));
-                }
-                _protocol.Add("PropList", new MsgPack.MessagePackObject(_array_PropList));
-            }
-            if (_struct.SkList != null) {
-                var _array_SkList = new List<MsgPack.MessagePackObject>();
-                foreach(var v_ in _struct.SkList){
-                    _array_SkList.Add( new MsgPack.MessagePackObject(Skill.Skill_to_protcol(v_)));
-                }
-                _protocol.Add("SkList", new MsgPack.MessagePackObject(_array_SkList));
-            }
-            if (_struct.MsList != null) {
-                var _array_MsList = new List<MsgPack.MessagePackObject>();
-                foreach(var v_ in _struct.MsList){
-                    _array_MsList.Add( new MsgPack.MessagePackObject(Monster.Monster_to_protcol(v_)));
-                }
-                _protocol.Add("MsList", new MsgPack.MessagePackObject(_array_MsList));
             }
             return _protocol;
         }
@@ -227,54 +57,145 @@ namespace Abelkhan
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "User"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.User = UserInformation.protcol_to_UserInformation(((MsgPack.MessagePackObject)i.Value).AsDictionary());
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Coin"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.Coin = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Strength"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.Strength = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "NormalChest"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.NormalChest = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RareChest"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RareChest = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "EpicChest"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.EpicChest = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "LegendChest"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.LegendChest = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList = new List<Role>();
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList = new List<Int32>();
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
                     foreach (var v_ in _protocol_array){
-                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList.Add(Role.protcol_to_Role(((MsgPack.MessagePackObject)v_).AsDictionary()));
-                    }
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "PropList"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.PropList = new List<Prop>();
-                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
-                    foreach (var v_ in _protocol_array){
-                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.PropList.Add(Prop.protcol_to_Prop(((MsgPack.MessagePackObject)v_).AsDictionary()));
-                    }
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkList"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.SkList = new List<Skill>();
-                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
-                    foreach (var v_ in _protocol_array){
-                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.SkList.Add(Skill.protcol_to_Skill(((MsgPack.MessagePackObject)v_).AsDictionary()));
-                    }
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "MsList"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.MsList = new List<Monster>();
-                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
-                    foreach (var v_ in _protocol_array){
-                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.MsList.Add(Monster.protcol_to_Monster(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
                     }
                 }
             }
             return _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b;
+        }
+    }
+
+    public class Role
+    {
+        public Int32 RoleID;
+        public Int32 Level;
+        public Int32 BaseAttack;
+        public Int32 BaseDefense;
+        public Int32 TotalAttack;
+        public Int32 TotalDefense;
+        public static MsgPack.MessagePackObjectDictionary Role_to_protcol(Role _struct){
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("RoleID", _struct.RoleID);
+            _protocol.Add("Level", _struct.Level);
+            _protocol.Add("BaseAttack", _struct.BaseAttack);
+            _protocol.Add("BaseDefense", _struct.BaseDefense);
+            _protocol.Add("TotalAttack", _struct.TotalAttack);
+            _protocol.Add("TotalDefense", _struct.TotalDefense);
+            return _protocol;
+        }
+        public static Role protcol_to_Role(MsgPack.MessagePackObjectDictionary _protocol){
+            var _structe15dab07_4671_3806_9f26_9880fe20019d = new Role();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "BaseAttack"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.BaseAttack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "BaseDefense"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.BaseDefense = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TotalAttack"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.TotalAttack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TotalDefense"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.TotalDefense = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _structe15dab07_4671_3806_9f26_9880fe20019d;
+        }
+    }
+
+    public class UserBattleData
+    {
+        public UserInformation User;
+        public Int32 coin;
+        public List<Role> RoleList;
+        public static MsgPack.MessagePackObjectDictionary UserBattleData_to_protcol(UserBattleData _struct){
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
+            _protocol.Add("coin", _struct.coin);
+            if (_struct.RoleList != null) {
+                var _array_RoleList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.RoleList){
+                    _array_RoleList.Add( new MsgPack.MessagePackObject(Role.Role_to_protcol(v_)));
+                }
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
+            }
+            return _protocol;
+        }
+        public static UserBattleData protcol_to_UserBattleData(MsgPack.MessagePackObjectDictionary _protocol){
+            var _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f = new UserBattleData();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "User"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.User = UserInformation.protcol_to_UserInformation(((MsgPack.MessagePackObject)i.Value).AsDictionary());
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "coin"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.coin = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.RoleList = new List<Role>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.RoleList.Add(Role.protcol_to_Role(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
+            }
+            return _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f;
+        }
+    }
+
+    public class ShopData
+    {
+        public List<Int32> SaleRoleList;
+        public List<Int32> SalePropList;
+        public static MsgPack.MessagePackObjectDictionary ShopData_to_protcol(ShopData _struct){
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            if (_struct.SaleRoleList != null) {
+                var _array_SaleRoleList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.SaleRoleList){
+                    _array_SaleRoleList.Add(v_);
+                }
+                _protocol.Add("SaleRoleList", new MsgPack.MessagePackObject(_array_SaleRoleList));
+            }
+            if (_struct.SalePropList != null) {
+                var _array_SalePropList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.SalePropList){
+                    _array_SalePropList.Add(v_);
+                }
+                _protocol.Add("SalePropList", new MsgPack.MessagePackObject(_array_SalePropList));
+            }
+            return _protocol;
+        }
+        public static ShopData protcol_to_ShopData(MsgPack.MessagePackObjectDictionary _protocol){
+            var _struct4c993b13_c35e_3baf_abbc_c749b6027fbc = new ShopData();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "SaleRoleList"){
+                    _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SaleRoleList = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SaleRoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SalePropList"){
+                    _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SalePropList = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SalePropList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
+                }
+            }
+            return _struct4c993b13_c35e_3baf_abbc_c749b6027fbc;
         }
     }
 

@@ -400,3 +400,4 @@ FodyWeavers.xsd
 .build
 lib
 lib_debug
+config_node.txt
