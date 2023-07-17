@@ -36,6 +36,32 @@ namespace Abelkhan
 
     }
 
+    public class login_player_login_wx_rsp : Common.Response {
+        private string _client_uuid_f260ea6c_9f00_31da_bd24_7e885d5e027d;
+        private UInt64 uuid_16fc813a_bcd2_3f4d_a93e_f851f857089a;
+        public login_player_login_wx_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_f260ea6c_9f00_31da_bd24_7e885d5e027d = client_uuid;
+            uuid_16fc813a_bcd2_3f4d_a93e_f851f857089a = _uuid;
+        }
+
+        public void rsp(string player_hub_name_e16830b9_52e1_36d5_aff7_3ebaf4d86eb0, string token_6333efe6_4f25_3c9a_a58e_52c6c889a79e){
+            var _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d = new ArrayList();
+            _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.Add(uuid_16fc813a_bcd2_3f4d_a93e_f851f857089a);
+            _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.Add(player_hub_name_e16830b9_52e1_36d5_aff7_3ebaf4d86eb0);
+            _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.Add(token_6333efe6_4f25_3c9a_a58e_52c6c889a79e);
+            Hub.Hub._gates.call_client(_client_uuid_f260ea6c_9f00_31da_bd24_7e885d5e027d, "login_rsp_cb_player_login_wx_rsp", _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d = new ArrayList();
+            _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.Add(uuid_16fc813a_bcd2_3f4d_a93e_f851f857089a);
+            _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_f260ea6c_9f00_31da_bd24_7e885d5e027d, "login_rsp_cb_player_login_wx_err", _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d);
+        }
+
+    }
+
     public class login_player_login_dy_rsp : Common.Response {
         private string _client_uuid_71c7fc76_b480_3603_a181_4245a2f78904;
         private UInt64 uuid_e7891139_3b5f_3714_83b6_4be0a51f4bfc;
@@ -66,6 +92,7 @@ namespace Abelkhan
         public login_module()
         {
             Hub.Hub._modules.add_mothed("login_player_login_no_token", player_login_no_token);
+            Hub.Hub._modules.add_mothed("login_player_login_wx", player_login_wx);
             Hub.Hub._modules.add_mothed("login_player_login_dy", player_login_dy);
         }
 
@@ -76,6 +103,17 @@ namespace Abelkhan
             rsp = new login_player_login_no_token_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_player_login_no_token != null){
                 on_player_login_no_token(_account);
+            }
+            rsp = null;
+        }
+
+        public event Action<string> on_player_login_wx;
+        public void player_login_wx(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _code = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            rsp = new login_player_login_wx_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_player_login_wx != null){
+                on_player_login_wx(_code);
             }
             rsp = null;
         }
