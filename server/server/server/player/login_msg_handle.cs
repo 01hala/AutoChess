@@ -33,7 +33,7 @@ namespace Player
             }
         }
 
-        private async void Login_player_Module_on_player_login(string code, string anonymous_code)
+        private async void Login_player_Module_on_player_login(string openid, string anonymous_openid)
         {
             Log.Log.trace("on_player_login begin!");
 
@@ -41,14 +41,8 @@ namespace Player
 
             try
             {
-                var session = await dy.dySdk.code2Session(Player.AppID, Player.AppSecret, code, anonymous_code); 
-                var token = await Player.client_Mng.token_player_login(session.openid, session.anonymous_openid);
+                var token = await Player.client_Mng.token_player_login(openid, anonymous_openid);
                 rsp.rsp(token);
-            }
-            catch (dy.code2SessionEx ex)
-            {
-                Log.Log.err($"code2SessionEx:{ex}");
-                rsp.err((int)em_error.login_dy_faild);
             }
             catch (System.Exception ex)
             {

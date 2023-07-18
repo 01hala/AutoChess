@@ -9,8 +9,6 @@ namespace Player
 {
     class Player
     {
-        public static string AppID;
-        public static string AppSecret;
         public static RedisHandle _redis_handle;
 
         public static readonly client_mng client_Mng = new ();
@@ -24,9 +22,6 @@ namespace Player
             _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
 
             _hub.set_support_take_over_svr(true);
-
-            AppID = Hub.Hub._config.get_value_string("AppID");
-            AppSecret = Hub.Hub._config.get_value_string("AppSecret");
 
             HttpClientWrapper.Init();
 

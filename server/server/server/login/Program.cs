@@ -4,6 +4,8 @@ namespace Login
 {
     class Login
     {
+        public static string AppID;
+        public static string AppSecret;
         public static RedisHandle _redis_handle;
         public static player_proxy_mng _player_proxy_mng = new ();
 
@@ -11,6 +13,9 @@ namespace Login
 		{
             var _hub = new Hub.Hub(args[0], args[1], "login");
             _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
+
+            AppID = Hub.Hub._config.get_value_string("AppID");
+            AppSecret = Hub.Hub._config.get_value_string("AppSecret");
 
             var _client_msg_handle = new client_msg_handle();
 

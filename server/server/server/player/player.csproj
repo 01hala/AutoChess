@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\expand\avatar\avatar.csproj" />
     <ProjectReference Include="..\..\expand\bag\bag.csproj" />
-    <ProjectReference Include="..\..\expand\dy_sdk\dy.csproj" />
     <ProjectReference Include="..\..\game_proto\game_proto.csproj" />
   </ItemGroup>
 

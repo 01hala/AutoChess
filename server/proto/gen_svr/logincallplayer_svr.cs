@@ -264,13 +264,13 @@ namespace Abelkhan
             return cb_player_login_no_token_obj;
         }
 
-        public login_player_player_login_cb player_login(string code, string anonymous_code = ""){
+        public login_player_player_login_cb player_login(string openid, string anonymous_openid = ""){
             var uuid_ab86d08e_f3b3_5b3e_a2b9_8a2b5c189a51 = (UInt64)Interlocked.Increment(ref uuid_79224a74_5cd5_3ad0_9351_c5e8d06e5c92);
 
             var _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b = new ArrayList();
             _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(uuid_ab86d08e_f3b3_5b3e_a2b9_8a2b5c189a51);
-            _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(code);
-            _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(anonymous_code);
+            _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(openid);
+            _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(anonymous_openid);
             Hub.Hub._hubs.call_hub(hub_name_79224a74_5cd5_3ad0_9351_c5e8d06e5c92, "login_player_player_login", _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b);
 
             var cb_player_login_obj = new login_player_player_login_cb(uuid_ab86d08e_f3b3_5b3e_a2b9_8a2b5c189a51, rsp_cb_login_player_handle);
@@ -354,11 +354,11 @@ namespace Abelkhan
         public event Action<string, string> on_player_login;
         public void player_login(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _code = ((MsgPack.MessagePackObject)inArray[1]).AsString();
-            var _anonymous_code = ((MsgPack.MessagePackObject)inArray[2]).AsString();
+            var _openid = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var _anonymous_openid = ((MsgPack.MessagePackObject)inArray[2]).AsString();
             rsp = new login_player_player_login_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_player_login != null){
-                on_player_login(_code, _anonymous_code);
+                on_player_login(_openid, _anonymous_openid);
             }
             rsp = null;
         }

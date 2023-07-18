@@ -1,6 +1,6 @@
 
 module login_player{
     player_login_no_token req(string account) rsp(string token) err(int32 err);
-    player_login req(string code, string anonymous_code = "") rsp(string token) err(int32 err);
+    player_login req(string openid, string anonymous_openid = "") rsp(string token) err(int32 err);
 }
 
