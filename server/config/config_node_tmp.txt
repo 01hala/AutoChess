@@ -45,6 +45,10 @@
 
 	"login":{
 		"name":"login",
+    	"DyAppID":"***",
+		"DyAppSecret":"***",
+    	"WxAppID":"***",
+		"WxAppSecret":"***",
 		"log_level":"trace",
 		"log_file":"login.txt",
 		"log_dir":"./log/"
@@ -60,8 +64,6 @@
     "player":{
 		"name":"player",
 		"guid_key":"public_guid",
-    	"AppID":"***",
-		"AppSecret":"***",
 		"log_level":"trace",
 		"log_file":"player.txt",
 		"log_dir":"./log/"

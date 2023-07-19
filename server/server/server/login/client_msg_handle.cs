@@ -124,7 +124,7 @@ namespace Login
 
             try
             {
-                var session = await dy.dySdk.code2Session(Login.AppID, Login.AppSecret, code, anonymous_code);
+                var session = await dy.dySdk.code2Session(Login.DyAppID, Login.DyAppSecret, code, anonymous_code);
 
                 string account = null;
                 if (string.IsNullOrEmpty(anonymous_code))
@@ -223,7 +223,7 @@ namespace Login
 
             try
             {
-                var session = await wx.wxSdk.code2Session(Login.AppID, Login.AppSecret, code);
+                var session = await wx.wxSdk.code2Session(Login.WxAppID, Login.WxAppSecret, code);
                 string account = session.openid;
 
                 Log.Log.trace("on_player_login_dy begin! player account:{0}, uuid:{1}", account, uuid);
