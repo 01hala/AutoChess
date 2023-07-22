@@ -296,11 +296,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<string, ShopData> on_start_battle_cb;
+        public event Action<string, UserBattleData, ShopData> on_start_battle_cb;
         public event Action<Int32> on_start_battle_err;
         public event Action on_start_battle_timeout;
 
-        public player_battle_start_battle_cb callBack(Action<string, ShopData> cb, Action<Int32> err)
+        public player_battle_start_battle_cb callBack(Action<string, UserBattleData, ShopData> cb, Action<Int32> err)
         {
             on_start_battle_cb += cb;
             on_start_battle_err += err;
@@ -315,11 +315,11 @@ namespace Abelkhan
             on_start_battle_timeout += timeout_cb;
         }
 
-        public void call_cb(string match_name, ShopData info)
+        public void call_cb(string match_name, UserBattleData battle_info, ShopData shop_info)
         {
             if (on_start_battle_cb != null)
             {
-                on_start_battle_cb(match_name, info);
+                on_start_battle_cb(match_name, battle_info, shop_info);
             }
         }
 
@@ -354,11 +354,12 @@ namespace Abelkhan
         public void start_battle_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _match_name = ((MsgPack.MessagePackObject)inArray[1]).AsString();
-            var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _shop_info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[3]).AsDictionary());
             var rsp = try_get_and_del_start_battle_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_match_name, _info);
+                rsp.call_cb(_match_name, _battle_info, _shop_info);
             }
         }
 

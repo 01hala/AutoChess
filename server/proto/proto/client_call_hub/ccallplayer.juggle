@@ -6,5 +6,5 @@ module player_login {
 }
 
 module player_battle {
-	start_battle req() rsp(string match_name, ShopData info) err(int32 err);
+	start_battle req() rsp(string match_name, UserBattleData battle_info, ShopData shop_info) err(int32 err);
 }
