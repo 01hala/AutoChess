@@ -35,6 +35,11 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_1aaece60_7bb0_3cf7_bd66_aeb26a76183d, "player_client_archive_sync", _argv_0bdf385d_2dce_375e_8995_1f8c5c23e0a6);
         }
 
+        public void battle_victory(){
+            var _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5 = new ArrayList();
+            Hub.Hub._gates.call_client(client_uuid_1aaece60_7bb0_3cf7_bd66_aeb26a76183d, "player_client_battle_victory", _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5);
+        }
+
     }
 
     public class player_client_multicast {

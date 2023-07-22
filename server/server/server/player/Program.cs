@@ -13,6 +13,7 @@ namespace Player
 
         public static readonly client_mng client_Mng = new ();
         public static readonly player_proxy_mng player_Proxy_Mng = new ();
+        public static readonly match_proxy_mng match_Proxy_Mng = new ();
 
         public static OfflineMsgMgr offline_Msg_Mng = new (Constant.Constant.player_db_name, Constant.Constant.player_db_offline_msg_collection);
 
@@ -28,6 +29,7 @@ namespace Player
             var _client_msg_handle = new client_msg_handle();
             var _login_msg_handle = new login_msg_handle();
             var _player_msg_handle = new player_msg_handle();
+            var _match_msg_handle = new match_msg_handle();
 
             _hub.on_hubproxy += on_hubproxy;
             _hub.on_hubproxy_reconn += on_hubproxy;
@@ -68,6 +70,10 @@ namespace Player
             if (_proxy.type == "player")
             {
                 player_Proxy_Mng.reg_player_proxy(_proxy);
+            }
+            else if (_proxy.type == "match")
+            {
+                match_Proxy_Mng.reg_match_proxy(_proxy);
             }
         }
     }

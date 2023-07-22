@@ -176,6 +176,30 @@ namespace Player
             var _data = avatar.get_real_hosting_data<PlayerInfo>();
             return _data.Data.info;
         }
+
+        public static UserBattleData PlayerBattleInfo(this Avatar avatar)
+        {
+            var _data = avatar.get_real_hosting_data<PlayerInfo>();
+            var _battle_data = new UserBattleData()
+            {
+                User = _data.Data.info.User,
+                coin = 10,
+                RoleList = new List<Role>()
+            };
+            foreach (var role_id in _data.Data.info.RoleList)
+            {
+                _battle_data.RoleList.Add(new Role()
+                {
+                    RoleID = role_id,
+                    Level = 1,
+                    BaseAttack = 1,
+                    BaseDefense = 1,
+                    TotalAttack = 1,
+                    TotalDefense = 1,
+                });
+            };
+            return _battle_data;
+        }
     }
 
     public class client_mng

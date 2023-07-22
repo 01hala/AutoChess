@@ -5,22 +5,45 @@ using MongoDB.Bson;
 using System;
 using MsgPack.Serialization;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Player
 {
     public class client_msg_handle
     {
-        private readonly player_client_caller player_client_Caller;
-
         private readonly player_login_module player_login_Module;
+        private readonly player_battle_module player_battle_Module;
 
         public client_msg_handle()
         {
-            player_client_Caller = new ();
-
             player_login_Module = new ();
             player_login_Module.on_player_login += Login_Player_Module_on_player_login;
             player_login_Module.on_create_role += Player_login_Module_on_create_role;
+
+            player_battle_Module = new ();
+            player_battle_Module.on_start_battle += Player_battle_Module_on_start_battle;
+        }
+
+        private async void Player_battle_Module_on_start_battle()
+        {
+            Log.Log.trace("on_start_battle begin!");
+
+            var rsp = player_battle_Module.rsp as player_battle_start_battle_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _match = Player.match_Proxy_Mng.get_match_proxy();
+                _match.start_battle(_avatar.PlayerBattleInfo()).callBack((shop) =>
+                {
+                    rsp.rsp(_match.name, shop);
+                }, rsp.err);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"{ex}");
+            }
         }
 
         private void Player_login_Module_on_create_role(string name, string nick_name)

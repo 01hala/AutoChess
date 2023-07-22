@@ -16,6 +16,7 @@ namespace Abelkhan
         {
             _client_handle = client_handle_;
             _client_handle.modulemanager.add_mothed("player_client_archive_sync", archive_sync);
+            _client_handle.modulemanager.add_mothed("player_client_battle_victory", battle_victory);
         }
 
         public event Action<UserData> on_archive_sync;
@@ -23,6 +24,13 @@ namespace Abelkhan
             var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
             if (on_archive_sync != null){
                 on_archive_sync(_info);
+            }
+        }
+
+        public event Action on_battle_victory;
+        public void battle_victory(IList<MsgPack.MessagePackObject> inArray){
+            if (on_battle_victory != null){
+                on_battle_victory();
             }
         }
 

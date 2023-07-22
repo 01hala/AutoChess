@@ -285,62 +285,6 @@ namespace Abelkhan
         }
 
     }
-    public class player_battle_set_battle_role_list_cb
-    {
-        private UInt64 cb_uuid;
-        private player_battle_rsp_cb module_rsp_cb;
-
-        public player_battle_set_battle_role_list_cb(UInt64 _cb_uuid, player_battle_rsp_cb _module_rsp_cb)
-        {
-            cb_uuid = _cb_uuid;
-            module_rsp_cb = _module_rsp_cb;
-        }
-
-        public event Action<UserBattleData> on_set_battle_role_list_cb;
-        public event Action<Int32> on_set_battle_role_list_err;
-        public event Action on_set_battle_role_list_timeout;
-
-        public player_battle_set_battle_role_list_cb callBack(Action<UserBattleData> cb, Action<Int32> err)
-        {
-            on_set_battle_role_list_cb += cb;
-            on_set_battle_role_list_err += err;
-            return this;
-        }
-
-        public void timeout(UInt64 tick, Action timeout_cb)
-        {
-            TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.set_battle_role_list_timeout(cb_uuid);
-            });
-            on_set_battle_role_list_timeout += timeout_cb;
-        }
-
-        public void call_cb(UserBattleData info)
-        {
-            if (on_set_battle_role_list_cb != null)
-            {
-                on_set_battle_role_list_cb(info);
-            }
-        }
-
-        public void call_err(Int32 err)
-        {
-            if (on_set_battle_role_list_err != null)
-            {
-                on_set_battle_role_list_err(err);
-            }
-        }
-
-        public void call_timeout()
-        {
-            if (on_set_battle_role_list_timeout != null)
-            {
-                on_set_battle_role_list_timeout();
-            }
-        }
-
-    }
-
     public class player_battle_start_battle_cb
     {
         private UInt64 cb_uuid;
@@ -352,11 +296,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<string> on_start_battle_cb;
+        public event Action<string, ShopData> on_start_battle_cb;
         public event Action<Int32> on_start_battle_err;
         public event Action on_start_battle_timeout;
 
-        public player_battle_start_battle_cb callBack(Action<string> cb, Action<Int32> err)
+        public player_battle_start_battle_cb callBack(Action<string, ShopData> cb, Action<Int32> err)
         {
             on_start_battle_cb += cb;
             on_start_battle_err += err;
@@ -371,11 +315,11 @@ namespace Abelkhan
             on_start_battle_timeout += timeout_cb;
         }
 
-        public void call_cb(string match_name)
+        public void call_cb(string match_name, ShopData info)
         {
             if (on_start_battle_cb != null)
             {
-                on_start_battle_cb(match_name);
+                on_start_battle_cb(match_name, info);
             }
         }
 
@@ -399,63 +343,22 @@ namespace Abelkhan
 
 /*this cb code is codegen by abelkhan for c#*/
     public class player_battle_rsp_cb : Common.IModule {
-        public Dictionary<UInt64, player_battle_set_battle_role_list_cb> map_set_battle_role_list;
         public Dictionary<UInt64, player_battle_start_battle_cb> map_start_battle;
         public player_battle_rsp_cb(Common.ModuleManager modules)
         {
-            map_set_battle_role_list = new Dictionary<UInt64, player_battle_set_battle_role_list_cb>();
-            modules.add_mothed("player_battle_rsp_cb_set_battle_role_list_rsp", set_battle_role_list_rsp);
-            modules.add_mothed("player_battle_rsp_cb_set_battle_role_list_err", set_battle_role_list_err);
             map_start_battle = new Dictionary<UInt64, player_battle_start_battle_cb>();
             modules.add_mothed("player_battle_rsp_cb_start_battle_rsp", start_battle_rsp);
             modules.add_mothed("player_battle_rsp_cb_start_battle_err", start_battle_err);
         }
 
-        public void set_battle_role_list_rsp(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var rsp = try_get_and_del_set_battle_role_list_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_cb(_info);
-            }
-        }
-
-        public void set_battle_role_list_err(IList<MsgPack.MessagePackObject> inArray){
-            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_set_battle_role_list_cb(uuid);
-            if (rsp != null)
-            {
-                rsp.call_err(_err);
-            }
-        }
-
-        public void set_battle_role_list_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_set_battle_role_list_cb(cb_uuid);
-            if (rsp != null){
-                rsp.call_timeout();
-            }
-        }
-
-        private player_battle_set_battle_role_list_cb try_get_and_del_set_battle_role_list_cb(UInt64 uuid){
-            lock(map_set_battle_role_list)
-            {
-                if (map_set_battle_role_list.TryGetValue(uuid, out player_battle_set_battle_role_list_cb rsp))
-                {
-                    map_set_battle_role_list.Remove(uuid);
-                }
-                return rsp;
-            }
-        }
-
         public void start_battle_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _match_name = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
             var rsp = try_get_and_del_start_battle_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_match_name);
+                rsp.call_cb(_match_name, _info);
             }
         }
 
@@ -527,24 +430,6 @@ namespace Abelkhan
         {
             _client_handle = client_handle_;
             rsp_cb_player_battle_handle = rsp_cb_player_battle_handle_;
-        }
-
-        public player_battle_set_battle_role_list_cb set_battle_role_list(List<Int32> role_list){
-            var uuid_07711fd0_cccd_53ab_9f0e_77899092db11 = (UInt64)Interlocked.Increment(ref uuid_4ffbb290_f238_38f6_b774_75ba1cccb192);
-
-            var _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2 = new ArrayList();
-            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(uuid_07711fd0_cccd_53ab_9f0e_77899092db11);
-            var _array_03c6cb48_755d_38f0_a566_1b564ef0e78d = new ArrayList();
-            foreach(var v_9c7e0c91_5849_58a5_953e_3924ee9819a9 in role_list){
-                _array_03c6cb48_755d_38f0_a566_1b564ef0e78d.Add(v_9c7e0c91_5849_58a5_953e_3924ee9819a9);
-            }
-            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(_array_03c6cb48_755d_38f0_a566_1b564ef0e78d);
-            _client_handle.call_hub(hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_set_battle_role_list", _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2);
-
-            var cb_set_battle_role_list_obj = new player_battle_set_battle_role_list_cb(uuid_07711fd0_cccd_53ab_9f0e_77899092db11, rsp_cb_player_battle_handle);
-            lock(rsp_cb_player_battle_handle.map_set_battle_role_list)
-            {                rsp_cb_player_battle_handle.map_set_battle_role_list.Add(uuid_07711fd0_cccd_53ab_9f0e_77899092db11, cb_set_battle_role_list_obj);
-            }            return cb_set_battle_role_list_obj;
         }
 
         public player_battle_start_battle_cb start_battle(){

@@ -92,31 +92,6 @@ namespace Abelkhan
         }
 
     }
-    public class player_battle_set_battle_role_list_rsp : Common.Response {
-        private string _client_uuid_b0cff194_b07c_38db_ae41_5f816e6cbfa2;
-        private UInt64 uuid_3bfcce5d_7fd6_3191_9f4c_326295164308;
-        public player_battle_set_battle_role_list_rsp(string client_uuid, UInt64 _uuid)
-        {
-            _client_uuid_b0cff194_b07c_38db_ae41_5f816e6cbfa2 = client_uuid;
-            uuid_3bfcce5d_7fd6_3191_9f4c_326295164308 = _uuid;
-        }
-
-        public void rsp(UserBattleData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
-            var _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2 = new ArrayList();
-            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(uuid_3bfcce5d_7fd6_3191_9f4c_326295164308);
-            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(UserBattleData.UserBattleData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
-            Hub.Hub._gates.call_client(_client_uuid_b0cff194_b07c_38db_ae41_5f816e6cbfa2, "player_battle_rsp_cb_set_battle_role_list_rsp", _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2);
-        }
-
-        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
-            var _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2 = new ArrayList();
-            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(uuid_3bfcce5d_7fd6_3191_9f4c_326295164308);
-            _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
-            Hub.Hub._gates.call_client(_client_uuid_b0cff194_b07c_38db_ae41_5f816e6cbfa2, "player_battle_rsp_cb_set_battle_role_list_err", _argv_b0cff194_b07c_38db_ae41_5f816e6cbfa2);
-        }
-
-    }
-
     public class player_battle_start_battle_rsp : Common.Response {
         private string _client_uuid_01e120b2_ff3e_35bc_b812_e0d6fa294873;
         private UInt64 uuid_ee4a9042_3083_3d2e_90e2_aa58942d4f15;
@@ -126,10 +101,11 @@ namespace Abelkhan
             uuid_ee4a9042_3083_3d2e_90e2_aa58942d4f15 = _uuid;
         }
 
-        public void rsp(string match_name_d50a466e_055b_3a8a_ac90_a255638bcd50){
+        public void rsp(string match_name_d50a466e_055b_3a8a_ac90_a255638bcd50, ShopData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
             var _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873 = new ArrayList();
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(uuid_ee4a9042_3083_3d2e_90e2_aa58942d4f15);
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(match_name_d50a466e_055b_3a8a_ac90_a255638bcd50);
+            _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(ShopData.ShopData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
             Hub.Hub._gates.call_client(_client_uuid_01e120b2_ff3e_35bc_b812_e0d6fa294873, "player_battle_rsp_cb_start_battle_rsp", _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873);
         }
 
@@ -145,23 +121,7 @@ namespace Abelkhan
     public class player_battle_module : Common.IModule {
         public player_battle_module()
         {
-            Hub.Hub._modules.add_mothed("player_battle_set_battle_role_list", set_battle_role_list);
             Hub.Hub._modules.add_mothed("player_battle_start_battle", start_battle);
-        }
-
-        public event Action<List<Int32>> on_set_battle_role_list;
-        public void set_battle_role_list(IList<MsgPack.MessagePackObject> inArray){
-            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _role_list = new List<Int32>();
-            var _protocol_arrayrole_list = ((MsgPack.MessagePackObject)inArray[1]).AsList();
-            foreach (var v_9797f049_d836_5d18_abd6_91a05cfcd191 in _protocol_arrayrole_list){
-                _role_list.Add(((MsgPack.MessagePackObject)v_9797f049_d836_5d18_abd6_91a05cfcd191).AsInt32());
-            }
-            rsp = new player_battle_set_battle_role_list_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
-            if (on_set_battle_role_list != null){
-                on_set_battle_role_list(_role_list);
-            }
-            rsp = null;
         }
 
         public event Action on_start_battle;

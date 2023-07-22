@@ -1,0 +1,9 @@
+import common
+
+module player_match {
+	start_battle req(UserBattleData info) rsp(ShopData info) err(int32 err);
+}
+
+module match_player {
+    battle_victory ntf(int64 guid);
+}

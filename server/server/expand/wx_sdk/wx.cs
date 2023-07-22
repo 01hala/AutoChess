@@ -27,6 +27,7 @@ namespace wx
                     var ret = await result.Content.ReadAsStringAsync();
                     Log.Log.trace("jscode2session:{0}", ret);
                     var ret_obj = Newtonsoft.Json.JsonConvert.DeserializeObject<code2Session>(ret);
+                    ret_obj.openid = $"wx_{ret_obj.openid}";
                     return ret_obj;
                 }
             }

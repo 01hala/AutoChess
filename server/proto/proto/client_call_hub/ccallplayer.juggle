@@ -6,6 +6,5 @@ module player_login {
 }
 
 module player_battle {
-    set_battle_role_list req(int32[] role_list) rsp(UserBattleData info) err(int32 err);
-	start_battle req() rsp(string match_name) err(int32 err);
+	start_battle req() rsp(string match_name, ShopData info) err(int32 err);
 }
