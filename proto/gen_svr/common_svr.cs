@@ -12,11 +12,11 @@ namespace Abelkhan
     public class UserInformation
     {
         public string UserName;
-        public Int32 UserUid;
+        public Int64 UserGuid;
         public static MsgPack.MessagePackObjectDictionary UserInformation_to_protcol(UserInformation _struct){
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("UserName", _struct.UserName);
-            _protocol.Add("UserUid", _struct.UserUid);
+            _protocol.Add("UserGuid", _struct.UserGuid);
             return _protocol;
         }
         public static UserInformation protcol_to_UserInformation(MsgPack.MessagePackObjectDictionary _protocol){
@@ -25,8 +25,8 @@ namespace Abelkhan
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "UserName"){
                     _struct07924b8f_25bc_32a4_b436_da6af6116572.UserName = ((MsgPack.MessagePackObject)i.Value).AsString();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "UserUid"){
-                    _struct07924b8f_25bc_32a4_b436_da6af6116572.UserUid = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "UserGuid"){
+                    _struct07924b8f_25bc_32a4_b436_da6af6116572.UserGuid = ((MsgPack.MessagePackObject)i.Value).AsInt64();
                 }
             }
             return _struct07924b8f_25bc_32a4_b436_da6af6116572;

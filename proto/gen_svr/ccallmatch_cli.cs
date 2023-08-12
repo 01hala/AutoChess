@@ -189,11 +189,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<UserBattleData, UserBattleData> on_start_battle_cb;
+        public event Action<UserBattleData, UserBattleData, bool> on_start_battle_cb;
         public event Action<Int32> on_start_battle_err;
         public event Action on_start_battle_timeout;
 
-        public plan_start_battle_cb callBack(Action<UserBattleData, UserBattleData> cb, Action<Int32> err)
+        public plan_start_battle_cb callBack(Action<UserBattleData, UserBattleData, bool> cb, Action<Int32> err)
         {
             on_start_battle_cb += cb;
             on_start_battle_err += err;
@@ -208,11 +208,11 @@ namespace Abelkhan
             on_start_battle_timeout += timeout_cb;
         }
 
-        public void call_cb(UserBattleData self, UserBattleData target)
+        public void call_cb(UserBattleData self, UserBattleData target, bool is_victory)
         {
             if (on_start_battle_cb != null)
             {
-                on_start_battle_cb(self, target);
+                on_start_battle_cb(self, target, is_victory);
             }
         }
 
@@ -374,10 +374,11 @@ namespace Abelkhan
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _self = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             var _target = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _is_victory = ((MsgPack.MessagePackObject)inArray[3]).AsBoolean();
             var rsp = try_get_and_del_start_battle_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_self, _target);
+                rsp.call_cb(_self, _target, _is_victory);
             }
         }
 

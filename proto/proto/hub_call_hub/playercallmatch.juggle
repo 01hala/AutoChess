@@ -1,7 +1,7 @@
 import common
 
 module player_match {
-	start_battle req(int32[] role_list) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
+	start_battle req(string client_uuid, int32[] role_list) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
 }
 
 module match_player {

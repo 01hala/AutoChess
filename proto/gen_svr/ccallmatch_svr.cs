@@ -94,11 +94,12 @@ namespace Abelkhan
             uuid_ee4a9042_3083_3d2e_90e2_aa58942d4f15 = _uuid;
         }
 
-        public void rsp(UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef, UserBattleData target_2cf141ee_a36d_3d58_a9b6_a4febe931c68){
+        public void rsp(UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef, UserBattleData target_2cf141ee_a36d_3d58_a9b6_a4febe931c68, bool is_victory_168a7189_b8a1_35f7_b78b_6d42a66a7a0d){
             var _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873 = new ArrayList();
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(uuid_ee4a9042_3083_3d2e_90e2_aa58942d4f15);
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(UserBattleData.UserBattleData_to_protcol(target_2cf141ee_a36d_3d58_a9b6_a4febe931c68));
+            _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(is_victory_168a7189_b8a1_35f7_b78b_6d42a66a7a0d);
             Hub.Hub._gates.call_client(_client_uuid_01e120b2_ff3e_35bc_b812_e0d6fa294873, "plan_rsp_cb_start_battle_rsp", _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873);
         }
 

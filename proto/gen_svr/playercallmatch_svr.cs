@@ -151,11 +151,12 @@ namespace Abelkhan
             rsp_cb_player_match_handle = rsp_cb_player_match_handle_;
         }
 
-        public player_match_start_battle_cb start_battle(List<Int32> role_list){
+        public player_match_start_battle_cb start_battle(string client_uuid, List<Int32> role_list){
             var uuid_21a74a63_a13c_539e_b2bc_ef5069375dba = (UInt64)Interlocked.Increment(ref uuid_f08f93cd_bfea_3bf2_ae83_42be38c1f420);
 
             var _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873 = new ArrayList();
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba);
+            _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(client_uuid);
             var _array_03c6cb48_755d_38f0_a566_1b564ef0e78d = new ArrayList();
             foreach(var v_9c7e0c91_5849_58a5_953e_3924ee9819a9 in role_list){
                 _array_03c6cb48_755d_38f0_a566_1b564ef0e78d.Add(v_9c7e0c91_5849_58a5_953e_3924ee9819a9);
@@ -254,17 +255,18 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_match_start_battle", start_battle);
         }
 
-        public event Action<List<Int32>> on_start_battle;
+        public event Action<string, List<Int32>> on_start_battle;
         public void start_battle(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _client_uuid = ((MsgPack.MessagePackObject)inArray[1]).AsString();
             var _role_list = new List<Int32>();
-            var _protocol_arrayrole_list = ((MsgPack.MessagePackObject)inArray[1]).AsList();
+            var _protocol_arrayrole_list = ((MsgPack.MessagePackObject)inArray[2]).AsList();
             foreach (var v_9797f049_d836_5d18_abd6_91a05cfcd191 in _protocol_arrayrole_list){
                 _role_list.Add(((MsgPack.MessagePackObject)v_9797f049_d836_5d18_abd6_91a05cfcd191).AsInt32());
             }
             rsp = new player_match_start_battle_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_start_battle != null){
-                on_start_battle(_role_list);
+                on_start_battle(_client_uuid, _role_list);
             }
             rsp = null;
         }

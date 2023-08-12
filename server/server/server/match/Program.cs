@@ -2,10 +2,11 @@
 
 namespace Match
 {
-    class Login
+    class Match
     {
         public static RedisHandle _redis_handle;
         public static player_proxy_mng _player_proxy_mng = new ();
+        public static battle_mng battle_Mng = new ();
 
         static void Main(string[] args)
 		{

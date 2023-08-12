@@ -23,9 +23,9 @@ namespace Player
             _proxy = proxy;
         }
 
-        public player_match_start_battle_cb start_battle(List<int> role_list)
+        public player_match_start_battle_cb start_battle(string client_uuid, List<int> role_list)
         {
-            return player_Match_Caller.get_hub(name).start_battle(role_list);
+            return player_Match_Caller.get_hub(name).start_battle(client_uuid, role_list);
         }
     }
 
