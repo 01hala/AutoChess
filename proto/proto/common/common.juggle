@@ -27,6 +27,11 @@ struct UserBattleData
 	Role[] RoleList; // 角色列表
 }
 
+enum ShopIndex {
+	Role = 0;
+	Prop = 1;
+}
+
 struct ShopData
 {
 	int32[] SaleRoleList;

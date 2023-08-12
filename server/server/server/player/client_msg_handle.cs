@@ -82,7 +82,7 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                    if (string.IsNullOrEmpty(_data.Data.info.User.UserName) && _data.Data.info.User.UserUid == 0)
+                    if (string.IsNullOrEmpty(_data.Data.info.User.UserName) && _data.Data.info.User.UserGuid == 0)
                     {
                         rsp.err((int)em_error.unregistered_palyer);
                     }

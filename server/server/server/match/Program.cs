@@ -13,7 +13,8 @@ namespace Match
             var _hub = new Hub.Hub(args[0], args[1], "login");
             _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
 
-            //var _client_msg_handle = new client_msg_handle();
+            var _player_msg_handle = new player_msg_handle();
+            var _client_msg_handle = new client_msg_handle();
 
             _hub.on_hubproxy += on_hubproxy;
             _hub.on_hubproxy_reconn += on_hubproxy;

@@ -58,7 +58,7 @@ namespace Player
                     User = new UserInformation()
                     {
                         UserName = string.Empty,
-                        UserUid = 0,
+                        UserGuid = 0,
                     },
                     Strength = 100,
                     RoleList = new(),
@@ -76,7 +76,7 @@ namespace Player
                     User = new UserInformation()
                     {
                         UserName = string.Empty,
-                        UserUid = 0,
+                        UserGuid = 0,
                     },
                     Strength = 0,
                     RoleList = new(),
@@ -85,7 +85,7 @@ namespace Player
 
             var user = data.GetValue("User").AsBsonDocument;
             info.info.User.UserName = user.GetValue("UserName").AsString;
-            info.info.User.UserUid = user.GetValue("UserUid").AsInt32;
+            info.info.User.UserGuid = user.GetValue("UserUid").AsInt64;
 
             info.info.Strength = data.GetValue("Strength").AsInt32;
 
@@ -116,7 +116,7 @@ namespace Player
 
             var doc = new BsonDocument
             {
-                { "User", new BsonDocument { {"UserName", info.User.UserName}, { "UserUid", info.User.UserUid} } },
+                { "User", new BsonDocument { {"UserName", info.User.UserName}, { "UserUid", info.User.UserGuid} } },
                 { "Strength", info.Strength },
                 { "RoleList",  roleList },
                 { "lastTickStrengthTime", lastTickStrengthTime }
@@ -303,7 +303,7 @@ namespace Player
             var _avatar = avatarMgr.get_avatar(uuid);
             var info = _avatar.get_real_hosting_data<PlayerInfo>();
             info.Data.info.User.UserName = nick_name;
-            info.Data.info.User.UserUid = (int)_avatar.Guid;
+            info.Data.info.User.UserGuid = _avatar.Guid;
 
             return _avatar;
         }

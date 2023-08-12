@@ -121,10 +121,10 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("plan_start_battle", start_battle);
         }
 
-        public event Action<Int32, Int32> on_buy;
+        public event Action<ShopIndex, Int32> on_buy;
         public void buy(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _shop_index = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _shop_index = (ShopIndex)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
             var _index = ((MsgPack.MessagePackObject)inArray[2]).AsInt32();
             rsp = new plan_buy_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_buy != null){
