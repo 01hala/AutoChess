@@ -61,6 +61,14 @@
 		"log_dir":"./log/"
 	},
 
+	"match":{
+		"name":"match",
+		"excel_json_config":"./json_config/",
+		"log_level":"trace",
+		"log_file":"rank.txt",
+		"log_dir":"./log/"
+	},
+
     "player":{
 		"name":"player",
 		"guid_key":"public_guid",
