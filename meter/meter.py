@@ -63,7 +63,7 @@ def excel_meter(xlr, outdir):
             k = tables[i].cell(0,n).value
             if type(k) == str:
                 k = deleteNoneSpacelstrip(k)
-            v = tables[i].cell(1,n).value
+            v = tables[i].cell(2,n).value
             if type(v) == str:
                 v = deleteNoneSpacelstrip(v)
             print(k, v)
