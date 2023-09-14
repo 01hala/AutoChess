@@ -21,11 +21,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<UserBattleData> on_buy_cb;
+        public event Action<UserBattleData, ShopData> on_buy_cb;
         public event Action<Int32> on_buy_err;
         public event Action on_buy_timeout;
 
-        public plan_buy_cb callBack(Action<UserBattleData> cb, Action<Int32> err)
+        public plan_buy_cb callBack(Action<UserBattleData, ShopData> cb, Action<Int32> err)
         {
             on_buy_cb += cb;
             on_buy_err += err;
@@ -40,11 +40,11 @@ namespace Abelkhan
             on_buy_timeout += timeout_cb;
         }
 
-        public void call_cb(UserBattleData info)
+        public void call_cb(UserBattleData battle_info, ShopData shop_info)
         {
             if (on_buy_cb != null)
             {
-                on_buy_cb(info);
+                on_buy_cb(battle_info, shop_info);
             }
         }
 
@@ -189,11 +189,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<UserBattleData, UserBattleData, bool> on_start_battle_cb;
+        public event Action<UserBattleData, UserBattleData, List<Int32>, bool> on_start_battle_cb;
         public event Action<Int32> on_start_battle_err;
         public event Action on_start_battle_timeout;
 
-        public plan_start_battle_cb callBack(Action<UserBattleData, UserBattleData, bool> cb, Action<Int32> err)
+        public plan_start_battle_cb callBack(Action<UserBattleData, UserBattleData, List<Int32>, bool> cb, Action<Int32> err)
         {
             on_start_battle_cb += cb;
             on_start_battle_err += err;
@@ -208,11 +208,11 @@ namespace Abelkhan
             on_start_battle_timeout += timeout_cb;
         }
 
-        public void call_cb(UserBattleData self, UserBattleData target, bool is_victory)
+        public void call_cb(UserBattleData self, UserBattleData target, List<Int32> random, bool is_victory)
         {
             if (on_start_battle_cb != null)
             {
-                on_start_battle_cb(self, target, is_victory);
+                on_start_battle_cb(self, target, random, is_victory);
             }
         }
 
@@ -258,11 +258,12 @@ namespace Abelkhan
 
         public void buy_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _shop_info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
             var rsp = try_get_and_del_buy_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_info);
+                rsp.call_cb(_battle_info, _shop_info);
             }
         }
 
@@ -374,11 +375,16 @@ namespace Abelkhan
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _self = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             var _target = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
-            var _is_victory = ((MsgPack.MessagePackObject)inArray[3]).AsBoolean();
+            var _random = new List<Int32>();
+            var _protocol_arrayrandom = ((MsgPack.MessagePackObject)inArray[3]).AsList();
+            foreach (var v_c03dfc9d_eeb7_5400_a34e_3331e6d6a766 in _protocol_arrayrandom){
+                _random.Add(((MsgPack.MessagePackObject)v_c03dfc9d_eeb7_5400_a34e_3331e6d6a766).AsInt32());
+            }
+            var _is_victory = ((MsgPack.MessagePackObject)inArray[4]).AsBoolean();
             var rsp = try_get_and_del_start_battle_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_self, _target, _is_victory);
+                rsp.call_cb(_self, _target, _random, _is_victory);
             }
         }
 

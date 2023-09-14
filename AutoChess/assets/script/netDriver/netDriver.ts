@@ -37,10 +37,10 @@ import * as cli from '../serverSDK/client_handle';
          // [3]
          director.addPersistRootNode(this.node);
          
-         await this.conn_gate_svr("wss://animal.ucat.games:3001");
-         //await this.conn_gate_svr("ws://127.0.0.1:3001");
+         //await this.conn_gate_svr("wss://animal.ucat.games:3001");
+         await this.conn_gate_svr("ws://127.0.0.1:3001");
 
-         this.node.emit("connect",1);
+         this.node.emit("connect", 1);
      }
  
      update (deltaTime: number) {

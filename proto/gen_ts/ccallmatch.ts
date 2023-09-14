@@ -8,7 +8,7 @@ export class plan_buy_cb{
     private cb_uuid : number;
     private module_rsp_cb : plan_rsp_cb;
 
-    public event_buy_handle_cb : (info:common.UserBattleData)=>void | null;
+    public event_buy_handle_cb : (battle_info:common.UserBattleData, shop_info:common.ShopData)=>void | null;
     public event_buy_handle_err : (err:number)=>void | null;
     public event_buy_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : plan_rsp_cb){
@@ -19,7 +19,7 @@ export class plan_buy_cb{
         this.event_buy_handle_timeout = null;
     }
 
-    callBack(_cb:(info:common.UserBattleData)=>void, _err:(err:number)=>void)
+    callBack(_cb:(battle_info:common.UserBattleData, shop_info:common.ShopData)=>void, _err:(err:number)=>void)
     {
         this.event_buy_handle_cb = _cb;
         this.event_buy_handle_err = _err;
@@ -98,7 +98,7 @@ export class plan_start_battle_cb{
     private cb_uuid : number;
     private module_rsp_cb : plan_rsp_cb;
 
-    public event_start_battle_handle_cb : (self:common.UserBattleData, target:common.UserBattleData, is_victory:boolean)=>void | null;
+    public event_start_battle_handle_cb : (self:common.UserBattleData, target:common.UserBattleData, random:number[], is_victory:boolean)=>void | null;
     public event_start_battle_handle_err : (err:number)=>void | null;
     public event_start_battle_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : plan_rsp_cb){
@@ -109,7 +109,7 @@ export class plan_start_battle_cb{
         this.event_start_battle_handle_timeout = null;
     }
 
-    callBack(_cb:(self:common.UserBattleData, target:common.UserBattleData, is_victory:boolean)=>void, _err:(err:number)=>void)
+    callBack(_cb:(self:common.UserBattleData, target:common.UserBattleData, random:number[], is_victory:boolean)=>void, _err:(err:number)=>void)
     {
         this.event_start_battle_handle_cb = _cb;
         this.event_start_battle_handle_err = _err;
@@ -149,6 +149,7 @@ export class plan_rsp_cb extends client_handle.imodule {
         let uuid = inArray[0];
         let _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d:any[] = [];
         _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.push(common.protcol_to_UserBattleData(inArray[1]));
+        _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.push(common.protcol_to_ShopData(inArray[2]));
         var rsp = this.try_get_and_del_buy_cb(uuid);
         if (rsp && rsp.event_buy_handle_cb) {
             rsp.event_buy_handle_cb.apply(null, _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d);
@@ -255,7 +256,11 @@ export class plan_rsp_cb extends client_handle.imodule {
         let _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873:any[] = [];
         _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.push(common.protcol_to_UserBattleData(inArray[1]));
         _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.push(common.protcol_to_UserBattleData(inArray[2]));
-        _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.push(inArray[3]);
+        let _array_c03dfc9d_eeb7_5400_a34e_3331e6d6a766:any[] = [];        for(let v_df09e5e0_20fb_554a_9fa6_4e1e75df56ac of inArray[3]){
+            _array_c03dfc9d_eeb7_5400_a34e_3331e6d6a766.push(v_df09e5e0_20fb_554a_9fa6_4e1e75df56ac);
+        }
+        _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.push(_array_c03dfc9d_eeb7_5400_a34e_3331e6d6a766);
+        _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.push(inArray[4]);
         var rsp = this.try_get_and_del_start_battle_cb(uuid);
         if (rsp && rsp.event_start_battle_handle_cb) {
             rsp.event_start_battle_handle_cb.apply(null, _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873);
