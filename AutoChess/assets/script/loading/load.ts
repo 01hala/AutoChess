@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 export class Loading {
     public static loading:Prefab = null;
 
-    public start(father:Node, loadFn:(setProgress:(progress:number) => void) => void) {
+    public load(father:Node, loadFn:(setProgress:(progress:number) => void) => void) {
         try {
             let load = instantiate(Loading.loading);
             father.addChild(load);
