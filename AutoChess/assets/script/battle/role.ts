@@ -22,10 +22,14 @@ export class Role {
     public BeHurted(damage: number) : number {
         return 0;
     }
-
-    public ChangeProperties(change: Map<Property, number>) : Map<Property, number> {
+    
+    public ChangeProperties(change: Map<Property, number>);
+    public ChangeProperties(type:Property,value:number);
+    public ChangeProperties(parameter,value?) : Map<Property, number> {
         return null;
     }
+    
+    
 
     public GetProperty(em: Property) {
         if (this.properties.has(em)) {
