@@ -15,12 +15,12 @@ export enum EventType {
     BattleBegin = 7,
     BeforeAttack = 8,
     Attack = 9,
-    Injured = 10,
-    Syncope = 11,
-    Fall = 12,
-    ChangeSelfLocation = 13,
-    ChangeEnemyLocation = 14,
-    AfterAttack = 15,
+    AfterAttack = 10,
+    Injured = 11,
+    Syncope = 12,
+    Fall = 13,
+    ChangeSelfLocation = 14,
+    ChangeEnemyLocation = 15,
     ReleaseSkill = 16,
 }
 
