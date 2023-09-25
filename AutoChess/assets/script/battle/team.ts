@@ -7,4 +7,8 @@ import * as role from './role'
 
 export class Team {
     private roleList : role.Role[];
+
+    public GetRole(index:number) : role.Role {
+        return this.roleList[index];
+    }
 }

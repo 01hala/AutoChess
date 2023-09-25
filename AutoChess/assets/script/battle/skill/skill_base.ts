@@ -42,6 +42,6 @@ export class Event {
 }
 
 export abstract class SkillBase {
-    abstract CheckSkillTrigger(frameEvent: Event[], selfIndex: number): boolean;
-    abstract UseSkill(selfCamp: team.Team, enemy: team.Team): void;
+    abstract CheckSkillTrigger(frameEvent: Event[], selfIndex: number, selfCamp: team.Team): boolean;
+    abstract UseSkill(selfIndex: number, selfCamp: team.Team, enemy: team.Team): void;
 }
