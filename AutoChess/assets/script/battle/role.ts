@@ -23,13 +23,9 @@ export class Role {
         return 0;
     }
     
-    public ChangeProperties(change: Map<Property, number>);
-    public ChangeProperties(type:Property,value:number);
-    public ChangeProperties(parameter,value?) : Map<Property, number> {
+    public ChangeProperties(type:Property,value:number) : Map<Property, number> {
         return null;
     }
-    
-    
 
     public GetProperty(em: Property) {
         if (this.properties.has(em)) {
