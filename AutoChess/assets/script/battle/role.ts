@@ -14,8 +14,13 @@ export enum Property {
     InevitableKill = 5, // 暂时放这里. 0 普通伤害，1 必杀
 }
 
+export class SkillInfo {
+    public trigger : skill.SkillTriggerBase;
+    public skill : skill.SkillBase;
+}
+
 export class Role {
-    public skill : skill.SkillBase[]; // 一般情况只有一个技能，使用特殊食物时添加一个技能
+    public skill : SkillInfo[]; // 一般情况只有一个技能，使用特殊食物时添加一个技能
 
     private properties : Map<Property, number>;
 

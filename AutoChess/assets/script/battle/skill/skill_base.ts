@@ -41,7 +41,10 @@ export class Event {
     public value : number[];
 }
 
-export abstract class SkillBase {
+export abstract class SkillTriggerBase {
     abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean;
+}
+
+export abstract class SkillBase {
     abstract UseSkill(selfInfo: RoleInfo, battle: battle.Battle): void;
 }
