@@ -3,7 +3,7 @@
  * author: qianqians
  * 2023/9/24
  */
-import * as team from '../team'
+import * as battle from '../battle'
 
 export enum EventType {
     Sold = 1,
@@ -42,6 +42,6 @@ export class Event {
 }
 
 export abstract class SkillBase {
-    abstract CheckSkillTrigger(frameEvent: Event[], selfIndex: number, selfCamp: team.Team): boolean;
-    abstract UseSkill(selfIndex: number, selfCamp: team.Team, enemy: team.Team): void;
+    abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean;
+    abstract UseSkill(selfInfo: RoleInfo, battle: battle.Battle): void;
 }
