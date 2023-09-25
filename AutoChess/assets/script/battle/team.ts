@@ -11,4 +11,14 @@ export class Team {
     public GetRole(index:number) : role.Role {
         return this.roleList[index];
     }
+
+/*
+ * 此函数返回场上所有角色
+ * Editor: Hotaru
+ * 2023/9/25
+ */
+    public GetRoles():role.Role[]
+    {
+        return this.roleList;
+    }
 }
