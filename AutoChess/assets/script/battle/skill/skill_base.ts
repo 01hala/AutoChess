@@ -22,6 +22,20 @@ export enum EventType {
     ReleaseSkill = 14,
 }
 
+/*
+ * 技能类型
+ * Editor:Hotaru
+ * 2023.09.25
+ */
+export enum SkillType
+{
+    Intensifier = 1,
+    Attack = 2,
+    Summon = 3,
+    Support = 4,
+    Economy = 5,
+}
+
 export enum Camp {
     None = -1,
     Tie = 0,
