@@ -12,9 +12,23 @@ export class Team {
         return this.roleList[index];
     }
 
-    public DeadRole(role: role.Role) {
+    public GetRoleIndex(role: role.Role) : number {
+        return this.roleList.indexOf(role);
+    }
+
+    private removeRole(role: role.Role) {
         let index = this.roleList.indexOf(role);
         this.roleList = this.roleList.splice(index, 1);
+    }
+
+    public CheckRemoveDeadRole() {
+        for (let r of this.roleList) {
+            if (r.CheckDead()) {
+                this.removeRole(r);
+                this.CheckRemoveDeadRole();
+                break;
+            }
+        }
     }
 
     public CheckDefeated() : boolean {

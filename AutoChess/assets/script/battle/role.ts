@@ -21,16 +21,76 @@ export class SkillInfo {
 }
 
 export class Role {
-    public skill : SkillInfo[]; // 一般情况只有一个技能，使用特殊食物时添加一个技能
+    public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
 
-    private properties : Map<Property, number>;
+    private properties : Map<Property, number> = new Map<Property, number>();
+    private selfCamp: skill.Camp;
 
-    public BeHurted(damage: number) : number {
-        return 0;
+    public constructor(selfCamp: skill.Camp, properties : Map<Property, number>) {
+        this.selfCamp = selfCamp;
+        this.properties = properties;
     }
 
-    public InevitableKill() {
-        this.properties[Property.HP] = 0;
+    private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle) {
+        let selfTeam = this.selfCamp == skill.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
+        let enemyTeam = this.selfCamp == skill.Camp.Self ? battle.GetEnemyTeam() : battle.GetSelfTeam();
+        let selfIndex = selfTeam.GetRoleIndex(this);
+        let enemyIndex = enemyTeam.GetRoleIndex(enemy);
+
+        if (this.CheckDead()) {
+            let ev = new skill.Event();
+            ev.type = skill.EventType.Syncope;
+            ev.spellcaster = new skill.RoleInfo();
+            ev.spellcaster.camp = enemy.selfCamp;
+            ev.spellcaster.index = enemyIndex;
+            ev.recipient = [];
+            let recipient = new skill.RoleInfo();
+            recipient.camp = this.selfCamp;
+            recipient.index = selfIndex;
+            ev.recipient.push(recipient);
+            ev.value = [];
+            ev.value.push(damage);
+            battle.AddBattleEvent(ev);
+        } 
+        if (damage > 0) {
+            let ev = new skill.Event();
+            ev.type = skill.EventType.Injured;
+            ev.spellcaster = new skill.RoleInfo();
+            ev.spellcaster.camp = enemy.selfCamp;
+            ev.spellcaster.index = enemyIndex;
+            ev.recipient = [];
+            let recipient = new skill.RoleInfo();
+            recipient.camp = this.selfCamp;
+            recipient.index = selfIndex;
+            ev.recipient.push(recipient);
+            ev.value = [];
+            ev.value.push(damage);
+            battle.AddBattleEvent(ev);
+        }
+    }
+
+    public BeHurted(enemy: Role, battle: battle.Battle) {
+        let damage = enemy.GetProperty(Property.Attack);
+
+        let hp = this.GetProperty(Property.HP);
+        let reduction = this.GetProperty(Property.DamageReduction);
+        let reductionRound = this.GetProperty(Property.DamageReductionRound);
+
+        if (reductionRound > 0) {
+            this.ChangeProperties(Property.DamageReductionRound, --reductionRound);
+            damage -= reduction;
+            damage = damage < 0 ? 0 : damage;
+        }
+
+        hp -= damage;
+        this.ChangeProperties(Property.HP, hp);
+        this.sendHurtedEvent(enemy, damage, battle);
+    }
+
+    public BeInevitableKill(enemy: Role, battle: battle.Battle) {
+        let damageSelf = this.properties[Property.HP];
+        this.ChangeProperties(Property.HP, 0);
+        this.sendHurtedEvent(enemy, damageSelf, battle);
     }
     
     public ChangeProperties(type:Property,value:number) : Map<Property, number> {
@@ -49,14 +109,12 @@ export class Role {
     }
 
     public Attack(enemy: Role, battle: battle.Battle) : number {
-        let attack = this.GetProperty(Property.Attack);
         let inevitableKill = this.GetProperty(Property.InevitableKill);
-
         if (inevitableKill == 1) {
-            enemy.InevitableKill();
+            enemy.BeInevitableKill(this, battle);
         }
         else {
-            //let damageReduction = 
+            enemy.BeHurted(this, battle);
         }
 
         return 0;

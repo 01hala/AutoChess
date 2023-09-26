@@ -40,76 +40,6 @@ export class Battle {
         if (self != null && enemy != null) {
             let damageEnemy = self.Attack(enemy, this);
             let damageSelf = enemy.Attack(self, this);
-
-            if (self.CheckDead()) {
-                this.selfTeam.DeadRole(self);
-                let ev = new skill.Event();
-                ev.type = skill.EventType.Syncope;
-                ev.spellcaster = new skill.RoleInfo();
-                ev.spellcaster.camp = skill.Camp.Enemy;
-                ev.spellcaster.index = 0;
-                ev.recipient = [];
-                let recipient = new skill.RoleInfo();
-                recipient.camp = skill.Camp.Self;
-                recipient.index = 0;
-                ev.recipient.push(recipient);
-                ev.value = [];
-                ev.value.push(damageSelf);
-                this.AddBattleEvent(ev);
-            } 
-            else if (damageSelf > 0) {
-                let ev = new skill.Event();
-                ev.type = skill.EventType.Injured;
-                ev.spellcaster = new skill.RoleInfo();
-                ev.spellcaster.camp = skill.Camp.Enemy;
-                ev.spellcaster.index = 0;
-                ev.recipient = [];
-                let recipient = new skill.RoleInfo();
-                recipient.camp = skill.Camp.Self;
-                recipient.index = 0;
-                ev.recipient.push(recipient);
-                ev.value = [];
-                ev.value.push(damageSelf);
-                this.AddBattleEvent(ev);
-            }
-
-            if (enemy.CheckDead()) {
-                this.enemyTeam.DeadRole(enemy);
-                let ev = new skill.Event();
-                ev.type = skill.EventType.Syncope;
-                ev.spellcaster = new skill.RoleInfo();
-                ev.spellcaster.camp = skill.Camp.Self;
-                ev.spellcaster.index = 0;
-                ev.recipient = [];
-                let recipient = new skill.RoleInfo();
-                recipient.camp = skill.Camp.Enemy;
-                recipient.index = 0;
-                ev.recipient.push(recipient);
-                ev.value = [];
-                ev.value.push(damageEnemy);
-                this.AddBattleEvent(ev);
-            } 
-            else if (damageEnemy > 0) {
-                let ev = new skill.Event();
-                ev.type = skill.EventType.Injured;
-                ev.spellcaster = new skill.RoleInfo();
-                ev.spellcaster.camp = skill.Camp.Self;
-                ev.spellcaster.index = 0;
-                ev.recipient = [];
-                let recipient = new skill.RoleInfo();
-                recipient.camp = skill.Camp.Enemy;
-                recipient.index = 0;
-                ev.recipient.push(recipient);
-                ev.value = [];
-                ev.value.push(damageEnemy);
-                this.AddBattleEvent(ev);
-            }
-
-            if (this.triggerBeforeAttack) {
-                let ev = new skill.Event();
-                ev.type = skill.EventType.AfterAttack;
-                this.AddBattleEvent(ev);
-            }
         }
     }
 
@@ -141,6 +71,9 @@ export class Battle {
             for(let ev of this.on_event) {
                 ev.call(null, evs);
             }
+
+            this.selfTeam.CheckRemoveDeadRole();
+            this.enemyTeam.CheckRemoveDeadRole();
 
             return false;
         }
