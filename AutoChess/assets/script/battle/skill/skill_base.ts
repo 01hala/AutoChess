@@ -46,6 +46,7 @@ export enum Camp {
 export class RoleInfo {
     public camp : Camp;
     public index : number;
+    public battleCount : number;
 }
 
 export class Event {

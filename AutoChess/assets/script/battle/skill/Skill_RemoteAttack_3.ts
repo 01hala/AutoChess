@@ -9,14 +9,6 @@ import { SkillBase,Event, RoleInfo,Camp, EventType,SkillTriggerBase, SkillType} 
 import { Battle } from '../battle';
 import { Property, Role } from '../role';
 
-export class skillTirgger extends SkillTriggerBase
-{
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
-    {
-        return false;
-    }
-
-}
 export class Skill_RemoteAttack_3 extends SkillBase  
 {
     public res:string="battle/skill/Skill_RemoteAttack_3";
@@ -39,9 +31,17 @@ export class Skill_RemoteAttack_3 extends SkillBase
     {
         try
         {
-            let recipientRoles:Role[]=battle.GetSelfTeam().GetRoles();
-            let randnum=this.GetRandomNum(1,recipientRoles.length);
-            recipientRoles[randnum].BeHurted(this.event.value[0]);
+            let recipientRoles:Role[]=new Array();
+            if(Camp.Self==selfInfo.camp)
+            {
+                recipientRoles=battle.GetEnemyTeam().GetRoles();
+            }
+            if(Camp.Enemy==selfInfo.camp)
+            {
+                recipientRoles=battle.GetSelfTeam().GetRoles();
+            }
+            // let randnum=this.GetRandomNum(1,recipientRoles.length);
+            // recipientRoles[randnum].BeHurted(this.event.value[0]);
         }
         catch (error) 
         {
@@ -49,20 +49,20 @@ export class Skill_RemoteAttack_3 extends SkillBase
         }
     }
     
-    private GetRandomNum(min:number,max:number):number
-    {
-        try
-        {
-            let range=max-min;
-            let rand=Math.random();
-            return (min+Math.round(rand*range));
-        }
-        catch (error) 
-        {
-            console.warn(this.res+"下的 getRandomNum 错误");
-            return 0;
-        }
-    }
+    // private GetRandomNum(min:number,max:number):number
+    // {
+    //     try
+    //     {
+    //         let range=max-min;
+    //         let rand=Math.random();
+    //         return (min+Math.round(rand*range));
+    //     }
+    //     catch (error) 
+    //     {
+    //         console.warn(this.res+"下的 getRandomNum 错误");
+    //         return 0;
+    //     }
+    // }
 }
 
 
