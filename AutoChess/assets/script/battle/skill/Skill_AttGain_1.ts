@@ -66,6 +66,7 @@ export class Skill_AttGain_1 extends SkillBase
         catch (error) 
         {
             console.warn(this.res+"下的 getRandomNum 错误");
+            return 0;
         }
     }
 }

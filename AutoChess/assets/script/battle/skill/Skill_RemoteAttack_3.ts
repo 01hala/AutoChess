@@ -60,6 +60,7 @@ export class Skill_RemoteAttack_3 extends SkillBase
         catch (error) 
         {
             console.warn(this.res+"下的 getRandomNum 错误");
+            return 0;
         }
     }
 }

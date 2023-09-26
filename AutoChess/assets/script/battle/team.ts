@@ -20,4 +20,15 @@ export class Team {
     public CheckDefeated() : boolean {
         return this.roleList.length <= 0;
     }
+
+/*
+ * 添加
+ * 此函数返回场上所有角色
+ * Editor: Hotaru
+ * 2023/9/25
+ */
+    public GetRoles():role.Role[]
+    {
+        return this.roleList;
+    }
 }
