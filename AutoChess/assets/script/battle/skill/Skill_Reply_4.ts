@@ -9,15 +9,6 @@ import { SkillBase,Event, RoleInfo,Camp, EventType,SkillTriggerBase, SkillType} 
 import { Battle } from '../battle';
 import { Property, Role } from '../role';
 
-export class skillTirgger extends SkillTriggerBase
-{
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
-    {
-        return false;
-    }
-
-}
-
 export class Skill_Reply_4 extends SkillBase  
 {
     public res:string="battle/skill/Skill_RemoteAttack_3";
@@ -40,8 +31,16 @@ export class Skill_Reply_4 extends SkillBase
     {
         try 
         {
-            let arr:Role[]=battle.GetSelfTeam().GetRoles();
-            arr.forEach(element => 
+            let recipientRoles:Role[]=new Array();
+            if(Camp.Self==selfInfo.camp)
+            {
+                recipientRoles=battle.GetSelfTeam().GetRoles();
+            }
+            if(Camp.Enemy==selfInfo.camp)
+            {
+                recipientRoles=battle.GetEnemyTeam().GetRoles();
+            }
+            recipientRoles.forEach(element => 
         {
             element.ChangeProperties(Property.HP,this.event.value[0]);
         });

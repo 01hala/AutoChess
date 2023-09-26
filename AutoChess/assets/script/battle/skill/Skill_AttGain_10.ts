@@ -1,20 +1,22 @@
 /*
- * Skill_AttGain_2.ts
+ * Skill_AttGain_10.ts
  * author: Hotaru
- * 2023/9/25
- * 击倒时——获得+3攻击力和+3生命值
+ * 2023/9/26
+ * 出售时——从前往后依次使伙伴获得+1攻击力，次数等于此兵种参与的战斗数
  */
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, debug, log, Node, random } from 'cc';
 import { SkillBase,Event, RoleInfo,Camp, EventType,SkillTriggerBase, SkillType} from './skill_base';
 import { Battle } from '../battle';
-import { Property, Role } from '../role';
+import { Team } from '../team';
+import { Role,Property } from '../role';
 
-export class Skill_AttGain_2 extends SkillBase 
+export class Skill_AttGain_10 extends SkillBase 
 {
-    public res:string="battle/skill/Skill_AttGain_2";
+    public res:string="battle/skill/Skill_AttGain_10";
     public SkillType:SkillType=SkillType.Intensifier;
 
     event:Event=new Event();
+
     public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
     {
         try
@@ -32,18 +34,21 @@ export class Skill_AttGain_2 extends SkillBase
     {
         try
         {
-            let recipientRole:Role=new Role();
+            let recipientRoles:Role[]=new Array();
             if(Camp.Self==selfInfo.camp)
             {
-                recipientRole==battle.GetSelfTeam().GetRole(selfInfo.index);
+                recipientRoles=battle.GetSelfTeam().GetRoles();
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                recipientRole==battle.GetEnemyTeam().GetRole(selfInfo.index);
+                recipientRoles=battle.GetEnemyTeam().GetRoles();
             }
-            recipientRole.ChangeProperties(Property.HP,this.event.value[0]);
-            recipientRole.ChangeProperties(Property.Attack,this.event.value[1]);
-           
+            for(let i:number=0;i<selfInfo.battleCount;i++)
+            {
+                recipientRoles[i].ChangeProperties(Property.HP,this.event.value[0]);
+                recipientRoles[i].ChangeProperties(Property.Attack,this.event.value[1]);
+            }
+            
         }
         catch (error) 
         {
@@ -51,6 +56,7 @@ export class Skill_AttGain_2 extends SkillBase
         }
     }
 
+    
 }
 
 

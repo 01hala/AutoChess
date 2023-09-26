@@ -9,14 +9,6 @@ import { SkillBase,Event, RoleInfo,Camp, EventType,SkillTriggerBase, SkillType} 
 import { Battle } from '../battle';
 import { Property, Role } from '../role';
 
-export class skillTirgger extends SkillTriggerBase
-{
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
-    {
-        return false;
-    }
-
-}
 export class Skill_RemoteAttack_5 extends SkillBase  
 {
     public res:string="battle/skill/Skill_RemoteAttack_3";
@@ -40,7 +32,15 @@ export class Skill_RemoteAttack_5 extends SkillBase
         try
         {
             //let randnum=this.GetRandomNum(0,5);
-            let recipientRoles:Role[]=battle.GetEnemyTeam().GetRoles();
+            let recipientRoles:Role[]=new Array();
+            if(Camp.Self==selfInfo.camp)
+            {
+                recipientRoles=battle.GetEnemyTeam().GetRoles();
+            }
+            if(Camp.Enemy==selfInfo.camp)
+            {
+                recipientRoles=battle.GetSelfTeam().GetRoles();
+            }
             if(recipientRoles.length<=3)
             {
                 recipientRoles.forEach(element => 
@@ -52,9 +52,9 @@ export class Skill_RemoteAttack_5 extends SkillBase
             {
                 for(let i:number=0;i<3;i++)
                 {
-                    let randnum=this.GetRandomNum(0,recipientRoles.length);
-                    recipientRoles[randnum].BeHurted(this.event.value[0]);
-                    recipientRoles.splice(randnum);
+                    // let randnum=this.GetRandomNum(0,recipientRoles.length);
+                    // recipientRoles[randnum].BeHurted(this.event.value[0]);
+                    // recipientRoles.splice(randnum);
                 }
             }
             
@@ -65,20 +65,20 @@ export class Skill_RemoteAttack_5 extends SkillBase
         }
     }
     
-    private GetRandomNum(min:number,max:number):number
-    {
-        try
-        {
-            let range=max-min;
-            let rand=Math.random();
-            return (min+Math.round(rand*range));
-        }
-        catch (error) 
-        {
-            console.warn(this.res+"下的 getRandomNum 错误");
-            return 0;
-        }
-    }
+    // private GetRandomNum(min:number,max:number):number
+    // {
+    //     try
+    //     {
+    //         let range=max-min;
+    //         let rand=Math.random();
+    //         return (min+Math.round(rand*range));
+    //     }
+    //     catch (error) 
+    //     {
+    //         console.warn(this.res+"下的 getRandomNum 错误");
+    //         return 0;
+    //     }
+    // }
 }
 
 
