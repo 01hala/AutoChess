@@ -12,13 +12,12 @@ export class Team {
         return this.roleList[index];
     }
 
-/*
- * 此函数返回场上所有角色
- * Editor: Hotaru
- * 2023/9/25
- */
-    public GetRoles():role.Role[]
-    {
-        return this.roleList;
+    public DeadRole(role: role.Role) {
+        let index = this.roleList.indexOf(role);
+        this.roleList = this.roleList.splice(index, 1);
+    }
+
+    public CheckDefeated() : boolean {
+        return this.roleList.length <= 0;
     }
 }

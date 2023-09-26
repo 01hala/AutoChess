@@ -4,6 +4,7 @@
  * 2023/9/24
  */
 import * as skill from './skill/skill_base'
+import * as battle from './battle'
 
 export enum Property {
     HP = 1,
@@ -27,6 +28,10 @@ export class Role {
     public BeHurted(damage: number) : number {
         return 0;
     }
+
+    public InevitableKill() {
+        this.properties[Property.HP] = 0;
+    }
     
     public ChangeProperties(type:Property,value:number) : Map<Property, number> {
         return null;
@@ -36,6 +41,24 @@ export class Role {
         if (this.properties.has(em)) {
             return this.properties[em];
         }
+        return 0;
+    }
+
+    public CheckDead() {
+        return this.properties[Property.HP] == 0;
+    }
+
+    public Attack(enemy: Role, battle: battle.Battle) : number {
+        let attack = this.GetProperty(Property.Attack);
+        let inevitableKill = this.GetProperty(Property.InevitableKill);
+
+        if (inevitableKill == 1) {
+            enemy.InevitableKill();
+        }
+        else {
+            //let damageReduction = 
+        }
+
         return 0;
     }
 }
