@@ -2,13 +2,14 @@
  * Skill_Summon_6.ts
  * author: Guanliu
  * 2023/9/27
- * 晕厥时——召唤一个2/2的虚空虫
+ * 晕厥时——召唤一个M/M的虚空虫
  */
 import { _decorator, Component, debug, log, Node, random } from 'cc';
-import { SkillBase,Event, RoleInfo,Camp, EventType,SkillTriggerBase, SkillType} from './skill_base';
+import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role,Property } from '../role';
+import { Camp, SkillType } from '../enums';
 
 export class Skill_Summon_6 extends SkillBase 
 {
@@ -16,6 +17,13 @@ export class Skill_Summon_6 extends SkillBase
     public SkillType:SkillType=SkillType.Summon;
 
     event:Event=new Event();
+
+    private addedHP:number;
+    public constructor(hp:number) {
+        super();
+
+        this.addedHP=hp;
+    }
 
     public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
     {
@@ -34,16 +42,16 @@ export class Skill_Summon_6 extends SkillBase
     {
         try
         {
-            let recipientRoles:Role[]=new Array();
+            //这里后面应该会换成创建虚空虫这个Role对象
             let added:Role;
             if(Camp.Self==selfInfo.camp)
             {
-                added=new Role(Camp.Self,new Map<Property,number>());
+                added=new Role(Camp.Self,new Map<Property,number>([[Property.HP,this.addedHP]]));
                 battle.GetSelfTeam().AddRole(added);
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                added=new Role(Camp.Self,new Map<Property,number>());
+                added=new Role(Camp.Self,new Map<Property,number>([[Property.HP,this.addedHP]]));
                 battle.GetEnemyTeam().AddRole(added);
             }
         }
