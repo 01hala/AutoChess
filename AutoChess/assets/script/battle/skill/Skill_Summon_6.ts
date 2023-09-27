@@ -35,15 +35,16 @@ export class Skill_Summon_6 extends SkillBase
         try
         {
             let recipientRoles:Role[]=new Array();
+            let added:Role;
             if(Camp.Self==selfInfo.camp)
             {
-                recipientRoles=battle.GetSelfTeam().GetRoles();
-                //...
+                added=new Role(Camp.Self,new Map<Property,number>());
+                battle.GetSelfTeam().AddRole(added);
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                recipientRoles=battle.GetEnemyTeam().GetRoles();
-                //...
+                added=new Role(Camp.Self,new Map<Property,number>());
+                battle.GetEnemyTeam().AddRole(added);
             }
         }
         catch (error) 

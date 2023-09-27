@@ -48,11 +48,14 @@ export class Team {
 
 /*
  * 添加
- * 此函数向场上顺序第一的位置加入一个角色，如果满员则不加入。返回是否加入成功
+ * 此函数向场上顺序第一的空位置加入一个角色，如果满员则不加入。返回是否加入成功
  * Editor: Guanliu
  * 2023/9/27
  */
     public AddRole(role:role.Role):boolean{
+        if(this.roleList.length>=6) return false;
+
+        this.roleList.unshift(role);
         return true;
     }
 }
