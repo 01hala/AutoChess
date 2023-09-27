@@ -18,7 +18,7 @@ export class Team {
 
     private removeRole(role: role.Role) {
         let index = this.roleList.indexOf(role);
-        this.roleList = this.roleList.splice(index, 1);
+        this.roleList.splice(index, 1);
     }
 
     public CheckRemoveDeadRole() {
