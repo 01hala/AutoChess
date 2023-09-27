@@ -6,6 +6,7 @@
 import * as skill from './skill/skill_base'
 import * as role from './role'
 import * as team from './team'
+import * as enums from './enums'
 
 export class Battle {
     private selfTeam : team.Team;
@@ -29,7 +30,7 @@ export class Battle {
 
     public StartBattle() {
         let ev = new skill.Event();
-        ev.type = skill.EventType.BattleBegin;
+        ev.type = enums.EventType.BattleBegin;
         this.AddBattleEvent(ev);
     }
 
@@ -43,20 +44,20 @@ export class Battle {
         }
     }
 
-    public GetWinCamp() : skill.Camp {
+    public GetWinCamp() : enums.Camp {
         if (!this.checkEndBattle()){
-            return skill.Camp.None;
+            return enums.Camp.None;
         }
 
         if (this.selfTeam.CheckDefeated() && this.enemyTeam.CheckDefeated()) {
-            return skill.Camp.Tie;
+            return enums.Camp.Tie;
         }
 
         if (this.selfTeam.CheckDefeated()) {
-            return skill.Camp.Enemy;
+            return enums.Camp.Enemy;
         }
 
-        return skill.Camp.Self;
+        return enums.Camp.Self;
     }
 
     private checkEndBattle() : boolean {
@@ -80,7 +81,7 @@ export class Battle {
 
         if (this.triggerBeforeAttack) {
             let ev = new skill.Event();
-            ev.type = skill.EventType.BeforeAttack;
+            ev.type = enums.EventType.BeforeAttack;
             this.AddBattleEvent(ev);
             this.triggerBeforeAttack = false;
             return false;

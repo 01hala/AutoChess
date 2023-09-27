@@ -5,6 +5,7 @@
  */
 import * as skill from './skill/skill_base'
 import * as battle from './battle'
+import * as enums from './enums'
 
 export enum Property {
     HP = 1,
@@ -24,22 +25,22 @@ export class Role {
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
 
     private properties : Map<Property, number> = new Map<Property, number>();
-    private selfCamp: skill.Camp;
+    private selfCamp: enums.Camp;
 
-    public constructor(selfCamp: skill.Camp, properties : Map<Property, number>) {
+    public constructor(selfCamp: enums.Camp, properties : Map<Property, number>) {
         this.selfCamp = selfCamp;
         this.properties = properties;
     }
 
     private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle) {
-        let selfTeam = this.selfCamp == skill.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
-        let enemyTeam = this.selfCamp == skill.Camp.Self ? battle.GetEnemyTeam() : battle.GetSelfTeam();
+        let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
+        let enemyTeam = this.selfCamp == enums.Camp.Self ? battle.GetEnemyTeam() : battle.GetSelfTeam();
         let selfIndex = selfTeam.GetRoleIndex(this);
         let enemyIndex = enemyTeam.GetRoleIndex(enemy);
 
         if (this.CheckDead()) {
             let ev = new skill.Event();
-            ev.type = skill.EventType.Syncope;
+            ev.type = enums.EventType.Syncope;
             ev.spellcaster = new skill.RoleInfo();
             ev.spellcaster.camp = enemy.selfCamp;
             ev.spellcaster.index = enemyIndex;
@@ -54,7 +55,7 @@ export class Role {
         } 
         if (damage > 0) {
             let ev = new skill.Event();
-            ev.type = skill.EventType.Injured;
+            ev.type = enums.EventType.Injured;
             ev.spellcaster = new skill.RoleInfo();
             ev.spellcaster.camp = enemy.selfCamp;
             ev.spellcaster.index = enemyIndex;
@@ -69,8 +70,7 @@ export class Role {
         }
     }
 
-    public BeHurted(enemy: Role, battle: battle.Battle) {
-        let damage = enemy.GetProperty(Property.Attack);
+    public BeHurted(damage:number, enemy: Role, battle: battle.Battle) {
 
         let hp = this.GetProperty(Property.HP);
         let reduction = this.GetProperty(Property.DamageReduction);
@@ -114,7 +114,8 @@ export class Role {
             enemy.BeInevitableKill(this, battle);
         }
         else {
-            enemy.BeHurted(this, battle);
+            let damage = this.GetProperty(Property.Attack);
+            enemy.BeHurted(damage, this, battle);
         }
 
         return 0;
