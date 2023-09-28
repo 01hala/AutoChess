@@ -8,7 +8,7 @@ import * as battle from './battle'
 import * as enums from './enums'
 
 export enum Property {
-    HP = 1,
+    Health = 1,
     Attack = 2,
     DamageReduction = 3,
     DamageReductionRound = 4,
@@ -72,7 +72,7 @@ export class Role {
 
     public BeHurted(damage:number, enemy: Role, battle: battle.Battle) {
 
-        let hp = this.GetProperty(Property.HP);
+        let hp = this.GetProperty(Property.Health);
         let reduction = this.GetProperty(Property.DamageReduction);
         let reductionRound = this.GetProperty(Property.DamageReductionRound);
 
@@ -83,13 +83,13 @@ export class Role {
         }
 
         hp -= damage;
-        this.ChangeProperties(Property.HP, hp);
+        this.ChangeProperties(Property.Health, hp);
         this.sendHurtedEvent(enemy, damage, battle);
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
-        let damageSelf = this.properties[Property.HP];
-        this.ChangeProperties(Property.HP, 0);
+        let damageSelf = this.properties[Property.Health];
+        this.ChangeProperties(Property.Health, 0);
         this.sendHurtedEvent(enemy, damageSelf, battle);
     }
     
@@ -105,7 +105,7 @@ export class Role {
     }
 
     public CheckDead() {
-        return this.properties[Property.HP] == 0;
+        return this.properties[Property.Health] == 0;
     }
 
     public Attack(enemy: Role, battle: battle.Battle) : number {
