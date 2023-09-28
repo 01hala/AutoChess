@@ -1,5 +1,5 @@
 /*
- * Skill_RemoteAtkForRandom
+ * Skill_RemoteAtk_1
  * author: Hotaru
  * 2023/9/25
  * 对N敌方随机单位造成M点远程伤害
@@ -11,9 +11,9 @@ import { Battle } from '../battle';
 import { Property, Role } from '../role';
 import { random } from '../util';
 
-export class Skill_RemoteAtkForRandom extends SkillBase  
+export class Skill_RemoteAtk_1 extends SkillBase  
 {
-    public res:string="battle/skill/Skill_RemoteAtkForRandom";
+    public res:string="battle/skill/Skill_RemoteAtk_1";
     public SkillType:SkillType=SkillType.Attack;
 
     private numberOfRole : number;

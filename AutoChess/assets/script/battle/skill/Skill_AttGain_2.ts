@@ -1,5 +1,5 @@
 /*
- * Skill_AttGainForRandom.ts
+ * Skill_AttGain_2.ts
  * author: Hotaru
  * 2023/9/27
  * 随机n人获得+m生命值和+k攻击力
@@ -12,9 +12,9 @@ import { Role,Property } from '../role';
 import { Camp, SkillType } from '../enums';
 import { random } from '../util';
 
-export class Skill_AttGainForRandom extends SkillBase 
+export class Skill_AttGain_2 extends SkillBase 
 {
-    public res:string="battle/skill/Skill_AttGainForRandom";
+    public res:string="battle/skill/Skill_AttGain_2";
     public SkillType:SkillType=SkillType.Intensifier;
 
     private numberOfRole:number;
