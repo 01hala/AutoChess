@@ -2,3 +2,5 @@
 hotaru:添加角色技能（购买时——随机一兵种获得+1生命值和+1攻击力），重载了battle/role.ts下的ChangeProperties，可以使用字典或者键值作为参数
 2023/09/25 
 hotaru:添加了2,3,4,5,号技能，在team里新增GetRoles函数返回场上所有角色，在skill_base里添加skilltype枚举
+2023/09/28
+hotaru:重写增益类技能，修改枚举Property.HP为Property.Health
