@@ -41,3 +41,11 @@ export enum Camp {
     Self = 1,
     Enemy = 2,
 }
+
+export enum Direction {
+    None = 0,
+    Forward = 1,
+    Back = 2,
+    Rigiht = 3,
+    Left = 4,
+}

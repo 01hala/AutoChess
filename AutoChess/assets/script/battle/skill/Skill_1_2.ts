@@ -35,7 +35,15 @@ export class Skill_AttGainForRandom extends SkillBase
     {
         try
         {
-            this.SkillEffect(selfInfo,battle);          
+            if(5>=this.numberOfRole)
+            {
+                this.SkillEffect(selfInfo,battle);
+            }
+            else
+            {
+                console.warn("生效人数不能大于5人");
+            }
+                  
         }
         catch (error) 
         {

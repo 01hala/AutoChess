@@ -70,6 +70,56 @@ export class Role {
         }
     }
 
+    private sendChangeEvent(enemy: Role, properties: Map<Property, number>, battle: battle.Battle)
+    {
+        let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
+        let enemyTeam = this.selfCamp == enums.Camp.Enemy ? battle.GetEnemyTeam() : battle.GetSelfTeam();
+        let selfIndex = selfTeam.GetRoleIndex(this);
+        let enemyIndex = enemyTeam.GetRoleIndex(enemy);
+
+        if (this.CheckDead()) {
+            let ev = new skill.Event();
+            ev.type = enums.EventType.Syncope;
+            ev.spellcaster = new skill.RoleInfo();
+            ev.spellcaster.camp = enemy.selfCamp;
+            ev.spellcaster.index = enemyIndex;
+            ev.recipient = [];
+            let recipient = new skill.RoleInfo();
+            recipient.camp = this.selfCamp;
+            recipient.index = selfIndex;
+            ev.recipient.push(recipient);
+            ev.value = [];
+            properties.forEach((value) => 
+            {
+                ev.value.push(value);
+            });
+            battle.AddBattleEvent(ev);
+        } 
+        
+        if(properties[Property.Health]>this.properties[Property.Health] || properties[Property.Attack]>this.properties[Property.Attack])
+        {
+            let ev = new skill.Event();
+            ev.type = enums.EventType.EatFood;
+            ev.spellcaster = new skill.RoleInfo();
+            ev.spellcaster.camp = enemy.selfCamp;
+            ev.spellcaster.index = enemyIndex;
+            ev.recipient = [];
+            let recipient = new skill.RoleInfo();
+            recipient.camp = this.selfCamp;
+            recipient.index = selfIndex;
+            ev.recipient.push(recipient);
+            ev.value = [];
+            properties.forEach((value) => 
+            {
+                ev.value.push(value);
+            });
+            battle.AddBattleEvent(ev);
+        }
+
+        
+
+    }
+
     public BeHurted(damage:number, enemy: Role, battle: battle.Battle) {
 
         let hp = this.GetProperty(Property.Health);

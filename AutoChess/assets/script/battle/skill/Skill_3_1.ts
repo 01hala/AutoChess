@@ -31,7 +31,15 @@ export class Skill_RemoteAtkForRandom extends SkillBase
     {
         try 
         {
-            this.SkillEffect(selfInfo,battle);
+            if(6>=this.numberOfRole)
+            {
+                this.SkillEffect(selfInfo,battle);
+            }
+            else
+            {
+                console.warn("生效人数不能大于6人");
+            }
+            
         } 
         catch (error) 
         {
