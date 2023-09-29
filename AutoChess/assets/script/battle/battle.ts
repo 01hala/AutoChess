@@ -73,6 +73,32 @@ export class Battle {
                 ev.call(null, evs);
             }
 
+            let selfTeam = this.selfTeam.GetRoles();
+            for(let index in selfTeam) {
+                let role = selfTeam[index];
+                let roleInfo = new skill.RoleInfo();
+                roleInfo.index =  parseInt(index);
+                roleInfo.camp = enums.Camp.Self;
+                for(let skill of role.skill) {
+                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
+                        skill.skill.UseSkill(roleInfo, this);
+                    }
+                }
+            }
+
+            let enemyTeam = this.enemyTeam.GetRoles();
+            for(let index in enemyTeam) {
+                let role = enemyTeam[index];
+                let roleInfo = new skill.RoleInfo();
+                roleInfo.index =  parseInt(index);
+                roleInfo.camp = enums.Camp.Enemy;
+                for(let skill of role.skill) {
+                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
+                        skill.skill.UseSkill(roleInfo, this);
+                    }
+                }
+            }
+
             this.selfTeam.CheckRemoveDeadRole();
             this.enemyTeam.CheckRemoveDeadRole();
 
