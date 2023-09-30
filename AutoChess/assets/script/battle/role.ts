@@ -19,13 +19,19 @@ export class SkillInfo {
 }
 
 export class Role {
+    public id:number;
+    public level:number;
+
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];
 
     private properties : Map<Property, number> = new Map<Property, number>();
     private selfCamp: enums.Camp;
 
-    public constructor(selfCamp: enums.Camp, properties : Map<Property, number>) {
+    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<Property, number>) {
+        this.id=id;
+        this.level=level;
+        
         this.selfCamp = selfCamp;
         this.properties = properties;
     }
@@ -228,6 +234,16 @@ export class Role {
             return this.properties[em];
         }
         return 0;
+    }
+/*
+ * 添加
+ * 因为存在交换属性的技能，所以添加一个函数返回某个角色的所有属性Map的副本
+ * Editor: Guanliu
+ * 2023/9/30
+ */
+    public GetProperties():Map<Property, number>{
+        let t=new Map<Property, number>(this.properties);
+        return t;
     }
 
     public CheckDead() {
