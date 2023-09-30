@@ -2,7 +2,7 @@
  * Skill_SwapProperties_5.ts
  * author: Guanliu
  * 2023/9/30
- * 战斗开始时——交换两个相邻伙伴的属性
+ * 交换队伍中指定两个位置上的角色的属性，若有交换方不存在则不交换
  */
 import { _decorator, Component, debug, log, Node, random, ValueType } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
@@ -13,11 +13,19 @@ import { Camp, SkillType } from '../enums';
 
 export class Skill_SwapProperties_5 extends SkillBase 
 {
-    public res:string="battle/skill/Skill_SwapProperties_49";
+    public res:string="battle/skill/Skill_SwapProperties_5";
     public SkillType:SkillType=SkillType.SwapProperties;
 
     event:Event=new Event();
 
+    private index1:number;
+    private index2:number;
+    public constructor(swapper1:number,swapper2:number) {
+        super();
+
+        this.index1=swapper1;
+        this.index2=swapper2;
+    }
 
     public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
     {
@@ -34,35 +42,16 @@ export class Skill_SwapProperties_5 extends SkillBase
 
     private SkillEffect(selfInfo: RoleInfo, battle: Battle):void
     {
-        /*
-        如果阵型是   1 0 2
-                    3 4 5
-        我的假设：角落角色的相邻角色是它的左/右和下/上方，中间角色的相邻角色是它的左右手边的角色
-        */
         try
         {
-            let leftOne:number,rightOne:number;
-
-            switch(selfInfo.index){
-                case 0:case 4:
-                    leftOne=selfInfo.index-1,rightOne=selfInfo.index+1;break;
-                case 1:
-                    leftOne=selfInfo.index-1,rightOne=selfInfo.index+2;break;
-                case 2:
-                    leftOne=selfInfo.index-2,rightOne=selfInfo.index+3;break;
-                case 3:
-                    leftOne=selfInfo.index-2,rightOne=selfInfo.index+1;break;
-                case 5:
-                    leftOne=selfInfo.index-3,rightOne=selfInfo.index-1;break;
-            }
             let swapRoles:Role[];
             if(Camp.Self==selfInfo.camp){
-                swapRoles.push(battle.GetSelfTeam().GetRole(leftOne));
-                swapRoles.push(battle.GetSelfTeam().GetRole(rightOne));
+                swapRoles.push(battle.GetSelfTeam().GetRole(this.index1));
+                swapRoles.push(battle.GetSelfTeam().GetRole(this.index1));
             }
             if(Camp.Enemy==selfInfo.camp){
-                swapRoles.push(battle.GetEnemyTeam().GetRole(leftOne));
-                swapRoles.push(battle.GetEnemyTeam().GetRole(rightOne));
+                swapRoles.push(battle.GetEnemyTeam().GetRole(this.index1));
+                swapRoles.push(battle.GetEnemyTeam().GetRole(this.index1));
             }
             if(swapRoles[0]==null||swapRoles[1]==null) return;
 
