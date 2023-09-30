@@ -33,6 +33,7 @@ export enum SkillType
     Summon = 3,
     Support = 4,
     Economy = 5,
+    SwapProperties=6,
 }
 
 export enum BufferType {

@@ -18,8 +18,6 @@ export class Skill_Summon_49 extends SkillBase
 
     event:Event=new Event();
 
-    private addedHP:number;
-
     public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
     {
         try

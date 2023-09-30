@@ -9,6 +9,7 @@ export class Team {
     private roleList : role.Role[];
 
     public GetRole(index:number) : role.Role {
+        if(index>=this.roleList.length) return null;
         return this.roleList[index];
     }
 

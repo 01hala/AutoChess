@@ -184,6 +184,16 @@ export class Role {
         }
         return 0;
     }
+/*
+ * 添加
+ * 因为存在交换属性的技能，所以添加一个函数返回某个角色的所有属性Map的副本
+ * Editor: Guanliu
+ * 2023/9/30
+ */
+    public GetProperties():Map<Property, number>{
+        let t=new Map<Property, number>(this.properties);
+        return t;
+    }
 
     public CheckDead() {
         return this.properties[Property.HP] == 0;
