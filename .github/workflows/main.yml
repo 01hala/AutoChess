@@ -6,3 +6,5 @@ hotaru:添加了2,3,4,5,号技能，在team里新增GetRoles函数返回场上�
 hotaru:重写增益类技能，修改枚举Property.HP为Property.Health
 2023/09/28
 hotaru:新增Direction枚举，在Skill_1_1.ts中新增位置判断，在role.ts里新增sendChangeEvent方法
+2023/09/29
+hotaru:修改config表，添加buff表，shop_skill表
