@@ -1,5 +1,5 @@
 /*
- * Skill_AttGain_1.ts
+ * Skill_AttGain_1_1.ts
  * author: Hotaru
  * 2023/9/27
  * 获得+m生命值和+k攻击力（前后左右或者自己）
@@ -14,7 +14,7 @@ import { random } from '../util';
 
 export class Skill_AttGain_1_1 extends SkillBase 
 {
-    public res:string="battle/skill/Skill_AttGain_1";
+    public res:string="battle/skill/Skill_AttGain_1_1";
     public SkillType:SkillType=SkillType.Intensifier;
 
     private health:number;
