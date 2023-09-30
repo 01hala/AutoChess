@@ -13,7 +13,7 @@ import { BufferType, Camp, Direction, SkillType } from '../enums';
 import { random } from '../util';
 import { Buffer } from '../buffer/buffer';
 
-export class Skill_Shields_1_1 extends SkillBase 
+export class Skill_Shields_1 extends SkillBase 
 {
     public res:string="battle/skill/Skill_Shields_1_1";
     public SkillType:SkillType=SkillType.Support;
