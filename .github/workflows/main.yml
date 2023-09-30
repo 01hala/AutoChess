@@ -10,3 +10,4 @@ hotaru:新增Direction枚举，在Skill_1_1.ts中新增位置判断，在role.ts
 hotaru:修改config表，添加buff表，shop_skill表
 2023/09/30
 hotaru:修改config表，在bufftype里新增2个枚举，在role里新增两种buff逻辑
+hotaru:添加Skill_Shields_1_1.ts
