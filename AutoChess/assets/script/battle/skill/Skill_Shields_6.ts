@@ -1,5 +1,5 @@
 /*
- * Skill_Shields_1_1.ts
+ * Skill_Shields_6.ts
  * author: Hotaru
  * 2023/9/30
  * 获得护盾(前后左右或自己)
@@ -13,9 +13,9 @@ import { BufferType, Camp, Direction, SkillType } from '../enums';
 import { random } from '../util';
 import { Buffer } from '../buffer/buffer';
 
-export class Skill_Shields_1 extends SkillBase 
+export class Skill_Shields_6 extends SkillBase 
 {
-    public res:string="battle/skill/Skill_Shields_1_1";
+    public res:string="battle/skill/Skill_Shields_6";
     public SkillType:SkillType=SkillType.Support;
 
     private value:number;
