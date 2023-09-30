@@ -105,8 +105,9 @@ export class Skill_AttGain_1_1 extends SkillBase
                 }
             if(null!=recipientRole)
             {
-                recipientRole.ChangeProperties(Property.HP,this.health);
-                recipientRole.ChangeProperties(Property.Attack,this.attack);
+                recipientRole.ChangeProperties(Property.HP, recipientRole.GetProperty(Property.HP) + this.health);
+                recipientRole.ChangeProperties(Property.TotalHP, recipientRole.GetProperty(Property.TotalHP) + this.health);
+                recipientRole.ChangeProperties(Property.Attack,recipientRole.GetProperty(Property.Attack) + this.attack);
             }
         }
         catch (error) 

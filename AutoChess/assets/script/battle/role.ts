@@ -10,7 +10,8 @@ import * as enums from './enums'
 
 export enum Property {
     HP = 1,
-    Attack = 2,
+    TotalHP = 2,
+    Attack = 3,
 }
 
 export class SkillInfo {
