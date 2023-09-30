@@ -35,6 +35,14 @@ export enum SkillType
     Economy = 5,
 }
 
+export enum BufferType {
+    InevitableKill = 1,
+    ShareDamage = 2,
+    SubstituteDamageFront = 3,
+    SubstituteDamageRandom = 4,
+    ReductionDamage = 5,
+}
+
 export enum Camp {
     None = -1,
     Tie = 0,
