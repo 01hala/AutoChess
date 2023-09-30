@@ -12,7 +12,7 @@ import { Role,Property } from '../role';
 import { Camp, Direction, SkillType } from '../enums';
 import { random } from '../util';
 
-export class Skill_AttGain_1 extends SkillBase 
+export class Skill_AttGain_1_1 extends SkillBase 
 {
     public res:string="battle/skill/Skill_AttGain_1";
     public SkillType:SkillType=SkillType.Intensifier;
