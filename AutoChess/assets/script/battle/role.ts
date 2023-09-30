@@ -222,7 +222,7 @@ export class Role {
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
         let damageSelf = this.properties[Property.HP];
-        this.ChangeProperties(Property.HP, 0);
+        this.properties[Property.HP] = 0;
         this.sendHurtedEvent(enemy, damageSelf, battle);
     }
     
@@ -264,6 +264,9 @@ export class Role {
                 substitute.BeHurted(damage, enemy, battle);
             }
             else {
+                if (enemy.checkInevitableKill() && this == r) {
+                    continue;
+                }
                 r.BeHurted(damage, enemy, battle);
             }
         }
