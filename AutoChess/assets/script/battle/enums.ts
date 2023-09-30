@@ -41,6 +41,8 @@ export enum BufferType {
     SubstituteDamageFront = 3,
     SubstituteDamageRandom = 4,
     ReductionDamage = 5,
+    intensifierAtk = 6,
+    Shields = 7,
 }
 
 export enum Camp {

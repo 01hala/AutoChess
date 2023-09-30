@@ -81,7 +81,7 @@ export class Skill_AttGain_2 extends SkillBase
             }
             recipientRoles.forEach((role) => 
             {
-                role.ChangeProperties(Property.Health,this.health);
+                role.ChangeProperties(Property.HP,this.health);
                 role.ChangeProperties(Property.Attack,this.attack);
             });
             

@@ -1,5 +1,5 @@
 /*
- * Skill_AttGain.ts
+ * Skill_AttGain_1.ts
  * author: Hotaru
  * 2023/9/27
  * 获得+m生命值和+k攻击力（前后左右或者自己）
@@ -12,9 +12,9 @@ import { Role,Property } from '../role';
 import { Camp, Direction, SkillType } from '../enums';
 import { random } from '../util';
 
-export class Skill_AttGain extends SkillBase 
+export class Skill_AttGain_1 extends SkillBase 
 {
-    public res:string="battle/skill/Skill_AttGain";
+    public res:string="battle/skill/Skill_AttGain_1";
     public SkillType:SkillType=SkillType.Intensifier;
 
     private health:number;
@@ -105,7 +105,7 @@ export class Skill_AttGain extends SkillBase
                 }
             if(null!=recipientRole)
             {
-                recipientRole.ChangeProperties(Property.Health,this.health);
+                recipientRole.ChangeProperties(Property.HP,this.health);
                 recipientRole.ChangeProperties(Property.Attack,this.attack);
             }
         }
