@@ -251,7 +251,7 @@ export class Role {
         return this.properties[Property.HP] == 0;
     }
 
-    public Attack(enemy: Role, battle: battle.Battle) : number {
+    public Attack(enemy: Role, battle: battle.Battle) {
         if (enemy.checkInevitableKill()) {
             this.BeInevitableKill(enemy, battle);
         }
@@ -270,7 +270,5 @@ export class Role {
                 r.BeHurted(damage, enemy, battle);
             }
         }
-
-        return 0;
     }
 }

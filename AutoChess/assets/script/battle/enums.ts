@@ -18,7 +18,6 @@ export enum EventType {
     Syncope = 11,
     ChangeSelfLocation = 12,
     ChangeEnemyLocation = 13,
-    ReleaseSkill = 14,
 }
 
 /*
