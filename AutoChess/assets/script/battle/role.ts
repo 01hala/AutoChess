@@ -4,16 +4,13 @@
  * 2023/9/24
  */
 import * as skill from './skill/skill_base'
+import * as buffer from './buffer/buffer'
 import * as battle from './battle'
 import * as enums from './enums'
 
 export enum Property {
     HP = 1,
     Attack = 2,
-    DamageReduction = 3,
-    DamageReductionRound = 4,
-    //
-    InevitableKill = 5, // 暂时放这里. 0 普通伤害，1 必杀
 }
 
 export class SkillInfo {
@@ -22,12 +19,19 @@ export class SkillInfo {
 }
 
 export class Role {
+    public id:number;
+    public level:number;
+
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
+    public buffer : buffer.Buffer[] = [];
 
     private properties : Map<Property, number> = new Map<Property, number>();
     private selfCamp: enums.Camp;
 
-    public constructor(selfCamp: enums.Camp, properties : Map<Property, number>) {
+    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<Property, number>) {
+        this.id=id;
+        this.level=level;
+        
         this.selfCamp = selfCamp;
         this.properties = properties;
     }
@@ -70,17 +74,94 @@ export class Role {
         }
     }
 
+    private checkShareDamageBuffer() : boolean {
+        for (let b of this.buffer) {
+            if (enums.BufferType.ShareDamage == b.BufferType && b.Round > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private checkInevitableKill() : boolean {
+        for (let b of this.buffer) {
+            if (enums.BufferType.InevitableKill == b.BufferType && b.Round > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private checkSubstituteDamageFront() : boolean {
+        for (let b of this.buffer) {
+            if (enums.BufferType.SubstituteDamageFront == b.BufferType && b.Round > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private checkSubstituteDamageRandom() : boolean {
+        for (let b of this.buffer) {
+            if (enums.BufferType.SubstituteDamageRandom == b.BufferType && b.Round > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private getShareDamageArray(battle: battle.Battle) : Role[] {
+        if (!this.checkShareDamageBuffer()) {
+            return [this];
+        }
+
+        let list = [];
+        let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam().GetRoles() : battle.GetEnemyTeam().GetRoles();
+        for (let r of selfTeam) {
+            if (r.checkShareDamageBuffer()) {
+                list.push(r);
+            }
+        }
+
+        return list;
+    }
+
+    private getSubstituteDamage(battle: battle.Battle) : Role {
+        let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
+        let selfIndex = selfTeam.GetRoleIndex(this);
+        
+        for (let index in selfTeam.GetRoles()) {
+            let i = parseInt(index);
+            let r = selfTeam.GetRole(i);
+            
+            if ((i - selfIndex) == 1 && r.checkSubstituteDamageFront()) {
+                return r;
+            }
+
+            if (r.checkSubstituteDamageRandom()) {
+                return r;
+            }
+        }
+
+        return null;
+    }
+
+    private getReductionDamage() : number {
+        for (let b of this.buffer) {
+            if (enums.BufferType.ReductionDamage == b.BufferType && b.Round > 0) {
+                return b.Value;
+            }
+        }
+        return 0;
+    }
+
     public BeHurted(damage:number, enemy: Role, battle: battle.Battle) {
 
         let hp = this.GetProperty(Property.HP);
-        let reduction = this.GetProperty(Property.DamageReduction);
-        let reductionRound = this.GetProperty(Property.DamageReductionRound);
+        let reduction = this.getReductionDamage();
 
-        if (reductionRound > 0) {
-            this.ChangeProperties(Property.DamageReductionRound, --reductionRound);
-            damage -= reduction;
-            damage = damage < 0 ? 0 : damage;
-        }
+        damage -= reduction;
+        damage = damage < 0 ? 0 : damage;
 
         hp -= damage;
         this.ChangeProperties(Property.HP, hp);
@@ -109,13 +190,20 @@ export class Role {
     }
 
     public Attack(enemy: Role, battle: battle.Battle) : number {
-        let inevitableKill = this.GetProperty(Property.InevitableKill);
-        if (inevitableKill == 1) {
-            enemy.BeInevitableKill(this, battle);
+        if (enemy.checkInevitableKill()) {
+            this.BeInevitableKill(enemy, battle);
         }
-        else {
-            let damage = this.GetProperty(Property.Attack);
-            enemy.BeHurted(damage, this, battle);
+        
+        let list = this.getShareDamageArray(battle);
+        let substitute = this.getSubstituteDamage(battle);
+        let damage = this.GetProperty(Property.Attack) / list.length;
+        for (let r of list) {
+            if (null != substitute && this == r) {
+                substitute.BeHurted(damage, enemy, battle);
+            }
+            else {
+                r.BeHurted(damage, enemy, battle);
+            }
         }
 
         return 0;
