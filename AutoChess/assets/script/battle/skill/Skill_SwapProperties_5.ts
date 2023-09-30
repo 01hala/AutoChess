@@ -1,5 +1,5 @@
 /*
- * Skill_SwapProperties_49.ts
+ * Skill_SwapProperties_5.ts
  * author: Guanliu
  * 2023/9/30
  * 战斗开始时——交换两个相邻伙伴的属性
@@ -11,7 +11,7 @@ import { Team } from '../team';
 import { Role,Property } from '../role';
 import { Camp, SkillType } from '../enums';
 
-export class Skill_SwapProperties_49 extends SkillBase 
+export class Skill_SwapProperties_5 extends SkillBase 
 {
     public res:string="battle/skill/Skill_SwapProperties_49";
     public SkillType:SkillType=SkillType.SwapProperties;
