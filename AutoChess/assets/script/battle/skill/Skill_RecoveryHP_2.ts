@@ -10,11 +10,14 @@ const { ccclass, property } = _decorator;
 export class Skill_RecoveryHP_2 extends SkillBase {
     public res:string="battle/skill/Skill_RecoveryHP_2";
     private camp : Camp;
+    private numberOfRole:number;
     private effectiveValue : number;
 
-    constructor(camp : Camp, effectiveValue : number){
+    constructor(camp : Camp, numberOfRole:number, effectiveValue : number){
         super();
         this.camp = camp;
+        this.numberOfRole = numberOfRole;
+        this.effectiveValue = effectiveValue;
     }
 
     UseSkill(selfInfo: RoleInfo, battle: Battle): void
@@ -23,13 +26,20 @@ export class Skill_RecoveryHP_2 extends SkillBase {
         {
             let effectiveRole : Role[] = null;
             if(Camp.Enemy == this.camp) {
-                effectiveRole = battle.GetEnemyTeam().GetRoles();
+                effectiveRole = battle.GetEnemyTeam().GetRoles().slice();
             }
             else if(Camp.Self == this.camp) {
-                effectiveRole = battle.GetSelfTeam().GetRoles();
+                effectiveRole = battle.GetSelfTeam().GetRoles().slice();
             }
 
-            for(const r of effectiveRole) {
+            let recipientRoles:Role[] = [];
+            while(recipientRoles.length < this.numberOfRole) {
+                let index = random(0, effectiveRole.length);
+                recipientRoles.push(effectiveRole[index]);
+                effectiveRole.splice(index, 1);
+            }
+
+            for(const r of recipientRoles) {
                 let totalHP = r.GetProperty(Property.TotalHP);
                 let HP = r.GetProperty(Property.HP) + this.effectiveValue;
                 if (HP > totalHP) {
