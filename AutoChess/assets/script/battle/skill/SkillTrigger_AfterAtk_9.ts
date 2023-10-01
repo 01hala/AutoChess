@@ -28,14 +28,15 @@ export class SkillTrigger_AfterAtk_9 extends SkillTriggerBase
 
     private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
     {
+        let flag:boolean=false;
         try
         {
             frameEvent.forEach((element)=>{
                 if(EventType.AfterAttack==element.type&&element.spellcaster==selfInfo) 
-                    return true; 
+                flag = true;
             });
 
-            return false;
+            return flag;
         }
         catch (error) 
         {

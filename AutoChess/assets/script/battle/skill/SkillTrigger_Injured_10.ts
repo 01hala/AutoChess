@@ -28,17 +28,18 @@ export class SkillTrigger_Injured_10 extends SkillTriggerBase
 
     private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
     {
+        let flag:boolean=false;
         try
         {
             frameEvent.forEach((element)=>{
                 if(EventType.Injured==element.type){
                     element.recipient.forEach(_recipient => {
-                        if(_recipient==selfInfo) return true;
+                        if(_recipient==selfInfo) flag = true;
                     });
                 } 
             });
 
-            return false;
+            return flag;
         }
         catch (error) 
         {
