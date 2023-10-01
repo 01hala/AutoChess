@@ -29,9 +29,13 @@ export class Skill_RecoveryHP_2 extends SkillBase {
                 effectiveRole = battle.GetSelfTeam().GetRoles();
             }
 
-            for(const r of effectiveRole)
-            {
-                let totalHP = r.GetProperty(property)
+            for(const r of effectiveRole) {
+                let totalHP = r.GetProperty(Property.TotalHP);
+                let HP = r.GetProperty(Property.HP) + this.effectiveValue;
+                if (HP > totalHP) {
+                    HP = totalHP;
+                }
+                r.ChangeProperties(Property.HP, HP);
             }
         }
         catch(e)
