@@ -1,17 +1,17 @@
 /*
- * SkillTrigger_AfterAtk_9.ts
+ * SkillTrigger_Injured_10.ts
  * author: Guanliu
  * 2023/10/1
- * 触发条件：攻击前
+ * 触发条件：受伤时
  */
 import { _decorator, Component, debug, log, Node, random } from 'cc';
-import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
+import { SkillBase,Event, RoleInfo,SkillTriggerBase } from '../skill/skill_base';
 import { Camp, EventType, SkillType } from '../enums';
 
-export class SkillTrigger_AfterAtk_9 extends SkillTriggerBase
+export class SkillTrigger_Injured_10 extends SkillTriggerBase
 {    
-    public res:string="battle/skill/SkillTrigger_AfterAtk_9";
-    public EventType:EventType=EventType.AfterAttack;
+    public res:string="battle/skill/SkillTrigger_Injured_10";
+    public EventType:EventType=EventType.Injured;
 
     event:Event=new Event();
 
@@ -28,20 +28,24 @@ export class SkillTrigger_AfterAtk_9 extends SkillTriggerBase
 
     private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
     {
-        let flag:boolean=false;
         try
         {
-            frameEvent.forEach((element)=>{
-                if(EventType.AfterAttack==element.type&&element.spellcaster==selfInfo) 
-                flag = true;
-            });
-
-            return flag;
+            for (let element of frameEvent) {
+                if(EventType.Injured==element.type){
+                    for (let _recipient of element.recipient) {
+                        if(_recipient.camp == selfInfo.camp && _recipient.index == selfInfo.index) {
+                            return true;
+                        }
+                    }
+                } 
+            }
         }
         catch (error) 
         {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
+
+        return false;
     }
 }
 
