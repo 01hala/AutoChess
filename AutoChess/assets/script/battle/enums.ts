@@ -21,6 +21,11 @@ export enum EventType {
     ReleaseSkill = 14,
 }
 
+export enum ChangePositionType {
+    FrontEndChange = 1,
+    RandomChange = 2,
+} 
+
 /*
  * 技能类型
  * Editor:Hotaru

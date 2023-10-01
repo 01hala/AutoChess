@@ -3,21 +3,19 @@ import { SkillBase,Event, RoleInfo, SkillTriggerBase } from './skill_base';
 import { Camp, EventType, SkillType } from '../enums';
 import { Battle } from '../battle';
 import { Property, Role } from '../role';
+import { ChangePositionType } from '../enums';
 import { random } from '../util';
 const { ccclass, property } = _decorator;
 
 @ccclass('Skill_ChangePosition_7')
 export class Skill_ChangePosition_7 extends SkillBase {
     public res:string="battle/skill/Skill_ChangePosition_7";
-    private battleEvent : Event = new Event();
-    private newRoleList : Role[] = [];
+    private changeType : ChangePositionType;
 
-    constructor(recipients : RoleInfo[])
+    constructor(changeType : ChangePositionType)
     {
         super();
-        this.battleEvent.type = EventType.ChangeEnemyLocation;
-        this.battleEvent.recipient = recipients;
-        this.battleEvent.value = null;
+        this.changeType = changeType;
     }
 
 
@@ -25,21 +23,65 @@ export class Skill_ChangePosition_7 extends SkillBase {
     {
         try
         {
-            this.battleEvent.spellcaster = selfInfo;
-            let originalRoleList = battle.GetEnemyTeam().GetRoles();
-            if(this.battleEvent.recipient.length == 1)
+            let battleEvent : Event = new Event();
+            battleEvent.type = EventType.ChangeEnemyLocation;
+            battleEvent.spellcaster = selfInfo;
+            battleEvent.recipient = [];
+            battleEvent.value = [];
+
+            let originalRoleList:Role[] = null;
+            if(Camp.Self==selfInfo.camp)
             {
-                this.newRoleList = originalRoleList.slice(1,originalRoleList.length);
-                this.newRoleList.unshift(originalRoleList[0]);
-                originalRoleList = this.newRoleList;
+                originalRoleList=battle.GetEnemyTeam().GetRoles().slice();
             }
-            else if(this.battleEvent.recipient.length == 2)
+            if(Camp.Enemy==selfInfo.camp)
             {
-                let tempRole = originalRoleList[this.battleEvent.recipient[0].index];
-                originalRoleList[this.battleEvent.recipient[0].index] = originalRoleList[this.battleEvent.recipient[1].index];
-                originalRoleList[this.battleEvent.recipient[1].index] = tempRole;
+                originalRoleList=battle.GetSelfTeam().GetRoles().slice();
             }
-            battle.AddBattleEvent(this.battleEvent);
+
+            if(ChangePositionType.FrontEndChange == this.changeType)
+            {
+                let begin = originalRoleList[0];
+                let end = originalRoleList[-1];
+                originalRoleList[0] = end;
+                originalRoleList[-1] = begin;
+                let recipient = new RoleInfo();
+                recipient.index = 0;
+                recipient.camp = begin.selfCamp;
+                battleEvent.recipient.push(recipient);
+                recipient = new RoleInfo();
+                recipient.index = originalRoleList.length - 1;
+                recipient.camp = begin.selfCamp;
+                battleEvent.recipient.push(recipient);
+                battleEvent.value.push(0);
+                battleEvent.value.push(originalRoleList.length - 1);
+            }
+            else if(ChangePositionType.RandomChange == this.changeType)
+            {
+                let recipientRoles:number[] = [];
+                while(recipientRoles.length < 2) {
+                    let index = random(0, originalRoleList.length);
+                    if (index in recipientRoles) {
+                        continue;
+                    }
+                    recipientRoles.push(index);
+                }
+                let begin = originalRoleList[recipientRoles[0]];
+                let end = originalRoleList[recipientRoles[1]];
+                originalRoleList[recipientRoles[0]] = end;
+                originalRoleList[recipientRoles[1]] = begin;
+                let recipient = new RoleInfo();
+                recipient.index = recipientRoles[0];
+                recipient.camp = begin.selfCamp;
+                battleEvent.recipient.push(recipient);
+                recipient = new RoleInfo();
+                recipient.index = recipientRoles[1];
+                recipient.camp = begin.selfCamp;
+                battleEvent.recipient.push(recipient);
+                battleEvent.value.push(recipientRoles[0]);
+                battleEvent.value.push(recipientRoles[1]);
+            }
+            battle.AddBattleEvent(battleEvent);
         }
         catch(e)
         {

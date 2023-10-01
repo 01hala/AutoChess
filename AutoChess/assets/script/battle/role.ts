@@ -23,7 +23,7 @@ export class Role {
     public buffer : buffer.Buffer[] = [];
 
     private properties : Map<Property, number> = new Map<Property, number>();
-    private selfCamp: enums.Camp;
+    public selfCamp: enums.Camp;
 
     public constructor(selfCamp: enums.Camp, properties : Map<Property, number>) {
         this.selfCamp = selfCamp;

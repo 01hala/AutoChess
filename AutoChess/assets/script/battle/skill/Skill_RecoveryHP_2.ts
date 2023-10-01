@@ -9,33 +9,29 @@ const { ccclass, property } = _decorator;
 @ccclass('Skill_RecoveryHP_2')
 export class Skill_RecoveryHP_2 extends SkillBase {
     public res:string="battle/skill/Skill_RecoveryHP_2";
-    private effectiveRoleInfo : RoleInfo[] = [];
+    private camp : Camp;
     private effectiveValue : number;
 
-    constructor(effectiveRoleInfo : RoleInfo[], effectiveValue : number){
+    constructor(camp : Camp, effectiveValue : number){
         super();
-        this.Init(effectiveRoleInfo, effectiveValue);
-    }
-
-    //回复生命脚本，第一个参数是需要回复生命值的RoleInfo，第二个参数是需要回复生命的数值，第三个参数是回复生命的目标阵容
-    Init(effectiveRoleInfo : RoleInfo[], effectiveValue : number) : void
-    {
-        this.effectiveRoleInfo = effectiveRoleInfo;
-        this.effectiveValue = effectiveValue;
+        this.camp = camp;
     }
 
     UseSkill(selfInfo: RoleInfo, battle: Battle): void
     {
         try
         {
-            for(const roleInfo of this.effectiveRoleInfo)
+            let effectiveRole : Role[] = null;
+            if(Camp.Enemy == this.camp) {
+                effectiveRole = battle.GetEnemyTeam().GetRoles();
+            }
+            else if(Camp.Self == this.camp) {
+                effectiveRole = battle.GetSelfTeam().GetRoles();
+            }
+
+            for(const r of effectiveRole)
             {
-                if(Camp.Enemy == roleInfo.camp)
-                    battle.GetEnemyTeam().GetRole(roleInfo.index).ChangeProperties(Property.HP,this.effectiveValue);
-                else if(Camp.Self == roleInfo.camp)
-                    battle.GetSelfTeam().GetRole(roleInfo.index).ChangeProperties(Property.HP,this.effectiveValue);
-                else
-                    throw new error("阵营");
+                let totalHP = r.GetProperty(property)
             }
         }
         catch(e)
