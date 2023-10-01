@@ -9,7 +9,7 @@ const { ccclass, property } = _decorator;
 @ccclass('Skill_RecoveryHP_2')
 export class Skill_RecoveryHP_2 extends SkillBase {
     public res:string="battle/skill/Skill_RecoveryHP_2";
-    private effectiveRoleInfo : RoleInfo[];
+    private effectiveRoleInfo : RoleInfo[] = [];
     private effectiveValue : number;
 
     constructor(effectiveRoleInfo : RoleInfo[], effectiveValue : number){
