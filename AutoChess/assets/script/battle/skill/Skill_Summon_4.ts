@@ -11,7 +11,7 @@ import { Team } from '../team';
 import { Role,Property } from '../role';
 import { Camp, SkillType } from '../enums';
 
-export class Skill_Summon_4_1 extends SkillBase 
+export class Skill_Summon_4 extends SkillBase 
 {
     public res:string="battle/skill/Skill_Summon_4";
     public SkillType:SkillType=SkillType.Summon;
