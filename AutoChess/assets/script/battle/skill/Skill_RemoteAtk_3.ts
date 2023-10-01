@@ -1,5 +1,5 @@
 /*
- * Skill_RemoteAttack_3.ts
+ * Skill_RemoteAtk_3
  * author: Hotaru
  * 2023/9/25
  * 对N敌方随机单位造成M点远程伤害
@@ -11,9 +11,9 @@ import { Battle } from '../battle';
 import { Property, Role } from '../role';
 import { random } from '../util';
 
-export class Skill_RemoteAttack_3 extends SkillBase  
+export class Skill_RemoteAtk_3 extends SkillBase  
 {
-    public res:string="battle/skill/Skill_RemoteAttack_3";
+    public res:string="battle/skill/Skill_RemoteAtk_1";
     public SkillType:SkillType=SkillType.Attack;
 
     private numberOfRole : number;
@@ -31,7 +31,15 @@ export class Skill_RemoteAttack_3 extends SkillBase
     {
         try 
         {
-            this.SkillEffect(selfInfo,battle);
+            if(6>=this.numberOfRole)
+            {
+                this.SkillEffect(selfInfo,battle);
+            }
+            else
+            {
+                console.warn("生效人数不能大于6人");
+            }
+            
         } 
         catch (error) 
         {

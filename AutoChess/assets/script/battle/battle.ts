@@ -39,8 +39,13 @@ export class Battle {
         let enemy = this.enemyTeam.GetRole(0);
 
         if (self != null && enemy != null) {
-            let damageEnemy = self.Attack(enemy, this);
-            let damageSelf = enemy.Attack(self, this);
+            self.Attack(enemy, this);
+            enemy.Attack(self, this);
+
+            let ev = new skill.Event();
+            ev.type = enums.EventType.AfterAttack;
+            this.AddBattleEvent(ev);
+            return false;
         }
     }
 

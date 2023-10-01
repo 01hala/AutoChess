@@ -10,7 +10,8 @@ import * as enums from './enums'
 
 export enum Property {
     HP = 1,
-    Attack = 2,
+    TotalHP = 2,
+    Attack = 3,
 }
 
 export class SkillInfo {
@@ -19,13 +20,19 @@ export class SkillInfo {
 }
 
 export class Role {
+    public id:number;
+    public level:number;
+
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];
 
     private properties : Map<Property, number> = new Map<Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(selfCamp: enums.Camp, properties : Map<Property, number>) {
+    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<Property, number>) {
+        this.id=id;
+        this.level=level;
+        
         this.selfCamp = selfCamp;
         this.properties = properties;
     }
@@ -104,6 +111,18 @@ export class Role {
         return false;
     }
 
+    private checkShields():boolean
+    {
+        for(let b of this.buffer)
+        {
+            if(enums.BufferType.Shields==b.BufferType&& b.Value>0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private getShareDamageArray(battle: battle.Battle) : Role[] {
         if (!this.checkShareDamageBuffer()) {
             return [this];
@@ -149,14 +168,53 @@ export class Role {
         return 0;
     }
 
+    private getintensifierAtk():number{
+
+        for(let b of this.buffer)
+        {
+            if(enums.BufferType.intensifierAtk == b.BufferType && b.Round > 0)
+            {
+                return b.Value;
+            }
+        }
+
+        return 0;
+    }
+
+    private getShields(){
+        for(let b of this.buffer)
+        {
+            if(enums.BufferType.Shields==b.BufferType&& this.checkShields())
+            {
+                return b;
+            }
+        }
+        return null;
+    }
+
     public BeHurted(damage:number, enemy: Role, battle: battle.Battle) {
 
         let hp = this.GetProperty(Property.HP);
         let reduction = this.getReductionDamage();
+        let Shields=this.getShields();
 
         damage -= reduction;
         damage = damage < 0 ? 0 : damage;
+        
 
+        if(null!= Shields)
+        {
+            if(Shields.Value>=damage)
+            {
+                Shields.Value-=damage;
+                damage = 0;
+            }
+            else
+            {
+                damage-=Shields.Value;
+                Shields.Value=0;
+            }
+        }
         hp -= damage;
         this.ChangeProperties(Property.HP, hp);
         this.sendHurtedEvent(enemy, damage, battle);
@@ -164,7 +222,7 @@ export class Role {
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
         let damageSelf = this.properties[Property.HP];
-        this.ChangeProperties(Property.HP, 0);
+        this.properties[Property.HP] = 0;
         this.sendHurtedEvent(enemy, damageSelf, battle);
     }
     
@@ -178,28 +236,39 @@ export class Role {
         }
         return 0;
     }
+/*
+ * 添加
+ * 因为存在交换属性的技能，所以添加一个函数返回某个角色的所有属性Map的副本
+ * Editor: Guanliu
+ * 2023/9/30
+ */
+    public GetProperties():Map<Property, number>{
+        let t=new Map<Property, number>(this.properties);
+        return t;
+    }
 
     public CheckDead() {
         return this.properties[Property.HP] == 0;
     }
 
-    public Attack(enemy: Role, battle: battle.Battle) : number {
+    public Attack(enemy: Role, battle: battle.Battle) {
         if (enemy.checkInevitableKill()) {
             this.BeInevitableKill(enemy, battle);
         }
         
         let list = this.getShareDamageArray(battle);
         let substitute = this.getSubstituteDamage(battle);
-        let damage = this.GetProperty(Property.Attack) / list.length;
+        let damage = this.GetProperty(Property.Attack)+this.getintensifierAtk() / list.length;
         for (let r of list) {
             if (null != substitute && this == r) {
                 substitute.BeHurted(damage, enemy, battle);
             }
             else {
+                if (enemy.checkInevitableKill() && this == r) {
+                    continue;
+                }
                 r.BeHurted(damage, enemy, battle);
             }
         }
-
-        return 0;
     }
 }

@@ -18,7 +18,6 @@ export enum EventType {
     Syncope = 11,
     ChangeSelfLocation = 12,
     ChangeEnemyLocation = 13,
-    ReleaseSkill = 14,
 }
 
 export enum ChangePositionType {
@@ -38,6 +37,7 @@ export enum SkillType
     Summon = 3,
     Support = 4,
     Economy = 5,
+    SwapProperties=6,
 }
 
 export enum BufferType {
@@ -46,6 +46,8 @@ export enum BufferType {
     SubstituteDamageFront = 3,
     SubstituteDamageRandom = 4,
     ReductionDamage = 5,
+    intensifierAtk = 6,
+    Shields = 7,
 }
 
 export enum Camp {
@@ -53,4 +55,12 @@ export enum Camp {
     Tie = 0,
     Self = 1,
     Enemy = 2,
+}
+
+export enum Direction {
+    None = 0,
+    Forward = 1,
+    Back = 2,
+    Rigiht = 3,
+    Left = 4,
 }
