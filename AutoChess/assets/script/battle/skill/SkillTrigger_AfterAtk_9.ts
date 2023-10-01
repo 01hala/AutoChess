@@ -1,17 +1,17 @@
 /*
- * SkillTrigger_Injured_10.ts
+ * SkillTrigger_AfterAtk_9.ts
  * author: Guanliu
  * 2023/10/1
- * 触发条件：受伤时
+ * 触发条件：攻击前
  */
 import { _decorator, Component, debug, log, Node, random } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
 import { Camp, EventType, SkillType } from '../enums';
 
-export class SkillTrigger_Injured_10 extends SkillTriggerBase
+export class SkillTrigger_AfterAtk_9 extends SkillTriggerBase
 {    
-    public res:string="battle/skill/SkillTrigger_Injured_10";
-    public EventType:EventType=EventType.Injured;
+    public res:string="battle/skill/SkillTrigger_AfterAtk_9";
+    public EventType:EventType=EventType.AfterAttack;
 
     event:Event=new Event();
 
@@ -31,11 +31,8 @@ export class SkillTrigger_Injured_10 extends SkillTriggerBase
         try
         {
             frameEvent.forEach((element)=>{
-                if(EventType.Injured==element.type){
-                    element.recipient.forEach(_recipient => {
-                        if(_recipient==selfInfo) return true;
-                    });
-                } 
+                if(EventType.AfterAttack==element.type&&element.spellcaster==selfInfo) 
+                    return true; 
             });
 
             return false;
