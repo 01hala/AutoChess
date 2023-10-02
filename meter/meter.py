@@ -70,7 +70,7 @@ def excel_meter(xlr, outdir):
             elem.append((k, v))
 
         json_obj = {}
-        for n in range(2, tables[i].nrows):
+        for n in range(3, tables[i].nrows):
             json_sub = {}
 
             cell = tables[i].cell(n,0)
@@ -102,6 +102,7 @@ def excel_meter(xlr, outdir):
                             value = str(value)
                     else:
                         value = str(value)
+                        print(value)
                 if v == "int":
                     print(value)
                     if value == "":
@@ -125,10 +126,10 @@ def excel_meter(xlr, outdir):
                 json_sub[k] = value
 
         print(outdir)
-        file_path = os.path.join(outdir, file_name + '.txt')
+        file_path = os.path.join(outdir, file_name + '.json')
         print(file_path)
-        file = open(file_path, 'w')
-        json.dump(json_obj, file, indent=4)
+        file = open(file_path, 'w', encoding='utf-8')
+        json.dump(json_obj, file, indent=4, ensure_ascii=False)
         file.close()
 
 if __name__=="__main__":

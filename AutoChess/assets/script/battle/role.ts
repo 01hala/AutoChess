@@ -19,6 +19,12 @@ export class SkillInfo {
     public skill : skill.SkillBase;
 }
 
+function createSkill(level:number, skillID:number) : skill.SkillBase {
+    
+    
+    return null;
+}
+
 export class Role {
     public id:number;
     public level:number;
