@@ -6,8 +6,7 @@ const { ccclass, property } = _decorator;
 @ccclass('SkillTrigger_ChangeSelfLocation_12')
 export class SkillTrigger_ChangeSelfLocation_12 extends SkillTriggerBase {
     public res:string="battle/skill/SkillTrigger_ChangeSelfLocation_12";
-    public EventType:EventType=EventType.ChangeSelfLocation;
-
+    
     CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
     {
         try
@@ -25,7 +24,7 @@ export class SkillTrigger_ChangeSelfLocation_12 extends SkillTriggerBase {
         try
         {
             for (let element of frameEvent) {
-                if(EventType.ChangeSelfLocation == element.type){
+                if(EventType.ChangeLocation == element.type){
                     for (let _recipient of element.recipient) {
                         if(_recipient.camp == selfInfo.camp && _recipient.index == selfInfo.index) {
                             return true;
