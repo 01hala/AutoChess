@@ -16,8 +16,7 @@ export enum EventType {
     AfterAttack = 9,
     Injured = 10,
     Syncope = 11,
-    ChangeSelfLocation = 12,
-    ChangeEnemyLocation = 13,
+    ChangeLocation = 12,
 }
 
 export enum ChangePositionType {
