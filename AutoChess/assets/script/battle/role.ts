@@ -84,7 +84,7 @@ function createSkill(level:number, skillID:number) : skill.SkillBase {
         break;
         case 5:
         {
-            skillObj = new Skill_SwapProperties_5.Skill_SwapProperties_5(skillConfig.Priority, value0, value1);
+            skillObj = new Skill_SwapProperties_5.Skill_SwapProperties_5(skillConfig.Priority, skillConfig.SwapPropertiesType, value0, value1);
         }
         break;
         case 6:
@@ -94,7 +94,7 @@ function createSkill(level:number, skillID:number) : skill.SkillBase {
         break;
         case 7:
         {
-            skillObj = new Skill_ChangePosition_7.Skill_ChangePosition_7(skillConfig.Priority, value0);
+            skillObj = new Skill_ChangePosition_7.Skill_ChangePosition_7(skillConfig.Priority, skillConfig.ChangePositionType, value0, value1);
         }
         break;
     }

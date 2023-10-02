@@ -10,12 +10,18 @@ const { ccclass, property } = _decorator;
 @ccclass('Skill_ChangePosition_7')
 export class Skill_ChangePosition_7 extends SkillBase {
     public res:string="battle/skill/Skill_ChangePosition_7";
+
+    private index1:number;
+    private index2:number;
     private changeType : ChangePositionType;
 
-    constructor(priority:number, changeType : ChangePositionType)
+    constructor(priority:number, changeType : ChangePositionType, change1:number, change2:number)
     {
         super(priority);
+
         this.changeType = changeType;
+        this.index1=change1;
+        this.index2=change2;
     }
 
 
@@ -39,22 +45,22 @@ export class Skill_ChangePosition_7 extends SkillBase {
                 originalRoleList=battle.GetSelfTeam().GetRoles().slice();
             }
 
-            if(ChangePositionType.FrontEndChange == this.changeType)
+            if(ChangePositionType.AssignChange == this.changeType)
             {
-                let begin = originalRoleList[0];
-                let end = originalRoleList[-1];
-                originalRoleList[0] = end;
-                originalRoleList[-1] = begin;
+                let begin = originalRoleList[this.index1];
+                let end = originalRoleList[this.index2];
+                originalRoleList[this.index1] = end;
+                originalRoleList[this.index2] = begin;
                 let recipient = new RoleInfo();
-                recipient.index = 0;
+                recipient.index = this.index1;
                 recipient.camp = begin.selfCamp;
                 battleEvent.recipient.push(recipient);
                 recipient = new RoleInfo();
-                recipient.index = originalRoleList.length - 1;
+                recipient.index = this.index2;
                 recipient.camp = begin.selfCamp;
                 battleEvent.recipient.push(recipient);
-                battleEvent.value.push(0);
-                battleEvent.value.push(originalRoleList.length - 1);
+                battleEvent.value.push(this.index1);
+                battleEvent.value.push(this.index2);
             }
             else if(ChangePositionType.RandomChange == this.changeType)
             {

@@ -21,9 +21,15 @@ export enum EventType {
 }
 
 export enum ChangePositionType {
-    FrontEndChange = 1,
+    AssignChange = 1,
     RandomChange = 2,
 } 
+
+export enum SwapPropertiesType {
+    SelfSwap = 1,
+    AssignSwap = 2,
+    RandomSwap = 3,
+}
 
 /*
  * 技能类型

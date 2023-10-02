@@ -15,7 +15,9 @@
         "Level3Value_1": 5,
         "Level3Value_2": 5,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "3": {
         "Id": 3,
@@ -33,7 +35,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "4": {
         "Id": 4,
@@ -51,7 +55,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "5": {
         "Id": 5,
@@ -69,7 +75,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "6": {
         "Id": 6,
@@ -87,7 +95,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 4,
         "SummonId": "[1]",
-        "SummonLevel": 1
+        "SummonLevel": 1,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "7": {
         "Id": 7,
@@ -105,7 +115,9 @@
         "Level3Value_1": 7,
         "Level3Value_2": 7,
         "SummonId": "[1]",
-        "SummonLevel": 1
+        "SummonLevel": 1,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "13": {
         "Id": 13,
@@ -123,7 +135,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "15": {
         "Id": 15,
@@ -141,7 +155,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 1,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "16": {
         "Id": 16,
@@ -159,7 +175,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 4,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "17": {
         "Id": 17,
@@ -177,7 +195,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "19": {
         "Id": 19,
@@ -195,7 +215,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": 2.0
     },
     "20": {
         "Id": 20,
@@ -213,7 +235,9 @@
         "Level3Value_1": 7,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "22": {
         "Id": 22,
@@ -231,7 +255,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "23": {
         "Id": 23,
@@ -249,7 +275,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "25": {
         "Id": 25,
@@ -267,7 +295,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "28": {
         "Id": 28,
@@ -285,7 +315,9 @@
         "Level3Value_1": 7,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "29": {
         "Id": 29,
@@ -303,7 +335,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "30": {
         "Id": 30,
@@ -321,7 +355,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "31": {
         "Id": 31,
@@ -339,7 +375,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 1,
+        "ChangePositionType": ""
     },
     "32": {
         "Id": 32,
@@ -357,7 +395,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "33": {
         "Id": 33,
@@ -375,7 +415,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "37": {
         "Id": 37,
@@ -393,7 +435,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "38": {
         "Id": 38,
@@ -411,7 +455,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "39": {
         "Id": 39,
@@ -429,7 +475,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "40": {
         "Id": 40,
@@ -447,7 +495,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "42": {
         "Id": 42,
@@ -465,7 +515,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "45": {
         "Id": 45,
@@ -483,7 +535,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "50": {
         "Id": 50,
@@ -501,7 +555,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 4,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "51": {
         "Id": 51,
@@ -519,7 +575,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "52": {
         "Id": 52,
@@ -537,6 +595,8 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     }
 }

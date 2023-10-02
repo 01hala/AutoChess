@@ -62,13 +62,11 @@ export class Skill_AttGain_1_2 extends SkillBase
 
             if(Camp.Self==selfInfo.camp)
             {
-                rolesTemp=battle.GetSelfTeam().GetRoles();
-                //...
+                rolesTemp=battle.GetSelfTeam().GetRoles().slice();
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                rolesTemp=battle.GetEnemyTeam().GetRoles();
-                //...
+                rolesTemp=battle.GetEnemyTeam().GetRoles().slice();
             }
             while(recipientRoles.length<this.numberOfRole)
             {
