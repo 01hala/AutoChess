@@ -23,8 +23,8 @@ export class Skill_AttGain_1_1 extends SkillBase
 
     event:Event=new Event();
 
-    public constructor(health:number, attack:number,dir:Direction = 0) {
-        super();
+    public constructor(priority:number, health:number, attack:number,dir:Direction = 0) {
+        super(priority);
 
         this.attack = attack;
         this.health=health;

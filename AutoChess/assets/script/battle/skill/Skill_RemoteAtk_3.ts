@@ -19,8 +19,8 @@ export class Skill_RemoteAtk_3 extends SkillBase
     private numberOfRole : number;
     private attack : number;
 
-    public constructor(numberOfRole:number, attack:number) {
-        super();
+    public constructor(priority:number, numberOfRole:number, attack:number) {
+        super(priority);
 
         this.numberOfRole = numberOfRole;
         this.attack = attack;

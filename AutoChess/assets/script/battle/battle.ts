@@ -84,10 +84,18 @@ export class Battle {
                 let roleInfo = new skill.RoleInfo();
                 roleInfo.index =  parseInt(index);
                 roleInfo.camp = enums.Camp.Self;
+                let p = 0;
+                let skillImpl: skill.SkillBase = null;
                 for(let skill of role.skill) {
                     if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
-                        skill.skill.UseSkill(roleInfo, this);
+                        if (skill.skill.Priority > p) {
+                            skillImpl = skill.skill;
+                            p = skill.skill.Priority;
+                        }
                     }
+                }
+                if (skillImpl) {
+                    skillImpl.UseSkill(roleInfo, this);
                 }
             }
 
@@ -97,10 +105,18 @@ export class Battle {
                 let roleInfo = new skill.RoleInfo();
                 roleInfo.index =  parseInt(index);
                 roleInfo.camp = enums.Camp.Enemy;
+                let p = 0;
+                let skillImpl: skill.SkillBase = null;
                 for(let skill of role.skill) {
                     if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
-                        skill.skill.UseSkill(roleInfo, this);
+                        if (skill.skill.Priority > p) {
+                            skillImpl = skill.skill;
+                            p = skill.skill.Priority;
+                        }
                     }
+                }
+                if (skillImpl) {
+                    skillImpl.UseSkill(roleInfo, this);
                 }
             }
 

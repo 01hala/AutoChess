@@ -24,8 +24,8 @@ export class Skill_Shields_6 extends SkillBase
 
     event:Event=new Event();
 
-    public constructor(value:number,round:number,dir:Direction) {
-        super();
+    public constructor(priority:number, value:number,round:number,dir:Direction) {
+        super(priority);
 
         this.value=value;
         this.round=round;

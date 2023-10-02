@@ -21,8 +21,8 @@ export class Skill_Summon_4 extends SkillBase
     private addedID: number;
     private addedLevel:number;
     private addedProperties: Map<Property, number>;
-    public constructor(id : number,level:number=1,roleProperties : Map<Property, number>=null) {
-        super();
+    public constructor(priority:number, id : number,level:number=1,roleProperties : Map<Property, number>=null) {
+        super(priority);
 
         this.addedID=id;
         this.addedLevel=level;

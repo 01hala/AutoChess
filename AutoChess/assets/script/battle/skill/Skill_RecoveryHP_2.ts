@@ -13,8 +13,8 @@ export class Skill_RecoveryHP_2 extends SkillBase {
     private numberOfRole:number;
     private effectiveValue : number;
 
-    constructor(camp : Camp, numberOfRole:number, effectiveValue : number){
-        super();
+    constructor(priority:number, camp : Camp, numberOfRole:number, effectiveValue : number){
+        super(priority);
         this.camp = camp;
         this.numberOfRole = numberOfRole;
         this.effectiveValue = effectiveValue;

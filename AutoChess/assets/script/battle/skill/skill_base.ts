@@ -24,5 +24,10 @@ export abstract class SkillTriggerBase {
 }
 
 export abstract class SkillBase {
+    public Priority : number = 0;
+    public constructor(priority:number) {
+        this.Priority = priority
+    }
+
     abstract UseSkill(selfInfo: RoleInfo, battle: battle.Battle): void;
 }

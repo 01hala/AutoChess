@@ -12,9 +12,9 @@ export class Skill_ChangePosition_7 extends SkillBase {
     public res:string="battle/skill/Skill_ChangePosition_7";
     private changeType : ChangePositionType;
 
-    constructor(changeType : ChangePositionType)
+    constructor(priority:number, changeType : ChangePositionType)
     {
-        super();
+        super(priority);
         this.changeType = changeType;
     }
 

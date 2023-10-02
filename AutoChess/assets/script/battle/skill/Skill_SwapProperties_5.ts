@@ -20,8 +20,8 @@ export class Skill_SwapProperties_5 extends SkillBase
 
     private index1:number;
     private index2:number;
-    public constructor(swapper1:number,swapper2:number) {
-        super();
+    public constructor(priority:number, swapper1:number,swapper2:number) {
+        super(priority);
 
         this.index1=swapper1;
         this.index2=swapper2;

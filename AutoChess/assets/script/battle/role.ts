@@ -226,8 +226,9 @@ export class Role {
         this.sendHurtedEvent(enemy, damageSelf, battle);
     }
     
-    public ChangeProperties(type:Property,value:number) : Map<Property, number> {
-        return null;
+    public ChangeProperties(type:Property,value:number) {
+        value = value > 50 ? 50 : value;
+        this.properties.set(type, value);
     }
 
     public GetProperty(em: Property) {
