@@ -30,7 +30,7 @@ export class Skill_ChangePosition_7 extends SkillBase {
         try
         {
             let battleEvent : Event = new Event();
-            battleEvent.type = EventType.ChangeEnemyLocation;
+            battleEvent.type = EventType.ChangeLocation;
             battleEvent.spellcaster = selfInfo;
             battleEvent.recipient = [];
             battleEvent.value = [];
