@@ -9,13 +9,11 @@ const { ccclass, property } = _decorator;
 @ccclass('Skill_RecoveryHP_2')
 export class Skill_RecoveryHP_2 extends SkillBase {
     public res:string="battle/skill/Skill_RecoveryHP_2";
-    private camp : Camp;
     private numberOfRole:number;
     private effectiveValue : number;
 
-    constructor(priority:number, camp : Camp, numberOfRole:number, effectiveValue : number){
+    constructor(priority:number, numberOfRole:number, effectiveValue : number){
         super(priority);
-        this.camp = camp;
         this.numberOfRole = numberOfRole;
         this.effectiveValue = effectiveValue;
     }
@@ -25,10 +23,10 @@ export class Skill_RecoveryHP_2 extends SkillBase {
         try
         {
             let effectiveRole : Role[] = null;
-            if(Camp.Enemy == this.camp) {
+            if(Camp.Enemy == selfInfo.camp) {
                 effectiveRole = battle.GetEnemyTeam().GetRoles().slice();
             }
-            else if(Camp.Self == this.camp) {
+            else if(Camp.Self == selfInfo.camp) {
                 effectiveRole = battle.GetSelfTeam().GetRoles().slice();
             }
 
