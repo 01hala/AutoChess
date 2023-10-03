@@ -9,6 +9,6 @@ export class config {
     public static SkillConfig : Map<number, skill_config.SkillConfig>;
 
     public static async load() {
-        config.SkillConfig = await skill_config.load_skill_config();
+        config.SkillConfig = await skill_config.LoadSkillConfig();
     }
 }

@@ -33,7 +33,7 @@ export class SkillConfig {
     public SwapPropertiesType : SwapPropertiesType;
 }
 
-export async function load_skill_config() : Promise<Map<number, SkillConfig>> {
+export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
     return new Promise<Map<number, SkillConfig>>((resolve, reject)=>{
         let map = new Map<number, SkillConfig>();
 
