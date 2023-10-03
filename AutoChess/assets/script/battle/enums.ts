@@ -23,6 +23,8 @@ export enum EventType {
     Injured = 10,
     Syncope = 11,
     ChangeLocation = 12,
+    BattleFail=13,
+    UsedSkill=14,
 }
 
 export enum ChangePositionType {

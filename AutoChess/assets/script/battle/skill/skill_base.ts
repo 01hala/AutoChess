@@ -10,6 +10,7 @@ export class RoleInfo {
     public camp : enums.Camp;
     public index : number;
     public battleCount : number;
+    public Fetters:number;
 }
 
 export class Event {
