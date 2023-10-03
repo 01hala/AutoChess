@@ -21,6 +21,8 @@ export class SkillTrigger_RoundEnd_6 extends SkillTriggerBase
         {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
+
+        return false;
     }
 
     private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo):boolean
@@ -40,6 +42,8 @@ export class SkillTrigger_RoundEnd_6 extends SkillTriggerBase
         {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
+
+        return false;
     }
     
 }

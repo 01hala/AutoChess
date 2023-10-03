@@ -4,6 +4,12 @@
  * 2023/9/27
  */
 
+export enum Property {
+    HP = 1,
+    TotalHP = 2,
+    Attack = 3,
+}
+
 export enum EventType {
     Sold = 1,
     Purchase = 2,

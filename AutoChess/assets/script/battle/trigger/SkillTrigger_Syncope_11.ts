@@ -18,6 +18,8 @@ export class SkillTrigger_Syncope_11 extends SkillTriggerBase {
         {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
+        
+        return false;
     }
 
     private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean

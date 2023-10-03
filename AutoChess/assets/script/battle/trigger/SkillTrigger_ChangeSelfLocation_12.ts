@@ -17,6 +17,8 @@ export class SkillTrigger_ChangeSelfLocation_12 extends SkillTriggerBase {
         {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
+        
+        return false;
     }
 
     private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean

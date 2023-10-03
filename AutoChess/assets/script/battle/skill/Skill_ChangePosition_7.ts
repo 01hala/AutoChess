@@ -1,8 +1,8 @@
 import { _decorator, Component, error, Node } from 'cc';
 import { SkillBase,Event, RoleInfo, SkillTriggerBase } from './skill_base';
-import { Camp, EventType, SkillType } from '../enums';
+import { Property, Camp, EventType, SkillType } from '../enums';
 import { Battle } from '../battle';
-import { Property, Role } from '../role';
+import { Role } from '../role';
 import { ChangePositionType } from '../enums';
 import { random } from '../util';
 const { ccclass, property } = _decorator;
