@@ -13,6 +13,7 @@ import * as SkillTrigger_Injured_10 from './trigger/SkillTrigger_Injured_10'
 import * as SkillTrigger_Syncope_11 from './trigger/SkillTrigger_Syncope_11'
 import * as SkillTrigger_ChangeSelfLocation_12 from './trigger/SkillTrigger_ChangeSelfLocation_12'
 import * as SkillTrigger_ChangeEnemyLocation_13 from './trigger/SkillTrigger_ChangeEnemyLocation_13'
+import * as SkillTrigger_UsedSKill_14 from './trigger/SkillTrigger_UsedSKill_14'
 
 export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
     let triggerObj: skill.SkillTriggerBase = null;
@@ -61,6 +62,11 @@ export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
         case 13:
         {
             triggerObj = new SkillTrigger_ChangeEnemyLocation_13.SkillTrigger_ChangeEnemyLocation_13();
+        }
+        break;
+        case 14:
+        {
+            triggerObj = new SkillTrigger_UsedSKill_14.SkillTrigger_UsedSKill_14();
         }
         break;
     }
