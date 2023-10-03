@@ -12,12 +12,12 @@ namespace Match
             plan_Module.on_buy += Plan_Module_on_buy;
             plan_Module.on_sale_role += Plan_Module_on_sale_role;
             plan_Module.on_refresh += Plan_Module_on_refresh;
-            plan_Module.on_start_battle += Plan_Module_on_start_battle;
+            plan_Module.on_start_round += Plan_Module_on_start_round;
         }
 
-        private void Plan_Module_on_start_battle()
+        private void Plan_Module_on_start_round()
         {
-            var rsp = plan_Module.rsp as plan_start_battle_rsp;
+            var rsp = plan_Module.rsp as plan_start_round_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
         }
 

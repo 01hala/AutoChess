@@ -80,18 +80,18 @@ namespace Abelkhan
     {
         public Int32 RoleID;
         public Int32 Level;
-        public Int32 BaseAttack;
-        public Int32 BaseDefense;
-        public Int32 TotalAttack;
-        public Int32 TotalDefense;
+        public Int32 HP;
+        public Int32 Attack;
+        public Int32 additionSkill;
+        public Int32 additionBuffer;
         public static MsgPack.MessagePackObjectDictionary Role_to_protcol(Role _struct){
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("Level", _struct.Level);
-            _protocol.Add("BaseAttack", _struct.BaseAttack);
-            _protocol.Add("BaseDefense", _struct.BaseDefense);
-            _protocol.Add("TotalAttack", _struct.TotalAttack);
-            _protocol.Add("TotalDefense", _struct.TotalDefense);
+            _protocol.Add("HP", _struct.HP);
+            _protocol.Add("Attack", _struct.Attack);
+            _protocol.Add("additionSkill", _struct.additionSkill);
+            _protocol.Add("additionBuffer", _struct.additionBuffer);
             return _protocol;
         }
         public static Role protcol_to_Role(MsgPack.MessagePackObjectDictionary _protocol){
@@ -103,17 +103,17 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "BaseAttack"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.BaseAttack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "HP"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.HP = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "BaseDefense"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.BaseDefense = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Attack"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.Attack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TotalAttack"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.TotalAttack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "additionSkill"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.additionSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TotalDefense"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.TotalDefense = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "additionBuffer"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
             }
             return _structe15dab07_4671_3806_9f26_9880fe20019d;

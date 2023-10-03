@@ -72,6 +72,7 @@ export class Role {
     private checkShareDamageBuffer() : boolean {
         for (let b of this.buffer) {
             if (enums.BufferType.ShareDamage == b.BufferType && b.Round > 0) {
+                --b.Round;
                 return true;
             }
         }
@@ -81,6 +82,7 @@ export class Role {
     private checkInevitableKill() : boolean {
         for (let b of this.buffer) {
             if (enums.BufferType.InevitableKill == b.BufferType && b.Round > 0) {
+                --b.Round;
                 return true;
             }
         }
@@ -90,6 +92,7 @@ export class Role {
     private checkSubstituteDamageFront() : boolean {
         for (let b of this.buffer) {
             if (enums.BufferType.SubstituteDamageFront == b.BufferType && b.Round > 0) {
+                --b.Round;
                 return true;
             }
         }
@@ -99,6 +102,7 @@ export class Role {
     private checkSubstituteDamageRandom() : boolean {
         for (let b of this.buffer) {
             if (enums.BufferType.SubstituteDamageRandom == b.BufferType && b.Round > 0) {
+                --b.Round;
                 return true;
             }
         }
@@ -111,6 +115,7 @@ export class Role {
         {
             if(enums.BufferType.Shields==b.BufferType&& b.Value>0)
             {
+                --b.Round;
                 return true;
             }
         }
