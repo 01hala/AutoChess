@@ -63,7 +63,7 @@
 
 	"match":{
 		"name":"match",
-		"excel_json_config":"./json_config/",
+		"excel_json_config":"./excel_json/",
 		"log_level":"trace",
 		"log_file":"rank.txt",
 		"log_dir":"./log/"
