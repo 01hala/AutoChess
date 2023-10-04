@@ -5,6 +5,7 @@ import { Battle } from '../../battle/battle';
 import * as skill from '../../battle/skill/skill_base'
 import { netDriver } from '../../netDriver/netDriver';
 import { netGame } from '../../netDriver/netGame';
+import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -43,15 +44,21 @@ export class RoleDis extends Component
         this.atkText=this.node.getChildByName("Atk").getComponentInChildren(RichText);
 
         this.changeAtt();
-
-        
-    }
-
-    update(deltaTime: number) 
-    {
-        this.battle.on_event.forEach(element => {
-            
+        this.battle.on_event.push((evs)=>
+        {
+            for(let ev of evs)
+            {
+                if(EventType.AfterAttack==ev.type)
+                {
+                    this.Attack;
+                }
+                if(EventType.EatFood==ev.type)
+                {
+                    this.changeAtt;
+                }
+            }
         });
+        
     }
 
     Attack()
