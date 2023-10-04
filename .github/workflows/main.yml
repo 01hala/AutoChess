@@ -13,5 +13,7 @@ hotaru:修改config表，在bufftype里新增2个枚举，在role里新增两种
 hotaru:添加Skill_Shields_1_1.ts
 2023/10/01
 hotaru:添加tirgger：5、6、7
-2023/10/3
+2023/10/03
 hotaru:添加trigger：释放技能，EventType枚举添加：UsedSkill、UsedSkill，RoleInfo添加：Fetters属性
+2023/10/04
+hotaru:添加并修改RoleDis.ts，创建attack动画
