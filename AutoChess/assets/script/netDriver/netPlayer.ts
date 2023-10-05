@@ -22,9 +22,12 @@ export class netPlayer {
         this.c_login_caller = new login.login_caller(cli.cli_handle); 
         this.c_player_login_caller = new player_login.player_login_caller(cli.cli_handle);
 
+        this.player_client_module = new player_client.player_client_module(cli.cli_handle);
         this.player_client_module.cb_archive_sync = (info) => {
             this.UserData = info;
-            this.cb_archive_sync.call(null);
+            if (this.cb_archive_sync) {
+                this.cb_archive_sync.call(null);
+            }
         }
         this.player_client_module.cb_battle_victory = () => {
             this.cb_battle_victory.call(null);
