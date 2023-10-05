@@ -30,7 +30,11 @@ namespace Match
                 role.Level = RandomHelper.RandomInt(3);
                 role.HP = rolec.Hp * role.Level;
                 role.Attack = rolec.Attack * role.Level;
-                role.additionSkill = 
+                role.additionSkill = 0;
+
+                var indexBuffer = RandomHelper.RandomInt(config.Config.BufferConfigs.Values.Count);
+                var bufferc = config.Config.BufferConfigs.Values.ElementAt(indexBuffer);
+                role.additionBuffer = bufferc.Id;
             }
 
             return data;

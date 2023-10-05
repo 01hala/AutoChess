@@ -42,7 +42,6 @@ namespace config
             foreach (var o in handle.Values<Newtonsoft.Json.Linq.JObject>())
             {
                 var rolec = new RoleConfig();
-
                 rolec.Id = (int)o["Id"];
                 rolec.Name = (string)o["Name"];
                 rolec.Stage = (int)o["Stage"];
