@@ -62,14 +62,23 @@ export class netGame {
         })
     }
     
-    public cb_battle: (self:common.UserBattleData, target:common.UserBattleData, random:number[], is_victory:boolean) => void;
+    public cb_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
     public battle() {
-        this.c_match.get_hub(this.match_name).start_battle().callBack((self, target, random, is_victory)=>{
-            this.cb_battle.call(null, self, target, random, is_victory);
+        this.c_match.get_hub(this.match_name).start_round().callBack((self, target)=>{
+            this.cb_battle.call(null, self, target);
         }, (err)=>{
             console.log("battle err:", err);
         }).timeout(3000, ()=>{
             console.log("battle timeout!");
+        })
+    }
+
+    public confirm_round_victory(is_victory:boolean) {
+        this.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(()=>{
+        }, ()=>{
+            console.log("confirm_round_victory err");
+        }).timeout(3000, ()=>{
+            console.log("confirm_round_victory timeout!");
         })
     }
 }

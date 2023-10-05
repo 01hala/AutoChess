@@ -14,10 +14,10 @@ struct UserData
 struct Role {
 	int32 RoleID;
 	int32 Level;
-	int32 BaseAttack;
-	int32 BaseDefense;
-	int32 TotalAttack;
-	int32 TotalDefense;
+	int32 HP;
+	int32 Attack;
+	int32 additionSkill;
+	int32 additionBuffer;
 }
 
 struct UserBattleData

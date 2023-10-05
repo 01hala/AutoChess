@@ -8,7 +8,7 @@ import { _decorator, Component, Node } from 'cc';
 import { SkillBase,Event, RoleInfo, SkillTriggerBase } from './skill_base';
 import { Camp, EventType, SkillType } from '../enums';
 import { Battle } from '../battle';
-import { Property, Role } from '../role';
+import {  Role } from '../role';
 import { random } from '../util';
 
 export class Skill_RemoteAtk_3 extends SkillBase  

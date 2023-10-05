@@ -178,57 +178,113 @@ namespace Abelkhan
 
     }
 
-    public class plan_start_battle_cb
+    public class plan_start_round_cb
     {
         private UInt64 cb_uuid;
         private plan_rsp_cb module_rsp_cb;
 
-        public plan_start_battle_cb(UInt64 _cb_uuid, plan_rsp_cb _module_rsp_cb)
+        public plan_start_round_cb(UInt64 _cb_uuid, plan_rsp_cb _module_rsp_cb)
         {
             cb_uuid = _cb_uuid;
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<UserBattleData, UserBattleData, List<Int32>, bool> on_start_battle_cb;
-        public event Action<Int32> on_start_battle_err;
-        public event Action on_start_battle_timeout;
+        public event Action<UserBattleData, UserBattleData> on_start_round_cb;
+        public event Action<Int32> on_start_round_err;
+        public event Action on_start_round_timeout;
 
-        public plan_start_battle_cb callBack(Action<UserBattleData, UserBattleData, List<Int32>, bool> cb, Action<Int32> err)
+        public plan_start_round_cb callBack(Action<UserBattleData, UserBattleData> cb, Action<Int32> err)
         {
-            on_start_battle_cb += cb;
-            on_start_battle_err += err;
+            on_start_round_cb += cb;
+            on_start_round_err += err;
             return this;
         }
 
         public void timeout(UInt64 tick, Action timeout_cb)
         {
             TinyTimer.add_timer(tick, ()=>{
-                module_rsp_cb.start_battle_timeout(cb_uuid);
+                module_rsp_cb.start_round_timeout(cb_uuid);
             });
-            on_start_battle_timeout += timeout_cb;
+            on_start_round_timeout += timeout_cb;
         }
 
-        public void call_cb(UserBattleData self, UserBattleData target, List<Int32> random, bool is_victory)
+        public void call_cb(UserBattleData self, UserBattleData target)
         {
-            if (on_start_battle_cb != null)
+            if (on_start_round_cb != null)
             {
-                on_start_battle_cb(self, target, random, is_victory);
+                on_start_round_cb(self, target);
             }
         }
 
         public void call_err(Int32 err)
         {
-            if (on_start_battle_err != null)
+            if (on_start_round_err != null)
             {
-                on_start_battle_err(err);
+                on_start_round_err(err);
             }
         }
 
         public void call_timeout()
         {
-            if (on_start_battle_timeout != null)
+            if (on_start_round_timeout != null)
             {
-                on_start_battle_timeout();
+                on_start_round_timeout();
+            }
+        }
+
+    }
+
+    public class plan_confirm_round_victory_cb
+    {
+        private UInt64 cb_uuid;
+        private plan_rsp_cb module_rsp_cb;
+
+        public plan_confirm_round_victory_cb(UInt64 _cb_uuid, plan_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action on_confirm_round_victory_cb;
+        public event Action on_confirm_round_victory_err;
+        public event Action on_confirm_round_victory_timeout;
+
+        public plan_confirm_round_victory_cb callBack(Action cb, Action err)
+        {
+            on_confirm_round_victory_cb += cb;
+            on_confirm_round_victory_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.confirm_round_victory_timeout(cb_uuid);
+            });
+            on_confirm_round_victory_timeout += timeout_cb;
+        }
+
+        public void call_cb()
+        {
+            if (on_confirm_round_victory_cb != null)
+            {
+                on_confirm_round_victory_cb();
+            }
+        }
+
+        public void call_err()
+        {
+            if (on_confirm_round_victory_err != null)
+            {
+                on_confirm_round_victory_err();
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_confirm_round_victory_timeout != null)
+            {
+                on_confirm_round_victory_timeout();
             }
         }
 
@@ -239,7 +295,8 @@ namespace Abelkhan
         public Dictionary<UInt64, plan_buy_cb> map_buy;
         public Dictionary<UInt64, plan_sale_role_cb> map_sale_role;
         public Dictionary<UInt64, plan_refresh_cb> map_refresh;
-        public Dictionary<UInt64, plan_start_battle_cb> map_start_battle;
+        public Dictionary<UInt64, plan_start_round_cb> map_start_round;
+        public Dictionary<UInt64, plan_confirm_round_victory_cb> map_confirm_round_victory;
         public plan_rsp_cb(Common.ModuleManager modules)
         {
             map_buy = new Dictionary<UInt64, plan_buy_cb>();
@@ -251,9 +308,12 @@ namespace Abelkhan
             map_refresh = new Dictionary<UInt64, plan_refresh_cb>();
             modules.add_mothed("plan_rsp_cb_refresh_rsp", refresh_rsp);
             modules.add_mothed("plan_rsp_cb_refresh_err", refresh_err);
-            map_start_battle = new Dictionary<UInt64, plan_start_battle_cb>();
-            modules.add_mothed("plan_rsp_cb_start_battle_rsp", start_battle_rsp);
-            modules.add_mothed("plan_rsp_cb_start_battle_err", start_battle_err);
+            map_start_round = new Dictionary<UInt64, plan_start_round_cb>();
+            modules.add_mothed("plan_rsp_cb_start_round_rsp", start_round_rsp);
+            modules.add_mothed("plan_rsp_cb_start_round_err", start_round_err);
+            map_confirm_round_victory = new Dictionary<UInt64, plan_confirm_round_victory_cb>();
+            modules.add_mothed("plan_rsp_cb_confirm_round_victory_rsp", confirm_round_victory_rsp);
+            modules.add_mothed("plan_rsp_cb_confirm_round_victory_err", confirm_round_victory_err);
         }
 
         public void buy_rsp(IList<MsgPack.MessagePackObject> inArray){
@@ -371,46 +431,76 @@ namespace Abelkhan
             }
         }
 
-        public void start_battle_rsp(IList<MsgPack.MessagePackObject> inArray){
+        public void start_round_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _self = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             var _target = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
-            var _random = new List<Int32>();
-            var _protocol_arrayrandom = ((MsgPack.MessagePackObject)inArray[3]).AsList();
-            foreach (var v_c03dfc9d_eeb7_5400_a34e_3331e6d6a766 in _protocol_arrayrandom){
-                _random.Add(((MsgPack.MessagePackObject)v_c03dfc9d_eeb7_5400_a34e_3331e6d6a766).AsInt32());
-            }
-            var _is_victory = ((MsgPack.MessagePackObject)inArray[4]).AsBoolean();
-            var rsp = try_get_and_del_start_battle_cb(uuid);
+            var rsp = try_get_and_del_start_round_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_self, _target, _random, _is_victory);
+                rsp.call_cb(_self, _target);
             }
         }
 
-        public void start_battle_err(IList<MsgPack.MessagePackObject> inArray){
+        public void start_round_err(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var rsp = try_get_and_del_start_battle_cb(uuid);
+            var rsp = try_get_and_del_start_round_cb(uuid);
             if (rsp != null)
             {
                 rsp.call_err(_err);
             }
         }
 
-        public void start_battle_timeout(UInt64 cb_uuid){
-            var rsp = try_get_and_del_start_battle_cb(cb_uuid);
+        public void start_round_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_start_round_cb(cb_uuid);
             if (rsp != null){
                 rsp.call_timeout();
             }
         }
 
-        private plan_start_battle_cb try_get_and_del_start_battle_cb(UInt64 uuid){
-            lock(map_start_battle)
+        private plan_start_round_cb try_get_and_del_start_round_cb(UInt64 uuid){
+            lock(map_start_round)
             {
-                if (map_start_battle.TryGetValue(uuid, out plan_start_battle_cb rsp))
+                if (map_start_round.TryGetValue(uuid, out plan_start_round_cb rsp))
                 {
-                    map_start_battle.Remove(uuid);
+                    map_start_round.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
+        public void confirm_round_victory_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var rsp = try_get_and_del_confirm_round_victory_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb();
+            }
+        }
+
+        public void confirm_round_victory_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var rsp = try_get_and_del_confirm_round_victory_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err();
+            }
+        }
+
+        public void confirm_round_victory_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_confirm_round_victory_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private plan_confirm_round_victory_cb try_get_and_del_confirm_round_victory_cb(UInt64 uuid){
+            lock(map_confirm_round_victory)
+            {
+                if (map_confirm_round_victory.TryGetValue(uuid, out plan_confirm_round_victory_cb rsp))
+                {
+                    map_confirm_round_victory.Remove(uuid);
                 }
                 return rsp;
             }
@@ -500,17 +590,31 @@ namespace Abelkhan
             }            return cb_refresh_obj;
         }
 
-        public plan_start_battle_cb start_battle(){
-            var uuid_21a74a63_a13c_539e_b2bc_ef5069375dba = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
+        public plan_start_round_cb start_round(){
+            var uuid_749771b4_9d43_5dd9_aa87_9201c8f06d41 = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
 
-            var _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873 = new ArrayList();
-            _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba);
-            _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_start_battle", _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873);
+            var _argv_a79b5af5_d482_3045_beb1_226490350eb9 = new ArrayList();
+            _argv_a79b5af5_d482_3045_beb1_226490350eb9.Add(uuid_749771b4_9d43_5dd9_aa87_9201c8f06d41);
+            _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_start_round", _argv_a79b5af5_d482_3045_beb1_226490350eb9);
 
-            var cb_start_battle_obj = new plan_start_battle_cb(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba, rsp_cb_plan_handle);
-            lock(rsp_cb_plan_handle.map_start_battle)
-            {                rsp_cb_plan_handle.map_start_battle.Add(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba, cb_start_battle_obj);
-            }            return cb_start_battle_obj;
+            var cb_start_round_obj = new plan_start_round_cb(uuid_749771b4_9d43_5dd9_aa87_9201c8f06d41, rsp_cb_plan_handle);
+            lock(rsp_cb_plan_handle.map_start_round)
+            {                rsp_cb_plan_handle.map_start_round.Add(uuid_749771b4_9d43_5dd9_aa87_9201c8f06d41, cb_start_round_obj);
+            }            return cb_start_round_obj;
+        }
+
+        public plan_confirm_round_victory_cb confirm_round_victory(bool is_victory){
+            var uuid_e5597e65_791a_5923_ac90_94a6aa039d4f = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
+
+            var _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0 = new ArrayList();
+            _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0.Add(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f);
+            _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0.Add(is_victory);
+            _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_confirm_round_victory", _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0);
+
+            var cb_confirm_round_victory_obj = new plan_confirm_round_victory_cb(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f, rsp_cb_plan_handle);
+            lock(rsp_cb_plan_handle.map_confirm_round_victory)
+            {                rsp_cb_plan_handle.map_confirm_round_victory.Add(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f, cb_confirm_round_victory_obj);
+            }            return cb_confirm_round_victory_obj;
         }
 
     }

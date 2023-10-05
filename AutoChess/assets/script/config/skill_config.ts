@@ -4,7 +4,7 @@
  * 2023/10/2
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction } from '../battle/enums';
+import { Direction, ChangePositionType, SwapPropertiesType } from '../battle/enums';
 
 export enum Priority {
     Low = 1,
@@ -29,9 +29,11 @@ export class SkillConfig {
     public Level3Value_2: number;
     public SummonId: number[];
     public SummonLevel: number;
+    public ChangePositionType : ChangePositionType;
+    public SwapPropertiesType : SwapPropertiesType;
 }
 
-export async function load_skill_config() : Promise<Map<number, SkillConfig>> {
+export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
     return new Promise<Map<number, SkillConfig>>((resolve, reject)=>{
         let map = new Map<number, SkillConfig>();
 
@@ -62,6 +64,8 @@ export async function load_skill_config() : Promise<Map<number, SkillConfig>> {
                 skillc.Level3Value_2 = v["Level3Value_2"];
                 skillc.SummonId = JSON.parse(v["SummonId"]);
                 skillc.SummonLevel = v["SummonLevel"];
+                skillc.ChangePositionType = v["ChangePositionType"];
+                skillc.SwapPropertiesType = v["SwapPropertiesType"];
 
                 map.set(parseInt(k), skillc);
             });

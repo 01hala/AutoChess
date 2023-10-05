@@ -8,8 +8,8 @@ import { _decorator, Component, debug, log, Node } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase, } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
-import { Role,Property } from '../role';
-import { Camp, SkillType } from '../enums';
+import { Role } from '../role';
+import { Camp, SkillType, Property } from '../enums';
 import { random } from '../util';
 
 export class Skill_AttGain_1_2 extends SkillBase 
@@ -62,13 +62,11 @@ export class Skill_AttGain_1_2 extends SkillBase
 
             if(Camp.Self==selfInfo.camp)
             {
-                rolesTemp=battle.GetSelfTeam().GetRoles();
-                //...
+                rolesTemp=battle.GetSelfTeam().GetRoles().slice();
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                rolesTemp=battle.GetEnemyTeam().GetRoles();
-                //...
+                rolesTemp=battle.GetEnemyTeam().GetRoles().slice();
             }
             while(recipientRoles.length<this.numberOfRole)
             {

@@ -8,8 +8,8 @@ import { _decorator, Component, debug, log, Node, random } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
-import { Role,Property } from '../role';
-import { Camp, SkillType } from '../enums';
+import { Role } from '../role';
+import { Camp, Property, SkillType } from '../enums';
 
 export class Skill_Summon_4 extends SkillBase 
 {

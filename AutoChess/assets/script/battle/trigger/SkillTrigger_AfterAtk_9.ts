@@ -24,6 +24,8 @@ export class SkillTrigger_AfterAtk_9 extends SkillTriggerBase
         {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");            
         }
+
+        return false;
     }
 
     private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean

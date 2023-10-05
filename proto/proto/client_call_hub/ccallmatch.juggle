@@ -4,5 +4,6 @@ module plan {
     buy req(ShopIndex shop_index, int32 index) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
     sale_role req(int32 index) rsp(UserBattleData info) err(int32 err);
     refresh req() rsp(ShopData info) err(int32 err);
-    start_battle req() rsp(UserBattleData self, UserBattleData target, int32[] random, bool is_victory) err(int32 err);
+    start_round req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
+    confirm_round_victory req(bool is_victory) rsp() err();
 }

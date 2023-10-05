@@ -4,6 +4,12 @@
  * 2023/9/27
  */
 
+export enum Property {
+    HP = 1,
+    TotalHP = 2,
+    Attack = 3,
+}
+
 export enum EventType {
     Sold = 1,
     Purchase = 2,
@@ -16,14 +22,21 @@ export enum EventType {
     AfterAttack = 9,
     Injured = 10,
     Syncope = 11,
-    ChangeSelfLocation = 12,
-    ChangeEnemyLocation = 13,
+    ChangeLocation = 12,
+    BattleFail=13,
+    UsedSkill=14,
 }
 
 export enum ChangePositionType {
-    FrontEndChange = 1,
+    AssignChange = 1,
     RandomChange = 2,
 } 
+
+export enum SwapPropertiesType {
+    SelfSwap = 1,
+    AssignSwap = 2,
+    RandomSwap = 3,
+}
 
 /*
  * 技能类型

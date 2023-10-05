@@ -66,10 +66,10 @@ export class Role
 {
     public RoleID : number = 0;
     public Level : number = 0;
-    public BaseAttack : number = 0;
-    public BaseDefense : number = 0;
-    public TotalAttack : number = 0;
-    public TotalDefense : number = 0;
+    public HP : number = 0;
+    public Attack : number = 0;
+    public additionSkill : number = 0;
+    public additionBuffer : number = 0;
 
 }
 
@@ -86,17 +86,17 @@ export function protcol_to_Role(_protocol:any){
         else if (key === "Level"){
             _struct.Level = val as number;
         }
-        else if (key === "BaseAttack"){
-            _struct.BaseAttack = val as number;
+        else if (key === "HP"){
+            _struct.HP = val as number;
         }
-        else if (key === "BaseDefense"){
-            _struct.BaseDefense = val as number;
+        else if (key === "Attack"){
+            _struct.Attack = val as number;
         }
-        else if (key === "TotalAttack"){
-            _struct.TotalAttack = val as number;
+        else if (key === "additionSkill"){
+            _struct.additionSkill = val as number;
         }
-        else if (key === "TotalDefense"){
-            _struct.TotalDefense = val as number;
+        else if (key === "additionBuffer"){
+            _struct.additionBuffer = val as number;
         }
     }
     return _struct;
