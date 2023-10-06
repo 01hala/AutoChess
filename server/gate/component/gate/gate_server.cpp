@@ -30,7 +30,7 @@ gate_service::gate_service(std::string config_file_path, std::string config_name
 	_center_config = _root_config->get_value_dict("center");
 	_config = _root_config->get_value_dict(config_name);
 
-	gate_name_info.name = fmt::format("{0}_{1}", config_name, xg::newGuid().str());
+	gate_name_info.name = std::format("{0}_{1}", config_name, xg::newGuid().str());
 	reconn_count = 0;
 	tick = 0;
 }
@@ -56,12 +56,12 @@ void gate_service::init() {
 
 	ares_library_init(ARES_LIB_INIT_ALL);
 
-	auto this_ptr = shared_from_this();
+	auto this_ptr = this;
 
-	_timerservice = std::make_shared<service::timerservice>();
-	_hubsvrmanager = std::make_shared<hubsvrmanager>();
-	_clientmanager = std::make_shared<clientmanager>(_hubsvrmanager);
-	_closehandle = std::make_shared<closehandle>();
+	_timerservice = new service::timerservice();
+	_hubsvrmanager = new hubsvrmanager();
+	_clientmanager = new clientmanager(_config->get_value_int("limit_client"), _hubsvrmanager);
+	_closehandle = new closehandle();
 
 	auto redismq_url = _root_config->get_value_string("redis_for_mq");
 	auto redismq_is_cluster = _root_config->get_value_bool("redismq_is_cluster");
@@ -74,9 +74,9 @@ void gate_service::init() {
 	}
 	_hub_redismq_service->start();
 
-	_center_msg_handle = std::make_shared<center_msg_handle>(this_ptr, _hubsvrmanager, _timerservice, _hub_redismq_service);
-	_hub_svr_msg_handle = std::make_shared<hub_svr_msg_handle>(_clientmanager, _hubsvrmanager);
-	_client_msg_handle = std::make_shared<client_msg_handle>(_clientmanager, _hubsvrmanager, _timerservice);
+	_center_msg_handle = new center_msg_handle(this_ptr, _hubsvrmanager, _timerservice, _hub_redismq_service);
+	_hub_svr_msg_handle = new hub_svr_msg_handle(_clientmanager, _hubsvrmanager);
+	_client_msg_handle = new client_msg_handle(_clientmanager, _hubsvrmanager, _timerservice);
 
 	auto _center_ch = _hub_redismq_service->connect(_center_config->get_value_string("name"));
 	init_center(_center_ch);
@@ -97,7 +97,12 @@ void gate_service::init() {
 				std::static_pointer_cast<service::channel>(ch)->set_xor_key_crypt();
 
 				auto _client = _clientmanager->reg_client(ch);
-				_client->ntf_cuuid();
+				if (_client) {
+					_client->ntf_cuuid();
+				}
+				else {
+					ch->disconnect();
+				}
 			});
 			_client_service->sigchanneldisconnect.connect([this](std::shared_ptr<abelkhan::Ichannel> ch) {
 				service::gc_put([this, ch]() {
@@ -127,7 +132,12 @@ void gate_service::init() {
 				}
 
 				auto _client = _clientmanager->reg_client(ch);
-				_client->ntf_cuuid();
+				if (_client) {
+					_client->ntf_cuuid();
+				}
+				else {
+					ch->disconnect();
+				}
 			});
 			_websocket_service->sigchanneldisconnect.connect([this](std::shared_ptr<abelkhan::Ichannel> ch) {
 				service::gc_put([this, ch]() {
@@ -153,8 +163,13 @@ void gate_service::init() {
 				std::static_pointer_cast<service::enetchannel>(ch)->set_xor_key_crypt();
 
 				auto _client = _clientmanager->reg_client(ch);
-				_client->ntf_cuuid();
-				});
+				if (_client) {
+					_client->ntf_cuuid();
+				}
+				else {
+					ch->disconnect();
+				}
+			});
 			_enet_service->sig_disconnect.connect([this](std::shared_ptr<abelkhan::Ichannel> ch) {
 				service::gc_put([this, ch]() {
 					//_clientmanager->unreg_client(ch);
@@ -169,7 +184,7 @@ void gate_service::init() {
 void gate_service::init_center(std::shared_ptr<abelkhan::Ichannel> _center_ch) {
 	_centerproxy = std::make_shared<centerproxy>(_center_ch, _timerservice);
 	_centerproxy->reg_server(gate_name_info, [this]() {
-		heartbeat_center(shared_from_this(), [this]() {
+		heartbeat_center(this, [this]() {
 			if (reconn_count > 5) {
 				spdlog::critical("connect center faild count:{0}!", reconn_count);
 				sig_center_crash.emit();
@@ -187,7 +202,7 @@ void gate_service::init_center(std::shared_ptr<abelkhan::Ichannel> _center_ch) {
 	});
 }
 
-void gate_service::heartbeat_center(std::shared_ptr<gate_service> _gate_service, std::function<void()> reconn_func, int64_t tick) {
+void gate_service::heartbeat_center(gate_service* _gate_service, std::function<void()> reconn_func, int64_t tick) {
 	do {
 		if ((tick - _gate_service->_centerproxy->timetmp) > 9000) {
 			reconn_func();

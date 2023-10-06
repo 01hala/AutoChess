@@ -30,7 +30,7 @@ namespace gate {
 class clientmanager;
 class clientproxy {
 private:
-	concurrent::ringque<std::pair<char*, int> > wait_send_buf;
+	mutable concurrent::ringque<std::pair<char*, int> > wait_send_buf;
 
 public:
 	int64_t _timetmp = 0;
@@ -38,23 +38,36 @@ public:
 	std::string _cuuid;
 
 	std::mutex _conn_hubproxys_mutex;
-	std::vector<std::shared_ptr<hubproxy> > conn_hubproxys;
+	std::vector<hubproxy*> conn_hubproxys;
 
 	std::shared_ptr<abelkhan::Ichannel> _ch;
-	int index1 = 0;
-	int index2 = 0;
+	int index = 0;
 	abelkhan::gate_call_client_caller _gate_call_client_caller;
 
-	std::shared_ptr<clientmanager> _cli_mgr = nullptr;
+	clientmanager* _cli_mgr = nullptr;
 
 public:
 	clientproxy() : _gate_call_client_caller(nullptr, service::_modulemng) {
 	}
 
-	clientproxy(const clientproxy & _) : _gate_call_client_caller(nullptr, service::_modulemng) {
+	clientproxy(const clientproxy & other) : _gate_call_client_caller(nullptr, service::_modulemng) {
+		std::pair<char*, int> buf;
+		while (other.wait_send_buf.pop(buf)) {
+			wait_send_buf.push(buf);
+		}
+
+		conn_hubproxys = other.conn_hubproxys;
+
+		_timetmp = other._timetmp;
+		_theory_timetmp = other._theory_timetmp;
+		_cuuid = other._cuuid;
+		_ch = other._ch;
+		_gate_call_client_caller.reset_channel(_ch);
+		index = other.index;
+		_cli_mgr = other._cli_mgr;
 	}
 
-	void init(std::string& cuuid, std::shared_ptr<abelkhan::Ichannel> ch, int _index1, int _index2, std::shared_ptr<clientmanager> cli_mgr) {
+	void init(std::string& cuuid, std::shared_ptr<abelkhan::Ichannel> ch, int _index, clientmanager* cli_mgr) {
 		wait_send_buf.clear();
 		conn_hubproxys.clear();
 
@@ -62,8 +75,7 @@ public:
 		_ch = ch;
 		_gate_call_client_caller.reset_channel(ch);
 
-		index1 = _index1;
-		index2 = _index2;
+		index = _index;
 
 		_cli_mgr = cli_mgr;
 	}
@@ -71,14 +83,14 @@ public:
 	virtual ~clientproxy() {
 	}
 
-	void conn_hub(std::shared_ptr<hubproxy> hub_proxy) {
+	void conn_hub(hubproxy* hub_proxy) {
 		std::lock_guard<std::mutex> l(_conn_hubproxys_mutex);
 		if (std::find(conn_hubproxys.begin(), conn_hubproxys.end(), hub_proxy) == conn_hubproxys.end()) {
 			conn_hubproxys.push_back(hub_proxy);
 		}
 	}
 
-	void unreg_hub(std::shared_ptr<hubproxy> hub_proxy) {
+	void unreg_hub(hubproxy* hub_proxy) {
 		std::lock_guard<std::mutex> l(_conn_hubproxys_mutex);
 		auto it = std::find(conn_hubproxys.begin(), conn_hubproxys.end(), hub_proxy);
 		if (it == conn_hubproxys.end()) {
@@ -101,7 +113,7 @@ public:
 	}
 
 	void done_send() {
-		std::pair<char*, int> buf; ;
+		std::pair<char*, int> buf;
 		while (wait_send_buf.pop(buf)) {
 			_ch->send(buf.first, buf.second);
 		}
@@ -109,21 +121,16 @@ public:
 
 };
 
-class clientmanager : public std::enable_shared_from_this<clientmanager> {
+class clientmanager {
 public:
-	clientmanager(std::shared_ptr<hubsvrmanager> _hubsvrmanager_) {
+	clientmanager(size_t _limit_client, hubsvrmanager* _hubsvrmanager_) {
 		_hubsvrmanager = _hubsvrmanager_;
 
-		client_proxy_pool.resize(1);
-		client_proxy_pool[0].resize(8192);
-
-		client_proxy_recycle_pool.resize(1);
-		for (int i = 0; i < 8192; i++)
+		client_proxy_pool.resize(_limit_client);
+		for (int i = 0; i < _limit_client; i++)
 		{
-			client_proxy_recycle_pool[0].push(i);
+			client_proxy_recycle_pool.push(i);
 		}
-
-		wait_send_cli.resize(1);
 	}
 
 	virtual ~clientmanager() {
@@ -156,54 +163,34 @@ public:
 		}
 	}
 
-	void scaler_client_proxy_pool() {
-		auto index = client_proxy_pool.size();
-		client_proxy_pool.push_back(std::vector<clientproxy>());
-		client_proxy_pool[index].resize(8192);
+	int pop_client_proxy_from_pool() {
+		if (!client_proxy_recycle_pool.empty()) {
+			auto index = client_proxy_recycle_pool.top();
+			client_proxy_recycle_pool.pop();
 
-		client_proxy_recycle_pool.push_back(std::priority_queue<int, std::vector<int>, std::greater<int> >());
-		for (int i = 0; i < 8192; i++)
-		{
-			client_proxy_recycle_pool[index].push(i);
+			return index;
 		}
-
-		wait_send_cli.push_back(std::set<int>());
+		return -1;
 	}
 
-	std::pair<int, int> pop_client_proxy_from_pool() {
-		int index1 = 0, index2 = 0;
-		for (; index1 < client_proxy_recycle_pool.size(); ++index1)
-		{
-			if (!client_proxy_recycle_pool[index1].empty()) {
-				index2 = client_proxy_recycle_pool[index1].top();
-				client_proxy_recycle_pool[index1].pop();
-
-				return { index1, index2 };
-			}
-		}
-
-		scaler_client_proxy_pool();
-
-		index2 = client_proxy_recycle_pool[index1].top();
-		client_proxy_recycle_pool[index1].pop();
-
-		return { index1, index2 };
-	}
-
-	static void recycle_client_proxy(std::shared_ptr<clientmanager> _cli_mgr, clientproxy * _proxy) {
+	static void recycle_client_proxy(clientmanager* _cli_mgr, clientproxy * _proxy) {
 		_proxy->_ch = nullptr;
 		_proxy->_cli_mgr = nullptr;
 
-		_cli_mgr->client_proxy_recycle_pool[_proxy->index1].push(_proxy->index2);
+		_cli_mgr->client_proxy_recycle_pool.push(_proxy->index);
 	}
 
 	std::shared_ptr<clientproxy> reg_client(std::shared_ptr<abelkhan::Ichannel> ch) {
 		auto cuuid = xg::newGuid().str();
-		auto _cli_mgr = shared_from_this();
+		auto _cli_mgr = this;
 
-		auto [index1, index2] = pop_client_proxy_from_pool();
-		auto client_proxy = &client_proxy_pool[index1][index2];
-		client_proxy->init(cuuid, ch, index1, index2, _cli_mgr);
+		auto index = pop_client_proxy_from_pool();
+		if (index < 0) {
+			return nullptr;
+		}
+
+		auto client_proxy = &client_proxy_pool[index];
+		client_proxy->init(cuuid, ch, index, _cli_mgr);
 		auto _client = std::shared_ptr<clientproxy>(client_proxy, std::bind(&clientmanager::recycle_client_proxy, _cli_mgr, std::placeholders::_1));
 
 		client_map.insert(std::make_pair(cuuid, _client));
@@ -232,21 +219,18 @@ public:
 		}
 	}
 
-	void mark_client_proxy_send(int index1, int index2) {
-		wait_send_cli[index1].insert(index2);
+	void mark_client_proxy_send(int index) {
+		wait_send_cli.insert(index);
 	}
 
 	void client_proxy_send() {
 		omp_set_nested(1);
 #pragma omp parallel for
-		for (int index1 = 0; index1 < wait_send_cli.size(); index1++) {
-#pragma omp parallel for
-			for (int index2 : wait_send_cli[index1]) {
-				auto client_proxy = &client_proxy_pool[index1][index2];
-				client_proxy->done_send();
-			}
-			wait_send_cli[index1].clear();
+		for (int index = 0; index < wait_send_cli.size(); index) {
+			auto client_proxy = &client_proxy_pool[index];
+			client_proxy->done_send();
 		}
+		wait_send_cli.clear();
 	}
 
 	bool has_client(std::shared_ptr<abelkhan::Ichannel> ch) {
@@ -283,12 +267,12 @@ private:
 	std::unordered_map<std::string, std::shared_ptr<clientproxy> > client_map;
 	std::unordered_map<std::shared_ptr<abelkhan::Ichannel>, std::shared_ptr<clientproxy> > client_uuid_map;
 
-	std::vector<std::vector<clientproxy> > client_proxy_pool;
-	std::vector<std::priority_queue<int, std::vector<int>, std::greater<int> > > client_proxy_recycle_pool;
+	std::vector<clientproxy> client_proxy_pool;
+	std::priority_queue<int, std::vector<int>, std::greater<int> > client_proxy_recycle_pool;
 
-	std::vector<std::set<int> > wait_send_cli;
+	std::set<int> wait_send_cli;
 
-	std::shared_ptr<hubsvrmanager> _hubsvrmanager;
+	hubsvrmanager* _hubsvrmanager;
 
 };
 
