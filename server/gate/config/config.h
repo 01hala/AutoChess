@@ -10,12 +10,11 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <exception>
 #include <memory>
 #include <iostream>
 
 #include <json11.hpp>
-
-#include <abelkhan.h>
 
 #include <log.h>
 
@@ -26,7 +25,7 @@ public:
 	config(std::string & file) {
 		auto fs = std::ifstream(file);
 		if (!fs.is_open()) {
-			throw abelkhan::Exception("cannot find config file" + file);
+			throw std::exception(("cannot find config file" + file).c_str());
 		}
 
 		std::stringstream buffer;

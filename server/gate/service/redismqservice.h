@@ -14,7 +14,6 @@
 #include <unordered_map>
 
 #include <spdlog/spdlog.h>
-#include <fmt/format.h>
 #include <hiredis/hiredis.h>
 #include <hircluster.h>
 #include <msgpack11.hpp>
@@ -28,7 +27,7 @@ namespace service {
 
 class redismqserviceException : public std::exception{
 public:
-	redismqserviceException(std::string err_) : std::exception() {
+	redismqserviceException(std::string err_) : std::exception(err_.c_str()) {
 		_err = err_;
 	}
 
@@ -79,33 +78,12 @@ public:
 
 		_is_cluster = is_cluster;
 		if (is_cluster) {
-			_write_cluster_ctx = redisClusterContextInit();
-			redisClusterSetOptionAddNodes(_write_cluster_ctx, redis_url.c_str());
-			if (!password.empty()) {
-				redisClusterSetOptionPassword(_write_cluster_ctx, password.c_str());
-			}
-			redisClusterSetOptionRouteUseSlots(_write_cluster_ctx);
-			redisClusterConnect2(_write_cluster_ctx);
-			if (!_write_cluster_ctx || _write_cluster_ctx->err) {
-				spdlog::error("redisClusterConnect2 faild url:{0}!", redis_url);
-				throw redismqserviceException("redisClusterConnect2 faild!");
-			}
-
-			_recv_cluster_ctx = redisClusterContextInit();
-			redisClusterSetOptionAddNodes(_recv_cluster_ctx, redis_url.c_str());
-			if (!password.empty()) {
-				redisClusterSetOptionPassword(_recv_cluster_ctx, password.c_str());
-			}
-			redisClusterSetOptionRouteUseSlots(_recv_cluster_ctx);
-			redisClusterConnect2(_recv_cluster_ctx);
-			if (!_recv_cluster_ctx || _recv_cluster_ctx->err) {
-				spdlog::error("redisClusterConnect2 faild url:{0}!", redis_url);
-				throw redismqserviceException("redisClusterConnect2 faild!");
-			}
+			init_write_cluster_ctx();
+			init_recv_cluster_ctx();
 		}
 		else {
-			_write_ctx = re_conn_redis();
-			_recv_ctx = re_conn_redis();
+			_write_ctx = conn_redis();
+			_recv_ctx = conn_redis();
 		}
 	}
 
@@ -202,62 +180,94 @@ private:
 		wait_listen_channel_names.clear();
 	}
 
-	void redis_cluster_send_data(std::string ch_name, char* data, size_t len) {
-		auto _reply = (redisReply*)redisClusterCommand(_write_cluster_ctx, "LPUSH %s %b", ch_name.c_str(), data, len);
-		if (_reply->type == REDIS_REPLY_PUSH || _reply->type == REDIS_REPLY_INTEGER) {
+	void init_write_cluster_ctx() {
+		_write_cluster_ctx = redisClusterContextInit();
+		redisClusterSetOptionAddNodes(_write_cluster_ctx, _redis_url.c_str());
+		if (!_password.empty()) {
+			redisClusterSetOptionPassword(_write_cluster_ctx, _password.c_str());
 		}
-		else {
-			spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+		redisClusterSetOptionRouteUseSlots(_write_cluster_ctx);
+		redisClusterConnect2(_write_cluster_ctx);
+		if (!_write_cluster_ctx || _write_cluster_ctx->err) {
+			spdlog::error("redisClusterConnect2 faild url:{0}!", _redis_url);
+			throw redismqserviceException("redisClusterConnect2 faild!");
 		}
-		freeReplyObject(_reply);
 	}
 
-	bool redis_cluster_recv_data() {
-		auto ret = false;
+	void init_recv_cluster_ctx() {
+		_recv_cluster_ctx = redisClusterContextInit();
+		redisClusterSetOptionAddNodes(_recv_cluster_ctx, _redis_url.c_str());
+		if (!_password.empty()) {
+			redisClusterSetOptionPassword(_recv_cluster_ctx, _password.c_str());
+		}
+		redisClusterSetOptionRouteUseSlots(_recv_cluster_ctx);
+		redisClusterConnect2(_recv_cluster_ctx);
+		if (!_recv_cluster_ctx || _recv_cluster_ctx->err) {
+			spdlog::error("redisClusterConnect2 faild url:{0}!", _redis_url);
+			throw redismqserviceException("redisClusterConnect2 faild!");
+		}
+	}
 
-		for (auto channel_name : listen_channel_names) {
-			auto _reply = (redisReply*)redisClusterCommand(_recv_cluster_ctx, "RPOP %s", channel_name.c_str());
-			if (_reply->type == REDIS_REPLY_STRING) {
-				auto _buf = _reply->str;
-				auto _ch_name_size = (uint32_t)_buf[0] | ((uint32_t)_buf[1] << 8) | ((uint32_t)_buf[2] << 16) | ((uint32_t)_buf[3] << 24);
-				auto _ch_name = std::string(&_buf[4], _ch_name_size);
-				auto _header_len = 4 + _ch_name_size;
-				auto _msg_len = (uint32_t)_reply->len - _header_len;
-
-				auto tmp_buff = (unsigned char*)_buf[_header_len];
-				uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
-				std::string err;
-				auto obj = msgpack11::MsgPack::parse((const char*)tmp_buff, len, err);
-				recv_data.push(std::make_pair(_ch_name, obj));
-
-				ret = true;
+	void redis_cluster_send_data(std::string ch_name, char* data, size_t len) {
+		auto _reply = (redisReply*)redisClusterCommand(_write_cluster_ctx, "LPUSH %s %b", ch_name.c_str(), data, len);
+		if (_reply) {
+			if (_reply->type == REDIS_REPLY_PUSH || _reply->type == REDIS_REPLY_INTEGER) {
 			}
-			else if (_reply->type != REDIS_REPLY_NIL) {
-				spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+			else {
+				spdlog::error(std::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
 			}
 			freeReplyObject(_reply);
 		}
+		else {
+			spdlog::error("redis exception operate type:{0}, str:{1}", _write_cluster_ctx->err, _write_cluster_ctx->errstr);
+			init_write_cluster_ctx();
+		}
+	}
 
-		return ret;
+	void redis_cluster_recv_data() {
+		std::string cmd = "BRPOP";
+		for (auto channel_name : listen_channel_names) {
+			cmd += " " + channel_name;
+		}
+		cmd += " 1";
+		while (true) {
+			auto _reply = (redisReply*)redisClusterCommand(_recv_cluster_ctx, cmd.c_str());
+			if (_reply) {
+				if (_reply->type == REDIS_REPLY_ARRAY) {
+					auto _buf = _reply->element[1]->str;
+					auto _ch_name_size = (uint32_t)_buf[0] | ((uint32_t)_buf[1] << 8) | ((uint32_t)_buf[2] << 16) | ((uint32_t)_buf[3] << 24);
+					auto _ch_name = std::string(&_buf[4], _ch_name_size);
+					auto _header_len = 4 + _ch_name_size;
+					auto _msg_len = (uint32_t)_reply->len - _header_len;
+
+					auto tmp_buff = (unsigned char*)_buf[_header_len];
+					uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
+					std::string err;
+					auto obj = msgpack11::MsgPack::parse((const char*)tmp_buff, len, err);
+					recv_data.push(std::make_pair(_ch_name, obj));
+
+				}
+				else if (_reply->type != REDIS_REPLY_NIL) {
+					spdlog::error(std::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+				}
+				else {
+					freeReplyObject(_reply);
+					break;
+				}
+				freeReplyObject(_reply);
+			}
+			else {
+				spdlog::error("redis exception operate type:{0}, str:{1}", _recv_cluster_ctx->err, _recv_cluster_ctx->errstr);
+				init_recv_cluster_ctx();
+			}
+		}
 	}
 
 	void thread_poll_cluster() {
 		int sleep_time = 1;
 		while (run_flag) {
 			refresh_listen_list();
-
-			bool is_idle = true;
-			if (redis_cluster_recv_data()) {
-				is_idle = false;
-				sleep_time = 1;
-			}
-
-			if (is_idle) {
-				if (sleep_time < 32) {
-					sleep_time *= 2;
-				}
-				std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time));
-			}
+			redis_cluster_recv_data();
 		}
 	}
 
@@ -284,9 +294,8 @@ private:
 		}
 	}
 	
-	redisContext* re_conn_redis() {
-		char token = ':';
-		auto ip_port = concurrent::split(_redis_url, token);
+	redisContext* conn_redis() {
+		auto ip_port = concurrent::split(_redis_url, ":");
 		auto _ctx = redisConnect(ip_port[0].c_str(), std::stoi(ip_port[1]));
 		if (!_ctx) {
 			spdlog::error("redisConnect faild url:{0}!", _redis_url);
@@ -303,6 +312,20 @@ private:
 		return _ctx;
 	}
 
+	bool re_conn_redis(redisContext* _ctx) {
+		if (redisReconnect(_ctx) == REDIS_OK) {
+			if (!_password.empty()) {
+				auto reply = (redisReply*)redisCommand(_ctx, "AUTH % s", _password.c_str());
+				if (reply->type == REDIS_REPLY_ERROR) {
+					spdlog::error("redisContext auth faild:{0}!", _password);
+					throw redismqserviceException("redisContext auth faild!");
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
 	void redis_mq_send_data(std::string ch_name, char* data, size_t len) {
 		while (true) {
 			auto _reply = (redisReply*)redisCommand(_write_ctx, "LPUSH %s %b", ch_name.c_str(), data, len);
@@ -310,31 +333,37 @@ private:
 				if (_reply->type == REDIS_REPLY_PUSH || _reply->type == REDIS_REPLY_INTEGER) {
 				}
 				else {
-					spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+					spdlog::error(std::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
 				}
 				freeReplyObject(_reply);
 				break;
 			}
 			else {
-				try {
-					redisFree(_write_ctx);
-					_write_ctx = re_conn_redis();
-				}
-				catch (redismqserviceException ex) {
-					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				int wait_time = 8;
+				while (!re_conn_redis(_write_ctx)) {
+					try {
+						std::this_thread::sleep_for(std::chrono::milliseconds(wait_time));
+					}
+					catch (redismqserviceException ex) {
+						std::this_thread::sleep_for(std::chrono::milliseconds(wait_time));
+					}
+					wait_time *= 2;
 				}
 			}
 		}
 	}
 
-	bool redis_mq_recv_data() {
-		auto ret = false;
-
+	void redis_mq_recv_data() {
+		std::string cmd = "BRPOP";
 		for (auto channel_name : listen_channel_names) {
-			auto _reply = (redisReply*)redisCommand(_recv_ctx, "RPOP %s", channel_name.c_str());
+			cmd += " " + channel_name;
+		}
+		cmd += " 1";
+		while (true) {
+			auto _reply = (redisReply*)redisCommand(_recv_ctx, cmd.c_str());
 			if (_reply) {
-				if (_reply->type == REDIS_REPLY_STRING) {
-					auto _buf = _reply->str;
+				if (_reply->type == REDIS_REPLY_ARRAY) {
+					auto _buf = _reply->element[1]->str;
 					auto _ch_name_size = (uint32_t)_buf[0] | ((uint32_t)_buf[1] << 8) | ((uint32_t)_buf[2] << 16) | ((uint32_t)_buf[3] << 24);
 					auto _ch_name = std::string(&_buf[4], _ch_name_size);
 					auto _header_len = 4 + _ch_name_size;
@@ -345,45 +374,35 @@ private:
 					std::string err;
 					auto obj = msgpack11::MsgPack::parse((const char*)&tmp_buff[4], len, err);
 					recv_data.push(std::make_pair(_ch_name, obj));
-
-					ret = true;
 				}
 				else if (_reply->type != REDIS_REPLY_NIL) {
-					spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+					spdlog::error(std::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+				}
+				else {
+					freeReplyObject(_reply);
+					break;
 				}
 				freeReplyObject(_reply);
 			}
 			else {
-				try {
-					redisFree(_recv_ctx);
-					_recv_ctx = re_conn_redis();
-				}
-				catch (redismqserviceException ex) {
-					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				int wait_time = 8;
+				while (!re_conn_redis(_recv_ctx)) {
+					try {
+						std::this_thread::sleep_for(std::chrono::milliseconds(wait_time));
+					}
+					catch (redismqserviceException ex) {
+						std::this_thread::sleep_for(std::chrono::milliseconds(wait_time));
+					}
+					wait_time *= 2;
 				}
 			}
 		}
-
-		return ret;
 	}
 
 	void thread_poll_single() {
-		int sleep_time = 1;
 		while (run_flag) {
 			refresh_listen_list();
-
-			bool is_idle = true;
-			if (redis_mq_recv_data()) {
-				is_idle = false;
-				sleep_time = 1;
-			}
-
-			if (is_idle) {
-				if (sleep_time < 32) {
-					sleep_time *= 2;
-				}
-				std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time));
-			}
+			redis_mq_recv_data();
 		}
 	}
 

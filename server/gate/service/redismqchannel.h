@@ -48,7 +48,7 @@ public:
 			}
 			catch (std::exception e)
 			{
-				spdlog::error("redismqchannel do rpc callback error, ex:{0}", e.what());
+				spdlog::error("redismqchannel do rpc callback error");
 			}
 		}
 	}
