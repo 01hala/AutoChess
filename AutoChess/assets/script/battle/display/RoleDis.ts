@@ -1,4 +1,4 @@
-import { _decorator, animation, CCInteger, Component, Enum, Node , Animation, RichText } from 'cc';
+import { _decorator, animation, CCInteger, Component, Enum, Node , Animation, RichText, AnimationComponent } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp , EventType, Property} from '../../battle/enums';
 import { Battle } from '../../battle/battle';
@@ -29,6 +29,8 @@ export class RoleDis extends Component
 
     private hpText:RichText;
     private atkText:RichText;
+
+    private roleSprite:Node;
     //private nGame:netGame=new netGame();
 
     start() 
@@ -37,7 +39,7 @@ export class RoleDis extends Component
         //{  
         //};
         
-
+        this.roleSprite=this.node.getChildByName("Sprite");
 
         this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
         this.hpText=this.node.getChildByName("Hp").getComponentInChildren(RichText);
@@ -48,9 +50,13 @@ export class RoleDis extends Component
         {
             for(let ev of evs)
             {
-                if(EventType.AfterAttack==ev.type)
+                if(EventType.AfterAttack==ev.type && Camp.Self == ev.spellcaster.camp)
                 {
                     this.Attack;
+                }
+                if(EventType.AfterAttack==ev.type && Camp.Enemy == ev.spellcaster.camp)
+                {
+                    this.EnemyAttack;
                 }
                 if(EventType.EatFood==ev.type)
                 {
@@ -63,8 +69,30 @@ export class RoleDis extends Component
 
     Attack()
     {
-        this.AtkAnim.play();
-        this.changeAtt();
+        this.roleSprite.setSiblingIndex(3);
+        this.AtkAnim.play("Attack");
+        if(this.AtkAnim)
+        {
+            this.AtkAnim.on(AnimationComponent.EventType.STOP,()=>
+            {
+                this.roleSprite.setSiblingIndex(0);
+            })
+        }
+        //this.changeAtt();
+    }
+
+    EnemyAttack()
+    {
+        this.roleSprite.setSiblingIndex(3);
+        this.AtkAnim.play("EnemyAttack");
+        if(this.AtkAnim)
+        {
+            this.AtkAnim.on(AnimationComponent.EventType.STOP,()=>
+            {
+                this.roleSprite.setSiblingIndex(0);
+            })
+        }
+        //this.changeAtt();
     }
 
     changeAtt()

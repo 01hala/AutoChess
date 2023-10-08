@@ -44,7 +44,7 @@ export class BundleManager extends Component
         }
         catch (err)
         {
-            console.warn(this.res+"下的 loadAssets 错误");
+            console.warn(this.res+"下的 loadAssets 错误:"+err);
             return null;
         }
 
