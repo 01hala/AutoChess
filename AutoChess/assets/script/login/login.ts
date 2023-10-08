@@ -2,6 +2,8 @@ import { _decorator, Component, Node, Canvas } from 'cc';
 import 'minigame-api-typings';
 const { ccclass, property } = _decorator;
 
+import * as common from "../serverSDK/common"
+
 import * as singleton from '../netDriver/netSingleton';
 import * as load from '../loading/load';
 
@@ -121,10 +123,25 @@ export class login extends Component {
         };
 
         singleton.netSingleton.player.cb_player_login_sucess = () => {
-            this._setProgress(1.0);
+            this._progress += 0.1;
+            this._setProgress(this._progress);
+
+            singleton.netSingleton.game.start_battle();
 
             console.log("login sucess!");
+        }
+
+        singleton.netSingleton.game.cb_start_battle = () => {
+            singleton.netSingleton.game.battle();
+
+            console.log("start_battle sucess!");
+        }
+
+        singleton.netSingleton.game.cb_battle = (self:common.UserBattleData, target:common.UserBattleData) => {
+            this._setProgress(1.0);
             this._loading.done();
+
+            console.log("start_round sucess!");
         }
 
         this.netNode.on("connect", (e)=>{
