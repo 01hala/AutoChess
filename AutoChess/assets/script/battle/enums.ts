@@ -25,6 +25,7 @@ export enum EventType {
     ChangeLocation = 12,
     BattleFail=13,
     UsedSkill=14,
+    
 }
 
 export enum ChangePositionType {
