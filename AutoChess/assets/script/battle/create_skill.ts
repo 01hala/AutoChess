@@ -6,8 +6,7 @@
 import * as config from '../config/config'
 import * as enums from './enums'
 import * as skill from './skill/skill_base'
-import * as Skill_AttGain_1_1 from './skill/Skill_AttGain_1_1'
-import * as Skill_AttGain_1_2 from './skill/Skill_AttGain_1_2'
+import * as Skill_AttGain_1 from './skill/Skill_AttGain_1'
 import * as Skill_RecoveryHP_2 from './skill/Skill_RecoveryHP_2'
 import * as Skill_RemoteAtk_3 from './skill/Skill_RemoteAtk_3'
 import * as Skill_Summon_4 from './skill/Skill_Summon_4'
@@ -39,10 +38,10 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         case 1:
         {
             if (skillConfig.ObjectDirection != enums.Direction.None) {
-                skillObj = new Skill_AttGain_1_1.Skill_AttGain_1_1(skillConfig.Priority, value0, value1, skillConfig.ObjectDirection);
+                skillObj = new Skill_AttGain_1.Skill_AttGain_1(skillConfig.Priority, value0, value1, skillConfig.ObjectDirection);
             }
             else {
-                skillObj = new Skill_AttGain_1_2.Skill_AttGain_1_2(skillConfig.Priority, skillConfig.ObjCount, value0, value1);
+                skillObj = new Skill_AttGain_1.Skill_AttGain_1(skillConfig.Priority, value0, value1,null,skillConfig.ObjCount);
             }
         }
         break;

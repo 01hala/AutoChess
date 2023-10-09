@@ -2,7 +2,7 @@
  * Skill_AttGain_1_1.ts
  * author: Hotaru
  * 2023/9/27
- * 获得+m生命值和+k攻击力（前后左右或者自己）
+ * 获得+m生命值和+k攻击力（随机n人、前后左右或者自己）
  */
 import { _decorator, Component, debug, log, Node } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase, } from './skill_base';
@@ -12,30 +12,47 @@ import { Role } from '../role';
 import { Camp, Direction, SkillType, Property } from '../enums';
 import { random } from '../util';
 
-export class Skill_AttGain_1_1 extends SkillBase 
+export class Skill_AttGain_1 extends SkillBase 
 {
-    public res:string="battle/skill/Skill_AttGain_1_1";
+    public res:string="battle/skill/Skill_AttGain_1";
     public SkillType:SkillType=SkillType.Intensifier;
 
+    private numberOfRole:number=null;
+    private dir:Direction=null;
     private health:number;
     private attack:number;
-    private dir:Direction;
 
     event:Event=new Event();
 
-    public constructor(priority:number, health:number, attack:number,dir:Direction = 0) {
+    public constructor(priority:number,health:number, attack:number,dir:Direction,numberOfRole?:number) {
         super(priority);
 
         this.attack = attack;
         this.health=health;
-        this.dir=dir;
+        if(null!=dir)
+        {
+            this.dir=dir;
+        }
+        if(null!=numberOfRole)
+        {
+            this.numberOfRole=numberOfRole;
+        }
+        
     }
 
     public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
     {
         try
         {
-            this.SkillEffect(selfInfo,battle);          
+            if(null==this.numberOfRole || 0==this.numberOfRole)
+            {
+                this.SkillEffect_1(selfInfo,battle);    
+            }
+            if(null==this.dir)
+            {
+                this.SkillEffect_2(selfInfo,battle);  
+            }
+                  
         }
         catch (error) 
         {
@@ -44,7 +61,7 @@ export class Skill_AttGain_1_1 extends SkillBase
         
     }
 
-    SkillEffect(selfInfo: RoleInfo, battle: Battle):void
+    SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void
     {
         
         try
@@ -109,6 +126,45 @@ export class Skill_AttGain_1_1 extends SkillBase
                 recipientRole.ChangeProperties(Property.TotalHP, recipientRole.GetProperty(Property.TotalHP) + this.health);
                 recipientRole.ChangeProperties(Property.Attack,recipientRole.GetProperty(Property.Attack) + this.attack);
             }
+        }
+        catch (error) 
+        {
+            console.warn(this.res+"下的 SkillEffect 错误");
+        }
+    }
+
+    SkillEffect_2(selfInfo: RoleInfo, battle: Battle):void
+    {
+        
+        try
+        {
+            let recipientRoles:Role[]=new Array();
+            let rolesTemp:Role[]=null;
+
+            if(Camp.Self==selfInfo.camp)
+            {
+                rolesTemp=battle.GetSelfTeam().GetRoles().slice();
+            }
+            if(Camp.Enemy==selfInfo.camp)
+            {
+                rolesTemp=battle.GetEnemyTeam().GetRoles().slice();
+            }
+            while(recipientRoles.length<this.numberOfRole)
+            {
+                let index = random(0, rolesTemp.length);
+                if(index!=selfInfo.index)                                   //随机但不包括自己
+                {
+                    recipientRoles.push(rolesTemp[index]);
+                    rolesTemp.splice(index, 1);
+                }
+            }
+            recipientRoles.forEach((role) => 
+            {
+                role.ChangeProperties(Property.HP, role.GetProperty(Property.HP) + this.health);
+                role.ChangeProperties(Property.TotalHP, role.GetProperty(Property.TotalHP) + this.health);
+                role.ChangeProperties(Property.Attack,role.GetProperty(Property.Attack) + this.attack);
+            });
+            
         }
         catch (error) 
         {
