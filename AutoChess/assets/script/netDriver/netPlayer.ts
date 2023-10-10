@@ -65,6 +65,7 @@ export class netPlayer {
                     });
                 }
                 else if (login_type == "wx") {
+                    console.log(login_hub);
                     this.c_login_caller.get_hub(login_hub.hub_name).player_login_wx(code).callBack((player_name, token)=>{
                         this.login_callback(player_name, token, nick_name);
                     }, (err)=>{

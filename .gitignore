@@ -424,3 +424,5 @@ node_modules/
 lib
 lib_debug
 config_node.txt
+/server/redis/dump.rdb
+/server/start_node.bat

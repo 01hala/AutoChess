@@ -19,8 +19,10 @@ namespace Match
         private UserBattleData getRandomBattleData()
         {
             var data = new UserBattleData();
+            data.User = new UserInformation();
+            data.RoleList = new List<Role>();
 
-            while(data.RoleList.Count < 5)
+            while (data.RoleList.Count < 5)
             {
                 var index = RandomHelper.RandomInt(config.Config.RoleConfigs.Values.Count);
                 var rolec = config.Config.RoleConfigs.Values.ElementAt(index);
@@ -35,6 +37,8 @@ namespace Match
                 var indexBuffer = RandomHelper.RandomInt(config.Config.BufferConfigs.Values.Count);
                 var bufferc = config.Config.BufferConfigs.Values.ElementAt(indexBuffer);
                 role.additionBuffer = bufferc.Id;
+
+                data.RoleList.Add(role);
             }
 
             return data;
@@ -47,7 +51,9 @@ namespace Match
 
             try
             {
-                rsp.rsp(getRandomBattleData(), getRandomBattleData());
+                var self = getRandomBattleData();
+                var target = getRandomBattleData();
+                rsp.rsp(self, target);
             }
             catch(System.Exception ex)
             {
