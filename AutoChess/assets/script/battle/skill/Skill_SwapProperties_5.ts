@@ -8,8 +8,8 @@ import { _decorator, Component, debug, log, Node, ValueType } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
-import { Role,Property } from '../role';
-import { Camp, SkillType, SwapPropertiesType } from '../enums';
+import { Role } from '../role';
+import { Camp, SkillType, SwapPropertiesType, Property } from '../enums';
 import { random } from '../util';
 
 export class Skill_SwapProperties_5 extends SkillBase 
