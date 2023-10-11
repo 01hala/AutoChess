@@ -23,3 +23,5 @@ hotaru:添加Queue.ts,添加BundleManager.ts
 hotaru:修改RoleDis.ts,创建EnemyAttack动画,同时添加动画帧事件
 2023/10/09
 hotaru:修改Skill_AttGain和create_skill,修改config表
+2023/10/11
+hotaru:在Roledis里添加RemoteAttack方法,创建Bullet.ts并添加发射和碰撞效果
