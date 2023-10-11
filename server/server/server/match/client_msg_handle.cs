@@ -22,7 +22,7 @@ namespace Match
             data.User = new UserInformation();
             data.RoleList = new List<Role>();
 
-            while (data.RoleList.Count < 5)
+            while (data.RoleList.Count < 6)
             {
                 var index = RandomHelper.RandomInt(config.Config.RoleConfigs.Values.Count);
                 var rolec = config.Config.RoleConfigs.Values.ElementAt(index);
