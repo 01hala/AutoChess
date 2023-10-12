@@ -27,3 +27,5 @@ hotaru:修改Skill_AttGain和create_skill,修改config表
 hotaru:在Roledis里添加RemoteAttack方法,创建Bullet.ts并添加发射和碰撞效果
 2023/10/12
 hotaru:创建BattleDis类,修改RoleDis里的attack方法
+2023/10/13
+hotaru:将queue里的putrole重命名为spawnrole，在battledis里添加putrole方法

@@ -31,6 +31,29 @@ export class BattleDis {
         this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
 
         father.addChild(this.panelNode);
+
+        
+    }
+
+    PutRole()
+    {
+        let ids:number[];
+        let roles=this.battle.GetSelfTeam().GetRoles();
+
+        for(let role of roles)
+        {
+            ids.push(role.id);
+        }
+        this.selfQueue.SpawnRole(ids);
+
+        ids=roles=null;
+        roles=this.battle.GetEnemyTeam().GetRoles();
+
+        for(let role of roles)
+        {
+            ids.push(role.id);
+        }
+        this.enemyQueue.SpawnRole(ids);
     }
 
     onAttackEvent()

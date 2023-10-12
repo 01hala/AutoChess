@@ -14,7 +14,7 @@ export class BundleManager extends Component
             this._instance=new BundleManager();
         return this._instance;
     }
-
+    
     onLoad()
     {
         if(BundleManager._instance === null)

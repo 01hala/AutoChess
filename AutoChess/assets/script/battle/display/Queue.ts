@@ -28,11 +28,11 @@ export class Queue extends Component
         
     }
 
-    PutRole(ID:number[])
+    async SpawnRole(ID:number[])
     {
         try 
         {
-            let address:string="Roles/role_";
+            let address:string="role_";
             for(let i:number=0;i<6;i++)
             {
                 let roleRes=""+address+ID[i];
@@ -43,7 +43,7 @@ export class Queue extends Component
                 //         this.node.addChild(newNode);
                 //         this.roleList.push(newNode);
                 //     });
-                let newNode=BundleManager.Instance.loadAssets("",roleRes);
+                let newNode = await BundleManager.Instance.loadAssets("", roleRes) as Prefab;
                 let role=instantiate(newNode);
                 role.position=new Vec3(this.locationTemp[i].position.x,this.locationTemp[i].position.y);
                 this.node.addChild(role);
