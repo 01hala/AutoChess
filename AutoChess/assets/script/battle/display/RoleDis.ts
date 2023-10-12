@@ -45,13 +45,10 @@ export class RoleDis extends Component
     private atkText:RichText;
 
     private roleSprite:Node;
-    //private nGame:netGame=new netGame();
+    
 
     start() 
     {
-        //this.nGame.cb_battle=(self,target)=>
-        //{  
-        //};
         
         this.roleSprite=this.node.getChildByName("Sprite");
 

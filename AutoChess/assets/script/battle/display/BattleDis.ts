@@ -9,6 +9,7 @@ import { Queue } from './Queue';
 import { Battle } from '../battle';
 import { Camp, EventType } from '../enums';
 import { RoleDis } from './RoleDis';
+import { netGame } from '../../netDriver/netGame';
 const { ccclass, property } = _decorator;
 
 @ccclass('BattleDis')
@@ -20,12 +21,16 @@ export class BattleDis extends Component {
     public enemyQueue:Queue;
 
     private battle:Battle=new Battle();
+    
+    
 
-    start() {
-
+    start() 
+    {
+        
     }
 
-    update(deltaTime: number) {
+    update(deltaTime: number) 
+    {
         
     }
 
