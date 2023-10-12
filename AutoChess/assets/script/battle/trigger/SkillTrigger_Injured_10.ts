@@ -11,7 +11,7 @@ import { Camp, EventType, SkillType } from '../enums';
 export class SkillTrigger_Injured_10 extends SkillTriggerBase
 {    
     public res:string="battle/skill/SkillTrigger_Injured_10";
-    public EventType:EventType=EventType.Injured;
+    public EventType:EventType=EventType.AttackInjured;
 
     event:Event=new Event();
 
@@ -33,7 +33,7 @@ export class SkillTrigger_Injured_10 extends SkillTriggerBase
         try
         {
             for (let element of frameEvent) {
-                if(EventType.Injured==element.type){
+                if(EventType.AttackInjured==element.type || EventType.RemoteInjured==element.type){
                     for (let _recipient of element.recipient) {
                         if(_recipient.camp == selfInfo.camp && _recipient.index == selfInfo.index) {
                             return true;
