@@ -1,3 +1,9 @@
+/*
+ * Bullet.ts
+ * author: Hotaru
+ * 2023/10/11
+ * 子弹展示类
+ */
 import { _decorator, BoxCollider, Component, ITriggerEvent, Node, tween, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 

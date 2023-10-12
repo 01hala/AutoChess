@@ -1,3 +1,9 @@
+/*
+ * RoleDis.ts
+ * author: Hotaru
+ * 2023/10/04
+ * 角色展示类
+ */
 import { _decorator, animation, CCInteger, Component, Enum, Node , Animation, RichText, AnimationComponent, Prefab, instantiate, find } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp , EventType, Property} from '../../battle/enums';
@@ -55,26 +61,7 @@ export class RoleDis extends Component
         //资源暂时没有
         this.remoteNode=BundleManager.Instance.loadAssets("","");
 
-        this.changeAtt();
-        this.battle.on_event.push((evs)=>
-        {
-            for(let ev of evs)
-            {
-                if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp)
-                {
-                    this.Attack;
-                }
-                if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp)
-                {
-                    this.EnemyAttack;
-                }
-                if(EventType.EatFood==ev.type)
-                {
-                    this.changeAtt;
-                }
-            }
-        });
-        
+        this.changeAtt();   
     }
 
     Attack()
