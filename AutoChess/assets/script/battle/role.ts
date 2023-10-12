@@ -7,10 +7,33 @@ import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
 import * as enums from './enums'
+import * as create_skill from './create_skill'
+import * as create_trigger from './create_trigger'
+import * as create_buffer from './create_buffer'
+import * as config from '../config/config'
 
 export class SkillInfo {
     public trigger : skill.SkillTriggerBase;
     public skill : skill.SkillBase;
+}
+
+function createSkill(id:number) : SkillInfo {
+    let skillConfig = config.config.SkillConfig.get(id);
+    if (skillConfig) {let skill = new SkillInfo();
+        skill.trigger = create_trigger.CreateTrigger(skillConfig.EffectTime);
+        skill.skill = create_skill.CreateSkill(this.level, id);
+    
+        return skill;
+    }
+    return null;
+}
+
+function createBuffer(id:number) : buffer.Buffer {
+    let bufferConfig = config.config.BufferConfig.get(id);
+    if (bufferConfig) {
+        return create_buffer.CreateSkill(id);
+    }
+    return null;
 }
 
 export class Role {
@@ -23,12 +46,35 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>) {
+    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
         this.id=id;
         this.level=level;
         
         this.selfCamp = selfCamp;
         this.properties = properties;
+
+        let roleConfig = config.config.RoleConfig.get(this.id);
+        console.log("id:", this.id, roleConfig);
+
+        let skill = createSkill(roleConfig.Id);
+        if (skill) {
+            this.skill.push();
+        }
+
+        let buffer = createBuffer(roleConfig.Id);
+        if (buffer) {
+            this.buffer.push(buffer);
+        }
+
+        skill = createSkill(additionSkill);
+        if (skill) {
+            this.skill.push();
+        }
+
+        buffer = createBuffer(additionBuffer);
+        if (buffer) {
+            this.buffer.push(buffer);
+        }
     }
 
     private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {

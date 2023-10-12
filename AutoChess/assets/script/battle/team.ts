@@ -3,10 +3,24 @@
  * author: qianqians
  * 2023/9/24
  */
+import * as common from "../serverSDK/common"
 import * as role from './role'
+import * as enums from './enums'
 
 export class Team {
     private roleList : role.Role[];
+
+    public constructor(selfCamp: enums.Camp, RoleList : common.Role[] ) {
+        this.roleList = [];
+
+        for (let r of RoleList) {
+            let properties = new Map<enums.Property, number>();
+            properties.set(enums.Property.HP, r.HP);
+            properties.set(enums.Property.TotalHP, r.HP);
+            properties.set(enums.Property.Attack, r.Attack);
+            this.roleList.push(new role.Role(r.RoleID, r.Level, selfCamp, properties, r.additionSkill, r.additionBuffer));
+        }
+    }
 
     public GetRole(index:number) : role.Role {
         if(index>=this.roleList.length) return null;
