@@ -15,7 +15,6 @@ export class RoleConfig {
     public Hp : number;
     public Fetters : number;
     public Hermes : number;
-    public Skill : number;
     public Res : string;
 }
 
@@ -43,7 +42,6 @@ export async function LoadSkillConfig() : Promise<Map<number, RoleConfig>> {
                 rolec.Hp = v["Hp"];
                 rolec.Fetters = v["Fetters"];
                 rolec.Hermes = v["Hermes"];
-                rolec.Skill = v["Skill"];
                 rolec.Res = v["Res"];
 
                 map.set(parseInt(k), rolec);

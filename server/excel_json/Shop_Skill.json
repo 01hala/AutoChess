@@ -6,7 +6,8 @@
         "Priority": "Low",
         "EffectTime": 2,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 1,
         "Level2Value_1": 2,
@@ -14,7 +15,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "8": {
         "Id": 8,
@@ -24,6 +27,7 @@
         "EffectTime": 7,
         "Effect": 6,
         "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 0,
         "Level2Value_1": 2,
@@ -31,7 +35,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "9": {
         "Id": 9,
@@ -40,7 +46,8 @@
         "Priority": "Hight",
         "EffectTime": 6,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 1,
         "Level2Value_1": 2,
@@ -48,7 +55,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "10": {
         "Id": 10,
@@ -57,7 +66,8 @@
         "Priority": "Low",
         "EffectTime": 1,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 1,
         "Level2Value_1": 0,
@@ -65,7 +75,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "11": {
         "Id": 11,
@@ -74,7 +86,8 @@
         "Priority": "Normal",
         "EffectTime": 3,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 2,
         "Level1Value_2": 2,
         "Level2Value_1": 3,
@@ -82,7 +95,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 4,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "12": {
         "Id": 12,
@@ -91,7 +106,8 @@
         "Priority": "Normal",
         "EffectTime": 4,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 1,
         "Level2Value_1": 2,
@@ -99,7 +115,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "14": {
         "Id": 14,
@@ -108,7 +126,8 @@
         "Priority": "Normal",
         "EffectTime": 4,
         "Effect": 1,
-        "ObjCount": 2,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 1,
         "Level2Value_1": 2,
@@ -116,7 +135,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "18": {
         "Id": 18,
@@ -125,7 +146,8 @@
         "Priority": "Low",
         "EffectTime": 5,
         "Effect": 1,
-        "ObjCount": 2,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 1,
         "Level2Value_1": 2,
@@ -133,7 +155,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "21": {
         "Id": 21,
@@ -142,7 +166,8 @@
         "Priority": "Normal",
         "EffectTime": 2,
         "Effect": 10,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 0,
         "Level2Value_1": 0,
@@ -150,7 +175,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "24": {
         "Id": 24,
@@ -160,6 +187,7 @@
         "EffectTime": 1,
         "Effect": 5,
         "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 0,
         "Level2Value_1": 2,
@@ -167,7 +195,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "26": {
         "Id": 26,
@@ -177,6 +207,7 @@
         "EffectTime": 5,
         "Effect": 8,
         "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 0,
         "Level2Value_1": 0,
@@ -184,7 +215,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "27": {
         "Id": 27,
@@ -193,7 +226,8 @@
         "Priority": "Normal",
         "EffectTime": 1,
         "Effect": 8,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 0,
         "Level2Value_1": 0,
@@ -201,7 +235,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "34": {
         "Id": 34,
@@ -211,6 +247,7 @@
         "EffectTime": 6,
         "Effect": 5,
         "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 0,
         "Level2Value_1": 0,
@@ -218,7 +255,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "35": {
         "Id": 35,
@@ -227,7 +266,8 @@
         "Priority": "Low",
         "EffectTime": 6,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 0,
         "Level2Value_1": 2,
@@ -235,7 +275,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "36": {
         "Id": 36,
@@ -245,6 +287,7 @@
         "EffectTime": 5,
         "Effect": 5,
         "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 0,
         "Level2Value_1": 0,
@@ -252,7 +295,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "41": {
         "Id": 41,
@@ -261,7 +306,8 @@
         "Priority": "Normal",
         "EffectTime": 1,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 0,
         "Level2Value_1": 2,
@@ -269,7 +315,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "43": {
         "Id": 43,
@@ -278,7 +326,8 @@
         "Priority": "Normal",
         "EffectTime": 6,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 2,
         "Level1Value_2": 2,
         "Level2Value_1": 3,
@@ -286,7 +335,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 4,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "44": {
         "Id": 44,
@@ -295,7 +346,8 @@
         "Priority": "Hight",
         "EffectTime": 1,
         "Effect": 1,
-        "ObjCount": 2,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 0,
         "Level2Value_1": 2,
@@ -303,7 +355,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "46": {
         "Id": 46,
@@ -312,7 +366,8 @@
         "Priority": "Normal",
         "EffectTime": 5,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 1,
         "Level1Value_2": 1,
         "Level2Value_1": 2,
@@ -320,7 +375,9 @@
         "Level3Value_1": 3,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "47": {
         "Id": 47,
@@ -330,6 +387,7 @@
         "EffectTime": 6,
         "Effect": 5,
         "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 2,
         "Level1Value_2": 0,
         "Level2Value_1": 3,
@@ -337,7 +395,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "48": {
         "Id": 48,
@@ -346,7 +406,8 @@
         "Priority": "Normal",
         "EffectTime": 6,
         "Effect": 1,
-        "ObjCount": 1,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 1,
         "Level2Value_1": 0,
@@ -354,7 +415,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 3,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "49": {
         "Id": 49,
@@ -363,7 +426,8 @@
         "Priority": "Normal",
         "EffectTime": 1,
         "Effect": 4,
-        "ObjCount": 2,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 0,
         "Level2Value_1": 0,
@@ -371,7 +435,9 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "[2,3]",
-        "SummonLevel": 1
+        "SummonLevel": 1,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "53": {
         "Id": 53,
@@ -380,7 +446,8 @@
         "Priority": "Low",
         "EffectTime": 6,
         "Effect": 1,
-        "ObjCount": 6,
+        "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 2,
         "Level1Value_2": 2,
         "Level2Value_1": 3,
@@ -388,7 +455,9 @@
         "Level3Value_1": 4,
         "Level3Value_2": 4,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     },
     "54": {
         "Id": 54,
@@ -398,6 +467,7 @@
         "EffectTime": 2,
         "Effect": 8,
         "ObjCount": 0,
+        "ObjDirection": "",
         "Level1Value_1": 0,
         "Level1Value_2": 0,
         "Level2Value_1": 0,
@@ -405,6 +475,8 @@
         "Level3Value_1": 0,
         "Level3Value_2": 0,
         "SummonId": "",
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "SwapPropertiesType": 0,
+        "ChangePositionType": ""
     }
 }

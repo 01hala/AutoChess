@@ -7,6 +7,9 @@ import * as common from "../serverSDK/common"
 import * as singleton from '../netDriver/netSingleton';
 import * as load from '../loading/load';
 
+import * as battle from '../battle/battle'
+import * as battleDis from '../battle/display/BattleDis'
+
 @ccclass('login')
 export class login extends Component {
     @property(Node)
@@ -137,7 +140,11 @@ export class login extends Component {
             console.log("start_battle sucess!");
         }
 
-        singleton.netSingleton.game.cb_battle = (self:common.UserBattleData, target:common.UserBattleData) => {
+        singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
+            let _battle = new battle.Battle(self, target);
+            singleton.netSingleton.battle = new battleDis.BattleDis(_battle);
+            await singleton.netSingleton.battle.Init();
+
             this._setProgress(1.0);
             this._loading.done();
 

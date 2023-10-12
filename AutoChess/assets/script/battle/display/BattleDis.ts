@@ -4,29 +4,31 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, instantiate, Node, Prefab } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import { Camp, EventType } from '../enums';
 import { RoleDis } from './RoleDis';
+import { BundleManager } from '../../bundle/BundleManager'
 const { ccclass, property } = _decorator;
 
-@ccclass('BattleDis')
-export class BattleDis extends Component {
-
-    @property(Queue)
+export class BattleDis {
+    private panelNode:Node;
     public selfQueue:Queue;
-    @property(Queue)
     public enemyQueue:Queue;
 
-    private battle:Battle=new Battle();
+    private battle:Battle = null;
 
-    start() {
-
+    public constructor(battle:Battle) {
+        this.battle = battle;
     }
 
-    update(deltaTime: number) {
-        
+    public async Init() {
+        let panel = await BundleManager.Instance.loadAssets("Battle", "BattlePanel") as Prefab;
+
+        this.panelNode = instantiate(panel);
+        this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
+        this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
     }
 
     onAttackEvent()

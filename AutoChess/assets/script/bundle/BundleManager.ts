@@ -21,34 +21,34 @@ export class BundleManager extends Component
         }
     }
 
-    loadAssets(bundleRes:string,assetsRes:string):Node
+    loadAssets(bundleRes:string,assetsRes:string) : Promise<Asset>
     {   
-        try
-        {
-            assetManager.loadBundle(bundleRes,(error,bundle)=>
+        return new Promise((resolve) => {
+            try
             {
-                if(error)
-                {
-                    console.warn(error.message);
-                }
-                bundle.load(assetsRes,(error,prefab)=>
+                assetManager.loadBundle(bundleRes,(error,bundle)=>
                 {
                     if(error)
                     {
                         console.warn(error.message);
                     }
-                    return prefab;
+                    bundle.load(assetsRes, (error,prefab)=>
+                    {
+                        if(error)
+                        {
+                            console.warn(error.message);
+                        }
+                        resolve(prefab);
+                    });
+                    
                 });
-                
-            });
-        }
-        catch (err)
-        {
-            console.warn(this.res+"下的 loadAssets 错误:"+err);
-            return null;
-        }
-
-        
+            }
+            catch (err)
+            {
+                console.warn(this.res+"下的 loadAssets 错误:"+err);
+                resolve(null);
+            }    
+        });
     }
 }
 
