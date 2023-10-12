@@ -26,5 +26,6 @@ export class Loading {
 
     public done() {
         this._load.destroy();
+        this._load = null;
     }
 }

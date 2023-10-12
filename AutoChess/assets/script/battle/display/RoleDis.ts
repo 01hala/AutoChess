@@ -29,7 +29,7 @@ export class RoleDis extends Component
         type:Prefab,
         displayName:"远程攻击物"
     })
-    public remoteNode:Node;
+    public remoteNode:Prefab;
 
     public Hp:number;
     public AtkNum:number;
@@ -37,7 +37,6 @@ export class RoleDis extends Component
     public Level:number;
 
     private roleInfo:Role=null;
-    private battle:Battle=new Battle();
 
     private AtkAnim:Animation;
 
@@ -47,7 +46,7 @@ export class RoleDis extends Component
     private roleSprite:Node;
     //private nGame:netGame=new netGame();
 
-    start() 
+    async start() 
     {
         //this.nGame.cb_battle=(self,target)=>
         //{  
@@ -59,7 +58,7 @@ export class RoleDis extends Component
         this.hpText=this.node.getChildByName("Hp").getComponentInChildren(RichText);
         this.atkText=this.node.getChildByName("Atk").getComponentInChildren(RichText);
         //资源暂时没有
-        this.remoteNode=BundleManager.Instance.loadAssets("","");
+        this.remoteNode = await BundleManager.Instance.loadAssets("","") as Prefab;
 
         this.changeAtt();   
     }

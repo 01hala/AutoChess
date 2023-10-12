@@ -44,12 +44,10 @@ namespace config
                 rolec.Id = (int)o["Id"];
                 rolec.Name = (string)o["Name"];
                 rolec.Stage = (int)o["Stage"];
-                rolec.Level = (int)o["Level"];
                 rolec.Price = (int)o["Price"];
                 rolec.Attack = (int)o["Attack"];
                 rolec.Hp = (int)o["Hp"];
                 rolec.Fetters = (int)o["Fetters"];
-                rolec.Hermes = (int)o["Hermes"];
                 rolec.Res = (string)o["Res"];
 
                 obj[rolec.Id] = rolec;

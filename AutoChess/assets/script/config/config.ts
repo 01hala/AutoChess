@@ -15,6 +15,6 @@ export class config {
     public static async load() {
         config.SkillConfig = await skill_config.LoadSkillConfig();
         config.BufferConfig = await buffer_config.LoadBufferConfig();
-        config.RoleConfig = await role_config.LoadSkillConfig();
+        config.RoleConfig = await role_config.LoadRoleConfig();
     }
 }

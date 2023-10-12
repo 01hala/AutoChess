@@ -9,6 +9,7 @@ import * as load from '../loading/load';
 
 import * as battle from '../battle/battle'
 import * as battleDis from '../battle/display/BattleDis'
+import * as config from '../config/config';
 
 @ccclass('login')
 export class login extends Component {
@@ -108,7 +109,9 @@ export class login extends Component {
         });
     }
 
-    start() {
+    async start() {
+        await config.config.load();
+
         this._loading = new load.Loading();
         this._setProgress = this._loading.load(this.bk.node);
 
@@ -141,9 +144,11 @@ export class login extends Component {
         }
 
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
+            console.log("cb_battle start round!");
+
             let _battle = new battle.Battle(self, target);
             singleton.netSingleton.battle = new battleDis.BattleDis(_battle);
-            await singleton.netSingleton.battle.Init();
+            await singleton.netSingleton.battle.Init(this.bk.node);
 
             this._setProgress(1.0);
             this._loading.done();

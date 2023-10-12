@@ -23,12 +23,14 @@ export class BattleDis {
         this.battle = battle;
     }
 
-    public async Init() {
+    public async Init(father:Node) {
         let panel = await BundleManager.Instance.loadAssets("Battle", "BattlePanel") as Prefab;
 
         this.panelNode = instantiate(panel);
         this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
         this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
+
+        father.addChild(this.panelNode);
     }
 
     onAttackEvent()

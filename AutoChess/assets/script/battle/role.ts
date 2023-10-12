@@ -54,6 +54,7 @@ export class Role {
         this.properties = properties;
 
         let roleConfig = config.config.RoleConfig.get(this.id);
+        console.log("id:", this.id, roleConfig);
 
         let skill = createSkill(roleConfig.Id);
         if (skill) {
