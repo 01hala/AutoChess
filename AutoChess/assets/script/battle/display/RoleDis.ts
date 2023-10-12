@@ -64,24 +64,17 @@ export class RoleDis extends Component
         this.changeAtt();   
     }
 
-    Attack()
+    Attack(camp:Camp)
     {
         this.roleSprite.setSiblingIndex(3);
-        this.AtkAnim.play("Attack");
-        if(this.AtkAnim)
+        if(Camp.Self==camp)
         {
-            this.AtkAnim.on(AnimationComponent.EventType.STOP,()=>
-            {
-                this.roleSprite.setSiblingIndex(0);
-            })
+            this.AtkAnim.play("Attack");
         }
-        //this.changeAtt();
-    }
-
-    EnemyAttack()
-    {
-        this.roleSprite.setSiblingIndex(3);
-        this.AtkAnim.play("EnemyAttack");
+        if(Camp.Enemy==camp)
+        {
+            this.AtkAnim.play("EnemyAttack");
+        }
         if(this.AtkAnim)
         {
             this.AtkAnim.on(AnimationComponent.EventType.STOP,()=>

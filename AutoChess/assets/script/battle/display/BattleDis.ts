@@ -37,11 +37,11 @@ export class BattleDis extends Component {
             {
                 if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp)
                 {
-                    this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack;
+                    this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(ev.spellcaster.camp);
                 }
                 if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp)
                 {
-                    this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack;
+                    this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(ev.spellcaster.camp);
                 }
             }
         });
