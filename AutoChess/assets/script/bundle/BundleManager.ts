@@ -6,13 +6,20 @@ export class BundleManager extends Component
 {
     private res:string="script/bundle/bundleManager.ts";
 
-    public static Instance:BundleManager=null;
+    public static _instance:BundleManager=null;
+
+    static get Instance()
+    {
+        if(this._instance==null)
+            this._instance=new BundleManager();
+        return this._instance;
+    }
 
     onLoad()
     {
-        if(BundleManager.Instance === null)
+        if(BundleManager._instance === null)
         {
-            BundleManager.Instance=this;
+            BundleManager._instance=this;
         }
         else
         {
