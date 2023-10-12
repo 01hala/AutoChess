@@ -28,8 +28,6 @@ export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
             }
             // 获取到 Json 数据
             const jsonData: object = res.json!;
-            console.log(jsonData);
-
             Object.keys(jsonData).forEach((k) => {
                 let v = jsonData[k];
 
@@ -42,8 +40,6 @@ export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
                 rolec.Hp = v["Hp"];
                 rolec.Fetters = v["Fetters"];
                 rolec.Res = v["Res"];
-
-                console.log(k, v);
 
                 map.set(parseInt(k), rolec);
             });
