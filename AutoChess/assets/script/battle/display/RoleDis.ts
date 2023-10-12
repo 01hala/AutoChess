@@ -96,6 +96,7 @@ export class RoleDis extends Component
             let newNode=instantiate(this.remoteNode);
             let tempRole=find("Canvas/EnemyQueue").children[role.index];
             newNode.getComponent(Bullet).target=tempRole;
+            this.schedule(null,0.2);
         }
         
     }
