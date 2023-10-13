@@ -1,0 +1,20 @@
+{
+  "0": {
+    "ID": 0,
+    "Name": "战斗界面",
+    "URL": "https://www.ucat.games:8001/zzq/prefab/",
+    "Path": "Battle"
+  },
+  "1": {
+    "ID": 1,
+    "Name": "人物",
+    "URL": "https://www.ucat.games:8001/zzq/prefab/",
+    "Path": "Roles"
+  },
+  "2": {
+    "ID": 2,
+    "Name": "远程投掷物",
+    "URL": "https://www.ucat.games:8001/zzq/prefab/",
+    "Path": "remote"
+  }
+}

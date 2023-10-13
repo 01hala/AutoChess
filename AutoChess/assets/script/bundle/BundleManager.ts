@@ -1,4 +1,5 @@
-import { _decorator, Asset, assetManager, Component, ImageAsset, Node } from 'cc';
+import { _decorator, Asset, assetManager, Component, ImageAsset, JsonAsset, Node, path, Prefab, resources } from 'cc';
+import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('BundleManager')
@@ -27,6 +28,8 @@ export class BundleManager extends Component
             return;
         }
     }
+
+    private jsonData:JsonAsset=null;
 
     loadAssets(bundleRes:string,assetsRes:string) : Promise<Asset>
     {   
@@ -75,6 +78,35 @@ export class BundleManager extends Component
                 resolve(null);
             }    
         });
+    }
+
+    //预加载
+    Preloading():Promise<void>
+    {
+        return new Promise(()=>
+        {
+            try
+            {
+                for(let i:number=0;i<config.BundleConfig.size;i++)
+                {
+                    let bundlePath=config.BundleConfig.get(i).URL+config.BundleConfig.get(i).Path;
+                    assetManager.loadBundle(bundlePath,(err,bundle)=>
+                    {
+                        if(err)
+                        {
+                            console.warn(bundlePath+"加载失败 err:"+err);
+                        }
+                        bundle.preloadDir(config.BundleConfig.get(i).Path);
+                        
+                    })
+                }
+            }
+            catch (error)
+            {
+                console.warn(this.res+"下的 Preloading 错误:"+error);
+    
+            }
+        })
     }
 }
 

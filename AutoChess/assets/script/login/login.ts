@@ -10,6 +10,7 @@ import * as load from '../loading/load';
 import * as battle from '../battle/battle'
 import * as battleDis from '../battle/display/BattleDis'
 import * as config from '../config/config';
+import { BundleManager } from '../bundle/BundleManager';
 
 @ccclass('login')
 export class login extends Component {
