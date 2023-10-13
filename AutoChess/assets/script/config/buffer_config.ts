@@ -17,7 +17,7 @@ export async function LoadBufferConfig() : Promise<Map<number, BufferConfig>> {
     return new Promise<Map<number, BufferConfig>>((resolve, reject)=>{
         let map = new Map<number, BufferConfig>();
 
-        resources.load('config/Skill', (err: any, res: JsonAsset) => {
+        resources.load('config/buffer', (err: any, res: JsonAsset) => {
             if (err) {
                 error(err.message || err);
                 return;

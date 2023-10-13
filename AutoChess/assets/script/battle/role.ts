@@ -7,10 +7,33 @@ import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
 import * as enums from './enums'
+import * as create_skill from './create_skill'
+import * as create_trigger from './create_trigger'
+import * as create_buffer from './create_buffer'
+import * as config from '../config/config'
 
 export class SkillInfo {
     public trigger : skill.SkillTriggerBase;
     public skill : skill.SkillBase;
+}
+
+function createSkill(id:number) : SkillInfo {
+    let skillConfig = config.config.SkillConfig.get(id);
+    if (skillConfig) {let skill = new SkillInfo();
+        skill.trigger = create_trigger.CreateTrigger(skillConfig.EffectTime);
+        skill.skill = create_skill.CreateSkill(this.level, id);
+    
+        return skill;
+    }
+    return null;
+}
+
+function createBuffer(id:number) : buffer.Buffer {
+    let bufferConfig = config.config.BufferConfig.get(id);
+    if (bufferConfig) {
+        return create_buffer.CreateSkill(id);
+    }
+    return null;
 }
 
 export class Role {
@@ -23,15 +46,38 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>) {
+    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
         this.id=id;
         this.level=level;
         
         this.selfCamp = selfCamp;
         this.properties = properties;
+
+        let roleConfig = config.config.RoleConfig.get(this.id);
+        console.log("id:", this.id, roleConfig);
+
+        let skill = createSkill(roleConfig.Id);
+        if (skill) {
+            this.skill.push();
+        }
+
+        let buffer = createBuffer(roleConfig.Id);
+        if (buffer) {
+            this.buffer.push(buffer);
+        }
+
+        skill = createSkill(additionSkill);
+        if (skill) {
+            this.skill.push();
+        }
+
+        buffer = createBuffer(additionBuffer);
+        if (buffer) {
+            this.buffer.push(buffer);
+        }
     }
 
-    private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle) {
+    private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {
         let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
         let enemyTeam = this.selfCamp == enums.Camp.Self ? battle.GetEnemyTeam() : battle.GetSelfTeam();
         let selfIndex = selfTeam.GetRoleIndex(this);
@@ -54,7 +100,7 @@ export class Role {
         } 
         if (damage > 0) {
             let ev = new skill.Event();
-            ev.type = enums.EventType.Injured;
+            ev.type = Injured;
             ev.spellcaster = new skill.RoleInfo();
             ev.spellcaster.camp = enemy.selfCamp;
             ev.spellcaster.index = enemyIndex;
@@ -191,7 +237,7 @@ export class Role {
         return null;
     }
 
-    public BeHurted(damage:number, enemy: Role, battle: battle.Battle) {
+    public BeHurted(damage:number, enemy: Role, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {
 
         let hp = this.GetProperty(enums.Property.HP);
         let reduction = this.getReductionDamage();
@@ -216,13 +262,13 @@ export class Role {
         }
         hp -= damage;
         this.ChangeProperties(enums.Property.HP, hp);
-        this.sendHurtedEvent(enemy, damage, battle);
+        this.sendHurtedEvent(enemy, damage, battle, Injured);
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
         let damageSelf = this.properties[enums.Property.HP];
         this.properties[enums.Property.HP] = 0;
-        this.sendHurtedEvent(enemy, damageSelf, battle);
+        this.sendHurtedEvent(enemy, damageSelf, battle, enums.EventType.AttackInjured);
     }
     
     public ChangeProperties(type:enums.Property,value:number) {
@@ -261,13 +307,13 @@ export class Role {
         let damage = this.GetProperty(enums.Property.Attack)+this.getintensifierAtk() / list.length;
         for (let r of list) {
             if (null != substitute && this == r) {
-                substitute.BeHurted(damage, enemy, battle);
+                substitute.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
             else {
                 if (enemy.checkInevitableKill() && this == r) {
                     continue;
                 }
-                r.BeHurted(damage, enemy, battle);
+                r.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
         }
     }

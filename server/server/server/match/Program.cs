@@ -10,7 +10,7 @@ namespace Match
 
         static void Main(string[] args)
 		{
-            var _hub = new Hub.Hub(args[0], args[1], "login");
+            var _hub = new Hub.Hub(args[0], args[1], "match");
 
             _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
             config.Config.Load(Hub.Hub._config.get_value_string("excel_json_config"));

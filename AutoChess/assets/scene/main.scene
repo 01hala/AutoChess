@@ -1367,26 +1367,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "queueTemp": [
-      {
-        "__id__": 15
-      },
-      {
-        "__id__": 18
-      },
-      {
-        "__id__": 21
-      },
-      {
-        "__id__": 24
-      },
-      {
-        "__id__": 27
-      },
-      {
-        "__id__": 30
-      }
-    ],
+    "locationTemp": [],
     "_id": "7exZ3YkF5Gr5mplHjnbv3E"
   },
   {
@@ -1513,26 +1494,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "queueTemp": [
-      {
-        "__id__": 9
-      },
-      {
-        "__id__": 42
-      },
-      {
-        "__id__": 45
-      },
-      {
-        "__id__": 48
-      },
-      {
-        "__id__": 51
-      },
-      {
-        "__id__": 54
-      }
-    ],
+    "locationTemp": [],
     "_id": "40ok6Gn6xFN75bgymv5TeX"
   },
   {

@@ -1,3 +1,9 @@
+/*
+ * Queue.ts
+ * author: Hotaru
+ * 2023/10/04
+ * 队列展示类
+ */
 import { _decorator, Component, instantiate, Node, Prefab, resources, Vec2, Vec3 } from 'cc';
 import { BundleManager } from '../../bundle/BundleManager';
 const { ccclass, property } = _decorator;
@@ -8,9 +14,9 @@ export class Queue extends Component
     private res:string="script/display/Queue.ts"
 
     @property([Node])
-    public queueTemp:Node[]=[];
+    public locationTemp:Node[]=[];
 
-    private roleList:Node[]=[];
+    public roleList:Node[]=[];
 
     start() 
     {
@@ -39,7 +45,7 @@ export class Queue extends Component
                 //     });
                 let newNode=BundleManager.Instance.loadAssets("",roleRes);
                 let role=instantiate(newNode);
-                role.position=new Vec3(this.queueTemp[i].position.x,this.queueTemp[i].position.y);
+                role.position=new Vec3(this.locationTemp[i].position.x,this.locationTemp[i].position.y);
                 this.node.addChild(role);
                 this.roleList.push(role);
             }

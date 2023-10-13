@@ -226,7 +226,7 @@ namespace Login
                 var session = await wx.wxSdk.code2Session(Login.WxAppID, Login.WxAppSecret, code);
                 string account = session.openid;
 
-                Log.Log.trace("on_player_login_dy begin! player account:{0}, uuid:{1}", account, uuid);
+                Log.Log.trace("on_player_login_wx begin! player account:{0}, uuid:{1}", account, uuid);
                 var lock_key = RedisHelp.BuildPlayerSvrCacheLockKey(account);
                 var token = $"lock_{account}";
                 try

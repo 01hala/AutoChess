@@ -3,6 +3,7 @@
  * author: qianqians
  * 2023/9/24
  */
+import * as common from "../serverSDK/common"
 import * as skill from './skill/skill_base'
 import * as role from './role'
 import * as team from './team'
@@ -13,6 +14,11 @@ export class Battle {
     private enemyTeam : team.Team;
 
     private evs:skill.Event[] = [];
+
+    public constructor(self:common.UserBattleData, target:common.UserBattleData) {
+        this.selfTeam = new team.Team(enums.Camp.Self, self.RoleList);
+        this.enemyTeam = new team.Team(enums.Camp.Enemy, target.RoleList);
+    }
 
     public GetSelfTeam() : team.Team {
         return this.selfTeam;
