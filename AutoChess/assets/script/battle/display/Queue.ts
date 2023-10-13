@@ -35,6 +35,9 @@ export class Queue extends Component
     {
         try 
         {
+            console.log(this.locationTemp);
+            console.log(r);
+
             let address:string="Role_";
             for(let i:number=0;i<6;i++)
             {
@@ -59,7 +62,7 @@ export class Queue extends Component
         } 
         catch (error) 
         {
-            console.warn(this.res+" 下的 PutRole 错误");
+            console.warn(this.res+" 下的 PutRole 错误", error);
         }
         
     }

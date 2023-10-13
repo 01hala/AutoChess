@@ -278,7 +278,7 @@ export class Role {
 
     public GetProperty(em: enums.Property) {
         if (this.properties.has(em)) {
-            return this.properties[em];
+            return this.properties.get(em);
         }
         return 0;
     }
