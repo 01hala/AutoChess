@@ -32,28 +32,17 @@ export class BattleDis {
 
         father.addChild(this.panelNode);
 
-        
+        await this.PutRole();
     }
 
-    PutRole()
+    async PutRole()
     {
         let ids:number[];
         let roles=this.battle.GetSelfTeam().GetRoles();
+        await this.selfQueue.SpawnRole(roles);
 
-        for(let role of roles)
-        {
-            ids.push(role.id);
-        }
-        this.selfQueue.SpawnRole(ids);
-
-        ids=roles=null;
         roles=this.battle.GetEnemyTeam().GetRoles();
-
-        for(let role of roles)
-        {
-            ids.push(role.id);
-        }
-        this.enemyQueue.SpawnRole(ids);
+        await this.enemyQueue.SpawnRole(roles);
     }
 
     onAttackEvent()

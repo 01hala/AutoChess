@@ -5,8 +5,11 @@
  * 队列展示类
  */
 import { _decorator, Component, instantiate, Node, Prefab, resources, Vec2, Vec3 } from 'cc';
-import { BundleManager } from '../../bundle/BundleManager';
 const { ccclass, property } = _decorator;
+
+import * as RoleDis from './RoleDis'
+import { BundleManager } from '../../bundle/BundleManager';
+import * as role from '../role'
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -28,14 +31,15 @@ export class Queue extends Component
         
     }
 
-    async SpawnRole(ID:number[])
+    async SpawnRole(r:role.Role[])
     {
         try 
         {
-            let address:string="role_";
+            let address:string="Role_";
             for(let i:number=0;i<6;i++)
             {
-                let roleRes=""+address+ID[i];
+                //let roleRes=""+address+r[i].id;
+                let roleRes=address+"1";
                 // resources.load(roleRes,Prefab,(err,prefab)=>
                 //     {
                 //         const newNode=instantiate(prefab);
@@ -43,11 +47,14 @@ export class Queue extends Component
                 //         this.node.addChild(newNode);
                 //         this.roleList.push(newNode);
                 //     });
-                let newNode = await BundleManager.Instance.loadAssets("", roleRes) as Prefab;
+                let newNode = await BundleManager.Instance.loadAssets("Roles", roleRes) as Prefab;
                 let role=instantiate(newNode);
                 role.position=new Vec3(this.locationTemp[i].position.x,this.locationTemp[i].position.y);
                 this.node.addChild(role);
                 this.roleList.push(role);
+
+                let roleDis = role.getComponent(RoleDis.RoleDis);
+                await roleDis.Refresh(r[i]);
             }
         } 
         catch (error) 

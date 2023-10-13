@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Enum, Node , Animation, RichText, AnimationComponent, Prefab, instantiate, find } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, Node , Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp , EventType, Property} from '../../battle/enums';
 import { Battle } from '../../battle/battle';
@@ -40,24 +40,27 @@ export class RoleDis extends Component
 
     private AtkAnim:Animation;
 
-    private hpText:RichText;
-    private atkText:RichText;
+    private hpSprite:Sprite;
+    private atkSprite:Sprite;
 
     private roleSprite:Node;
     
 
-    async start() 
+    start() 
     {
         
         this.roleSprite=this.node.getChildByName("Sprite");
 
         this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
-        this.hpText=this.node.getChildByName("Hp").getComponentInChildren(RichText);
-        this.atkText=this.node.getChildByName("Atk").getComponentInChildren(RichText);
+        this.hpSprite=this.roleSprite.getChildByName("Hp").getComponent(Sprite);
+        this.atkSprite=this.roleSprite.getChildByName("Atk").getComponent(Sprite);
         //资源暂时没有
-        this.remoteNode = await BundleManager.Instance.loadAssets("","") as Prefab;
+    }
 
-        this.changeAtt();   
+    async Refresh(roleInfo:Role) {
+        this.roleInfo = roleInfo;
+
+        await this.changeAtt();   
     }
 
     Attack(camp:Camp)
@@ -81,12 +84,16 @@ export class RoleDis extends Component
         //this.changeAtt();
     }
 
-    changeAtt()
+    async changeAtt()
     {
         this.Hp=this.roleInfo.GetProperty(Property.HP);
-        this.AtkAnim=this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
-        this.hpText.string="<color=#00ff00>"+this.Hp+"</color>";
-        this.atkText.string="<color=#00ff00>"+this.AtkNum+"</color>";
+        this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
+
+        let imgHp = await BundleManager.Instance.loadImg(`https://www.ucat.games:8001/zzq/Num/hp_${this.Hp}.png`);
+        let imgAttack = await BundleManager.Instance.loadImg(`https://www.ucat.games:8001/zzq/Num/attack_${this.AtkNum}.png`);
+
+        this.hpSprite.spriteFrame = SpriteFrame.createWithImage(imgHp);
+        this.atkSprite.spriteFrame = SpriteFrame.createWithImage(imgAttack);
     }
 
     RemoteAttack(ev:skill.Event)

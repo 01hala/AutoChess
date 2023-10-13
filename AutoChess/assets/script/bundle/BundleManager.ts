@@ -1,4 +1,4 @@
-import { _decorator, Asset, assetManager, Component, error, Node } from 'cc';
+import { _decorator, Asset, assetManager, Component, ImageAsset, Node } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('BundleManager')
@@ -48,6 +48,25 @@ export class BundleManager extends Component
                         resolve(prefab);
                     });
                     
+                });
+            }
+            catch (err)
+            {
+                console.warn(this.res+"下的 loadAssets 错误:"+err);
+                resolve(null);
+            }    
+        });
+    }
+
+    loadImg(url:string) : Promise<ImageAsset> {
+        return new Promise((resolve) => {
+            try
+            {
+                assetManager.loadRemote(url, {ext:'.png'}, (err:Error, asset:Asset)=>{
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    resolve(asset as ImageAsset);
                 });
             }
             catch (err)
