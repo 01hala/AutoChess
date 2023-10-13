@@ -38,8 +38,8 @@ namespace config
                 offset += read;
             }
 
-            var handle = Newtonsoft.Json.Linq.JToken.Parse(System.Text.Encoding.Default.GetString(data));
-            foreach (var o in handle.Values<Newtonsoft.Json.Linq.JObject>())
+            var handle = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(System.Text.Encoding.Default.GetString(data));
+            foreach (var o in handle.Values)
             {
                 var rolec = new RoleConfig();
                 rolec.Id = (int)o["Id"];

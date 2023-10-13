@@ -5,6 +5,8 @@
  */
 #include "buffer.h"
 
+#include <stdlib.h>
+
 namespace service {
 
 static char* buffer = nullptr;

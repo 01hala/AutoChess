@@ -11,7 +11,7 @@ namespace config
         public static void Load(string path)
         {
             RoleConfigs = RoleConfig.Load(Path.Combine(path, "Role.json"));
-            BufferConfigs = BufferConfig.Load(Path.Combine(path, "Buffer.json"));
+            BufferConfigs = BufferConfig.Load(Path.Combine(path, "buffer.json"));
         }
     }
 }

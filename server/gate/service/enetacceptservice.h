@@ -3,8 +3,9 @@
 
 #include <unordered_map>
 
-#include <abelkhan.h>
 #include <concurrent/signals.h>
+
+#include <abelkhan.h>
 
 #include "DNS.h"
 #include "enetchannel.h"

@@ -17,3 +17,9 @@ hotaru:添加tirgger：5、6、7
 hotaru:添加trigger：释放技能，EventType枚举添加：UsedSkill、UsedSkill，RoleInfo添加：Fetters属性
 2023/10/04
 hotaru:添加并修改RoleDis.ts，创建attack动画
+2023/10/07
+hotaru:添加Queue.ts,添加BundleManager.ts
+2023/10/08
+hotaru:修改RoleDis.ts,创建EnemyAttack动画,同时添加动画帧事件
+2023/10/09
+hotaru:修改Skill_AttGain和create_skill,修改config表
