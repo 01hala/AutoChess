@@ -98,8 +98,9 @@ export class RoleDis extends Component
         {
             this.Hp=this.roleInfo.GetProperty(Property.HP);
             this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
-            //this.hpText.string='<color=#ad0003><outline color=#f05856 width=4>'+this.Hp+'</outline></color>';
-            this.atkText.string='<color=#ffa900><outline color=#ffe900 width=4>'+this.AtkNum+'</outline></color>';
+
+            this.hpText.string="<color=#ad0003><outline color=#f05856 width=4>"+this.Hp+"</outline></color>";
+            this.atkText.string="<color=#ffa900><outline color=#ffe900 width=4>"+this.AtkNum+"</outline></color>";
         }
         catch(err)
         {
