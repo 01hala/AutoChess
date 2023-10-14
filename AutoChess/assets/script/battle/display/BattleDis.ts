@@ -30,9 +30,9 @@ export class BattleDis {
         this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
         this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
 
-        father.addChild(this.panelNode);
-
         await this.PutRole();
+        
+        father.addChild(this.panelNode);
     }
 
     async PutRole()
