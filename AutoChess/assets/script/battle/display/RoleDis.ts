@@ -52,7 +52,7 @@ export class RoleDis extends Component
             this.roleSprite=this.node.getChildByName("Sprite");
             this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
             this.hpText=this.roleSprite.getChildByPath("Hp/HpText").getComponent(RichText);
-            this.hpText=this.roleSprite.getChildByPath("Atk/AtkText").getComponent(RichText);
+            this.atkText=this.roleSprite.getChildByPath("Atk/AtkText").getComponent(RichText);
         }
         catch(err)
         {
