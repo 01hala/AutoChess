@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Sprite, Node , Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, Node , Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp , EventType, Property} from '../../battle/enums';
 import { Battle } from '../../battle/battle';
@@ -40,21 +40,29 @@ export class RoleDis extends Component
 
     private AtkAnim:Animation;
 
-    private hpSprite:Sprite;
-    private atkSprite:Sprite;
+    private hpText:RichText;
+    private atkText:RichText;
 
     private roleSprite:Node;
     
+    protected onLoad(): void 
+    {
+        try
+        {
+            this.roleSprite=this.node.getChildByName("Sprite");
+            this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
+            this.hpText=this.roleSprite.getChildByPath("Hp/HpText").getComponent(RichText);
+            this.hpText=this.roleSprite.getChildByPath("Atk/AtkText").getComponent(RichText);
+        }
+        catch(err)
+        {
+            console.warn("RoleDis 里的 onLoad 函数错误 err:"+err);
+        }
+    }
 
     start() 
     {
         
-        this.roleSprite=this.node.getChildByName("Sprite");
-
-        this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
-        this.hpSprite=this.roleSprite.getChildByName("Hp").getComponent(Sprite);
-        this.atkSprite=this.roleSprite.getChildByName("Atk").getComponent(Sprite);
-        //资源暂时没有
     }
 
     async Refresh(roleInfo:Role) {
@@ -86,14 +94,17 @@ export class RoleDis extends Component
 
     async changeAtt()
     {
-        this.Hp=this.roleInfo.GetProperty(Property.HP);
-        this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
-
-        let imgHp = await BundleManager.Instance.loadImg(`https://www.ucat.games:8001/zzq/Num/hp_${this.Hp}.png`);
-        let imgAttack = await BundleManager.Instance.loadImg(`https://www.ucat.games:8001/zzq/Num/attack_${this.AtkNum}.png`);
-
-        this.hpSprite.spriteFrame = SpriteFrame.createWithImage(imgHp);
-        this.atkSprite.spriteFrame = SpriteFrame.createWithImage(imgAttack);
+        try
+        {
+            this.Hp=this.roleInfo.GetProperty(Property.HP);
+            this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
+            //this.hpText.string='<color=#ad0003><outline color=#f05856 width=4>'+this.Hp+'</outline></color>';
+            this.atkText.string='<color=#ffa900><outline color=#ffe900 width=4>'+this.AtkNum+'</outline></color>';
+        }
+        catch(err)
+        {
+            console.warn("RoleDis 里的 changeAtt 函数错误 err:"+err);
+        }
     }
 
     RemoteAttack(ev:skill.Event)

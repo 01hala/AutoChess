@@ -31,3 +31,4 @@ hotaru:创建BattleDis类,修改RoleDis里的attack方法
 hotaru:将queue里的putrole重命名为spawnrole，在battledis里添加putrole方法
 2020/10/14
 hotaru:在bundlemanager里添加preloading（预加载）方法,添加bundle_config配置文件
+hotaru:添加字体文件、添加图片资源

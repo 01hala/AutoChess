@@ -62,7 +62,7 @@ export class Queue extends Component
         } 
         catch (error) 
         {
-            console.warn(this.res+" 下的 PutRole 错误", error);
+            console.warn(this.res+" 下的 SpawnRole 错误", error);
         }
         
     }
