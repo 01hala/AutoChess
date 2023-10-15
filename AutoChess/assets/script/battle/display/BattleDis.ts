@@ -13,18 +13,6 @@ import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 const { ccclass, property } = _decorator;
 
-enum AttackState {
-    Not = 0,
-    AttackReady = 1,
-    Attack = 2,
-    AttackReduction = 3,
-}
-
-class AttackRole {
-    public selfIndex = 0;
-    public enemyIndex = 0;
-}
-
 export class BattleDis {
     private panelNode:Node;
     public selfQueue:Queue;
@@ -52,7 +40,7 @@ export class BattleDis {
         father.addChild(this.panelNode);
 
         this.battle.StartBattle();
-        setInterval(this.tickBattle.bind(this), 500);
+        setTimeout(this.tickBattle.bind(this), 500);
     }
 
     async tickBattle() {
@@ -83,34 +71,25 @@ export class BattleDis {
 
     private checkAttackEvent(evs:skill.Event[]) {
         let allAwait = [];
-        if (this.attackState == AttackState.Not) {
-            for(let ev of evs)
-            {
-                if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp)
-                {
-                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).AttackReady(this.selfQueue.readyLocation.position));
+        for(let ev of evs)
+        {
+            if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp) {
+                allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
+                    this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position));
 
-                    console.log("set attackState AttackState.AttackReady!");
-                    this.attackState = AttackState.AttackReady;
-                    this.attackRole.selfIndex = ev.spellcaster.index;
-                }
-                if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp)
-                {
-                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).AttackReady(this.enemyQueue.readyLocation.position));
-
-                    this.attackRole.enemyIndex = ev.spellcaster.index;
-                }
+                console.log("set attackState AttackState.AttackReady!");
+            }
+            if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
+                allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
+                    this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position));
             }
         }
         return allAwait;
     }
 
-    private attackState:AttackState = AttackState.Not;
-    private attackRole:AttackRole = new AttackRole();
     onEvent()
     {
-        this.battle.on_event.push(async (evs)=>
-        {
+        this.battle.on_event = async (evs) => {
             //console.log("begin on_event!");
             
             /*for(let ev of evs)
@@ -160,43 +139,13 @@ export class BattleDis {
             let allAwait = this.checkAttackEvent(evs);
             await Promise.all(allAwait);
 
-            if (this.attackState == AttackState.AttackReady) {
-                console.log("do AttackReady!");
-
-                this.attackState = AttackState.Attack;
-
-                let allAwait1 = []
-                allAwait1.push(this.selfQueue.roleList[this.attackRole.selfIndex].getComponent(RoleDis).Attack(this.selfQueue.battleLocation.position));
-                allAwait1.push(this.enemyQueue.roleList[this.attackRole.enemyIndex].getComponent(RoleDis).Attack(this.enemyQueue.battleLocation.position));
-
-                await Promise.all(allAwait1);
-            }
-            else if (this.attackState == AttackState.Attack) {
-                console.log("do AttackReduction!");
-
-                this.attackState = AttackState.AttackReduction;
-
-                let selfRoleDis = this.selfQueue.roleList[this.attackRole.selfIndex].getComponent(RoleDis);
-                let enemyRoleDis = this.enemyQueue.roleList[this.attackRole.enemyIndex].getComponent(RoleDis);
-
-                let allAwait2 = []
-                allAwait2.push(selfRoleDis.AttackReduction());
-                allAwait2.push(enemyRoleDis.AttackReduction());
-
-                await Promise.all(allAwait2);
-
-            }
-            else if (this.attackState == AttackState.AttackReduction) {
-                //this.attackState = AttackState.Not;
-            }
-
             if (this.resolve) {
                 this.resolve.call(null);
                 this.resolve = null;
             }
 
             //console.log("end on_event!");
-        });
+        }
     }
 }
 

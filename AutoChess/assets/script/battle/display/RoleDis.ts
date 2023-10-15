@@ -98,38 +98,21 @@ export class RoleDis extends Component
         this.originalPos = new Vec3(this.node.position); 
     }
 
-    private tAttackReady:Tween<Node> = null;
-    AttackReady(readyLocation:Vec3) {
-        this.tAttackReady = tween(this.node).to(0.5, { position: readyLocation }).start();
-        return this.delay(600, ()=>{ 
-            if ( this.tAttackReady) {
-                this.tAttackReady.stop();
-                this.tAttackReady = null;
-            }
-        });
-    }
-
     private tAttack:Tween<Node> = null;
-    Attack(battleLocation:Vec3) {
-        this.tAttack = tween(this.node).to(0.3, { position: battleLocation }).start();
-        return this.delay(400, ()=>{ 
+    Attack(readyLocation:Vec3, battleLocation:Vec3) {
+        this.tAttack = tween(this.node)
+            .to(0.5, { position: readyLocation })
+            .delay(0.1)
+            .to(0.3, { position: battleLocation })
+            .delay(0.1)
+            .to(0.3, { position: this.originalPos })
+            .start();
+
+        return this.delay(1500, ()=>{ 
             if (this.tAttack) {
                 this.tAttack.stop(); 
                 this.tAttack = null;
             }
-        });
-    }
-
-    private tAttackReduction:Tween<Node> = null;
-    AttackReduction() {
-        console.log("originalPos", this.originalPos);
-        this.tAttackReduction = tween(this.node).to(0.3, { position: this.originalPos }).start();
-        return this.delay(500, ()=>{ 
-            if (this.tAttackReduction) {
-                this.tAttackReduction.stop();
-                this.tAttackReduction = null;
-            }
-            console.log("now Pos", this.node.position);
         });
     }
 
