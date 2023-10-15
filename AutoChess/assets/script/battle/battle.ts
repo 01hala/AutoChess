@@ -32,7 +32,7 @@ export class Battle {
         this.evs.push(ev);
     }
 
-    public on_event : ((evs:skill.Event[]) => void)[];
+    public on_event : ((evs:skill.Event[]) => void)[] = [];
 
     public StartBattle() {
         let ev = new skill.Event();
@@ -41,6 +41,8 @@ export class Battle {
     }
 
     private battle() {
+        //console.log("battle begin!");
+
         let self = this.selfTeam.GetRole(0);
         let enemy = this.enemyTeam.GetRole(0);
 
@@ -51,12 +53,13 @@ export class Battle {
             let ev = new skill.Event();
             ev.type = enums.EventType.AfterAttack;
             this.AddBattleEvent(ev);
-            return false;
         }
+
+        //console.log("battle end!");
     }
 
     public GetWinCamp() : enums.Camp {
-        if (!this.checkEndBattle()){
+        if (!this.CheckEndBattle()){
             return enums.Camp.None;
         }
 
@@ -71,18 +74,19 @@ export class Battle {
         return enums.Camp.Self;
     }
 
-    private checkEndBattle() : boolean {
+    public CheckEndBattle() : boolean {
         return this.selfTeam.CheckDefeated() || this.enemyTeam.CheckDefeated();
     }
 
     private triggerBeforeAttack : boolean = true;
     public TickBattle() : boolean {
+        let evs = this.evs;
+        for(let ev of this.on_event) {
+            ev.call(null, evs);
+        }
+            
         if (this.evs.length > 0) {
-            let evs = this.evs;
             this.evs = [];
-            for(let ev of this.on_event) {
-                ev.call(null, evs);
-            }
 
             let selfTeam = this.selfTeam.GetRoles();
             for(let index in selfTeam) {
@@ -129,6 +133,7 @@ export class Battle {
             this.selfTeam.CheckRemoveDeadRole();
             this.enemyTeam.CheckRemoveDeadRole();
 
+            //console.log("tick events");
             return false;
         }
 
@@ -137,16 +142,19 @@ export class Battle {
             ev.type = enums.EventType.BeforeAttack;
             this.AddBattleEvent(ev);
             this.triggerBeforeAttack = false;
+
+            //console.log("trigger Before Attack");
             return false;
         }
 
         this.battle();
+        //console.log("battle Attack");
         this.triggerBeforeAttack = true;
 
         if (this.evs.length > 0) {
             return false;
         }
 
-        return this.checkEndBattle();
+        return this.CheckEndBattle();
     }
 }

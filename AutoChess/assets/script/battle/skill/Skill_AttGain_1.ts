@@ -9,7 +9,7 @@ import { SkillBase,Event, RoleInfo,SkillTriggerBase, } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role } from '../role';
-import { Camp, Direction, SkillType, Property } from '../enums';
+import { Camp, Direction, SkillType, Property, EventType } from '../enums';
 import { random } from '../util';
 
 export class Skill_AttGain_1 extends SkillBase 
@@ -48,7 +48,7 @@ export class Skill_AttGain_1 extends SkillBase
             {
                 this.SkillEffect_1(selfInfo,battle);    
             }
-            if(null==this.dir)
+            else if(null==this.dir)
             {
                 this.SkillEffect_2(selfInfo,battle);  
             }
@@ -66,8 +66,17 @@ export class Skill_AttGain_1 extends SkillBase
         
         try
         {
+            let event = new Event();
+            event.type = EventType.IntensifierProperties;
+            event.spellcaster = selfInfo;
+            event.recipient = [];
+
             let teamTemp:Role[]=null;
             let recipientRole:Role=null;
+
+            let roleInfo = new RoleInfo();
+            roleInfo.camp = selfInfo.camp;
+            roleInfo.index = 0;
 
             if(Camp.Self==selfInfo.camp)
             {
@@ -81,17 +90,20 @@ export class Skill_AttGain_1 extends SkillBase
                 {
                     case 0:
                         recipientRole=teamTemp[selfInfo.index];
+                        roleInfo.index = selfInfo.index;
                         break;
                     case 1:
                         if(selfInfo.index>=3)
                         {
                             recipientRole=teamTemp[selfInfo.index-3];
+                            roleInfo.index = selfInfo.index-3;
                         }
                         break;
                     case 2:
                         if(selfInfo.index<3)
                         {
                             recipientRole=teamTemp[selfInfo.index+3];
+                            roleInfo.index = selfInfo.index+3;
                         }
                         break;
                     case 3:
@@ -100,10 +112,12 @@ export class Skill_AttGain_1 extends SkillBase
                             if(1==selfInfo.index||4==selfInfo.index)
                             {
                                 recipientRole=teamTemp[selfInfo.index-3];
+                                roleInfo.index = selfInfo.index-3;
                             }
                             if(0==selfInfo.index||3==selfInfo.index)
                             {
                                 recipientRole=teamTemp[selfInfo.index+2];
+                                roleInfo.index = selfInfo.index+2;
                             }
                         }
                         break;
@@ -113,10 +127,12 @@ export class Skill_AttGain_1 extends SkillBase
                             if(0==selfInfo.index||3==selfInfo.index)
                             {
                                 recipientRole=battle.GetSelfTeam().GetRole(selfInfo.index+1);
+                                roleInfo.index = selfInfo.index+1;
                             }
                             if(2==selfInfo.index||5==selfInfo.index)
                             {
                                 recipientRole=battle.GetSelfTeam().GetRole(selfInfo.index-2);
+                                roleInfo.index = selfInfo.index-2;
                             }
                         }
                 }
@@ -125,6 +141,10 @@ export class Skill_AttGain_1 extends SkillBase
                 recipientRole.ChangeProperties(Property.HP, recipientRole.GetProperty(Property.HP) + this.health);
                 recipientRole.ChangeProperties(Property.TotalHP, recipientRole.GetProperty(Property.TotalHP) + this.health);
                 recipientRole.ChangeProperties(Property.Attack,recipientRole.GetProperty(Property.Attack) + this.attack);
+
+                event.recipient.push(roleInfo);
+                event.value = [this.health, this.health, this.attack];
+                battle.AddBattleEvent(event);
             }
         }
         catch (error) 
@@ -138,6 +158,11 @@ export class Skill_AttGain_1 extends SkillBase
         
         try
         {
+            let event = new Event();
+            event.type = EventType.IntensifierProperties;
+            event.spellcaster = selfInfo;
+            event.recipient = [];
+
             let recipientRoles:Role[]=new Array();
             let rolesTemp:Role[]=null;
 
@@ -149,13 +174,18 @@ export class Skill_AttGain_1 extends SkillBase
             {
                 rolesTemp=battle.GetEnemyTeam().GetRoles().slice();
             }
-            while(recipientRoles.length<this.numberOfRole)
+            while(recipientRoles.length<this.numberOfRole && recipientRoles.length<rolesTemp.length)
             {
                 let index = random(0, rolesTemp.length);
                 if(index!=selfInfo.index)                                   //随机但不包括自己
                 {
                     recipientRoles.push(rolesTemp[index]);
                     rolesTemp.splice(index, 1);
+
+                    let roleInfo = new RoleInfo();
+                    roleInfo.camp = selfInfo.camp;
+                    roleInfo.index = index;
+                    event.recipient.push(roleInfo);
                 }
             }
             recipientRoles.forEach((role) => 
@@ -164,7 +194,8 @@ export class Skill_AttGain_1 extends SkillBase
                 role.ChangeProperties(Property.TotalHP, role.GetProperty(Property.TotalHP) + this.health);
                 role.ChangeProperties(Property.Attack,role.GetProperty(Property.Attack) + this.attack);
             });
-            
+            event.value = [this.health, this.health, this.attack];
+            battle.AddBattleEvent(event);
         }
         catch (error) 
         {

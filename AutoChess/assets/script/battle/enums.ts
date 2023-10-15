@@ -24,9 +24,11 @@ export enum EventType {
     RemoteInjured = 11,
     Syncope = 12,
     ChangeLocation = 13,
-    BattleFail=14,
-    UsedSkill=15,
-    
+    Summon = 14,
+    BattleFail=15,
+    UsedSkill=16,
+    SwapProperties = 17,
+    IntensifierProperties = 18,
 }
 
 export enum ChangePositionType {

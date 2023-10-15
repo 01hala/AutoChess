@@ -19,6 +19,11 @@ export class Queue extends Component
     @property([Node])
     public locationTemp:Node[]=[];
 
+    @property(Node)
+    public readyLocation:Node;
+    @property(Node)
+    public battleLocation:Node;
+
     public roleList:Node[]=[];
 
     start() 

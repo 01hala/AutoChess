@@ -17,11 +17,12 @@ export class SkillInfo {
     public skill : skill.SkillBase;
 }
 
-function createSkill(id:number) : SkillInfo {
+function createSkill(id:number, level:number) : SkillInfo {
     let skillConfig = config.config.SkillConfig.get(id);
-    if (skillConfig) {let skill = new SkillInfo();
+    if (skillConfig) {
+        let skill = new SkillInfo();
         skill.trigger = create_trigger.CreateTrigger(skillConfig.EffectTime);
-        skill.skill = create_skill.CreateSkill(this.level, id);
+        skill.skill = create_skill.CreateSkill(level, id);
     
         return skill;
     }
@@ -54,9 +55,8 @@ export class Role {
         this.properties = properties;
 
         let roleConfig = config.config.RoleConfig.get(this.id);
-        console.log("id:", this.id, roleConfig);
 
-        let skill = createSkill(roleConfig.Id);
+        let skill = createSkill(roleConfig.Id, this.level);
         if (skill) {
             this.skill.push();
         }
@@ -66,7 +66,7 @@ export class Role {
             this.buffer.push(buffer);
         }
 
-        skill = createSkill(additionSkill);
+        skill = createSkill(additionSkill, this.level);
         if (skill) {
             this.skill.push();
         }

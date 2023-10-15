@@ -37,6 +37,7 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
     return new Promise<Map<number, SkillConfig>>((resolve, reject)=>{
         let map = new Map<number, SkillConfig>();
 
+        console.log("Load Skill Config begin!");
         resources.load('config/Skill', (err: any, res: JsonAsset) => {
             if (err) {
                 error(err.message || err);
@@ -62,7 +63,7 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
                 skillc.Level2Value_2 = v["Level2Value_2"];
                 skillc.Level3Value_1 = v["Level3Value_1"];
                 skillc.Level3Value_2 = v["Level3Value_2"];
-                skillc.SummonId = JSON.parse(v["SummonId"]);
+                skillc.SummonId = v["SummonId"] == "" ? [] : JSON.parse(v["SummonId"]);
                 skillc.SummonLevel = v["SummonLevel"];
                 skillc.ChangePositionType = v["ChangePositionType"];
                 skillc.SwapPropertiesType = v["SwapPropertiesType"];
@@ -71,6 +72,7 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
             });
         })
 
+        console.log("Load Skill Config end!");
         resolve(map);
     });
 }

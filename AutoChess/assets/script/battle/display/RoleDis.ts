@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Sprite, Node , Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp , EventType, Property} from '../../battle/enums';
 import { Battle } from '../../battle/battle';
@@ -49,10 +49,23 @@ export class RoleDis extends Component
     {
         try
         {
+            console.log("onLoad begin!");
+
             this.roleSprite=this.node.getChildByName("Sprite");
             this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
             this.hpText=this.roleSprite.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText=this.roleSprite.getChildByPath("Atk/AtkText").getComponent(RichText);
+
+            if (this.roleInfo) {
+                if (this.hpText && this.atkText) {
+                    this.hpText.string="<color=#ad0003><outline color=#f05856 width=4>"+this.Hp+"</outline></color>";
+                    this.atkText.string="<color=#ffa900><outline color=#ffe900 width=4>"+this.AtkNum+"</outline></color>";
+                }
+            }
+
+            this.AttackInit();
+            
+            console.log("onLoad end!");
         }
         catch(err)
         {
@@ -71,36 +84,66 @@ export class RoleDis extends Component
         await this.changeAtt();   
     }
 
-    Attack(camp:Camp)
-    {
-        this.roleSprite.setSiblingIndex(3);
-        if(Camp.Self==camp)
-        {
-            this.AtkAnim.play("Attack");
-        }
-        if(Camp.Enemy==camp)
-        {
-            this.AtkAnim.play("EnemyAttack");
-        }
-        if(this.AtkAnim)
-        {
-            this.AtkAnim.on(AnimationComponent.EventType.STOP,()=>
-            {
-                this.roleSprite.setSiblingIndex(0);
-            })
-        }
-        //this.changeAtt();
+    delay(ms:number, release:() => void) : Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+                release();
+            }, ms);
+        });
+    }
+    
+    private originalPos:Vec3;
+    AttackInit() {
+        this.originalPos = new Vec3(this.node.position); 
     }
 
-    async changeAtt()
+    private tAttackReady:Tween<Node> = null;
+    AttackReady(readyLocation:Vec3) {
+        this.tAttackReady = tween(this.node).to(0.5, { position: readyLocation }).start();
+        return this.delay(600, ()=>{ 
+            if ( this.tAttackReady) {
+                this.tAttackReady.stop();
+                this.tAttackReady = null;
+            }
+        });
+    }
+
+    private tAttack:Tween<Node> = null;
+    Attack(battleLocation:Vec3) {
+        this.tAttack = tween(this.node).to(0.3, { position: battleLocation }).start();
+        return this.delay(400, ()=>{ 
+            if (this.tAttack) {
+                this.tAttack.stop(); 
+                this.tAttack = null;
+            }
+        });
+    }
+
+    private tAttackReduction:Tween<Node> = null;
+    AttackReduction() {
+        console.log("originalPos", this.originalPos);
+        this.tAttackReduction = tween(this.node).to(0.3, { position: this.originalPos }).start();
+        return this.delay(500, ()=>{ 
+            if (this.tAttackReduction) {
+                this.tAttackReduction.stop();
+                this.tAttackReduction = null;
+            }
+            console.log("now Pos", this.node.position);
+        });
+    }
+
+    changeAtt()
     {
         try
         {
             this.Hp=this.roleInfo.GetProperty(Property.HP);
             this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
 
-            this.hpText.string="<color=#ad0003><outline color=#f05856 width=4>"+this.Hp+"</outline></color>";
-            this.atkText.string="<color=#ffa900><outline color=#ffe900 width=4>"+this.AtkNum+"</outline></color>";
+            if (this.hpText && this.atkText) {
+                this.hpText.string="<color=#ad0003><outline color=#f05856 width=4>"+this.Hp+"</outline></color>";
+                this.atkText.string="<color=#ffa900><outline color=#ffe900 width=4>"+this.AtkNum+"</outline></color>";
+            }
         }
         catch(err)
         {

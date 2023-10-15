@@ -149,7 +149,7 @@ export class login extends Component {
 
             let _battle = new battle.Battle(self, target);
             singleton.netSingleton.battle = new battleDis.BattleDis(_battle);
-            await singleton.netSingleton.battle.Init(this.bk.node);
+            await singleton.netSingleton.battle.Start(this.bk.node);
 
             this._setProgress(1.0);
             this._loading.done();

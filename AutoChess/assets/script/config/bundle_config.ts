@@ -19,6 +19,7 @@ export async function LoadBundleConfig() : Promise<Map<number, BundleConfig >> {
     return new Promise<Map<number, BundleConfig >>((resolve, reject)=>{
         let map = new Map<number, BundleConfig >();
 
+        console.log("Load Bundle Config begin!");
         resources.load('config/Bundle', (err: any, res: JsonAsset) => {
             if (err) {
                 error(err.message || err);
@@ -40,6 +41,7 @@ export async function LoadBundleConfig() : Promise<Map<number, BundleConfig >> {
             });
         })
 
+        console.log("Load Bundle Config end!");
         resolve(map);
     });
 }

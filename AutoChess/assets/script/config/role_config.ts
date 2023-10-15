@@ -21,6 +21,7 @@ export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
     return new Promise<Map<number, RoleConfig>>((resolve, reject)=>{
         let map = new Map<number, RoleConfig>();
 
+        console.log("Load Role Config begin!");
         resources.load('config/Role', (err: any, res: JsonAsset) => {
             if (err) {
                 error(err.message || err);
@@ -45,6 +46,7 @@ export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
             });
         });
 
+        console.log("Load Role Config end!");
         resolve(map);
     });
 }

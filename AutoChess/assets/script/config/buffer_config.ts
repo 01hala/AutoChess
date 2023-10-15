@@ -17,6 +17,7 @@ export async function LoadBufferConfig() : Promise<Map<number, BufferConfig>> {
     return new Promise<Map<number, BufferConfig>>((resolve, reject)=>{
         let map = new Map<number, BufferConfig>();
 
+        console.log("Load Buffer Config begin!");
         resources.load('config/buffer', (err: any, res: JsonAsset) => {
             if (err) {
                 error(err.message || err);
@@ -38,6 +39,7 @@ export async function LoadBufferConfig() : Promise<Map<number, BufferConfig>> {
             });
         });
 
+        console.log("Load Buffer Config end!");
         resolve(map);
     });
 }
