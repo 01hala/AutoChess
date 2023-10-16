@@ -5,6 +5,7 @@
     "version": "3.8.0"
   },
   "dependencies": {
+    "@msgpack/msgpack": "^3.0.0-beta2",
     "minigame-api-typings": "^3.8.2"
   }
 }
