@@ -48,13 +48,13 @@ export class BundleManager
                     this.bundles.set(bundleRes, bundle);
                 }
 
-                bundle.load(assetsRes, Asset, (error,prefab) => {
+                bundle.load(assetsRes, Asset, (error, asset) => {
                     if(error) {
                         console.warn(error.message);
                         resolve(null);
                     }
                     else {
-                        resolve(prefab);
+                        resolve(asset);
                     }
                 });
             }
@@ -73,7 +73,7 @@ export class BundleManager
                     if (err) {
                         console.log(err.message);
                     }
-                    resolve(asset as Asset);
+                    resolve(asset);
                 });
             }
             catch (err)
