@@ -85,6 +85,36 @@ export class BattleDis {
         await Promise.all(allAwait);
     }
 
+    private async ChangeAttEvent(evs:skill.Event[])
+    {
+        let allAwait = [];
+        for(let ev of evs)
+        {
+            if(EventType.AfterAttack==ev.type)
+            {
+                allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+            }
+
+            if(Camp.Self == ev.spellcaster.camp)
+            {
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type)
+                {
+                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                }
+            }
+            if(Camp.Enemy==ev.spellcaster.camp)
+            {
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type)
+                {
+                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                }
+            }
+            
+        }
+        await Promise.all(allAwait);
+    }
+
     onEvent()
     {
         this.battle.on_event = async (evs) => {
@@ -135,6 +165,7 @@ export class BattleDis {
             }*/
             
             await this.checkAttackEvent(evs);
+            await this.ChangeAttEvent(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);
