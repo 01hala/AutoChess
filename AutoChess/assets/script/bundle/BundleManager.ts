@@ -1,11 +1,11 @@
-import { _decorator, Asset, assetManager, Component, ImageAsset, JsonAsset, Node, path, Prefab, resources } from 'cc';
+import { _decorator, Asset, assetManager, AssetManager, Component, ImageAsset, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
 import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
-@ccclass('BundleManager')
-export class BundleManager extends Component 
+export class BundleManager
 {
     private res:string="script/bundle/bundleManager.ts";
+    private bundles:Map<string, AssetManager.Bundle> = new Map();
 
     public static _instance:BundleManager=null;
 
@@ -16,41 +16,48 @@ export class BundleManager extends Component
         return this._instance;
     }
     
-    onLoad()
-    {
-        if(BundleManager._instance === null)
-        {
-            BundleManager._instance=this;
-        }
-        else
-        {
-            this.destroy();
-            return;
-        }
+    private loadBundle(bundleRes:string) : Promise<AssetManager.Bundle> {
+        return new Promise((resolve) => {
+            try {
+                assetManager.loadBundle(bundleRes,(error,bundle) => {
+                    if(error) {
+                        console.warn(error.message);
+                        resolve(null);
+                    }
+                    else {
+                        resolve(bundle);
+                    }
+                });
+            }
+            catch (err) {
+                console.warn(this.res+"下的 loadAssets 错误:"+err);
+                resolve(null);
+            }    
+        });
     }
 
-    private jsonData:JsonAsset=null;
-
-    loadAssets(bundleRes:string,assetsRes:string) : Promise<Asset>
+    loadAssets(bundleRes:string, assetsRes:string) : Promise<Asset>
     {   
-        return new Promise((resolve) => {
+        return new Promise(async (resolve) => {
             try
             {
-                assetManager.loadBundle(bundleRes,(error,bundle)=>
-                {
-                    if(error)
-                    {
+                let bundle : AssetManager.Bundle = null;
+                if (this.bundles.has(bundleRes)) {
+                    bundle = this.bundles.get(bundleRes);
+                }
+                else {
+                    bundle = await this.loadBundle(bundleRes);
+                    this.bundles.set(bundleRes, bundle);
+                }
+
+                bundle.load(assetsRes, Prefab, (error,prefab) => {
+                    if(error) {
                         console.warn(error.message);
+                        resolve(null);
                     }
-                    bundle.load(assetsRes, (error,prefab)=>
-                    {
-                        if(error)
-                        {
-                            console.warn(error.message);
-                        }
+                    else {
                         resolve(prefab);
-                    });
-                    
+                    }
                 });
             }
             catch (err)
@@ -61,7 +68,38 @@ export class BundleManager extends Component
         });
     }
 
-    loadImg(url:string) : Promise<ImageAsset> {
+    loadSpriteFrame(bundleRes:string, assetsRes:string) : Promise<SpriteFrame> {
+        return new Promise(async (resolve) => {
+            try
+            {
+                let bundle : AssetManager.Bundle = null;
+                if (this.bundles.has(bundleRes)) {
+                    bundle = this.bundles.get(bundleRes);
+                }
+                else {
+                    bundle = await this.loadBundle(bundleRes);
+                    this.bundles.set(bundleRes, bundle);
+                }
+
+                bundle.load(assetsRes, SpriteFrame, (error, spriteFrame) => {
+                    if(error) {
+                        console.warn(error.message);
+                        resolve(null);
+                    }
+                    else {
+                        resolve(spriteFrame);
+                    }
+                });
+            }
+            catch (err)
+            {
+                console.warn(this.res+"下的 loadAssets 错误:"+err);
+                resolve(null);
+            }    
+        });
+    }
+
+    loadImageAsset(url:string) : Promise<ImageAsset> {
         return new Promise((resolve) => {
             try
             {
@@ -87,18 +125,19 @@ export class BundleManager extends Component
         {
             try
             {
-                for(let i:number=0;i<config.BundleConfig.size;i++)
-                {
-                    let bundlePath=config.BundleConfig.get(i).URL+config.BundleConfig.get(i).Path;
-                    assetManager.loadBundle(bundlePath,(err,bundle)=>
-                    {
-                        if(err)
-                        {
-                            console.warn(bundlePath+"加载失败 err:"+err);
-                        }
-                        bundle.preloadDir(config.BundleConfig.get(i).Path);
-                        
-                    })
+                for(let i:number=0;i<config.BundleConfig.size;i++) {
+                    let bundleRes = config.BundleConfig.get(i).Path;
+                    if (!this.bundles.has(bundleRes)) {
+                        assetManager.loadBundle(bundleRes,(err,bundle) => {
+                            if(err) {
+                                console.warn(bundleRes+"加载失败 err:"+err);
+                            }
+                            else {
+                                this.bundles.set(bundleRes, bundle);
+                                bundle.preloadDir(config.BundleConfig.get(i).Path);
+                            }
+                        });
+                    }
                 }
             }
             catch (error)
