@@ -83,21 +83,6 @@ export class Role {
         let selfIndex = selfTeam.GetRoleIndex(this);
         let enemyIndex = enemyTeam.GetRoleIndex(enemy);
 
-        if (this.CheckDead()) {
-            let ev = new skill.Event();
-            ev.type = enums.EventType.Syncope;
-            ev.spellcaster = new skill.RoleInfo();
-            ev.spellcaster.camp = enemy.selfCamp;
-            ev.spellcaster.index = enemyIndex;
-            ev.recipient = [];
-            let recipient = new skill.RoleInfo();
-            recipient.camp = this.selfCamp;
-            recipient.index = selfIndex;
-            ev.recipient.push(recipient);
-            ev.value = [];
-            ev.value.push(damage);
-            battle.AddBattleEvent(ev);
-        } 
         if (damage > 0) {
             let ev = new skill.Event();
             ev.type = Injured;
@@ -113,6 +98,21 @@ export class Role {
             ev.value.push(damage);
             battle.AddBattleEvent(ev);
         }
+        if (this.CheckDead()) {
+            let ev = new skill.Event();
+            ev.type = enums.EventType.Syncope;
+            ev.spellcaster = new skill.RoleInfo();
+            ev.spellcaster.camp = enemy.selfCamp;
+            ev.spellcaster.index = enemyIndex;
+            ev.recipient = [];
+            let recipient = new skill.RoleInfo();
+            recipient.camp = this.selfCamp;
+            recipient.index = selfIndex;
+            ev.recipient.push(recipient);
+            ev.value = [];
+            ev.value.push(damage);
+            battle.AddBattleEvent(ev);
+        } 
     }
 
     private checkShareDamageBuffer() : boolean {
@@ -266,8 +266,8 @@ export class Role {
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
-        let damageSelf = this.properties[enums.Property.HP];
-        this.properties[enums.Property.HP] = 0;
+        let damageSelf = this.properties.get(enums.Property.HP);
+        this.properties.set(enums.Property.HP, 0);
         this.sendHurtedEvent(enemy, damageSelf, battle, enums.EventType.AttackInjured);
     }
     
@@ -294,7 +294,7 @@ export class Role {
     }
 
     public CheckDead() {
-        return this.properties[enums.Property.HP] <= 0;
+        return this.properties.get(enums.Property.HP) <= 0;
     }
 
     public Attack(enemy: Role, battle: battle.Battle) {
