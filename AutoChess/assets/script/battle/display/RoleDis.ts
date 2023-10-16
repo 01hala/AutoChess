@@ -79,9 +79,7 @@ export class RoleDis extends Component
     }
 
     async Refresh(roleInfo:Role) {
-        this.roleInfo = roleInfo;
-
-        await this.changeAtt();   
+        await this.changeAtt(roleInfo);   
     }
 
     delay(ms:number, release:() => void) : Promise<void> {
@@ -116,10 +114,12 @@ export class RoleDis extends Component
         });
     }
 
-    changeAtt()
+    changeAtt(roleInfo:Role)
     {
         try
         {
+            this.roleInfo=roleInfo;
+
             this.Hp=this.roleInfo.GetProperty(Property.HP);
             this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
 

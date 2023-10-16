@@ -51,7 +51,7 @@ export class Battle {
             enemy.Attack(self, this);
 
             let ev = new skill.Event();
-            ev.type = enums.EventType.AfterAttack;
+            ev.type = enums.EventType.AttackInjured;
             this.AddBattleEvent(ev);
         }
 
