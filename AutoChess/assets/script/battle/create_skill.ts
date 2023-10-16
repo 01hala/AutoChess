@@ -59,9 +59,9 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         {
             if (skillConfig.SummonLevel == 0) {
                 let p = new Map<enums.Property, number>();
-                p[enums.Property.HP] = value0;
-                p[enums.Property.TotalHP] = value0;
-                p[enums.Property.Attack] = value1;
+                p.set(enums.Property.HP, value0);
+                p.set(enums.Property.TotalHP, value0);
+                p.set(enums.Property.Attack, value1);
                 skillObj = new Skill_Summon_4.Skill_Summon_4(skillConfig.Priority, skillConfig.SummonId[0], 0, p);
             }
             else {
