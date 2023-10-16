@@ -67,17 +67,15 @@ export class BundleManager
 
     loadAssetsFromUrl(url:string) : Promise<Asset> {
         return new Promise((resolve) => {
-            try
-            {
-                assetManager.loadRemote(url, {ext:'.png'}, (err:Error, asset:Asset)=>{
+            try {
+                assetManager.loadRemote(url, {ext:'.png'}, (err:Error, asset:Asset) => {
                     if (err) {
                         console.log(err.message);
                     }
                     resolve(asset);
                 });
             }
-            catch (err)
-            {
+            catch (err) {
                 console.warn(this.res+"下的 loadAssets 错误:"+err);
                 resolve(null);
             }    
