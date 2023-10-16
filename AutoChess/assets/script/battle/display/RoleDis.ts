@@ -146,6 +146,13 @@ export class RoleDis extends Component
         
     }
     
+    Exit()
+    {
+        /*
+         * 退场效果。。。
+         */
+        this.node.destroy();
+    }
 }
 
 

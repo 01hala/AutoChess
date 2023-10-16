@@ -73,4 +73,44 @@ export class Team {
         this.roleList.unshift(role);
         return true;
     }
+/*
+ * 添加
+ * 此函数在第一位置角色倒下后补齐第一位置的空缺
+ * Editor: Guanliu
+ * 2023/10/16
+ */
+    public Repair()
+    {
+        if(null==this.roleList[0])
+        {
+            if(null!=this.roleList[3])//优先后排补位
+            {
+                this.roleList[0]=this.roleList[3];
+                if(null!=this.roleList[5])//补位后先右边往中间移
+                {
+                    this.roleList[3]=this.roleList[5];
+                    this.removeRole(this.roleList[5]);
+                }
+                else if(null!=this.roleList[4])//右边没有就移左边
+                {
+                    this.roleList[3]=this.roleList[4];
+                    this.removeRole(this.roleList[4]);
+                } 
+                else
+                {
+                    this.removeRole(this.roleList[3]);
+                }
+            }
+            else if(null!=this.roleList[2])//如果后排无人
+            {
+                this.roleList[0]=this.roleList[2];
+                this.removeRole(this.roleList[2]);
+            }
+            else
+            {
+                this.roleList[0]=this.roleList[1];
+                this.removeRole(this.roleList[1]);
+            }
+        }
+    }
 }

@@ -71,6 +71,37 @@ export class Queue extends Component
         }
         
     }
+
+    Repair()
+    {
+        if(null==this.roleList[0])
+        {
+            if(null!=this.roleList[3])//优先后排补位
+            {
+                this.roleList[0]=this.roleList[3];
+                if(null!=this.roleList[5])//补位后先右边往中间移
+                {
+                    this.roleList[3]=this.roleList[5];
+                    this.roleList[5]=null;
+                }
+                else if(null!=this.roleList[4])//右边没有就移左边
+                {
+                    this.roleList[3]=this.roleList[4];
+                    this.roleList[4]=null;
+                } 
+            }
+            else if(null!=this.roleList[2])//如果后排无人
+            {
+                this.roleList[0]=this.roleList[2];
+                this.roleList[2]=null
+            }
+            else
+            {
+                this.roleList[0]=this.roleList[1];
+                this.roleList[1]=null
+            }
+        }
+    }
 }
 
 
