@@ -36,11 +36,9 @@ export class BundleManager
         });
     }
 
-    loadAssets(bundleRes:string, assetsRes:string) : Promise<Asset>
-    {   
+    loadAssetsFromBundle(bundleRes:string, assetsRes:string) : Promise<Asset> {   
         return new Promise(async (resolve) => {
-            try
-            {
+            try {
                 let bundle : AssetManager.Bundle = null;
                 if (this.bundles.has(bundleRes)) {
                     bundle = this.bundles.get(bundleRes);
@@ -50,7 +48,7 @@ export class BundleManager
                     this.bundles.set(bundleRes, bundle);
                 }
 
-                bundle.load(assetsRes, Prefab, (error,prefab) => {
+                bundle.load(assetsRes, Asset, (error,prefab) => {
                     if(error) {
                         console.warn(error.message);
                         resolve(null);
@@ -60,46 +58,14 @@ export class BundleManager
                     }
                 });
             }
-            catch (err)
-            {
+            catch (err) {
                 console.warn(this.res+"下的 loadAssets 错误:"+err);
                 resolve(null);
             }    
         });
     }
 
-    loadSpriteFrame(bundleRes:string, assetsRes:string) : Promise<SpriteFrame> {
-        return new Promise(async (resolve) => {
-            try
-            {
-                let bundle : AssetManager.Bundle = null;
-                if (this.bundles.has(bundleRes)) {
-                    bundle = this.bundles.get(bundleRes);
-                }
-                else {
-                    bundle = await this.loadBundle(bundleRes);
-                    this.bundles.set(bundleRes, bundle);
-                }
-
-                bundle.load(assetsRes, SpriteFrame, (error, spriteFrame) => {
-                    if(error) {
-                        console.warn(error.message);
-                        resolve(null);
-                    }
-                    else {
-                        resolve(spriteFrame);
-                    }
-                });
-            }
-            catch (err)
-            {
-                console.warn(this.res+"下的 loadAssets 错误:"+err);
-                resolve(null);
-            }    
-        });
-    }
-
-    loadImageAsset(url:string) : Promise<ImageAsset> {
+    loadAssetsFromUrl(url:string) : Promise<Asset> {
         return new Promise((resolve) => {
             try
             {
@@ -107,7 +73,7 @@ export class BundleManager
                     if (err) {
                         console.log(err.message);
                     }
-                    resolve(asset as ImageAsset);
+                    resolve(asset as Asset);
                 });
             }
             catch (err)
@@ -119,12 +85,9 @@ export class BundleManager
     }
 
     //预加载
-    Preloading():Promise<void>
-    {
-        return new Promise(()=>
-        {
-            try
-            {
+    Preloading() : Promise<void> {
+        return new Promise(() => {
+            try {
                 for(let i:number=0;i<config.BundleConfig.size;i++) {
                     let bundleRes = config.BundleConfig.get(i).Path;
                     if (!this.bundles.has(bundleRes)) {
@@ -140,12 +103,10 @@ export class BundleManager
                     }
                 }
             }
-            catch (error)
-            {
+            catch (error) {
                 console.warn(this.res+"下的 Preloading 错误:"+error);
-    
             }
-        })
+        });
     }
 }
 
