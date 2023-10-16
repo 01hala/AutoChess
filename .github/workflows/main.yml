@@ -29,6 +29,12 @@ hotaru:在Roledis里添加RemoteAttack方法,创建Bullet.ts并添加发射和�
 hotaru:创建BattleDis类,修改RoleDis里的attack方法
 2023/10/13
 hotaru:将queue里的putrole重命名为spawnrole，在battledis里添加putrole方法
-2020/10/14
+2023/10/14
 hotaru:在bundlemanager里添加preloading（预加载）方法,添加bundle_config配置文件
 hotaru:添加字体文件、添加图片资源
+2023/10/16
+hotaru:battledis里添加changeattevent
+hotaru:修改battle的event类型，给changeattevent加个参数
+hotaru:在team里添加Repair函数
+2023/10/17
+hotaru:在queue里添加Shiftdis方法,修改repair方法

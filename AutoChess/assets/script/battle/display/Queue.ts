@@ -10,6 +10,7 @@ const { ccclass, property } = _decorator;
 import * as RoleDis from './RoleDis'
 import { BundleManager } from '../../bundle/BundleManager';
 import * as role from '../role'
+import { Battle } from '../battle';
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -72,35 +73,52 @@ export class Queue extends Component
         
     }
 
-    Repair()
+    async Shiftdis(r:role.Role[])
     {
-        if(null==this.roleList[0])
+        let n:number[]=[];
+        for(let t of r)
         {
-            if(null!=this.roleList[3])//优先后排补位
+            n.push(t.id);
+        }
+        let tm=this.roleList;
+        for(let i:number=0;i<n.length;i++)//找到需要离场的角色
+        {
+            for(let j:number=0;j<tm.length;j++)
             {
-                this.roleList[0]=this.roleList[3];
-                if(null!=this.roleList[5])//补位后先右边往中间移
+                if(tm[j].getComponent(RoleDis.RoleDis).RoleId==n[i])
                 {
-                    this.roleList[3]=this.roleList[5];
-                    this.roleList[5]=null;
+                    tm.splice(j,0);
+                    break;
                 }
-                else if(null!=this.roleList[4])//右边没有就移左边
+            }      
+        }
+        if(0!=tm.length)
+        {
+            for(let i:number=0;i<tm.length;i++)
+            {
+                for(let j:number=0;j<this.roleList.length;j++)
                 {
-                    this.roleList[3]=this.roleList[4];
-                    this.roleList[4]=null;
-                } 
-            }
-            else if(null!=this.roleList[2])//如果后排无人
-            {
-                this.roleList[0]=this.roleList[2];
-                this.roleList[2]=null
-            }
-            else
-            {
-                this.roleList[0]=this.roleList[1];
-                this.roleList[1]=null
+                    if(this.roleList[j]==tm[i])
+                    {
+                        this.roleList.splice(j,0);
+                    }
+                }
             }
         }
+        tm=[];
+        for(let i:number=0;i<n.length;i++ )
+        {
+            for(let j:number=0;j<this.roleList.length;j++)
+            {
+                if(this.roleList[j].getComponent(RoleDis.RoleDis).RoleId==n[i])
+                {
+                    tm.push(this.roleList[j]);
+                    this.roleList[j].position=this.locationTemp[i].position;
+                }
+            }
+        }
+        this.roleList=tm;
+
     }
 }
 

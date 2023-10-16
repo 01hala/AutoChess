@@ -75,42 +75,62 @@ export class Team {
     }
 /*
  * 添加
- * 此函数在第一位置角色倒下后补齐第一位置的空缺
- * Editor: Guanliu
+ * 此函数在角色倒下后补齐位置的空缺
+ * Editor: Hotaru
  * 2023/10/16
  */
     public Repair()
     {
-        if(null==this.roleList[0])
+        //空位判断暂时为null
+        if(null==this.roleList[0])//0号位空缺
         {
             if(null!=this.roleList[3])//优先后排补位
             {
                 this.roleList[0]=this.roleList[3];
-                if(null!=this.roleList[5])//补位后先右边往中间移
-                {
-                    this.roleList[3]=this.roleList[5];
-                    this.removeRole(this.roleList[5]);
-                }
-                else if(null!=this.roleList[4])//右边没有就移左边
-                {
-                    this.roleList[3]=this.roleList[4];
-                    this.removeRole(this.roleList[4]);
-                } 
-                else
-                {
-                    this.removeRole(this.roleList[3]);
-                }
+                this.roleList[3]=null;
             }
             else if(null!=this.roleList[2])//如果后排无人
             {
                 this.roleList[0]=this.roleList[2];
-                this.removeRole(this.roleList[2]);
+                this.roleList[2]=null;
             }
             else
             {
                 this.roleList[0]=this.roleList[1];
-                this.removeRole(this.roleList[1]);
+                this.roleList[1]=null;
             }
+        }
+
+        if(null==this.roleList[1])//一号位空缺
+        {
+            if(null!=this.roleList[4])
+            {
+                this.roleList[1]=this.roleList[4];
+                this.roleList[4]=null;
+            }
+        }
+
+        if(null==this.roleList[2])//二号位空缺
+        {
+            if(null!=this.roleList[5])
+            {
+                this.roleList[2]=this.roleList[5];
+                this.roleList[5]=null;
+            }
+        }
+
+        if(null==this.roleList[3])//三号位空缺
+        {
+            if(null!=this.roleList[5])
+            {
+                this.roleList[3]=this.roleList[5];
+                this.roleList[5]=null;
+            }
+            else if(null!=this.roleList[4])
+            {
+                this.roleList[3]=this.roleList[4];
+                this.roleList[4]=null;
+            } 
         }
     }
 }
