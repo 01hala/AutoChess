@@ -159,7 +159,7 @@ export class BattleDis {
             }*/
             
             await this.checkAttackEvent(evs);
-            await this.ChangeAttEvent(evs);
+            //await this.ChangeAttEvent(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);
