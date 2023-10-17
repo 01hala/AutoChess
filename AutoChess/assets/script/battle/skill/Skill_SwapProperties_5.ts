@@ -9,7 +9,7 @@ import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role } from '../role';
-import { Camp, SkillType, SwapPropertiesType, Property } from '../enums';
+import { Camp, SkillType, SwapPropertiesType, Property, EventType } from '../enums';
 import { random } from '../util';
 
 export class Skill_SwapProperties_5 extends SkillBase 
@@ -47,6 +47,11 @@ export class Skill_SwapProperties_5 extends SkillBase
     {
         try
         {
+            let event = new Event();
+            event.type = EventType.ChangeLocation;
+            event.spellcaster = selfInfo;
+            event.recipient = [];
+
             if (SwapPropertiesType.SelfSwap == this.type) {
                 let swapRole:Role = null;
                 if(Camp.Self==selfInfo.camp){
@@ -60,6 +65,8 @@ export class Skill_SwapProperties_5 extends SkillBase
                 let attack = swapRole.GetProperty(Property.Attack);
                 swapRole.ChangeProperties(Property.HP, attack);
                 swapRole.ChangeProperties(Property.Attack, hp);
+
+                event.value = [SwapPropertiesType.SelfSwap];
             }
             else if (SwapPropertiesType.AssignSwap == this.type) {
                 let swapRoles:Role[];
@@ -78,16 +85,23 @@ export class Skill_SwapProperties_5 extends SkillBase
                     swapRoles[0].ChangeProperties(key,swapRoles[1].GetProperty(key));
                     swapRoles[1].ChangeProperties(key,value);
                 });
+
+                event.value = [SwapPropertiesType.AssignSwap, this.index1, this.index2];
             }
             else if (SwapPropertiesType.RandomSwap == this.type) {
                 let swapRoles:Role[];
                 let rolesTemp:Role[]=null;
 
+                event.value = [SwapPropertiesType.AssignSwap];
+
+                let original:Role[] = null;
                 if(Camp.Self==selfInfo.camp) {
                     rolesTemp=battle.GetSelfTeam().GetRoles().slice();
+                    original = battle.GetSelfTeam().GetRoles();
                 }
                 if(Camp.Enemy==selfInfo.camp) {
                     rolesTemp=battle.GetEnemyTeam().GetRoles().slice();
+                    original = battle.GetSelfTeam().GetRoles();
                 }
                 while(swapRoles.length<2) {
                     let index = random(0, rolesTemp.length);
@@ -102,7 +116,11 @@ export class Skill_SwapProperties_5 extends SkillBase
                     swapRoles[0].ChangeProperties(key,swapRoles[1].GetProperty(key));
                     swapRoles[1].ChangeProperties(key,value);
                 });
+
+                event.value.push(original.indexOf(swapRoles[0]));
+                event.value.push(original.indexOf(swapRoles[1]));
             }
+            battle.AddBattleEvent(event);
         }
         catch (error) 
         {

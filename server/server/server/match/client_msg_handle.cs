@@ -29,7 +29,7 @@ namespace Match
 
                 var role = new Role();
                 role.RoleID = rolec.Id;
-                role.Level = RandomHelper.RandomInt(3);
+                role.Level = RandomHelper.RandomInt(3) + 1;
                 role.HP = rolec.Hp * role.Level;
                 role.Attack = rolec.Attack * role.Level;
                 role.additionSkill = 0;

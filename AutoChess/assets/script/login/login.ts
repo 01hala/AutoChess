@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, Canvas } from 'cc';
 import 'minigame-api-typings';
+
 const { ccclass, property } = _decorator;
 
 import * as common from "../serverSDK/common"
@@ -10,6 +11,7 @@ import * as load from '../loading/load';
 import * as battle from '../battle/battle'
 import * as battleDis from '../battle/display/BattleDis'
 import * as config from '../config/config';
+import { BundleManager } from '../bundle/BundleManager';
 
 @ccclass('login')
 export class login extends Component {
@@ -148,7 +150,7 @@ export class login extends Component {
 
             let _battle = new battle.Battle(self, target);
             singleton.netSingleton.battle = new battleDis.BattleDis(_battle);
-            await singleton.netSingleton.battle.Init(this.bk.node);
+            await singleton.netSingleton.battle.Start(this.bk.node);
 
             this._setProgress(1.0);
             this._loading.done();

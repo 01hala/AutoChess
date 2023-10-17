@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Enum, Node , Animation, RichText, AnimationComponent, Prefab, instantiate, find } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp , EventType, Property} from '../../battle/enums';
 import { Battle } from '../../battle/battle';
@@ -44,52 +44,94 @@ export class RoleDis extends Component
     private atkText:RichText;
 
     private roleSprite:Node;
-    //private nGame:netGame=new netGame();
-
-    async start() 
+    
+    protected onLoad(): void 
     {
-        //this.nGame.cb_battle=(self,target)=>
-        //{  
-        //};
-        
-        this.roleSprite=this.node.getChildByName("Sprite");
+        try
+        {
+            console.log("onLoad begin!");
 
-        this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
-        this.hpText=this.node.getChildByName("Hp").getComponentInChildren(RichText);
-        this.atkText=this.node.getChildByName("Atk").getComponentInChildren(RichText);
-        //资源暂时没有
-        this.remoteNode = await BundleManager.Instance.loadAssets("","") as Prefab;
+            this.roleSprite=this.node.getChildByName("Sprite");
+            this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
+            this.hpText=this.roleSprite.getChildByPath("Hp/HpText").getComponent(RichText);
+            this.atkText=this.roleSprite.getChildByPath("Atk/AtkText").getComponent(RichText);
 
-        this.changeAtt();   
+            if (this.roleInfo) {
+                if (this.hpText && this.atkText) {
+                    this.hpText.string="<color=#ad0003><outline color=#f05856 width=4>"+this.Hp+"</outline></color>";
+                    this.atkText.string="<color=#ffa900><outline color=#ffe900 width=4>"+this.AtkNum+"</outline></color>";
+                }
+            }
+
+            this.AttackInit();
+            
+            console.log("onLoad end!");
+        }
+        catch(err)
+        {
+            console.warn("RoleDis 里的 onLoad 函数错误 err:"+err);
+        }
     }
 
-    Attack(camp:Camp)
+    start() 
     {
-        this.roleSprite.setSiblingIndex(3);
-        if(Camp.Self==camp)
-        {
-            this.AtkAnim.play("Attack");
-        }
-        if(Camp.Enemy==camp)
-        {
-            this.AtkAnim.play("EnemyAttack");
-        }
-        if(this.AtkAnim)
-        {
-            this.AtkAnim.on(AnimationComponent.EventType.STOP,()=>
-            {
-                this.roleSprite.setSiblingIndex(0);
-            })
-        }
-        //this.changeAtt();
+        
+    }
+
+    async Refresh(roleInfo:Role) {
+        this.roleInfo = roleInfo;
+
+        await this.changeAtt();   
+    }
+
+    delay(ms:number, release:() => void) : Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+                release();
+            }, ms);
+        });
+    }
+    
+    private originalPos:Vec3;
+    AttackInit() {
+        this.originalPos = new Vec3(this.node.position); 
+    }
+
+    private tAttack:Tween<Node> = null;
+    Attack(readyLocation:Vec3, battleLocation:Vec3) {
+        this.tAttack = tween(this.node)
+            .to(0.5, { position: readyLocation })
+            .delay(0.1)
+            .to(0.3, { position: battleLocation })
+            .delay(0.1)
+            .to(0.3, { position: this.originalPos })
+            .start();
+
+        return this.delay(1500, ()=>{ 
+            if (this.tAttack) {
+                this.tAttack.stop(); 
+                this.tAttack = null;
+            }
+        });
     }
 
     changeAtt()
     {
-        this.Hp=this.roleInfo.GetProperty(Property.HP);
-        this.AtkAnim=this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
-        this.hpText.string="<color=#00ff00>"+this.Hp+"</color>";
-        this.atkText.string="<color=#00ff00>"+this.AtkNum+"</color>";
+        try
+        {
+            this.Hp=this.roleInfo.GetProperty(Property.HP);
+            this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
+
+            if (this.hpText && this.atkText) {
+                this.hpText.string="<color=#ad0003><outline color=#f05856 width=4>"+this.Hp+"</outline></color>";
+                this.atkText.string="<color=#ffa900><outline color=#ffe900 width=4>"+this.AtkNum+"</outline></color>";
+            }
+        }
+        catch(err)
+        {
+            console.warn("RoleDis 里的 changeAtt 函数错误 err:"+err);
+        }
     }
 
     RemoteAttack(ev:skill.Event)
@@ -99,6 +141,7 @@ export class RoleDis extends Component
             let newNode=instantiate(this.remoteNode);
             let tempRole=find("Canvas/EnemyQueue").children[role.index];
             newNode.getComponent(Bullet).target=tempRole;
+            this.schedule(null,0.2);
         }
         
     }
