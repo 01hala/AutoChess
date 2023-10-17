@@ -79,57 +79,53 @@ export class Team {
  * Editor: Hotaru
  * 2023/10/16
  */
-    public Repair()
-    {
-        //空位判断暂时为null
-        if(null==this.roleList[0])//0号位空缺
+    public Repair(n:number):number                                                  //补位逻辑：
+    {                                                                               //优先后排往前顶，中间空了了两边补
+        if(0==n)//0号位空缺
         {
-            if(null!=this.roleList[3])//优先后排补位
+            if(this.roleList[n+3])
             {
-                this.roleList[0]=this.roleList[3];
-                this.roleList[3]=null;
+                this.roleList[n]=this.roleList[n+3];
+                return n+3;
+                //this.removeRole(this.roleList[n+3]);
             }
-            else if(null!=this.roleList[2])//如果后排无人
+            else if(this.roleList[n+2])//如果后排无人
             {
-                this.roleList[0]=this.roleList[2];
-                this.roleList[2]=null;
+                this.roleList[n]=this.roleList[n+2];
+                return n+2;
+                //this.removeRole(this.roleList[n+2]);
             }
             else
             {
-                this.roleList[0]=this.roleList[1];
-                this.roleList[1]=null;
+                this.roleList[n]=this.roleList[n+1];
+                return n+1;
+                //this.removeRole(this.roleList[n+1]);
             }
         }
 
-        if(null==this.roleList[1])//一号位空缺
+        if(1==n||2==n)//一、二号位空缺
         {
-            if(null!=this.roleList[4])
+            if(this.roleList[n+3])
             {
-                this.roleList[1]=this.roleList[4];
-                this.roleList[4]=null;
+                this.roleList[n]=this.roleList[n+3];
+                return n+3;
+                //this.roleList[4]=null;
             }
         }
 
-        if(null==this.roleList[2])//二号位空缺
+        if(3==n)//三号位空缺
         {
-            if(null!=this.roleList[5])
+            if(this.roleList[n+2])
             {
-                this.roleList[2]=this.roleList[5];
-                this.roleList[5]=null;
+                this.roleList[n]=this.roleList[n+2];
+                return n+2;
+                //this.roleList[5]=null;
             }
-        }
-
-        if(null==this.roleList[3])//三号位空缺
-        {
-            if(null!=this.roleList[5])
+            else if(this.roleList[n+1])
             {
-                this.roleList[3]=this.roleList[5];
-                this.roleList[5]=null;
-            }
-            else if(null!=this.roleList[4])
-            {
-                this.roleList[3]=this.roleList[4];
-                this.roleList[4]=null;
+                this.roleList[n]=this.roleList[n+1];
+                return n+1;
+                //this.roleList[4]=null;
             } 
         }
     }

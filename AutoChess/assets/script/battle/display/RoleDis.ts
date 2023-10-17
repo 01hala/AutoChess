@@ -38,6 +38,8 @@ export class RoleDis extends Component
 
     private roleInfo:Role=null;
 
+    
+
     private AtkAnim:Animation;
 
     private hpText:RichText;
