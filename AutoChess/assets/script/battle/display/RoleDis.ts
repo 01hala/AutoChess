@@ -14,6 +14,7 @@ import { netGame } from '../../netDriver/netGame';
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { BundleManager } from '../../bundle/BundleManager';
 import { Bullet } from './Bullet';
+import * as singleton from '../../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -44,6 +45,8 @@ export class RoleDis extends Component
     private roleSprite:Node;
     private intensifierText:Node;
     private bandage:Node;
+
+    private typeface:any;
     
     protected onLoad(): void 
     {
@@ -56,9 +59,11 @@ export class RoleDis extends Component
             this.bandage=this.node.getChildByName("Bandage");
             this.bandage.active=false;
             this.intensifierText.active=false;
-            this.hpText=this.node.getChildByPath("HpText").getComponent(RichText);
-            this.atkText=this.node.getChildByPath("AtkText").getComponent(RichText);
+            this.hpText=this.node.getChildByPath("HP/HpText").getComponent(RichText);
+            this.atkText=this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
             
+            this.typeface=BundleManager.Instance.loadAssetsFromBundle("Typeface","MAOKENASSORTEDSANS");
+            this.hpText.font=this.atkText.font=this.typeface;
 
             if (this.roleInfo) {
                 if (this.hpText && this.atkText) {
@@ -101,12 +106,22 @@ export class RoleDis extends Component
     }
 
     private tAttack:Tween<Node> = null;
-    Attack(readyLocation:Vec3, battleLocation:Vec3) {
+
+    Attack(readyLocation:Vec3, battleLocation:Vec3 , camp:Camp) 
+    {
         this.tAttack = tween(this.node)
             .to(0.5, { position: readyLocation })
             .delay(0.1)
-            .to(0.3, { position: battleLocation })
-            .delay(0.1)
+            .to(0.3, { position: battleLocation }).call(()=>
+            {
+                if(Camp.Self==camp)
+                    singleton.netSingleton.battle.showBattleEffect(true);
+            })
+            .delay(0.1).call(()=>
+            {
+                if(Camp.Self==camp)
+                    singleton.netSingleton.battle.showBattleEffect(false);
+            })
             .to(0.3, { position: this.originalPos })
             .start();
 
@@ -162,7 +177,7 @@ export class RoleDis extends Component
         }
         if(wait) 
         {
-            this.schedule(null,0.3);//等待0.3秒
+            this.delay(300,()=>{});//等待0.3秒
         }
         if(0!=value[1])
         {
@@ -171,7 +186,7 @@ export class RoleDis extends Component
             this.intensifierText.active=true;
             anim.play();
         }
-        this.schedule(null,0.3);//等待0.3秒
+        this.delay(300,()=>{});//等待0.3秒
     }
 
     RemoteAttack(ev:skill.Event)
@@ -181,7 +196,7 @@ export class RoleDis extends Component
             let newNode=instantiate(this.remoteNode);
             let tempRole=find("Canvas/EnemyQueue").children[role.index];
             newNode.getComponent(Bullet).target=tempRole;
-            this.schedule(null,0.2);
+            this.delay(300,()=>{});
         }
         
     }

@@ -16,5 +16,11 @@
     "Name": "远程投掷物",
     "URL": "https://www.ucat.games:8001/zzq/prefab/",
     "Path": "remote"
+  },
+  "3":{
+    "ID": 3,
+    "Name": "字体",
+    "URL": "https://www.ucat.games:8001/zzq/prefab/",
+    "Path": "Typeface"
   }
 }
