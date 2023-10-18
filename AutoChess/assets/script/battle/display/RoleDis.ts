@@ -138,31 +138,36 @@ export class RoleDis extends Component
     {
         let type:Property;
         let anim:Animation=this.intensifierText.getComponent(Animation);
-        let wait:boolean=false;
+        let wait:boolean;//等待开关，动画播放时启动
         anim.on(Animation.EventType.FINISHED,()=>
         {
             this.intensifierText.active=false;
-            
+        },this);
+
+        anim.on(Animation.EventType.PLAY,()=>
+        {
+            wait=true;
         },this);
 
         if(0!=value[0])
         {
+            wait=false;
             this.intensifierText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>+"+value[0]+"</outline></color>";
             this.intensifierText.active=true;
             anim.play();
-            wait=true;
         }
-        if(wait) //如果上面的if执行了
+        if(wait) 
         {
-            this.schedule(null,0.2);//等待0.2秒
+            this.schedule(null,0.3);//等待0.3秒
         }
         if(0!=value[1])
         {
+            wait=false;
             this.intensifierText.getComponent(RichText).string="<color=#ffa900><outline color=#ffe900 width=4>+"+value[1]+"</outline></color>"
             this.intensifierText.active=true;
             anim.play();
         }
-        this.schedule(null,0.2);//等待0.2秒
+        this.schedule(null,0.3);//等待0.3秒
     }
 
     RemoteAttack(ev:skill.Event)
