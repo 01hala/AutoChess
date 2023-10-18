@@ -6,7 +6,7 @@
 import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
-import * as enums from './enums'
+import * as enums from '../other/enums'
 import * as create_skill from './create_skill'
 import * as create_trigger from './create_trigger'
 import * as create_buffer from './create_buffer'

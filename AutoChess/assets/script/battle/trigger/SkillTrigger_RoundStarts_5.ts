@@ -5,7 +5,7 @@
  * 触发器——回合开始
  */
 import { Event, RoleInfo, SkillTriggerBase } from "../skill/skill_base";
-import { Camp, Direction, EventType, SkillType } from '../enums';
+import { Camp, Direction, EventType, SkillType } from '../../other/enums';
 
 export class SkillTrigger_RoundStarts_5 extends SkillTriggerBase
 {

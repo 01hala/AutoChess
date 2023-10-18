@@ -38,3 +38,6 @@ hotaru:修改battle的event类型，给changeattevent加个参数
 hotaru:在team里添加Repair函数
 2023/10/17
 hotaru:在queue里添加Shiftdis方法,修改repair方法
+2023/10/18
+hotaru:在roledis里添加Intensifier方法,新建other文件夹，把enums.ts移动至此文件夹
+hotaru:修改Remoteatk，添加全局伤害效果

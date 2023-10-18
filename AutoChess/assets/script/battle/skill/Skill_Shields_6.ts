@@ -8,8 +8,8 @@ import { _decorator, Component, debug, log, Node } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase, } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
-import { Role,Property } from '../role';
-import { BufferType, Camp, Direction, SkillType } from '../enums';
+import { Role} from '../role';
+import { BufferType, Camp, Direction, SkillType } from '../../other/enums';
 import { random } from '../util';
 import { Buffer } from '../buffer/buffer';
 

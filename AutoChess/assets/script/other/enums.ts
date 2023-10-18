@@ -82,3 +82,9 @@ export enum Direction {
     Left = 4,
     Self = 5,
 }
+
+export enum IntensifierType
+{
+    Attack=1,
+    HP=2,
+}

@@ -8,7 +8,7 @@ import { _decorator, instantiate, Node, Prefab } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
-import { Camp, EventType } from '../enums';
+import { Camp, EventType } from '../../other/enums';
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 const { ccclass, property } = _decorator;

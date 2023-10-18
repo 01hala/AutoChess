@@ -9,7 +9,7 @@ import { SkillBase,Event, RoleInfo,SkillTriggerBase, } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role } from '../role';
-import { Camp, Direction, SkillType, Property, EventType } from '../enums';
+import { Camp, Direction, SkillType, Property, EventType } from '../../other/enums';
 import { random } from '../util';
 
 export class Skill_AttGain_1 extends SkillBase 
@@ -61,7 +61,7 @@ export class Skill_AttGain_1 extends SkillBase
         
     }
 
-    SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void
+    SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void          //指定某一对象生效
     {
         
         try
@@ -149,11 +149,11 @@ export class Skill_AttGain_1 extends SkillBase
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect 错误");
+            console.warn(this.res+"下的 SkillEffect_1 错误");
         }
     }
 
-    SkillEffect_2(selfInfo: RoleInfo, battle: Battle):void
+    SkillEffect_2(selfInfo: RoleInfo, battle: Battle):void          //随机一对象生效
     {
         
         try
@@ -199,7 +199,7 @@ export class Skill_AttGain_1 extends SkillBase
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect 错误");
+            console.warn(this.res+"下的 SkillEffect_2 错误");
         }
     }
 

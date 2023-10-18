@@ -6,7 +6,7 @@
  */
 import { _decorator, Component, Node } from 'cc';
 import { SkillBase,Event, RoleInfo, SkillTriggerBase } from './skill_base';
-import { Camp, EventType, SkillType } from '../enums';
+import { Camp, EventType, SkillType } from '../../other/enums';
 import { Battle } from '../battle';
 import { Role } from '../role';
 import { random } from '../util';
@@ -18,12 +18,14 @@ export class Skill_RemoteAtk_3 extends SkillBase
 
     private numberOfRole : number;
     private attack : number;
+    private isAll:boolean;
 
-    public constructor(priority:number, numberOfRole:number, attack:number) {
+    public constructor(priority:number, numberOfRole:number, attack:number,isAll:boolean) {
         super(priority);
 
         this.numberOfRole = numberOfRole;
         this.attack = attack;
+        this.isAll=isAll;
     }
 
     event:Event=new Event();
@@ -31,13 +33,18 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try 
         {
-            if(6>=this.numberOfRole)
+            if(6>=this.numberOfRole && !this.isAll)
             {
-                this.SkillEffect(selfInfo,battle);
+                this.SkillEffect_1(selfInfo,battle);
             }
             else
             {
                 console.warn("生效人数不能大于6人");
+            }
+
+            if(this.isAll)
+            {
+                this.SkillEffect_2(selfInfo,battle);
             }
             
         } 
@@ -47,7 +54,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
         }   
     }
 
-    private SkillEffect(selfInfo: RoleInfo, battle: Battle):void
+    private SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void          //随机对象生效
     {
         try
         {
@@ -76,6 +83,33 @@ export class Skill_RemoteAtk_3 extends SkillBase
         catch (error) 
         {
             console.warn(this.res+"下的 SkillEffect 错误");
+        }
+    }
+
+    private SkillEffect_2(selfInfo: RoleInfo, battle: Battle)         //场上全部生效
+    {
+        let self:Role=null;
+
+        if(Camp.Self==selfInfo.camp)
+        {
+            self=battle.GetSelfTeam().GetRole(selfInfo.index);
+        }
+        if(Camp.Enemy==selfInfo.camp)
+        {
+            self=battle.GetEnemyTeam().GetRole(selfInfo.index);
+        }
+
+        let recipientRoles:Role[] = battle.GetSelfTeam().GetRoles();
+        let enemyRoles:Role[] = battle.GetEnemyTeam().GetRoles();
+
+        for(let t of enemyRoles)
+        {
+            recipientRoles.push(t);
+        }
+
+        for(let role of recipientRoles)
+        {
+            role.BeHurted(this.attack, self, battle)
         }
     }
 }

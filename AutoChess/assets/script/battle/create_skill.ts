@@ -4,7 +4,7 @@
  * 2023/10/3
  */
 import * as config from '../config/config'
-import * as enums from './enums'
+import * as enums from '../other/enums'
 import * as skill from './skill/skill_base'
 import * as Skill_AttGain_1 from './skill/Skill_AttGain_1'
 import * as Skill_RecoveryHP_2 from './skill/Skill_RecoveryHP_2'
@@ -52,7 +52,7 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         break;
         case 3:
         {
-            skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, value0);
+            skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, value0,false);
         }
         break;
         case 4:

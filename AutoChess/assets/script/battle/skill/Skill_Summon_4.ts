@@ -9,7 +9,7 @@ import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role } from '../role';
-import { Camp, SkillType, Property, EventType } from '../enums';
+import { Camp, SkillType, Property, EventType } from '../../other/enums';
 
 export class Skill_Summon_4 extends SkillBase 
 {

@@ -3,7 +3,7 @@
  * author: qianqians
  * 2023/9/24
  */
-import * as enums from '../enums'
+import * as enums from '../../other/enums'
 import * as battle from '../battle'
 
 export class RoleInfo {

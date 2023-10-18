@@ -4,7 +4,7 @@
  * 2023/10/3
  */
 import * as config from '../config/config'
-import * as enums from './enums'
+import * as enums from '../other/enums'
 import * as buffer from './buffer/buffer'
 
 export function CreateSkill(bufferID:number) : buffer.Buffer {

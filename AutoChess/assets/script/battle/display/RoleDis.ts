@@ -6,7 +6,7 @@
  */
 import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween } from 'cc';
 import { Role } from '../../battle/role';
-import { Camp , EventType, Property} from '../../battle/enums';
+import { Camp , EventType, Property,IntensifierType} from '../../other/enums';
 import { Battle } from '../../battle/battle';
 import * as skill from '../../battle/skill/skill_base'
 import { netDriver } from '../../netDriver/netDriver';
@@ -38,14 +38,11 @@ export class RoleDis extends Component
 
     private roleInfo:Role=null;
 
-    
-
-    private AtkAnim:Animation;
-
     private hpText:RichText;
     private atkText:RichText;
 
     private roleSprite:Node;
+    private intensifierText:Node;
     
     protected onLoad(): void 
     {
@@ -54,9 +51,10 @@ export class RoleDis extends Component
             console.log("onLoad begin!");
 
             this.roleSprite=this.node.getChildByName("Sprite");
-            this.AtkAnim=this.node.getChildByName("Sprite").getComponent(Animation);
-            this.hpText=this.roleSprite.getChildByPath("Hp/HpText").getComponent(RichText);
-            this.atkText=this.roleSprite.getChildByPath("Atk/AtkText").getComponent(RichText);
+            this.intensifierText=this.node.getChildByName("IntensifierText");
+            this.intensifierText.active=false;
+            this.hpText=this.node.getChildByPath("HpText").getComponent(RichText);
+            this.atkText=this.node.getChildByPath("AtkText").getComponent(RichText);
 
             if (this.roleInfo) {
                 if (this.hpText && this.atkText) {
@@ -134,6 +132,25 @@ export class RoleDis extends Component
         {
             console.warn("RoleDis 里的 changeAtt 函数错误 err:"+err);
         }
+    }
+
+    Intensifier(type:IntensifierType,value:number)
+    {
+        if(IntensifierType.Attack==type)
+        {
+            this.intensifierText.getComponent(RichText).string="<color=#ffa900><outline color=#ffe900 width=4>+"+value+"</outline></color>"
+        }
+        if(IntensifierType.HP==type)
+        {
+            this.intensifierText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>+"+value+"</outline></color>";
+        }
+        this.intensifierText.active=true;
+        let anim:Animation=this.intensifierText.getComponent(Animation);
+        anim.on(Animation.EventType.FINISHED,()=>
+        {
+            this.intensifierText.active=false;
+        },this);
+        anim.play();
     }
 
     RemoteAttack(ev:skill.Event)

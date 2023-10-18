@@ -5,7 +5,7 @@
  * 触发器——回合结束(准备结束)
  */
 import { Event, RoleInfo, SkillTriggerBase } from "../skill/skill_base";
-import { Camp, Direction, EventType, SkillType } from '../enums';
+import { Camp, Direction, EventType, SkillType } from '../../other/enums';
 
 export class SkillTrigger_RoundEnd_6 extends SkillTriggerBase
 {

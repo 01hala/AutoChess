@@ -7,7 +7,7 @@ import * as common from "../serverSDK/common"
 import * as skill from './skill/skill_base'
 import * as role from './role'
 import * as team from './team'
-import * as enums from './enums'
+import * as enums from '../other/enums'
 
 export class Battle {
     private selfTeam : team.Team;

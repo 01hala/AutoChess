@@ -5,7 +5,7 @@
  */
 import * as common from "../serverSDK/common"
 import * as role from './role'
-import * as enums from './enums'
+import * as enums from '../other/enums'
 
 export class Team {
     private roleList : role.Role[];
