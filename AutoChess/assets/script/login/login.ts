@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, Canvas } from 'cc';
 import 'minigame-api-typings';
+
 const { ccclass, property } = _decorator;
 
 import * as common from "../serverSDK/common"

@@ -170,16 +170,15 @@ export class RoleDis extends Component
         this.schedule(null,0.3);//等待0.3秒
     }
 
-    RemoteAttack(ev:skill.Event)
+    RemoteAttack(spellcasterLocation:Vec3, targetLocation:Vec3)
     {
-        for(let role of ev.recipient)
-        {
-            let newNode=instantiate(this.remoteNode);
-            let tempRole=find("Canvas/EnemyQueue").children[role.index];
-            newNode.getComponent(Bullet).target=tempRole;
-            this.schedule(null,0.2);
-        }
-        
+        //生成子弹，从发射者位置到达目标位置
+        console.log("进行远程攻击");
+        let bulletNode=instantiate(this.remoteNode);
+        bulletNode.setPosition(spellcasterLocation);
+        //let tempRole=find("Canvas/EnemyQueue").children[role.index];
+        bulletNode.getComponent(Bullet).Init(targetLocation);
+        this.schedule(null,0.2);
     }
     
     Exit()
