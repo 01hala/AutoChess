@@ -96,7 +96,7 @@ export class BattleDis {
                 {
                     if(EventType.IntensifierProperties == ev.type)
                     {
-                        //this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Intensifier();
+                        this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Intensifier(ev.value);
                     }
                     allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetSelfTeam().GetRole(ev.spellcaster.index)));
                 }
@@ -105,6 +105,10 @@ export class BattleDis {
             {
                 if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type)
                 {
+                    if(EventType.IntensifierProperties == ev.type)
+                    {
+                        this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Intensifier(ev.value);
+                    }
                     allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index)));
                 }
             }
