@@ -10,6 +10,7 @@ const { ccclass, property } = _decorator;
 import * as RoleDis from './RoleDis'
 import { BundleManager } from '../../bundle/BundleManager';
 import * as role from '../role'
+import { Battle } from '../battle';
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -70,6 +71,54 @@ export class Queue extends Component
             console.warn(this.res+" 下的 SpawnRole 错误", error);
         }
         
+    }
+
+    async Shiftdis(r:role.Role[])
+    {
+        let n:number[]=[];
+        for(let t of r)
+        {
+            n.push(t.id);
+        }
+        let tm=this.roleList;
+        for(let i:number=0;i<n.length;i++)//找到需要离场的角色
+        {
+            for(let j:number=0;j<tm.length;j++)
+            {
+                if(tm[j].getComponent(RoleDis.RoleDis).RoleId==n[i])
+                {
+                    tm.splice(j,0);
+                    break;
+                }
+            }      
+        }
+        if(0!=tm.length)
+        {
+            for(let i:number=0;i<tm.length;i++)
+            {
+                for(let j:number=0;j<this.roleList.length;j++)
+                {
+                    if(this.roleList[j]==tm[i])
+                    {
+                        this.roleList.splice(j,0);
+                    }
+                }
+            }
+        }
+        tm=[];
+        for(let i:number=0;i<n.length;i++ )
+        {
+            for(let j:number=0;j<this.roleList.length;j++)
+            {
+                if(this.roleList[j].getComponent(RoleDis.RoleDis).RoleId==n[i])
+                {
+                    tm.push(this.roleList[j]);
+                    this.roleList[j].position=this.locationTemp[i].position;
+                }
+            }
+        }
+        this.roleList=tm;
+
     }
 }
 

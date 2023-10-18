@@ -90,24 +90,18 @@ export class BattleDis {
         let allAwait = [];
         for(let ev of evs)
         {
-            if(EventType.AfterAttack==ev.type)
-            {
-                allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
-                allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
-            }
-
             if(Camp.Self == ev.spellcaster.camp)
             {
-                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type)
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type)
                 {
-                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetSelfTeam().GetRole(ev.spellcaster.index)));
                 }
             }
             if(Camp.Enemy==ev.spellcaster.camp)
             {
-                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type)
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type)
                 {
-                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index)));
                 }
             }
             

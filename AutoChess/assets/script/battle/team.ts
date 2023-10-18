@@ -73,4 +73,60 @@ export class Team {
         this.roleList.unshift(role);
         return true;
     }
+/*
+ * 添加
+ * 此函数在角色倒下后补齐位置的空缺
+ * Editor: Hotaru
+ * 2023/10/16
+ */
+    public Repair(n:number):number                                                  //补位逻辑：
+    {                                                                               //优先后排往前顶，中间空了了两边补
+        if(0==n)//0号位空缺
+        {
+            if(this.roleList[n+3])
+            {
+                this.roleList[n]=this.roleList[n+3];
+                return n+3;
+                //this.removeRole(this.roleList[n+3]);
+            }
+            else if(this.roleList[n+2])//如果后排无人
+            {
+                this.roleList[n]=this.roleList[n+2];
+                return n+2;
+                //this.removeRole(this.roleList[n+2]);
+            }
+            else
+            {
+                this.roleList[n]=this.roleList[n+1];
+                return n+1;
+                //this.removeRole(this.roleList[n+1]);
+            }
+        }
+
+        if(1==n||2==n)//一、二号位空缺
+        {
+            if(this.roleList[n+3])
+            {
+                this.roleList[n]=this.roleList[n+3];
+                return n+3;
+                //this.roleList[4]=null;
+            }
+        }
+
+        if(3==n)//三号位空缺
+        {
+            if(this.roleList[n+2])
+            {
+                this.roleList[n]=this.roleList[n+2];
+                return n+2;
+                //this.roleList[5]=null;
+            }
+            else if(this.roleList[n+1])
+            {
+                this.roleList[n]=this.roleList[n+1];
+                return n+1;
+                //this.roleList[4]=null;
+            } 
+        }
+    }
 }
