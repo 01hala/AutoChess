@@ -81,6 +81,17 @@ export class BattleDis {
                 allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
                     this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position));
             }
+
+            if(EventType.RemoteInjured==ev.type){
+                //判断发射者所在的阵营
+                let spList=Camp.Self == ev.spellcaster.camp?this.selfQueue.roleList:this.enemyQueue.roleList;
+                ev.recipient.forEach(element=>{
+                    //判断每一个受到远程攻击者所在的阵营
+                    let targetList=Camp.Enemy == element.camp?this.enemyQueue.roleList:this.selfQueue.roleList;
+                    allAwait.push(spList[ev.spellcaster.index].getComponent(RoleDis).RemoteAttack(
+                        spList[ev.spellcaster.index].getPosition(),targetList[element.index].getPosition()));
+                })
+            }
         }
         await Promise.all(allAwait);
     }
