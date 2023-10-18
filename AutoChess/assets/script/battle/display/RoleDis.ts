@@ -134,13 +134,13 @@ export class RoleDis extends Component
         }
     }
 
-    Intensifier(type:IntensifierType,value:number)
+    Intensifier(type:Property,value:number)
     {
-        if(IntensifierType.Attack==type)
+        if(Property.Attack==type)
         {
             this.intensifierText.getComponent(RichText).string="<color=#ffa900><outline color=#ffe900 width=4>+"+value+"</outline></color>"
         }
-        if(IntensifierType.HP==type)
+        if(Property.HP==type)
         {
             this.intensifierText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>+"+value+"</outline></color>";
         }
