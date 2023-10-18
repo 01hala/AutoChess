@@ -8,24 +8,19 @@ export type { EncodeOptions };
 import { decode, decodeMulti } from "./decode";
 export { decode, decodeMulti };
 import type { DecodeOptions } from "./decode";
-export { DecodeOptions };
+export type { DecodeOptions };
 
 import { decodeAsync, decodeArrayStream, decodeMultiStream, decodeStream } from "./decodeAsync";
 export { decodeAsync, decodeArrayStream, decodeMultiStream, decodeStream };
 
 import { Decoder, DataViewIndexOutOfBoundsError } from "./Decoder";
-export { Decoder, DataViewIndexOutOfBoundsError };
-import type { DecoderOptions } from "./Decoder";
-export type { DecoderOptions };
 import { DecodeError } from "./DecodeError";
-export { DecodeError };
+export { Decoder, DecodeError, DataViewIndexOutOfBoundsError };
 
 import { Encoder } from "./Encoder";
 export { Encoder };
-import type { EncoderOptions } from "./Encoder";
-export type { EncoderOptions };
 
-// Utilities for Extension Types:
+// Utilitiies for Extension Types:
 
 import { ExtensionCodec } from "./ExtensionCodec";
 export { ExtensionCodec };

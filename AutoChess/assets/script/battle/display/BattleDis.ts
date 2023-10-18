@@ -74,15 +74,23 @@ export class BattleDis
 
     private async checkAttackEvent(evs:skill.Event[]) {
         let allAwait = [];
+        let selfAttack = false;
+        let enemyAttack = false;
         for(let ev of evs)
         {
             if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp) {
-                allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
-                    this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position,ev.spellcaster.camp));
+                if (!selfAttack) {
+                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
+                        this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position,ev.spellcaster.camp));
+                    selfAttack = true;
+                }
             }
-            if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
-                    this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position,ev.spellcaster.camp));
+            else if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
+                if (!enemyAttack) {
+                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
+                        this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position,ev.spellcaster.camp));
+                    enemyAttack = true;
+                }
             }
         }
         await Promise.all(allAwait);
