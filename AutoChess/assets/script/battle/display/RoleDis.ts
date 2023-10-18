@@ -6,7 +6,7 @@
  */
 import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween } from 'cc';
 import { Role } from '../../battle/role';
-import { Camp , EventType, Property,IntensifierType} from '../../other/enums';
+import { Camp , EventType, Property} from '../../other/enums';
 import { Battle } from '../../battle/battle';
 import * as skill from '../../battle/skill/skill_base'
 import { netDriver } from '../../netDriver/netDriver';
