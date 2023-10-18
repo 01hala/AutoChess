@@ -361,7 +361,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.09375,
+      "width": 54.9140625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -394,11 +394,8 @@
     "_fontSize": 40,
     "_maxWidth": 0,
     "_fontFamily": "MAOKENASSORTEDSANS",
-    "_font": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
-      "__expectedType__": "cc.TTFFont"
-    },
-    "_isSystemFontUsed": false,
+    "_font": null,
+    "_isSystemFontUsed": true,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
@@ -629,7 +626,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.09375,
+      "width": 54.9140625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -662,11 +659,8 @@
     "_fontSize": 40,
     "_maxWidth": 0,
     "_fontFamily": "MAOKENASSORTEDSANS",
-    "_font": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
-      "__expectedType__": "cc.TTFFont"
-    },
-    "_isSystemFontUsed": false,
+    "_font": null,
+    "_isSystemFontUsed": true,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
@@ -849,7 +843,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 62.58984375,
+      "width": 65.0068359375,
       "height": 63
     },
     "_anchorPoint": {
@@ -882,11 +876,8 @@
     "_fontSize": 50,
     "_maxWidth": 0,
     "_fontFamily": "Arial",
-    "_font": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
-      "__expectedType__": "cc.TTFFont"
-    },
-    "_isSystemFontUsed": false,
+    "_font": null,
+    "_isSystemFontUsed": true,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"

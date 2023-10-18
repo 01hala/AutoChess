@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab } from 'cc';
+import { _decorator, instantiate, Node, Prefab, tween } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
@@ -33,7 +33,6 @@ export class BattleDis
 
     public async Start(father:Node) {
         let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
-
         this.panelNode = instantiate(panel);
         this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
         this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
@@ -79,11 +78,11 @@ export class BattleDis
         {
             if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp) {
                 allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
-                    this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position));
+                    this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position,ev.spellcaster.camp));
             }
             if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
                 allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
-                    this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position));
+                    this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position,ev.spellcaster.camp));
             }
         }
         await Promise.all(allAwait);
@@ -107,10 +106,11 @@ export class BattleDis
         await Promise.all(allAwait);
     }
 
-    showBattleEffect()
+    showBattleEffect(bool:boolean)
     {
-        //this.battleEffectImg.active=true;
+        this.battleEffectImg.active=bool;
     }
+
 
     private async ChangeAttEvent(evs:skill.Event[])
     {

@@ -2649,7 +2649,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "BattleEffect",
+    "_name": "BattleEffectImg",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {

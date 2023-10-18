@@ -41,3 +41,4 @@ hotaru:在queue里添加Shiftdis方法,修改repair方法
 2023/10/18
 hotaru:在roledis里添加Intensifier方法,新建other文件夹，把enums.ts移动至此文件夹
 hotaru:修改Remoteatk，添加全局伤害效果
+hotaru:碰撞效果、字体bundle

@@ -83,21 +83,20 @@ export class Role {
         let selfIndex = selfTeam.GetRoleIndex(this);
         let enemyIndex = enemyTeam.GetRoleIndex(enemy);
 
-        if (damage > 0) {
-            let ev = new skill.Event();
-            ev.type = Injured;
-            ev.spellcaster = new skill.RoleInfo();
-            ev.spellcaster.camp = enemy.selfCamp;
-            ev.spellcaster.index = enemyIndex;
-            ev.recipient = [];
-            let recipient = new skill.RoleInfo();
-            recipient.camp = this.selfCamp;
-            recipient.index = selfIndex;
-            ev.recipient.push(recipient);
-            ev.value = [];
-            ev.value.push(damage);
-            battle.AddBattleEvent(ev);
-        }
+        let ev = new skill.Event();
+        ev.type = Injured;
+        ev.spellcaster = new skill.RoleInfo();
+        ev.spellcaster.camp = enemy.selfCamp;
+        ev.spellcaster.index = enemyIndex;
+        ev.recipient = [];
+        let recipient = new skill.RoleInfo();
+        recipient.camp = this.selfCamp;
+        recipient.index = selfIndex;
+        ev.recipient.push(recipient);
+        ev.value = [];
+        ev.value.push(damage);
+        battle.AddBattleEvent(ev);
+        
         if (this.CheckDead()) {
             let ev = new skill.Event();
             ev.type = enums.EventType.Syncope;
