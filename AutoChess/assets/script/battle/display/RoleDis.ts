@@ -43,6 +43,7 @@ export class RoleDis extends Component
 
     private roleSprite:Node;
     private intensifierText:Node;
+    private bandage:Node;
     
     protected onLoad(): void 
     {
@@ -52,9 +53,12 @@ export class RoleDis extends Component
 
             this.roleSprite=this.node.getChildByName("Sprite");
             this.intensifierText=this.node.getChildByName("IntensifierText");
+            this.bandage=this.node.getChildByName("Bandage");
+            this.bandage.active=false;
             this.intensifierText.active=false;
             this.hpText=this.node.getChildByPath("HpText").getComponent(RichText);
             this.atkText=this.node.getChildByPath("AtkText").getComponent(RichText);
+            
 
             if (this.roleInfo) {
                 if (this.hpText && this.atkText) {

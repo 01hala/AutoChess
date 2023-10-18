@@ -13,8 +13,11 @@ import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 const { ccclass, property } = _decorator;
 
-export class BattleDis {
+export class BattleDis 
+{
     private panelNode:Node;
+    private battleEffectImg:Node;
+
     public selfQueue:Queue;
     public enemyQueue:Queue;
 
@@ -34,6 +37,7 @@ export class BattleDis {
         this.panelNode = instantiate(panel);
         this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
         this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
+        this.battleEffectImg=this.panelNode.getChildByName("BattleEffectImg");
 
         await this.PutRole();
         
@@ -83,6 +87,11 @@ export class BattleDis {
             }
         }
         await Promise.all(allAwait);
+    }
+
+    showBattleEffect()
+    {
+        //this.battleEffectImg.active=true;
     }
 
     private async ChangeAttEvent(evs:skill.Event[])
