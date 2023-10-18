@@ -55,7 +55,7 @@ export class Queue extends Component
                 //         this.node.addChild(newNode);
                 //         this.roleList.push(newNode);
                 //     });
-                let newNode = await BundleManager.Instance.loadAssets("Roles", roleRes) as Prefab;
+                let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
                 let role=instantiate(newNode);
                 role.position=new Vec3(this.locationTemp[i].position.x,this.locationTemp[i].position.y);
                 this.node.addChild(role);

@@ -29,7 +29,7 @@ export class BattleDis {
     }
 
     public async Start(father:Node) {
-        let panel = await BundleManager.Instance.loadAssets("Battle", "BattlePanel") as Prefab;
+        let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
 
         this.panelNode = instantiate(panel);
         this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
@@ -69,22 +69,50 @@ export class BattleDis {
         });
     }
 
-    private checkAttackEvent(evs:skill.Event[]) {
+    private async checkAttackEvent(evs:skill.Event[]) {
         let allAwait = [];
         for(let ev of evs)
         {
             if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp) {
                 allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
                     this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position));
-
-                console.log("set attackState AttackState.AttackReady!");
             }
             if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
                 allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
                     this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position));
             }
         }
-        return allAwait;
+        await Promise.all(allAwait);
+    }
+
+    private async ChangeAttEvent(evs:skill.Event[])
+    {
+        let allAwait = [];
+        for(let ev of evs)
+        {
+            if(EventType.AfterAttack==ev.type)
+            {
+                allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+            }
+
+            if(Camp.Self == ev.spellcaster.camp)
+            {
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type)
+                {
+                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                }
+            }
+            if(Camp.Enemy==ev.spellcaster.camp)
+            {
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type)
+                {
+                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                }
+            }
+            
+        }
+        await Promise.all(allAwait);
     }
 
     onEvent()
@@ -136,8 +164,8 @@ export class BattleDis {
                 }
             }*/
             
-            let allAwait = this.checkAttackEvent(evs);
-            await Promise.all(allAwait);
+            await this.checkAttackEvent(evs);
+            //await this.ChangeAttEvent(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);
