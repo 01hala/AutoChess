@@ -56,8 +56,8 @@ export class RoleDis extends Component
             this.bandage=this.node.getChildByName("Bandage");
             this.bandage.active=false;
             this.intensifierText.active=false;
-            this.hpText=this.node.getChildByPath("HpText").getComponent(RichText);
-            this.atkText=this.node.getChildByPath("AtkText").getComponent(RichText);
+            this.hpText=this.node.getChildByPath("Hp/HpText").getComponent(RichText);
+            this.atkText=this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
             
 
             if (this.roleInfo) {
@@ -102,18 +102,20 @@ export class RoleDis extends Component
 
     private tAttack:Tween<Node> = null;
     Attack(readyLocation:Vec3, battleLocation:Vec3) {
+        console.log("Attack begin!");
         this.tAttack = tween(this.node)
-            .to(0.5, { position: readyLocation })
+            .to(0.4, { position: readyLocation })
             .delay(0.1)
-            .to(0.3, { position: battleLocation })
+            .to(0.1, { position: battleLocation })
             .delay(0.1)
             .to(0.3, { position: this.originalPos })
             .start();
 
-        return this.delay(1500, ()=>{ 
+        return this.delay(1000, ()=>{ 
             if (this.tAttack) {
                 this.tAttack.stop(); 
                 this.tAttack = null;
+                console.log("Attack end!");
             }
         });
     }

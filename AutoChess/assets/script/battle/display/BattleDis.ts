@@ -85,7 +85,14 @@ export class BattleDis
                 allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
                     this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position));
             }
+        }
+        await Promise.all(allAwait);
+    }
 
+    private async checkRemoteInjured(evs:skill.Event[]) {
+        let allAwait = [];
+        for(let ev of evs)
+        {
             if(EventType.RemoteInjured==ev.type){
                 //判断发射者所在的阵营
                 let spList=Camp.Self == ev.spellcaster.camp?this.selfQueue.roleList:this.enemyQueue.roleList;
@@ -94,7 +101,7 @@ export class BattleDis
                     let targetList=Camp.Enemy == element.camp?this.enemyQueue.roleList:this.selfQueue.roleList;
                     allAwait.push(spList[ev.spellcaster.index].getComponent(RoleDis).RemoteAttack(
                         spList[ev.spellcaster.index].getPosition(),targetList[element.index].getPosition()));
-                })
+                });
             }
         }
         await Promise.all(allAwait);
@@ -110,9 +117,8 @@ export class BattleDis
         let allAwait = [];
         for(let ev of evs)
         {
-            if(Camp.Self == ev.spellcaster.camp)
-            {
-                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type)
+            if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) {
+                if(Camp.Self == ev.spellcaster.camp)
                 {
                     if(EventType.IntensifierProperties == ev.type)
                     {
@@ -120,10 +126,7 @@ export class BattleDis
                     }
                     allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetSelfTeam().GetRole(ev.spellcaster.index)));
                 }
-            }
-            if(Camp.Enemy==ev.spellcaster.camp)
-            {
-                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type)
+                if(Camp.Enemy==ev.spellcaster.camp)
                 {
                     if(EventType.IntensifierProperties == ev.type)
                     {
@@ -132,7 +135,6 @@ export class BattleDis
                     allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index)));
                 }
             }
-            
         }
         await Promise.all(allAwait);
     }
@@ -187,7 +189,8 @@ export class BattleDis
             }*/
             
             await this.checkAttackEvent(evs);
-            //await this.ChangeAttEvent(evs);
+            await this.ChangeAttEvent(evs);
+            await this.checkRemoteInjured(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);
