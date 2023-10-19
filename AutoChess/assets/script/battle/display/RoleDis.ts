@@ -109,7 +109,7 @@ export class RoleDis extends Component
 
     Attack(readyLocation:Vec3, battleLocation:Vec3 , camp:Camp) 
     {
-        console.log("Attack begin!");
+        console.log(`Attack begin! selfCamp:${this.roleInfo.selfCamp}`);
         this.tAttack = tween(this.node)
             .to(0.4, { position: readyLocation })
             .delay(0.1)
