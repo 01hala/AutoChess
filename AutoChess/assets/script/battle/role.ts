@@ -175,7 +175,7 @@ export class Role {
         let list = [];
         let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam().GetRoles() : battle.GetEnemyTeam().GetRoles();
         for (let r of selfTeam) {
-            if (r.checkShareDamageBuffer()) {
+            if (this == r || r.checkShareDamageBuffer()) {
                 list.push(r);
             }
         }
@@ -297,23 +297,32 @@ export class Role {
     }
 
     public Attack(enemy: Role, battle: battle.Battle) {
+        console.log("role Attack begin!");
+
         if (enemy.checkInevitableKill()) {
+            console.log("role checkInevitableKill!");
             this.BeInevitableKill(enemy, battle);
         }
         
         let list = this.getShareDamageArray(battle);
         let substitute = this.getSubstituteDamage(battle);
         let damage = this.GetProperty(enums.Property.Attack)+this.getintensifierAtk() / list.length;
+        console.log("role Attack list.length:", list.length);
         for (let r of list) {
             if (null != substitute && this == r) {
+                console.log("role substitute!");
                 substitute.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
             else {
                 if (enemy.checkInevitableKill() && this == r) {
+                    console.log("role checkInevitableKill continue!");
                     continue;
                 }
+                console.log("role AttackInjured!");
                 r.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
         }
+
+        console.log("role Attack end!");
     }
 }
