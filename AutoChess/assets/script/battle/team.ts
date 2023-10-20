@@ -23,6 +23,7 @@ export class Team {
     }
 
     public GetRole(index:number) : role.Role {
+        console.log("Team GetRole index:", index, " roleList.length:", this.roleList.length);
         if(index>=this.roleList.length) return null;
         return this.roleList[index];
     }

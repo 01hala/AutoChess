@@ -137,19 +137,29 @@ export class BattleDis
             if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) {
                 if(Camp.Self == ev.spellcaster.camp)
                 {
-                    if(EventType.IntensifierProperties == ev.type)
-                    {
-                        this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Intensifier(ev.value);
+                    let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                    if (r) {
+                        allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(r));
                     }
-                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetSelfTeam().GetRole(ev.spellcaster.index)));
                 }
                 if(Camp.Enemy==ev.spellcaster.camp)
                 {
-                    if(EventType.IntensifierProperties == ev.type)
-                    {
-                        this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Intensifier(ev.value);
+                    let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                    if (r) {
+                        allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(r));
                     }
-                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).changeAtt(this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index)));
+                }
+            }
+            
+            if(EventType.IntensifierProperties == ev.type)
+            {
+                if(Camp.Self == ev.spellcaster.camp)
+                {
+                    this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Intensifier(ev.value);
+                }
+                if(Camp.Enemy==ev.spellcaster.camp)
+                {
+                    this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Intensifier(ev.value);
                 }
             }
         }
