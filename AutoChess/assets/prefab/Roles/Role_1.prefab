@@ -361,7 +361,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.9140625,
+      "width": 52.4921875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -393,7 +393,7 @@
     "_verticalAlign": 0,
     "_fontSize": 40,
     "_maxWidth": 0,
-    "_fontFamily": "MAOKENASSORTEDSANS",
+    "_fontFamily": "",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": {
@@ -626,7 +626,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 54.9140625,
+      "width": 52.4921875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -658,7 +658,7 @@
     "_verticalAlign": 0,
     "_fontSize": 40,
     "_maxWidth": 0,
-    "_fontFamily": "MAOKENASSORTEDSANS",
+    "_fontFamily": "",
     "_font": null,
     "_isSystemFontUsed": true,
     "_userDefinedFont": {
