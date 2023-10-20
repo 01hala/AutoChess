@@ -72,6 +72,15 @@ export class BattleDis
         });
     }
 
+    async CheckShiftEvent()
+    {
+        let roles=this.battle.GetSelfTeam().GetRoles();
+        await this.selfQueue.Shiftdis(roles);
+
+        roles=this.battle.GetEnemyTeam().GetRoles();
+        await this.enemyQueue.Shiftdis(roles);
+    }
+
     private async checkAttackEvent(evs:skill.Event[]) {
         let allAwait = [];
         let selfAttack = false;
