@@ -10,10 +10,16 @@ import { netSingleton } from "./netSingleton"
 export class netGame {
     private c_player_battle__caller : player_login.player_battle_caller;
     private c_match : match.plan_caller;
+    private c_match_gm : match.gm_caller;
 
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_match = new match.plan_caller(cli.cli_handle);
+        this.c_match_gm = new match.gm_caller(cli.cli_handle);
+    }
+
+    public set_formationf(self:match.RoleSetUp[], target:match.RoleSetUp[]) {
+        this.c_match_gm.get_hub(this.match_name).set_formation(self, target);
     }
 
     private match_name:string = "";

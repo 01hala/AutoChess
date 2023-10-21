@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, tween } from 'cc';
+import { _decorator, instantiate, Node, Prefab, tween, Button } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
@@ -20,6 +20,8 @@ export class BattleDis
 
     public selfQueue:Queue;
     public enemyQueue:Queue;
+
+    private gmBtn:Button;
 
     private battle:Battle = null;
     
@@ -37,6 +39,12 @@ export class BattleDis
         this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
         this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
         this.battleEffectImg=this.panelNode.getChildByName("BattleEffectImg");
+
+        this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
+        this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
+            let gmPanel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
+            this.panelNode.addChild(instantiate(gmPanel));
+        }, this);
 
         await this.PutRole();
         

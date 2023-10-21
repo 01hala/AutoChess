@@ -9,7 +9,82 @@ namespace Abelkhan
 /*this enum code is codegen by abelkhan codegen for c#*/
 
 /*this struct code is codegen by abelkhan codegen for c#*/
+    public class RoleSetUp
+    {
+        public Int32 RoleID;
+        public Int32 Level;
+        public static MsgPack.MessagePackObjectDictionary RoleSetUp_to_protcol(RoleSetUp _struct){
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("RoleID", _struct.RoleID);
+            _protocol.Add("Level", _struct.Level);
+            return _protocol;
+        }
+        public static RoleSetUp protcol_to_RoleSetUp(MsgPack.MessagePackObjectDictionary _protocol){
+            var _structb74dba06_f215_379e_9ab1_cbf7fac5461e = new RoleSetUp();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
+                    _structb74dba06_f215_379e_9ab1_cbf7fac5461e.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
+                    _structb74dba06_f215_379e_9ab1_cbf7fac5461e.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _structb74dba06_f215_379e_9ab1_cbf7fac5461e;
+        }
+    }
+
 /*this module code is codegen by abelkhan codegen for c#*/
+    public class gm_set_formation_rsp : Common.Response {
+        private string _client_uuid_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4;
+        private UInt64 uuid_7234b97e_ac14_32bc_b5ce_00f2a1185510;
+        public gm_set_formation_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4 = client_uuid;
+            uuid_7234b97e_ac14_32bc_b5ce_00f2a1185510 = _uuid;
+        }
+
+        public void rsp(){
+            var _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4 = new ArrayList();
+            _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.Add(uuid_7234b97e_ac14_32bc_b5ce_00f2a1185510);
+            Hub.Hub._gates.call_client(_client_uuid_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4, "gm_rsp_cb_set_formation_rsp", _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4 = new ArrayList();
+            _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.Add(uuid_7234b97e_ac14_32bc_b5ce_00f2a1185510);
+            _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4, "gm_rsp_cb_set_formation_err", _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4);
+        }
+
+    }
+
+    public class gm_module : Common.IModule {
+        public gm_module()
+        {
+            Hub.Hub._modules.add_mothed("gm_set_formation", set_formation);
+        }
+
+        public event Action<List<RoleSetUp>, List<RoleSetUp>> on_set_formation;
+        public void set_formation(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _self = new List<RoleSetUp>();
+            var _protocol_arrayself = ((MsgPack.MessagePackObject)inArray[1]).AsList();
+            foreach (var v_9d043920_d936_5a24_bb36_334fe3c35b20 in _protocol_arrayself){
+                _self.Add(RoleSetUp.protcol_to_RoleSetUp(((MsgPack.MessagePackObject)v_9d043920_d936_5a24_bb36_334fe3c35b20).AsDictionary()));
+            }
+            var _target = new List<RoleSetUp>();
+            var _protocol_arraytarget = ((MsgPack.MessagePackObject)inArray[2]).AsList();
+            foreach (var v_61cce653_b4c5_5664_80a0_a7090acc4e68 in _protocol_arraytarget){
+                _target.Add(RoleSetUp.protcol_to_RoleSetUp(((MsgPack.MessagePackObject)v_61cce653_b4c5_5664_80a0_a7090acc4e68).AsDictionary()));
+            }
+            rsp = new gm_set_formation_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_set_formation != null){
+                on_set_formation(_self, _target);
+            }
+            rsp = null;
+        }
+
+    }
     public class plan_buy_rsp : Common.Response {
         private string _client_uuid_8e620315_ff2a_3f9c_a655_464ce392ed2d;
         private UInt64 uuid_7835a394_6da2_3551_9856_fdfa059cab62;

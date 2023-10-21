@@ -3,7 +3,157 @@ import * as common from "./common";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
 /*this struct code is codegen by abelkhan codegen for typescript*/
+export class RoleSetUp
+{
+    public RoleID : number = 0;
+    public Level : number = 0;
+
+}
+
+export function RoleSetUp_to_protcol(_struct:RoleSetUp){
+    return _struct;
+}
+
+export function protcol_to_RoleSetUp(_protocol:any){
+    let _struct = new RoleSetUp();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "RoleID"){
+            _struct.RoleID = val as number;
+        }
+        else if (key === "Level"){
+            _struct.Level = val as number;
+        }
+    }
+    return _struct;
+}
+
 /*this caller code is codegen by abelkhan codegen for typescript*/
+export class gm_set_formation_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : gm_rsp_cb;
+
+    public event_set_formation_handle_cb : ()=>void | null;
+    public event_set_formation_handle_err : (err:number)=>void | null;
+    public event_set_formation_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : gm_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_set_formation_handle_cb = null;
+        this.event_set_formation_handle_err = null;
+        this.event_set_formation_handle_timeout = null;
+    }
+
+    callBack(_cb:()=>void, _err:(err:number)=>void)
+    {
+        this.event_set_formation_handle_cb = _cb;
+        this.event_set_formation_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.set_formation_timeout(this.cb_uuid); }, tick);
+        this.event_set_formation_handle_timeout = timeout_cb;
+    }
+
+}
+
+/*this cb code is codegen by abelkhan for ts*/
+export class gm_rsp_cb extends client_handle.imodule {
+    public map_set_formation:Map<number, gm_set_formation_cb>;
+    constructor(modules:client_handle.modulemng){
+        super();
+        this.map_set_formation = new Map<number, gm_set_formation_cb>();
+        modules.add_method("gm_rsp_cb_set_formation_rsp", this.set_formation_rsp.bind(this));
+        modules.add_method("gm_rsp_cb_set_formation_err", this.set_formation_err.bind(this));
+    }
+    public set_formation_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4:any[] = [];
+        var rsp = this.try_get_and_del_set_formation_cb(uuid);
+        if (rsp && rsp.event_set_formation_handle_cb) {
+            rsp.event_set_formation_handle_cb.apply(null, _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4);
+        }
+    }
+
+    public set_formation_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4:any[] = [];
+        _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.push(inArray[1]);
+        var rsp = this.try_get_and_del_set_formation_cb(uuid);
+        if (rsp && rsp.event_set_formation_handle_err) {
+            rsp.event_set_formation_handle_err.apply(null, _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4);
+        }
+    }
+
+    public set_formation_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_set_formation_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_set_formation_handle_timeout) {
+                rsp.event_set_formation_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_set_formation_cb(uuid : number){
+        var rsp = this.map_set_formation.get(uuid);
+        this.map_set_formation.delete(uuid);
+        return rsp;
+    }
+
+}
+
+let rsp_cb_gm_handle : gm_rsp_cb | null = null;
+export class gm_caller {
+    private _hubproxy:gm_hubproxy;
+    constructor(_client:client_handle.client){
+        if (rsp_cb_gm_handle == null){
+            rsp_cb_gm_handle = new gm_rsp_cb(_client._modulemng);
+        }
+        this._hubproxy = new gm_hubproxy(_client);
+    }
+
+    public get_hub(hub_name:string)
+    {
+        this._hubproxy.hub_name_1008a118_0d3f_3753_8a26_27a821a2c67a = hub_name;
+        return this._hubproxy;
+    }
+
+}
+
+export class gm_hubproxy
+{
+    private uuid_1008a118_0d3f_3753_8a26_27a821a2c67a : number = Math.round(Math.random() * 1000);
+
+    public hub_name_1008a118_0d3f_3753_8a26_27a821a2c67a:string;
+    private _client_handle:client_handle.client;
+
+    constructor(client_handle_:client_handle.client)
+    {
+        this._client_handle = client_handle_;
+    }
+
+    public set_formation(self:RoleSetUp[], target:RoleSetUp[]){
+        let uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a = Math.round(this.uuid_1008a118_0d3f_3753_8a26_27a821a2c67a++);
+
+        let _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4:any[] = [uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a];
+        let _array_809515b8_3e31_3feb_a08c_462fee09f6ef:any[] = [];        for(let v_f28d998e_a4db_5715_ae88_a209524e50aa of self){
+            _array_809515b8_3e31_3feb_a08c_462fee09f6ef.push(RoleSetUp_to_protcol(v_f28d998e_a4db_5715_ae88_a209524e50aa));
+        }
+        _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.push(_array_809515b8_3e31_3feb_a08c_462fee09f6ef);
+        let _array_2cf141ee_a36d_3d58_a9b6_a4febe931c68:any[] = [];        for(let v_9eb21ec2_86d8_5305_9ade_1618c199442b of target){
+            _array_2cf141ee_a36d_3d58_a9b6_a4febe931c68.push(RoleSetUp_to_protcol(v_9eb21ec2_86d8_5305_9ade_1618c199442b));
+        }
+        _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.push(_array_2cf141ee_a36d_3d58_a9b6_a4febe931c68);
+        this._client_handle.call_hub(this.hub_name_1008a118_0d3f_3753_8a26_27a821a2c67a, "gm_set_formation", _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4);
+        let cb_set_formation_obj = new gm_set_formation_cb(uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a, rsp_cb_gm_handle);
+        if (rsp_cb_gm_handle){
+            rsp_cb_gm_handle.map_set_formation.set(uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a, cb_set_formation_obj);
+        }
+        return cb_set_formation_obj;
+    }
+
+}
 export class plan_buy_cb{
     private cb_uuid : number;
     private module_rsp_cb : plan_rsp_cb;

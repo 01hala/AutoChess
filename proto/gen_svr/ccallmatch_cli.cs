@@ -9,7 +9,200 @@ namespace Abelkhan
 /*this enum code is codegen by abelkhan codegen for c#*/
 
 /*this struct code is codegen by abelkhan codegen for c#*/
+    public class RoleSetUp
+    {
+        public Int32 RoleID;
+        public Int32 Level;
+        public static MsgPack.MessagePackObjectDictionary RoleSetUp_to_protcol(RoleSetUp _struct){
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("RoleID", _struct.RoleID);
+            _protocol.Add("Level", _struct.Level);
+            return _protocol;
+        }
+        public static RoleSetUp protcol_to_RoleSetUp(MsgPack.MessagePackObjectDictionary _protocol){
+            var _structb74dba06_f215_379e_9ab1_cbf7fac5461e = new RoleSetUp();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
+                    _structb74dba06_f215_379e_9ab1_cbf7fac5461e.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
+                    _structb74dba06_f215_379e_9ab1_cbf7fac5461e.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _structb74dba06_f215_379e_9ab1_cbf7fac5461e;
+        }
+    }
+
 /*this caller code is codegen by abelkhan codegen for c#*/
+    public class gm_set_formation_cb
+    {
+        private UInt64 cb_uuid;
+        private gm_rsp_cb module_rsp_cb;
+
+        public gm_set_formation_cb(UInt64 _cb_uuid, gm_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action on_set_formation_cb;
+        public event Action<Int32> on_set_formation_err;
+        public event Action on_set_formation_timeout;
+
+        public gm_set_formation_cb callBack(Action cb, Action<Int32> err)
+        {
+            on_set_formation_cb += cb;
+            on_set_formation_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.set_formation_timeout(cb_uuid);
+            });
+            on_set_formation_timeout += timeout_cb;
+        }
+
+        public void call_cb()
+        {
+            if (on_set_formation_cb != null)
+            {
+                on_set_formation_cb();
+            }
+        }
+
+        public void call_err(Int32 err)
+        {
+            if (on_set_formation_err != null)
+            {
+                on_set_formation_err(err);
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_set_formation_timeout != null)
+            {
+                on_set_formation_timeout();
+            }
+        }
+
+    }
+
+/*this cb code is codegen by abelkhan for c#*/
+    public class gm_rsp_cb : Common.IModule {
+        public Dictionary<UInt64, gm_set_formation_cb> map_set_formation;
+        public gm_rsp_cb(Common.ModuleManager modules)
+        {
+            map_set_formation = new Dictionary<UInt64, gm_set_formation_cb>();
+            modules.add_mothed("gm_rsp_cb_set_formation_rsp", set_formation_rsp);
+            modules.add_mothed("gm_rsp_cb_set_formation_err", set_formation_err);
+        }
+
+        public void set_formation_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var rsp = try_get_and_del_set_formation_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb();
+            }
+        }
+
+        public void set_formation_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var rsp = try_get_and_del_set_formation_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err(_err);
+            }
+        }
+
+        public void set_formation_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_set_formation_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private gm_set_formation_cb try_get_and_del_set_formation_cb(UInt64 uuid){
+            lock(map_set_formation)
+            {
+                if (map_set_formation.TryGetValue(uuid, out gm_set_formation_cb rsp))
+                {
+                    map_set_formation.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
+    }
+
+    public class gm_caller {
+        public static gm_rsp_cb rsp_cb_gm_handle = null;
+        private ThreadLocal<gm_hubproxy> _hubproxy;
+        public Client.Client _client_handle;
+        public gm_caller(Client.Client client_handle_) 
+        {
+            _client_handle = client_handle_;
+            if (rsp_cb_gm_handle == null)
+            {
+                rsp_cb_gm_handle = new gm_rsp_cb(_client_handle.modulemanager);
+            }
+
+            _hubproxy = new ThreadLocal<gm_hubproxy>();
+        }
+
+        public gm_hubproxy get_hub(string hub_name)
+        {
+            if (_hubproxy.Value == null)
+{
+                _hubproxy.Value = new gm_hubproxy(_client_handle, rsp_cb_gm_handle);
+            }
+            _hubproxy.Value.hub_name_1008a118_0d3f_3753_8a26_27a821a2c67a = hub_name;
+            return _hubproxy.Value;
+        }
+
+    }
+
+    public class gm_hubproxy {
+        public string hub_name_1008a118_0d3f_3753_8a26_27a821a2c67a;
+        private Int32 uuid_1008a118_0d3f_3753_8a26_27a821a2c67a = (Int32)RandomUUID.random();
+
+        public Client.Client _client_handle;
+        public gm_rsp_cb rsp_cb_gm_handle;
+
+        public gm_hubproxy(Client.Client client_handle_, gm_rsp_cb rsp_cb_gm_handle_)
+        {
+            _client_handle = client_handle_;
+            rsp_cb_gm_handle = rsp_cb_gm_handle_;
+        }
+
+        public gm_set_formation_cb set_formation(List<RoleSetUp> self, List<RoleSetUp> target){
+            var uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a = (UInt64)Interlocked.Increment(ref uuid_1008a118_0d3f_3753_8a26_27a821a2c67a);
+
+            var _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4 = new ArrayList();
+            _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.Add(uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a);
+            var _array_809515b8_3e31_3feb_a08c_462fee09f6ef = new ArrayList();
+            foreach(var v_f28d998e_a4db_5715_ae88_a209524e50aa in self){
+                _array_809515b8_3e31_3feb_a08c_462fee09f6ef.Add(RoleSetUp.RoleSetUp_to_protcol(v_f28d998e_a4db_5715_ae88_a209524e50aa));
+            }
+            _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.Add(_array_809515b8_3e31_3feb_a08c_462fee09f6ef);
+            var _array_2cf141ee_a36d_3d58_a9b6_a4febe931c68 = new ArrayList();
+            foreach(var v_9eb21ec2_86d8_5305_9ade_1618c199442b in target){
+                _array_2cf141ee_a36d_3d58_a9b6_a4febe931c68.Add(RoleSetUp.RoleSetUp_to_protcol(v_9eb21ec2_86d8_5305_9ade_1618c199442b));
+            }
+            _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4.Add(_array_2cf141ee_a36d_3d58_a9b6_a4febe931c68);
+            _client_handle.call_hub(hub_name_1008a118_0d3f_3753_8a26_27a821a2c67a, "gm_set_formation", _argv_7fae5a4d_9f93_3cc2_9421_f25db2a4e0b4);
+
+            var cb_set_formation_obj = new gm_set_formation_cb(uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a, rsp_cb_gm_handle);
+            lock(rsp_cb_gm_handle.map_set_formation)
+            {                rsp_cb_gm_handle.map_set_formation.Add(uuid_8d9bac12_4a33_5bf1_8982_b111c06cf07a, cb_set_formation_obj);
+            }            return cb_set_formation_obj;
+        }
+
+    }
     public class plan_buy_cb
     {
         private UInt64 cb_uuid;

@@ -1,5 +1,14 @@
 import common
 
+struct RoleSetUp {
+	int32 RoleID;
+	int32 Level;
+}
+
+module gm {
+    set_formation req(RoleSetUp[] self, RoleSetUp[] target) rsp() err(int32 err);
+}
+
 module plan {
     buy req(ShopIndex shop_index, int32 index) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
     sale_role req(int32 index) rsp(UserBattleData info) err(int32 err);
