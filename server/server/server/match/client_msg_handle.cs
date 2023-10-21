@@ -42,7 +42,7 @@ namespace Match
             {
                 config.RoleConfig rolec = null;
                 var level = 1;
-                if (selfSetUp.Count <= 0)
+                if (setUp != null && setUp.Count <= 0)
                 {
                     var r = setUp[data.RoleList.Count];
                     rolec = config.Config.RoleConfigs[r.RoleID];
