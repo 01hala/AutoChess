@@ -42,6 +42,7 @@ export class BattleDis
 
         this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
         this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
+            console.log("gm Button!");
             let gmPanel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
             this.panelNode.addChild(instantiate(gmPanel));
         }, this);
