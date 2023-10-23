@@ -11,6 +11,7 @@ import * as skill from '../skill/skill_base'
 import { Camp, EventType } from '../../other/enums';
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
+import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -81,13 +82,24 @@ export class BattleDis
         });
     }
 
-    async CheckShiftEvent()
+    async CheckShiftEvent(evs:skill.Event[])
     {
-        let roles=this.battle.GetSelfTeam().GetRoles();
-        await this.selfQueue.Shiftdis(roles);
-
-        roles=this.battle.GetEnemyTeam().GetRoles();
-        await this.enemyQueue.Shiftdis(roles);
+        let allAwait = [];
+        let roles=null;
+        for(let ev of evs)
+        {
+            if(EventType.Syncope==ev.type && Camp.Self == ev.spellcaster.camp)
+            {
+                roles=this.battle.GetSelfTeam().GetRoles();
+                allAwait.push(this.selfQueue.Shiftdis(roles));
+            }
+            if(EventType.Syncope==ev.type && Camp.Enemy == ev.spellcaster.camp)
+            {
+                roles=this.battle.GetEnemyTeam().GetRoles();
+                allAwait.push(this.enemyQueue.Shiftdis(roles));
+            }
+        }
+        await Promise.all(allAwait);
     }
 
     private async checkAttackEvent(evs:skill.Event[]) {
@@ -226,6 +238,7 @@ export class BattleDis
             
             await this.checkAttackEvent(evs);
             await this.ChangeAttEvent(evs);
+            await this.CheckShiftEvent(evs);
             await this.checkRemoteInjured(evs);
 
             if (this.resolve) {
