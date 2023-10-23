@@ -187,6 +187,26 @@ export class BattleDis
         await Promise.all(allAwait);
     }
 
+    async CheckExitEvent(evs:skill.Event[])
+    {
+        let allAwait = [];
+        for(let ev of evs)
+        {
+            if(EventType.Syncope == ev.type)
+            {
+                if(Camp.Self==ev.spellcaster.camp)
+                {
+                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Exit());
+                }
+                if(Camp.Enemy==ev.spellcaster.camp)
+                {
+                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Exit());
+                }
+            }
+        }
+        await Promise.all(allAwait);
+    }
+
     onEvent()
     {
         this.battle.on_event = async (evs) => {

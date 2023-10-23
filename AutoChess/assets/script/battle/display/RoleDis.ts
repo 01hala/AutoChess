@@ -209,7 +209,13 @@ export class RoleDis extends Component
         /*
          * 退场效果。。。
          */
-        this.node.destroy();
+        this.bandage.active=true;
+        this.bandage.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+        {
+            this.node.destroy();
+        });
+        this.bandage.getComponent(Animation).play();
+        
     }
 }
 
