@@ -33,6 +33,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try 
         {
+            console.log("Remote Atack begin");
             if(6>=this.numberOfRole && !this.isAll)
             {
                 this.SkillEffect_1(selfInfo,battle);
@@ -58,6 +59,8 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try
         {
+            console.log("Remote Atack SkillEffect_1 begin");
+
             let recipientRoles:Role[] = new Array();
             let self:Role = null;
             let enemyRoles:Role[] = null;
@@ -88,6 +91,8 @@ export class Skill_RemoteAtk_3 extends SkillBase
 
     private SkillEffect_2(selfInfo: RoleInfo, battle: Battle)         //场上全部生效
     {
+        console.log("Remote Atack SkillEffect_2 begin");
+
         let self:Role=null;
 
         if(Camp.Self==selfInfo.camp)

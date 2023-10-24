@@ -33,6 +33,7 @@ export class SkillTrigger_BattleBegin_7 extends SkillTriggerBase
             {
                 if(EventType.BattleBegin==b.type)
                 {
+                    console.log("CheckSkillTrigger BattleBegin!");
                     return true;
                 }
             }

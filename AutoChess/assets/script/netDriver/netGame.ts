@@ -19,7 +19,7 @@ export class netGame {
     }
 
     public set_formationf(self:match.RoleSetUp[], target:match.RoleSetUp[]) {
-        this.c_match_gm.get_hub(this.match_name).set_formation(self, target);
+        return this.c_match_gm.get_hub(this.match_name).set_formation(self, target);
     }
 
     private match_name:string = "";

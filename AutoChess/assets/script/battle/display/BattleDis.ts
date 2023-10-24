@@ -2,7 +2,7 @@
  * BattleDis.ts
  * author: Hotaru
  * 2023/10/12
- * Õ½¶·Õ¹Ê¾Àà
+ * Õ½ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½
  */
 import { _decorator, instantiate, Node, Prefab, tween, Button } from 'cc';
 import { Queue } from './Queue';
@@ -113,13 +113,17 @@ export class BattleDis
         for(let ev of evs)
         {
             if(EventType.RemoteInjured==ev.type){
-                //ÅÐ¶Ï·¢ÉäÕßËùÔÚµÄÕóÓª
+                console.log("checkRemoteInjured RemoteInjured");
+
                 let spList=Camp.Self == ev.spellcaster.camp?this.selfQueue.roleList:this.enemyQueue.roleList;
+                console.log(spList);
                 ev.recipient.forEach(element=>{
-                    //ÅÐ¶ÏÃ¿Ò»¸öÊÜµ½Ô¶³Ì¹¥»÷ÕßËùÔÚµÄÕóÓª
                     let targetList=Camp.Enemy == element.camp?this.enemyQueue.roleList:this.selfQueue.roleList;
+                    console.log(targetList);
+                    console.log(element);
                     allAwait.push(spList[ev.spellcaster.index].getComponent(RoleDis).RemoteAttack(
-                        spList[ev.spellcaster.index].getPosition(),targetList[element.index].getPosition()));
+                        spList[ev.spellcaster.index].getPosition(),
+                        targetList[element.index].getPosition()));
                 });
             }
         }
@@ -180,7 +184,7 @@ export class BattleDis
                 {
                     allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
                 }
-                if(Camp.Enemy==ev.spellcaster.camp)
+                else if(Camp.Enemy==ev.spellcaster.camp)
                 {
                     allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
                 }
@@ -214,31 +218,31 @@ export class BattleDis
             /*for(let ev of evs)
             {
                 if (EventType.RemoteInjured == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`±¾·½${ev.spellcaster.index}Ô¶³Ì¹¥»÷µÐ·½[${ev.recipient}]`);
+                    console.log(`ï¿½ï¿½ï¿½ï¿½${ev.spellcaster.index}Ô¶ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½Ð·ï¿½[${ev.recipient}]`);
                 }
                 if (EventType.RemoteInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`µÐ·½${ev.spellcaster.index}Ô¶³Ì¹¥»÷±¾·½[${ev.recipient}]`);
+                    console.log(`ï¿½Ð·ï¿½${ev.spellcaster.index}Ô¶ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[${ev.recipient}]`);
                 }
 
                 if (EventType.Summon == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`±¾·½${ev.spellcaster.index}ÕÙ»½[${ev.recipient}]`);
+                    console.log(`ï¿½ï¿½ï¿½ï¿½${ev.spellcaster.index}ï¿½Ù»ï¿½[${ev.recipient}]`);
                 }
                 if (EventType.Summon == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`µÐ·½${ev.spellcaster.index}ÕÙ»½[${ev.recipient}]`);
+                    console.log(`ï¿½Ð·ï¿½${ev.spellcaster.index}ï¿½Ù»ï¿½[${ev.recipient}]`);
                 }
 
                 if (EventType.ChangeLocation == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`±¾·½${ev.spellcaster.index}¸Ä±äµÐ·½Î»ÖÃ[${ev.recipient}]`);
+                    console.log(`ï¿½ï¿½ï¿½ï¿½${ev.spellcaster.index}ï¿½Ä±ï¿½Ð·ï¿½Î»ï¿½ï¿½[${ev.recipient}]`);
                 }
                 if (EventType.ChangeLocation == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`µÐ·½${ev.spellcaster.index}¸Ä±ä±¾·½Î»ÖÃ[${ev.recipient}]`);
+                    console.log(`ï¿½Ð·ï¿½${ev.spellcaster.index}ï¿½Ä±ä±¾ï¿½ï¿½Î»ï¿½ï¿½[${ev.recipient}]`);
                 }
 
                 if (EventType.SwapProperties == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`±¾·½${ev.spellcaster.index}·¢Æð½»»»ÊôÐÔ[${ev.value}]`);
+                    console.log(`ï¿½ï¿½ï¿½ï¿½${ev.spellcaster.index}ï¿½ï¿½ï¿½ð½»»ï¿½ï¿½ï¿½ï¿½ï¿½[${ev.value}]`);
                 }
                 if (EventType.SwapProperties == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`µÐ·½${ev.spellcaster.index}·¢Æð½»»»ÊôÐÔ[${ev.value}]`);
+                    console.log(`ï¿½Ð·ï¿½${ev.spellcaster.index}ï¿½ï¿½ï¿½ð½»»ï¿½ï¿½ï¿½ï¿½ï¿½[${ev.value}]`);
                 }
 
                 if(EventType.IntensifierProperties==ev.type && Camp.Self == ev.spellcaster.camp)
@@ -256,10 +260,10 @@ export class BattleDis
             }*/
             
             await this.checkAttackEvent(evs);
+            await this.checkRemoteInjured(evs);
             await this.ChangeAttEvent(evs);
             await this.CheckExitEvent(evs);
             await this.CheckShiftEvent(evs);
-            await this.checkRemoteInjured(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);

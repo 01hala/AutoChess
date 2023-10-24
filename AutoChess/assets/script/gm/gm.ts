@@ -106,7 +106,15 @@ export class gm extends Component {
         target6.Level = parseInt(this.target6Level.string);
         let target = [target1, target2, target3, target4, target5, target6];
 
-        singleton.netSingleton.game.set_formationf(self, target);
+        singleton.netSingleton.game.set_formationf(self, target).callBack(()=>{
+            this.node.destroy();
+        }, () => {
+            console.log("gm_set_up error!");
+            this.node.destroy();
+        }).timeout(3000, () => {
+            console.log("gm_set_up timeout!");
+            this.node.destroy();
+        });
     }
 
     update(deltaTime: number) {

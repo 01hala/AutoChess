@@ -34,6 +34,7 @@ export class SkillTrigger_BeforeAtk_8 extends SkillTriggerBase
         {
             for (let element of frameEvent) {
                 if(EventType.BeforeAttack==element.type) {
+                    console.log("CheckSkillTrigger BeforeAttack!");
                     return true;
                 }
             }
