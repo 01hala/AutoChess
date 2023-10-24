@@ -201,7 +201,7 @@ export class RoleDis extends Component
         bulletNode.setPosition(spellcasterLocation);
         //let tempRole=find("Canvas/EnemyQueue").children[role.index];
         bulletNode.getComponent(Bullet).Init(targetLocation);
-        this.schedule(null,0.2);
+        this.delay(300,()=>{});
     }
     
     Exit()
@@ -209,12 +209,22 @@ export class RoleDis extends Component
         /*
          * 退场效果。。。
          */
-        this.bandage.active=true;
-        this.bandage.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+        try
         {
-            this.node.destroy();
-        });
-        this.bandage.getComponent(Animation).play();
+            this.bandage.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                singleton.netSingleton.battle.showBattleEffect(false);
+                this.node.destroy();
+                //this.node.active=false;
+            });
+            this.bandage.active=true;
+            this.bandage.getComponent(Animation).play();
+            return this.delay(800,()=>{});
+        }
+        catch(err)
+        {
+            console.warn("RoleDis 里的 Exit 函数错误 err:"+err);
+        }
         
     }
 }

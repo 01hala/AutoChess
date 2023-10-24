@@ -79,7 +79,9 @@ export class Queue extends Component
         for(let t of r)
         {
             n.push(t.id);
+            console.log("Shiftdis:"+n);
         }
+        /*
         let tm=this.roleList;
         for(let i:number=0;i<n.length;i++)//找到需要离场的角色
         {
@@ -92,7 +94,7 @@ export class Queue extends Component
                 }
             }      
         }
-        if(0!=tm.length)
+        if(0!=tm.length)//移除列表里需要离场的角色
         {
             for(let i:number=0;i<tm.length;i++)
             {
@@ -105,20 +107,40 @@ export class Queue extends Component
                 }
             }
         }
-        tm=[];
-        for(let i:number=0;i<n.length;i++ )
-        {
-            for(let j:number=0;j<this.roleList.length;j++)
-            {
-                if(this.roleList[j].getComponent(RoleDis.RoleDis).RoleId==n[i])
-                {
-                    tm.push(this.roleList[j]);
-                    this.roleList[j].position=this.locationTemp[i].position;
-                }
-            }
-        }
-        this.roleList=tm;
+        */
+        // let tm=[];
+        // for(let i:number=0;i<n.length;i++ )
+        // {
+        //     for(let j:number=0;j<this.roleList.length;j++)
+        //     {
+        //         if(this.roleList[j].getComponent(RoleDis.RoleDis).RoleId==n[i])
+        //         {
+        //             tm.push(this.roleList[j]);
+        //             this.roleList[j].position=this.locationTemp[i].position;
+        //         }
+        //     }
+        // }
+        // this.roleList=tm;
 
+        for(let i=0;i<this.roleList.length;i++)
+        {
+            this.roleList[i].position=this.locationTemp[i].position;
+            this.roleList[i].getComponent(RoleDis.RoleDis).AttackInit();
+        }
+    }
+
+    async RemoveRole(index:number)
+    {
+        try
+        {
+            await this.roleList[index].getComponent(RoleDis.RoleDis).Exit();
+            this.roleList.splice(index,1);
+        }
+        
+        catch (err)
+        {
+            console.warn(this.res+" 下的 RemoveRole 错误:", err);
+        }
     }
 }
 

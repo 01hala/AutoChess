@@ -40,7 +40,7 @@ export class BattleDis
         this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
         this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
         this.battleEffectImg=this.panelNode.getChildByName("BattleEffectImg");
-
+        this.battleEffectImg.active=false;
         this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
         this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
             console.log("gm Button!");
@@ -82,26 +82,6 @@ export class BattleDis
         });
     }
 
-    async CheckShiftEvent(evs:skill.Event[])
-    {
-        let allAwait = [];
-        let roles=null;
-        for(let ev of evs)
-        {
-            if(EventType.Syncope==ev.type && Camp.Self == ev.spellcaster.camp)
-            {
-                roles=this.battle.GetSelfTeam().GetRoles();
-                allAwait.push(this.selfQueue.Shiftdis(roles));
-            }
-            if(EventType.Syncope==ev.type && Camp.Enemy == ev.spellcaster.camp)
-            {
-                roles=this.battle.GetEnemyTeam().GetRoles();
-                allAwait.push(this.enemyQueue.Shiftdis(roles));
-            }
-        }
-        await Promise.all(allAwait);
-    }
-
     private async checkAttackEvent(evs:skill.Event[]) {
         let allAwait = [];
         let selfAttack = false;
@@ -110,14 +90,16 @@ export class BattleDis
         {
             if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp) {
                 if (!selfAttack) {
-                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
+                    console.log("checkAttevent: eslfcamp "+this.selfQueue.roleList[0].getComponent(RoleDis).RoleId);
+                    allAwait.push(this.selfQueue.roleList[0].getComponent(RoleDis).Attack(
                         this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position,ev.spellcaster.camp));
                     selfAttack = true;
                 }
             }
             else if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
                 if (!enemyAttack) {
-                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Attack(
+                    console.log("checkAttevent: enemtcamp "+this.enemyQueue.roleList[0].getComponent(RoleDis).RoleId);
+                    allAwait.push(this.enemyQueue.roleList[0].getComponent(RoleDis).Attack(
                         this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position,ev.spellcaster.camp));
                     enemyAttack = true;
                 }
@@ -196,12 +178,32 @@ export class BattleDis
             {
                 if(Camp.Self==ev.spellcaster.camp)
                 {
-                    allAwait.push(this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Exit());
+                    allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
                 }
                 if(Camp.Enemy==ev.spellcaster.camp)
                 {
-                    allAwait.push(this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).Exit());
+                    allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
                 }
+            }
+        }
+        await Promise.all(allAwait);
+    }
+
+    async CheckShiftEvent(evs:skill.Event[])
+    {
+        let allAwait = [];
+        let roles=null;
+        for(let ev of evs)
+        {
+            if(EventType.Syncope==ev.type && Camp.Self == ev.spellcaster.camp)
+            {
+                roles=this.battle.GetSelfTeam().GetRoles();
+                allAwait.push(this.selfQueue.Shiftdis(roles));
+            }
+            if(EventType.Syncope==ev.type && Camp.Enemy == ev.spellcaster.camp)
+            {
+                roles=this.battle.GetEnemyTeam().GetRoles();
+                allAwait.push(this.enemyQueue.Shiftdis(roles));
             }
         }
         await Promise.all(allAwait);
@@ -258,6 +260,7 @@ export class BattleDis
             
             await this.checkAttackEvent(evs);
             await this.ChangeAttEvent(evs);
+            await this.CheckExitEvent(evs);
             await this.CheckShiftEvent(evs);
             await this.checkRemoteInjured(evs);
 

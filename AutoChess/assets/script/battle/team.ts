@@ -82,7 +82,7 @@ export class Team {
  */
     public Repair(n:number):number                                                  //补位逻辑：
     {                                                                               //优先后排往前顶，中间空了了两边补
-        if(0==n)//0号位空缺
+        if(0==n)//0号位空缺                                                          //返回值为需要移除的元素的下标
         {
             if(this.roleList[n+3])
             {

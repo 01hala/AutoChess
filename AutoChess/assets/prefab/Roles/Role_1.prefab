@@ -321,7 +321,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 2,
       "z": 0
     },
     "_lrot": {
@@ -361,7 +361,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 52.4921875,
+      "width": 71.37890625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -388,14 +388,17 @@
       "__id__": 15
     },
     "_lineHeight": 40,
-    "_string": "<color=#ffa900><outline color=#ffe900 width=4\n>00</outline></color>",
+    "_string": "<color=#f99b08><outline color=#fff457 width=4\n>00</outline></color>",
     "_horizontalAlign": 1,
-    "_verticalAlign": 0,
-    "_fontSize": 40,
+    "_verticalAlign": 1,
+    "_fontSize": 55,
     "_maxWidth": 0,
     "_fontFamily": "",
-    "_font": null,
-    "_isSystemFontUsed": true,
+    "_font": {
+      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__expectedType__": "cc.TTFFont"
+    },
+    "_isSystemFontUsed": false,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
@@ -436,8 +439,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
-      "height": 40
+      "width": 55,
+      "height": 55
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -586,7 +589,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 2,
       "z": 0
     },
     "_lrot": {
@@ -626,7 +629,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 52.4921875,
+      "width": 71.37890625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -653,14 +656,17 @@
       "__id__": 27
     },
     "_lineHeight": 40,
-    "_string": "<color=#ad0003><outline color=#f05856 width=4\n>00</outline></color>",
+    "_string": "<color=#9d0c27><outline color=#e93552 width=4\n>00</outline></color>",
     "_horizontalAlign": 1,
-    "_verticalAlign": 0,
-    "_fontSize": 40,
+    "_verticalAlign": 1,
+    "_fontSize": 55,
     "_maxWidth": 0,
     "_fontFamily": "",
-    "_font": null,
-    "_isSystemFontUsed": true,
+    "_font": {
+      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__expectedType__": "cc.TTFFont"
+    },
+    "_isSystemFontUsed": false,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
@@ -701,8 +707,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
-      "height": 40
+      "width": 55,
+      "height": 55
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
