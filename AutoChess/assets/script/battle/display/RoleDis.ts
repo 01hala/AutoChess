@@ -2,7 +2,7 @@
  * RoleDis.ts
  * author: Hotaru
  * 2023/10/04
- * è§’è‰²å±•ç¤ºç±»
+ * ½ÇÉ«Õ¹Ê¾Àà
  */
 import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween } from 'cc';
 import { Role } from '../../battle/role';
@@ -22,13 +22,13 @@ export class RoleDis extends Component
 {
     @property({
         type:CCInteger,
-        displayName:"è§’è‰²ID"
+        displayName:"½ÇÉ«ID"
     })
     public RoleId:number;
 
     @property({
         type:Prefab,
-        displayName:"è¿œç¨‹æ”»å‡»ç‰©"
+        displayName:"Ô¶³Ì¹¥»÷Îï"
     })
     public remoteNode:Prefab;
 
@@ -78,7 +78,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis é‡Œçš„ onLoad å‡½æ•°é”™è¯¯ err:"+err);
+            console.warn("RoleDis ÀïµÄ onLoad º¯Êı´íÎó err:"+err);
         }
     }
 
@@ -153,7 +153,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis é‡Œçš„ changeAtt å‡½æ•°é”™è¯¯ err:"+err);
+            console.warn("RoleDis ÀïµÄ changeAtt º¯Êı´íÎó err:"+err);
         }
     }
 
@@ -161,7 +161,7 @@ export class RoleDis extends Component
     {
         let type:Property;
         let anim:Animation=this.intensifierText.getComponent(Animation);
-        let wait:boolean;//ç­‰å¾…å¼€å…³ï¼ŒåŠ¨ç”»æ’­æ”¾æ—¶å¯åŠ¨
+        let wait:boolean;//µÈ´ı¿ª¹Ø£¬¶¯»­²¥·ÅÊ±Æô¶¯
         anim.on(Animation.EventType.FINISHED,()=>
         {
             this.intensifierText.active=false;
@@ -181,7 +181,7 @@ export class RoleDis extends Component
         }
         if(wait) 
         {
-            this.delay(300,()=>{});//ç­‰å¾…0.3ç§’
+            this.delay(300,()=>{});//µÈ´ı0.3Ãë
         }
         if(0!=value[1])
         {
@@ -190,13 +190,13 @@ export class RoleDis extends Component
             this.intensifierText.active=true;
             anim.play();
         }
-        this.delay(300,()=>{});//ç­‰å¾…0.3ç§’
+        this.delay(300,()=>{});//µÈ´ı0.3Ãë
     }
 
     RemoteAttack(spellcasterLocation:Vec3, targetLocation:Vec3)
     {
-        //ç”Ÿæˆå­å¼¹ï¼Œä»å‘å°„è€…ä½ç½®åˆ°è¾¾ç›®æ ‡ä½ç½®
-        console.log("è¿›è¡Œè¿œç¨‹æ”»å‡»");
+        //Éú³É×Óµ¯£¬´Ó·¢ÉäÕßÎ»ÖÃµ½´ïÄ¿±êÎ»ÖÃ
+        console.log("½øĞĞÔ¶³Ì¹¥»÷");
         let bulletNode=instantiate(this.remoteNode);
         bulletNode.setPosition(spellcasterLocation);
         //let tempRole=find("Canvas/EnemyQueue").children[role.index];
@@ -207,7 +207,7 @@ export class RoleDis extends Component
     Exit()
     {
         /*
-         * é€€åœºæ•ˆæœã€‚ã€‚ã€‚
+         * ÍË³¡Ğ§¹û¡£¡£¡£
          */
         try
         {
@@ -223,7 +223,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis é‡Œçš„ Exit å‡½æ•°é”™è¯¯ err:"+err);
+            console.warn("RoleDis ÀïµÄ Exit º¯Êı´íÎó err:"+err);
         }
         
     }

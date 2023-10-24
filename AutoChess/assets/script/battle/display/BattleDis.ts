@@ -2,7 +2,7 @@
  * BattleDis.ts
  * author: Hotaru
  * 2023/10/12
- * æˆ˜æ–—å±•ç¤ºç±»
+ * Õ½¶·Õ¹Ê¾Àà
  */
 import { _decorator, instantiate, Node, Prefab, tween, Button } from 'cc';
 import { Queue } from './Queue';
@@ -113,10 +113,10 @@ export class BattleDis
         for(let ev of evs)
         {
             if(EventType.RemoteInjured==ev.type){
-                //åˆ¤æ–­å‘å°„è€…æ‰€åœ¨çš„é˜µè¥
+                //ÅĞ¶Ï·¢ÉäÕßËùÔÚµÄÕóÓª
                 let spList=Camp.Self == ev.spellcaster.camp?this.selfQueue.roleList:this.enemyQueue.roleList;
                 ev.recipient.forEach(element=>{
-                    //åˆ¤æ–­æ¯ä¸€ä¸ªå—åˆ°è¿œç¨‹æ”»å‡»è€…æ‰€åœ¨çš„é˜µè¥
+                    //ÅĞ¶ÏÃ¿Ò»¸öÊÜµ½Ô¶³Ì¹¥»÷ÕßËùÔÚµÄÕóÓª
                     let targetList=Camp.Enemy == element.camp?this.enemyQueue.roleList:this.selfQueue.roleList;
                     allAwait.push(spList[ev.spellcaster.index].getComponent(RoleDis).RemoteAttack(
                         spList[ev.spellcaster.index].getPosition(),targetList[element.index].getPosition()));
@@ -192,16 +192,13 @@ export class BattleDis
     async CheckShiftEvent(evs:skill.Event[])
     {
         let allAwait = [];
-        let roles=null;
         for(let ev of evs)
         {
-            if(EventType.Syncope==ev.type && Camp.Self == ev.spellcaster.camp)
+            if(EventType.BeforeAttack==ev.type)
             {
-                roles=this.battle.GetSelfTeam().GetRoles();
+                let roles=this.battle.GetSelfTeam().GetRoles();
                 allAwait.push(this.selfQueue.Shiftdis(roles));
-            }
-            if(EventType.Syncope==ev.type && Camp.Enemy == ev.spellcaster.camp)
-            {
+
                 roles=this.battle.GetEnemyTeam().GetRoles();
                 allAwait.push(this.enemyQueue.Shiftdis(roles));
             }
@@ -217,31 +214,31 @@ export class BattleDis
             /*for(let ev of evs)
             {
                 if (EventType.RemoteInjured == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`æœ¬æ–¹${ev.spellcaster.index}è¿œç¨‹æ”»å‡»æ•Œæ–¹[${ev.recipient}]`);
+                    console.log(`±¾·½${ev.spellcaster.index}Ô¶³Ì¹¥»÷µĞ·½[${ev.recipient}]`);
                 }
                 if (EventType.RemoteInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`æ•Œæ–¹${ev.spellcaster.index}è¿œç¨‹æ”»å‡»æœ¬æ–¹[${ev.recipient}]`);
+                    console.log(`µĞ·½${ev.spellcaster.index}Ô¶³Ì¹¥»÷±¾·½[${ev.recipient}]`);
                 }
 
                 if (EventType.Summon == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`æœ¬æ–¹${ev.spellcaster.index}å¬å”¤[${ev.recipient}]`);
+                    console.log(`±¾·½${ev.spellcaster.index}ÕÙ»½[${ev.recipient}]`);
                 }
                 if (EventType.Summon == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`æ•Œæ–¹${ev.spellcaster.index}å¬å”¤[${ev.recipient}]`);
+                    console.log(`µĞ·½${ev.spellcaster.index}ÕÙ»½[${ev.recipient}]`);
                 }
 
                 if (EventType.ChangeLocation == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`æœ¬æ–¹${ev.spellcaster.index}æ”¹å˜æ•Œæ–¹ä½ç½®[${ev.recipient}]`);
+                    console.log(`±¾·½${ev.spellcaster.index}¸Ä±äµĞ·½Î»ÖÃ[${ev.recipient}]`);
                 }
                 if (EventType.ChangeLocation == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`æ•Œæ–¹${ev.spellcaster.index}æ”¹å˜æœ¬æ–¹ä½ç½®[${ev.recipient}]`);
+                    console.log(`µĞ·½${ev.spellcaster.index}¸Ä±ä±¾·½Î»ÖÃ[${ev.recipient}]`);
                 }
 
                 if (EventType.SwapProperties == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`æœ¬æ–¹${ev.spellcaster.index}å‘èµ·äº¤æ¢å±æ€§[${ev.value}]`);
+                    console.log(`±¾·½${ev.spellcaster.index}·¢Æğ½»»»ÊôĞÔ[${ev.value}]`);
                 }
                 if (EventType.SwapProperties == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`æ•Œæ–¹${ev.spellcaster.index}å‘èµ·äº¤æ¢å±æ€§[${ev.value}]`);
+                    console.log(`µĞ·½${ev.spellcaster.index}·¢Æğ½»»»ÊôĞÔ[${ev.value}]`);
                 }
 
                 if(EventType.IntensifierProperties==ev.type && Camp.Self == ev.spellcaster.camp)
