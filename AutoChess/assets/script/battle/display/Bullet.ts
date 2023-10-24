@@ -26,31 +26,16 @@ export class Bullet extends Component {
 
     start() 
     {       
-        this.isInit=false;
-        //let collider = this.node.getComponent(BoxCollider);
-        //collider.on('onTriggerStay', this.onTriggerStay, this);
-
-        // tween(this.node.position).to(1,this.target.position,{
-        //     onUpdate:(target:Vec3,ratio:number)=>{
-        //         this.node.position=target;
-        //     }
-        // }).start(); 
+        this.isInit=false; 
     }
 
     public Init(targetPos:Vec3){
+        console.log("初始化子弹");
         this.targetPos=targetPos;
         this.isInit=true;
         //贝塞尔曲线控制点
         this.controlPoint = new Vec3((this.node.getPosition().x + this.targetPos.x) / 2, this.node.getPosition().y + 100, 0);
     }
-    // onTriggerStay(event:ITriggerEvent) 
-    // {
-    //     if(event.otherCollider.node==this.target)
-    //     {
-    //         this.node.destroy();
-    //     }
-        
-    // }
 
     update(deltaTime: number) 
     {

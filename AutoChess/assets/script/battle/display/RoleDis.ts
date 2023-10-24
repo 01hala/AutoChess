@@ -196,7 +196,6 @@ export class RoleDis extends Component
     RemoteAttack(spellcasterLocation:Vec3, targetLocation:Vec3)
     {
         //生成子弹，从发射者位置到达目标位置
-        console.log("进行远程攻击");
         let bulletNode=instantiate(this.remoteNode);
         bulletNode.setPosition(spellcasterLocation);
         //let tempRole=find("Canvas/EnemyQueue").children[role.index];

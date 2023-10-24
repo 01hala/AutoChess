@@ -110,9 +110,11 @@ export class BattleDis
 
     private async checkRemoteInjured(evs:skill.Event[]) {
         let allAwait = [];
+        console.log("进入检查远程攻击的事件函数");
         for(let ev of evs)
         {
             if(EventType.RemoteInjured==ev.type){
+                console.log("存在远程攻击");
                 //判断发射者所在的阵营
                 let spList=Camp.Self == ev.spellcaster.camp?this.selfQueue.roleList:this.enemyQueue.roleList;
                 ev.recipient.forEach(element=>{
