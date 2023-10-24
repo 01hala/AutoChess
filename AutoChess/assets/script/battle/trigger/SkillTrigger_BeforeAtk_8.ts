@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SkillTrigger_BeforeAtk_8.ts
  * author: Guanliu
  * 2023/10/1
