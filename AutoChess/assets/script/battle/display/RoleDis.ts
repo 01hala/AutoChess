@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp , EventType, Property} from '../../other/enums';
 import { Battle } from '../../battle/battle';
@@ -149,7 +149,10 @@ export class RoleDis extends Component
             this.roleInfo=roleInfo;
 
             this.Hp=this.roleInfo.GetProperty(Property.HP);
-            this.AtkNum=this.roleInfo.GetProperty(Property.Attack);
+            this.AtkNum = this.roleInfo.GetProperty(Property.Attack);
+
+            this.Hp = Math.round(this.Hp);
+            this.AtkNum = Math.round(this.AtkNum);
 
             if (this.hpText && this.atkText) {
                 this.hpText.string ="<color=#9d0c27><outline color=#e93552 width=4>"+this.Hp+"</outline></color>";

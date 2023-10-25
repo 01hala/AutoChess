@@ -94,7 +94,7 @@ export class BattleDis
             {
                 if (!selfAttack)
                 {
-                    console.log("checkAttevent: eslfcamp " + this.selfQueue.roleList[0].getComponent(RoleDis).RoleId);
+                    console.log("checkAttevent: eslfcamp " + this.selfQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).RoleId);
                     r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
                     allAwait.push(this.selfQueue.roleList[0].getComponent(RoleDis).Attack
                         (
@@ -107,7 +107,7 @@ export class BattleDis
             {
                 if (!enemyAttack)
                 {
-                    console.log("checkAttevent: enemtcamp " + this.enemyQueue.roleList[0].getComponent(RoleDis).RoleId);
+                    console.log("checkAttevent: enemtcamp " + this.enemyQueue.roleList[ev.spellcaster.index].getComponent(RoleDis).RoleId);
                     r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
                     allAwait.push(this.enemyQueue.roleList[0].getComponent(RoleDis).Attack
                         (
