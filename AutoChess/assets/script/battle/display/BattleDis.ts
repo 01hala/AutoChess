@@ -12,6 +12,7 @@ import { Camp, EventType } from '../../other/enums';
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
+import { Role } from '../../serverSDK/common';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -86,21 +87,32 @@ export class BattleDis
         let allAwait = [];
         let selfAttack = false;
         let enemyAttack = false;
+        let r = null;
         for(let ev of evs)
         {
-            if(EventType.AttackInjured==ev.type && Camp.Self == ev.spellcaster.camp) {
-                if (!selfAttack) {
-                    console.log("checkAttevent: eslfcamp "+this.selfQueue.roleList[0].getComponent(RoleDis).RoleId);
-                    allAwait.push(this.selfQueue.roleList[0].getComponent(RoleDis).Attack(
-                        this.selfQueue.readyLocation.position,  this.selfQueue.battleLocation.position,ev.spellcaster.camp));
+            if (EventType.AttackInjured == ev.type && Camp.Self == ev.spellcaster.camp)
+            {
+                if (!selfAttack)
+                {
+                    console.log("checkAttevent: eslfcamp " + this.selfQueue.roleList[0].getComponent(RoleDis).RoleId);
+                    r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                    allAwait.push(this.selfQueue.roleList[0].getComponent(RoleDis).Attack
+                        (
+                            this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp,r
+                        ));
                     selfAttack = true;
                 }
             }
-            else if(EventType.AttackInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                if (!enemyAttack) {
-                    console.log("checkAttevent: enemtcamp "+this.enemyQueue.roleList[0].getComponent(RoleDis).RoleId);
-                    allAwait.push(this.enemyQueue.roleList[0].getComponent(RoleDis).Attack(
-                        this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position,ev.spellcaster.camp));
+            else if (EventType.AttackInjured == ev.type && Camp.Enemy == ev.spellcaster.camp)
+            {
+                if (!enemyAttack)
+                {
+                    console.log("checkAttevent: enemtcamp " + this.enemyQueue.roleList[0].getComponent(RoleDis).RoleId);
+                    r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                    allAwait.push(this.enemyQueue.roleList[0].getComponent(RoleDis).Attack
+                        (
+                            this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp,r
+                        ));
                     enemyAttack = true;
                 }
             }
@@ -259,10 +271,10 @@ export class BattleDis
             }*/
             
             await this.checkAttackEvent(evs);
+            await this.checkRemoteInjured(evs);
             await this.ChangeAttEvent(evs);
             await this.CheckExitEvent(evs);
             await this.CheckShiftEvent(evs);
-            await this.checkRemoteInjured(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);

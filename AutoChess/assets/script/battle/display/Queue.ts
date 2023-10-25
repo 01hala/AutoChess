@@ -11,6 +11,7 @@ import * as RoleDis from './RoleDis'
 import { BundleManager } from '../../bundle/BundleManager';
 import * as role from '../role'
 import { Battle } from '../battle';
+import { Role } from '../../serverSDK/common';
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -79,7 +80,7 @@ export class Queue extends Component
         for(let t of r)
         {
             n.push(t.id);
-            console.log("Shiftdis:"+n);
+            //console.log("Shiftdis:"+n);
         }
         /*
         let tm=this.roleList;
@@ -124,7 +125,8 @@ export class Queue extends Component
 
         for(let i=0;i<this.roleList.length;i++)
         {
-            this.roleList[i].position=this.locationTemp[i].position;
+            //this.roleList[i].position = this.locationTemp[i].position;
+            await this.roleList[i].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[i].position);
             this.roleList[i].getComponent(RoleDis.RoleDis).AttackInit();
         }
     }
