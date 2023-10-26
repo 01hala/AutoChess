@@ -31,7 +31,7 @@ export class Skill_RecoveryHP_2 extends SkillBase {
             }
 
             let recipientRoles:Role[] = [];
-            while(recipientRoles.length < this.numberOfRole) {
+            while(recipientRoles.length < this.numberOfRole && effectiveRole.length > 0) {
                 let index = random(0, effectiveRole.length);
                 recipientRoles.push(effectiveRole[index]);
                 effectiveRole.splice(index, 1);
