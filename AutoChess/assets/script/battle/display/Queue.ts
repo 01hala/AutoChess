@@ -75,12 +75,12 @@ export class Queue extends Component
 
     async Shiftdis(r:role.Role[])
     {
-        let n:number[]=[];
+        /*let n:number[]=[];
         for(let t of r)
         {
             n.push(t.id);
             console.log("Shiftdis:"+n);
-        }
+        }*/
         /*
         let tm=this.roleList;
         for(let i:number=0;i<n.length;i++)//找到需要离场的角色

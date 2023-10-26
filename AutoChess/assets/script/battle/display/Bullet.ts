@@ -10,7 +10,7 @@
  * 2023/10/18
  * 子弹轨迹改为贝塞尔曲线、计算到目标点位的距离
  */
-import { _decorator, BoxCollider, Component, ITriggerEvent, Node, tween, Vec3 } from 'cc';
+import { _decorator, BoxCollider, Component, ITriggerEvent, Node, Tween, tween, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Bullet')
@@ -24,6 +24,8 @@ export class Bullet extends Component {
     //贝塞尔曲线的参数（0~1）
     public parameter:number;
 
+    tAttack: Tween<Node>;
+
     start() 
     {       
         this.isInit=false; 
@@ -34,13 +36,19 @@ export class Bullet extends Component {
         this.targetPos=targetPos;
         this.isInit=true;
         //贝塞尔曲线控制点
-        this.controlPoint = new Vec3((this.node.getPosition().x + this.targetPos.x) / 2, this.node.getPosition().y + 100, 0);
+        //this.controlPoint = new Vec3((this.node.getPosition().x + this.targetPos.x) / 2, this.node.getPosition().y + 100, 0);
+
+        this.tAttack = tween(this.node)
+            .to(0.4, { position: targetPos }).start();
+        console.log("子弹移动");
     }
 
     update(deltaTime: number) 
     {
         //如果目标点位还没初始化就不执行接下去的操作
+        console.log("子弹update更新");
         if(!this.isInit) return;
+        console.log("子弹以贝塞尔曲线运动");
 
         let len:number = this.targetPos.subtract(this.node.getPosition()).length();
         if(len<this.destoryLen) this.node.destroy();

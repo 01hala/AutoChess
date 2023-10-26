@@ -2,7 +2,7 @@
  * RoleDis.ts
  * author: Hotaru
  * 2023/10/04
- * 角色展示类
+ * ��ɫչʾ��
  */
 import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween } from 'cc';
 import { Role } from '../../battle/role';
@@ -22,13 +22,13 @@ export class RoleDis extends Component
 {
     @property({
         type:CCInteger,
-        displayName:"角色ID"
+        displayName:"��ɫID"
     })
     public RoleId:number;
 
     @property({
         type:Prefab,
-        displayName:"远程攻击物"
+        displayName:"Զ�̹�����"
     })
     public remoteNode:Prefab;
 
@@ -52,8 +52,6 @@ export class RoleDis extends Component
     {
         try
         {
-            console.log("onLoad begin!");
-
             this.roleSprite=this.node.getChildByName("Sprite");
             this.intensifierText=this.node.getChildByName("IntensifierText");
             this.bandage=this.node.getChildByName("Bandage");
@@ -73,12 +71,10 @@ export class RoleDis extends Component
             }
 
             this.AttackInit();
-            
-            console.log("onLoad end!");
         }
         catch(err)
         {
-            console.warn("RoleDis 里的 onLoad 函数错误 err:"+err);
+            console.warn("RoleDis ��� onLoad �������� err:"+err);
         }
     }
 
@@ -153,7 +149,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis 里的 changeAtt 函数错误 err:"+err);
+            console.warn("RoleDis ��� changeAtt �������� err:"+err);
         }
     }
 
@@ -161,7 +157,7 @@ export class RoleDis extends Component
     {
         let type:Property;
         let anim:Animation=this.intensifierText.getComponent(Animation);
-        let wait:boolean;//等待开关，动画播放时启动
+        let wait:boolean;//�ȴ����أ���������ʱ����
         anim.on(Animation.EventType.FINISHED,()=>
         {
             this.intensifierText.active=false;
@@ -181,7 +177,7 @@ export class RoleDis extends Component
         }
         if(wait) 
         {
-            this.delay(300,()=>{});//等待0.3秒
+            this.delay(300,()=>{});//�ȴ�0.3��
         }
         if(0!=value[1])
         {
@@ -190,23 +186,23 @@ export class RoleDis extends Component
             this.intensifierText.active=true;
             anim.play();
         }
-        this.delay(300,()=>{});//等待0.3秒
+        this.delay(300,()=>{});//�ȴ�0.3��
     }
 
     RemoteAttack(spellcasterLocation:Vec3, targetLocation:Vec3)
     {
-        //生成子弹，从发射者位置到达目标位置
+        console.log("remoteatk");
         let bulletNode=instantiate(this.remoteNode);
         bulletNode.setPosition(spellcasterLocation);
-        //let tempRole=find("Canvas/EnemyQueue").children[role.index];
         bulletNode.getComponent(Bullet).Init(targetLocation);
-        this.delay(300,()=>{});
+        //let tempRole=find("Canvas/EnemyQueue").children[role.index];   
+        //this.delay(300,()=>{});
     }
     
     Exit()
     {
         /*
-         * 退场效果。。。
+         * �˳�Ч��������
          */
         try
         {
@@ -222,7 +218,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis 里的 Exit 函数错误 err:"+err);
+            console.warn("RoleDis ��� Exit �������� err:"+err);
         }
         
     }

@@ -2,7 +2,7 @@
  * BattleDis.ts
  * author: Hotaru
  * 2023/10/12
- * 战斗展示类
+ * ս��չʾ��
  */
 import { _decorator, instantiate, Node, Prefab, tween, Button } from 'cc';
 import { Queue } from './Queue';
@@ -110,18 +110,20 @@ export class BattleDis
 
     private async checkRemoteInjured(evs:skill.Event[]) {
         let allAwait = [];
-        console.log("进入检查远程攻击的事件函数");
         for(let ev of evs)
         {
             if(EventType.RemoteInjured==ev.type){
-                console.log("存在远程攻击");
-                //判断发射者所在的阵营
+                console.log("checkRemoteInjured RemoteInjured");
+
                 let spList=Camp.Self == ev.spellcaster.camp?this.selfQueue.roleList:this.enemyQueue.roleList;
+                console.log(spList);
                 ev.recipient.forEach(element=>{
-                    //判断每一个受到远程攻击者所在的阵营
                     let targetList=Camp.Enemy == element.camp?this.enemyQueue.roleList:this.selfQueue.roleList;
+                    console.log(targetList);
+                    console.log(element);
                     allAwait.push(spList[ev.spellcaster.index].getComponent(RoleDis).RemoteAttack(
-                        spList[ev.spellcaster.index].getPosition(),targetList[element.index].getPosition()));
+                        spList[ev.spellcaster.index].getPosition(),
+                        targetList[element.index].getPosition()));
                 });
             }
         }
@@ -182,7 +184,7 @@ export class BattleDis
                 {
                     allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
                 }
-                if(Camp.Enemy==ev.spellcaster.camp)
+                else if(Camp.Enemy==ev.spellcaster.camp)
                 {
                     allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
                 }
@@ -194,16 +196,13 @@ export class BattleDis
     async CheckShiftEvent(evs:skill.Event[])
     {
         let allAwait = [];
-        let roles=null;
         for(let ev of evs)
         {
-            if(EventType.Syncope==ev.type && Camp.Self == ev.spellcaster.camp)
+            if(EventType.BeforeAttack==ev.type)
             {
-                roles=this.battle.GetSelfTeam().GetRoles();
+                let roles=this.battle.GetSelfTeam().GetRoles();
                 allAwait.push(this.selfQueue.Shiftdis(roles));
-            }
-            if(EventType.Syncope==ev.type && Camp.Enemy == ev.spellcaster.camp)
-            {
+
                 roles=this.battle.GetEnemyTeam().GetRoles();
                 allAwait.push(this.enemyQueue.Shiftdis(roles));
             }
@@ -219,31 +218,31 @@ export class BattleDis
             /*for(let ev of evs)
             {
                 if (EventType.RemoteInjured == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`本方${ev.spellcaster.index}远程攻击敌方[${ev.recipient}]`);
+                    console.log(`����${ev.spellcaster.index}Զ�̹����з�[${ev.recipient}]`);
                 }
                 if (EventType.RemoteInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`敌方${ev.spellcaster.index}远程攻击本方[${ev.recipient}]`);
+                    console.log(`�з�${ev.spellcaster.index}Զ�̹�������[${ev.recipient}]`);
                 }
 
                 if (EventType.Summon == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`本方${ev.spellcaster.index}召唤[${ev.recipient}]`);
+                    console.log(`����${ev.spellcaster.index}�ٻ�[${ev.recipient}]`);
                 }
                 if (EventType.Summon == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`敌方${ev.spellcaster.index}召唤[${ev.recipient}]`);
+                    console.log(`�з�${ev.spellcaster.index}�ٻ�[${ev.recipient}]`);
                 }
 
                 if (EventType.ChangeLocation == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`本方${ev.spellcaster.index}改变敌方位置[${ev.recipient}]`);
+                    console.log(`����${ev.spellcaster.index}�ı�з�λ��[${ev.recipient}]`);
                 }
                 if (EventType.ChangeLocation == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`敌方${ev.spellcaster.index}改变本方位置[${ev.recipient}]`);
+                    console.log(`�з�${ev.spellcaster.index}�ı䱾��λ��[${ev.recipient}]`);
                 }
 
                 if (EventType.SwapProperties == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`本方${ev.spellcaster.index}发起交换属性[${ev.value}]`);
+                    console.log(`����${ev.spellcaster.index}���𽻻�����[${ev.value}]`);
                 }
                 if (EventType.SwapProperties == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`敌方${ev.spellcaster.index}发起交换属性[${ev.value}]`);
+                    console.log(`�з�${ev.spellcaster.index}���𽻻�����[${ev.value}]`);
                 }
 
                 if(EventType.IntensifierProperties==ev.type && Camp.Self == ev.spellcaster.camp)
@@ -261,10 +260,10 @@ export class BattleDis
             }*/
             
             await this.checkAttackEvent(evs);
+            await this.checkRemoteInjured(evs);
             await this.ChangeAttEvent(evs);
             await this.CheckExitEvent(evs);
             await this.CheckShiftEvent(evs);
-            await this.checkRemoteInjured(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);
