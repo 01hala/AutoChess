@@ -38,7 +38,7 @@ export class Skill_SwapProperties_5 extends SkillBase
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 UseSkill 错误");
+            console.warn(this.res+"下的 UseSkill 错误", error);
         }
         
     }
@@ -60,6 +60,9 @@ export class Skill_SwapProperties_5 extends SkillBase
                 if(Camp.Enemy==selfInfo.camp){
                     swapRole = battle.GetEnemyTeam().GetRole(selfInfo.index);
                 }
+                if (!swapRole) {
+                    return;
+                }
 
                 let hp = swapRole.GetProperty(Property.HP);
                 let attack = swapRole.GetProperty(Property.Attack);
@@ -78,7 +81,9 @@ export class Skill_SwapProperties_5 extends SkillBase
                     swapRoles.push(battle.GetEnemyTeam().GetRole(this.index1));
                     swapRoles.push(battle.GetEnemyTeam().GetRole(this.index2));
                 }
-                if(swapRoles[0]==null||swapRoles[1]==null) return;
+                if(!swapRoles[0] || !swapRoles[1]) {
+                    return;
+                }
 
                 let temp=swapRoles[0].GetProperties();
                 temp.forEach((value,key)=>{
@@ -99,16 +104,19 @@ export class Skill_SwapProperties_5 extends SkillBase
                     rolesTemp=battle.GetSelfTeam().GetRoles().slice();
                     original = battle.GetSelfTeam().GetRoles();
                 }
-                if(Camp.Enemy==selfInfo.camp) {
+                else if(Camp.Enemy==selfInfo.camp) {
                     rolesTemp=battle.GetEnemyTeam().GetRoles().slice();
                     original = battle.GetSelfTeam().GetRoles();
                 }
-                while(swapRoles.length<2) {
+                while(swapRoles.length<2 && rolesTemp.length > 0) {
                     let index = random(0, rolesTemp.length);
                     if(index!=selfInfo.index) {
                         swapRoles.push(rolesTemp[index]);
                         rolesTemp.splice(index, 1);
                     }
+                }
+                if (swapRoles.length<2) {
+                    return;
                 }
 
                 let temp=swapRoles[0].GetProperties();
@@ -117,14 +125,14 @@ export class Skill_SwapProperties_5 extends SkillBase
                     swapRoles[1].ChangeProperties(key,value);
                 });
 
-                event.value.push(original.indexOf(swapRoles[0]));
-                event.value.push(original.indexOf(swapRoles[1]));
+                event.value.push(swapRoles[0].index);
+                event.value.push(swapRoles[1].index);
             }
             battle.AddBattleEvent(event);
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect 错误");
+            console.warn(this.res+"下的 SkillEffect 错误", error);
         }
     }
 }

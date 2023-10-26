@@ -11,6 +11,7 @@ import * as RoleDis from './RoleDis'
 import { BundleManager } from '../../bundle/BundleManager';
 import * as role from '../role'
 import { Battle } from '../battle';
+import { Role } from '../../serverSDK/common';
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -73,13 +74,13 @@ export class Queue extends Component
         
     }
 
-    async Shiftdis(r:role.Role[])
+    /*async Shiftdis(r:role.Role[])
     {
         /*let n:number[]=[];
         for(let t of r)
         {
             n.push(t.id);
-            console.log("Shiftdis:"+n);
+            //console.log("Shiftdis:"+n);
         }*/
         /*
         let tm=this.roleList;
@@ -122,19 +123,23 @@ export class Queue extends Component
         // }
         // this.roleList=tm;
 
-        for(let i=0;i<this.roleList.length;i++)
+        /*for(let i=0;i<this.roleList.length;i++)
         {
-            this.roleList[i].position=this.locationTemp[i].position;
+            //this.roleList[i].position = this.locationTemp[i].position;
+            await this.roleList[i].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[i].position);
             this.roleList[i].getComponent(RoleDis.RoleDis).AttackInit();
         }
-    }
+    }*/
 
     async RemoveRole(index:number)
     {
         try
         {
-            await this.roleList[index].getComponent(RoleDis.RoleDis).Exit();
-            this.roleList.splice(index,1);
+            let roleNode = this.roleList[index];
+            this.roleList[index] = null;
+            if (roleNode) {
+                await roleNode.getComponent(RoleDis.RoleDis).Exit();
+            }
         }
         
         catch (err)

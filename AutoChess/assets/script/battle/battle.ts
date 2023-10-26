@@ -43,10 +43,13 @@ export class Battle {
     private battle() {
         //console.log("battle begin!");
 
-        let self = this.selfTeam.GetRole(0);
-        let enemy = this.enemyTeam.GetRole(0);
+        let self = this.selfTeam.GetLasterRole();
+        let enemy = this.enemyTeam.GetLasterRole();
 
         if (self != null && enemy != null) {
+            console.log("battle self:", self);
+            console.log("battle enemy:", enemy);
+
             self.Attack(enemy, this);
             enemy.Attack(self, this);
 

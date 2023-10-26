@@ -18,16 +18,15 @@ export class SkillInfo {
 }
 
 function createSkill(id:number, level:number) : SkillInfo {
-    console.log("skill id:", id);
     let skillConfig = config.config.SkillConfig.get(id);
     if (skillConfig) {
         let skill = new SkillInfo();
         skill.trigger = create_trigger.CreateTrigger(skillConfig.EffectTime);
         skill.skill = create_skill.CreateSkill(level, id);
-
-        console.log("trigger:", skillConfig.EffectTime, " id:", id);
     
-        return skill;
+        if (skill.trigger && skill.skill) {
+            return skill;
+        }
     }
     return null;
 }
@@ -41,8 +40,10 @@ function createBuffer(id:number) : buffer.Buffer {
 }
 
 export class Role {
+    public index:number;
     public id:number;
     public level:number;
+    public isDead:boolean = false;
 
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];
@@ -50,7 +51,9 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
+    public constructor(index:number, id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
+        this.index = index;
+        console.log("role index:", this.index);
         this.id=id;
         this.level=level;
         
@@ -100,6 +103,7 @@ export class Role {
         ev.value.push(damage);
         battle.AddBattleEvent(ev);
         
+        console.log("sendHurtedEvent");
         if (this.CheckDead()) {
             let ev = new skill.Event();
             ev.type = enums.EventType.Syncope;
@@ -193,6 +197,10 @@ export class Role {
         for (let index in selfTeam.GetRoles()) {
             let i = parseInt(index);
             let r = selfTeam.GetRole(i);
+
+            if (!r) {
+                continue;
+            }
             
             if ((i - selfIndex) == 1 && r.checkSubstituteDamageFront()) {
                 return r;
@@ -265,6 +273,8 @@ export class Role {
         hp -= damage;
         this.ChangeProperties(enums.Property.HP, hp);
         this.sendHurtedEvent(enemy, damage, battle, Injured);
+
+        console.log("BeHurted index:", this.index, " hp:", hp);
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
@@ -297,6 +307,10 @@ export class Role {
 
     public CheckDead() {
         return this.properties.get(enums.Property.HP) <= 0;
+    }
+
+    public CheckDeadEnd() {
+        return this.isDead;
     }
 
     public Attack(enemy: Role, battle: battle.Battle) {

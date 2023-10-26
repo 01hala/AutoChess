@@ -51,7 +51,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
         } 
         catch (error) 
         {
-            console.warn(this.res+"下的 UseSkill 错误");
+            console.warn(this.res+"下的 UseSkill 错误", error);
         }   
     }
 
@@ -74,7 +74,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
                 self = battle.GetEnemyTeam().GetRole(selfInfo.index);
                 enemyRoles=battle.GetSelfTeam().GetRoles().slice();
             }
-            while(recipientRoles.length < this.numberOfRole) {
+            while(recipientRoles.length < this.numberOfRole && enemyRoles.length > 0) {
                 let index = random(0, enemyRoles.length);
                 recipientRoles.push(enemyRoles[index]);
                 enemyRoles.splice(index, 1);
@@ -85,7 +85,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect 错误");
+            console.warn(this.res+"下的 SkillEffect 错误", error);
         }
     }
 
