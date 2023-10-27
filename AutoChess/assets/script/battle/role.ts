@@ -3,6 +3,8 @@
  * author: qianqians
  * 2023/9/24
  */
+import { Node } from 'cc';
+
 import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
@@ -44,6 +46,8 @@ export class Role {
     public id:number;
     public level:number;
     public isDead:boolean = false;
+
+    public roleNode:Node = null;
 
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];

@@ -58,8 +58,8 @@ export class BattleDis
     }
 
     async tickBattle() {
-        console.log("tickBattle: selfcamp roleList", this.selfQueue.roleList);
-        console.log("tickBattle: enemycamp roleList", this.enemyQueue.roleList);
+        //console.log("tickBattle: selfcamp roleList", this.selfQueue.roleList);
+        //console.log("tickBattle: enemycamp roleList", this.enemyQueue.roleList);
 
         while (!this.battle.CheckEndBattle()) {
             let awaiter = this.displayDone();
@@ -87,40 +87,34 @@ export class BattleDis
         let allAwait = [];
         let selfAttack = false;
         let enemyAttack = false;
-        let r = null;
         for(let ev of evs)
         {
-            if (EventType.AttackInjured == ev.type && Camp.Self == ev.spellcaster.camp)
+            if (EventType.AttackInjured == ev.type)
             {
-                if (!selfAttack)
+                if (Camp.Self == ev.spellcaster.camp)
                 {
-                    console.log("checkAttevent: selfcamp " + ev.spellcaster.index);
-                    let roleNode = this.selfQueue.roleList[ev.spellcaster.index];
-                    if (roleNode) {
-                        console.log("checkAttevent: selfcamp id " + roleNode.getComponent(RoleDis).RoleId);
-                        r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                        allAwait.push(roleNode.getComponent(RoleDis).Attack(
-                            this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp, r));
-                        selfAttack = true;
-                    } else {
-                        console.log("checkAttevent: selfcamp roleList", this.selfQueue.roleList);
+                    if (!selfAttack)
+                    {
+                        console.log("checkAttevent: selfcamp " + ev.spellcaster.index);
+                        let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                        if (r.CheckDeadEnd()){
+                            allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
+                                this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp, r));
+                            selfAttack = true;
+                        }
                     }
                 }
-            }
-            else if (EventType.AttackInjured == ev.type && Camp.Enemy == ev.spellcaster.camp)
-            {
-                if (!enemyAttack)
+                else if (Camp.Enemy == ev.spellcaster.camp)
                 {
-                    console.log("checkAttevent: enemycamp " + ev.spellcaster.index);
-                    let enemyNode = this.enemyQueue.roleList[ev.spellcaster.index];
-                    if (enemyNode) {
-                        console.log("checkAttevent: enemycamp id " + enemyNode.getComponent(RoleDis).RoleId);
-                        r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                        allAwait.push(enemyNode.getComponent(RoleDis).Attack(
-                            this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp, r));
-                        enemyAttack = true;
-                    } else {
-                        console.log("checkAttevent: enemycamp roleList", this.enemyQueue.roleList);
+                    if (!enemyAttack)
+                    {
+                        console.log("checkAttevent: enemycamp " + ev.spellcaster.index);
+                        let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                        if (r.CheckDeadEnd()){
+                            allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
+                                this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp, r));
+                            enemyAttack = true;
+                        }
                     }
                 }
             }
@@ -135,15 +129,16 @@ export class BattleDis
             if(EventType.RemoteInjured==ev.type){
                 console.log("checkRemoteInjured RemoteInjured");
 
-                let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue.roleList : this.enemyQueue.roleList;
+                let spList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
                 ev.recipient.forEach(element=>{
-                    let targetList = Camp.Enemy == element.camp ? this.enemyQueue.roleList : this.selfQueue.roleList;
+                    let targetList = Camp.Enemy == element.camp ? this.battle.GetEnemyTeam() : this.battle.GetSelfTeam();
 
-                    let self = spList[ev.spellcaster.index];
-                    let target = targetList[element.index];
+                    let self = spList.GetRole(ev.spellcaster.index);
+                    let target = targetList.GetRole(element.index);
 
                     if (self && target) {
-                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(self.getPosition(), target.getPosition()));
+                        allAwait.push(self.roleNode.getComponent(RoleDis).RemoteAttack(
+                            self.roleNode.getPosition(), target.roleNode.getPosition()));
                     }
                 });
             }
@@ -166,17 +161,15 @@ export class BattleDis
                 if(Camp.Self == ev.spellcaster.camp)
                 {
                     let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                    let node = this.selfQueue.roleList[ev.spellcaster.index];
-                    if (r && node) {
-                        allAwait.push(node.getComponent(RoleDis).changeAtt(r));
+                    if (r && r.roleNode) {
+                        allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
                     }
                 }
                 if(Camp.Enemy==ev.spellcaster.camp)
                 {
                     let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                    let node = this.enemyQueue.roleList[ev.spellcaster.index];
-                    if (r && node) {
-                        allAwait.push(node.getComponent(RoleDis).changeAtt(r));
+                    if (r && r.roleNode) {
+                        allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
                     }
                 }
             }
@@ -194,12 +187,14 @@ export class BattleDis
                 if(Camp.Self==ev.spellcaster.camp)
                 {
                     console.log("Self Syncope index:", ev.spellcaster.index);
-                    allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
+                    let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                    allAwait.push(this.selfQueue.RemoveRole(r));
                 }
                 else if(Camp.Enemy==ev.spellcaster.camp)
                 {
                     console.log("Enemy Syncope index:", ev.spellcaster.index);
-                    allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
+                    let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                    allAwait.push(this.enemyQueue.RemoveRole(r));
                 }
             }
         }

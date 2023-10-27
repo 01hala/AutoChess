@@ -26,7 +26,7 @@ export class Queue extends Component
     @property(Node)
     public battleLocation:Node;
 
-    public roleList:Node[]=[];
+    //public roleList:Node[]=[];
 
     start() 
     {
@@ -54,8 +54,9 @@ export class Queue extends Component
                 let role=instantiate(newNode);
                 role.position=new Vec3(this.locationTemp[i].position);
                 this.node.addChild(role);
-                this.roleList.push(role);
+                //this.roleList.push(role);
 
+                r[i].roleNode = role;
                 let roleDis = role.getComponent(RoleDis.RoleDis);
                 await roleDis.Refresh(r[i]);
             }
@@ -67,14 +68,13 @@ export class Queue extends Component
         
     }
 
-    async RemoveRole(index:number)
+    async RemoveRole(role:role.Role)
     {
         try
         {
-            let roleNode = this.roleList[index];
-            this.roleList[index] = null;
-            if (roleNode) {
-                await roleNode.getComponent(RoleDis.RoleDis).Exit();
+            if (role.roleNode) {
+                await role.roleNode.getComponent(RoleDis.RoleDis).Exit();
+                role.roleNode = null;
             }
         }
         catch (err)
