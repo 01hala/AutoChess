@@ -34,26 +34,28 @@ export class Team {
     }
 
     public GetLasterRole() : role.Role {
-        for (let r of this.roleList) {
-            if (!r.CheckDead()) {
-                return r;
-            }
-        }
-        return null;
+        return this.roleList[0];
     }
 
     public GetRoleIndex(role: role.Role) : number {
         return role.index;
     }
 
+    private removeRole(role: role.Role) {
+        let index = this.roleList.indexOf(role);
+        this.roleList.splice(index, 1);
+    }
+
     public CheckRemoveDeadRole() {
         for (let r of this.roleList) {
             if (r.CheckDead()) {
-                r.isDead = true;
+                this.removeRole(r);
+                this.CheckRemoveDeadRole();
+                break;
             }
         }
     }
-
+    
     public CheckDefeated() : boolean {
         for (let r of this.roleList) {
             if (!r.CheckDeadEnd()) {
