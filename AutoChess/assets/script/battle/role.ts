@@ -318,7 +318,7 @@ export class Role {
         console.log("role Attack begin!");
 
         if (enemy.checkInevitableKill()) {
-            console.log("role checkInevitableKill!");
+            //console.log("role checkInevitableKill!");
             this.BeInevitableKill(enemy, battle);
         }
         
@@ -328,15 +328,15 @@ export class Role {
         console.log("role Attack list.length:", list.length);
         for (let r of list) {
             if (null != substitute && this == r) {
-                console.log("role substitute!");
+                //console.log("role substitute!");
                 substitute.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
             else {
                 if (enemy.checkInevitableKill() && this == r) {
-                    console.log("role checkInevitableKill continue!");
+                    //console.log("role checkInevitableKill continue!");
                     continue;
                 }
-                console.log("role AttackInjured!");
+                //console.log("role AttackInjured!");
                 r.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
         }
