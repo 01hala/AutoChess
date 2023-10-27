@@ -182,7 +182,7 @@ export class Role {
         let list = [];
         let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam().GetRoles() : battle.GetEnemyTeam().GetRoles();
         for (let r of selfTeam) {
-            if (this == r || r.checkShareDamageBuffer()) {
+            if (this == r || (!r.CheckDead() && r.checkShareDamageBuffer())) {
                 list.push(r);
             }
         }
@@ -324,7 +324,7 @@ export class Role {
         
         let list = this.getShareDamageArray(battle);
         let substitute = this.getSubstituteDamage(battle);
-        let damage = this.GetProperty(enums.Property.Attack)+this.getintensifierAtk() / list.length;
+        let damage = this.GetProperty(enums.Property.Attack) + this.getintensifierAtk() / list.length;
         console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {
             if (null != substitute && this == r) {
