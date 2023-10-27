@@ -294,19 +294,20 @@ export class Role {
         }
         return 0;
     }
-/*
- * 添加
- * 因为存在交换属性的技能，所以添加一个函数返回某个角色的所有属性Map的副本
- * Editor: Guanliu
- * 2023/9/30
- */
+    /*
+     * 添加
+     * 因为存在交换属性的技能，所以添加一个函数返回某个角色的所有属性Map的副本
+     * Editor: Guanliu
+     * 2023/9/30
+     */
     public GetProperties():Map<enums.Property, number>{
         let t=new Map<enums.Property, number>(this.properties);
         return t;
     }
 
     public CheckDead() {
-        return this.properties.get(enums.Property.HP) <= 0;
+        let hp = this.properties.get(enums.Property.HP);
+        return hp <= 0;
     }
 
     public CheckDeadEnd() {
