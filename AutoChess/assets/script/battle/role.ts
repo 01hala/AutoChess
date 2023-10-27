@@ -45,7 +45,6 @@ export class Role {
     public index:number;
     public id:number;
     public level:number;
-    public isDead:boolean = false;
 
     public roleNode:Node = null;
 
@@ -57,7 +56,6 @@ export class Role {
 
     public constructor(index:number, id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
         this.index = index;
-        console.log("role index:", this.index);
         this.id=id;
         this.level=level;
         
@@ -88,10 +86,8 @@ export class Role {
     }
 
     private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {
-        let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
-        let enemyTeam = this.selfCamp == enums.Camp.Self ? battle.GetEnemyTeam() : battle.GetSelfTeam();
-        let selfIndex = selfTeam.GetRoleIndex(this);
-        let enemyIndex = enemyTeam.GetRoleIndex(enemy);
+        let selfIndex = this.index;
+        let enemyIndex = enemy.index;
 
         let ev = new skill.Event();
         ev.type = Injured;
@@ -107,7 +103,6 @@ export class Role {
         ev.value.push(damage);
         battle.AddBattleEvent(ev);
         
-        console.log("sendHurtedEvent camp:", this.selfCamp);
         if (this.CheckDead()) {
             let ev = new skill.Event();
             ev.type = enums.EventType.Syncope;
@@ -123,6 +118,8 @@ export class Role {
             ev.value.push(damage);
             battle.AddBattleEvent(ev);
         } 
+
+        console.log("sendHurtedEvent camp:", this.selfCamp, " selfIndex:", selfIndex, " enemyIndex:", enemyIndex);
     }
 
     private checkShareDamageBuffer() : boolean {
@@ -312,10 +309,6 @@ export class Role {
     public CheckDead() {
         let hp = this.properties.get(enums.Property.HP);
         return hp <= 0;
-    }
-
-    public CheckDeadEnd() {
-        return this.isDead;
     }
 
     public Attack(enemy: Role, battle: battle.Battle) {

@@ -156,6 +156,8 @@ export class RoleDis extends Component
         {
             console.warn("RoleDis changeAtt err:"+err);
         }
+
+        return this.delay(300, ()=>{ });
     }
 
     Intensifier(value:number[])

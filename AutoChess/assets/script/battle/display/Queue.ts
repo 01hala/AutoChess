@@ -54,6 +54,8 @@ export class Queue extends Component
                 this.node.addChild(role);
 
                 r[i].roleNode = role;
+                console.log("role:", r[i]);
+
                 let roleDis = role.getComponent(RoleDis.RoleDis);
                 await roleDis.Refresh(r[i]);
             }
@@ -69,9 +71,11 @@ export class Queue extends Component
     {
         try
         {
+            console.log("RemoveRole role:", role);
             if (role.roleNode) {
-                await role.roleNode.getComponent(RoleDis.RoleDis).Exit();
+                let node = role.roleNode
                 role.roleNode = null;
+                await node.getComponent(RoleDis.RoleDis).Exit();
             }
         }
         catch (err)

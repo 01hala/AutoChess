@@ -85,7 +85,7 @@ export class Battle {
     public TickBattle() : boolean {
         let evs = this.evs;
         this.on_event.call(null, evs);
-            
+        
         if (this.evs.length > 0) {
             this.evs = [];
 

@@ -26,7 +26,7 @@ export class Team {
 
     public GetRole(index:number) : role.Role {
         for (let r of this.roleList) {
-            if (!r.CheckDeadEnd() && r.index == index) {
+            if (r.index == index) {
                 return r;
             }
         }
@@ -57,12 +57,7 @@ export class Team {
     }
     
     public CheckDefeated() : boolean {
-        for (let r of this.roleList) {
-            if (!r.CheckDeadEnd()) {
-                return false;
-            }
-        }
-        return true;
+        return this.roleList.length <= 0;
     }
 
     /*
