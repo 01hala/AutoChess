@@ -221,13 +221,8 @@ export class BattleDis
             console.log("checkAttackEvent end!");
 
             await this.checkRemoteInjured(evs);
-            console.log("checkRemoteInjured end!");
-
             await this.ChangeAttEvent(evs);
-            console.log("ChangeAttEvent end!");
-
             await this.CheckExitEvent(evs);
-            console.log("CheckExitEvent end!");
 
             if (this.resolve) {
                 this.resolve.call(null);
