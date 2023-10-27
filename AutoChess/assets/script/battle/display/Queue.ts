@@ -26,8 +26,6 @@ export class Queue extends Component
     @property(Node)
     public battleLocation:Node;
 
-    //public roleList:Node[]=[];
-
     start() 
     {
 
@@ -54,7 +52,6 @@ export class Queue extends Component
                 let role=instantiate(newNode);
                 role.position=new Vec3(this.locationTemp[i].position);
                 this.node.addChild(role);
-                //this.roleList.push(role);
 
                 r[i].roleNode = role;
                 let roleDis = role.getComponent(RoleDis.RoleDis);
