@@ -315,7 +315,7 @@ export class Role {
     }
 
     public Attack(enemy: Role, battle: battle.Battle) {
-        console.log("role Attack begin!");
+        console.log("role Attack begin! camp:", this.selfCamp);
 
         if (enemy.checkInevitableKill()) {
             //console.log("role checkInevitableKill!");
@@ -325,7 +325,7 @@ export class Role {
         let list = this.getShareDamageArray(battle);
         let substitute = this.getSubstituteDamage(battle);
         let damage = this.GetProperty(enums.Property.Attack)+this.getintensifierAtk() / list.length;
-        console.log("role Attack list.length:", list.length);
+        console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {
             if (null != substitute && this == r) {
                 //console.log("role substitute!");
@@ -341,6 +341,6 @@ export class Role {
             }
         }
 
-        console.log("role Attack end!");
+        console.log("role Attack end! camp:", this.selfCamp);
     }
 }
