@@ -257,24 +257,24 @@ export class Role {
         damage = damage < 0 ? 0 : damage;
         
 
-        if(null!= Shields)
+        if(null != Shields)
         {
-            if(Shields.Value>=damage)
+            if(Shields.Value >= damage)
             {
-                Shields.Value-=damage;
+                Shields.Value -= damage;
                 damage = 0;
             }
             else
             {
-                damage-=Shields.Value;
-                Shields.Value=0;
+                damage -= Shields.Value;
+                Shields.Value = 0;
             }
         }
         hp -= damage;
         this.ChangeProperties(enums.Property.HP, hp);
         this.sendHurtedEvent(enemy, damage, battle, Injured);
 
-        console.log("BeHurted index:", this.index, " hp:", hp);
+        console.log("BeHurted camp: " + this.selfCamp + " index:", this.index, " hp:", hp);
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {

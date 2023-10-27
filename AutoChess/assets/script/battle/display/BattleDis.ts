@@ -58,6 +58,9 @@ export class BattleDis
     }
 
     async tickBattle() {
+        console.log("tickBattle: selfcamp roleList", this.selfQueue.roleList);
+        console.log("tickBattle: enemycamp roleList", this.enemyQueue.roleList);
+
         while (!this.battle.CheckEndBattle()) {
             let awaiter = this.displayDone();
             this.battle.TickBattle();
