@@ -64,23 +64,23 @@ export class Team {
         return true;
     }
 
-/*
- * 添加
- * 此函数返回场上所有角色
- * Editor: Hotaru
- * 2023/9/25
- */
+    /*
+     * 添加
+     * 此函数返回场上所有角色
+     * Editor: Hotaru
+     * 2023/9/25
+     */
     public GetRoles():role.Role[]
     {
         return this.roleList;
     }
 
-/*
- * 添加
- * 此函数向场上第一位置加入一个角色，如果满员则不加入。返回是否加入成功
- * Editor: Guanliu
- * 2023/9/27
- */
+    /*
+     * 添加
+     * 此函数向场上第一位置加入一个角色，如果满员则不加入。返回是否加入成功
+     * Editor: Guanliu
+     * 2023/9/27
+     */
     public AddRole(role:role.Role):boolean{
         if(this.roleList.length>=6) return false;
 

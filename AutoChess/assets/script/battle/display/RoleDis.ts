@@ -79,7 +79,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis ��� onLoad �������� err:"+err);
+            console.warn("RoleDis onLoad err:"+err);
         }
     }
 
@@ -142,7 +142,6 @@ export class RoleDis extends Component
     {
         try
         {
-            console.log("roleInfo:", roleInfo);
             this.roleInfo=roleInfo;
 
             this.Hp=Math.round(this.roleInfo.GetProperty(Property.HP));
@@ -155,7 +154,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis ��� changeAtt �������� err:"+err);
+            console.warn("RoleDis changeAtt err:"+err);
         }
     }
 
@@ -163,7 +162,7 @@ export class RoleDis extends Component
     {
         let type:Property;
         let anim:Animation=this.intensifierText.getComponent(Animation);
-        let wait:boolean;//�ȴ����أ���������ʱ����
+        let wait:boolean;
         anim.on(Animation.EventType.FINISHED,()=>
         {
             this.intensifierText.active=false;
@@ -183,7 +182,7 @@ export class RoleDis extends Component
         }
         if(wait) 
         {
-            this.delay(300,()=>{});//�ȴ�0.3��
+            this.delay(300,()=>{});
         }
         if(0!=value[1])
         {
@@ -192,13 +191,11 @@ export class RoleDis extends Component
             this.intensifierText.active=true;
             anim.play();
         }
-        this.delay(300,()=>{});//�ȴ�0.3��
+        this.delay(300,()=>{});
     }
 
     RemoteAttack(spellcasterLocation:Vec3, targetLocation:Vec3)
     {
-        //�����ӵ����ӷ�����λ�õ���Ŀ��λ��
-        console.log("����Զ�̹���");
         let bulletNode=instantiate(this.remoteNode);
         bulletNode.setPosition(spellcasterLocation);
         //let tempRole=find("Canvas/EnemyQueue").children[role.index];
@@ -206,28 +203,9 @@ export class RoleDis extends Component
         bulletNode.getComponent(Bullet).Init(targetLocation);
         this.delay(300,()=>{});
     }
-
-    ShiftPos(vec:Vec3)
-    {
-        console.log(`shiftPos begin!`);
-
-        this.tShiftpos = tween(this.node).
-            to(0.3, { position: vec }).start();
-
-        return this.delay(300, () => {
-            if (this.tShiftpos) {
-                this.tShiftpos.stop();
-                this.tShiftpos = null;
-                console.log("shiftPos end!");
-            }
-        });
-    }
     
     Exit()
     {
-        /*
-         * �˳�Ч��������
-         */
         try
         {
             this.bandage.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
@@ -244,7 +222,7 @@ export class RoleDis extends Component
         }
         catch(err)
         {
-            console.warn("RoleDis ��� Exit �������� err:"+err);
+            console.warn("RoleDis Exit err:"+err);
         }
         
     }

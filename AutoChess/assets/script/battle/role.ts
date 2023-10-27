@@ -103,17 +103,17 @@ export class Role {
         ev.value.push(damage);
         battle.AddBattleEvent(ev);
         
-        console.log("sendHurtedEvent");
+        console.log("sendHurtedEvent camp:", this.selfCamp);
         if (this.CheckDead()) {
             let ev = new skill.Event();
             ev.type = enums.EventType.Syncope;
             ev.spellcaster = new skill.RoleInfo();
-            ev.spellcaster.camp = enemy.selfCamp;
-            ev.spellcaster.index = enemyIndex;
+            ev.spellcaster.camp = this.selfCamp;
+            ev.spellcaster.index = selfIndex;
             ev.recipient = [];
             let recipient = new skill.RoleInfo();
-            recipient.camp = this.selfCamp;
-            recipient.index = selfIndex;
+            recipient.camp = enemy.selfCamp;
+            recipient.index = enemyIndex;
             ev.recipient.push(recipient);
             ev.value = [];
             ev.value.push(damage);

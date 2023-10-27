@@ -89,7 +89,7 @@ export class Battle {
         if (this.evs.length > 0) {
             this.evs = [];
 
-            let selfTeam = this.selfTeam.GetRoles();
+            /*let selfTeam = this.selfTeam.GetRoles();
             for(let index in selfTeam) {
                 let role = selfTeam[index];
                 let roleInfo = new skill.RoleInfo();
@@ -129,7 +129,7 @@ export class Battle {
                 if (skillImpl) {
                     skillImpl.UseSkill(roleInfo, this);
                 }
-            }
+            }*/
 
             this.selfTeam.CheckRemoveDeadRole();
             this.enemyTeam.CheckRemoveDeadRole();

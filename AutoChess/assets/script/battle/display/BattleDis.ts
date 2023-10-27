@@ -99,6 +99,8 @@ export class BattleDis
                         allAwait.push(roleNode.getComponent(RoleDis).Attack(
                             this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp, r));
                         selfAttack = true;
+                    } else {
+                        console.log("checkAttevent: selfcamp roleList", this.selfQueue.roleList);
                     }
                 }
             }
@@ -114,6 +116,8 @@ export class BattleDis
                         allAwait.push(enemyNode.getComponent(RoleDis).Attack(
                             this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp, r));
                         enemyAttack = true;
+                    } else {
+                        console.log("checkAttevent: enemycamp roleList", this.enemyQueue.roleList);
                     }
                 }
             }
@@ -186,10 +190,12 @@ export class BattleDis
             {
                 if(Camp.Self==ev.spellcaster.camp)
                 {
+                    console.log("Self Syncope index:", ev.spellcaster.index);
                     allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
                 }
                 else if(Camp.Enemy==ev.spellcaster.camp)
                 {
+                    console.log("Enemy Syncope index:", ev.spellcaster.index);
                     allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
                 }
             }
@@ -197,77 +203,15 @@ export class BattleDis
         await Promise.all(allAwait);
     }
 
-    /*async CheckShiftEvent(evs:skill.Event[])
-    {
-        let allAwait = [];
-        for(let ev of evs)
-        {
-            if(EventType.BeforeAttack==ev.type)
-            {
-                let roles=this.battle.GetSelfTeam().GetRoles();
-                allAwait.push(this.selfQueue.Shiftdis(roles));
-
-                roles=this.battle.GetEnemyTeam().GetRoles();
-                allAwait.push(this.enemyQueue.Shiftdis(roles));
-            }
-        }
-        await Promise.all(allAwait);
-    }*/
-
     onEvent()
     {
         this.battle.on_event = async (evs) => {
             //console.log("begin on_event!");
             
-            /*for(let ev of evs)
-            {
-                if (EventType.RemoteInjured == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`����${ev.spellcaster.index}Զ�̹����з�[${ev.recipient}]`);
-                }
-                if (EventType.RemoteInjured==ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`�з�${ev.spellcaster.index}Զ�̹�������[${ev.recipient}]`);
-                }
-
-                if (EventType.Summon == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`����${ev.spellcaster.index}�ٻ�[${ev.recipient}]`);
-                }
-                if (EventType.Summon == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`�з�${ev.spellcaster.index}�ٻ�[${ev.recipient}]`);
-                }
-
-                if (EventType.ChangeLocation == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`����${ev.spellcaster.index}�ı�з�λ��[${ev.recipient}]`);
-                }
-                if (EventType.ChangeLocation == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`�з�${ev.spellcaster.index}�ı䱾��λ��[${ev.recipient}]`);
-                }
-
-                if (EventType.SwapProperties == ev.type && Camp.Self == ev.spellcaster.camp) {
-                    console.log(`����${ev.spellcaster.index}���𽻻�����[${ev.value}]`);
-                }
-                if (EventType.SwapProperties == ev.type && Camp.Enemy == ev.spellcaster.camp) {
-                    console.log(`�з�${ev.spellcaster.index}���𽻻�����[${ev.value}]`);
-                }
-
-                if(EventType.IntensifierProperties==ev.type && Camp.Self == ev.spellcaster.camp)
-                {
-                    for(let role of ev.recipient) {
-                        this.selfQueue.roleList[role.index].getComponent(RoleDis).changeAtt();
-                    }
-                }
-                if(EventType.IntensifierProperties==ev.type && Camp.Enemy == ev.spellcaster.camp)
-                {
-                    for(let role of ev.recipient) {
-                        this.enemyQueue.roleList[role.index].getComponent(RoleDis).changeAtt();
-                    }
-                }
-            }*/
-            
             await this.checkAttackEvent(evs);
             await this.checkRemoteInjured(evs);
             await this.ChangeAttEvent(evs);
             await this.CheckExitEvent(evs);
-            //await this.CheckShiftEvent(evs);
 
             if (this.resolve) {
                 this.resolve.call(null);
