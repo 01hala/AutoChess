@@ -50,7 +50,6 @@ export class Team {
         for (let r of this.roleList) {
             if (r.CheckDead()) {
                 r.isDead = true;
-                break;
             }
         }
     }

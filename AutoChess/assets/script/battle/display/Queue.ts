@@ -49,10 +49,10 @@ export class Queue extends Component
             for(let i = 0; i<6; i++)
             {
                 //let roleRes=""+address+r[i].id;
-                let roleRes=address+"1";
+                let roleRes = address + "1";
                 let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
                 let role=instantiate(newNode);
-                role.position=new Vec3(this.locationTemp[i].position.x,this.locationTemp[i].position.y);
+                role.position=new Vec3(this.locationTemp[i].position);
                 this.node.addChild(role);
                 this.roleList.push(role);
 
