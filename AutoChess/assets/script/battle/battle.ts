@@ -89,7 +89,7 @@ export class Battle {
     private triggerBeforeAttack : boolean = true;
     public async TickBattle() : Promise<boolean> {
         let evs = this.evs.slice();
-        await this.on_event(evs);
+        await this.on_event.call(null, evs);
 
         if (this.evs.length > 0) {
             this.evs = [];
