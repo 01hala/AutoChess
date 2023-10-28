@@ -16,6 +16,7 @@ const { ccclass, property } = _decorator;
 
 export class BattleDis 
 {
+    private father:Node;
     private panelNode:Node;
     private battleEffectImg:Node;
 
@@ -50,6 +51,7 @@ export class BattleDis
 
         await this.PutRole();
         
+        this.father=father;
         father.addChild(this.panelNode);
 
         this.battle.StartBattle();
@@ -123,7 +125,7 @@ export class BattleDis
                     console.log(element);
                     allAwait.push(spList[ev.spellcaster.index].getComponent(RoleDis).RemoteAttack(
                         spList[ev.spellcaster.index].getPosition(),
-                        targetList[element.index].getPosition()));
+                        targetList[element.index].getPosition(),this.father));
                 });
             }
         }
