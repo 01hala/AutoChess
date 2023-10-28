@@ -3,6 +3,8 @@
  * author: qianqians
  * 2023/9/24
  */
+import { Node } from 'cc';
+
 import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
@@ -18,16 +20,15 @@ export class SkillInfo {
 }
 
 function createSkill(id:number, level:number) : SkillInfo {
-    console.log("skill id:", id);
     let skillConfig = config.config.SkillConfig.get(id);
     if (skillConfig) {
         let skill = new SkillInfo();
         skill.trigger = create_trigger.CreateTrigger(skillConfig.EffectTime);
         skill.skill = create_skill.CreateSkill(level, id);
-
-        console.log("trigger:", skillConfig.EffectTime, " id:", id);
     
-        return skill;
+        if (skill.trigger && skill.skill) {
+            return skill;
+        }
     }
     return null;
 }
@@ -41,8 +42,11 @@ function createBuffer(id:number) : buffer.Buffer {
 }
 
 export class Role {
+    public index:number;
     public id:number;
     public level:number;
+
+    public roleNode:Node = null;
 
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];
@@ -50,7 +54,8 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
+    public constructor(index:number, id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
+        this.index = index;
         this.id=id;
         this.level=level;
         
@@ -81,10 +86,8 @@ export class Role {
     }
 
     private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {
-        let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
-        let enemyTeam = this.selfCamp == enums.Camp.Self ? battle.GetEnemyTeam() : battle.GetSelfTeam();
-        let selfIndex = selfTeam.GetRoleIndex(this);
-        let enemyIndex = enemyTeam.GetRoleIndex(enemy);
+        let selfIndex = this.index;
+        let enemyIndex = enemy.index;
 
         let ev = new skill.Event();
         ev.type = Injured;
@@ -104,17 +107,19 @@ export class Role {
             let ev = new skill.Event();
             ev.type = enums.EventType.Syncope;
             ev.spellcaster = new skill.RoleInfo();
-            ev.spellcaster.camp = enemy.selfCamp;
-            ev.spellcaster.index = enemyIndex;
+            ev.spellcaster.camp = this.selfCamp;
+            ev.spellcaster.index = selfIndex;
             ev.recipient = [];
             let recipient = new skill.RoleInfo();
-            recipient.camp = this.selfCamp;
-            recipient.index = selfIndex;
+            recipient.camp = enemy.selfCamp;
+            recipient.index = enemyIndex;
             ev.recipient.push(recipient);
             ev.value = [];
             ev.value.push(damage);
             battle.AddBattleEvent(ev);
         } 
+
+        console.log("sendHurtedEvent camp:", this.selfCamp, " selfIndex:", selfIndex, " enemyIndex:", enemyIndex);
     }
 
     private checkShareDamageBuffer() : boolean {
@@ -178,7 +183,7 @@ export class Role {
         let list = [];
         let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam().GetRoles() : battle.GetEnemyTeam().GetRoles();
         for (let r of selfTeam) {
-            if (this == r || r.checkShareDamageBuffer()) {
+            if (this == r || (!r.CheckDead() && r.checkShareDamageBuffer())) {
                 list.push(r);
             }
         }
@@ -193,6 +198,10 @@ export class Role {
         for (let index in selfTeam.GetRoles()) {
             let i = parseInt(index);
             let r = selfTeam.GetRole(i);
+
+            if (!r) {
+                continue;
+            }
             
             if ((i - selfIndex) == 1 && r.checkSubstituteDamageFront()) {
                 return r;
@@ -249,22 +258,24 @@ export class Role {
         damage = damage < 0 ? 0 : damage;
         
 
-        if(null!= Shields)
+        if(null != Shields)
         {
-            if(Shields.Value>=damage)
+            if(Shields.Value >= damage)
             {
-                Shields.Value-=damage;
+                Shields.Value -= damage;
                 damage = 0;
             }
             else
             {
-                damage-=Shields.Value;
-                Shields.Value=0;
+                damage -= Shields.Value;
+                Shields.Value = 0;
             }
         }
         hp -= damage;
         this.ChangeProperties(enums.Property.HP, hp);
         this.sendHurtedEvent(enemy, damage, battle, Injured);
+
+        console.log("BeHurted camp: " + this.selfCamp + " index:", this.index, " hp:", hp);
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
@@ -284,48 +295,49 @@ export class Role {
         }
         return 0;
     }
-/*
- * 添加
- * 因为存在交换属性的技能，所以添加一个函数返回某个角色的所有属性Map的副本
- * Editor: Guanliu
- * 2023/9/30
- */
+    /*
+     * 添加
+     * 因为存在交换属性的技能，所以添加一个函数返回某个角色的所有属性Map的副本
+     * Editor: Guanliu
+     * 2023/9/30
+     */
     public GetProperties():Map<enums.Property, number>{
         let t=new Map<enums.Property, number>(this.properties);
         return t;
     }
 
     public CheckDead() {
-        return this.properties.get(enums.Property.HP) <= 0;
+        let hp = this.properties.get(enums.Property.HP);
+        return hp <= 0;
     }
 
     public Attack(enemy: Role, battle: battle.Battle) {
-        console.log("role Attack begin!");
+        console.log("role Attack begin! camp:", this.selfCamp);
 
         if (enemy.checkInevitableKill()) {
-            console.log("role checkInevitableKill!");
+            //console.log("role checkInevitableKill!");
             this.BeInevitableKill(enemy, battle);
         }
         
         let list = this.getShareDamageArray(battle);
         let substitute = this.getSubstituteDamage(battle);
-        let damage = this.GetProperty(enums.Property.Attack)+this.getintensifierAtk() / list.length;
-        console.log("role Attack list.length:", list.length);
+        let damage = this.GetProperty(enums.Property.Attack) + this.getintensifierAtk() / list.length;
+        console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {
             if (null != substitute && this == r) {
-                console.log("role substitute!");
+                //console.log("role substitute!");
                 substitute.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
             else {
                 if (enemy.checkInevitableKill() && this == r) {
-                    console.log("role checkInevitableKill continue!");
+                    //console.log("role checkInevitableKill continue!");
                     continue;
                 }
-                console.log("role AttackInjured!");
+                //console.log("role AttackInjured!");
                 r.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
         }
 
-        console.log("role Attack end!");
+        console.log("role Attack end! camp:", this.selfCamp);
     }
 }

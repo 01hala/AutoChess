@@ -8,6 +8,10 @@
   "userData": {
     "isBundle": true,
     "bundleConfigID": "4eP/N0bhlDqIX5jKd6ZSYB",
-    "bundleName": "Typeface"
+    "bundleName": "Typeface",
+    "compressionType": {},
+    "isRemoteBundle": {
+      "wechatgame": true
+    }
   }
 }
