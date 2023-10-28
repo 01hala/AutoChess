@@ -26,6 +26,8 @@ export class Queue extends Component
     @property(Node)
     public battleLocation:Node;
 
+    public roleNodes:Node[] = [];
+
     start() 
     {
 
@@ -54,6 +56,7 @@ export class Queue extends Component
                 this.node.addChild(role);
 
                 r[i].roleNode = role;
+                this.roleNodes.push(role);
                 console.log("role:", r[i]);
 
                 let roleDis = role.getComponent(RoleDis.RoleDis);
@@ -67,16 +70,13 @@ export class Queue extends Component
         
     }
 
-    async RemoveRole(role:role.Role)
+    async RemoveRole(index:number)
     {
         try
         {
             console.log("RemoveRole role:", role);
-            if (role.roleNode) {
-                let node = role.roleNode
-                role.roleNode = null;
-                await node.getComponent(RoleDis.RoleDis).Exit();
-            }
+            let node = this.roleNodes[index];
+            await node.getComponent(RoleDis.RoleDis).Exit();
         }
         catch (err)
         {

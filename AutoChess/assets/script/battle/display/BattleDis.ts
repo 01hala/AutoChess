@@ -62,10 +62,12 @@ export class BattleDis
         while (!this.battle.CheckEndBattle()) {
             console.log("TickBattle begin!");
             let awaiter = this.displayDone();
-            console.log("TickBattle awaiter!");
+            console.log("TickBattle awaiter begin!");
             this.battle.TickBattle();
             console.log("TickBattle tick!");
             await awaiter;
+            console.log("TickBattle awaiter end!");
+            //this.battle.CheckRemoveDeadRole();
             console.log("TickBattle end!");
         }
     }
@@ -195,14 +197,14 @@ export class BattleDis
             if(Camp.Self==ev.spellcaster.camp)
             {
                 console.log("Self Syncope index:", ev.spellcaster.index);
-                let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                allAwait.push(this.selfQueue.RemoveRole(r));
+                //let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
             }
             else if(Camp.Enemy==ev.spellcaster.camp)
             {
                 console.log("Enemy Syncope index:", ev.spellcaster.index);
-                let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                allAwait.push(this.enemyQueue.RemoveRole(r));
+                //let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
             }
         }
         console.log("CheckExitEvent allAwait:", allAwait);

@@ -81,19 +81,24 @@ export class Battle {
         return this.selfTeam.CheckDefeated() || this.enemyTeam.CheckDefeated();
     }
 
+    public CheckRemoveDeadRole() {
+        this.selfTeam.CheckRemoveDeadRole();
+        this.enemyTeam.CheckRemoveDeadRole();
+    }
+
     private triggerBeforeAttack : boolean = true;
     public TickBattle() : boolean {
+        let evs = this.evs.slice();
+        this.on_event.call(null, evs);
+
         if (this.evs.length > 0) {
-            let evs = this.evs.slice();
-            this.on_event.call(null, evs);
-            
             this.evs = [];
 
-            /*let selfTeam = this.selfTeam.GetRoles();
+            let selfTeam = this.selfTeam.GetRoles();
             for(let index in selfTeam) {
                 let role = selfTeam[index];
                 let roleInfo = new skill.RoleInfo();
-                roleInfo.index =  parseInt(index);
+                roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Self;
                 let p = 0;
                 let skillImpl: skill.SkillBase = null;
@@ -114,7 +119,7 @@ export class Battle {
             for(let index in enemyTeam) {
                 let role = enemyTeam[index];
                 let roleInfo = new skill.RoleInfo();
-                roleInfo.index =  parseInt(index);
+                roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Enemy;
                 let p = 0;
                 let skillImpl: skill.SkillBase = null;
@@ -129,10 +134,9 @@ export class Battle {
                 if (skillImpl) {
                     skillImpl.UseSkill(roleInfo, this);
                 }
-            }*/
+            }
 
-            this.selfTeam.CheckRemoveDeadRole();
-            this.enemyTeam.CheckRemoveDeadRole();
+            this.CheckRemoveDeadRole();
 
             //console.log("tick events");
             return false;
