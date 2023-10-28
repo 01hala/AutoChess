@@ -75,69 +75,79 @@ export class BattleDis
     }
 
     private async checkAttackEvent(evs:skill.Event[]) {
-        let allAwait = [];
-        let selfAttack = false;
-        let enemyAttack = false;
-        for(let ev of evs)
-        {
-            console.log("checkAttackEvent ev:", ev)
-            if (EventType.AttackInjured != ev.type)
+        try {
+            let allAwait = [];
+            let selfAttack = false;
+            let enemyAttack = false;
+            for(let ev of evs)
             {
-                continue;
-            }
+                console.log("checkAttackEvent ev:", ev)
+                if (EventType.AttackInjured != ev.type)
+                {
+                    continue;
+                }
 
-            if (Camp.Self == ev.spellcaster.camp)
-            {
-                if (!selfAttack)
+                if (Camp.Self == ev.spellcaster.camp)
                 {
-                    console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
-                    let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                    allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
-                        this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp, r));
-                    selfAttack = true;
+                    if (!selfAttack)
+                    {
+                        console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
+                        let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                        allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
+                            this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp, r));
+                        selfAttack = true;
+                    }
+                }
+                else if (Camp.Enemy == ev.spellcaster.camp)
+                {
+                    if (!enemyAttack)
+                    {
+                        console.log("checkAttackEvent: enemycamp " + ev.spellcaster.index);
+                        let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                        allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
+                            this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp, r));
+                        enemyAttack = true;
+                    }
                 }
             }
-            else if (Camp.Enemy == ev.spellcaster.camp)
-            {
-                if (!enemyAttack)
-                {
-                    console.log("checkAttackEvent: enemycamp " + ev.spellcaster.index);
-                    let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                    allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
-                        this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp, r));
-                    enemyAttack = true;
-                }
-            }
+            console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
+            await Promise.all(allAwait);
         }
-        console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
-        await Promise.all(allAwait);
+        catch(error) {
+            console.error("checkAttackEvent err:", error);
+        }
     }
 
     private async checkRemoteInjured(evs:skill.Event[]) {
-        let allAwait = [];
-        for(let ev of evs)
-        {
-            if(EventType.RemoteInjured != ev.type) {
-                continue;
-            }
-
-            console.log("checkRemoteInjured RemoteInjured");
-
-            let spList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
-            ev.recipient.forEach(element=>{
-                let targetList = Camp.Enemy == element.camp ? this.battle.GetEnemyTeam() : this.battle.GetSelfTeam();
-
-                let self = spList.GetRole(ev.spellcaster.index);
-                let target = targetList.GetRole(element.index);
-
-                if (self && target) {
-                    allAwait.push(self.roleNode.getComponent(RoleDis).RemoteAttack(
-                        self.roleNode.getPosition(), target.roleNode.getPosition(),this.father));
+        try {
+            let allAwait = [];
+            for(let ev of evs)
+            {
+                if(EventType.RemoteInjured != ev.type) {
+                    continue;
                 }
-            });
+
+                console.log("checkRemoteInjured RemoteInjured");
+
+                let spList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
+                ev.recipient.forEach(element=>{
+                    let targetList = Camp.Enemy == element.camp ? this.battle.GetEnemyTeam() : this.battle.GetSelfTeam();
+
+                    let self = spList.GetRole(ev.spellcaster.index);
+                    let target = targetList.GetRole(element.index);
+
+                    if (self && target) {
+                        allAwait.push(self.roleNode.getComponent(RoleDis).RemoteAttack(
+                            self.roleNode.getPosition(), target.roleNode.getPosition(),this.father));
+                    }
+                });
+            }
+            console.log("checkRemoteInjured allAwait:", allAwait);
+            await Promise.all(allAwait);
         }
-        console.log("checkRemoteInjured allAwait:", allAwait);
-        await Promise.all(allAwait);
+        catch(error) {
+            console.error("checkRemoteInjured err:", error);
+        }
     }
 
     showBattleEffect(bool:boolean)
@@ -147,55 +157,63 @@ export class BattleDis
 
     private async ChangeAttEvent(evs:skill.Event[])
     {
-        let allAwait = [];
-        for(let ev of evs)
-        {
-            if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) {
-                if(Camp.Self == ev.spellcaster.camp)
-                {
-                    let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                    if (r && r.roleNode) {
-                        allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
+        try {
+            let allAwait = [];
+            for(let ev of evs)
+            {
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) {
+                    if(Camp.Self == ev.spellcaster.camp)
+                    {
+                        let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                        if (r && r.roleNode) {
+                            allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
+                        }
                     }
-                }
-                if(Camp.Enemy==ev.spellcaster.camp)
-                {
-                    let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                    if (r && r.roleNode) {
-                        allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
+                    if(Camp.Enemy==ev.spellcaster.camp)
+                    {
+                        let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                        if (r && r.roleNode) {
+                            allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
+                        }
                     }
                 }
             }
+            console.log("ChangeAttEvent allAwait:", allAwait);
+            await Promise.all(allAwait);
         }
-        console.log("ChangeAttEvent allAwait:", allAwait);
-        await Promise.all(allAwait);
+        catch(error) {
+            console.error("ChangeAttEvent err:", error);
+        }
     }
 
     async CheckExitEvent(evs:skill.Event[])
     {
-        let allAwait = [];
-        for(let ev of evs)
-        {
-            if(EventType.Syncope != ev.type)
+        try {
+            let allAwait = [];
+            for(let ev of evs)
             {
-                continue;
-            }
+                if(EventType.Syncope != ev.type)
+                {
+                    continue;
+                }
 
-            if(Camp.Self==ev.spellcaster.camp)
-            {
-                console.log("Self Syncope index:", ev.spellcaster.index);
-                //let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
+                if(Camp.Self==ev.spellcaster.camp)
+                {
+                    console.log("Self Syncope index:", ev.spellcaster.index);
+                    allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
+                }
+                else if(Camp.Enemy==ev.spellcaster.camp)
+                {
+                    console.log("Enemy Syncope index:", ev.spellcaster.index);
+                    allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
+                }
             }
-            else if(Camp.Enemy==ev.spellcaster.camp)
-            {
-                console.log("Enemy Syncope index:", ev.spellcaster.index);
-                //let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
-            }
+            console.log("CheckExitEvent allAwait:", allAwait);
+            await Promise.all(allAwait);
         }
-        console.log("CheckExitEvent allAwait:", allAwait);
-        await Promise.all(allAwait);
+        catch(error) {
+            console.error("CheckExitEvent err:", error);
+        }
     }
 
     onEvent()
@@ -205,10 +223,15 @@ export class BattleDis
         this.battle.on_event = async (evs) => {
             console.log("begin on_event! evs:", evs);
 
-            await this.checkAttackEvent(evs);
-            await this.checkRemoteInjured(evs);
-            await this.ChangeAttEvent(evs);
-            await this.CheckExitEvent(evs);
+            try {
+                await this.checkAttackEvent(evs);
+                await this.checkRemoteInjured(evs);
+                await this.ChangeAttEvent(evs);
+                await this.CheckExitEvent(evs);
+            }
+            catch(error) {
+                console.error("on_event err:", error);
+            }
 
             console.log("end on_event!");
         }
