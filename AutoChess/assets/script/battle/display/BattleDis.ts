@@ -29,8 +29,6 @@ export class BattleDis
 
     private battle:Battle = null;
     
-    private resolve: ()=>void;
-
     public constructor(battle:Battle) {
         this.battle = battle;
         this.onEvent();
@@ -63,15 +61,7 @@ export class BattleDis
         console.log("tickBattle begin!");
 
         while (!this.battle.CheckEndBattle()) {
-            console.log("TickBattle begin!");
-            let awaiter = this.displayDone();
-            console.log("TickBattle awaiter begin!");
             await this.battle.TickBattle();
-            console.log("TickBattle tick!");
-            await awaiter;
-            console.log("TickBattle awaiter end!");
-            //this.battle.CheckRemoveDeadRole();
-            console.log("TickBattle end!");
         }
     }
 
@@ -82,12 +72,6 @@ export class BattleDis
 
         roles=this.battle.GetEnemyTeam().GetRoles();
         await this.enemyQueue.SpawnRole(roles);
-    }
-
-    private displayDone() : Promise<void> {
-        return new Promise((resolve)=>{
-            this.resolve = resolve;
-        });
     }
 
     private async checkAttackEvent(evs:skill.Event[]) {
@@ -225,11 +209,6 @@ export class BattleDis
             await this.checkRemoteInjured(evs);
             await this.ChangeAttEvent(evs);
             await this.CheckExitEvent(evs);
-
-            if (this.resolve) {
-                this.resolve.call(null);
-                this.resolve = null;
-            }
 
             console.log("end on_event!");
         }
