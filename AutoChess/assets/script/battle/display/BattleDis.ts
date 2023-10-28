@@ -63,7 +63,7 @@ export class BattleDis
             console.log("TickBattle begin!");
             let awaiter = this.displayDone();
             console.log("TickBattle awaiter begin!");
-            this.battle.TickBattle();
+            await this.battle.TickBattle();
             console.log("TickBattle tick!");
             await awaiter;
             console.log("TickBattle awaiter end!");

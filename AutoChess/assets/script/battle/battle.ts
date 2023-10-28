@@ -32,7 +32,7 @@ export class Battle {
         this.evs.push(ev);
     }
 
-    public on_event : ((evs:skill.Event[]) => void) = null;
+    public on_event : ((evs:skill.Event[]) => Promise<void>) = null;
 
     public StartBattle() {
         let ev = new skill.Event();
@@ -87,9 +87,9 @@ export class Battle {
     }
 
     private triggerBeforeAttack : boolean = true;
-    public TickBattle() : boolean {
+    public async TickBattle() : Promise<boolean> {
         let evs = this.evs.slice();
-        this.on_event.call(null, evs);
+        await this.on_event(evs);
 
         if (this.evs.length > 0) {
             this.evs = [];
