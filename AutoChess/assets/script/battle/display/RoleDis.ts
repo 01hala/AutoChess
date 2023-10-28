@@ -196,14 +196,15 @@ export class RoleDis extends Component
         this.delay(300,()=>{});
     }
 
-    RemoteAttack(spellcasterLocation:Vec3, targetLocation:Vec3)
+    RemoteAttack(spellcasterLocation:Vec3, targetLocation:Vec3,father:Node)
     {
         let bulletNode=instantiate(this.remoteNode);
         bulletNode.setPosition(spellcasterLocation);
         //let tempRole=find("Canvas/EnemyQueue").children[role.index];
         console.log(bulletNode);
         bulletNode.getComponent(Bullet).Init(targetLocation);
-        this.delay(300,()=>{});
+        father.addChild(bulletNode);
+        //this.delay(300,()=>{});
     }
     
     Exit()

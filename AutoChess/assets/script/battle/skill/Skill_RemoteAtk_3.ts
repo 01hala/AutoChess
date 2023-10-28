@@ -26,6 +26,8 @@ export class Skill_RemoteAtk_3 extends SkillBase
         this.numberOfRole = numberOfRole;
         this.attack = attack;
         this.isAll=isAll;
+
+        //this.event.type=EventType.RemoteInjured;
     }
 
     event:Event=new Event();
@@ -33,7 +35,6 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try 
         {
-            console.log("Remote Atack begin");
             if(6>=this.numberOfRole && !this.isAll)
             {
                 this.SkillEffect_1(selfInfo,battle);
@@ -51,7 +52,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
         } 
         catch (error) 
         {
-            console.warn(this.res+"下的 UseSkill 错误", error);
+            console.warn(this.res+"下的 UseSkill 错误");
         }   
     }
 
@@ -59,39 +60,61 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try
         {
-            console.log("Remote Atack SkillEffect_1 begin");
+            console.log("try to use remote skill");
+            let battleEvent : Event = new Event();
+            battleEvent.type = EventType.RemoteInjured;
+            battleEvent.spellcaster = selfInfo;
+            battleEvent.recipient = [];
+            battleEvent.value = [];
 
             let recipientRoles:Role[] = new Array();
             let self:Role = null;
             let enemyRoles:Role[] = null;
+
+            let roleInfo=new RoleInfo();
+
             if(Camp.Self==selfInfo.camp)
             {
                 self = battle.GetSelfTeam().GetRole(selfInfo.index);
                 enemyRoles=battle.GetEnemyTeam().GetRoles().slice();
+
+                roleInfo.camp=Camp.Enemy;
             }
             if(Camp.Enemy==selfInfo.camp)
             {
                 self = battle.GetEnemyTeam().GetRole(selfInfo.index);
                 enemyRoles=battle.GetSelfTeam().GetRoles().slice();
+
+                roleInfo.camp=Camp.Self;
             }
-            while(recipientRoles.length < this.numberOfRole && enemyRoles.length > 0) {
+            while(recipientRoles.length < this.numberOfRole) {
                 let index = random(0, enemyRoles.length);
                 recipientRoles.push(enemyRoles[index]);
                 enemyRoles.splice(index, 1);
+
+                roleInfo.index=index;
             }
             recipientRoles.forEach((role)=>{
                 role.BeHurted(this.attack, self, battle);
             });
+
+            battleEvent.recipient.push(roleInfo);
+            battle.AddBattleEvent(battleEvent);
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect 错误", error);
+            console.warn(this.res+"下的 SkillEffect 错误");
+            console.log(error);
         }
     }
 
     private SkillEffect_2(selfInfo: RoleInfo, battle: Battle)         //场上全部生效
     {
-        console.log("Remote Atack SkillEffect_2 begin");
+        let battleEvent : Event = new Event();
+        battleEvent.type = EventType.RemoteInjured;
+        battleEvent.spellcaster = selfInfo;
+        battleEvent.recipient = [];
+        battleEvent.value = [];
 
         let self:Role=null;
 
@@ -110,12 +133,19 @@ export class Skill_RemoteAtk_3 extends SkillBase
         for(let t of enemyRoles)
         {
             recipientRoles.push(t);
+            let roleInfo=new RoleInfo();
+
+            roleInfo.camp=t.selfCamp;
+            if(Camp.Enemy==selfInfo.camp) roleInfo.index=battle.GetSelfTeam().GetRoleIndex(t);
+            else roleInfo.index=battle.GetEnemyTeam().GetRoleIndex(t);
+            battleEvent.recipient.push(roleInfo);
         }
 
         for(let role of recipientRoles)
         {
             role.BeHurted(this.attack, self, battle)
         }
+        battle.AddBattleEvent(battleEvent);
     }
 }
 
