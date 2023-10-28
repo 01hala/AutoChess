@@ -113,7 +113,7 @@ export class RoleDis extends Component
         this.tAttack = tween(this.node)
             .to(0.4, { position: readyLocation })
             .delay(0.1)
-            .to(0.1, { position: battleLocation }).call(()=>
+            .to(0.08, { position: battleLocation }).call(()=>
             {
                 this.changeAtt(roleInfo);
                 if(Camp.Self==camp) {
