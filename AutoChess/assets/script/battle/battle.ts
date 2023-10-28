@@ -83,10 +83,10 @@ export class Battle {
 
     private triggerBeforeAttack : boolean = true;
     public TickBattle() : boolean {
-        let evs = this.evs;
-        this.on_event.call(null, evs);
-        
         if (this.evs.length > 0) {
+            let evs = this.evs.slice();
+            this.on_event.call(null, evs);
+            
             this.evs = [];
 
             /*let selfTeam = this.selfTeam.GetRoles();

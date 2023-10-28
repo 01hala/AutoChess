@@ -91,6 +91,7 @@ export class BattleDis
         let enemyAttack = false;
         for(let ev of evs)
         {
+            console.log("checkAttackEvent ev:", ev)
             if (EventType.AttackInjured != ev.type)
             {
                 continue;
@@ -213,13 +214,9 @@ export class BattleDis
         console.log("onEvent begin!");
 
         this.battle.on_event = async (evs) => {
-            console.log("begin on_event!");
-            
-            console.log("evs:", evs);
+            console.log("begin on_event! evs:", evs);
 
             await this.checkAttackEvent(evs);
-            console.log("checkAttackEvent end!");
-
             await this.checkRemoteInjured(evs);
             await this.ChangeAttEvent(evs);
             await this.CheckExitEvent(evs);
