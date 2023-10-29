@@ -51,9 +51,10 @@ export class Team {
             if (r.CheckDead()) {
                 this.removeRole(r);
                 this.CheckRemoveDeadRole();
-                break;
+                return true;
             }
         }
+        return false;
     }
     
     public CheckDefeated() : boolean {

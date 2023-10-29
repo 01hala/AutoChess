@@ -82,8 +82,7 @@ export class Battle {
     }
 
     public CheckRemoveDeadRole() {
-        this.selfTeam.CheckRemoveDeadRole();
-        this.enemyTeam.CheckRemoveDeadRole();
+        return this.selfTeam.CheckRemoveDeadRole() || this.enemyTeam.CheckRemoveDeadRole();
     }
 
     private triggerBeforeAttack : boolean = true;
@@ -136,10 +135,14 @@ export class Battle {
                 }
             }
 
-            this.CheckRemoveDeadRole();
-
             //console.log("tick events");
             return false;
+        }
+
+        if (this.evs.length <= 0) {
+            if (this.CheckRemoveDeadRole()) {
+                return false;
+            }
         }
 
         if (this.triggerBeforeAttack) {
