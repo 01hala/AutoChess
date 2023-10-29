@@ -50,6 +50,7 @@ export class Role {
 
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];
+    private skill_is_lock : boolean = false;
 
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
@@ -83,6 +84,18 @@ export class Role {
         if (buffer) {
             this.buffer.push(buffer);
         }
+    }
+
+    public CheckSkillIsLock() {
+        return this.skill_is_lock;
+    }
+
+    public LockSkill() {
+        this.skill_is_lock = true;
+    }
+
+    public UnlockSkill() {
+        this.skill_is_lock = false;
     }
 
     private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {

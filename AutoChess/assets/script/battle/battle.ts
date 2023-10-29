@@ -43,6 +43,16 @@ export class Battle {
     private battle() {
         //console.log("battle begin!");
 
+        let selfTeam = this.selfTeam.GetRoles();
+        for(let role of selfTeam) {
+            role.UnlockSkill();
+        }
+
+        let enemyTeam = this.enemyTeam.GetRoles();
+        for(let role of enemyTeam) {
+            role.UnlockSkill();
+        }
+
         let self = this.selfTeam.GetLasterRole();
         let enemy = this.enemyTeam.GetLasterRole();
 
@@ -96,6 +106,10 @@ export class Battle {
             let selfTeam = this.selfTeam.GetRoles();
             for(let index in selfTeam) {
                 let role = selfTeam[index];
+                if (role.CheckSkillIsLock()) {
+                    continue;
+                }
+
                 let roleInfo = new skill.RoleInfo();
                 roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Self;
@@ -110,6 +124,7 @@ export class Battle {
                     }
                 }
                 if (skillImpl) {
+                    role.LockSkill();
                     skillImpl.UseSkill(roleInfo, this);
                 }
             }
@@ -117,6 +132,10 @@ export class Battle {
             let enemyTeam = this.enemyTeam.GetRoles();
             for(let index in enemyTeam) {
                 let role = enemyTeam[index];
+                if (role.CheckSkillIsLock()) {
+                    continue;
+                }
+
                 let roleInfo = new skill.RoleInfo();
                 roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Enemy;
@@ -131,6 +150,7 @@ export class Battle {
                     }
                 }
                 if (skillImpl) {
+                    role.LockSkill();
                     skillImpl.UseSkill(roleInfo, this);
                 }
             }
