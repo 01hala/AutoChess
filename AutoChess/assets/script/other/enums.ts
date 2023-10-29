@@ -29,6 +29,7 @@ export enum EventType {
     UsedSkill=16,
     SwapProperties = 17,
     IntensifierProperties = 18,
+    Exit = 19,
 }
 
 export enum ChangePositionType {
@@ -43,7 +44,7 @@ export enum SwapPropertiesType {
 }
 
 /*
- * ¼¼ÄÜÀàÐÍ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * Editor:Hotaru
  * 2023.09.25
  */

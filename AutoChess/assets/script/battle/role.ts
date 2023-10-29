@@ -122,6 +122,19 @@ export class Role {
         console.log("sendHurtedEvent camp:", this.selfCamp, " selfIndex:", selfIndex, " enemyIndex:", enemyIndex);
     }
 
+    public SendExitEvent(battle: battle.Battle) {
+        if (this.CheckDead()) {
+            let ev = new skill.Event();
+            ev.type = enums.EventType.Exit;
+            ev.spellcaster = new skill.RoleInfo();
+            ev.spellcaster.camp = this.selfCamp;
+            ev.spellcaster.index = this.index;
+            ev.recipient = [];
+            ev.value = [];
+            battle.AddBattleEvent(ev);
+        } 
+    }
+
     private checkShareDamageBuffer() : boolean {
         for (let b of this.buffer) {
             if (enums.BufferType.ShareDamage == b.BufferType && b.Round > 0) {
@@ -307,6 +320,7 @@ export class Role {
     }
 
     public CheckDead() {
+        console.log("CheckDead:", this.properties);
         let hp = this.properties.get(enums.Property.HP);
         return hp <= 0;
     }

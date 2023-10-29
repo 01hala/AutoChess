@@ -5,6 +5,7 @@
  */
 import * as common from "../serverSDK/common"
 import * as role from './role'
+import * as battle from './battle'
 import * as enums from '../other/enums'
 
 export class Team {
@@ -46,11 +47,13 @@ export class Team {
         this.roleList.splice(index, 1);
     }
 
-    public CheckRemoveDeadRole() {
+    public CheckRemoveDeadRole(battle: battle.Battle) {
         for (let r of this.roleList) {
+            console.log("CheckRemoveDeadRole:", r);
             if (r.CheckDead()) {
+                r.SendExitEvent(battle);
                 this.removeRole(r);
-                this.CheckRemoveDeadRole();
+                this.CheckRemoveDeadRole(battle);
                 return true;
             }
         }

@@ -192,7 +192,7 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
-                if(EventType.Syncope != ev.type)
+                if(EventType.Exit != ev.type)
                 {
                     continue;
                 }

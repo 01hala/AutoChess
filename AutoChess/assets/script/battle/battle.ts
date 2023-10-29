@@ -78,11 +78,11 @@ export class Battle {
     }
 
     public CheckEndBattle() : boolean {
-        return this.selfTeam.CheckDefeated() || this.enemyTeam.CheckDefeated();
+        return this.evs.length <= 0 && (this.selfTeam.CheckDefeated() || this.enemyTeam.CheckDefeated());
     }
 
     public CheckRemoveDeadRole() {
-        return this.selfTeam.CheckRemoveDeadRole() || this.enemyTeam.CheckRemoveDeadRole();
+        return this.selfTeam.CheckRemoveDeadRole(this) || this.enemyTeam.CheckRemoveDeadRole(this);
     }
 
     private triggerBeforeAttack : boolean = true;
