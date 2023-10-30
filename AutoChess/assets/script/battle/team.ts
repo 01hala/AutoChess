@@ -48,15 +48,23 @@ export class Team {
     }
 
     public CheckRemoveDeadRole(battle: battle.Battle) {
+        let removeRoles = [];
         for (let r of this.roleList) {
-            console.log("CheckRemoveDeadRole:", r);
             if (r.CheckDead()) {
+                removeRoles.push(r);
+
                 r.SendExitEvent(battle);
-                this.removeRole(r);
-                this.CheckRemoveDeadRole(battle);
-                return true;
+                r.roleNode = null;
             }
         }
+
+        if (removeRoles.length > 0) {
+            for (let r of removeRoles) {
+                this.removeRole(r);
+            }
+            return true;
+        }
+
         return false;
     }
     

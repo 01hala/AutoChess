@@ -93,9 +93,12 @@ export class Queue extends Component
     {
         try
         {
-            console.log("RemoveRole role:", role);
             let node = this.roleNodes[index];
-            await node.getComponent(RoleDis.RoleDis).Exit();
+            this.roleNodes[index] = null;
+
+            if (node) {
+                await node.getComponent(RoleDis.RoleDis).Exit();
+            }
         }
         catch (err)
         {
