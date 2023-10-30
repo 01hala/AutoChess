@@ -1,0 +1,45 @@
+struct UserInformation
+{
+	string UserName; // 用户名
+	int64 UserGuid; // 用户uid
+}
+
+struct UserData
+{
+	UserInformation User; // 用户信息
+	int32 Strength; // 体力
+	int32[] RoleList; // 角色列表
+}
+
+struct Role {
+	int32 RoleID;
+	int32 Level;
+	int32 HP;
+	int32 Attack;
+	int32 additionSkill;
+	int32 additionBuffer;
+}
+
+struct UserBattleData
+{
+	UserInformation User; // 用户信息
+	int32 coin;
+	Role[] RoleList; // 角色列表
+}
+
+enum ShopIndex {
+	Role = 0;
+	Prop = 1;
+}
+
+struct ShopData
+{
+	int32[] SaleRoleList;
+	int32[] SalePropList;
+}
+
+struct svr_info
+{
+	int32 tick_time;
+	int32 player_num;
+}

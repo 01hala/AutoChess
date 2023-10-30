@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\..\bin\debug</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\..\bin\release</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="match_msg_handle.cs~RF1f008777.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\expand\avatar\avatar.csproj" />
+    <ProjectReference Include="..\..\expand\bag\bag.csproj" />
+    <ProjectReference Include="..\..\game_proto\game_proto.csproj" />
+  </ItemGroup>
+
+</Project>

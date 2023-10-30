@@ -1,0 +1,10 @@
+import common
+
+module player_login {
+	player_login req(string token, string nick_name) rsp(UserData info) err(int32 err);
+	create_role req(string name, string nick_name) rsp(UserData info) err(int32 err);
+}
+
+module player_battle {
+	start_battle req() rsp(string match_name, UserBattleData battle_info, ShopData shop_info) err(int32 err);
+}

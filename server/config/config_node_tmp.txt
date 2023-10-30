@@ -1,0 +1,84 @@
+{
+    "center":{
+		"name":"center_tsxs",
+        "gm_ip":"127.0.0.1",
+        "gm_port":1001,
+		"log_level":"trace",
+		"log_file":"center.txt",
+		"log_dir":"./log/"
+    },
+
+    "dbproxy":{
+		"name":"dbproxy",
+		"db_url":"mongodb://127.0.0.1:27017",
+		"log_level":"trace",
+		"log_file":"dbproxy.txt",
+		"log_dir":"./log/",
+		"index":[{"db":"tsxs", "collection":"guid", "key":"Guid", "is_unique":true},
+				 {"db":"tsxs", "collection":"player", "key":"sdk_uuid", "is_unique":true},
+				 {"db":"tsxs", "collection":"player", "key":"guid", "is_unique":true},
+	             {"db":"tsxs", "collection":"offline_msg", "key":"player_guid", "is_unique":false}],
+		"guid":[{"db":"tsxs", "collection":"guid", "guid":10013}]
+    },
+
+    "gate":{
+		"name":"gate",
+		"websocket_listen":true,
+		"websocket_outside_host":"ws://127.0.0.1",
+		"websocket_outside_port":3001,
+		"is_ssl":true,
+		"certificate":"./cert/tsxs.ucat.games_bundle.crt",
+		"private_key":"./cert/tsxs.ucat.games.key",
+		"tmp_dh":"./cert/tsxs.ucat.games_bundle.pem",
+		"log_level":"trace",
+		"log_file":"gate.txt",
+		"log_dir":"./log/"
+    },
+
+    "gm":{
+		"gm_ip":"127.0.0.1",
+        "gm_port":1001,
+		"log_level":"trace",
+		"log_file":"control.txt",
+		"log_dir":"./log/"
+    },
+
+	"login":{
+		"name":"login",
+    	"DyAppID":"***",
+		"DyAppSecret":"***",
+    	"WxAppID":"***",
+		"WxAppSecret":"***",
+		"log_level":"trace",
+		"log_file":"login.txt",
+		"log_dir":"./log/"
+	},
+
+	"rank":{
+		"name":"rank",
+		"log_level":"trace",
+		"log_file":"rank.txt",
+		"log_dir":"./log/"
+	},
+
+	"match":{
+		"name":"match",
+		"excel_json_config":"./excel_json/",
+		"log_level":"trace",
+		"log_file":"rank.txt",
+		"log_dir":"./log/"
+	},
+
+    "player":{
+		"name":"player",
+		"guid_key":"public_guid",
+		"log_level":"trace",
+		"log_file":"player.txt",
+		"log_dir":"./log/"
+    },
+	
+	"redismq_listen": true,
+	"redismq_is_cluster": false,
+	"redis_for_mq": "127.0.0.1:6379",
+	"redis_for_cache": "127.0.0.1:6379"
+}
