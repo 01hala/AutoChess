@@ -216,8 +216,7 @@ export class RoleDis extends Component
     {
         console.log(`shiftPos begin!`);
         //开始缓动
-        this.tShiftpos = tween(this.node).
-        to(0.3, { position: vec }).start();
+        this.tShiftpos = tween(this.node).to(0.3, { position: vec }).start();
         //返回延迟300ms
         return this.delay(300, () => 
         {
