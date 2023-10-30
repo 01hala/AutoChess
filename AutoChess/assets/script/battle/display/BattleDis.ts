@@ -236,34 +236,6 @@ export class BattleDis
         }
     }
 
-    async CheckShiftEvent(evs:skill.Event[])
-    {
-        try
-        {
-            let allAwait = [];
-            let roles=null;
-            for(let ev of evs)
-            {
-                if(EventType.Syncope==ev.type && Camp.Self == ev.spellcaster.camp)
-                {
-                    roles=this.battle.GetSelfTeam().GetRoles();
-                    allAwait.push(this.selfQueue.Shiftdis(roles));
-                }
-                if(EventType.Syncope==ev.type && Camp.Enemy == ev.spellcaster.camp)
-                {
-                    roles=this.battle.GetEnemyTeam().GetRoles();
-                    allAwait.push(this.enemyQueue.Shiftdis(roles));
-                }
-            }
-            await Promise.all(allAwait);
-        }
-        catch(error)
-        {
-            console.error("BattleDis 下的 CheckShiftEvent 错误 err:", error);
-        }
-        
-    }
-
     async CheckExitEvent(evs:skill.Event[])
     {
         try 
@@ -280,11 +252,15 @@ export class BattleDis
                 {
                     console.log("Self Syncope index:", ev.spellcaster.index);
                     allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
+                    let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                    r.roleNode = null;
                 }
                 else if(Camp.Enemy==ev.spellcaster.camp)
                 {
                     console.log("Enemy Syncope index:", ev.spellcaster.index);
                     allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
+                    let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                    r.roleNode = null;
                 }
             }
             console.log("CheckExitEvent allAwait:", allAwait);
