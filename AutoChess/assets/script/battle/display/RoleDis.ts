@@ -66,8 +66,8 @@ export class RoleDis extends Component
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
 
-            this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
-            this.hpText.font = this.atkText.font = this.typeface;
+            //this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
+            //this.hpText.font = this.atkText.font = this.typeface;
 
             if (this.roleInfo) {
                 if (this.hpText && this.atkText) {

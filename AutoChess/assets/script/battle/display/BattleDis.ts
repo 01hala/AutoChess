@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, tween, Button } from 'cc';
+import { _decorator, instantiate, Node, Prefab, tween, Button, UITransform } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
@@ -183,9 +183,11 @@ export class BattleDis
                     let target = targetList.GetRole(element.index);
 
                     if (self && target) 
-                    {
+                    {                
+                        let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.roleNode.getWorldPosition());
+                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.roleNode.getWorldPosition());
                         allAwait.push(self.roleNode.getComponent(RoleDis).RemoteAttack(
-                            self.roleNode.getPosition(), target.roleNode.getPosition(),this.father));
+                            selfpos, targetpos,this.father));
                     }
                 });
             }

@@ -3,7 +3,6 @@
     "__type__": "cc.Prefab",
     "_name": "Role_1",
     "_objFlags": 0,
-    "__editorExtras__": {},
     "_native": "",
     "data": {
       "__id__": 1
@@ -361,7 +360,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 69.17071291101253,
+      "width": 71.38,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -394,8 +393,11 @@
     "_fontSize": 55,
     "_maxWidth": 0,
     "_fontFamily": "",
-    "_font": null,
-    "_isSystemFontUsed": true,
+    "_font": {
+      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__expectedType__": "cc.TTFFont"
+    },
+    "_isSystemFontUsed": false,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
@@ -511,7 +513,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Hp",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 1
@@ -565,7 +567,7 @@
   {
     "__type__": "cc.Node",
     "_name": "HpText",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 22
@@ -626,7 +628,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 69.17071291101253,
+      "width": 71.38,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -659,8 +661,11 @@
     "_fontSize": 55,
     "_maxWidth": 0,
     "_fontFamily": "",
-    "_font": null,
-    "_isSystemFontUsed": true,
+    "_font": {
+      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__expectedType__": "cc.TTFFont"
+    },
+    "_isSystemFontUsed": false,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
@@ -843,7 +848,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 65.0068359375,
+      "width": 62.59,
       "height": 63
     },
     "_anchorPoint": {
@@ -876,8 +881,11 @@
     "_fontSize": 50,
     "_maxWidth": 0,
     "_fontFamily": "Arial",
-    "_font": null,
-    "_isSystemFontUsed": true,
+    "_font": {
+      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__expectedType__": "cc.TTFFont"
+    },
+    "_isSystemFontUsed": false,
     "_userDefinedFont": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
