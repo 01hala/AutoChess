@@ -5,6 +5,7 @@
     "version": "3.7.3"
   },
   "dependencies": {
-    "minigame-api-typings": "^3.8.2"
+    "minigame-api-typings": "^3.8.2",
+    "miniprogram-api-typings": "^3.12.1"
   }
 }

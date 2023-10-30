@@ -2,7 +2,7 @@
  * BattleDis.ts
  * author: Hotaru
  * 2023/10/12
- * ս��չʾ��
+ * 战斗展示类
  */
 import { _decorator, instantiate, Node, Prefab, tween, Button } from 'cc';
 import { Queue } from './Queue';
@@ -17,65 +17,107 @@ const { ccclass, property } = _decorator;
 
 export class BattleDis 
 {
+    //父级对象
     private father:Node;
-
+    //顶级面板
     private panelNode:Node;
+    //战斗效果
     private battleEffectImg:Node;
-
+    //敌我队列
     public selfQueue:Queue;
     public enemyQueue:Queue;
 
     private gmBtn:Button;
-
+    //战斗系统类
     private battle:Battle = null;
     
-    public constructor(battle:Battle) {
+    public constructor(battle:Battle) 
+    {
         this.battle = battle;
         this.onEvent();
     }
 
-    public async Start(father:Node) {
-        let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
-        this.panelNode = instantiate(panel);
-        this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
-        this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
-        this.battleEffectImg=this.panelNode.getChildByName("BattleEffectImg");
-        this.battleEffectImg.active=false;
-        this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
-        this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
-            console.log("gm Button!");
-            let gmPanel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
-            this.panelNode.addChild(instantiate(gmPanel));
-        }, this);
-
-        await this.PutRole();
+    public async Start(father:Node) 
+    {
+        try
+        {
+            let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
+            this.panelNode = instantiate(panel);
+            this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
+            this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
+            this.battleEffectImg=this.panelNode.getChildByName("BattleEffectImg");
+            this.battleEffectImg.active=false;
+            this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
+            this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
+                console.log("gm Button!");
+                let gmPanel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
+                this.panelNode.addChild(instantiate(gmPanel));
+            }, this);
+    
+            await this.PutRole();
+            
+            this.father=father;
+            father.addChild(this.panelNode);
+    
+            this.battle.StartBattle();
+            setTimeout(this.TickBattle.bind(this), 500);
+        }
+        catch(error)
+        {
+            console.error("BattleDis 下的 Start 错误 err:", error);
+        }
         
-        this.father=father;
-        father.addChild(this.panelNode);
-
-        this.battle.StartBattle();
-        setTimeout(this.tickBattle.bind(this), 500);
     }
 
-    async tickBattle() {
-        console.log("tickBattle begin!");
-
-        while (!this.battle.CheckEndBattle()) {
-            await this.battle.TickBattle();
+    async TickBattle() 
+    {
+        try
+        {
+            console.log("tickBattle begin!");
+            while (!this.battle.CheckEndBattle()) 
+            {
+                await this.battle.TickBattle();
+            }
         }
+        catch(error)
+        {
+            console.error("BattleDis 下的 TickBattle 错误 err:", error);
+        }
+        
     }
 
     async PutRole()
     {
-        let roles=this.battle.GetSelfTeam().GetRoles();
-        await this.selfQueue.SpawnRole(roles);
-
-        roles=this.battle.GetEnemyTeam().GetRoles();
-        await this.enemyQueue.SpawnRole(roles);
+        try
+        {
+            let roles=this.battle.GetSelfTeam().GetRoles();
+            await this.selfQueue.SpawnRole(roles);
+    
+            roles=this.battle.GetEnemyTeam().GetRoles();
+            await this.enemyQueue.SpawnRole(roles);
+        }
+        catch(error)
+        {
+            console.error("BattleDis 下的 PutRole 错误 err:", error);
+        }
+        
     }
 
-    private async checkAttackEvent(evs:skill.Event[]) {
-        try {
+    showBattleEffect(bool:boolean)
+    {
+        this.battleEffectImg.active=bool;
+    }
+
+    /*
+     * 
+     * 以下为事件响应函数
+     * 
+     */
+
+    private async CheckAttackEvent(evs:skill.Event[]) 
+    {
+        try 
+        {
             let allAwait = [];
             let selfAttack = false;
             let enemyAttack = false;
@@ -113,17 +155,21 @@ export class BattleDis
             console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
             await Promise.all(allAwait);
         }
-        catch(error) {
-            console.error("checkAttackEvent err:", error);
+        catch(error) 
+        {
+            console.error("BattleDis 下的 CheckAttackEvent 错误 err:", error);
         }
     }
 
-    private async checkRemoteInjured(evs:skill.Event[]) {
-        try {
+    private async CheckRemoteInjured(evs:skill.Event[]) 
+    {
+        try 
+        {
             let allAwait = [];
             for(let ev of evs)
             {
-                if(EventType.RemoteInjured != ev.type) {
+                if(EventType.RemoteInjured != ev.type) 
+                {
                     continue;
                 }
 
@@ -136,7 +182,8 @@ export class BattleDis
                     let self = spList.GetRole(ev.spellcaster.index);
                     let target = targetList.GetRole(element.index);
 
-                    if (self && target) {
+                    if (self && target) 
+                    {
                         allAwait.push(self.roleNode.getComponent(RoleDis).RemoteAttack(
                             self.roleNode.getPosition(), target.roleNode.getPosition(),this.father));
                     }
@@ -145,34 +192,34 @@ export class BattleDis
             console.log("checkRemoteInjured allAwait:", allAwait);
             await Promise.all(allAwait);
         }
-        catch(error) {
-            console.error("checkRemoteInjured err:", error);
+        catch(error) 
+        {
+            console.error("BattleDis 下的 CheckRemoteInjured 错误 err:", error);
         }
-    }
-
-    showBattleEffect(bool:boolean)
-    {
-        this.battleEffectImg.active=bool;
     }
 
     private async ChangeAttEvent(evs:skill.Event[])
     {
-        try {
+        try 
+        {
             let allAwait = [];
             for(let ev of evs)
             {
-                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) {
+                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) 
+                {
                     if(Camp.Self == ev.spellcaster.camp)
                     {
                         let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                        if (r && r.roleNode) {
+                        if (r && r.roleNode) 
+                        {
                             allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
                         }
                     }
                     if(Camp.Enemy==ev.spellcaster.camp)
                     {
                         let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                        if (r && r.roleNode) {
+                        if (r && r.roleNode) 
+                        {
                             allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
                         }
                     }
@@ -181,14 +228,44 @@ export class BattleDis
             console.log("ChangeAttEvent allAwait:", allAwait);
             await Promise.all(allAwait);
         }
-        catch(error) {
-            console.error("ChangeAttEvent err:", error);
+        catch(error) 
+        {
+            console.error("BattleDis 下的 ChangeAttEvent 错误 err:", error);
         }
+    }
+
+    async CheckShiftEvent(evs:skill.Event[])
+    {
+        try
+        {
+            let allAwait = [];
+            let roles=null;
+            for(let ev of evs)
+            {
+                if(EventType.Syncope==ev.type && Camp.Self == ev.spellcaster.camp)
+                {
+                    roles=this.battle.GetSelfTeam().GetRoles();
+                    allAwait.push(this.selfQueue.Shiftdis(roles));
+                }
+                if(EventType.Syncope==ev.type && Camp.Enemy == ev.spellcaster.camp)
+                {
+                    roles=this.battle.GetEnemyTeam().GetRoles();
+                    allAwait.push(this.enemyQueue.Shiftdis(roles));
+                }
+            }
+            await Promise.all(allAwait);
+        }
+        catch(error)
+        {
+            console.error("BattleDis 下的 CheckShiftEvent 错误 err:", error);
+        }
+        
     }
 
     async CheckExitEvent(evs:skill.Event[])
     {
-        try {
+        try 
+        {
             let allAwait = [];
             for(let ev of evs)
             {
@@ -211,8 +288,9 @@ export class BattleDis
             console.log("CheckExitEvent allAwait:", allAwait);
             await Promise.all(allAwait);
         }
-        catch(error) {
-            console.error("CheckExitEvent err:", error);
+        catch(error) 
+        {
+            console.error("BattleDis 下的 CheckExitEvent 错误 err:", error);
         }
     }
 
@@ -220,17 +298,20 @@ export class BattleDis
     {
         console.log("onEvent begin!");
 
-        this.battle.on_event = async (evs) => {
+        this.battle.on_event = async (evs) => 
+        {
             console.log("begin on_event! evs:", evs);
 
-            try {
-                await this.checkAttackEvent(evs);
-                await this.checkRemoteInjured(evs);
+            try 
+            {
+                await this.CheckAttackEvent(evs);
+                await this.CheckRemoteInjured(evs);
                 await this.ChangeAttEvent(evs);
                 await this.CheckExitEvent(evs);
             }
-            catch(error) {
-                console.error("on_event err:", error);
+            catch(error) 
+            {
+                console.error("BattleDis 下的 on_event 错误 err:", error);
             }
 
             console.log("end on_event!");

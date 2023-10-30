@@ -16,8 +16,7 @@ import { Role } from '../../serverSDK/common';
 @ccclass('Queue')
 export class Queue extends Component 
 {
-    private res:string="script/display/Queue.ts"
-
+    //站位列表
     @property([Node])
     public locationTemp:Node[]=[];
 
@@ -25,7 +24,7 @@ export class Queue extends Component
     public readyLocation:Node;
     @property(Node)
     public battleLocation:Node;
-
+    //角色列表
     public roleNodes:Node[] = [];
 
     start() 
@@ -65,9 +64,26 @@ export class Queue extends Component
         } 
         catch (error) 
         {
-            console.warn(this.res+" 下的 SpawnRole 错误", error);
+            console.warn("Queue 下的 SpawnRole 错误", error);
         }
         
+    }
+
+    async Shiftdis(r:role.Role[])
+    {
+        try
+        {
+            for(let i=0;i<this.roleNodes.length;i++)
+            {
+                //this.roleList[i].position = this.locationTemp[i].position;
+                await this.roleNodes[i].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[i].position);
+                this.roleNodes[i].getComponent(RoleDis.RoleDis).AttackInit();
+            }
+        }
+       catch(err)
+       {
+            console.warn("Queue 下的 Shiftdis 错误:", err);
+       }
     }
 
     async RemoveRole(index:number)
@@ -80,7 +96,7 @@ export class Queue extends Component
         }
         catch (err)
         {
-            console.warn(this.res+" 下的 RemoveRole 错误:", err);
+            console.warn("Queue 下的 RemoveRole 错误:", err);
         }
     }
 }
