@@ -89,7 +89,8 @@ export class RoleDis extends Component
     }
 
     async Refresh(roleInfo:Role) {
-        await this.changeAtt(roleInfo);   
+        this.roleInfo=roleInfo;
+        await this.changeAtt();   
     }
 
     delay(ms:number, release:() => void) : Promise<void> {
@@ -107,7 +108,7 @@ export class RoleDis extends Component
         this.originalPos = new Vec3(this.node.position); 
     }
 
-    Attack(readyLocation:Vec3, battleLocation:Vec3 , camp:Camp ,roleInfo?:Role) 
+    Attack(readyLocation:Vec3, battleLocation:Vec3 , camp:Camp) 
     {
         console.log(`Attack begin! selfCamp:${this.roleInfo.selfCamp}`);
         this.tAttack = tween(this.node)
@@ -115,7 +116,7 @@ export class RoleDis extends Component
             .delay(0.1)
             .to(0.08, { position: battleLocation }).call(()=>
             {
-                this.changeAtt(roleInfo);
+                this.changeAtt();
                 if(Camp.Self==camp) {
                     singleton.netSingleton.battle.showBattleEffect(true);
                 }
@@ -138,11 +139,11 @@ export class RoleDis extends Component
         });
     }
 
-    changeAtt(roleInfo:Role)
+    changeAtt()
     {
         try
         {
-            this.roleInfo=roleInfo;
+            //this.roleInfo=roleInfo;
 
             this.Hp=Math.round(this.roleInfo.GetProperty(Property.HP));
             this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));

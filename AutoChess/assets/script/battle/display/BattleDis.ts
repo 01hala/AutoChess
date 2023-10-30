@@ -94,7 +94,7 @@ export class BattleDis
                         console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
                         let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
                         allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
-                            this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp, r));
+                            this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp));
                         selfAttack = true;
                     }
                 }
@@ -105,7 +105,7 @@ export class BattleDis
                         console.log("checkAttackEvent: enemycamp " + ev.spellcaster.index);
                         let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
                         allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
-                            this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp, r));
+                            this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp));
                         enemyAttack = true;
                     }
                 }
@@ -166,14 +166,14 @@ export class BattleDis
                     {
                         let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
                         if (r && r.roleNode) {
-                            allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
+                            allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
                         }
                     }
                     if(Camp.Enemy==ev.spellcaster.camp)
                     {
                         let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
                         if (r && r.roleNode) {
-                            allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt(r));
+                            allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
                         }
                     }
                 }
