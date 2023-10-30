@@ -73,11 +73,14 @@ export class Queue extends Component
     {
         try
         {
-            for(let i=0;i<this.roleNodes.length;i++)
+            for(let _r of r)
             {
-                //this.roleList[i].position = this.locationTemp[i].position;
-                await this.roleNodes[i].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[i].position);
-                this.roleNodes[i].getComponent(RoleDis.RoleDis).AttackInit();
+                if (!_r.roleNode) {
+                    continue;
+                }
+
+                await _r.roleNode.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_r.index].position);
+                _r.roleNode.getComponent(RoleDis.RoleDis).AttackInit();
             }
         }
        catch(err)
