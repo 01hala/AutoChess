@@ -61,11 +61,11 @@ export class Skill_RemoteAtk_3 extends SkillBase
         try
         {
             console.log("try to use remote skill");
-            let battleEvent : Event = new Event();
-            battleEvent.type = EventType.RemoteInjured;
-            battleEvent.spellcaster = selfInfo;
-            battleEvent.recipient = [];
-            battleEvent.value = [];
+            //let battleEvent : Event = new Event();
+            //battleEvent.type = EventType.RemoteInjured;
+            //battleEvent.spellcaster = selfInfo;
+            //battleEvent.recipient = [];
+            //battleEvent.value = [];
 
             let recipientRoles:Role[] = new Array();
             let self:Role = null;
@@ -98,8 +98,8 @@ export class Skill_RemoteAtk_3 extends SkillBase
                 role.BeHurted(this.attack, self, battle);
             });
 
-            battleEvent.recipient.push(roleInfo);
-            battle.AddBattleEvent(battleEvent);
+            //battleEvent.recipient.push(roleInfo);
+            //battle.AddBattleEvent(battleEvent);
         }
         catch (error) 
         {

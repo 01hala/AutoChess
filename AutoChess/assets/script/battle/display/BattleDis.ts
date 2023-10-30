@@ -78,6 +78,12 @@ export class BattleDis
             {
                 await this.battle.TickBattle();
             }
+
+            await this.battle.TickBattle();
+            while (!this.battle.CheckEndBattle()) 
+            {
+                await this.battle.TickBattle();
+            }
         }
         catch(error)
         {

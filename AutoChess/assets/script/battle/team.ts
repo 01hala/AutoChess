@@ -44,18 +44,32 @@ export class Team {
 
     private removeRole(role: role.Role) {
         let index = this.roleList.indexOf(role);
-        this.roleList.splice(index, 1);
+        if (index != -1) {
+            this.roleList.splice(index, 1);
+        }
     }
 
     public CheckRemoveDeadRole(battle: battle.Battle) {
         let removeRoles = [];
         for (let r of this.roleList) {
-            if (r.CheckDead()) {
-                removeRoles.push(r);
+            try {
+                if (r.CheckDead()) {
+                    removeRoles.push(r);
 
-                r.SendExitEvent(battle);
-                r.roleNode = null;
+                    r.SendExitEvent(battle);
+                    r.roleNode = null;
+                }
             }
+            catch(error) {
+                console.log("CheckRemoveDeadRole CheckDead:", error);
+
+                if (r.CheckDead()) {
+                    removeRoles.push(r);
+
+                    r.SendExitEvent(battle);
+                    r.roleNode = null;
+                }
+            }   
         }
 
         if (removeRoles.length > 0) {

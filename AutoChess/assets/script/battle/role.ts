@@ -348,7 +348,7 @@ export class Role {
         
         let list = this.getShareDamageArray(battle);
         let substitute = this.getSubstituteDamage(battle);
-        let damage = this.GetProperty(enums.Property.Attack) + this.getintensifierAtk() / list.length;
+        let damage = enemy.GetProperty(enums.Property.Attack) + enemy.getintensifierAtk() / list.length;
         console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {
             if (null != substitute && this == r) {
