@@ -136,16 +136,14 @@ export class Role {
     }
 
     public SendExitEvent(battle: battle.Battle) {
-        if (this.CheckDead()) {
-            let ev = new skill.Event();
-            ev.type = enums.EventType.Exit;
-            ev.spellcaster = new skill.RoleInfo();
-            ev.spellcaster.camp = this.selfCamp;
-            ev.spellcaster.index = this.index;
-            ev.recipient = [];
-            ev.value = [];
-            battle.AddBattleEvent(ev);
-        } 
+        let ev = new skill.Event();
+        ev.type = enums.EventType.Exit;
+        ev.spellcaster = new skill.RoleInfo();
+        ev.spellcaster.camp = this.selfCamp;
+        ev.spellcaster.index = this.index;
+        ev.recipient = [];
+        ev.value = [];
+        battle.AddBattleEvent(ev);
     }
 
     private checkShareDamageBuffer() : boolean {
@@ -328,7 +326,7 @@ export class Role {
      * 2023/9/30
      */
     public GetProperties():Map<enums.Property, number>{
-        let t=new Map<enums.Property, number>(this.properties);
+        let t = new Map<enums.Property, number>(this.properties);
         return t;
     }
 
@@ -348,7 +346,7 @@ export class Role {
         
         let list = this.getShareDamageArray(battle);
         let substitute = this.getSubstituteDamage(battle);
-        let damage = this.GetProperty(enums.Property.Attack) + this.getintensifierAtk() / list.length;
+        let damage = enemy.GetProperty(enums.Property.Attack) + enemy.getintensifierAtk() / list.length;
         console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {
             if (null != substitute && this == r) {

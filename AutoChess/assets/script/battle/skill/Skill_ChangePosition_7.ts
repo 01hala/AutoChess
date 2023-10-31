@@ -49,8 +49,12 @@ export class Skill_ChangePosition_7 extends SkillBase {
             {
                 let begin = originalRoleList[this.index1];
                 let end = originalRoleList[this.index2];
+
                 originalRoleList[this.index1] = end;
                 originalRoleList[this.index2] = begin;
+                begin.index = this.index2;
+                end.index = this.index2;
+
                 let recipient = new RoleInfo();
                 recipient.index = this.index1;
                 recipient.camp = begin.selfCamp;
@@ -59,6 +63,7 @@ export class Skill_ChangePosition_7 extends SkillBase {
                 recipient.index = this.index2;
                 recipient.camp = begin.selfCamp;
                 battleEvent.recipient.push(recipient);
+
                 battleEvent.value.push(this.index1);
                 battleEvent.value.push(this.index2);
             }
@@ -72,10 +77,15 @@ export class Skill_ChangePosition_7 extends SkillBase {
                     }
                     recipientRoles.push(index);
                 }
+
                 let begin = originalRoleList[recipientRoles[0]];
                 let end = originalRoleList[recipientRoles[1]];
+
                 originalRoleList[recipientRoles[0]] = end;
                 originalRoleList[recipientRoles[1]] = begin;
+                begin.index = this.index2;
+                end.index = this.index2;
+
                 let recipient = new RoleInfo();
                 recipient.index = recipientRoles[0];
                 recipient.camp = begin.selfCamp;
@@ -84,6 +94,7 @@ export class Skill_ChangePosition_7 extends SkillBase {
                 recipient.index = recipientRoles[1];
                 recipient.camp = begin.selfCamp;
                 battleEvent.recipient.push(recipient);
+
                 battleEvent.value.push(recipientRoles[0]);
                 battleEvent.value.push(recipientRoles[1]);
             }
