@@ -136,16 +136,14 @@ export class Role {
     }
 
     public SendExitEvent(battle: battle.Battle) {
-        if (this.CheckDead()) {
-            let ev = new skill.Event();
-            ev.type = enums.EventType.Exit;
-            ev.spellcaster = new skill.RoleInfo();
-            ev.spellcaster.camp = this.selfCamp;
-            ev.spellcaster.index = this.index;
-            ev.recipient = [];
-            ev.value = [];
-            battle.AddBattleEvent(ev);
-        } 
+        let ev = new skill.Event();
+        ev.type = enums.EventType.Exit;
+        ev.spellcaster = new skill.RoleInfo();
+        ev.spellcaster.camp = this.selfCamp;
+        ev.spellcaster.index = this.index;
+        ev.recipient = [];
+        ev.value = [];
+        battle.AddBattleEvent(ev);
     }
 
     private checkShareDamageBuffer() : boolean {
