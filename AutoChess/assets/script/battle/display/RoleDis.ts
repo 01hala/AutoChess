@@ -260,6 +260,7 @@ export class RoleDis extends Component
             this.bandage.getComponent(Animation).play();
             return this.delay(200, () => 
             {
+                this.roleInfo = null;
                 this.node.destroy();
             });
         }

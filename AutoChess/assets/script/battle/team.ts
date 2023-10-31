@@ -63,12 +63,10 @@ export class Team {
             catch(error) {
                 console.log("CheckRemoveDeadRole CheckDead:", error);
 
-                if (r.CheckDead()) {
-                    removeRoles.push(r);
+                removeRoles.push(r);
 
-                    r.SendExitEvent(battle);
-                    r.roleNode = null;
-                }
+                r.SendExitEvent(battle);
+                r.roleNode = null;
             }   
         }
 

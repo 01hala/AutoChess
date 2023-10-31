@@ -328,7 +328,7 @@ export class Role {
      * 2023/9/30
      */
     public GetProperties():Map<enums.Property, number>{
-        let t=new Map<enums.Property, number>(this.properties);
+        let t = new Map<enums.Property, number>(this.properties);
         return t;
     }
 
