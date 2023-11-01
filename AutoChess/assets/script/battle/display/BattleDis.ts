@@ -97,10 +97,10 @@ export class BattleDis
         try
         {
             let roles=this.battle.GetSelfTeam().GetRoles();
-            await this.selfQueue.SpawnRole(roles);
+            await this.selfQueue.InitRole(roles);
     
             roles=this.battle.GetEnemyTeam().GetRoles();
-            await this.enemyQueue.SpawnRole(roles);
+            await this.enemyQueue.InitRole(roles);
         }
         catch(error)
         {
