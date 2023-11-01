@@ -238,7 +238,7 @@ export class RoleDis extends Component
             console.log(bulletNode);
             bulletNode.getComponent(Bullet).Init(targetLocation);
             father.addChild(bulletNode);
-            this.delay(700, () => { });
+            //this.delay(700, () => { });
             return this.delay(700, () => 
             {
                 // if (this.tAttack) {
