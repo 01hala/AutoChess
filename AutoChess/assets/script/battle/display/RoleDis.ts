@@ -239,7 +239,14 @@ export class RoleDis extends Component
             bulletNode.getComponent(Bullet).Init(targetLocation);
             father.addChild(bulletNode);
             this.delay(700, () => { });
-
+            return this.delay(700, () => 
+            {
+                // if (this.tAttack) {
+                //     this.tAttack.stop();
+                //     this.tAttack = null;
+                //     console.log("RemoteAttack end!");
+                // }
+            });
         }
         catch (err) 
         {
