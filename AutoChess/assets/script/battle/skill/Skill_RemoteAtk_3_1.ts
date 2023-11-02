@@ -1,8 +1,8 @@
 /*
- * Skill_RemoteAtk_3
+ * Skill_RemoteAtk_3_1
  * author: Hotaru
- * 2023/9/25
- * 对N敌方随机单位造成M点远程伤害
+ * 2023/11/2
+ * 对N敌方随机单位造成M点远程伤害(百分比)
  */
 import { _decorator, Component, Node } from 'cc';
 import { SkillBase,Event, RoleInfo, SkillTriggerBase } from './skill_base';
@@ -11,9 +11,10 @@ import { Battle } from '../battle';
 import { Role } from '../role';
 import { random } from '../util';
 
-export class Skill_RemoteAtk_3 extends SkillBase  
+export class Skill_RemoteAtk_3_1 extends SkillBase  
 {
-    public res:string="battle/skill/Skill_RemoteAtk_3";
+    
+    public res:string="battle/skill/Skill_RemoteAtk_3_1";
     public SkillType:SkillType=SkillType.Attack;
 
     private numberOfRole : number;
@@ -35,8 +36,12 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try 
         {
+            this.attack=this.attack*(1+selfInfo.attack); //攻击力百分比
+            this.attack=Math.round(this.attack);         //四舍五入
+
             if(6>=this.numberOfRole && !this.isAll)
             {
+                
                 this.SkillEffect_1(selfInfo,battle);
             }
             else
@@ -44,10 +49,10 @@ export class Skill_RemoteAtk_3 extends SkillBase
                 console.warn("生效人数不能大于6人");
             }
 
-            if(this.isAll)
-            {
-                this.SkillEffect_2(selfInfo,battle);
-            }
+            // if(this.isAll)
+            // {
+            //     this.SkillEffect_2(selfInfo,battle);
+            // }
             
         } 
         catch (error) 
@@ -56,7 +61,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
         }   
     }
 
-    private SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void          //随机对象生效
+    SkillEffect_1(selfInfo: RoleInfo, battle: Battle)               //随机对象生效
     {
         try
         {
@@ -109,45 +114,8 @@ export class Skill_RemoteAtk_3 extends SkillBase
         }
     }
 
-    private SkillEffect_2(selfInfo: RoleInfo, battle: Battle)         //场上全部生效
+    SkillEffect_2(selfInfo: RoleInfo, battle: Battle)
     {
-        let battleEvent : Event = new Event();
-        battleEvent.type = EventType.RemoteInjured;
-        battleEvent.spellcaster = selfInfo;
-        battleEvent.recipient = [];
-        battleEvent.value = [];
 
-        let self:Role=null;
-
-        if(Camp.Self==selfInfo.camp)
-        {
-            self=battle.GetSelfTeam().GetRole(selfInfo.index);
-        }
-        if(Camp.Enemy==selfInfo.camp)
-        {
-            self=battle.GetEnemyTeam().GetRole(selfInfo.index);
-        }
-
-        let recipientRoles:Role[] = battle.GetSelfTeam().GetRoles();
-        let enemyRoles:Role[] = battle.GetEnemyTeam().GetRoles();
-
-        for(let t of enemyRoles)
-        {
-            recipientRoles.push(t);
-            let roleInfo=new RoleInfo();
-
-            roleInfo.camp=t.selfCamp;
-            if(Camp.Enemy==selfInfo.camp) roleInfo.index=battle.GetSelfTeam().GetRoleIndex(t);
-            else roleInfo.index=battle.GetEnemyTeam().GetRoleIndex(t);
-            battleEvent.recipient.push(roleInfo);
-        }
-
-        for(let role of recipientRoles)
-        {
-            role.BeHurted(this.attack, self, battle)
-        }
-        battle.AddBattleEvent(battleEvent);
     }
 }
-
-

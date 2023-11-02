@@ -111,6 +111,8 @@ export class Battle {
                 }
 
                 let roleInfo = new skill.RoleInfo();
+                roleInfo.attack=role.GetProperty(enums.Property.Attack);
+                roleInfo.hp=role.GetProperty(enums.Property.HP);
                 roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Self;
                 let p = 0;
@@ -137,6 +139,8 @@ export class Battle {
                 }
 
                 let roleInfo = new skill.RoleInfo();
+                roleInfo.attack=role.GetProperty(enums.Property.Attack);
+                roleInfo.hp=role.GetProperty(enums.Property.HP);
                 roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Enemy;
                 let p = 0;

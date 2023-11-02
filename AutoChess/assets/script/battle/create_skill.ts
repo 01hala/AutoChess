@@ -9,10 +9,12 @@ import * as skill from './skill/skill_base'
 import * as Skill_AttGain_1 from './skill/Skill_AttGain_1'
 import * as Skill_RecoveryHP_2 from './skill/Skill_RecoveryHP_2'
 import * as Skill_RemoteAtk_3 from './skill/Skill_RemoteAtk_3'
+import * as Skill_RemoteAtk_3_1 from './skill/Skill_RemoteAtk_3_1'
 import * as Skill_Summon_4 from './skill/Skill_Summon_4'
 import * as Skill_SwapProperties_5 from './skill/Skill_SwapProperties_5'
 import * as Skill_Shields_6 from './skill/Skill_Shields_6'
 import * as Skill_ChangePosition_7 from './skill/Skill_ChangePosition_7'
+import { isInteger } from './util'
 
 
 export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
@@ -52,7 +54,14 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         break;
         case 3:
         {
-            skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, value0,false);
+            if(isInteger(value0))
+            {
+                skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, value0,false);
+            }
+            else
+            {
+                skillObj=new Skill_RemoteAtk_3_1.Skill_RemoteAtk_3_1(skillConfig.Priority, skillConfig.ObjCount, value0,false);
+            }
         }
         break;
         case 4:
