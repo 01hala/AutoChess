@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, tween, Button, UITransform } from 'cc';
+import { _decorator, instantiate, Node, Prefab, tween, Button, UITransform, debug } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
@@ -129,7 +129,7 @@ export class BattleDis
             let enemyAttack = false;
             for(let ev of evs)
             {
-                console.log("checkAttackEvent ev:", ev)
+                //console.log("checkAttackEvent ev:", ev)
                 if (EventType.AttackInjured != ev.type)
                 {
                     continue;
@@ -139,7 +139,7 @@ export class BattleDis
                 {
                     if (!selfAttack)
                     {
-                        console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
+                        //console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
                         let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
                         allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
                             this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp));
@@ -158,7 +158,7 @@ export class BattleDis
                     }
                 }
             }
-            console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
+            //console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
             await Promise.all(allAwait);
         }
         catch(error) 
@@ -179,7 +179,7 @@ export class BattleDis
                     continue;
                 }
 
-                console.log("checkRemoteInjured RemoteInjured");
+                //console.log("checkRemoteInjured RemoteInjured");
 
                 let spList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
                 ev.recipient.forEach(element=>{
@@ -197,7 +197,7 @@ export class BattleDis
                     }
                 });
             }
-            console.log("checkRemoteInjured allAwait:", allAwait);
+            //console.log("checkRemoteInjured allAwait:", allAwait);
             await Promise.all(allAwait);
         }
         catch(error) 
@@ -222,9 +222,11 @@ export class BattleDis
                         {
                             for(let t of ev.recipient)
                             {
-                                r=this.battle.GetSelfTeam().GetRole(t.index);
+                                r=this.battle.GetEnemyTeam().GetRole(t.index);
+                                //console.warn("敌方role",r.index);
                                 if(r && r.roleNode)
                                 {
+                                    //console.warn("敌方角色远程受伤表现");
                                     allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
                                 }
                             }
@@ -244,9 +246,11 @@ export class BattleDis
                         {
                             for(let t of ev.recipient)
                             {
-                                r=this.battle.GetEnemyTeam().GetRole(t.index);
+                                r=this.battle.GetSelfTeam().GetRole(t.index);
+                                //console.warn("我方role",r.index);
                                 if(r && r.roleNode)
                                 {
+                                    //console.warn("我方角色远程受伤表现");
                                     allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
                                 }
                             }

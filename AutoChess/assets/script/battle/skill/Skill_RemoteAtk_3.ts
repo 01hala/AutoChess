@@ -96,7 +96,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
             }
             recipientRoles.forEach((role)=>{
                 role.BeHurted(this.attack, self, battle);
-                console.log("远程攻击角色受伤 :",this.attack);
+                //console.log("远程攻击角色受伤 :",this.attack);
             });
 
             //battleEvent.recipient.push(roleInfo);
