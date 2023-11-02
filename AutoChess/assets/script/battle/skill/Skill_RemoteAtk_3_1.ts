@@ -36,13 +36,11 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
     {
         try 
         {
-            this.attack=this.attack*(1+selfInfo.attack); //攻击力百分比
-            this.attack=Math.round(this.attack);         //四舍五入
 
             if(6>=this.numberOfRole && !this.isAll)
             {
                 
-                this.SkillEffect_1(selfInfo,battle);
+                this.SkillEffect_1(selfInfo,battle,this.attack*(1+selfInfo.attack));
             }
             else
             {
@@ -61,7 +59,7 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
         }   
     }
 
-    SkillEffect_1(selfInfo: RoleInfo, battle: Battle)               //随机对象生效
+    SkillEffect_1(selfInfo: RoleInfo, battle: Battle,attack:number)               //随机对象生效
     {
         try
         {
@@ -77,6 +75,8 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
             let enemyRoles:Role[] = null;
 
             let roleInfo=new RoleInfo();
+
+            attack=Math.round(attack);                                          //四舍五入
 
             if(Camp.Self==selfInfo.camp)
             {
@@ -101,7 +101,7 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
             }
             recipientRoles.forEach((role)=>{
                 role.BeHurted(this.attack, self, battle);
-                console.log("远程攻击角色受伤 :",this.attack);
+                console.log("远程攻击角色受伤 :",attack);
             });
 
             //battleEvent.recipient.push(roleInfo);
