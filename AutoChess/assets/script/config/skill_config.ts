@@ -4,7 +4,7 @@
  * 2023/10/2
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction, ChangePositionType, SwapPropertiesType } from '../battle/enums';
+import { Direction, ChangePositionType, SwapPropertiesType } from '../other/enums';
 
 export enum Priority {
     Low = 1,
