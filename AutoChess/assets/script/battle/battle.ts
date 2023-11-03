@@ -57,9 +57,6 @@ export class Battle {
         let enemy = this.enemyTeam.GetLasterRole();
 
         if (self != null && enemy != null) {
-            console.log("battle self:", self);
-            console.log("battle enemy:", enemy);
-
             self.Attack(enemy, this);
             enemy.Attack(self, this);
 

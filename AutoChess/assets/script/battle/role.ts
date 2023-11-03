@@ -131,8 +131,6 @@ export class Role {
             ev.value.push(damage);
             battle.AddBattleEvent(ev);
         } 
-
-        console.log("sendHurtedEvent camp:", this.selfCamp, " selfIndex:", selfIndex, " enemyIndex:", enemyIndex);
     }
 
     public SendExitEvent(battle: battle.Battle) {
@@ -298,8 +296,6 @@ export class Role {
         hp -= damage;
         this.ChangeProperties(enums.Property.HP, hp);
         this.sendHurtedEvent(enemy, damage, battle, Injured);
-
-        console.log("BeHurted camp: " + this.selfCamp + " index:", this.index, " hp:", hp);
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {
@@ -331,14 +327,11 @@ export class Role {
     }
 
     public CheckDead() {
-        console.log("CheckDead:", this.properties);
         let hp = this.properties.get(enums.Property.HP);
         return hp <= 0;
     }
 
     public Attack(enemy: Role, battle: battle.Battle) {
-        console.log("role Attack begin! camp:", this.selfCamp);
-
         if (enemy.checkInevitableKill()) {
             //console.log("role checkInevitableKill!");
             this.BeInevitableKill(enemy, battle);
@@ -362,7 +355,5 @@ export class Role {
                 r.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
             }
         }
-
-        console.log("role Attack end! camp:", this.selfCamp);
     }
 }

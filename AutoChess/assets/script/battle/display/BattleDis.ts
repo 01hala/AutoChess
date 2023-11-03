@@ -13,12 +13,13 @@ import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { Role } from '../../serverSDK/common';
+import { gm } from '../../gm/gm';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
 {
     //父级对象
-    private father:Node;
+    public father:Node;
     //顶级面板
     private panelNode:Node;
     //战斗效果
@@ -29,12 +30,16 @@ export class BattleDis
 
     private gmBtn:Button;
     //战斗系统类
-    private battle:Battle = null;
+    public battle:Battle = null;
     
     public constructor(battle:Battle) 
     {
         this.battle = battle;
         this.onEvent();
+    }
+
+    public destory() {
+        this.panelNode.destroy();
     }
 
     public async Start(father:Node) 
@@ -50,8 +55,9 @@ export class BattleDis
             this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
             this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
                 console.log("gm Button!");
-                let gmPanel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
-                this.panelNode.addChild(instantiate(gmPanel));
+                let gmPrefab = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
+                let gmPanel = instantiate(gmPrefab);
+                this.panelNode.addChild(gmPanel);
             }, this);
     
             await this.PutRole();
@@ -73,7 +79,6 @@ export class BattleDis
     {
         try
         {
-            console.log("tickBattle begin!");
             while (!this.battle.CheckEndBattle()) 
             {
                 await this.battle.TickBattle();
@@ -150,7 +155,6 @@ export class BattleDis
                 {
                     if (!enemyAttack)
                     {
-                        console.log("checkAttackEvent: enemycamp " + ev.spellcaster.index);
                         let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
                         allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
                             this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp));
@@ -290,16 +294,13 @@ export class BattleDis
 
                 if(Camp.Self==ev.spellcaster.camp)
                 {
-                    console.log("Self Syncope index:", ev.spellcaster.index);
                     allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
                 }
                 else if(Camp.Enemy==ev.spellcaster.camp)
                 {
-                    console.log("Enemy Syncope index:", ev.spellcaster.index);
                     allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
                 }
             }
-            console.log("CheckExitEvent allAwait:", allAwait);
             await Promise.all(allAwait);
         }
         catch(error) 
@@ -310,12 +311,8 @@ export class BattleDis
 
     onEvent()
     {
-        console.log("onEvent begin!");
-
         this.battle.on_event = async (evs) => 
         {
-            console.log("begin on_event! evs:", evs);
-
             try 
             {
                 await this.CheckAttackEvent(evs);
@@ -327,8 +324,6 @@ export class BattleDis
             {
                 console.error("BattleDis 下的 on_event 错误 err:", error);
             }
-
-            console.log("end on_event!");
         }
     }
 }

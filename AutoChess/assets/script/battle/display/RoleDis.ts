@@ -113,7 +113,6 @@ export class RoleDis extends Component
     {
         try 
         {
-            console.log(`Attack begin! selfCamp:${this.roleInfo.selfCamp}`);
             this.tAttack = tween(this.node)
                 .to(0.4, { position: readyLocation })
                 .delay(0.1)
@@ -136,7 +135,6 @@ export class RoleDis extends Component
                 if (this.tAttack) {
                     this.tAttack.stop();
                     this.tAttack = null;
-                    console.log("Attack end!");
                 }
             });
         }
