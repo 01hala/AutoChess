@@ -5,22 +5,39 @@ using System.Reflection.Metadata;
 
 namespace config
 {
-    public class RoleConfig
+    public class FoodConfig
     {
         public int Id;
         public string Name;
-        public int Stage;
-        public int Level;
         public int Price;
-        public int Attack;
-        public int Hp;
-        public int Fetters;
-        public int Hermes;
-        public string Res;
+        public int Stage;
+        public int Effect;
+        public int EffectScope;
+        public int AttackBonus;
+        public int HpBonus;
+        public int Vaule;
 
-        public static Dictionary<int, RoleConfig> Load(string path)
+        public static Dictionary<int, List<FoodConfig> > LoadStage(Dictionary<int, FoodConfig> cfg)
         {
-            var obj = new Dictionary<int, RoleConfig>();
+            var stage = new Dictionary<int, List<FoodConfig>>();
+
+            foreach (var f in cfg.Values)
+            {
+                if (!stage.TryGetValue(f.Stage, out List<FoodConfig> foods))
+                {
+                    foods = new List<FoodConfig>();
+                    stage[f.Stage] = foods;
+                }
+
+                foods.Add(f);
+            }
+
+            return stage;
+        }
+
+        public static Dictionary<int, FoodConfig> Load(string path)
+        {
+            var obj = new Dictionary<int, FoodConfig>();
 
             FileStream fs = File.OpenRead(path);
             byte[] data = new byte[fs.Length];
@@ -40,17 +57,18 @@ namespace config
             var handle = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(System.Text.Encoding.Default.GetString(data));
             foreach (var o in handle.Values)
             {
-                var rolec = new RoleConfig();
-                rolec.Id = (int)o["Id"];
-                rolec.Name = (string)o["Name"];
-                rolec.Stage = (int)o["Stage"];
-                rolec.Price = (int)o["Price"];
-                rolec.Attack = (int)o["Attack"];
-                rolec.Hp = (int)o["Hp"];
-                rolec.Fetters = (int)o["Fetters"];
-                rolec.Res = (string)o["Res"];
+                var foodc = new FoodConfig();
+                foodc.Id = (int)o["Id"];
+                foodc.Name = (string)o["Name"];
+                foodc.Price = (int)o["Price"];
+                foodc.Stage = (int)o["Stage"];
+                foodc.Effect = (int)o["Effect"];
+                foodc.EffectScope = (int)o["EffectScope"];
+                foodc.AttackBonus = (int)o["AttackBonus"];
+                foodc.HpBonus = (int)o["HpBonus"];
+                foodc.Vaule = (int)o["Vaule"];
 
-                obj[rolec.Id] = rolec;
+                obj[foodc.Id] = foodc;
             }
 
             return obj;

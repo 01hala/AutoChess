@@ -18,6 +18,24 @@ namespace config
         public int Hermes;
         public string Res;
 
+        public static Dictionary<int, List<RoleConfig> > LoadStage(Dictionary<int, RoleConfig> cfg)
+        {
+            var stage = new Dictionary<int, List<RoleConfig>>();
+
+            foreach (var r in cfg.Values)
+            {
+                if (!stage.TryGetValue(r.Stage, out List<RoleConfig> roles))
+                {
+                    roles = new List<RoleConfig>();
+                    stage[r.Stage] = roles;
+                }
+
+                roles.Add(r);
+            }
+
+            return stage;
+        }
+
         public static Dictionary<int, RoleConfig> Load(string path)
         {
             var obj = new Dictionary<int, RoleConfig>();
