@@ -4,11 +4,12 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, tween, Button, UITransform, debug } from 'cc';
+import { _decorator, instantiate, Node, Prefab, tween, Button, UITransform, Label } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
 import { Camp, EventType } from '../../other/enums';
+import { sleep } from '../../other/sleep'
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
@@ -29,6 +30,9 @@ export class BattleDis
     public enemyQueue:Queue;
 
     private gmBtn:Button;
+    private pauseBtn:Button;
+    private puase:boolean = false;
+
     //战斗系统类
     public battle:Battle = null;
     
@@ -48,16 +52,32 @@ export class BattleDis
         {
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
             this.panelNode = instantiate(panel);
+
             this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
             this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
+
             this.battleEffectImg=this.panelNode.getChildByName("BattleEffectImg");
             this.battleEffectImg.active=false;
+
             this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
             this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
                 console.log("gm Button!");
                 let gmPrefab = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
                 let gmPanel = instantiate(gmPrefab);
                 this.panelNode.addChild(gmPanel);
+            }, this);
+
+            let pauseNode = this.panelNode.getChildByName("pause");
+            this.pauseBtn = pauseNode.getComponent(Button);
+            this.pauseBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
+                console.log("pause Button!");
+                this.puase = !this.puase;
+                if (this.puase) {
+                    pauseNode.getChildByName("Label").getComponent(Label).string = "run";
+                }
+                else {    
+                    pauseNode.getChildByName("Label").getComponent(Label).string = "pause";
+                }
             }, this);
     
             await this.PutRole();
@@ -82,6 +102,10 @@ export class BattleDis
             while (!this.battle.CheckEndBattle()) 
             {
                 await this.battle.TickBattle();
+
+                while (this.puase) {
+                    await sleep(200);
+                }
             }
 
             await this.battle.TickBattle();
