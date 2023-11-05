@@ -274,6 +274,36 @@ export class plan_start_round_cb{
 
 }
 
+export class plan_start_round1_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : plan_rsp_cb;
+
+    public event_start_round1_handle_cb : (self:common.UserBattleData, target:common.UserBattleData)=>void | null;
+    public event_start_round1_handle_err : (err:number)=>void | null;
+    public event_start_round1_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : plan_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_start_round1_handle_cb = null;
+        this.event_start_round1_handle_err = null;
+        this.event_start_round1_handle_timeout = null;
+    }
+
+    callBack(_cb:(self:common.UserBattleData, target:common.UserBattleData)=>void, _err:(err:number)=>void)
+    {
+        this.event_start_round1_handle_cb = _cb;
+        this.event_start_round1_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.start_round1_timeout(this.cb_uuid); }, tick);
+        this.event_start_round1_handle_timeout = timeout_cb;
+    }
+
+}
+
 export class plan_confirm_round_victory_cb{
     private cb_uuid : number;
     private module_rsp_cb : plan_rsp_cb;
@@ -310,6 +340,7 @@ export class plan_rsp_cb extends client_handle.imodule {
     public map_sale_role:Map<number, plan_sale_role_cb>;
     public map_refresh:Map<number, plan_refresh_cb>;
     public map_start_round:Map<number, plan_start_round_cb>;
+    public map_start_round1:Map<number, plan_start_round1_cb>;
     public map_confirm_round_victory:Map<number, plan_confirm_round_victory_cb>;
     constructor(modules:client_handle.modulemng){
         super();
@@ -325,6 +356,9 @@ export class plan_rsp_cb extends client_handle.imodule {
         this.map_start_round = new Map<number, plan_start_round_cb>();
         modules.add_method("plan_rsp_cb_start_round_rsp", this.start_round_rsp.bind(this));
         modules.add_method("plan_rsp_cb_start_round_err", this.start_round_err.bind(this));
+        this.map_start_round1 = new Map<number, plan_start_round1_cb>();
+        modules.add_method("plan_rsp_cb_start_round1_rsp", this.start_round1_rsp.bind(this));
+        modules.add_method("plan_rsp_cb_start_round1_err", this.start_round1_err.bind(this));
         this.map_confirm_round_victory = new Map<number, plan_confirm_round_victory_cb>();
         modules.add_method("plan_rsp_cb_confirm_round_victory_rsp", this.confirm_round_victory_rsp.bind(this));
         modules.add_method("plan_rsp_cb_confirm_round_victory_err", this.confirm_round_victory_err.bind(this));
@@ -471,6 +505,42 @@ export class plan_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public start_round1_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_f14f1f61_44e1_3119_8561_5f13515b6af0:any[] = [];
+        _argv_f14f1f61_44e1_3119_8561_5f13515b6af0.push(common.protcol_to_UserBattleData(inArray[1]));
+        _argv_f14f1f61_44e1_3119_8561_5f13515b6af0.push(common.protcol_to_UserBattleData(inArray[2]));
+        var rsp = this.try_get_and_del_start_round1_cb(uuid);
+        if (rsp && rsp.event_start_round1_handle_cb) {
+            rsp.event_start_round1_handle_cb.apply(null, _argv_f14f1f61_44e1_3119_8561_5f13515b6af0);
+        }
+    }
+
+    public start_round1_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_f14f1f61_44e1_3119_8561_5f13515b6af0:any[] = [];
+        _argv_f14f1f61_44e1_3119_8561_5f13515b6af0.push(inArray[1]);
+        var rsp = this.try_get_and_del_start_round1_cb(uuid);
+        if (rsp && rsp.event_start_round1_handle_err) {
+            rsp.event_start_round1_handle_err.apply(null, _argv_f14f1f61_44e1_3119_8561_5f13515b6af0);
+        }
+    }
+
+    public start_round1_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_start_round1_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_start_round1_handle_timeout) {
+                rsp.event_start_round1_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_start_round1_cb(uuid : number){
+        var rsp = this.map_start_round1.get(uuid);
+        this.map_start_round1.delete(uuid);
+        return rsp;
+    }
+
     public confirm_round_victory_rsp(inArray:any[]){
         let uuid = inArray[0];
         let _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0:any[] = [];
@@ -585,6 +655,18 @@ export class plan_hubproxy
             rsp_cb_plan_handle.map_start_round.set(uuid_749771b4_9d43_5dd9_aa87_9201c8f06d41, cb_start_round_obj);
         }
         return cb_start_round_obj;
+    }
+
+    public start_round1(){
+        let uuid_5813c0ea_49f7_594f_866e_a947cbfbb3da = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
+
+        let _argv_f14f1f61_44e1_3119_8561_5f13515b6af0:any[] = [uuid_5813c0ea_49f7_594f_866e_a947cbfbb3da];
+        this._client_handle.call_hub(this.hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_start_round1", _argv_f14f1f61_44e1_3119_8561_5f13515b6af0);
+        let cb_start_round1_obj = new plan_start_round1_cb(uuid_5813c0ea_49f7_594f_866e_a947cbfbb3da, rsp_cb_plan_handle);
+        if (rsp_cb_plan_handle){
+            rsp_cb_plan_handle.map_start_round1.set(uuid_5813c0ea_49f7_594f_866e_a947cbfbb3da, cb_start_round1_obj);
+        }
+        return cb_start_round1_obj;
     }
 
     public confirm_round_victory(is_victory:boolean){
