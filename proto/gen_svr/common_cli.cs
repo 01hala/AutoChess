@@ -8,6 +8,12 @@ namespace Abelkhan
 {
 /*this enum code is codegen by abelkhan codegen for c#*/
 
+    public enum ShopSkillEffectEM{
+        AddProperty = 1,
+        AddCoin = 2,
+        RefreshShop = 3,
+        AddEquipment = 4
+    }
     public enum ShopIndex{
         Role = 0,
         Prop = 1

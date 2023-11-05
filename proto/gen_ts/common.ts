@@ -1,6 +1,13 @@
 import * as client_handle from "./client_handle";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
+export enum ShopSkillEffectEM{
+    AddProperty = 1,
+    AddCoin = 2,
+    RefreshShop = 3,
+    AddEquipment = 4
+}
+
 export enum ShopIndex{
     Role = 0,
     Prop = 1

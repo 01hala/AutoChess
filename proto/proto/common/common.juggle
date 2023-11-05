@@ -20,6 +20,13 @@ struct Role {
 	int32 additionBuffer;
 }
 
+enum ShopSkillEffectEM {
+	AddProperty = 1;
+	AddCoin = 2;
+	RefreshShop = 3;
+	AddEquipment = 4;
+}
+
 struct UserBattleData
 {
 	UserInformation User; // 用户信息
