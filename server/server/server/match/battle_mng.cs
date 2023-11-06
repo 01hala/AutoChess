@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -151,13 +152,114 @@ namespace Match
 
         public em_error buy(ShopIndex shop_index, int index, int role_index)
         {
+            var r = battleData.RoleList[index];
+
             if (shop_index == ShopIndex.Role)
             {
+                var s = shopData.SaleRoleList[index];
 
+                if (s == null)
+                {
+                    return em_error.db_error;
+                }
+
+                if (r == null)
+                {
+                    r = new Role();
+
+                    r.RoleID = s.RoleID;
+                    r.Level = 1;
+                    r.Number = 1;
+                    r.HP = s.HP;
+                    r.Attack = s.Attack;
+                    r.TempHP = 0;
+                    r.TempAttack = 0;
+                    r.additionBuffer = 0;
+                    r.TempAdditionBuffer = 0;
+
+                    battleData.RoleList[index] = r;
+                }
+                else
+                {
+                    if (r.RoleID != s.RoleID)
+                    {
+                        return em_error.not_same_role_to_update;
+                    }
+
+                    r.Number += 1;
+                    r.Level = r.Number / 3 + 1;
+                    r.HP += 1;
+                    r.Attack += 1;
+                }
+
+                shopData.SaleRoleList.RemoveAt(index);
             }
             else if (shop_index == ShopIndex.Prop)
             {
+                if (r == null)
+                {
+                    return em_error.db_error;
+                }
 
+                var p = shopData.SalePropList[index];
+                if (p == null)
+                {
+                    return em_error.db_error;
+                }
+
+                if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
+                {
+                    if (config.Config.FoodConfigs.TryGetValue(p.PropID, out var foodcfg))
+                    {
+                        switch((BufferAndEquipEffect)foodcfg.Effect)
+                        {
+                            case BufferAndEquipEffect.AddHP:
+                            {
+                                if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                {
+                                    r.TempHP += foodcfg.HpBonus;
+                                }
+                                else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                {
+                                    r.HP-= foodcfg.HpBonus;
+                                }
+                            }
+                            break;
+
+                            case BufferAndEquipEffect.AddAttack:
+                            {
+                                if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                {
+                                    r.TempAttack += foodcfg.AttackBonus;
+                                }
+                                else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                {
+                                    r.Attack -= foodcfg.AttackBonus;
+                                }
+                            }
+                            break;
+
+                            case BufferAndEquipEffect.AddBuffer:
+                            {
+                                if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                {
+                                    r.TempAdditionBuffer += foodcfg.Vaule;
+                                }
+                                else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                {
+                                    r.additionBuffer -= foodcfg.Vaule;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        return em_error.db_error;
+                    }
+                }
+
+                shopData.SalePropList.RemoveAt(index);
             }
             else
             {

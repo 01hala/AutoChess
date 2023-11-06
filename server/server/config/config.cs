@@ -20,8 +20,24 @@ namespace config
         Self = 5,
     }
 
+    public enum BufferAndEquipEffect
+    {
+        AddHP = 1,
+        AddAttack = 2,
+        AddBuffer = 3,
+    }
+
+    public enum EffectScope
+    {
+        SingleBattle = 1,
+        WholeGame = 2,
+    }
+
     public static class Config
     {
+        public const int FoodIDMin = 1000;
+        public const int FoodIDMax = 1999;
+
         public static Dictionary<int, RoleConfig> RoleConfigs;
         public static Dictionary<int, List<RoleConfig> > RoleStageConfigs;
         public static Dictionary<int, FoodConfig> FoodConfigs;

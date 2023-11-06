@@ -73,6 +73,7 @@ export class Role
 {
     public RoleID : number = 0;
     public Level : number = 0;
+    public Number : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
     public TempHP : number = 0;
@@ -94,6 +95,9 @@ export function protcol_to_Role(_protocol:any){
         }
         else if (key === "Level"){
             _struct.Level = val as number;
+        }
+        else if (key === "Number"){
+            _struct.Number = val as number;
         }
         else if (key === "HP"){
             _struct.HP = val as number;

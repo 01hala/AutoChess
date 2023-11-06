@@ -86,6 +86,7 @@ namespace Abelkhan
     {
         public Int32 RoleID;
         public Int32 Level;
+        public Int32 Number;
         public Int32 HP;
         public Int32 Attack;
         public Int32 TempHP;
@@ -96,6 +97,7 @@ namespace Abelkhan
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("Level", _struct.Level);
+            _protocol.Add("Number", _struct.Number);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
             _protocol.Add("TempHP", _struct.TempHP);
@@ -112,6 +114,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Number"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.Number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "HP"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.HP = ((MsgPack.MessagePackObject)i.Value).AsInt32();
