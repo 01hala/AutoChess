@@ -95,6 +95,19 @@ namespace Match
         {
             var rsp = plan_Module.rsp as plan_refresh_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var self = Match.battle_Mng.get_battle_player(uuid);
+                self.refresh();
+
+                rsp.rsp(self.ShopData);
+            }
+            catch(System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_refresh error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private void Plan_Module_on_sale_role(int obj)

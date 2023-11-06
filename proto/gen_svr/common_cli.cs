@@ -165,23 +165,81 @@ namespace Abelkhan
         }
     }
 
+    public class ShopRole
+    {
+        public Int32 RoleID;
+        public Int32 HP;
+        public Int32 Attack;
+        public bool IsFreeze;
+        public static MsgPack.MessagePackObjectDictionary ShopRole_to_protcol(ShopRole _struct){
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("RoleID", _struct.RoleID);
+            _protocol.Add("HP", _struct.HP);
+            _protocol.Add("Attack", _struct.Attack);
+            _protocol.Add("IsFreeze", _struct.IsFreeze);
+            return _protocol;
+        }
+        public static ShopRole protcol_to_ShopRole(MsgPack.MessagePackObjectDictionary _protocol){
+            var _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2 = new ShopRole();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "HP"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.HP = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Attack"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.Attack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "IsFreeze"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.IsFreeze = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+            }
+            return _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2;
+        }
+    }
+
+    public class ShopProp
+    {
+        public Int32 PropID;
+        public bool IsFreeze;
+        public static MsgPack.MessagePackObjectDictionary ShopProp_to_protcol(ShopProp _struct){
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("PropID", _struct.PropID);
+            _protocol.Add("IsFreeze", _struct.IsFreeze);
+            return _protocol;
+        }
+        public static ShopProp protcol_to_ShopProp(MsgPack.MessagePackObjectDictionary _protocol){
+            var _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c = new ShopProp();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "PropID"){
+                    _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c.PropID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "IsFreeze"){
+                    _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c.IsFreeze = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+            }
+            return _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c;
+        }
+    }
+
     public class ShopData
     {
-        public List<Int32> SaleRoleList;
-        public List<Int32> SalePropList;
+        public List<ShopRole> SaleRoleList;
+        public List<ShopProp> SalePropList;
         public static MsgPack.MessagePackObjectDictionary ShopData_to_protcol(ShopData _struct){
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             if (_struct.SaleRoleList != null) {
                 var _array_SaleRoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.SaleRoleList){
-                    _array_SaleRoleList.Add(v_);
+                    _array_SaleRoleList.Add( new MsgPack.MessagePackObject(ShopRole.ShopRole_to_protcol(v_)));
                 }
                 _protocol.Add("SaleRoleList", new MsgPack.MessagePackObject(_array_SaleRoleList));
             }
             if (_struct.SalePropList != null) {
                 var _array_SalePropList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.SalePropList){
-                    _array_SalePropList.Add(v_);
+                    _array_SalePropList.Add( new MsgPack.MessagePackObject(ShopProp.ShopProp_to_protcol(v_)));
                 }
                 _protocol.Add("SalePropList", new MsgPack.MessagePackObject(_array_SalePropList));
             }
@@ -191,17 +249,17 @@ namespace Abelkhan
             var _struct4c993b13_c35e_3baf_abbc_c749b6027fbc = new ShopData();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "SaleRoleList"){
-                    _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SaleRoleList = new List<Int32>();
+                    _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SaleRoleList = new List<ShopRole>();
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
                     foreach (var v_ in _protocol_array){
-                        _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SaleRoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                        _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SaleRoleList.Add(ShopRole.protcol_to_ShopRole(((MsgPack.MessagePackObject)v_).AsDictionary()));
                     }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SalePropList"){
-                    _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SalePropList = new List<Int32>();
+                    _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SalePropList = new List<ShopProp>();
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
                     foreach (var v_ in _protocol_array){
-                        _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SalePropList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                        _struct4c993b13_c35e_3baf_abbc_c749b6027fbc.SalePropList.Add(ShopProp.protcol_to_ShopProp(((MsgPack.MessagePackObject)v_).AsDictionary()));
                     }
                 }
             }

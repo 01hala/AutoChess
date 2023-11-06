@@ -140,10 +140,66 @@ export function protcol_to_UserBattleData(_protocol:any){
     return _struct;
 }
 
+export class ShopRole
+{
+    public RoleID : number = 0;
+    public HP : number = 0;
+    public Attack : number = 0;
+    public IsFreeze : boolean = false;
+
+}
+
+export function ShopRole_to_protcol(_struct:ShopRole){
+    return _struct;
+}
+
+export function protcol_to_ShopRole(_protocol:any){
+    let _struct = new ShopRole();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "RoleID"){
+            _struct.RoleID = val as number;
+        }
+        else if (key === "HP"){
+            _struct.HP = val as number;
+        }
+        else if (key === "Attack"){
+            _struct.Attack = val as number;
+        }
+        else if (key === "IsFreeze"){
+            _struct.IsFreeze = val as boolean;
+        }
+    }
+    return _struct;
+}
+
+export class ShopProp
+{
+    public PropID : number = 0;
+    public IsFreeze : boolean = false;
+
+}
+
+export function ShopProp_to_protcol(_struct:ShopProp){
+    return _struct;
+}
+
+export function protcol_to_ShopProp(_protocol:any){
+    let _struct = new ShopProp();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "PropID"){
+            _struct.PropID = val as number;
+        }
+        else if (key === "IsFreeze"){
+            _struct.IsFreeze = val as boolean;
+        }
+    }
+    return _struct;
+}
+
 export class ShopData
 {
-    public SaleRoleList : number[] = [];
-    public SalePropList : number[] = [];
+    public SaleRoleList : ShopRole[] = [];
+    public SalePropList : ShopProp[] = [];
 
 }
 
@@ -157,13 +213,13 @@ export function protcol_to_ShopData(_protocol:any){
         if (key === "SaleRoleList"){
             _struct.SaleRoleList = [];
             for(let v_ of val as any) {
-                _struct.SaleRoleList.push(v_);
+                _struct.SaleRoleList.push(protcol_to_ShopRole(v_));
             }
         }
         else if (key === "SalePropList"){
             _struct.SalePropList = [];
             for(let v_ of val as any) {
-                _struct.SalePropList.push(v_);
+                _struct.SalePropList.push(protcol_to_ShopProp(v_));
             }
         }
     }

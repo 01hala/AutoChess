@@ -39,10 +39,22 @@ enum ShopIndex {
 	Prop = 1;
 }
 
+struct ShopRole {
+	int32 RoleID;
+	int32 HP;
+	int32 Attack;
+	bool IsFreeze;
+}
+
+struct ShopProp {
+	int32 PropID;
+	bool IsFreeze;
+}
+
 struct ShopData
 {
-	int32[] SaleRoleList;
-	int32[] SalePropList;
+	ShopRole[] SaleRoleList;
+	ShopProp[] SalePropList;
 }
 
 struct svr_info
