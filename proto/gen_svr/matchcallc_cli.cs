@@ -49,12 +49,13 @@ namespace Abelkhan
     }
 
 /*this module code is codegen by abelkhan codegen for c#*/
-    public class shop_skill_effect_module : Common.IModule {
+    public class shop_client_module : Common.IModule {
         public Client.Client _client_handle;
-        public shop_skill_effect_module(Client.Client client_handle_) 
+        public shop_client_module(Client.Client client_handle_) 
         {
             _client_handle = client_handle_;
-            _client_handle.modulemanager.add_mothed("shop_skill_effect_shop_skill_effect", shop_skill_effect);
+            _client_handle.modulemanager.add_mothed("shop_client_shop_skill_effect", shop_skill_effect);
+            _client_handle.modulemanager.add_mothed("shop_client_refresh", refresh);
         }
 
         public event Action<ShopSkillEffect> on_shop_skill_effect;
@@ -62,6 +63,14 @@ namespace Abelkhan
             var _effect = ShopSkillEffect.protcol_to_ShopSkillEffect(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
             if (on_shop_skill_effect != null){
                 on_shop_skill_effect(_effect);
+            }
+        }
+
+        public event Action<ShopData> on_refresh;
+        public void refresh(IList<MsgPack.MessagePackObject> inArray){
+            var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_refresh != null){
+                on_refresh(_info);
             }
         }
 

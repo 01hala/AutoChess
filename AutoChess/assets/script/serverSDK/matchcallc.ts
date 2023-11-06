@@ -35,14 +35,16 @@ export function protcol_to_ShopSkillEffect(_protocol:any){
 }
 
 /*this module code is codegen by abelkhan codegen for typescript*/
-export class shop_skill_effect_module extends client_handle.imodule {
+export class shop_client_module extends client_handle.imodule {
     public _client_handle:client_handle.client;
     constructor(_client_handle_:client_handle.client){
         super();
         this._client_handle = _client_handle_;
-        this._client_handle._modulemng.add_method("shop_skill_effect_shop_skill_effect", this.shop_skill_effect.bind(this));
+        this._client_handle._modulemng.add_method("shop_client_shop_skill_effect", this.shop_skill_effect.bind(this));
+        this._client_handle._modulemng.add_method("shop_client_refresh", this.refresh.bind(this));
 
         this.cb_shop_skill_effect = null;
+        this.cb_refresh = null;
     }
 
     public cb_shop_skill_effect : (effect:ShopSkillEffect)=>void | null;
@@ -51,6 +53,15 @@ export class shop_skill_effect_module extends client_handle.imodule {
         _argv_.push(protcol_to_ShopSkillEffect(inArray[0]));
         if (this.cb_shop_skill_effect){
             this.cb_shop_skill_effect.apply(null, _argv_);
+        }
+    }
+
+    public cb_refresh : (info:common.ShopData)=>void | null;
+    refresh(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(common.protcol_to_ShopData(inArray[0]));
+        if (this.cb_refresh){
+            this.cb_refresh.apply(null, _argv_);
         }
     }
 

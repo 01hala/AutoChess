@@ -6,6 +6,7 @@ struct ShopSkillEffect {
     int32[] value;
 }
 
-module shop_skill_effect {
+module shop_client {
     shop_skill_effect ntf(ShopSkillEffect effect);
+    refresh ntf(ShopData info);
 }

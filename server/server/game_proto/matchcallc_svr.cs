@@ -50,90 +50,96 @@ namespace Abelkhan
 
 /*this caller code is codegen by abelkhan codegen for c#*/
 /*this cb code is codegen by abelkhan for c#*/
-    public class shop_skill_effect_rsp_cb : Common.IModule {
-        public shop_skill_effect_rsp_cb() 
+    public class shop_client_rsp_cb : Common.IModule {
+        public shop_client_rsp_cb() 
         {
         }
 
     }
 
-    public class shop_skill_effect_clientproxy {
-        public string client_uuid_c0363c29_389e_36d3_b41f_f37d9a21bfc8;
-        private Int32 uuid_c0363c29_389e_36d3_b41f_f37d9a21bfc8 = (Int32)RandomUUID.random();
+    public class shop_client_clientproxy {
+        public string client_uuid_e5452469_9f69_3091_b3a7_a731f3b03301;
+        private Int32 uuid_e5452469_9f69_3091_b3a7_a731f3b03301 = (Int32)RandomUUID.random();
 
-        public shop_skill_effect_rsp_cb rsp_cb_shop_skill_effect_handle;
+        public shop_client_rsp_cb rsp_cb_shop_client_handle;
 
-        public shop_skill_effect_clientproxy(shop_skill_effect_rsp_cb rsp_cb_shop_skill_effect_handle_)
+        public shop_client_clientproxy(shop_client_rsp_cb rsp_cb_shop_client_handle_)
         {
-            rsp_cb_shop_skill_effect_handle = rsp_cb_shop_skill_effect_handle_;
+            rsp_cb_shop_client_handle = rsp_cb_shop_client_handle_;
         }
 
         public void shop_skill_effect(ShopSkillEffect effect){
             var _argv_c0363c29_389e_36d3_b41f_f37d9a21bfc8 = new ArrayList();
             _argv_c0363c29_389e_36d3_b41f_f37d9a21bfc8.Add(ShopSkillEffect.ShopSkillEffect_to_protcol(effect));
-            Hub.Hub._gates.call_client(client_uuid_c0363c29_389e_36d3_b41f_f37d9a21bfc8, "shop_skill_effect_shop_skill_effect", _argv_c0363c29_389e_36d3_b41f_f37d9a21bfc8);
+            Hub.Hub._gates.call_client(client_uuid_e5452469_9f69_3091_b3a7_a731f3b03301, "shop_client_shop_skill_effect", _argv_c0363c29_389e_36d3_b41f_f37d9a21bfc8);
+        }
+
+        public void refresh(ShopData info){
+            var _argv_97f4163d_22be_334a_ad37_ab1f786ceb46 = new ArrayList();
+            _argv_97f4163d_22be_334a_ad37_ab1f786ceb46.Add(ShopData.ShopData_to_protcol(info));
+            Hub.Hub._gates.call_client(client_uuid_e5452469_9f69_3091_b3a7_a731f3b03301, "shop_client_refresh", _argv_97f4163d_22be_334a_ad37_ab1f786ceb46);
         }
 
     }
 
-    public class shop_skill_effect_multicast {
-        public List<string> client_uuids_c0363c29_389e_36d3_b41f_f37d9a21bfc8;
-        public shop_skill_effect_rsp_cb rsp_cb_shop_skill_effect_handle;
+    public class shop_client_multicast {
+        public List<string> client_uuids_e5452469_9f69_3091_b3a7_a731f3b03301;
+        public shop_client_rsp_cb rsp_cb_shop_client_handle;
 
-        public shop_skill_effect_multicast(shop_skill_effect_rsp_cb rsp_cb_shop_skill_effect_handle_)
+        public shop_client_multicast(shop_client_rsp_cb rsp_cb_shop_client_handle_)
         {
-            rsp_cb_shop_skill_effect_handle = rsp_cb_shop_skill_effect_handle_;
+            rsp_cb_shop_client_handle = rsp_cb_shop_client_handle_;
         }
 
     }
 
-    public class shop_skill_effect_broadcast {
-        public shop_skill_effect_rsp_cb rsp_cb_shop_skill_effect_handle;
+    public class shop_client_broadcast {
+        public shop_client_rsp_cb rsp_cb_shop_client_handle;
 
-        public shop_skill_effect_broadcast(shop_skill_effect_rsp_cb rsp_cb_shop_skill_effect_handle_)
+        public shop_client_broadcast(shop_client_rsp_cb rsp_cb_shop_client_handle_)
         {
-            rsp_cb_shop_skill_effect_handle = rsp_cb_shop_skill_effect_handle_;
+            rsp_cb_shop_client_handle = rsp_cb_shop_client_handle_;
         }
 
     }
 
-    public class shop_skill_effect_caller {
-        public static shop_skill_effect_rsp_cb rsp_cb_shop_skill_effect_handle = null;
-        private ThreadLocal<shop_skill_effect_clientproxy> _clientproxy;
-        private ThreadLocal<shop_skill_effect_multicast> _multicast;
-        private shop_skill_effect_broadcast _broadcast;
+    public class shop_client_caller {
+        public static shop_client_rsp_cb rsp_cb_shop_client_handle = null;
+        private ThreadLocal<shop_client_clientproxy> _clientproxy;
+        private ThreadLocal<shop_client_multicast> _multicast;
+        private shop_client_broadcast _broadcast;
 
-        public shop_skill_effect_caller() 
+        public shop_client_caller() 
         {
-            if (rsp_cb_shop_skill_effect_handle == null)
+            if (rsp_cb_shop_client_handle == null)
             {
-                rsp_cb_shop_skill_effect_handle = new shop_skill_effect_rsp_cb();
+                rsp_cb_shop_client_handle = new shop_client_rsp_cb();
             }
 
-            _clientproxy = new ThreadLocal<shop_skill_effect_clientproxy>();
-            _multicast = new ThreadLocal<shop_skill_effect_multicast>();
-            _broadcast = new shop_skill_effect_broadcast(rsp_cb_shop_skill_effect_handle);
+            _clientproxy = new ThreadLocal<shop_client_clientproxy>();
+            _multicast = new ThreadLocal<shop_client_multicast>();
+            _broadcast = new shop_client_broadcast(rsp_cb_shop_client_handle);
         }
 
-        public shop_skill_effect_clientproxy get_client(string client_uuid) {
+        public shop_client_clientproxy get_client(string client_uuid) {
             if (_clientproxy.Value == null)
 {
-                _clientproxy.Value = new shop_skill_effect_clientproxy(rsp_cb_shop_skill_effect_handle);
+                _clientproxy.Value = new shop_client_clientproxy(rsp_cb_shop_client_handle);
             }
-            _clientproxy.Value.client_uuid_c0363c29_389e_36d3_b41f_f37d9a21bfc8 = client_uuid;
+            _clientproxy.Value.client_uuid_e5452469_9f69_3091_b3a7_a731f3b03301 = client_uuid;
             return _clientproxy.Value;
         }
 
-        public shop_skill_effect_multicast get_multicast(List<string> client_uuids) {
+        public shop_client_multicast get_multicast(List<string> client_uuids) {
             if (_multicast.Value == null)
 {
-                _multicast.Value = new shop_skill_effect_multicast(rsp_cb_shop_skill_effect_handle);
+                _multicast.Value = new shop_client_multicast(rsp_cb_shop_client_handle);
             }
-            _multicast.Value.client_uuids_c0363c29_389e_36d3_b41f_f37d9a21bfc8 = client_uuids;
+            _multicast.Value.client_uuids_e5452469_9f69_3091_b3a7_a731f3b03301 = client_uuids;
             return _multicast.Value;
         }
 
-        public shop_skill_effect_broadcast get_broadcast() {
+        public shop_client_broadcast get_broadcast() {
             return _broadcast;
         }
     }
