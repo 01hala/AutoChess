@@ -606,12 +606,13 @@ export class plan_hubproxy
         this._client_handle = client_handle_;
     }
 
-    public buy(shop_index:common.ShopIndex, index:number){
+    public buy(shop_index:common.ShopIndex, index:number, role_index:number){
         let uuid_4d846fab_804e_563b_998f_6e40c5d2bd39 = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
 
         let _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d:any[] = [uuid_4d846fab_804e_563b_998f_6e40c5d2bd39];
         _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.push(shop_index);
         _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.push(index);
+        _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.push(role_index);
         this._client_handle.call_hub(this.hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_buy", _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d);
         let cb_buy_obj = new plan_buy_cb(uuid_4d846fab_804e_563b_998f_6e40c5d2bd39, rsp_cb_plan_handle);
         if (rsp_cb_plan_handle){

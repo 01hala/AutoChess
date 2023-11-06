@@ -840,13 +840,14 @@ namespace Abelkhan
             rsp_cb_plan_handle = rsp_cb_plan_handle_;
         }
 
-        public plan_buy_cb buy(ShopIndex shop_index, Int32 index){
+        public plan_buy_cb buy(ShopIndex shop_index, Int32 index, Int32 role_index){
             var uuid_4d846fab_804e_563b_998f_6e40c5d2bd39 = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
 
             var _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d = new ArrayList();
             _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.Add(uuid_4d846fab_804e_563b_998f_6e40c5d2bd39);
             _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.Add((int)shop_index);
             _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.Add(index);
+            _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d.Add(role_index);
             _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_buy", _argv_8e620315_ff2a_3f9c_a655_464ce392ed2d);
 
             var cb_buy_obj = new plan_buy_cb(uuid_4d846fab_804e_563b_998f_6e40c5d2bd39, rsp_cb_plan_handle);

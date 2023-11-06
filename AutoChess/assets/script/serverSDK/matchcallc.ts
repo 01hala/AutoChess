@@ -35,16 +35,39 @@ export function protcol_to_ShopSkillEffect(_protocol:any){
 }
 
 /*this module code is codegen by abelkhan codegen for typescript*/
-export class shop_client_module extends client_handle.imodule {
+export class battle_client_module extends client_handle.imodule {
     public _client_handle:client_handle.client;
     constructor(_client_handle_:client_handle.client){
         super();
         this._client_handle = _client_handle_;
-        this._client_handle._modulemng.add_method("shop_client_shop_skill_effect", this.shop_skill_effect.bind(this));
-        this._client_handle._modulemng.add_method("shop_client_refresh", this.refresh.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_battle_victory", this.battle_victory.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_battle_plan_refresh", this.battle_plan_refresh.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_shop_skill_effect", this.shop_skill_effect.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_refresh", this.refresh.bind(this));
 
+        this.cb_battle_victory = null;
+        this.cb_battle_plan_refresh = null;
         this.cb_shop_skill_effect = null;
         this.cb_refresh = null;
+    }
+
+    public cb_battle_victory : (rounds:number)=>void | null;
+    battle_victory(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(inArray[0]);
+        if (this.cb_battle_victory){
+            this.cb_battle_victory.apply(null, _argv_);
+        }
+    }
+
+    public cb_battle_plan_refresh : (battle_info:common.UserBattleData, shop_info:common.ShopData)=>void | null;
+    battle_plan_refresh(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(common.protcol_to_UserBattleData(inArray[0]));
+        _argv_.push(common.protcol_to_ShopData(inArray[1]));
+        if (this.cb_battle_plan_refresh){
+            this.cb_battle_plan_refresh.apply(null, _argv_);
+        }
     }
 
     public cb_shop_skill_effect : (effect:ShopSkillEffect)=>void | null;

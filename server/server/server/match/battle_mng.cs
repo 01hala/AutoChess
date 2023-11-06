@@ -24,14 +24,21 @@ namespace Match
             }
         }
 
+        private int round = 1;
+
         public battle_player(string clientUUID, List<int> roleList) 
         {
             battleData = new UserBattleData();
             battleData.User = new UserInformation();
             battleData.RoleList = new List<Role>();
+            
             shopData = new ShopData();
-            shopData.SalePropList = roleList;
-            shopData.SaleRoleList = roleList;
+            refresh();
+        }
+
+        public void refresh()
+        {
+
         }
     }
 

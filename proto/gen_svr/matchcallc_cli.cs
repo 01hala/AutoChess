@@ -49,13 +49,32 @@ namespace Abelkhan
     }
 
 /*this module code is codegen by abelkhan codegen for c#*/
-    public class shop_client_module : Common.IModule {
+    public class battle_client_module : Common.IModule {
         public Client.Client _client_handle;
-        public shop_client_module(Client.Client client_handle_) 
+        public battle_client_module(Client.Client client_handle_) 
         {
             _client_handle = client_handle_;
-            _client_handle.modulemanager.add_mothed("shop_client_shop_skill_effect", shop_skill_effect);
-            _client_handle.modulemanager.add_mothed("shop_client_refresh", refresh);
+            _client_handle.modulemanager.add_mothed("battle_client_battle_victory", battle_victory);
+            _client_handle.modulemanager.add_mothed("battle_client_battle_plan_refresh", battle_plan_refresh);
+            _client_handle.modulemanager.add_mothed("battle_client_shop_skill_effect", shop_skill_effect);
+            _client_handle.modulemanager.add_mothed("battle_client_refresh", refresh);
+        }
+
+        public event Action<Int32> on_battle_victory;
+        public void battle_victory(IList<MsgPack.MessagePackObject> inArray){
+            var _rounds = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            if (on_battle_victory != null){
+                on_battle_victory(_rounds);
+            }
+        }
+
+        public event Action<UserBattleData, ShopData> on_battle_plan_refresh;
+        public void battle_plan_refresh(IList<MsgPack.MessagePackObject> inArray){
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            var _shop_info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            if (on_battle_plan_refresh != null){
+                on_battle_plan_refresh(_battle_info, _shop_info);
+            }
         }
 
         public event Action<ShopSkillEffect> on_shop_skill_effect;

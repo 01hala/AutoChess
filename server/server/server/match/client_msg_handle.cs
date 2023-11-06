@@ -103,7 +103,7 @@ namespace Match
             var uuid = Hub.Hub._gates.current_client_uuid;
         }
 
-        private void Plan_Module_on_buy(ShopIndex shop_index, int index)
+        private void Plan_Module_on_buy(ShopIndex shop_index, int index, int role_index)
         {
             var rsp = plan_Module.rsp as plan_buy_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
