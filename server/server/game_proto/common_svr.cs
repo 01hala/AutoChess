@@ -90,9 +90,7 @@ namespace Abelkhan
         public Int32 Attack;
         public Int32 TempHP;
         public Int32 TempAttack;
-        public Int32 additionSkill;
         public Int32 additionBuffer;
-        public Int32 TempAdditionSkill;
         public Int32 TempAdditionBuffer;
         public static MsgPack.MessagePackObjectDictionary Role_to_protcol(Role _struct){
             var _protocol = new MsgPack.MessagePackObjectDictionary();
@@ -102,9 +100,7 @@ namespace Abelkhan
             _protocol.Add("Attack", _struct.Attack);
             _protocol.Add("TempHP", _struct.TempHP);
             _protocol.Add("TempAttack", _struct.TempAttack);
-            _protocol.Add("additionSkill", _struct.additionSkill);
             _protocol.Add("additionBuffer", _struct.additionBuffer);
-            _protocol.Add("TempAdditionSkill", _struct.TempAdditionSkill);
             _protocol.Add("TempAdditionBuffer", _struct.TempAdditionBuffer);
             return _protocol;
         }
@@ -129,14 +125,8 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TempAttack"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.TempAttack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "additionSkill"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.additionSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "additionBuffer"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TempAdditionSkill"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TempAdditionBuffer"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionBuffer = ((MsgPack.MessagePackObject)i.Value).AsInt32();

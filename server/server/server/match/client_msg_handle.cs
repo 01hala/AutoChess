@@ -138,6 +138,25 @@ namespace Match
         {
             var rsp = plan_Module.rsp as plan_buy_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var self = Match.battle_Mng.get_battle_player(uuid);
+                var err = self.buy(shop_index, index, role_index);
+                if (err == em_error.success)
+                {
+                    rsp.rsp(self.BattleData, self.ShopData);
+                }
+                else
+                {
+                    rsp.err((int)err);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_buy error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         

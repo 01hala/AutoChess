@@ -77,9 +77,7 @@ export class Role
     public Attack : number = 0;
     public TempHP : number = 0;
     public TempAttack : number = 0;
-    public additionSkill : number = 0;
     public additionBuffer : number = 0;
-    public TempAdditionSkill : number = 0;
     public TempAdditionBuffer : number = 0;
 
 }
@@ -109,14 +107,8 @@ export function protcol_to_Role(_protocol:any){
         else if (key === "TempAttack"){
             _struct.TempAttack = val as number;
         }
-        else if (key === "additionSkill"){
-            _struct.additionSkill = val as number;
-        }
         else if (key === "additionBuffer"){
             _struct.additionBuffer = val as number;
-        }
-        else if (key === "TempAdditionSkill"){
-            _struct.TempAdditionSkill = val as number;
         }
         else if (key === "TempAdditionBuffer"){
             _struct.TempAdditionBuffer = val as number;

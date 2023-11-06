@@ -148,6 +148,24 @@ namespace Match
 
             return false;
         }
+
+        public em_error buy(ShopIndex shop_index, int index, int role_index)
+        {
+            if (shop_index == ShopIndex.Role)
+            {
+
+            }
+            else if (shop_index == ShopIndex.Prop)
+            {
+
+            }
+            else
+            {
+                return em_error.db_error;
+            }
+
+            return em_error.success;
+        }
     }
 
     public class battle_mng
