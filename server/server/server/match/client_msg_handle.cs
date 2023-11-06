@@ -110,10 +110,28 @@ namespace Match
             }
         }
 
-        private void Plan_Module_on_sale_role(int obj)
+        private void Plan_Module_on_sale_role(int index)
         {
             var rsp = plan_Module.rsp as plan_sale_role_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var self = Match.battle_Mng.get_battle_player(uuid);
+                if (self.sale_role(index))
+                {
+                    rsp.rsp(self.BattleData);
+                }
+                else
+                {
+                    rsp.err((int)em_error.no_role_in_index_to_sale);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_sale_role error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private void Plan_Module_on_buy(ShopIndex shop_index, int index, int role_index)

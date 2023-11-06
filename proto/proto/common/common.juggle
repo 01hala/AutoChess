@@ -16,8 +16,12 @@ struct Role {
 	int32 Level;
 	int32 HP;
 	int32 Attack;
+	int32 TempHP;
+	int32 TempAttack;
 	int32 additionSkill;
 	int32 additionBuffer;
+	int32 TempAdditionSkill;
+	int32 TempAdditionBuffer;
 }
 
 enum ShopSkillEffectEM {

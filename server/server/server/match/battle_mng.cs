@@ -45,7 +45,7 @@ namespace Match
 
             battleData = new UserBattleData();
             battleData.User = new UserInformation();
-            battleData.RoleList = new List<Role>();
+            battleData.RoleList = new List<Role>() { null, null, null, null, null, null };
 
             rolePool = roleList;
 
@@ -128,6 +128,25 @@ namespace Match
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
                 shopData.SalePropList.Add(randomShopProp(stage));
             }
+        }
+
+        public bool sale_role(int index)
+        {
+            var r = battleData.RoleList[index];
+            if (r == null)
+            {
+                battleData.RoleList[index] = null;
+
+                var rcfg = config.Config.RoleConfigs[r.RoleID];
+                if (rcfg == null)
+                {
+                    battleData.coin += rcfg.Price + r.Level - 1;
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 
