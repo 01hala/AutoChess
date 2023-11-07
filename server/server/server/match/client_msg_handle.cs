@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using Amazon.SecurityToken.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +33,8 @@ namespace Match
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
                 _player.round++;
+                Match._redis_handle.PushList($"AutoChess:battle:{_player.round}", _player.BattleData);
+
                 if (is_victory)
                 {
                     _player.victory++;
@@ -69,7 +72,7 @@ namespace Match
             }
         }
 
-        private void Plan_Module_on_start_round1()
+        private async void Plan_Module_on_start_round1()
         {
             var rsp = plan_Module.rsp as plan_start_round1_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -81,9 +84,13 @@ namespace Match
                 _player.end_round();
                 _player.do_skill();
 
-                var self = getRandomBattleData(selfSetUp);
-                var target = getRandomBattleData(targetSetUp);
-                rsp.rsp(self, target);
+                var target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{_player.round}");
+                if (target == null)
+                {
+                    target = getRandomBattleData(targetSetUp);
+                }
+
+                rsp.rsp(_player.BattleData, target);
             }
             catch (System.Exception ex)
             {

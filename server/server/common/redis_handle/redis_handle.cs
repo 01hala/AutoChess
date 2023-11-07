@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using StackExchange.Redis;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Abelkhan
 {
@@ -73,6 +74,40 @@ namespace Abelkhan
                 try
                 {
                     return database.KeyDelete(key);
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
+        public void PushList<T>(string key, T data)
+        {
+            while (true)
+            {
+                try
+                {
+                    database.ListLeftPushAsync(key, JsonConvert.SerializeObject(data));
+                    return;
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
+        public async Task<T> RandomList<T>(string key)
+        {
+            while (true)
+            {
+                try
+                {
+                    var count = await database.ListLengthAsync(key);
+                    var index = RandomHelper.RandomInt((int)count);
+                    string json = await database.ListGetByIndexAsync(key, index);
+                    return JsonConvert.DeserializeObject<T>(json);
                 }
                 catch (RedisTimeoutException e)
                 {
