@@ -55,6 +55,8 @@ namespace Match
         public int victory = 0;
         public int round = 1;
 
+        private List<int> skip_level = new List<int>();
+
         public battle_player(string _clientUUID, battle_client_caller _caller, List<int> roleList) 
         {
             clientUUID = _clientUUID;
@@ -286,6 +288,16 @@ namespace Match
                             ev = EMRoleShopEvent.update,
                             index = role_index
                         });
+
+                        if (!skip_level.Contains(r.Level))
+                        {
+                            var stage = r.Level + 1;
+                            if (stage > 6)
+                            {
+                                stage = 6;
+                            }
+                            shopData.SaleRoleList.Add(randomShopRole(stage));
+                        }
                     }
                 }
 
