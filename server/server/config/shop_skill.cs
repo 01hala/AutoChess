@@ -53,7 +53,7 @@ namespace config
                 skillc.EffectTime = (EMShopEvent)o["EffectTime"];
                 skillc.Effect = (Abelkhan.ShopSkillEffectEM)o["Effect"];
                 skillc.ObjCount = (int)o["ObjCount"];
-                skillc.ObjectDirection = (Direction)o["ObjectDirection"];
+                skillc.ObjectDirection = (Direction)o["ObjDirection"];
                 skillc.EffectScope = (EffectScope)o["EffectScope"];
                 skillc.Level1Value_1 = (int)o["Level1Value_1"];
                 skillc.Level1Value_2 = (int)o["Level1Value_2"];
