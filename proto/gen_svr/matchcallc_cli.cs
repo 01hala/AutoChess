@@ -11,11 +11,21 @@ namespace Abelkhan
 /*this struct code is codegen by abelkhan codegen for c#*/
     public class ShopSkillEffect
     {
+        public Int32 spellcaster;
+        public List<Int32> recipient;
         public Int32 skill_id;
         public ShopSkillEffectEM effect;
         public List<Int32> value;
         public static MsgPack.MessagePackObjectDictionary ShopSkillEffect_to_protcol(ShopSkillEffect _struct){
             var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("spellcaster", _struct.spellcaster);
+            if (_struct.recipient != null) {
+                var _array_recipient = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.recipient){
+                    _array_recipient.Add(v_);
+                }
+                _protocol.Add("recipient", new MsgPack.MessagePackObject(_array_recipient));
+            }
             _protocol.Add("skill_id", _struct.skill_id);
             _protocol.Add("effect", (Int32)_struct.effect);
             if (_struct.value != null) {
@@ -30,7 +40,17 @@ namespace Abelkhan
         public static ShopSkillEffect protcol_to_ShopSkillEffect(MsgPack.MessagePackObjectDictionary _protocol){
             var _struct65920e74_e4bd_3add_b5ce_2729ba6c3234 = new ShopSkillEffect();
             foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "skill_id"){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "spellcaster"){
+                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.spellcaster = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "recipient"){
+                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.recipient = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.recipient.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "skill_id"){
                     _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.skill_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "effect"){
@@ -85,11 +105,12 @@ namespace Abelkhan
             }
         }
 
-        public event Action<ShopData> on_refresh;
+        public event Action<UserBattleData, ShopData> on_refresh;
         public void refresh(IList<MsgPack.MessagePackObject> inArray){
-            var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             if (on_refresh != null){
-                on_refresh(_info);
+                on_refresh(_battle_info, _info);
             }
         }
 

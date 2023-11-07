@@ -9,6 +9,15 @@ namespace Match
 {
     public class battle_player
     {
+        private battle_client_caller caller;
+        public battle_client_caller BattleClientCaller
+        {
+            get
+            {
+                return caller;
+            }
+        }
+
         private UserBattleData battleData;
         public UserBattleData BattleData
         {
@@ -40,9 +49,10 @@ namespace Match
 
         private int round = 1;
 
-        public battle_player(string _clientUUID, List<int> roleList) 
+        public battle_player(string _clientUUID, battle_client_caller _caller, List<int> roleList) 
         {
             clientUUID = _clientUUID;
+            caller = _caller;
 
             battleData = new UserBattleData();
             battleData.User = new UserInformation();
@@ -274,13 +284,16 @@ namespace Match
     {
         private Dictionary<string, battle_player> battles = new();
 
+        private battle_client_caller _caller;
+
         public battle_mng()
         {
+            _caller = new battle_client_caller();
         }
 
         public battle_player add_player_to_battle(string clientUUID, List<int> roleList)
         {
-            var _player = new battle_player(clientUUID, roleList);
+            var _player = new battle_player(clientUUID, _caller, roleList);
             battles[clientUUID] = _player;
             return _player;
         }

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\common\common.csproj" />
+    <ProjectReference Include="..\game_proto\game_proto.csproj" />
   </ItemGroup>
 
 </Project>

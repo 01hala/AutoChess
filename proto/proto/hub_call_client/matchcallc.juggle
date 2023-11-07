@@ -1,6 +1,8 @@
 import common
 
 struct ShopSkillEffect {
+    int32 spellcaster;
+    int32[] recipient;
     int32 skill_id;
     ShopSkillEffectEM effect;
     int32[] value;
@@ -11,5 +13,5 @@ module battle_client {
     battle_plan_refresh ntf(UserBattleData battle_info, ShopData shop_info);
 
     shop_skill_effect ntf(ShopSkillEffect effect);
-    refresh ntf(ShopData info);
+    refresh ntf(UserBattleData battle_info, ShopData info);
 }

@@ -5,6 +5,8 @@ import * as common from "./common";
 /*this struct code is codegen by abelkhan codegen for typescript*/
 export class ShopSkillEffect
 {
+    public spellcaster : number = 0;
+    public recipient : number[] = [];
     public skill_id : number = 0;
     public effect : common.ShopSkillEffectEM = common.ShopSkillEffectEM.AddProperty;
     public value : number[] = [];
@@ -18,7 +20,16 @@ export function ShopSkillEffect_to_protcol(_struct:ShopSkillEffect){
 export function protcol_to_ShopSkillEffect(_protocol:any){
     let _struct = new ShopSkillEffect();
     for (const [key, val] of Object.entries(_protocol)) {
-        if (key === "skill_id"){
+        if (key === "spellcaster"){
+            _struct.spellcaster = val as number;
+        }
+        else if (key === "recipient"){
+            _struct.recipient = [];
+            for(let v_ of val as any) {
+                _struct.recipient.push(v_);
+            }
+        }
+        else if (key === "skill_id"){
             _struct.skill_id = val as number;
         }
         else if (key === "effect"){
@@ -79,10 +90,11 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_refresh : (info:common.ShopData)=>void | null;
+    public cb_refresh : (battle_info:common.UserBattleData, info:common.ShopData)=>void | null;
     refresh(inArray:any[]){
         let _argv_:any[] = [];
-        _argv_.push(common.protcol_to_ShopData(inArray[0]));
+        _argv_.push(common.protcol_to_UserBattleData(inArray[0]));
+        _argv_.push(common.protcol_to_ShopData(inArray[1]));
         if (this.cb_refresh){
             this.cb_refresh.apply(null, _argv_);
         }

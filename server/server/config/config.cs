@@ -33,6 +33,20 @@ namespace config
         WholeGame = 2,
     }
 
+    public enum EMShopEvent
+    {
+        sales = 1,       //出售时
+        buy = 2,         //购买时
+        self_update = 3, //升级时
+        self_food = 4,   //吃食物时
+        camp_update = 5, //友方升级时
+        camp_food = 6,   //友方吃食物时
+        start_round = 7, //回合开始
+        end_round = 8,   //回合结束
+        syncope = 9,     //晕厥时
+        refresh = 10,    //商店更新时
+    }
+
     public static class Config
     {
         public const int FoodIDMin = 1000;
