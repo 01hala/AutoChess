@@ -13,7 +13,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "2": {
@@ -30,7 +30,7 @@
         "Stage3value_2": 5,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "3": {
@@ -47,7 +47,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 5,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "4": {
@@ -64,7 +64,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "5": {
@@ -81,7 +81,7 @@
         "Stage3value_2": 5,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 1.0,
+        "SummonId": 1,
         "SummonLevel": 1
     },
     "6": {
@@ -98,7 +98,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 3.0,
+        "SummonId": 3,
         "SummonLevel": 1
     },
     "7": {
@@ -115,7 +115,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "8": {
@@ -132,7 +132,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "9": {
@@ -149,7 +149,7 @@
         "Stage3value_2": 3,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "10": {
@@ -166,7 +166,7 @@
         "Stage3value_2": 2,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "11": {
@@ -183,7 +183,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": "",
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "12": {
@@ -200,7 +200,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "13": {
@@ -217,7 +217,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     },
     "14": {
@@ -234,7 +234,7 @@
         "Stage3value_2": 0,
         "Stage4value_1": 0,
         "Stage4value_2": 0,
-        "SummonId": 0.0,
+        "SummonId": 0,
         "SummonLevel": 0
     }
 }

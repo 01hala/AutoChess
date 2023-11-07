@@ -6,7 +6,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
-        "Fetters": 1.0,
+        "Fetters": 1,
         "Res": "prefab/Roles/Role_1"
     },
     "2": {
@@ -16,7 +16,7 @@
         "Price": 4,
         "Attack": 4,
         "Hp": 3,
-        "Fetters": 2.0,
+        "Fetters": 2,
         "Res": "prefab/Roles/Role_2"
     },
     "3": {
@@ -26,7 +26,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
-        "Fetters": 3.0,
+        "Fetters": 3,
         "Res": "prefab/Roles/Role_3"
     },
     "4": {
@@ -36,7 +36,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 4,
-        "Fetters": 4.0,
+        "Fetters": 4,
         "Res": "prefab/Roles/Role_4"
     },
     "5": {
@@ -46,7 +46,7 @@
         "Price": 4,
         "Attack": 8,
         "Hp": 4,
-        "Fetters": 3.0,
+        "Fetters": 3,
         "Res": "prefab/Roles/Role_5"
     },
     "6": {
@@ -56,7 +56,7 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 6,
-        "Fetters": 5.0,
+        "Fetters": 5,
         "Res": "prefab/Roles/Role_6"
     },
     "7": {
@@ -66,7 +66,7 @@
         "Price": 4,
         "Attack": 1,
         "Hp": 1,
-        "Fetters": 5.0,
+        "Fetters": 5,
         "Res": "prefab/Roles/Role_7"
     },
     "8": {
@@ -76,7 +76,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 2,
-        "Fetters": 6.0,
+        "Fetters": 6,
         "Res": "prefab/Roles/Role_8"
     },
     "9": {
@@ -86,7 +86,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
-        "Fetters": 7.0,
+        "Fetters": 7,
         "Res": "prefab/Roles/Role_9"
     },
     "10": {
@@ -96,7 +96,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 3,
-        "Fetters": 7.0,
+        "Fetters": 7,
         "Res": "prefab/Roles/Role_10"
     },
     "11": {
@@ -106,7 +106,7 @@
         "Price": 4,
         "Attack": 2,
         "Hp": 5,
-        "Fetters": 6.0,
+        "Fetters": 6,
         "Res": "prefab/Roles/Role_11"
     },
     "12": {
@@ -116,7 +116,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
-        "Fetters": 8.0,
+        "Fetters": 8,
         "Res": "prefab/Roles/Role_12"
     },
     "13": {
@@ -126,7 +126,7 @@
         "Price": 4,
         "Attack": 7,
         "Hp": 10,
-        "Fetters": 9.0,
+        "Fetters": 9,
         "Res": "prefab/Roles/Role_13"
     },
     "14": {
@@ -136,7 +136,7 @@
         "Price": 5,
         "Attack": 3,
         "Hp": 5,
-        "Fetters": 8.0,
+        "Fetters": 8,
         "Res": "prefab/Roles/Role_14"
     },
     "15": {
@@ -146,7 +146,7 @@
         "Price": 4,
         "Attack": 1,
         "Hp": 7,
-        "Fetters": 3.0,
+        "Fetters": 3,
         "Res": "prefab/Roles/Role_15"
     },
     "16": {
@@ -156,7 +156,7 @@
         "Price": 5,
         "Attack": 2,
         "Hp": 4,
-        "Fetters": 5.0,
+        "Fetters": 5,
         "Res": "prefab/Roles/Role_16"
     },
     "17": {
@@ -166,7 +166,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
-        "Fetters": 10.0,
+        "Fetters": 10,
         "Res": "prefab/Roles/Role_17"
     },
     "18": {
@@ -176,7 +176,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 1,
-        "Fetters": 11.0,
+        "Fetters": 11,
         "Res": "prefab/Roles/Role_18"
     },
     "19": {
@@ -186,7 +186,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 1,
-        "Fetters": 13.0,
+        "Fetters": 13,
         "Res": "prefab/Roles/Role_19"
     },
     "20": {
@@ -196,7 +196,7 @@
         "Price": 4,
         "Attack": 6,
         "Hp": 3,
-        "Fetters": 2.0,
+        "Fetters": 2,
         "Res": "prefab/Roles/Role_20"
     },
     "21": {
@@ -206,7 +206,7 @@
         "Price": 5,
         "Attack": 1,
         "Hp": 1,
-        "Fetters": 6.0,
+        "Fetters": 6,
         "Res": "prefab/Roles/Role_21"
     },
     "22": {
@@ -216,7 +216,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 4,
-        "Fetters": 4.0,
+        "Fetters": 4,
         "Res": "prefab/Roles/Role_22"
     },
     "23": {
@@ -226,7 +226,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
-        "Fetters": 10.0,
+        "Fetters": 10,
         "Res": "prefab/Roles/Role_23"
     },
     "24": {
@@ -236,7 +236,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 1,
-        "Fetters": 12.0,
+        "Fetters": 12,
         "Res": "prefab/Roles/Role_24"
     },
     "25": {
@@ -246,7 +246,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 8,
-        "Fetters": 10.0,
+        "Fetters": 10,
         "Res": "prefab/Roles/Role_25"
     },
     "26": {
@@ -256,7 +256,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
-        "Fetters": 7.0,
+        "Fetters": 7,
         "Res": "prefab/Roles/Role_26"
     },
     "27": {
@@ -266,7 +266,7 @@
         "Price": 5,
         "Attack": 4,
         "Hp": 2,
-        "Fetters": 9.0,
+        "Fetters": 9,
         "Res": "prefab/Roles/Role_27"
     },
     "28": {
@@ -276,7 +276,7 @@
         "Price": 4,
         "Attack": 3,
         "Hp": 5,
-        "Fetters": 7.0,
+        "Fetters": 7,
         "Res": "prefab/Roles/Role_28"
     },
     "29": {
@@ -286,7 +286,7 @@
         "Price": 4,
         "Attack": 1,
         "Hp": 6,
-        "Fetters": 13.0,
+        "Fetters": 13,
         "Res": "prefab/Roles/Role_29"
     },
     "30": {
@@ -296,7 +296,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 2,
-        "Fetters": 13.0,
+        "Fetters": 13,
         "Res": "prefab/Roles/Role_30"
     },
     "31": {
@@ -306,7 +306,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 4,
-        "Fetters": 12.0,
+        "Fetters": 12,
         "Res": "prefab/Roles/Role_31"
     },
     "32": {
@@ -316,7 +316,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 5,
-        "Fetters": 3.0,
+        "Fetters": 3,
         "Res": "prefab/Roles/Role_32"
     },
     "33": {
@@ -326,7 +326,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
-        "Fetters": 9.0,
+        "Fetters": 9,
         "Res": "prefab/Roles/Role_33"
     },
     "34": {
@@ -336,7 +336,7 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 3,
-        "Fetters": 1.0,
+        "Fetters": 1,
         "Res": "prefab/Roles/Role_34"
     },
     "35": {
@@ -346,7 +346,7 @@
         "Price": 4,
         "Attack": 2,
         "Hp": 4,
-        "Fetters": 11.0,
+        "Fetters": 11,
         "Res": "prefab/Roles/Role_35"
     },
     "36": {
@@ -356,7 +356,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
-        "Fetters": 3.0,
+        "Fetters": 3,
         "Res": "prefab/Roles/Role_36"
     },
     "37": {
@@ -366,7 +366,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 3,
-        "Fetters": 11.0,
+        "Fetters": 11,
         "Res": "prefab/Roles/Role_37"
     },
     "38": {
@@ -376,7 +376,7 @@
         "Price": 4,
         "Attack": 2,
         "Hp": 3,
-        "Fetters": 11.0,
+        "Fetters": 11,
         "Res": "prefab/Roles/Role_38"
     },
     "39": {
@@ -386,7 +386,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
-        "Fetters": 11.0,
+        "Fetters": 11,
         "Res": "prefab/Roles/Role_39"
     },
     "40": {
@@ -396,7 +396,7 @@
         "Price": 4,
         "Attack": 4,
         "Hp": 7,
-        "Fetters": 4.0,
+        "Fetters": 4,
         "Res": "prefab/Roles/Role_40"
     },
     "41": {
@@ -406,7 +406,7 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 2,
-        "Fetters": 10.0,
+        "Fetters": 10,
         "Res": "prefab/Roles/Role_41"
     },
     "42": {
@@ -416,7 +416,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 6,
-        "Fetters": 2.0,
+        "Fetters": 2,
         "Res": "prefab/Roles/Role_42"
     },
     "43": {
@@ -426,7 +426,7 @@
         "Price": 5,
         "Attack": 2,
         "Hp": 4,
-        "Fetters": 14.0,
+        "Fetters": 14,
         "Res": "prefab/Roles/Role_43"
     },
     "44": {
@@ -436,7 +436,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
-        "Fetters": 9.0,
+        "Fetters": 9,
         "Res": "prefab/Roles/Role_44"
     },
     "45": {
@@ -446,7 +446,7 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 2,
-        "Fetters": 2.0,
+        "Fetters": 2,
         "Res": "prefab/Roles/Role_45"
     },
     "46": {
@@ -456,7 +456,7 @@
         "Price": 4,
         "Attack": 4,
         "Hp": 4,
-        "Fetters": 12.0,
+        "Fetters": 12,
         "Res": "prefab/Roles/Role_46"
     },
     "47": {
@@ -466,7 +466,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
-        "Fetters": 12.0,
+        "Fetters": 12,
         "Res": "prefab/Roles/Role_47"
     },
     "48": {
@@ -476,7 +476,7 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 5,
-        "Fetters": 1.0,
+        "Fetters": 1,
         "Res": "prefab/Roles/Role_48"
     },
     "49": {
@@ -486,7 +486,7 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 2,
-        "Fetters": 1.0,
+        "Fetters": 1,
         "Res": "prefab/Roles/Role_49"
     },
     "50": {
@@ -496,7 +496,7 @@
         "Price": 4,
         "Attack": 3,
         "Hp": 4,
-        "Fetters": 5.0,
+        "Fetters": 5,
         "Res": "prefab/Roles/Role_50"
     },
     "51": {
@@ -506,7 +506,7 @@
         "Price": 3,
         "Attack": 6,
         "Hp": 4,
-        "Fetters": 11.0,
+        "Fetters": 11,
         "Res": "prefab/Roles/Role_51"
     },
     "52": {
@@ -516,7 +516,7 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 1,
-        "Fetters": 6.0,
+        "Fetters": 6,
         "Res": "prefab/Roles/Role_52"
     },
     "53": {
@@ -526,7 +526,7 @@
         "Price": 5,
         "Attack": 5,
         "Hp": 5,
-        "Fetters": 14.0,
+        "Fetters": 14,
         "Res": "prefab/Roles/Role_53"
     },
     "54": {
@@ -536,7 +536,7 @@
         "Price": 4,
         "Attack": 3,
         "Hp": 3,
-        "Fetters": 14.0,
+        "Fetters": 14,
         "Res": "prefab/Roles/Role_54"
     }
 }

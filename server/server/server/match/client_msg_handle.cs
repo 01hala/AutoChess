@@ -14,11 +14,83 @@ namespace Match
             plan_Module.on_buy += Plan_Module_on_buy;
             plan_Module.on_sale_role += Plan_Module_on_sale_role;
             plan_Module.on_refresh += Plan_Module_on_refresh;
+            plan_Module.on_start_round1 += Plan_Module_on_start_round1;
+            plan_Module.on_confirm_round_victory += Plan_Module_on_confirm_round_victory;
+
             plan_Module.on_start_round += Plan_Module_on_start_round;
 
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
         }
 
+        private void Plan_Module_on_confirm_round_victory(bool is_victory)
+        {
+            var rsp = plan_Module.rsp as plan_confirm_round_victory_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _player = Match.battle_Mng.get_battle_player(uuid);
+
+                _player.round++;
+                if (is_victory)
+                {
+                    _player.victory++;
+                }
+                else
+                {
+                    _player.count--;
+                }
+
+                if (_player.victory >= 10)
+                {
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
+                }
+                else
+                {
+                    if (_player.count <= 0)
+                    {
+                        _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(false);
+                    }
+                    else
+                    {
+                        _player.BattleClientCaller.get_client(_player.ClientUUID).battle_plan_refresh(_player.BattleData, _player.ShopData);
+                    }
+                }
+
+                _player.start_round();
+                _player.do_skill();
+
+                rsp.rsp();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_confirm_round_victory error:{0}", ex);
+                rsp.err();
+            }
+        }
+
+        private void Plan_Module_on_start_round1()
+        {
+            var rsp = plan_Module.rsp as plan_start_round1_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _player = Match.battle_Mng.get_battle_player(uuid);
+
+                _player.end_round();
+                _player.do_skill();
+
+                var self = getRandomBattleData(selfSetUp);
+                var target = getRandomBattleData(targetSetUp);
+                rsp.rsp(self, target);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_start_round1 error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
+        }
 
         private List<RoleSetUp> selfSetUp;
         private List<RoleSetUp> targetSetUp;
@@ -99,6 +171,7 @@ namespace Match
             {
                 var self = Match.battle_Mng.get_battle_player(uuid);
                 self.refresh();
+                self.do_skill();
 
                 rsp.rsp(self.ShopData);
             }
@@ -120,6 +193,7 @@ namespace Match
                 if (self.sale_role(index))
                 {
                     rsp.rsp(self.BattleData);
+                    self.do_skill();
                 }
                 else
                 {
@@ -145,6 +219,7 @@ namespace Match
                 if (err == em_error.success)
                 {
                     rsp.rsp(self.BattleData, self.ShopData);
+                    self.do_skill();
                 }
                 else
                 {

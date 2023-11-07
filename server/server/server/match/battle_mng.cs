@@ -27,6 +27,8 @@ namespace Match
             }
         }
 
+        private List<shop_skill_role> shop_skill_roles;
+
         private ShopData shopData;
         public ShopData ShopData
         {
@@ -47,7 +49,11 @@ namespace Match
 
         private List<int> rolePool;
 
-        private int round = 1;
+        private List<shop_event> evs = new List<shop_event>();
+
+        public int count = 10;
+        public int victory = 0;
+        public int round = 1;
 
         public battle_player(string _clientUUID, battle_client_caller _caller, List<int> roleList) 
         {
@@ -57,6 +63,8 @@ namespace Match
             battleData = new UserBattleData();
             battleData.User = new UserInformation();
             battleData.RoleList = new List<Role>() { null, null, null, null, null, null };
+
+            shop_skill_roles = new List<shop_skill_role> { null, null, null, null, null, null };
 
             rolePool = roleList;
 
@@ -100,10 +108,36 @@ namespace Match
             return null;
         }
 
-        public void refresh()
+        public void do_skill()
+        {
+            do
+            {
+                var tmp_evs = new List<shop_event>(evs);
+                evs.Clear();
+
+                foreach (var _skill_role in shop_skill_roles)
+                {
+                    if (_skill_role.Trigger(tmp_evs))
+                    {
+                        _skill_role.UseSkill(this);
+                    }
+                }
+
+            } while (evs.Count > 0);
+        }
+
+        private void clear_skill_tag()
+        {
+            foreach (var _skill_role in shop_skill_roles)
+            {
+                _skill_role.is_trigger = false;
+            }
+        }
+
+        private void _refresh()
         {
             var rmRoleList = new List<ShopRole>();
-            foreach(var r in shopData.SaleRoleList)
+            foreach (var r in shopData.SaleRoleList)
             {
                 if (!r.IsFreeze)
                 {
@@ -141,18 +175,60 @@ namespace Match
             }
         }
 
+        public void start_round()
+        {
+            _refresh();
+
+            evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.start_round
+            });
+
+            clear_skill_tag();
+        }
+
+        public void end_round()
+        {
+            evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.end_round
+            });
+
+            clear_skill_tag();
+        }
+
+        public void refresh()
+        {
+            _refresh();
+
+            evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.refresh
+            });
+
+            clear_skill_tag();
+        }
+
         public bool sale_role(int index)
         {
             var r = battleData.RoleList[index];
             if (r == null)
             {
                 battleData.RoleList[index] = null;
+                shop_skill_roles[index] = null;
 
                 var rcfg = config.Config.RoleConfigs[r.RoleID];
                 if (rcfg == null)
                 {
                     battleData.coin += rcfg.Price + r.Level - 1;
                 }
+
+                evs.Add(new shop_event()
+                {
+                    ev = EMRoleShopEvent.sales
+                });
+
+                clear_skill_tag();
 
                 return true;
             }
@@ -162,7 +238,7 @@ namespace Match
 
         public em_error buy(ShopIndex shop_index, int index, int role_index)
         {
-            var r = battleData.RoleList[index];
+            var r = battleData.RoleList[role_index];
 
             if (shop_index == ShopIndex.Role)
             {
@@ -188,6 +264,7 @@ namespace Match
                     r.TempAdditionBuffer = 0;
 
                     battleData.RoleList[index] = r;
+                    shop_skill_roles[index] = new shop_skill_role(index, s.RoleID);
                 }
                 else
                 {
@@ -197,9 +274,19 @@ namespace Match
                     }
 
                     r.Number += 1;
+                    var oldLevel = r.Level;
                     r.Level = r.Number / 3 + 1;
                     r.HP += 1;
                     r.Attack += 1;
+
+                    if (r.Level > oldLevel)
+                    {
+                        evs.Add(new shop_event()
+                        {
+                            ev = EMRoleShopEvent.update,
+                            index = role_index
+                        });
+                    }
                 }
 
                 shopData.SaleRoleList.RemoveAt(index);
@@ -261,7 +348,26 @@ namespace Match
                                 }
                             }
                             break;
+
+                            case BufferAndEquipEffect.Syncope:
+                            {
+                                battleData.RoleList[role_index] = null;
+                                shop_skill_roles[role_index] = null;
+
+                                evs.Add(new shop_event()
+                                {
+                                    ev = EMRoleShopEvent.syncope,
+                                    index = role_index
+                                });
+                            }
+                            break;
                         }
+
+                        evs.Add(new shop_event()
+                        {
+                            ev = EMRoleShopEvent.food,
+                            index = role_index
+                        });
                     }
                     else
                     {
@@ -275,6 +381,13 @@ namespace Match
             {
                 return em_error.db_error;
             }
+
+            evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.buy
+            });
+
+            clear_skill_tag();
 
             return em_error.success;
         }

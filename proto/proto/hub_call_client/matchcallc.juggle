@@ -9,7 +9,7 @@ struct ShopSkillEffect {
 }
 
 module battle_client {
-    battle_victory ntf(int32 rounds);
+    battle_victory ntf(bool is_victory);
     battle_plan_refresh ntf(UserBattleData battle_info, ShopData shop_info);
 
     shop_skill_effect ntf(ShopSkillEffect effect);

@@ -62,7 +62,7 @@ export class battle_client_module extends client_handle.imodule {
         this.cb_refresh = null;
     }
 
-    public cb_battle_victory : (rounds:number)=>void | null;
+    public cb_battle_victory : (is_victory:boolean)=>void | null;
     battle_victory(inArray:any[]){
         let _argv_:any[] = [];
         _argv_.push(inArray[0]);

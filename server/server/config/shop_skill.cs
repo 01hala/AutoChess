@@ -15,6 +15,7 @@ namespace config
         public Abelkhan.ShopSkillEffectEM Effect;
         public int ObjCount;
         public Direction ObjectDirection;
+        public EffectScope EffectScope;
         public int Level1Value_1;
         public int Level1Value_2;
         public int Level2Value_1;
@@ -53,6 +54,7 @@ namespace config
                 skillc.Effect = (Abelkhan.ShopSkillEffectEM)o["Effect"];
                 skillc.ObjCount = (int)o["ObjCount"];
                 skillc.ObjectDirection = (Direction)o["ObjectDirection"];
+                skillc.EffectScope = (EffectScope)o["EffectScope"];
                 skillc.Level1Value_1 = (int)o["Level1Value_1"];
                 skillc.Level1Value_2 = (int)o["Level1Value_2"];
                 skillc.Level2Value_1 = (int)o["Level2Value_1"];

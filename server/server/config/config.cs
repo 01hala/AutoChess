@@ -25,6 +25,7 @@ namespace config
         AddHP = 1,
         AddAttack = 2,
         AddBuffer = 3,
+        Syncope = 4,
     }
 
     public enum EffectScope
@@ -45,6 +46,18 @@ namespace config
         end_round = 8,   //回合结束
         syncope = 9,     //晕厥时
         refresh = 10,    //商店更新时
+    }
+
+    public enum EMRoleShopEvent
+    {
+        sales = 1,       //出售时
+        buy = 2,         //购买时
+        update = 3,      //升级时
+        food = 4,        //吃食物时
+        start_round = 5, //回合开始
+        end_round = 6,   //回合结束
+        syncope = 7,     //晕厥时
+        refresh = 8,     //商店更新时
     }
 
     public static class Config

@@ -80,11 +80,11 @@ namespace Abelkhan
             _client_handle.modulemanager.add_mothed("battle_client_refresh", refresh);
         }
 
-        public event Action<Int32> on_battle_victory;
+        public event Action<bool> on_battle_victory;
         public void battle_victory(IList<MsgPack.MessagePackObject> inArray){
-            var _rounds = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var _is_victory = ((MsgPack.MessagePackObject)inArray[0]).AsBoolean();
             if (on_battle_victory != null){
-                on_battle_victory(_rounds);
+                on_battle_victory(_is_victory);
             }
         }
 
