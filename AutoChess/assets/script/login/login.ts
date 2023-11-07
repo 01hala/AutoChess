@@ -139,7 +139,7 @@ export class login extends Component {
             console.log("login sucess!");
         }
 
-        singleton.netSingleton.game.cb_start_battle = () => {
+        singleton.netSingleton.game.cb_start_battle = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
             singleton.netSingleton.game.battle();
 
             console.log("start_battle sucess!");

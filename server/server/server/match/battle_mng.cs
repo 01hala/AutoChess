@@ -71,6 +71,8 @@ namespace Match
             rolePool = roleList;
 
             shopData = new ShopData();
+            shopData.SaleRoleList = new List<ShopRole>();
+            shopData.SalePropList = new List<ShopProp>();
             refresh();
         }
 
@@ -132,7 +134,10 @@ namespace Match
         {
             foreach (var _skill_role in shop_skill_roles)
             {
-                _skill_role.is_trigger = false;
+                if (_skill_role != null)
+                {
+                    _skill_role.is_trigger = false;
+                }
             }
         }
 

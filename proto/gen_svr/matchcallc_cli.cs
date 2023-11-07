@@ -17,6 +17,10 @@ namespace Abelkhan
         public ShopSkillEffectEM effect;
         public List<Int32> value;
         public static MsgPack.MessagePackObjectDictionary ShopSkillEffect_to_protcol(ShopSkillEffect _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("spellcaster", _struct.spellcaster);
             if (_struct.recipient != null) {
@@ -38,6 +42,10 @@ namespace Abelkhan
             return _protocol;
         }
         public static ShopSkillEffect protcol_to_ShopSkillEffect(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _struct65920e74_e4bd_3add_b5ce_2729ba6c3234 = new ShopSkillEffect();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "spellcaster"){

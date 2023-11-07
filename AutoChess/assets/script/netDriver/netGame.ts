@@ -36,8 +36,8 @@ export class netGame {
     }
 
     public cb_buy: (battle_info:common.UserBattleData, shop_info:common.ShopData) => void;
-    public buy(shop_index:common.ShopIndex, index:number) {
-        this.c_match.get_hub(this.match_name).buy(shop_index, index).callBack((battle_info, shop_info)=>{
+    public buy(shop_index:common.ShopIndex, index:number, role_index:number) {
+        this.c_match.get_hub(this.match_name).buy(shop_index, index, role_index).callBack((battle_info, shop_info)=>{
             this.cb_buy.call(null, battle_info, shop_info);
         }, (err)=>{
             console.log("buy err:", err);

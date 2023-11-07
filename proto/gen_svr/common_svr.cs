@@ -24,12 +24,20 @@ namespace Abelkhan
         public string UserName;
         public Int64 UserGuid;
         public static MsgPack.MessagePackObjectDictionary UserInformation_to_protcol(UserInformation _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("UserName", _struct.UserName);
             _protocol.Add("UserGuid", _struct.UserGuid);
             return _protocol;
         }
         public static UserInformation protcol_to_UserInformation(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _struct07924b8f_25bc_32a4_b436_da6af6116572 = new UserInformation();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "UserName"){
@@ -49,6 +57,10 @@ namespace Abelkhan
         public Int32 Strength;
         public List<Int32> RoleList;
         public static MsgPack.MessagePackObjectDictionary UserData_to_protcol(UserData _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("Strength", _struct.Strength);
@@ -62,6 +74,10 @@ namespace Abelkhan
             return _protocol;
         }
         public static UserData protcol_to_UserData(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b = new UserData();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "User"){
@@ -94,6 +110,10 @@ namespace Abelkhan
         public Int32 additionBuffer;
         public Int32 TempAdditionBuffer;
         public static MsgPack.MessagePackObjectDictionary Role_to_protcol(Role _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("Level", _struct.Level);
@@ -107,6 +127,10 @@ namespace Abelkhan
             return _protocol;
         }
         public static Role protcol_to_Role(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _structe15dab07_4671_3806_9f26_9880fe20019d = new Role();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
@@ -147,6 +171,10 @@ namespace Abelkhan
         public Int32 coin;
         public List<Role> RoleList;
         public static MsgPack.MessagePackObjectDictionary UserBattleData_to_protcol(UserBattleData _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("coin", _struct.coin);
@@ -160,6 +188,10 @@ namespace Abelkhan
             return _protocol;
         }
         public static UserBattleData protcol_to_UserBattleData(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f = new UserBattleData();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "User"){
@@ -187,6 +219,10 @@ namespace Abelkhan
         public Int32 Attack;
         public bool IsFreeze;
         public static MsgPack.MessagePackObjectDictionary ShopRole_to_protcol(ShopRole _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("HP", _struct.HP);
@@ -195,6 +231,10 @@ namespace Abelkhan
             return _protocol;
         }
         public static ShopRole protcol_to_ShopRole(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2 = new ShopRole();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
@@ -219,12 +259,20 @@ namespace Abelkhan
         public Int32 PropID;
         public bool IsFreeze;
         public static MsgPack.MessagePackObjectDictionary ShopProp_to_protcol(ShopProp _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("PropID", _struct.PropID);
             _protocol.Add("IsFreeze", _struct.IsFreeze);
             return _protocol;
         }
         public static ShopProp protcol_to_ShopProp(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c = new ShopProp();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "PropID"){
@@ -243,6 +291,10 @@ namespace Abelkhan
         public List<ShopRole> SaleRoleList;
         public List<ShopProp> SalePropList;
         public static MsgPack.MessagePackObjectDictionary ShopData_to_protcol(ShopData _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             if (_struct.SaleRoleList != null) {
                 var _array_SaleRoleList = new List<MsgPack.MessagePackObject>();
@@ -261,6 +313,10 @@ namespace Abelkhan
             return _protocol;
         }
         public static ShopData protcol_to_ShopData(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _struct4c993b13_c35e_3baf_abbc_c749b6027fbc = new ShopData();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "SaleRoleList"){
@@ -287,12 +343,20 @@ namespace Abelkhan
         public Int32 tick_time;
         public Int32 player_num;
         public static MsgPack.MessagePackObjectDictionary svr_info_to_protcol(svr_info _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("tick_time", _struct.tick_time);
             _protocol.Add("player_num", _struct.player_num);
             return _protocol;
         }
         public static svr_info protcol_to_svr_info(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _struct13f334ce_724e_3749_be0d_3222168d7a26 = new svr_info();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "tick_time"){

@@ -26,6 +26,10 @@ export function UserInformation_to_protcol(_struct:UserInformation){
 }
 
 export function protcol_to_UserInformation(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new UserInformation();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "UserName"){
@@ -51,6 +55,10 @@ export function UserData_to_protcol(_struct:UserData){
 }
 
 export function protcol_to_UserData(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new UserData();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "User"){
@@ -88,6 +96,10 @@ export function Role_to_protcol(_struct:Role){
 }
 
 export function protcol_to_Role(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new Role();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "RoleID"){
@@ -134,6 +146,10 @@ export function UserBattleData_to_protcol(_struct:UserBattleData){
 }
 
 export function protcol_to_UserBattleData(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new UserBattleData();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "User"){
@@ -166,6 +182,10 @@ export function ShopRole_to_protcol(_struct:ShopRole){
 }
 
 export function protcol_to_ShopRole(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new ShopRole();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "RoleID"){
@@ -196,6 +216,10 @@ export function ShopProp_to_protcol(_struct:ShopProp){
 }
 
 export function protcol_to_ShopProp(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new ShopProp();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "PropID"){
@@ -220,6 +244,10 @@ export function ShopData_to_protcol(_struct:ShopData){
 }
 
 export function protcol_to_ShopData(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new ShopData();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "SaleRoleList"){
@@ -250,6 +278,10 @@ export function svr_info_to_protcol(_struct:svr_info){
 }
 
 export function protcol_to_svr_info(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new svr_info();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "tick_time"){

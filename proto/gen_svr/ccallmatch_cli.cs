@@ -14,12 +14,20 @@ namespace Abelkhan
         public Int32 RoleID;
         public Int32 Level;
         public static MsgPack.MessagePackObjectDictionary RoleSetUp_to_protcol(RoleSetUp _struct){
+        if (_struct == null) {
+            return null;
+        }
+
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("Level", _struct.Level);
             return _protocol;
         }
         public static RoleSetUp protcol_to_RoleSetUp(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
             var _structb74dba06_f215_379e_9ab1_cbf7fac5461e = new RoleSetUp();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){

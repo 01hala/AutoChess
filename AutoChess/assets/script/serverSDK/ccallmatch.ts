@@ -15,6 +15,10 @@ export function RoleSetUp_to_protcol(_struct:RoleSetUp){
 }
 
 export function protcol_to_RoleSetUp(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new RoleSetUp();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "RoleID"){

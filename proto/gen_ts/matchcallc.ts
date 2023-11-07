@@ -18,6 +18,10 @@ export function ShopSkillEffect_to_protcol(_struct:ShopSkillEffect){
 }
 
 export function protcol_to_ShopSkillEffect(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
     let _struct = new ShopSkillEffect();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "spellcaster"){
