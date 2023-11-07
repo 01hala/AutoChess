@@ -3,8 +3,6 @@
  * author: qianqians
  * 2023/9/24
  */
-import { Node } from 'cc';
-
 import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
@@ -46,8 +44,6 @@ export class Role {
     public id:number;
     public level:number;
 
-    public roleNode:Node = null;
-
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];
     private skill_is_lock : boolean = false;
@@ -55,13 +51,16 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(index:number, id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionSkill:number, additionBuffer:number) {
+    public constructor(index:number, id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionBuffer:number) {
         this.index = index;
         this.id=id;
         this.level=level;
         
         this.selfCamp = selfCamp;
-        this.properties = properties;
+        
+        properties.forEach((v, k) => {
+            this.properties.set(k, v);
+        })
 
         let roleConfig = config.config.RoleConfig.get(this.id);
 
@@ -74,12 +73,6 @@ export class Role {
         if (buffer) {
             this.buffer.push(buffer);
         }
-
-        skill = createSkill(additionSkill, this.level);
-        if (skill) {
-            this.skill.push(skill);
-        }
-
         buffer = createBuffer(additionBuffer);
         if (buffer) {
             this.buffer.push(buffer);
@@ -322,7 +315,10 @@ export class Role {
      * 2023/9/30
      */
     public GetProperties():Map<enums.Property, number>{
-        let t = new Map<enums.Property, number>(this.properties);
+        let t = new Map<enums.Property, number>();
+        this.properties.forEach((v, k) => {
+            t.set(k, v);
+        })
         return t;
     }
 

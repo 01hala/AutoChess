@@ -70,7 +70,7 @@ export class Skill_ChangePosition_7 extends SkillBase {
             else if(ChangePositionType.RandomChange == this.changeType)
             {
                 let recipientRoles:number[] = [];
-                while(recipientRoles.length < 2) {
+                while(recipientRoles.length < 2 && recipientRoles.length < originalRoleList.length) {
                     let index = random(0, originalRoleList.length);
                     if (index in recipientRoles) {
                         continue;

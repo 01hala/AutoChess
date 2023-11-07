@@ -20,7 +20,7 @@ export class Team {
             properties.set(enums.Property.HP, r.HP);
             properties.set(enums.Property.TotalHP, r.HP);
             properties.set(enums.Property.Attack, r.Attack);
-            this.roleList.push(new role.Role(index, r.RoleID, r.Level, selfCamp, properties, r.additionSkill, r.additionBuffer));
+            this.roleList.push(new role.Role(index, r.RoleID, r.Level, selfCamp, properties, r.additionBuffer));
             index++;
         }
     }
@@ -57,7 +57,6 @@ export class Team {
                     removeRoles.push(r);
 
                     r.SendExitEvent(battle);
-                    r.roleNode = null;
                 }
             }
             catch(error) {
@@ -66,7 +65,6 @@ export class Team {
                 removeRoles.push(r);
 
                 r.SendExitEvent(battle);
-                r.roleNode = null;
             }   
         }
 

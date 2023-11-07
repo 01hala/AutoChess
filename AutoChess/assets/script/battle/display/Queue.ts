@@ -56,7 +56,7 @@ export class Queue extends Component
 
                 this.node.addChild(role);
 
-                r.roleNode = role;
+                //r.roleNode = role;
                 this.roleNodes.push(role);
                 console.log("role:", r);
 
@@ -105,7 +105,8 @@ export class Queue extends Component
                 }
                 if(-1!=emptyIndex)
                 {
-                    role.position=spellcaster.roleNode.position;
+                    let roleNode = this.roleNodes[spellcaster.index];
+                    role.position = roleNode.position;
                     await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[emptyIndex].position);
                 }
                 else if(-1==emptyIndex)

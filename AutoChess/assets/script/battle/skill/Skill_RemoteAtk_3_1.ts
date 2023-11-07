@@ -92,7 +92,7 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
 
                 roleInfo.camp=Camp.Self;
             }
-            while(recipientRoles.length < this.numberOfRole) {
+            while(recipientRoles.length < this.numberOfRole && enemyRoles.length > 0) {
                 let index = random(0, enemyRoles.length);
                 recipientRoles.push(enemyRoles[index]);
                 enemyRoles.splice(index, 1);

@@ -169,8 +169,9 @@ export class BattleDis
                     if (!selfAttack)
                     {
                         //console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
-                        let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                        allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
+                        //let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
+                        let roleNode = this.selfQueue.roleNodes[ev.spellcaster.index];
+                        allAwait.push(roleNode.getComponent(RoleDis).Attack(
                             this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp));
                         selfAttack = true;
                     }
@@ -179,8 +180,9 @@ export class BattleDis
                 {
                     if (!enemyAttack)
                     {
-                        let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                        allAwait.push(r.roleNode.getComponent(RoleDis).Attack(
+                        //let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
+                        let roleNode = this.enemyQueue.roleNodes[ev.spellcaster.index];
+                        allAwait.push(roleNode.getComponent(RoleDis).Attack(
                             this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp));
                         enemyAttack = true;
                     }
@@ -209,18 +211,18 @@ export class BattleDis
 
                 //console.log("checkRemoteInjured RemoteInjured");
 
-                let spList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
+                let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                 ev.recipient.forEach(element=>{
-                    let targetList = Camp.Enemy == element.camp ? this.battle.GetEnemyTeam() : this.battle.GetSelfTeam();
+                    let targetList = Camp.Enemy == element.camp ? this.enemyQueue : this.selfQueue;
 
-                    let self = spList.GetRole(ev.spellcaster.index);
-                    let target = targetList.GetRole(element.index);
+                    let self = spList.roleNodes[ev.spellcaster.index];
+                    let target = targetList.roleNodes[element.index];
 
                     if (self && target) 
                     {                
-                        let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.roleNode.getWorldPosition());
-                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.roleNode.getWorldPosition());
-                        allAwait.push(self.roleNode.getComponent(RoleDis).RemoteAttack(
+                        let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
+                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
+                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(
                             selfpos, targetpos,this.father));
                     }
                 });
@@ -239,7 +241,7 @@ export class BattleDis
         try 
         {
             let allAwait = [];
-            let r=null;
+            let r:Node = null;
             for(let ev of evs)
             {
                 if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) 
@@ -250,21 +252,21 @@ export class BattleDis
                         {
                             for(let t of ev.recipient)
                             {
-                                r=this.battle.GetEnemyTeam().GetRole(t.index);
+                                r = this.enemyQueue.roleNodes[t.index];
                                 //console.warn("敌方role",r.index);
-                                if(r && r.roleNode)
+                                if(r)
                                 {
                                     //console.warn("敌方角色远程受伤表现");
-                                    allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
+                                    allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
                             }
                         }
                         else
                         {
-                            r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
-                            if (r && r.roleNode) 
+                            r = this.selfQueue.roleNodes[ev.spellcaster.index];
+                            if (r)
                             {
-                                allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
+                                allAwait.push(r.getComponent(RoleDis).changeAtt());
                             }
                         }
                     }
@@ -274,21 +276,21 @@ export class BattleDis
                         {
                             for(let t of ev.recipient)
                             {
-                                r=this.battle.GetSelfTeam().GetRole(t.index);
+                                r=this.selfQueue.roleNodes[t.index];
                                 //console.warn("我方role",r.index);
-                                if(r && r.roleNode)
+                                if(r)
                                 {
                                     //console.warn("我方角色远程受伤表现");
-                                    allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
+                                    allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
                             }
                         }
                         else
                         {
-                            r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
-                            if (r && r.roleNode) 
+                            r = this.enemyQueue.roleNodes[ev.spellcaster.index];
+                            if (r) 
                             {
-                                allAwait.push(r.roleNode.getComponent(RoleDis).changeAtt());
+                                allAwait.push(r.getComponent(RoleDis).changeAtt());
                             }
                         }
                         
