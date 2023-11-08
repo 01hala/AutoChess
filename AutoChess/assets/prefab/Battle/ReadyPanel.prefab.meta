@@ -2,12 +2,12 @@
   "ver": "1.1.43",
   "importer": "prefab",
   "imported": true,
-  "uuid": "3a7e18eb-c371-4636-afaa-6254709bc0f5",
+  "uuid": "8d404a04-a51f-4d9a-a9a2-893b39ac1fb6",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "remote"
+    "syncNodeName": "ReadyPanel"
   }
 }

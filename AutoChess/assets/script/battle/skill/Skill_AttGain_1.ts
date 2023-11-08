@@ -135,7 +135,11 @@ export class Skill_AttGain_1 extends SkillBase
                                 roleInfo.index = selfInfo.index-2;
                             }
                         }
+                        break;
+                    default:
+                        break;
                 }
+            
             if(null!=recipientRole)
             {
                 recipientRole.ChangeProperties(Property.HP, recipientRole.GetProperty(Property.HP) + this.health);
@@ -149,7 +153,7 @@ export class Skill_AttGain_1 extends SkillBase
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect_1 错误");
+            console.warn(this.res+"下的 SkillEffect_1 错误 ",error);
         }
     }
 
@@ -199,10 +203,76 @@ export class Skill_AttGain_1 extends SkillBase
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect_2 错误");
+            console.warn(this.res+"下的 SkillEffect_2 错误 ",error);
         }
     }
 
+/*
+ * 添加相邻位置的角色生效
+ * author: Hotaru
+ * 2023/10/8
+ */
+    SkillEffect_3(selfInfo: RoleInfo, battle: Battle):void
+    {
+        try
+        {
+            let event = new Event();
+            event.type = EventType.IntensifierProperties;
+            event.spellcaster = selfInfo;
+            event.recipient = [];
+
+            let indexs:number[]=[];
+
+            let rolesTemp:Role[]=[];
+
+            if(Camp.Self==selfInfo.camp)
+            {
+                rolesTemp=battle.GetSelfTeam().GetRoles().slice();
+            }
+
+            if(Camp.Enemy==selfInfo.camp)
+            {
+                rolesTemp=battle.GetEnemyTeam().GetRoles().slice();
+            }
+
+            if(Direction.Cross==this.dir)
+            {
+                switch(selfInfo.index)
+                {
+                    case 0:
+                        indexs.push(1,2,3);break;
+                    case 1:
+                        indexs.push(0,4);break;
+                    case 2:
+                        indexs.push(0,5);break;
+                    case 3:
+                        indexs.push(0,4,5);break;
+                    case 4:
+                        indexs.push(1,3);break;
+                    case 5:
+                        indexs.push(2,3);break;
+                }
+            }
+            for(let i of indexs)
+            {
+                let roleInfo:RoleInfo=new RoleInfo();
+                roleInfo.camp=selfInfo.camp;
+
+                if(null!=rolesTemp[i])
+                {
+                    roleInfo.index=i;
+                    event.recipient.push(roleInfo);
+                }
+            }
+            event.value = [this.health, this.health, this.attack];
+            battle.AddBattleEvent(event);
+        }
+        catch(error)
+        {
+            console.warn(this.res+"下的 SkillEffect_3 错误 ",error);
+        }
+        
+    }
 }
 
 
