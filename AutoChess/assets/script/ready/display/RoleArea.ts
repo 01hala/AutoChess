@@ -6,6 +6,8 @@ export class RoleArea extends Component
 {
     public targets:Map<string,string> = new Map();
 
+    public roles:Node[]=[];
+
     onLoad() 
     {
         for(let t of this.node.getChildByName("Node").children)

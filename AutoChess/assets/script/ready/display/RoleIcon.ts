@@ -64,7 +64,7 @@ export class RoleIcon extends Component
 
         this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
         {
-            if(null!=otherCollider && 1 == otherCollider.group)
+            if(null!=otherCollider && 1 == otherCollider.tag)
             {
                 for(let i=0;i<this.roleArea.targets.size;i++)
                 {
@@ -76,13 +76,16 @@ export class RoleIcon extends Component
                         return;
                     }
                 }
-
             }  
+            if(null!=otherCollider && 2 == otherCollider.tag)
+            {
+                //this.SellRole();
+            }
         }, this);
 
         this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
         {
-            if(null!=otherCollider && 1 == otherCollider.group)
+            if(null!=otherCollider && 1 == otherCollider.tag)
             {
                 for(let i=0;i<this.roleArea.targets.size;i++)
                 {
@@ -176,7 +179,6 @@ export class RoleIcon extends Component
 
     Adsorption()
     {
-           
         if(null!=this.target)
         {
 
@@ -188,10 +190,17 @@ export class RoleIcon extends Component
              .start();
             //this.node.setWorldPosition(this.target.worldPosition);
             this.isBuy=true;
+            this.roleArea.roles.push(this.roleNode);
         }
         else
         {
-            this.node.setPosition(this.originalPos);
+            this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
+            .call(()=>
+            {
+           
+            })
+            .start();
+            //this.node.setPosition(this.originalPos);
             if(!this.isBuy)
             {
                 this.roleNode.active=false;
