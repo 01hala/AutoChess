@@ -42,10 +42,14 @@ export class RoleIcon extends Component
     
     private iconMask:Node;
 
-    private originalPos:Vec3;
+    public originalPos:Vec3;
     private tweenNode:Tween<Node>;
 
     public isBuy:boolean=false;
+    private isSwitch:boolean=false;
+
+    private tempTarget:Node=null;
+    private t:Node=null;
 
     protected async onLoad()
     {
@@ -71,48 +75,48 @@ export class RoleIcon extends Component
         //this.roleNode=this.SpawnRole()
         await this.LoadPrefab();
 
-        this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
-        {
-            if(null!=otherCollider && 1 == otherCollider.tag)
+        this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
             {
-                for(let i=0;i<this.roleArea.targets.size;i++)
+                if(null!=otherCollider && 1 == otherCollider.tag)
+                {
+                    console.log(otherCollider.name);
+                    for(let i=0;i<this.roleArea.targets.size;i++)
+                    {
+                        if(this.roleArea.GetTargetValue(otherCollider.node.name)==selfCollider.node)
+                        {
+                            console.log("set null");
+                            this.roleArea.targets.set(otherCollider.node.name,null);
+                            //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
+                            return;
+                        }
+                    }
+                }
+            },this);
+
+            this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
+            {
+                if(null!=otherCollider && 1 == otherCollider.tag)
                 {
                     if(null==this.roleArea.GetTargetValue(otherCollider.node.name))
-                    {
-                        
+                    { 
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.Index=Number(num);
-                        //console.log(this.Index);
                         this.target=otherCollider.node;
-                        this.roleArea.targets.set(otherCollider.node.name,selfCollider.node.name);
-                        //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
-                        return;
+                        this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
+                        this.isSwitch=false;
                     }
-                }
-            }  
-            if(null!=otherCollider && 2 == otherCollider.tag)
-            {
-                //this.SellRole();
-            }
-        }, this);
-
-        this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
-        {
-            if(null!=otherCollider && 1 == otherCollider.tag)
-            {
-                for(let i=0;i<this.roleArea.targets.size;i++)
-                {
-                    if(this.roleArea.GetTargetValue(otherCollider.node.name)===selfCollider.node.name)
+                    else if(this.isBuy)
                     {
-                        this.roleArea.targets.set(otherCollider.node.name,null);
-                        //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
-                        return;
-                    }
+                        this.tempTarget=otherCollider.node;
+                        this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
+                        this.isSwitch=true;
+                     }
+                }  
+                if(null!=otherCollider && 2 == otherCollider.tag)
+                {
+                    //this.SellRole();
                 }
-            }
-
-
-        },this)
+            }, this);
 
         this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
         {
@@ -121,8 +125,19 @@ export class RoleIcon extends Component
         }, this)
         this.myTouch.on(Input.EventType.TOUCH_END, () => 
         {
+            //this.collider.off(Contact2DType.END_CONTACT);
+            //this.collider.off(Contact2DType.BEGIN_CONTACT);
             this.touchStartPoint = new Vec2(0, 0);
+            if(this.isSwitch)
+            {
+                this.roleArea.SwitchPos(this.target,this.t);
+                
+                this.target=this.tempTarget;
+                this.roleArea.targets.set(this.target.name,this.node);
+                this.isSwitch=false;
+            }
             this.Adsorption();
+            
             if(this.isBuy)
             {
                 this.shopArea.BuyRole();
@@ -131,7 +146,7 @@ export class RoleIcon extends Component
         }, this)
         this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
         {
-
+            
             let node: Node = event.currentTarget;
             
             let pos = new Vec2();
@@ -144,6 +159,7 @@ export class RoleIcon extends Component
         }, this)
         this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
         {
+            
 
             let node: Node = event.currentTarget;
 
@@ -207,7 +223,8 @@ export class RoleIcon extends Component
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
              {
-            
+                this.originalPos=this.node.getPosition();
+                this.tweenNode.stop();
              })
              .start();
             //this.node.setWorldPosition(this.target.worldPosition);
@@ -219,7 +236,7 @@ export class RoleIcon extends Component
             this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
             .call(()=>
             {
-           
+                this.tweenNode.stop();
             })
             .start();
             //this.node.setPosition(this.originalPos);
@@ -230,6 +247,19 @@ export class RoleIcon extends Component
             }
         }
         
+    }
+
+    TransPos(Vec3:Vec3)
+    {
+        this.tweenNode=tween(this.node).to(0.1,{worldPosition:Vec3})
+        .call(()=>
+        {
+            //this.originalPos=this.node.getPosition();
+            this.tweenNode.stop();
+        })
+        .start();
+        //this.node.setWorldPosition(Vec3);
+        console.log("tarnspos!");
     }
 
     // GetUiPos(node:Node):Vec3
