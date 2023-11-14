@@ -172,13 +172,21 @@ namespace Match
             while (shopData.SaleRoleList.Count < 3)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                shopData.SaleRoleList.Add(randomShopRole(stage));
+                var r = randomShopRole(stage);
+                if (r != null)
+                {
+                    shopData.SaleRoleList.Add(r);
+                }
             }
 
             while (shopData.SalePropList.Count < 3)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                shopData.SalePropList.Add(randomShopProp(stage));
+                var p = randomShopProp(stage);
+                if (p != null)
+                {
+                    shopData.SalePropList.Add(p);
+                }
             }
         }
 

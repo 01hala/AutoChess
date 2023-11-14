@@ -21,6 +21,7 @@ namespace Player
 		{
             var _hub = new Hub.Hub(args[0], args[1], "player");
             _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
+            config.Config.Load(Hub.Hub._config.get_value_string("excel_json_config"));
 
             _hub.set_support_take_over_svr(true);
 
