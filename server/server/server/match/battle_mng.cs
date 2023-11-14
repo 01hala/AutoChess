@@ -179,7 +179,7 @@ namespace Match
                 }
             }
 
-            while (shopData.SalePropList.Count < 3)
+            for(int i = 0; i < 3 && shopData.SalePropList.Count < 3; ++i)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
                 var p = randomShopProp(stage);

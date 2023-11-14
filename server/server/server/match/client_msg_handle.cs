@@ -139,8 +139,8 @@ namespace Match
 
             while (data.RoleList.Count < 6)
             {
-                config.RoleConfig rolec = null;
-                var level = 1;
+                config.RoleConfig rolec;
+                int level;
                 if (setUp != null && setUp.Count > 0)
                 {
                     var r = setUp[data.RoleList.Count];
