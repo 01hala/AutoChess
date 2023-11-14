@@ -408,6 +408,56 @@ namespace Match
 
             return em_error.success;
         }
+
+        public void move(int role_index1, int role_index2)
+        {
+            var r1 = battleData.RoleList[role_index1];
+            var r2 = battleData.RoleList[role_index2];
+
+            if ((r1 == null && r2 != null) ||
+                (r1 != null && r2 == null))
+            {
+                battleData.RoleList[role_index1] = r2;
+                battleData.RoleList[role_index2] = r1;
+            }
+            else if (r1 != null && r2 != null)
+            {
+                if (r1.RoleID != r2.RoleID)
+                {
+                    battleData.RoleList[role_index1] = r2;
+                    battleData.RoleList[role_index2] = r1;
+                }
+                else
+                {
+                    battleData.RoleList[role_index1] = null;
+
+                    r2.Number += r1.Number;
+                    var oldLevel = r2.Level;
+                    r2.Level = r2.Number / 3 + 1;
+                    r2.HP += r1.Number;
+                    r2.Attack += r1.Number;
+
+                    if (r2.Level > oldLevel)
+                    {
+                        evs.Add(new shop_event()
+                        {
+                            ev = EMRoleShopEvent.update,
+                            index = role_index2
+                        });
+
+                        if (!skip_level.Contains(r2.Level))
+                        {
+                            var stage = r2.Level + 1;
+                            if (stage > 6)
+                            {
+                                stage = 6;
+                            }
+                            shopData.SaleRoleList.Add(randomShopRole(stage));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public class battle_mng

@@ -11,6 +11,9 @@ import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
 import * as role from '../../battle/role'
 import { RoleDis } from '../../battle/display/RoleDis';
+import { ReadyDis } from './ReadyDis';
+import * as singleton from '../../netDriver/netSingleton';
+import { ShopArea } from './ShopArea';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -19,7 +22,9 @@ export class RoleIcon extends Component
     @property(Node)
     public myTouch: Node;
     public target:Node;
-    public id:number;
+
+    public roleId:number;
+    public Index:number;
     //public canvas:Node;
 
     private panel:Node;
@@ -30,6 +35,8 @@ export class RoleIcon extends Component
     private roleNode:Node;
 
     private roleArea:RoleArea;
+    private shopArea:ShopArea;
+
     private rolePrefab:Prefab;
 
     
@@ -38,15 +45,16 @@ export class RoleIcon extends Component
     private originalPos:Vec3;
     private tweenNode:Tween<Node>;
 
-    private isBuy:boolean=false;
+    public isBuy:boolean=false;
 
     protected async onLoad()
     {
        try
        {
             //this.canvas=director.getScene().getChildByPath("Canvas");
-            this.roleArea=this.node.parent.getChildByPath("RoleArea").getComponent(RoleArea);
             this.panel=this.node.parent;
+            this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
+            this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
             this.originalPos=this.node.getPosition();
             this.iconMask=this.node.getChildByName("IconMask");
             this.collider=this.node.getComponent(Collider2D);
@@ -71,6 +79,10 @@ export class RoleIcon extends Component
                 {
                     if(null==this.roleArea.GetTargetValue(otherCollider.node.name))
                     {
+                        
+                        let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
+                        this.Index=Number(num);
+                        //console.log(this.Index);
                         this.target=otherCollider.node;
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node.name);
                         //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
@@ -111,6 +123,10 @@ export class RoleIcon extends Component
         {
             this.touchStartPoint = new Vec2(0, 0);
             this.Adsorption();
+            if(this.isBuy)
+            {
+                this.shopArea.BuyRole();
+            }
 
         }, this)
         this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 

@@ -4,8 +4,9 @@
  * 2023/11/11
  */
 import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
-import { ShopProp, ShopRole } from '../../serverSDK/common';
+import { ShopIndex, ShopProp, ShopRole } from '../../serverSDK/common';
 import { RoleIcon } from './RoleIcon';
+import * as singleton from '../../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -20,6 +21,8 @@ export class ShopArea extends Component
     public rolesSquare:Node[]=[];
 
     public panel:Node;
+
+    private shopRoles:Node[]=[];
 
     protected onLoad(): void 
     {
@@ -40,8 +43,9 @@ export class ShopArea extends Component
         
     }
 
-    Init(roles:ShopRole[],props:ShopProp[])
+    Init(roles?:ShopRole[],props?:ShopProp[])
     {
+        this.shopRoles=[];
         if(roles)
         {
             for(let i=0;i<roles.length;i++)
@@ -55,10 +59,18 @@ export class ShopArea extends Component
         
     }
 
-    ShopUpdate(roles:ShopRole[],props:ShopProp[])
+    BuyRole()
     {
-
+        for(let i=0;i<this.shopRoles.length;i++)
+        {
+            if(this.shopRoles[i].getComponent(RoleIcon).isBuy)
+            {
+                singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).Index);
+            }
+        }
+        
     }
+
 
 }
 

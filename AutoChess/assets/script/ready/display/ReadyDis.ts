@@ -8,6 +8,7 @@ import { RoleArea } from './RoleArea';
 import { Ready } from '../Ready';
 import { BundleManager } from '../../bundle/BundleManager';
 import { ShopArea } from './ShopArea';
+import * as skill from '../../battle/skill/skill_base'
 const { ccclass, property } = _decorator;
 
 @ccclass('ReadyDis')
@@ -16,9 +17,9 @@ export class ReadyDis
     public father:Node;
 
     private panelNode:Node;
+    private coinText:Text;
 
     private roleArea:Node;
-
     private shopArea:ShopArea;
 
     public ready:Ready;
@@ -35,22 +36,24 @@ export class ReadyDis
     {
         try
         {
-            let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
+            let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
             this.panelNode = instantiate(panel);
 
             this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
-            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
-
+            this.RefreshShop();
+            //刷新按钮
             this.refreshBtn=this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK,()=>
             {
-                this.ready.Refresh();
-                this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
-
+                this.RefreshShop();
             },this);
             
+            
+
             this.father=father;
             father.addChild(this.panelNode);
+
+            this.ready.StartReady();
 
         }
         catch(error)
@@ -59,9 +62,24 @@ export class ReadyDis
         }
     }
 
+    //刷新商店
+    RefreshShop()
+    {
+        this.ready.Refresh();
+        this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
+    }
+
+    private CheckCoinEvent(evs:skill.Event[])
+    {
+
+    }
+
     onEvent()
     {
-        
+        this.ready.on_event = async (evs) =>
+        {
+            await this.CheckCoinEvent(evs);
+        }
     }
 
 

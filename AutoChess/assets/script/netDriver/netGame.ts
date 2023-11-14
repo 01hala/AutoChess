@@ -23,6 +23,7 @@ export class netGame {
     }
 
     private match_name:string = "";
+    //准备阶段
     public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData) => void;
     public start_battle() {
         this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info)=>{
@@ -35,10 +36,12 @@ export class netGame {
         });
     }
 
-    public cb_buy: (battle_info:common.UserBattleData, shop_info:common.ShopData) => void;
+    public cb_battle_info: (battle_info:common.UserBattleData) => void;
+    public cb_shop_info: (shop_info:common.ShopData) => void;
     public buy(shop_index:common.ShopIndex, index:number, role_index:number) {
         this.c_match.get_hub(this.match_name).buy(shop_index, index, role_index).callBack((battle_info, shop_info)=>{
-            this.cb_buy.call(null, battle_info, shop_info);
+            this.cb_battle_info.call(null, battle_info);
+            this.cb_shop_info.call(null, shop_info);
         }, (err)=>{
             console.log("buy err:", err);
         }).timeout(3000, ()=>{
@@ -46,10 +49,19 @@ export class netGame {
         })
     }
 
-    public cb_sale_role: (battle_info:common.UserBattleData) => void;
+    public move(role_index1:number, role_index2:number) {
+        this.c_match.get_hub(this.match_name).move(role_index1, role_index2).callBack((battle_info)=>{
+            this.cb_battle_info.call(null, battle_info);
+        }, (err)=>{
+            console.log("move err:", err);
+        }).timeout(3000, ()=>{
+            console.log("move timeout!");
+        })
+    }
+
     public sale_role(index:number) {
         this.c_match.get_hub(this.match_name).sale_role(index).callBack((battle_info)=>{
-            this.cb_sale_role.call(null, battle_info);
+            this.cb_battle_info.call(null, battle_info);
         }, (err)=>{
             console.log("sale_role err:", err);
         }).timeout(3000, ()=>{
@@ -57,10 +69,9 @@ export class netGame {
         })
     }
     
-    public cb_refresh: (shop_info:common.ShopData) => void;
     public refresh() {
         this.c_match.get_hub(this.match_name).refresh().callBack((shop_info)=>{
-            this.cb_refresh.call(null, shop_info);
+            this.cb_shop_info.call(null, shop_info);
         }, (err)=>{
             console.log("refresh err:", err);
         }).timeout(3000, ()=>{
@@ -68,6 +79,7 @@ export class netGame {
         })
     }
     
+    //战斗阶段(测试用)
     public cb_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
     public battle() {
         this.c_match.get_hub(this.match_name).start_round().callBack((self, target)=>{
@@ -76,6 +88,16 @@ export class netGame {
             console.log("battle err:", err);
         }).timeout(3000, ()=>{
             console.log("battle timeout!");
+        })
+    }
+    //战斗阶段
+    public battle1() {
+        this.c_match.get_hub(this.match_name).start_round1().callBack((self, target)=>{
+            this.cb_battle.call(null, self, target);
+        }, (err)=>{
+            console.log("battle1 err:", err);
+        }).timeout(3000, ()=>{
+            console.log("battle1 timeout!");
         })
     }
 

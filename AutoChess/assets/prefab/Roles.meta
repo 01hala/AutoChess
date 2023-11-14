@@ -10,8 +10,6 @@
     "bundleName": "Roles",
     "bundleConfigID": "10/3kWFm5JBrRddctK2a3b",
     "compressionType": {},
-    "isRemoteBundle": {
-      "wechatgame": true
-    }
+    "isRemoteBundle": {}
   }
 }
