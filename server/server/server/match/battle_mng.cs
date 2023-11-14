@@ -146,7 +146,7 @@ namespace Match
             var rmRoleList = new List<ShopRole>();
             foreach (var r in shopData.SaleRoleList)
             {
-                if (!r.IsFreeze)
+                if (r != null && !r.IsFreeze)
                 {
                     rmRoleList.Add(r);
                 }
@@ -159,7 +159,7 @@ namespace Match
             var rmPropList = new List<ShopProp>();
             foreach (var p in shopData.SalePropList)
             {
-                if (!p.IsFreeze)
+                if (p != null && !p.IsFreeze)
                 {
                     rmPropList.Add(p);
                 }
