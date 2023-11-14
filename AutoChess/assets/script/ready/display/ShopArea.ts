@@ -55,7 +55,7 @@ export class ShopArea extends Component
         
     }
 
-    ShopUpdate()
+    ShopUpdate(roles:ShopRole[],props:ShopProp[])
     {
 
     }

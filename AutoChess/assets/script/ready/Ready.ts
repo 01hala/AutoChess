@@ -7,6 +7,7 @@ import { _decorator, Component, Node } from 'cc';
 import * as skill from '../battle/skill/skill_base'
 import * as common from "../serverSDK/common"
 import { ShopProp, ShopRole } from '../serverSDK/common';
+import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
 const { ccclass, property } = _decorator;
 
@@ -45,7 +46,13 @@ export class Ready
 
     public Refresh()
     {
-
+        singleton.netSingleton.game.refresh();
+        singleton.netSingleton.game.cb_refresh=(self:common.ShopData)=>
+        {
+            this.roles=self.SaleRoleList;
+            this.props=self.SalePropList;
+        }
+        
     }
 }
 

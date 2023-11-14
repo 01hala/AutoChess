@@ -45,7 +45,7 @@ export class ReadyDis
             this.refreshBtn.node.on(Button.EventType.CLICK,()=>
             {
                 this.ready.Refresh();
-                this.shopArea.getComponent(ShopArea).ShopUpdate();
+                this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
 
             },this);
             
