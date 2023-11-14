@@ -8,10 +8,12 @@ import * as common from "../serverSDK/common"
 import * as singleton from '../netDriver/netSingleton';
 import * as load from '../loading/load';
 
-import * as battle from '../battle/battle'
-import * as battleDis from '../battle/display/BattleDis'
+import { Battle } from '../battle/battle'
+import { BattleDis }  from '../battle/display/BattleDis'
 import * as config from '../config/config';
 import { BundleManager } from '../bundle/BundleManager';
+import { Ready } from '../ready/Ready';
+import { ReadyDis } from '../ready/display/ReadyDis';
 
 @ccclass('login')
 export class login extends Component {
@@ -133,23 +135,29 @@ export class login extends Component {
         singleton.netSingleton.player.cb_player_login_sucess = () => {
             this._progress += 0.1;
             this._setProgress(this._progress);
-
+            //开始准备阶段
             singleton.netSingleton.game.start_battle();
 
             console.log("login sucess!");
         }
+        //准备阶段
+        singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
+            //singleton.netSingleton.game.battle();
 
-        singleton.netSingleton.game.cb_start_battle = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
-            singleton.netSingleton.game.battle();
-
-            console.log("start_battle sucess!");
+            let _ready = new Ready(shop_info);
+            singleton.netSingleton.ready=new ReadyDis(_ready);
+            await singleton.netSingleton.ready.start(this.bk.node);
+            
+            this._setProgress(1.0);
+            this._loading.done();
+            console.log("Start Ready sucess!");
         }
 
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
             console.log("cb_battle start round!");
 
-            let _battle = new battle.Battle(self, target);
-            singleton.netSingleton.battle = new battleDis.BattleDis(_battle);
+            let _battle = new Battle(self, target);
+            singleton.netSingleton.battle = new BattleDis(_battle);
             await singleton.netSingleton.battle.Start(this.bk.node);
 
             this._setProgress(1.0);

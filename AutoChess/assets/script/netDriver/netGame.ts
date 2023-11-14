@@ -23,6 +23,7 @@ export class netGame {
     }
 
     private match_name:string = "";
+    //准备阶段
     public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData) => void;
     public start_battle() {
         this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info)=>{
@@ -78,6 +79,7 @@ export class netGame {
         })
     }
     
+    //战斗阶段(测试用)
     public cb_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
     public battle() {
         this.c_match.get_hub(this.match_name).start_round().callBack((self, target)=>{
@@ -88,7 +90,7 @@ export class netGame {
             console.log("battle timeout!");
         })
     }
-
+    //战斗阶段
     public battle1() {
         this.c_match.get_hub(this.match_name).start_round1().callBack((self, target)=>{
             this.cb_battle.call(null, self, target);

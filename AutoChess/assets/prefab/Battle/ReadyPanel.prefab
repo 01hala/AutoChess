@@ -204,7 +204,7 @@
   {
     "__type__": "cc.Node",
     "_name": "TopArea",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 1
     },
@@ -260,7 +260,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Tips",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 8
     },
@@ -430,8 +430,8 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "HpInfor",
-    "_objFlags": 0,
+    "_name": "HpInfo",
+    "_objFlags": 512,
     "_parent": {
       "__id__": 8
     },
