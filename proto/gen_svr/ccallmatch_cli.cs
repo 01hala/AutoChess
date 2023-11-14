@@ -267,6 +267,62 @@ namespace Abelkhan
 
     }
 
+    public class plan_move_cb
+    {
+        private UInt64 cb_uuid;
+        private plan_rsp_cb module_rsp_cb;
+
+        public plan_move_cb(UInt64 _cb_uuid, plan_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action<UserBattleData> on_move_cb;
+        public event Action<Int32> on_move_err;
+        public event Action on_move_timeout;
+
+        public plan_move_cb callBack(Action<UserBattleData> cb, Action<Int32> err)
+        {
+            on_move_cb += cb;
+            on_move_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.move_timeout(cb_uuid);
+            });
+            on_move_timeout += timeout_cb;
+        }
+
+        public void call_cb(UserBattleData info)
+        {
+            if (on_move_cb != null)
+            {
+                on_move_cb(info);
+            }
+        }
+
+        public void call_err(Int32 err)
+        {
+            if (on_move_err != null)
+            {
+                on_move_err(err);
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_move_timeout != null)
+            {
+                on_move_timeout();
+            }
+        }
+
+    }
+
     public class plan_sale_role_cb
     {
         private UInt64 cb_uuid;
@@ -550,6 +606,7 @@ namespace Abelkhan
 /*this cb code is codegen by abelkhan for c#*/
     public class plan_rsp_cb : Common.IModule {
         public Dictionary<UInt64, plan_buy_cb> map_buy;
+        public Dictionary<UInt64, plan_move_cb> map_move;
         public Dictionary<UInt64, plan_sale_role_cb> map_sale_role;
         public Dictionary<UInt64, plan_refresh_cb> map_refresh;
         public Dictionary<UInt64, plan_start_round_cb> map_start_round;
@@ -560,6 +617,9 @@ namespace Abelkhan
             map_buy = new Dictionary<UInt64, plan_buy_cb>();
             modules.add_mothed("plan_rsp_cb_buy_rsp", buy_rsp);
             modules.add_mothed("plan_rsp_cb_buy_err", buy_err);
+            map_move = new Dictionary<UInt64, plan_move_cb>();
+            modules.add_mothed("plan_rsp_cb_move_rsp", move_rsp);
+            modules.add_mothed("plan_rsp_cb_move_err", move_err);
             map_sale_role = new Dictionary<UInt64, plan_sale_role_cb>();
             modules.add_mothed("plan_rsp_cb_sale_role_rsp", sale_role_rsp);
             modules.add_mothed("plan_rsp_cb_sale_role_err", sale_role_err);
@@ -611,6 +671,44 @@ namespace Abelkhan
                 if (map_buy.TryGetValue(uuid, out plan_buy_cb rsp))
                 {
                     map_buy.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
+        public void move_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var rsp = try_get_and_del_move_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb(_info);
+            }
+        }
+
+        public void move_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var rsp = try_get_and_del_move_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err(_err);
+            }
+        }
+
+        public void move_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_move_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private plan_move_cb try_get_and_del_move_cb(UInt64 uuid){
+            lock(map_move)
+            {
+                if (map_move.TryGetValue(uuid, out plan_move_cb rsp))
+                {
+                    map_move.Remove(uuid);
                 }
                 return rsp;
             }
@@ -862,6 +960,21 @@ namespace Abelkhan
             lock(rsp_cb_plan_handle.map_buy)
             {                rsp_cb_plan_handle.map_buy.Add(uuid_4d846fab_804e_563b_998f_6e40c5d2bd39, cb_buy_obj);
             }            return cb_buy_obj;
+        }
+
+        public plan_move_cb move(Int32 role1_index, Int32 role2_index){
+            var uuid_b12e48a4_eacf_5547_aa8b_371481c78a76 = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
+
+            var _argv_33efb72e_9227_32af_a058_169be114a277 = new ArrayList();
+            _argv_33efb72e_9227_32af_a058_169be114a277.Add(uuid_b12e48a4_eacf_5547_aa8b_371481c78a76);
+            _argv_33efb72e_9227_32af_a058_169be114a277.Add(role1_index);
+            _argv_33efb72e_9227_32af_a058_169be114a277.Add(role2_index);
+            _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_move", _argv_33efb72e_9227_32af_a058_169be114a277);
+
+            var cb_move_obj = new plan_move_cb(uuid_b12e48a4_eacf_5547_aa8b_371481c78a76, rsp_cb_plan_handle);
+            lock(rsp_cb_plan_handle.map_move)
+            {                rsp_cb_plan_handle.map_move.Add(uuid_b12e48a4_eacf_5547_aa8b_371481c78a76, cb_move_obj);
+            }            return cb_move_obj;
         }
 
         public plan_sale_role_cb sale_role(Int32 index){
