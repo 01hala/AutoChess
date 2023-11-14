@@ -3,20 +3,20 @@
  * author: Hotaru
  * 2023/11/11
  */
-
 import { _decorator, Component, Node } from 'cc';
 import * as skill from '../battle/skill/skill_base'
 import * as common from "../serverSDK/common"
-import { Role,ShopProp } from '../serverSDK/common';
+import { ShopProp, ShopRole } from '../serverSDK/common';
+import { sleep } from '../other/sleep';
 const { ccclass, property } = _decorator;
 
 @ccclass('Ready')
 export class Ready
 {
     private props:ShopProp[];
-    private roles:Role[];
+    private roles:ShopRole[];
 
-    private freezeRoles:Role[]=[];
+    //private freezeRoles:Role[]=[];
 
     private evs:skill.Event[] = [];
 
@@ -24,10 +24,11 @@ export class Ready
 
     public constructor(self:common.ShopData) 
     {
-        
+        this.roles=self.SaleRoleList;
+        this.props=self.SalePropList;
     }
 
-    public GetShopRoles():Role[]
+    public GetShopRoles():ShopRole[]
     {
         return this.roles;
     }

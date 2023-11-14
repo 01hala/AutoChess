@@ -19,7 +19,7 @@ export class ReadyDis
 
     private roleArea:Node;
 
-    private shopArea:Node;
+    private shopArea:ShopArea;
 
     public ready:Ready;
 
@@ -38,6 +38,9 @@ export class ReadyDis
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
             this.panelNode = instantiate(panel);
 
+            this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
+            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
+
             this.refreshBtn=this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK,()=>
             {
@@ -55,7 +58,6 @@ export class ReadyDis
 
         }
     }
-
 
     onEvent()
     {

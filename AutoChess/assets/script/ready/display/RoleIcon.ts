@@ -18,7 +18,8 @@ export class RoleIcon extends Component
 {
     @property(Node)
     public myTouch: Node;
-
+    public target:Node;
+    public id:number;
     //public canvas:Node;
 
     private panel:Node;
@@ -26,12 +27,12 @@ export class RoleIcon extends Component
     private collider:Collider2D;
     private touchStartPoint: Vec2 = new Vec2(0, 0);
 
-    public target:Node;
-    public id:number;
+    private roleNode:Node;
 
     private roleArea:RoleArea;
     private rolePrefab:Prefab;
-    private roleNode:Node;
+
+    
     private iconMask:Node;
 
     private originalPos:Vec3;
@@ -176,6 +177,11 @@ export class RoleIcon extends Component
         this.roleNode.active=false;
     }
 
+    SetProperty(hp:number,atk:number)
+    {
+        this.roleNode.getComponent(RoleDis).HP=hp;
+        this.roleNode.getComponent(RoleDis).ATK=atk;
+    }
 
     Adsorption()
     {

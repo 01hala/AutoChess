@@ -86,7 +86,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 450,
+      "x": 449.99999999999994,
       "y": 800.0000000000001,
       "z": 0
     },
@@ -170,7 +170,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 800,
+    "_orthoHeight": 800.0000000000001,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -224,7 +224,8 @@
     "instance": {
       "__id__": 7
     },
-    "targetOverrides": null
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
   },
   {
     "__type__": "cc.PrefabInstance",
@@ -375,8 +376,8 @@
     "__prefab": null,
     "_alignFlags": 45,
     "_target": null,
-    "_left": 0,
-    "_right": 0,
+    "_left": -5.684341886080802e-14,
+    "_right": -5.684341886080802e-14,
     "_top": 1.1368683772161603e-13,
     "_bottom": 1.1368683772161603e-13,
     "_horizontalCenter": 0,
