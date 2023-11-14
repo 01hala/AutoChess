@@ -146,7 +146,7 @@ namespace Match
             var rmRoleList = new List<ShopRole>();
             foreach (var r in shopData.SaleRoleList)
             {
-                if (!r.IsFreeze)
+                if (r != null && !r.IsFreeze)
                 {
                     rmRoleList.Add(r);
                 }
@@ -159,7 +159,7 @@ namespace Match
             var rmPropList = new List<ShopProp>();
             foreach (var p in shopData.SalePropList)
             {
-                if (!p.IsFreeze)
+                if (p != null && !p.IsFreeze)
                 {
                     rmPropList.Add(p);
                 }
@@ -172,13 +172,21 @@ namespace Match
             while (shopData.SaleRoleList.Count < 3)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                shopData.SaleRoleList.Add(randomShopRole(stage));
+                var r = randomShopRole(stage);
+                if (r != null)
+                {
+                    shopData.SaleRoleList.Add(r);
+                }
             }
 
-            while (shopData.SalePropList.Count < 3)
+            for(int i = 0; i < 3 && shopData.SalePropList.Count < 3; ++i)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                shopData.SalePropList.Add(randomShopProp(stage));
+                var p = randomShopProp(stage);
+                if (p != null)
+                {
+                    shopData.SalePropList.Add(p);
+                }
             }
         }
 
