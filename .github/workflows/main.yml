@@ -62,3 +62,11 @@ hotaru:添加远程攻击分支（百分比伤害）
 hotaru:新增十字形站位判断，添加readypanel及其美术资源
 2023/11/9
 hotaru:商店拖拽效果
+2023/11/10 
+hotaru:修改、优化拖拽效果
+2023/11/11
+hotaru:添加ready.ts  readydis.ts  shoparea.ts
+2023/11/14
+hotaru:完善ready阶段
+2023/11/15
+hotaru:细化拖拽效果

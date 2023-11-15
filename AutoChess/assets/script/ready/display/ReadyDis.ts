@@ -37,7 +37,11 @@ export class ReadyDis
         try
         {
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
+            console.log(panel);
             this.panelNode = instantiate(panel);
+
+            this.father=father;
+            father.addChild(this.panelNode);
 
             this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
             this.RefreshShop();
@@ -48,13 +52,7 @@ export class ReadyDis
                 this.RefreshShop();
             },this);
             
-            
-
-            this.father=father;
-            father.addChild(this.panelNode);
-
             this.ready.StartReady();
-
         }
         catch(error)
         {

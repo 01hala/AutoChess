@@ -1,10 +1,11 @@
 import { _decorator, Component, Node } from 'cc';
+import { RoleIcon } from './RoleIcon';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleArea')
 export class RoleArea extends Component 
 {
-    public targets:Map<string,string> = new Map();
+    public targets:Map<string,Node> = new Map();
 
     public roles:Node[]=[];
 
@@ -28,6 +29,13 @@ export class RoleArea extends Component
             return this.targets.get(name);
         }
         return null;
+    }
+
+    async SwitchPos(pos:Node,switchNode:Node)
+    {
+        this.targets.set(pos.name,switchNode);
+        switchNode.getComponent(RoleIcon).target=pos;
+        switchNode.getComponent(RoleIcon).TransPos(pos.worldPosition);
     }
 }
 
