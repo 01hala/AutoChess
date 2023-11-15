@@ -10,6 +10,8 @@
     "bundleName": "Battle",
     "bundleConfigID": "85ThGQdaRIbo1oHhQGeHzA",
     "compressionType": {},
-    "isRemoteBundle": {}
+    "isRemoteBundle": {
+      "wechatgame": true
+    }
   }
 }

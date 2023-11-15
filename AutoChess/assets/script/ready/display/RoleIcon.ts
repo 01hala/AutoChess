@@ -146,7 +146,6 @@ export class RoleIcon extends Component
         }, this)
         this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
         {
-            
             let node: Node = event.currentTarget;
             
             let pos = new Vec2();
@@ -159,8 +158,6 @@ export class RoleIcon extends Component
         }, this)
         this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
         {
-            
-
             let node: Node = event.currentTarget;
 
             this.touchStartPoint.set(event.getUILocation());
