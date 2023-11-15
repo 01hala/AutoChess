@@ -14,6 +14,7 @@ import { RoleDis } from '../../battle/display/RoleDis';
 import { ReadyDis } from './ReadyDis';
 import * as singleton from '../../netDriver/netSingleton';
 import { ShopArea } from './ShopArea';
+import { Camp, Property } from '../../other/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -61,6 +62,7 @@ export class RoleIcon extends Component
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
             this.originalPos=this.node.getPosition();
             this.iconMask=this.node.getChildByName("IconMask");
+            this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
        }
        catch(error)
@@ -69,12 +71,85 @@ export class RoleIcon extends Component
        }
         
     }
-
-    async start() 
+    //初始化
+    async Init(id:number,hp:number,atk:number)
     {
-        //this.roleNode=this.SpawnRole()
-        await this.LoadPrefab();
+        let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
+        let r=new role.Role(0,id,1,0,Camp.Self,map);
+        this.roleNode=await this.SpawnRole(r);
+        
+/*拖拽*/
+        this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
+        {
+            this.touchStartPoint = new Vec2(0, 0);
+        }, this);
 
+        this.myTouch.on(Input.EventType.TOUCH_END, () => 
+        {
+            this.touchStartPoint = new Vec2(0, 0);
+            if(this.isSwitch)
+            {
+                this.roleArea.SwitchPos(this.target,this.t);
+                this.target=this.tempTarget;
+                this.roleArea.targets.set(this.target.name,this.node);
+                this.isSwitch=false;
+            }
+            this.Adsorption();
+            
+            if(this.isBuy)
+            {
+                this.shopArea.BuyRole();
+            }
+        }, this);
+
+        this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
+        {
+            let node: Node = event.currentTarget;
+            let pos = new Vec2();
+            let shit = pos.set(event.getUILocation());
+            let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
+            let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
+            node.setPosition(x, y, 0);
+        }, this);
+
+        this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
+        {
+            let node: Node = event.currentTarget;
+
+            this.touchStartPoint.set(event.getUILocation());
+
+            let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
+            let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
+
+            this.touchStartPoint = new Vec2(x, y);
+            this.roleNode.active=true;
+            this.iconMask.active=false;
+        }, this);
+/*拖拽*/
+
+        this.iconMask.active=true;
+    }
+
+    SpawnRole(r:role.Role):Promise<Node>
+    {
+        return new Promise (async (resolve)=>
+        {
+            let address: string = "Role_";
+            //let roleRes=""+address+r[i].id;
+            let roleRes = address + "1";
+            let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+
+            let role = instantiate(newNode);
+            role.setParent(this.node);
+            let roleDis = role.getComponent(RoleDis);
+            roleDis.Refresh(r);
+            role.active=false;
+            resolve(role);
+        });
+    }
+
+    start() 
+    {
         this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
             {
                 if(null!=otherCollider && 1 == otherCollider.tag)
@@ -117,63 +192,7 @@ export class RoleIcon extends Component
                     //this.SellRole();
                 }
             }, this);
-
-        this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
-        {
-            
-            this.touchStartPoint = new Vec2(0, 0);
-        }, this)
-        this.myTouch.on(Input.EventType.TOUCH_END, () => 
-        {
-            //this.collider.off(Contact2DType.END_CONTACT);
-            //this.collider.off(Contact2DType.BEGIN_CONTACT);
-            this.touchStartPoint = new Vec2(0, 0);
-            if(this.isSwitch)
-            {
-                this.roleArea.SwitchPos(this.target,this.t);
-                
-                this.target=this.tempTarget;
-                this.roleArea.targets.set(this.target.name,this.node);
-                this.isSwitch=false;
-            }
-            this.Adsorption();
-            
-            if(this.isBuy)
-            {
-                this.shopArea.BuyRole();
-            }
-
-        }, this)
-        this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
-        {
-            
-            let node: Node = event.currentTarget;
-            
-            let pos = new Vec2();
-            let shit = pos.set(event.getUILocation());
-            let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
-            let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
-
-            node.setPosition(x, y, 0);
-
-        }, this)
-        this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
-        {
-            
-
-            let node: Node = event.currentTarget;
-
-            this.touchStartPoint.set(event.getUILocation());
-
-            let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
-            let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
-            
-            this.touchStartPoint = new Vec2(x, y);
-
-            this.roleNode.active=true;
-            this.iconMask.active=false;
-
-        }, this)
+  
     }
 
     update(deltaTime: number) 
@@ -181,40 +200,7 @@ export class RoleIcon extends Component
 
     }
 
-    SpawnRole(r:role.Role):Promise<Node>
-    {
-        return new Promise (async (resolve)=>
-        {
-            let address: string = "Role_";
-            //let roleRes=""+address+r[i].id;
-            let roleRes = address + "1";
-            let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-
-            let role = instantiate(newNode);
-            let roleDis = role.getComponent(RoleDis);
-            await roleDis.Refresh(r);
-            resolve(role);
-        });
-    }
-    
-
-    async LoadPrefab()
-    {
-        let address: string = "Role_";
-        //let roleRes=""+address+r[i].id;
-        let roleRes = address + "1";
-        this.rolePrefab=await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-        this.roleNode=instantiate(this.rolePrefab);
-        this.roleNode.setParent(this.node);
-        this.roleNode.active=false;
-    }
-
-    SetProperty(hp:number,atk:number)
-    {
-        this.roleNode.getComponent(RoleDis).HP=hp;
-        this.roleNode.getComponent(RoleDis).ATK=atk;
-    }
-
+    //拖拽吸附
     Adsorption()
     {
         if(null!=this.target)
@@ -248,7 +234,7 @@ export class RoleIcon extends Component
         }
         
     }
-
+    //互相换位
     TransPos(Vec3:Vec3)
     {
         this.tweenNode=tween(this.node).to(0.1,{worldPosition:Vec3})

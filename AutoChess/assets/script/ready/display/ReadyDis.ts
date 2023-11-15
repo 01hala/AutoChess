@@ -44,7 +44,7 @@ export class ReadyDis
             father.addChild(this.panelNode);
 
             this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
-            this.RefreshShop();
+            
             //刷新按钮
             this.refreshBtn=this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK,()=>
@@ -53,6 +53,7 @@ export class ReadyDis
             },this);
             
             this.ready.StartReady();
+            this.RefreshShop();
         }
         catch(error)
         {

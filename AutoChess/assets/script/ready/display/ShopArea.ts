@@ -51,9 +51,10 @@ export class ShopArea extends Component
             for(let i=0;i<roles.length;i++)
             {
                 let newNode=instantiate(this.roleIcon);
-                newNode.getComponent(RoleIcon).SetProperty(roles[i].HP,roles[i].Attack)
                 newNode.setParent(this.panel);
                 newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
+                newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
+                this.shopRoles.push(newNode);
             }
         }
     }
@@ -65,6 +66,7 @@ export class ShopArea extends Component
             if(this.shopRoles[i].getComponent(RoleIcon).isBuy)
             {
                 singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).Index);
+                this.shopRoles.splice(i,1);
             }
         }
         
