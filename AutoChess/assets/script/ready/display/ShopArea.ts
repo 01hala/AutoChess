@@ -56,7 +56,6 @@ export class ShopArea extends Component
                 newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
             }
         }
-        
     }
 
     BuyRole()
@@ -68,6 +67,11 @@ export class ShopArea extends Component
                 singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).Index);
             }
         }
+        
+    }
+
+    SaleRole()
+    {
         
     }
 
