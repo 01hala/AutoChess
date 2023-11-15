@@ -95,14 +95,19 @@ export class Team {
 
     /*
      * 添加
-     * 此函数向场上第一位置加入一个角色，如果满员则不加入。返回是否加入成功
+     * 此函数向场上第一个空位置加入一个角色，如果满员则不加入。返回加入后的角色所在索引
      * Editor: Guanliu
      * 2023/9/27
      */
-    public AddRole(role:role.Role):boolean{
-        if(this.roleList.length>=6) return false;
+    public AddRole(role:role.Role):number{
+        for(let i=0;i<this.roleList.length;i++){
+            if(null==this.roleList[i]){
+                this.roleList[i]=role;
+                return i;
+            }
+        }
 
-        this.roleList.unshift(role);
-        return true;
+        //返回-1说明加入失败
+        return -1;
     }
 }

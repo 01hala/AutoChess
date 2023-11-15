@@ -236,6 +236,33 @@ export class BattleDis
         }
     }
 
+    private async CheckSummonEvent(evs:skill.Event[]) 
+    {
+        try 
+        {
+            let allAwait = [];
+            for(let ev of evs)
+            {
+                if(EventType.Summon != ev.type) 
+                {
+                    continue;
+                }
+
+                //释放技能者所在阵营列表
+                let roleList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam().GetRoles() : this.battle.GetEnemyTeam().GetRoles();
+                
+                ev.recipient.forEach(element=>{
+                    this.selfQueue.SummonRole(roleList,ev.spellcaster);
+                });
+            }
+            await Promise.all(allAwait);
+        }
+        catch(error) 
+        {
+            console.error("BattleDis 下的 CheckSummon 错误 err:", error);
+        }
+    }
+
     private async ChangeAttEvent(evs:skill.Event[])
     {
         try 
@@ -343,6 +370,7 @@ export class BattleDis
             {
                 await this.CheckAttackEvent(evs);
                 await this.CheckRemoteInjured(evs);
+                await this.CheckSummonEvent(evs);
                 await this.ChangeAttEvent(evs);
                 await this.CheckExitEvent(evs);
             }

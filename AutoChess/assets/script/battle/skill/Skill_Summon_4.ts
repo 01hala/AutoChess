@@ -43,9 +43,10 @@ export class Skill_Summon_4 extends SkillBase
     }
 
     private SkillEffect(selfInfo: RoleInfo, battle: Battle):void
-    {
+    {    
         try
         {
+            console.log("召唤技能");
             let battleEvent : Event = new Event();
             battleEvent.type = EventType.Summon;
             battleEvent.spellcaster = selfInfo;
@@ -55,18 +56,20 @@ export class Skill_Summon_4 extends SkillBase
             let added:Role;
             if(Camp.Self==selfInfo.camp)
             {
-                added=new Role(this.addedID, this.addedLevel, Camp.Self, this.addedProperties, 0, 0);
-                battle.GetSelfTeam().AddRole(added);
+                added=new Role(-1,this.addedID, this.addedLevel, Camp.Self, this.addedProperties, 0);
+                added.index = battle.GetSelfTeam().AddRole(added);
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                added=new Role(this.addedID,this.addedLevel,Camp.Enemy,this.addedProperties, 0, 0);
-                battle.GetEnemyTeam().AddRole(added);
+                added=new Role(-1,this.addedID, this.addedLevel, Camp.Enemy, this.addedProperties, 0);
+                added.index = battle.GetEnemyTeam().AddRole(added);
             }
 
             let roleInfo = new RoleInfo();
             roleInfo.camp = selfInfo.camp;
             roleInfo.index = 0;
+            roleInfo.hp=this.addedProperties[Property.HP];
+            roleInfo.attack=this.addedProperties[Property.Attack];
             battleEvent.recipient.push(roleInfo);
             battle.AddBattleEvent(battleEvent);
         }
