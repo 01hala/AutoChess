@@ -19,7 +19,7 @@ export class ShopArea extends Component
     public roleIcon:Node;
 
     public rolesSquare:Node[]=[];
-
+    @property(Node)
     public panel:Node;
 
     private shopRoles:Node[]=[];
@@ -30,7 +30,6 @@ export class ShopArea extends Component
         {
             this.rolesSquare.push(t);
         }
-        this.panel=this.node.parent;
     }
 
     start() 
@@ -52,6 +51,7 @@ export class ShopArea extends Component
             {
                 let newNode=instantiate(this.roleIcon);
                 newNode.setParent(this.panel);
+                //console.log(newNode.parent.name);
                 newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
                 newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
                 this.shopRoles.push(newNode);

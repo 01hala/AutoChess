@@ -60,7 +60,6 @@ export class RoleIcon extends Component
             this.panel=this.node.parent;
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
-            this.originalPos=this.node.getPosition();
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
@@ -77,7 +76,7 @@ export class RoleIcon extends Component
         let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
         let r=new role.Role(0,id,1,0,Camp.Self,map);
         this.roleNode=await this.SpawnRole(r);
-        
+        this.originalPos=this.node.getPosition();
 /*拖拽*/
         this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
         {
@@ -154,12 +153,12 @@ export class RoleIcon extends Component
             {
                 if(null!=otherCollider && 1 == otherCollider.tag)
                 {
-                    console.log(otherCollider.name);
+                    //console.log(otherCollider.name);
                     for(let i=0;i<this.roleArea.targets.size;i++)
                     {
                         if(this.roleArea.GetTargetValue(otherCollider.node.name)==selfCollider.node)
                         {
-                            console.log("set null");
+                            //console.log("set null");
                             this.roleArea.targets.set(otherCollider.node.name,null);
                             //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
                             return;
@@ -219,6 +218,7 @@ export class RoleIcon extends Component
         }
         else
         {
+            console.log(this.originalPos);
             this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
             .call(()=>
             {
