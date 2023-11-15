@@ -121,7 +121,7 @@ namespace Match
 
                 foreach (var _skill_role in shop_skill_roles)
                 {
-                    if (_skill_role.Trigger(tmp_evs))
+                    if (_skill_role != null && _skill_role.Trigger(tmp_evs))
                     {
                         _skill_role.UseSkill(this);
                     }
