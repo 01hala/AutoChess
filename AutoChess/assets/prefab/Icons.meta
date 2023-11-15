@@ -9,6 +9,7 @@
     "compressionType": {},
     "isRemoteBundle": {
       "wechatgame": true
-    }
+    },
+    "isBundle": true
   }
 }
