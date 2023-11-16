@@ -18,7 +18,7 @@ export class Ready
     private props:ShopProp[];
     private roles:ShopRole[];
 
-    private coin:number;
+    private coin:number=0;
 
     //private freezeRoles:Role[]=[];
 
@@ -59,7 +59,7 @@ export class Ready
             this.props=shop_info.SalePropList;
         }
 
-        let ev=new skill.Event;
+        let ev=new skill.Event();
         ev.type=EventType.RoundStarts;
         this.AddReadyEvent(ev);
     }
@@ -69,22 +69,24 @@ export class Ready
         singleton.netSingleton.game.refresh();
     }
 
-    public Buy(shop_index: common.ShopIndex,index:number,role_index:number)
+    public async Buy(shop_index: common.ShopIndex,index:number,role_index:number)
     {
-        singleton.netSingleton.game.buy(shop_index,index,role_index);
+        await singleton.netSingleton.game.buy(shop_index,index,role_index);
 
-        let ev = new skill.Event;
+        let ev = new skill.Event();
         ev.type=EventType.Purchase;
+        ev.value=[];
         ev.value.push(this.coin);
         this.AddReadyEvent(ev);
     }
 
-    public Sale(role_index:number)
+    public async Sale(role_index:number)
     {
-        singleton.netSingleton.game.sale_role(role_index);
+        await singleton.netSingleton.game.sale_role(role_index);
 
-        let ev = new skill.Event;
+        let ev = new skill.Event();
         ev.type=EventType.Sold;
+        ev.value=[];
         ev.value.push(this.coin);
         this.AddReadyEvent(ev);
     }

@@ -57,19 +57,6 @@ export class RoleDis extends Component
 
     private originalPos: Vec3;
 
-    //属性设置器
-    public set HP(v : number) 
-    {
-        this.Hp = v;
-        this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
-    }
-    
-    public set ATK(v : number) {
-        this.AtkNum = v;
-        this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-    }
-    
-
     protected onLoad(): void {
         try {
             this.levelSprite = this.node.getChildByName("LevelSprite");

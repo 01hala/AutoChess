@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { RoleIcon } from './RoleIcon';
+import * as singleton from '../../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleArea')
@@ -15,6 +16,11 @@ export class RoleArea extends Component
         {
             this.targets.set(t.name,null);
         }
+    }
+
+    start()
+    {
+        
     }
 
     update(deltaTime: number) 
@@ -36,6 +42,13 @@ export class RoleArea extends Component
         this.targets.set(pos.name,switchNode);
         switchNode.getComponent(RoleIcon).target=pos;
         switchNode.getComponent(RoleIcon).TransPos(pos.worldPosition);
+    }
+
+    SaleRole(index:number)
+    {
+        singleton.netSingleton.ready.ready.Sale(index);
+
+        this.roles.splice(index,1);
     }
 }
 
