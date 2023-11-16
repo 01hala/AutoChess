@@ -25,7 +25,7 @@ export class RoleIcon extends Component
     public target:Node;
 
     public roleId:number;
-    public Index:number;
+    public index:number;
     //public canvas:Node;
 
     private panel:Node;
@@ -47,6 +47,7 @@ export class RoleIcon extends Component
     private tweenNode:Tween<Node>;
 
     public isBuy:boolean=false;
+    public isSale:boolean=false;
     private isSwitch:boolean=false;
 
     private tempTarget:Node=null;
@@ -78,11 +79,12 @@ export class RoleIcon extends Component
         this.roleNode=await this.SpawnRole(r);
         this.originalPos=this.node.getPosition();
 /*拖拽*/
+        //拖拽取消
         this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
         {
             this.touchStartPoint = new Vec2(0, 0);
         }, this);
-
+        //拖拽结束
         this.myTouch.on(Input.EventType.TOUCH_END, () => 
         {
             this.touchStartPoint = new Vec2(0, 0);
@@ -94,13 +96,15 @@ export class RoleIcon extends Component
                 this.isSwitch=false;
             }
             this.Adsorption();
-            
-            if(this.isBuy)
+            if(this.isSale)
             {
-                this.shopArea.BuyRole();
+                this.roleArea.SaleRole(this.index);
+                this.roleNode.destroy();
+                this.node.destroy();
             }
+            
         }, this);
-
+        //拖拽中
         this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
         {
             let node: Node = event.currentTarget;
@@ -110,7 +114,7 @@ export class RoleIcon extends Component
             let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
             node.setPosition(x, y, 0);
         }, this);
-
+        //拖拽开始
         this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
         {
             let node: Node = event.currentTarget;
@@ -165,6 +169,13 @@ export class RoleIcon extends Component
                         }
                     }
                 }
+                if(null!=otherCollider && 2 == otherCollider.tag)
+                {
+                    if(this.isBuy)
+                    {
+                        this.isSale=false;
+                    }
+                }
             },this);
 
             this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
@@ -174,7 +185,7 @@ export class RoleIcon extends Component
                     if(null==this.roleArea.GetTargetValue(otherCollider.node.name))
                     { 
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
-                        this.Index=Number(num);
+                        this.index=Number(num);
                         this.target=otherCollider.node;
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
@@ -188,7 +199,11 @@ export class RoleIcon extends Component
                 }  
                 if(null!=otherCollider && 2 == otherCollider.tag)
                 {
-                    //this.SellRole();
+                    if(this.isBuy)
+                    {
+                        this.isSale=true;
+                    }
+                    
                 }
             }, this);
   
@@ -202,9 +217,9 @@ export class RoleIcon extends Component
     //拖拽吸附
     Adsorption()
     {
-        if(null!=this.target)
+        if(null!=this.target && !this.isSale)
         {
-
+            this.roleArea.roles.push(this.roleNode);
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
              {
@@ -213,8 +228,12 @@ export class RoleIcon extends Component
              })
              .start();
             //this.node.setWorldPosition(this.target.worldPosition);
-            this.isBuy=true;
-            this.roleArea.roles.push(this.roleNode);
+            if(!this.isBuy)
+            {
+                this.isBuy=true;
+                this.shopArea.BuyRole();
+                console.log('buy role');
+            }
         }
         else
         {

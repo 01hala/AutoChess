@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, Button, Component, EventHandler, instantiate, Node, Prefab } from 'cc';
+import { _decorator, Button, Component, EventHandler, instantiate, Node, Prefab, Size, size, UITransform, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { Ready } from '../Ready';
 import { BundleManager } from '../../bundle/BundleManager';
@@ -36,6 +36,7 @@ export class ReadyDis
     {
         try
         {
+            
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
             console.log(panel);
             this.panelNode = instantiate(panel);

@@ -80,12 +80,13 @@ export class Ready
         this.AddReadyEvent(ev);
     }
 
-    public Sale(role_index:number)
+    public async Sale(role_index:number)
     {
-        singleton.netSingleton.game.sale_role(role_index);
+        await singleton.netSingleton.game.sale_role(role_index);
 
         let ev = new skill.Event();
         ev.type=EventType.Sold;
+        ev.value=[];
         ev.value.push(this.coin);
         this.AddReadyEvent(ev);
     }
