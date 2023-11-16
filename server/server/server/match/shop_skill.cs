@@ -34,8 +34,8 @@ namespace Match
                 return false;
             }
 
-            var skill = config.Config.ShopSkillConfigs[roleID];
-            if (skill == null)
+            ShopSkillConfig skill;
+            if (!config.Config.ShopSkillConfigs.TryGetValue(roleID, out skill))
             {
                 return false;
             }
@@ -356,8 +356,8 @@ namespace Match
                 return;
             }
 
-            var skill = config.Config.ShopSkillConfigs[roleID];
-            if (skill == null)
+            ShopSkillConfig skill;
+            if (!config.Config.ShopSkillConfigs.TryGetValue(roleID, out skill))
             {
                 return;
             }
