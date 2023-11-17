@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Canvas } from 'cc';
+import { _decorator, Component, Node, Canvas, instantiate } from 'cc';
 import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;

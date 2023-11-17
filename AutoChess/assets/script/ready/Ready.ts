@@ -16,7 +16,9 @@ const { ccclass, property } = _decorator;
 export class Ready
 {
     private props:ShopProp[];
-    private roles:ShopRole[];
+    private shopRoles:ShopRole[];
+
+    private roles:common.Role[];
 
     private coin:number=0;
 
@@ -28,13 +30,13 @@ export class Ready
 
     public constructor(self:common.ShopData) 
     {
-        this.roles=self.SaleRoleList;
+        this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
     }
 
     public GetShopRoles():ShopRole[]
     {
-        return this.roles;
+        return this.shopRoles;
     }
 
     public GetShopProps():ShopProp[]
@@ -47,17 +49,33 @@ export class Ready
         this.evs.push(ev);
     }
 
+    public SetCoins(count:number)
+    {
+        if(count)
+        {
+            this.coin=count;
+        }
+    }
+
+    public SetRoles(data:common.Role[])
+    {
+        if(data)
+        {
+            this.roles=data;
+        }
+    }
+
+    public SetShopData(data:common.ShopData)
+    {
+        if(data)
+        {
+            this.shopRoles=data.SaleRoleList;
+            this.props=data.SalePropList;
+        }
+    }
+
     public StartReady()
     {
-        singleton.netSingleton.game.cb_battle_info=(battle_info:common.UserBattleData)=>
-        {
-            this.coin=battle_info.coin;
-        }
-        singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
-        {
-            this.roles=shop_info.SaleRoleList;
-            this.props=shop_info.SalePropList;
-        }
 
         let ev=new skill.Event();
         ev.type=EventType.RoundStarts;

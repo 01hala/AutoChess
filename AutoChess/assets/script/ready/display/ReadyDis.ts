@@ -9,6 +9,9 @@ import { Ready } from '../Ready';
 import { BundleManager } from '../../bundle/BundleManager';
 import { ShopArea } from './ShopArea';
 import * as skill from '../../battle/skill/skill_base'
+import * as singleton from '../../netDriver/netSingleton';
+import * as common from '../../serverSDK/common';
+import { login } from '../../login/login';
 const { ccclass, property } = _decorator;
 
 @ccclass('ReadyDis')
@@ -36,7 +39,16 @@ export class ReadyDis
     {
         try
         {
-            
+            singleton.netSingleton.game.cb_battle_info=(battle_info:common.UserBattleData)=>
+            {
+                this.ready.SetCoins(battle_info.coin);
+                this.ready.SetRoles(battle_info.RoleList);
+            }
+            singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
+            {
+                this.ready.SetShopData(shop_info);
+            }
+
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
             console.log(panel);
             this.panelNode = instantiate(panel);
@@ -45,6 +57,7 @@ export class ReadyDis
             father.addChild(this.panelNode);
 
             this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
+            //this.waitingPanel.active=false;
             
             //刷新按钮
             this.refreshBtn=this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
@@ -62,10 +75,16 @@ export class ReadyDis
         }
     }
 
-    //刷新商店
-    RefreshShop()
+    Waiting()
     {
-        this.ready.Refresh();
+        
+    }
+
+    //刷新商店
+    async RefreshShop()
+    {
+        await this.ready.Refresh();
+        console.log('refresh');
         this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
     }
 
@@ -73,6 +92,7 @@ export class ReadyDis
     {
 
     }
+
 
     onEvent()
     {

@@ -85,7 +85,7 @@ export class RoleIcon extends Component
             this.touchStartPoint = new Vec2(0, 0);
         }, this);
         //拖拽结束
-        this.myTouch.on(Input.EventType.TOUCH_END, () => 
+        this.myTouch.on(Input.EventType.TOUCH_END, async () => 
         {
             this.touchStartPoint = new Vec2(0, 0);
             if(this.isSwitch)
@@ -95,13 +95,15 @@ export class RoleIcon extends Component
                 this.roleArea.targets.set(this.target.name,this.node);
                 this.isSwitch=false;
             }
-            this.Adsorption();
             if(this.isSale)
             {
-                this.roleArea.SaleRole(this.index);
+                this.roleNode.active=false;
+                await this.roleArea.SaleRole(this.node);
                 this.roleNode.destroy();
                 this.node.destroy();
             }
+            //吸附缓动
+            this.Adsorption();
             
         }, this);
         //拖拽中
@@ -186,6 +188,7 @@ export class RoleIcon extends Component
                     { 
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.index=Number(num);
+                        console.log(this.index);
                         this.target=otherCollider.node;
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
@@ -219,7 +222,12 @@ export class RoleIcon extends Component
     {
         if(null!=this.target && !this.isSale)
         {
-            this.roleArea.roles.push(this.roleNode);
+            if(!this.isBuy)
+            {
+                this.isBuy=true;
+                this.shopArea.BuyRole();
+            }
+            this.roleArea.rolesNode.push(this.roleNode);
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
              {
@@ -228,16 +236,9 @@ export class RoleIcon extends Component
              })
              .start();
             //this.node.setWorldPosition(this.target.worldPosition);
-            if(!this.isBuy)
-            {
-                this.isBuy=true;
-                this.shopArea.BuyRole();
-                console.log('buy role');
-            }
         }
         else
         {
-            console.log(this.originalPos);
             this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
             .call(()=>
             {
