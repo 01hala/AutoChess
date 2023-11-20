@@ -86,6 +86,7 @@ export class RoleIcon extends Component
         let r=new role.Role(0,id,1,0,Camp.Self,map);
         this.roleNode=await this.SpawnRole(r);
         this.originalPos=this.node.getPosition();
+        this.roleId=id;
 /*拖拽*/
         //拖拽取消
         this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
