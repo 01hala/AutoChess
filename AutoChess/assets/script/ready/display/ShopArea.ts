@@ -69,6 +69,7 @@ export class ShopArea extends Component
         {
             if(this.shopRoles[i].getComponent(RoleIcon).isBuy)
             {
+                console.log("buy index"+ this.shopRoles[i].getComponent(RoleIcon).index);
                 singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).index);
                 this.shopRoles.splice(i,1);
             }
