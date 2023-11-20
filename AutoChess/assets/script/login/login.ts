@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Canvas } from 'cc';
+import { _decorator, Component, Node, Canvas, instantiate } from 'cc';
 import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
@@ -143,14 +143,21 @@ export class login extends Component {
         //准备阶段
         singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
             //singleton.netSingleton.game.battle();
-
-            let _ready = new Ready(shop_info);
-            singleton.netSingleton.ready=new ReadyDis(_ready);
-            await singleton.netSingleton.ready.start(this.bk.node);
-            
-            this._setProgress(1.0);
-            this._loading.done();
-            console.log("Start Ready sucess!");
+            if(null==singleton.netSingleton.ready)
+            {
+                //新的一局游戏
+                let _ready = new Ready(shop_info);
+                singleton.netSingleton.ready=new ReadyDis(_ready);
+                await singleton.netSingleton.ready.start(this.bk.node);
+                this._setProgress(1.0);
+                this._loading.done();
+                console.log("Start Ready sucess!");
+            }
+            else
+            {
+                singleton.netSingleton.ready.Restore();
+            }
+           
         }
 
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {

@@ -5,7 +5,7 @@
  * 图标拖拽类
  */
 
-import { _decorator, Collider, Collider2D, Component, Contact2DType, director, EventTouch, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Node, Prefab, rect, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
+import { _decorator, Button, Collider, Collider2D, Component, Contact2DType, director, EventTouch, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Node, Prefab, rect, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
@@ -15,6 +15,7 @@ import { ReadyDis } from './ReadyDis';
 import * as singleton from '../../netDriver/netSingleton';
 import { ShopArea } from './ShopArea';
 import { Camp, Property } from '../../other/enums';
+import { InfoPanel } from '../../secondaryPanel/InfoPanel';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -22,19 +23,20 @@ export class RoleIcon extends Component
 {
     @property(Node)
     public myTouch: Node;
+    //目标站位
     public target:Node;
-
+    //角色信息
     public roleId:number;
     public index:number;
-    //public canvas:Node;
-
+    //父级面板
     private panel:Node;
-
+    //图标碰撞体
     private collider:Collider2D;
+    //拖拽起始位置
     private touchStartPoint: Vec2 = new Vec2(0, 0);
-
+    //角色实体
     private roleNode:Node;
-
+    //各操作区域
     private roleArea:RoleArea;
     private shopArea:ShopArea;
 
@@ -64,6 +66,12 @@ export class RoleIcon extends Component
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
+
+            this.node.on(Button.EventType.CLICK,()=>
+            {
+                singleton.netSingleton.ready.infoPanel.active=true;
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+            });
        }
        catch(error)
        {
@@ -78,6 +86,7 @@ export class RoleIcon extends Component
         let r=new role.Role(0,id,1,0,Camp.Self,map);
         this.roleNode=await this.SpawnRole(r);
         this.originalPos=this.node.getPosition();
+        this.roleId=id;
 /*拖拽*/
         //拖拽取消
         this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
@@ -85,33 +94,50 @@ export class RoleIcon extends Component
             this.touchStartPoint = new Vec2(0, 0);
         }, this);
         //拖拽结束
-        this.myTouch.on(Input.EventType.TOUCH_END, () => 
+        this.myTouch.on(Input.EventType.TOUCH_END, async () => 
         {
+            //重新注册按钮事件
+            this.node.on(Button.EventType.CLICK,()=>
+            {
+                singleton.netSingleton.ready.infoPanel.active=true;
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+            });
+            //还原起始值
             this.touchStartPoint = new Vec2(0, 0);
-            if(this.isSwitch)
+            //换位
+            if(this.isSwitch)//是否交换位置
             {
                 this.roleArea.SwitchPos(this.target,this.t);
                 this.target=this.tempTarget;
                 this.roleArea.targets.set(this.target.name,this.node);
                 this.isSwitch=false;
             }
-            this.Adsorption();
-            if(this.isSale)
+            //出售
+            if(this.isSale)//是否出售
             {
-                this.roleArea.SaleRole(this.index);
+                this.roleNode.active=false;
+                await this.roleArea.SaleRole(this.node);
                 this.roleNode.destroy();
                 this.node.destroy();
             }
+            //吸附缓动
+            this.Adsorption();
             
         }, this);
         //拖拽中
         this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
         {
+            this.node.off(Button.EventType.CLICK);
+            //计算位移坐标
             let node: Node = event.currentTarget;
             let pos = new Vec2();
             let shit = pos.set(event.getUILocation());
             let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
             let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
+            //隐藏图标并显示角色实体
+            this.roleNode.active=true;
+            this.iconMask.active=false;
+            //设置坐标
             node.setPosition(x, y, 0);
         }, this);
         //拖拽开始
@@ -125,11 +151,8 @@ export class RoleIcon extends Component
             let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
 
             this.touchStartPoint = new Vec2(x, y);
-            this.roleNode.active=true;
-            this.iconMask.active=false;
         }, this);
 /*拖拽*/
-
         this.iconMask.active=true;
     }
 
@@ -186,6 +209,7 @@ export class RoleIcon extends Component
                     { 
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.index=Number(num);
+                        console.log(this.index);
                         this.target=otherCollider.node;
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
@@ -219,7 +243,12 @@ export class RoleIcon extends Component
     {
         if(null!=this.target && !this.isSale)
         {
-            this.roleArea.roles.push(this.roleNode);
+            if(!this.isBuy)
+            {
+                this.isBuy=true;
+                this.shopArea.BuyRole();
+            }
+            this.roleArea.rolesNode.push(this.roleNode);
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
              {
@@ -228,16 +257,9 @@ export class RoleIcon extends Component
              })
              .start();
             //this.node.setWorldPosition(this.target.worldPosition);
-            if(!this.isBuy)
-            {
-                this.isBuy=true;
-                this.shopArea.BuyRole();
-                console.log('buy role');
-            }
         }
         else
         {
-            console.log(this.originalPos);
             this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
             .call(()=>
             {

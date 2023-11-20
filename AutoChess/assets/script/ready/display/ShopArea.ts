@@ -44,6 +44,10 @@ export class ShopArea extends Component
 
     Init(roles?:ShopRole[],props?:ShopProp[])
     {
+        for(let t of this.shopRoles)
+        {
+            t.destroy();
+        }
         this.shopRoles=[];
         if(roles)
         {
@@ -65,7 +69,6 @@ export class ShopArea extends Component
         {
             if(this.shopRoles[i].getComponent(RoleIcon).isBuy)
             {
-                console.log(this.shopRoles[i].getComponent(RoleIcon).index);
                 singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).index);
                 this.shopRoles.splice(i,1);
             }

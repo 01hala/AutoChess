@@ -15,12 +15,16 @@ export class Team {
         this.roleList = [];
 
         let index = 0;
-        for (let r of RoleList) {
-            let properties = new Map<enums.Property, number>();
-            properties.set(enums.Property.HP, r.HP);
-            properties.set(enums.Property.TotalHP, r.HP);
-            properties.set(enums.Property.Attack, r.Attack);
-            this.roleList.push(new role.Role(index, r.RoleID, r.Level,r.Exp, selfCamp, properties, r.additionBuffer));
+        for (let r of RoleList) 
+        {
+            if(null!=r)
+            {
+                let properties = new Map<enums.Property, number>();
+                properties.set(enums.Property.HP, r.HP);
+                properties.set(enums.Property.TotalHP, r.HP);
+                properties.set(enums.Property.Attack, r.Attack);
+                this.roleList.push(new role.Role(index, r.RoleID, r.Level,r.Exp, selfCamp, properties, r.additionBuffer));
+            }
             index++;
         }
     }

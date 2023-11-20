@@ -8,7 +8,7 @@ export class RoleArea extends Component
 {
     public targets:Map<string,Node> = new Map();
 
-    public roles:Node[]=[];
+    public rolesNode:Node[]=[];
 
     onLoad() 
     {
@@ -44,11 +44,18 @@ export class RoleArea extends Component
         switchNode.getComponent(RoleIcon).TransPos(pos.worldPosition);
     }
 
-    SaleRole(index:number)
+    async SaleRole(role:Node)
     {
-        singleton.netSingleton.ready.ready.Sale(index);
+        for(let i:number=0;i<this.rolesNode.length;i++)
+        {
+            if(this.rolesNode[i]==role)
+            {
+                await singleton.netSingleton.ready.ready.Sale(i);
+                this.rolesNode.splice(i,1);
+                return;
+            }
+        }
 
-        this.roles.splice(index,1);
     }
 }
 

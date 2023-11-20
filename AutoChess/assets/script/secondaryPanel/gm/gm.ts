@@ -3,12 +3,12 @@ import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
 
-import * as common from "../serverSDK/common"
-import * as match from "../serverSDK/ccallmatch"
-import * as battle from '../battle/battle'
-import * as battleDis from '../battle/display/BattleDis'
-import * as singleton from '../netDriver/netSingleton'
-import * as enums from '../other/enums'
+import * as common from "../../serverSDK/common"
+import * as match from "../../serverSDK/ccallmatch"
+import * as battle from '../../battle/battle'
+import * as battleDis from '../../battle/display/BattleDis'
+import * as singleton from '../../netDriver/netSingleton'
+import * as enums from '../../other/enums'
 
 @ccclass('gm')
 export class gm extends Component {
