@@ -20,7 +20,7 @@ export class Ready
 
     private roles:common.Role[];
 
-    private coin:number=0;
+    public coin:number=0;
 
     //private freezeRoles:Role[]=[];
 
@@ -76,7 +76,6 @@ export class Ready
 
     public StartReady()
     {
-
         let ev=new skill.Event();
         ev.type=EventType.RoundStarts;
         this.AddReadyEvent(ev);
@@ -85,6 +84,11 @@ export class Ready
     public Refresh()
     {
         singleton.netSingleton.game.refresh();
+    }
+
+    public StartBattle()
+    {
+        singleton.netSingleton.game.battle1();
     }
 
     public async Buy(shop_index: common.ShopIndex,index:number,role_index:number)
