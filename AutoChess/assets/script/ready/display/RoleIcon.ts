@@ -105,7 +105,7 @@ export class RoleIcon extends Component
             //还原起始值
             this.touchStartPoint = new Vec2(0, 0);
             //换位
-            if(this.isSwitch)//是否交换位置
+            if(this.isSwitch && !this.isSale)//是否交换位置
             {
                 this.roleArea.SwitchPos(this.target,this.t);
                 this.target=this.tempTarget;
@@ -116,7 +116,7 @@ export class RoleIcon extends Component
             if(this.isSale)//是否出售
             {
                 this.roleNode.active=false;
-                await this.roleArea.SaleRole(this.node);
+                await this.roleArea.SaleRole(this.index);
                 this.roleNode.destroy();
                 this.node.destroy();
             }
@@ -248,7 +248,7 @@ export class RoleIcon extends Component
                 this.isBuy=true;
                 this.shopArea.BuyRole();
             }
-            this.roleArea.rolesNode.push(this.roleNode);
+            this.roleArea.rolesNode.push(this.node);
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
              {
