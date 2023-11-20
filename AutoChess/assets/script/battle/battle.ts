@@ -41,7 +41,7 @@ export class Battle {
     }
 
     private battle() {
-        //console.log("battle begin!");
+        console.log("battle begin!");
 
         let selfTeam = this.selfTeam.GetRoles();
         for(let role of selfTeam) {
@@ -65,7 +65,7 @@ export class Battle {
             this.AddBattleEvent(ev);
         }
 
-        //console.log("battle end!");
+        console.log("battle end!");
     }
 
     public GetWinCamp() : enums.Camp {

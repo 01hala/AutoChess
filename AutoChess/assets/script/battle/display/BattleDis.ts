@@ -14,7 +14,6 @@ import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { Role } from '../../serverSDK/common';
-import { gm } from '../../gm/gm';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -50,6 +49,7 @@ export class BattleDis
     {
         try
         {
+            console.log("battledis start");
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
             this.panelNode = instantiate(panel);
 
