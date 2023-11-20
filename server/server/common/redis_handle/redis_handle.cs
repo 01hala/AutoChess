@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -107,6 +108,10 @@ namespace Abelkhan
                     var count = await database.ListLengthAsync(key);
                     var index = RandomHelper.RandomInt((int)count);
                     string json = await database.ListGetByIndexAsync(key, index);
+                    if (string.IsNullOrEmpty(json))
+                    {
+                        return default;
+                    }
                     return JsonConvert.DeserializeObject<T>(json);
                 }
                 catch (RedisTimeoutException e)
