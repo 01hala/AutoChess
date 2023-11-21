@@ -14,6 +14,8 @@ export class Team {
     public constructor(selfCamp: enums.Camp, RoleList : common.Role[] ) {
         this.roleList = [];
 
+        console.log("RoleList:", RoleList);
+
         let index = 0;
         for (let r of RoleList) 
         {

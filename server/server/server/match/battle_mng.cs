@@ -146,7 +146,7 @@ namespace Match
             var rmRoleList = new List<ShopRole>();
             foreach (var r in shopData.SaleRoleList)
             {
-                if (r != null && !r.IsFreeze)
+                if (r == null || !r.IsFreeze)
                 {
                     rmRoleList.Add(r);
                 }
@@ -159,7 +159,7 @@ namespace Match
             var rmPropList = new List<ShopProp>();
             foreach (var p in shopData.SalePropList)
             {
-                if (p != null && !p.IsFreeze)
+                if (p == null || !p.IsFreeze)
                 {
                     rmPropList.Add(p);
                 }
@@ -314,7 +314,7 @@ namespace Match
                     }
                 }
 
-                shopData.SaleRoleList.RemoveAt(index);
+                shopData.SaleRoleList[index] = null;
             }
             else if (shop_index == ShopIndex.Prop)
             {
@@ -400,7 +400,7 @@ namespace Match
                     }
                 }
 
-                shopData.SalePropList.RemoveAt(index);
+                shopData.SalePropList[index] = null;
             }
             else
             {
