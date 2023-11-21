@@ -19,7 +19,7 @@ export class ShopArea extends Component
     public roleIcon:Node;
 
     public rolesSquare:Node[]=[];
-
+    @property(Node)
     public panel:Node;
 
     private shopRoles:Node[]=[];
@@ -30,7 +30,6 @@ export class ShopArea extends Component
         {
             this.rolesSquare.push(t);
         }
-        this.panel=this.node.parent;
     }
 
     start() 
@@ -45,15 +44,21 @@ export class ShopArea extends Component
 
     Init(roles?:ShopRole[],props?:ShopProp[])
     {
+        for(let t of this.shopRoles)
+        {
+            t.destroy();
+        }
         this.shopRoles=[];
         if(roles)
         {
             for(let i=0;i<roles.length;i++)
             {
                 let newNode=instantiate(this.roleIcon);
-                newNode.getComponent(RoleIcon).SetProperty(roles[i].HP,roles[i].Attack)
                 newNode.setParent(this.panel);
+                //console.log(newNode.parent.name);
                 newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
+                newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
+                this.shopRoles.push(newNode);
             }
         }
     }
@@ -64,16 +69,14 @@ export class ShopArea extends Component
         {
             if(this.shopRoles[i].getComponent(RoleIcon).isBuy)
             {
-                singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).Index);
+                singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).index);
+                this.shopRoles.splice(i,1);
             }
         }
         
     }
 
-    SaleRole()
-    {
-        
-    }
+
 
 
 }

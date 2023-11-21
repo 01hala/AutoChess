@@ -5,6 +5,8 @@ import * as error from "../serverSDK/error"
 import * as player_login from "../serverSDK/ccallplayer"
 import * as match from "../serverSDK/ccallmatch"
 
+import * as match_c from "../serverSDK/matchcallc"
+
 import { netSingleton } from "./netSingleton"
 
 export class netGame {
@@ -12,10 +14,29 @@ export class netGame {
     private c_match : match.plan_caller;
     private c_match_gm : match.gm_caller;
 
+    private match_c : match_c.battle_client_module;
+
+    public cb_battle_victory : (is_victory:boolean) => void;
+    public cb_shop_skill_effect : (effect:match_c.ShopSkillEffect) => void;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_match = new match.plan_caller(cli.cli_handle);
         this.c_match_gm = new match.gm_caller(cli.cli_handle);
+
+        this.match_c = new match_c.battle_client_module(cli.cli_handle);
+        this.match_c.cb_battle_victory = (is_victory:boolean) => {
+            this.cb_battle_victory.call(null, is_victory);
+        }
+        this.match_c.cb_battle_plan_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
+            this.cb_start_battle.call(null, battle_info, shop_info);
+        }
+        this.match_c.cb_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
+            this.cb_battle_info.call(null, battle_info);
+            this.cb_shop_info.call(null, shop_info);
+        }
+        this.match_c.cb_shop_skill_effect = (effect:match_c.ShopSkillEffect) => {
+            this.cb_shop_skill_effect.call(null, effect);
+        }
     }
 
     public set_formationf(self:match.RoleSetUp[], target:match.RoleSetUp[]) {

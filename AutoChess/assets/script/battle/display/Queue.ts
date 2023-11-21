@@ -26,7 +26,7 @@ export class Queue extends Component
     @property(Node)
     public battleLocation:Node;
     //角色列表
-    public roleNodes:Node[] = [];
+    public roleNodes:Node[] = [null, null, null, null, null, null];
 
     start() 
     {
@@ -58,7 +58,7 @@ export class Queue extends Component
                 this.node.addChild(role);
 
                 //r.roleNode = role;
-                this.roleNodes.push(role);
+                this.roleNodes[r.index] = role;
                 console.log("role:", r);
 
                 let roleDis = role.getComponent(RoleDis.RoleDis);

@@ -227,13 +227,13 @@ namespace Match
         public bool sale_role(int index)
         {
             var r = battleData.RoleList[index];
-            if (r == null)
+            if (r != null)
             {
                 battleData.RoleList[index] = null;
                 shop_skill_roles[index] = null;
 
-                var rcfg = config.Config.RoleConfigs[r.RoleID];
-                if (rcfg == null)
+                RoleConfig rcfg;
+                if (config.Config.RoleConfigs.TryGetValue(r.RoleID, out rcfg))
                 {
                     battleData.coin += rcfg.Price + r.Level - 1;
                 }
