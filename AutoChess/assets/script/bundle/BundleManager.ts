@@ -50,7 +50,7 @@ export class BundleManager
 
                 bundle.load(assetsRes, Asset, (error, asset) => {
                     if(error) {
-                        console.warn(error.message);
+                        console.warn("loadAssetsFromBundle ", error.message);
                         resolve(null);
                     }
                     else {

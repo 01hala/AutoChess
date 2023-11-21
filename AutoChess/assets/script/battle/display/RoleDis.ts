@@ -34,15 +34,16 @@ export class RoleDis extends Component
     //血量和攻击
     public Hp: number;
     public AtkNum: number;
-    //等级
+    //等级和经验
     public Level: number;
+    public Exp:number;
     //角色信息
     private roleInfo: Role = null;
     //生命和攻击文本
     private hpText: RichText;
     private atkText: RichText;
-    //
-    private roleSprite: Node;
+    //等级光圈
+    private levelSprite: Node;
     //增益提示
     private intensifierText: Node;
     //受伤效果
@@ -56,9 +57,22 @@ export class RoleDis extends Component
 
     private originalPos: Vec3;
 
+    //属性设置器
+    public set HP(v : number) 
+    {
+        this.Hp = v;
+        this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
+    }
+    
+    public set ATK(v : number) {
+        this.AtkNum = v;
+        this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+    }
+    
+
     protected onLoad(): void {
         try {
-            this.roleSprite = this.node.getChildByName("Sprite");
+            this.levelSprite = this.node.getChildByName("LevelSprite");
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
             this.bandage.active = false;
@@ -69,12 +83,7 @@ export class RoleDis extends Component
             //this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
             //this.hpText.font = this.atkText.font = this.typeface;
 
-            if (this.roleInfo) {
-                if (this.hpText && this.atkText) {
-                    this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
-                    this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-                }
-            }
+            
 
             this.AttackInit();
         }
@@ -83,8 +92,14 @@ export class RoleDis extends Component
         }
     }
 
-    start() {
-
+    start() 
+    {
+        if (this.roleInfo) {
+            if (this.hpText && this.atkText) {
+                this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
+                this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+            }
+        }
     }
 
     async Refresh(roleInfo: Role) 
@@ -250,6 +265,11 @@ export class RoleDis extends Component
         {
             console.warn("RoleDis 下的 RemoteAttack 错误 err:" + err);
         }
+    }
+
+    LevelUp()
+    {
+        
     }
 
     Exit() 

@@ -121,7 +121,7 @@ namespace Match
 
                 foreach (var _skill_role in shop_skill_roles)
                 {
-                    if (_skill_role.Trigger(tmp_evs))
+                    if (_skill_role != null && _skill_role.Trigger(tmp_evs))
                     {
                         _skill_role.UseSkill(this);
                     }
@@ -146,7 +146,7 @@ namespace Match
             var rmRoleList = new List<ShopRole>();
             foreach (var r in shopData.SaleRoleList)
             {
-                if (!r.IsFreeze)
+                if (r != null && !r.IsFreeze)
                 {
                     rmRoleList.Add(r);
                 }
@@ -159,7 +159,7 @@ namespace Match
             var rmPropList = new List<ShopProp>();
             foreach (var p in shopData.SalePropList)
             {
-                if (!p.IsFreeze)
+                if (p != null && !p.IsFreeze)
                 {
                     rmPropList.Add(p);
                 }
@@ -172,13 +172,21 @@ namespace Match
             while (shopData.SaleRoleList.Count < 3)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                shopData.SaleRoleList.Add(randomShopRole(stage));
+                var r = randomShopRole(stage);
+                if (r != null)
+                {
+                    shopData.SaleRoleList.Add(r);
+                }
             }
 
-            while (shopData.SalePropList.Count < 3)
+            for(int i = 0; i < 3 && shopData.SalePropList.Count < 3; ++i)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                shopData.SalePropList.Add(randomShopProp(stage));
+                var p = randomShopProp(stage);
+                if (p != null)
+                {
+                    shopData.SalePropList.Add(p);
+                }
             }
         }
 
@@ -407,6 +415,56 @@ namespace Match
             clear_skill_tag();
 
             return em_error.success;
+        }
+
+        public void move(int role_index1, int role_index2)
+        {
+            var r1 = battleData.RoleList[role_index1];
+            var r2 = battleData.RoleList[role_index2];
+
+            if ((r1 == null && r2 != null) ||
+                (r1 != null && r2 == null))
+            {
+                battleData.RoleList[role_index1] = r2;
+                battleData.RoleList[role_index2] = r1;
+            }
+            else if (r1 != null && r2 != null)
+            {
+                if (r1.RoleID != r2.RoleID)
+                {
+                    battleData.RoleList[role_index1] = r2;
+                    battleData.RoleList[role_index2] = r1;
+                }
+                else
+                {
+                    battleData.RoleList[role_index1] = null;
+
+                    r2.Number += r1.Number;
+                    var oldLevel = r2.Level;
+                    r2.Level = r2.Number / 3 + 1;
+                    r2.HP += r1.Number;
+                    r2.Attack += r1.Number;
+
+                    if (r2.Level > oldLevel)
+                    {
+                        evs.Add(new shop_event()
+                        {
+                            ev = EMRoleShopEvent.update,
+                            index = role_index2
+                        });
+
+                        if (!skip_level.Contains(r2.Level))
+                        {
+                            var stage = r2.Level + 1;
+                            if (stage > 6)
+                            {
+                                stage = 6;
+                            }
+                            shopData.SaleRoleList.Add(randomShopRole(stage));
+                        }
+                    }
+                }
+            }
         }
     }
 

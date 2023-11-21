@@ -14,6 +14,7 @@ namespace Match
         {
             plan_Module.on_buy += Plan_Module_on_buy;
             plan_Module.on_sale_role += Plan_Module_on_sale_role;
+            plan_Module.on_move += Plan_Module_on_move;
             plan_Module.on_refresh += Plan_Module_on_refresh;
             plan_Module.on_start_round1 += Plan_Module_on_start_round1;
             plan_Module.on_confirm_round_victory += Plan_Module_on_confirm_round_victory;
@@ -21,6 +22,25 @@ namespace Match
             plan_Module.on_start_round += Plan_Module_on_start_round;
 
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
+        }
+
+        private void Plan_Module_on_move(int role_index1, int role_index2)
+        {
+            var rsp = plan_Module.rsp as plan_move_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _player = Match.battle_Mng.get_battle_player(uuid);
+                _player.move(role_index1, role_index2);
+
+                rsp.rsp(_player.BattleData);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_confirm_round_victory error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private void Plan_Module_on_confirm_round_victory(bool is_victory)
@@ -119,8 +139,8 @@ namespace Match
 
             while (data.RoleList.Count < 6)
             {
-                config.RoleConfig rolec = null;
-                var level = 1;
+                config.RoleConfig rolec;
+                int level;
                 if (setUp != null && setUp.Count > 0)
                 {
                     var r = setUp[data.RoleList.Count];

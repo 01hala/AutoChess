@@ -43,6 +43,7 @@ export class Role {
     public index:number;
     public id:number;
     public level:number;
+    public exp:number;
 
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public buffer : buffer.Buffer[] = [];
@@ -51,11 +52,11 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(index:number, id:number,level:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionBuffer:number) {
+    public constructor(index:number, id:number,level:number,exp:number,selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionBuffer:number) {
         this.index = index;
         this.id=id;
         this.level=level;
-        
+        this.exp=exp;
         this.selfCamp = selfCamp;
         
         properties.forEach((v, k) => {

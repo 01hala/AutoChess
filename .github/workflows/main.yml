@@ -58,3 +58,15 @@ hotaru:整理文件、代码，导入战斗背景
 hotaru:添加召唤相关代码;修改部分函数和函数名
 2023/11/2
 hotaru:添加远程攻击分支（百分比伤害）
+2023/11/8
+hotaru:新增十字形站位判断，添加readypanel及其美术资源
+2023/11/9
+hotaru:商店拖拽效果
+2023/11/10 
+hotaru:修改、优化拖拽效果
+2023/11/11
+hotaru:添加ready.ts  readydis.ts  shoparea.ts
+2023/11/14
+hotaru:完善ready阶段
+2023/11/15
+hotaru:细化拖拽效果

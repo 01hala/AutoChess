@@ -61,7 +61,7 @@ namespace Player
                         UserGuid = 0,
                     },
                     Strength = 100,
-                    RoleList = new(),
+                    RoleList = new(config.Config.RoleConfigs.Keys),
                 },
                 lastTickStrengthTime = Timerservice.Tick
             };

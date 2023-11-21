@@ -81,6 +81,7 @@ export class Role
 {
     public RoleID : number = 0;
     public Level : number = 0;
+    public Exp:number=0;
     public Number : number = 0;
     public HP : number = 0;
     public Attack : number = 0;

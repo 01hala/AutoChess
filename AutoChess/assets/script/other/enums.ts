@@ -82,4 +82,5 @@ export enum Direction {
     Rigiht = 3,
     Left = 4,
     Self = 5,
+    Cross = 6,
 }

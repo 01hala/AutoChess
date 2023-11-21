@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\config\config.csproj" />
     <ProjectReference Include="..\..\expand\avatar\avatar.csproj" />
     <ProjectReference Include="..\..\expand\bag\bag.csproj" />
     <ProjectReference Include="..\..\game_proto\game_proto.csproj" />

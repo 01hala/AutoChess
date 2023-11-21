@@ -11,8 +11,7 @@
     "bundleConfigID": "85ThGQdaRIbo1oHhQGeHzA",
     "compressionType": {},
     "isRemoteBundle": {
-      "wechatgame": true,
-      "web-desktop": true
+      "wechatgame": true
     }
   }
 }
