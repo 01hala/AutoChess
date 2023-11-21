@@ -155,6 +155,10 @@ namespace Match
                     rolec = config.Config.RoleConfigs.Values.ElementAt(index);
 
                     level = RandomHelper.RandomInt(3) + 1;
+                    if (count < 6)
+                    {
+                        level = 1;
+                    }
                 }
 
                 var role = new Role();
