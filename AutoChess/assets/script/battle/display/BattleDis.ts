@@ -261,6 +261,36 @@ export class BattleDis
         }
     }
 
+    private async CheckAttGainEvent(evs:skill.Event[]) 
+    {
+        try 
+        {
+            let allAwait = [];
+            for(let ev of evs)
+            {
+                if(EventType.IntensifierProperties != ev.type) 
+                {
+                    continue;
+                }
+
+                //受到增益者            
+                ev.recipient.forEach(element=>{
+                    if(Camp.Self==element.camp){
+                        allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                    }
+                    else{
+                        allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                    }            
+                });
+            }
+            await Promise.all(allAwait);
+        }
+        catch(error) 
+        {
+            console.error("BattleDis 下的 CheckAttGainEvent 错误 err:", error);
+        }
+    }
+
     private async ChangeAttEvent(evs:skill.Event[])
     {
         try 
@@ -369,6 +399,7 @@ export class BattleDis
                 await this.CheckAttackEvent(evs);
                 await this.CheckRemoteInjured(evs);
                 await this.CheckSummonEvent(evs);
+                await this.CheckAttGainEvent(evs);
                 await this.ChangeAttEvent(evs);
                 await this.CheckExitEvent(evs);
             }
@@ -378,6 +409,7 @@ export class BattleDis
             }
         }
     }
+    
 }
 
 
