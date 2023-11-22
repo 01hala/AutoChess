@@ -46,7 +46,9 @@ export class ShopArea extends Component
     {
         for(let t of this.shopRoles)
         {
-            t.destroy();
+            if (t != null) {
+                t.destroy();
+            }
         }
         this.shopRoles=[];
         if(roles)

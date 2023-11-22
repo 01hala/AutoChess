@@ -278,8 +278,8 @@ namespace Match
                     r.additionBuffer = 0;
                     r.TempAdditionBuffer = 0;
 
-                    battleData.RoleList[index] = r;
-                    shop_skill_roles[index] = new shop_skill_role(index, s.RoleID);
+                    battleData.RoleList[role_index] = r;
+                    shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID);
                 }
                 else
                 {

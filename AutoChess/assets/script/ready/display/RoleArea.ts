@@ -46,7 +46,7 @@ export class RoleArea extends Component
 
     async SaleRole(index:number)
     {
-       
+        console.log("SaleRole index:" + index);
         for(let i:number=0;i<this.rolesNode.length;i++)
         {
             if(this.rolesNode[i].getComponent(RoleIcon).index==index)
