@@ -81,10 +81,8 @@ export class BattleDis
             }, this);
     
             await this.PutRole();
-            
             this.father=father;
             father.addChild(this.panelNode);
-    
             this.battle.StartBattle();
             setTimeout(this.TickBattle.bind(this), 500);
         }

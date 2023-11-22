@@ -273,6 +273,7 @@ export class RoleDis extends Component
             return this.delay(200, () => 
             {
                 this.roleInfo = null;
+                console.log("销毁角色");
                 this.node.destroy();
             });
         }

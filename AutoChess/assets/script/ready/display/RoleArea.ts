@@ -44,13 +44,14 @@ export class RoleArea extends Component
         switchNode.getComponent(RoleIcon).TransPos(pos.worldPosition);
     }
 
-    async SaleRole(role:Node)
+    async SaleRole(index:number)
     {
+       
         for(let i:number=0;i<this.rolesNode.length;i++)
         {
-            if(this.rolesNode[i]==role)
+            if(this.rolesNode[i].getComponent(RoleIcon).index==index)
             {
-                await singleton.netSingleton.ready.ready.Sale(i);
+                await singleton.netSingleton.ready.ready.Sale(index);
                 this.rolesNode.splice(i,1);
                 return;
             }

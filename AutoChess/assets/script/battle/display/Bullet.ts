@@ -53,7 +53,11 @@ export class Bullet extends Component {
         // .start();
 
         this.tAttack = tween(this.node)
-            .to(0.7, { position: targetPos }).call(() => { this.node.destroy() }).start();
+            .to(0.7, { position: targetPos }).call(() => 
+            { 
+                console.log("销毁子弹");
+                this.node.destroy();
+            }).start();
 
         // let collider = this.node.getComponent(BoxCollider);
         // collider.on('onTriggerStay', this.onTriggerStay, this);

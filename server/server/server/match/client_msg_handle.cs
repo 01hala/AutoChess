@@ -107,7 +107,7 @@ namespace Match
                 var target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{_player.round}");
                 if (target == null)
                 {
-                    target = getRandomBattleData(targetSetUp);
+                    target = getRandomBattleData(_player.round, targetSetUp);
                 }
 
                 rsp.rsp(_player.BattleData, target);
@@ -131,13 +131,15 @@ namespace Match
             rsp.rsp();
         }
 
-        private UserBattleData getRandomBattleData(List<RoleSetUp> setUp)
+        private UserBattleData getRandomBattleData(int round, List<RoleSetUp> setUp)
         {
             var data = new UserBattleData();
             data.User = new UserInformation();
             data.RoleList = new List<Role>();
 
-            while (data.RoleList.Count < 6)
+            var count = (round + 2) > 6 ? 6 : (round + 2);
+
+            while (data.RoleList.Count < count)
             {
                 config.RoleConfig rolec;
                 int level;
@@ -153,6 +155,10 @@ namespace Match
                     rolec = config.Config.RoleConfigs.Values.ElementAt(index);
 
                     level = RandomHelper.RandomInt(3) + 1;
+                    if (count < 6)
+                    {
+                        level = 1;
+                    }
                 }
 
                 var role = new Role();
@@ -178,8 +184,8 @@ namespace Match
 
             try
             {
-                var self = getRandomBattleData(selfSetUp);
-                var target = getRandomBattleData(targetSetUp);
+                var self = getRandomBattleData(3, selfSetUp);
+                var target = getRandomBattleData(3, targetSetUp);
                 rsp.rsp(self, target);
             }
             catch(System.Exception ex)
