@@ -139,7 +139,7 @@ export class Queue extends Component
                     console.warn("Queue 下的 InitRole 读取的 role 为空");
                     break;
                 }
-                role.position=new Vec3(this.locationTemp[i].position);
+                role.position=new Vec3(this.locationTemp[r[i].index].position);
             }
         }
         catch(error)

@@ -57,6 +57,8 @@ export class RoleDis extends Component
 
     private originalPos: Vec3;
 
+    private idText:RichText;
+
     protected onLoad(): void {
         try {
             this.levelSprite = this.node.getChildByName("LevelSprite");
@@ -67,6 +69,7 @@ export class RoleDis extends Component
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
 
+            this.idText=this.node.getChildByPath("ID").getComponent(RichText);
             //this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
             //this.hpText.font = this.atkText.font = this.typeface;
 
@@ -85,6 +88,8 @@ export class RoleDis extends Component
             if (this.hpText && this.atkText) {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+
+                this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
             }
         }
     }
@@ -152,10 +157,10 @@ export class RoleDis extends Component
         try 
         {
             //this.roleInfo=roleInfo;
-
+            
             this.Hp = Math.round(this.roleInfo.GetProperty(Property.HP));
             this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));
-
+            this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
             if (this.hpText && this.atkText) {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";

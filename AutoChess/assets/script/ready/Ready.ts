@@ -112,6 +112,11 @@ export class Ready
         ev.value.push(this.coin);
         this.AddReadyEvent(ev);
     }
+
+    public async Move(index_befor:number,index_after:number)
+    {
+        await singleton.netSingleton.game.move(index_befor,index_after);
+    }
 }
 
 

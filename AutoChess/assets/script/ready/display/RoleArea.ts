@@ -9,6 +9,7 @@ export class RoleArea extends Component
     public targets:Map<string,Node> = new Map();
 
     public rolesNode:Node[]=[];
+    public presenceNum:number;
 
     onLoad() 
     {
@@ -37,11 +38,17 @@ export class RoleArea extends Component
         return null;
     }
 
-    async SwitchPos(pos:Node,switchNode:Node)
+    async SwitchPos(_selfIndex:number,_selfPosTarget:Node,_switchNode:Node)
     {
-        this.targets.set(pos.name,switchNode);
-        switchNode.getComponent(RoleIcon).target=pos;
-        switchNode.getComponent(RoleIcon).TransPos(pos.worldPosition);
+        await this.MovePos(_selfIndex,_switchNode.getComponent(RoleIcon).index);
+        this.targets.set(_selfPosTarget.name,_switchNode);
+        _switchNode.getComponent(RoleIcon).target=_selfPosTarget;
+        _switchNode.getComponent(RoleIcon).TransPos(_selfPosTarget.worldPosition);
+    }
+
+    async MovePos(_indexBefor:number,_indexAfter:number)
+    {
+        singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
     }
 
     async SaleRole(index:number)
@@ -51,13 +58,17 @@ export class RoleArea extends Component
         {
             if(this.rolesNode[i].getComponent(RoleIcon).index==index)
             {
-                await singleton.netSingleton.ready.ready.Sale(index);
+                singleton.netSingleton.ready.ready.Sale(index);
                 this.rolesNode.splice(i,1);
                 return;
             }
         }
-
+        if(this.rolesNode.length<=0)
+        {
+            this.rolesNode=[];
+        }
     }
+
 }
 
 

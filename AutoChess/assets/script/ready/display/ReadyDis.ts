@@ -21,8 +21,8 @@ export class ReadyDis
 
     private panelNode:Node;
 
-    private roleArea:RoleArea;
-    private shopArea:ShopArea;
+    public roleArea:RoleArea;
+    public shopArea:ShopArea;
 
     public ready:Ready;
 
@@ -48,6 +48,7 @@ export class ReadyDis
             {
                 this.ready.SetCoins(battle_info.coin);
                 this.ready.SetRoles(battle_info.RoleList);
+                this.UpdatePlayerInfo(battle_info.coin);
             }
             singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
             {
@@ -83,7 +84,7 @@ export class ReadyDis
             this.startBtn=this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK,()=>
             {
-                if(this.roleArea.rolesNode.length!=0)
+                if(this.roleArea.rolesNode.length>0)
                 {
                     this.panelNode.active=false;
                     this.ready.StartBattle();
@@ -126,9 +127,9 @@ export class ReadyDis
 
 
 
-    private CheckCoinEvent(evs:skill.Event[])
+    private UpdatePlayerInfo(_coinNum:number)
     {
-
+        this.coinText.string=""+_coinNum;
     }
 
 
@@ -136,7 +137,7 @@ export class ReadyDis
     {
         this.ready.on_event = async (evs) =>
         {
-            await this.CheckCoinEvent(evs);
+            
         }
     }
 

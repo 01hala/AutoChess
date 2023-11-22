@@ -7,6 +7,7 @@ import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
 import { ShopIndex, ShopProp, ShopRole } from '../../serverSDK/common';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
+import { RoleArea } from './RoleArea';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -24,12 +25,15 @@ export class ShopArea extends Component
 
     private shopRoles:Node[]=[];
 
+    private roleArea:RoleArea;
+
     protected onLoad(): void 
     {
         for(let t of this.node.getChildByPath("TopArea/Role").children)
         {
             this.rolesSquare.push(t);
         }
+        this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
     }
 
     start() 
@@ -46,34 +50,36 @@ export class ShopArea extends Component
     {
         for(let t of this.shopRoles)
         {
-            if (t != null) {
-                t.destroy();
-            }
+            t.destroy();
         }
         this.shopRoles=[];
         if(roles)
         {
             for(let i=0;i<roles.length;i++)
             {
-                let newNode=instantiate(this.roleIcon);
-                newNode.setParent(this.panel);
-                //console.log(newNode.parent.name);
-                newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-                newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
-                this.shopRoles.push(newNode);
+                if(roles[i])
+                {
+                    let newNode=instantiate(this.roleIcon);
+                    newNode.setParent(this.panel);
+                    //console.log(newNode.parent.name);
+                    newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
+                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
+                    this.shopRoles.push(newNode);
+                }
             }
         }
     }
 
-    BuyRole()
+    async BuyRole(_index:number,_obj:Node)
     {
+        console.log(this.shopRoles.length);
         for(let i=0;i<this.shopRoles.length;i++)
         {
-            if(this.shopRoles[i] != null && this.shopRoles[i].getComponent(RoleIcon).isBuy)
+            if(this.shopRoles[i].getComponent(RoleIcon).isBuy)
             {
-                console.log("buy i:"+ i + " index:" + this.shopRoles[i].getComponent(RoleIcon).index);
-                singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , this.shopRoles[i].getComponent(RoleIcon).index);
-                this.shopRoles[i] = null;
+                await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
+                this.roleArea.rolesNode.push(_obj);
+                this.shopRoles.splice(i,1);
             }
         }
         
