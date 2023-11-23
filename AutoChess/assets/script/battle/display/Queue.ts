@@ -12,6 +12,7 @@ import { BundleManager } from '../../bundle/BundleManager';
 import * as role from '../role'
 import { Battle } from '../battle';
 import { Role } from '../../serverSDK/common';
+import { RoleInfo } from '../skill/skill_base';
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -78,7 +79,7 @@ export class Queue extends Component
  * 2023/10/31
  * 召唤角色
  */
-    async SummonRole(r:role.Role[],spellcaster:role.Role)
+    async SummonRole(r:role.Role[],spellcaster:RoleInfo)
     {
         try
         {
