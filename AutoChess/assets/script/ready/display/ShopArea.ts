@@ -70,16 +70,16 @@ export class ShopArea extends Component
         }
     }
 
-    async BuyRole(_index:number,_obj:Node)
+    async BuyRole(_index:number, _obj:Node)
     {
         console.log(this.shopRoles.length);
         for(let i=0;i<this.shopRoles.length;i++)
         {
-            if(this.shopRoles[i].getComponent(RoleIcon).isBuy)
+            if(this.shopRoles[i] && this.shopRoles[i].getComponent(RoleIcon).isBuy)
             {
                 await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
                 this.roleArea.rolesNode.push(_obj);
-                this.shopRoles.splice(i,1);
+                this.shopRoles[i] = null;
             }
         }
         
