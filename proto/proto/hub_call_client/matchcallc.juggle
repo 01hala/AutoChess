@@ -15,6 +15,7 @@ module battle_client {
     shop_skill_effect ntf(ShopSkillEffect effect);
     refresh ntf(UserBattleData battle_info, ShopData info);
 
+    role_buy_merge ntf(int32 target_role_index, Role target_role, bool is_update);
     role_merge ntf(int32 source_role_index, int32 target_role_index, Role target_role, bool is_update);
     role_eat_food ntf(int32 _id, int32 target_role_index, Role target_role, bool is_update);
 }

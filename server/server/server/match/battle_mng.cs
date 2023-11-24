@@ -462,6 +462,8 @@ namespace Match
                             }
                             shopData.SaleRoleList.Add(randomShopRole(stage));
                         }
+
+
                     }
                 }
             }

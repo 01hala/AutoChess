@@ -122,6 +122,14 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_refresh", _argv_97f4163d_22be_334a_ad37_ab1f786ceb46);
         }
 
+        public void role_buy_merge(Int32 target_role_index, Role target_role, bool is_update){
+            var _argv_b88ee4af_0113_348f_b36f_e256526443e4 = new ArrayList();
+            _argv_b88ee4af_0113_348f_b36f_e256526443e4.Add(target_role_index);
+            _argv_b88ee4af_0113_348f_b36f_e256526443e4.Add(Role.Role_to_protcol(target_role));
+            _argv_b88ee4af_0113_348f_b36f_e256526443e4.Add(is_update);
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_buy_merge", _argv_b88ee4af_0113_348f_b36f_e256526443e4);
+        }
+
         public void role_merge(Int32 source_role_index, Int32 target_role_index, Role target_role, bool is_update){
             var _argv_11ec50cd_6ba3_3e9e_917b_336716e3e9a4 = new ArrayList();
             _argv_11ec50cd_6ba3_3e9e_917b_336716e3e9a4.Add(source_role_index);
