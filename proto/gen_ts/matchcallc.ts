@@ -59,11 +59,15 @@ export class battle_client_module extends client_handle.imodule {
         this._client_handle._modulemng.add_method("battle_client_battle_plan_refresh", this.battle_plan_refresh.bind(this));
         this._client_handle._modulemng.add_method("battle_client_shop_skill_effect", this.shop_skill_effect.bind(this));
         this._client_handle._modulemng.add_method("battle_client_refresh", this.refresh.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_role_merge", this.role_merge.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_role_eat_food", this.role_eat_food.bind(this));
 
         this.cb_battle_victory = null;
         this.cb_battle_plan_refresh = null;
         this.cb_shop_skill_effect = null;
         this.cb_refresh = null;
+        this.cb_role_merge = null;
+        this.cb_role_eat_food = null;
     }
 
     public cb_battle_victory : (is_victory:boolean)=>void | null;
@@ -101,6 +105,30 @@ export class battle_client_module extends client_handle.imodule {
         _argv_.push(common.protcol_to_ShopData(inArray[1]));
         if (this.cb_refresh){
             this.cb_refresh.apply(null, _argv_);
+        }
+    }
+
+    public cb_role_merge : (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void | null;
+    role_merge(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(inArray[0]);
+        _argv_.push(inArray[1]);
+        _argv_.push(common.protcol_to_Role(inArray[2]));
+        _argv_.push(inArray[3]);
+        if (this.cb_role_merge){
+            this.cb_role_merge.apply(null, _argv_);
+        }
+    }
+
+    public cb_role_eat_food : (_id:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void | null;
+    role_eat_food(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(inArray[0]);
+        _argv_.push(inArray[1]);
+        _argv_.push(common.protcol_to_Role(inArray[2]));
+        _argv_.push(inArray[3]);
+        if (this.cb_role_eat_food){
+            this.cb_role_eat_food.apply(null, _argv_);
         }
     }
 

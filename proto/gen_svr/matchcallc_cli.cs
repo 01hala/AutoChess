@@ -86,6 +86,8 @@ namespace Abelkhan
             _client_handle.modulemanager.add_mothed("battle_client_battle_plan_refresh", battle_plan_refresh);
             _client_handle.modulemanager.add_mothed("battle_client_shop_skill_effect", shop_skill_effect);
             _client_handle.modulemanager.add_mothed("battle_client_refresh", refresh);
+            _client_handle.modulemanager.add_mothed("battle_client_role_merge", role_merge);
+            _client_handle.modulemanager.add_mothed("battle_client_role_eat_food", role_eat_food);
         }
 
         public event Action<bool> on_battle_victory;
@@ -119,6 +121,28 @@ namespace Abelkhan
             var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             if (on_refresh != null){
                 on_refresh(_battle_info, _info);
+            }
+        }
+
+        public event Action<Int32, Int32, Role, bool> on_role_merge;
+        public void role_merge(IList<MsgPack.MessagePackObject> inArray){
+            var _source_role_index = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var _target_role_index = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _target_role = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _is_update = ((MsgPack.MessagePackObject)inArray[3]).AsBoolean();
+            if (on_role_merge != null){
+                on_role_merge(_source_role_index, _target_role_index, _target_role, _is_update);
+            }
+        }
+
+        public event Action<Int32, Int32, Role, bool> on_role_eat_food;
+        public void role_eat_food(IList<MsgPack.MessagePackObject> inArray){
+            var __id = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var _target_role_index = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _target_role = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _is_update = ((MsgPack.MessagePackObject)inArray[3]).AsBoolean();
+            if (on_role_eat_food != null){
+                on_role_eat_food(__id, _target_role_index, _target_role, _is_update);
             }
         }
 
