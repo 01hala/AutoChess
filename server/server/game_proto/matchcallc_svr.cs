@@ -139,12 +139,13 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_merge", _argv_11ec50cd_6ba3_3e9e_917b_336716e3e9a4);
         }
 
-        public void role_eat_food(Int32 _id, Int32 target_role_index, Role target_role, bool is_update){
+        public void role_eat_food(Int32 food_id, Int32 target_role_index, Role target_role, bool is_update, bool is_syncope){
             var _argv_9752e987_da9a_3510_b580_1a5c8a9dd457 = new ArrayList();
-            _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(_id);
+            _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(food_id);
             _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(target_role_index);
             _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(Role.Role_to_protcol(target_role));
             _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(is_update);
+            _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(is_syncope);
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_eat_food", _argv_9752e987_da9a_3510_b580_1a5c8a9dd457);
         }
 

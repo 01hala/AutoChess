@@ -146,14 +146,15 @@ namespace Abelkhan
             }
         }
 
-        public event Action<Int32, Int32, Role, bool> on_role_eat_food;
+        public event Action<Int32, Int32, Role, bool, bool> on_role_eat_food;
         public void role_eat_food(IList<MsgPack.MessagePackObject> inArray){
-            var __id = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var _food_id = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
             var _target_role_index = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
             var _target_role = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
             var _is_update = ((MsgPack.MessagePackObject)inArray[3]).AsBoolean();
+            var _is_syncope = ((MsgPack.MessagePackObject)inArray[4]).AsBoolean();
             if (on_role_eat_food != null){
-                on_role_eat_food(__id, _target_role_index, _target_role, _is_update);
+                on_role_eat_food(_food_id, _target_role_index, _target_role, _is_update, _is_syncope);
             }
         }
 

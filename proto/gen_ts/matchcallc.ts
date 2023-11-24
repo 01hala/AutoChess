@@ -133,13 +133,14 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_role_eat_food : (_id:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void | null;
+    public cb_role_eat_food : (food_id:number, target_role_index:number, target_role:common.Role, is_update:boolean, is_syncope:boolean)=>void | null;
     role_eat_food(inArray:any[]){
         let _argv_:any[] = [];
         _argv_.push(inArray[0]);
         _argv_.push(inArray[1]);
         _argv_.push(common.protcol_to_Role(inArray[2]));
         _argv_.push(inArray[3]);
+        _argv_.push(inArray[4]);
         if (this.cb_role_eat_food){
             this.cb_role_eat_food.apply(null, _argv_);
         }

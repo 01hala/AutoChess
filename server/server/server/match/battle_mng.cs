@@ -311,6 +311,12 @@ namespace Match
                             }
                             shopData.SaleRoleList.Add(randomShopRole(stage));
                         }
+
+                        BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);
+                    }
+                    else
+                    {
+                        BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, false);
                     }
                 }
 
