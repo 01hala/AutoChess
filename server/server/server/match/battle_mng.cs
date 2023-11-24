@@ -339,7 +339,9 @@ namespace Match
                 {
                     if (config.Config.FoodConfigs.TryGetValue(p.PropID, out var foodcfg))
                     {
-                        switch((BufferAndEquipEffect)foodcfg.Effect)
+                        bool is_update = false;
+                        bool is_syncope = false;
+                        switch ((BufferAndEquipEffect)foodcfg.Effect)
                         {
                             case BufferAndEquipEffect.AddHP:
                             {
@@ -393,6 +395,8 @@ namespace Match
                             }
                             break;
                         }
+
+                        BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, r, is_update, is_syncope);
 
                         evs.Add(new shop_event()
                         {
@@ -469,7 +473,11 @@ namespace Match
                             shopData.SaleRoleList.Add(randomShopRole(stage));
                         }
 
-
+                        BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, true);
+                    }
+                    else
+                    {
+                        BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, false);
                     }
                 }
             }
