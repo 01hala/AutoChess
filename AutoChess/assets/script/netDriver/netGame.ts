@@ -18,6 +18,8 @@ export class netGame {
 
     public cb_battle_victory : (is_victory:boolean) => void;
     public cb_shop_skill_effect : (effect:match_c.ShopSkillEffect) => void;
+    public cb_role_buy_merge : (target_role_index:number, target_role:common.Role, is_update:boolean) => void;
+    public cb_role_merge : (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_match = new match.plan_caller(cli.cli_handle);

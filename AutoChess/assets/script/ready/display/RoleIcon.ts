@@ -10,6 +10,7 @@ import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
 import * as role from '../../battle/role'
+import * as common from '../../serverSDK/common';
 import { RoleDis } from '../../battle/display/RoleDis';
 import { ReadyDis } from './ReadyDis';
 import * as singleton from '../../netDriver/netSingleton';
@@ -37,7 +38,7 @@ export class RoleIcon extends Component
     //拖拽起始位置
     private touchStartPoint: Vec2 = new Vec2(0, 0);
     //角色实体
-    private roleNode:Node;
+    public roleNode:Node;
     //各操作区域
     private roleArea:RoleArea;
     private shopArea:ShopArea;
@@ -130,6 +131,11 @@ export class RoleIcon extends Component
                 {
                     this.isBuy=true;
                     this.shopArea.BuyRole(this.index, this.node);
+                    if(null==this.target)
+                    {
+                        this.roleNode.destroy();
+                        this.node.destroy();
+                    }
                 }
             }
             //换位
@@ -241,7 +247,12 @@ export class RoleIcon extends Component
                         this.tempTarget=otherCollider.node;
                         this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
                         this.isSwitch=true;
-                     }
+                    }
+                    else
+                    {
+                        let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
+                        this.tempIndex=Number(num);
+                    }
                 }  
                 if(null!=otherCollider && 2 == otherCollider.tag)
                 {
@@ -304,6 +315,17 @@ export class RoleIcon extends Component
         .start();
         //this.node.setWorldPosition(Vec3);
         console.log("tarnspos!");
+    }
+    //合并升级
+    GetUpgrade(t:common.Role,is_update:boolean)
+    {
+        let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
+        let r=new role.Role(0,this.roleId,1,0,Camp.Self,map);
+        this.roleNode.getComponent(RoleDis).Refresh(r);
+        if(is_update)
+        {
+            this.roleNode.getComponent(RoleDis).LevelUp();
+        }
     }
 
     // GetUiPos(node:Node):Vec3

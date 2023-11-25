@@ -12,6 +12,7 @@ import * as skill from '../../battle/skill/skill_base'
 import * as singleton from '../../netDriver/netSingleton';
 import * as common from '../../serverSDK/common';
 import { login } from '../../login/login';
+import { RoleIcon } from './RoleIcon';
 const { ccclass, property } = _decorator;
 
 @ccclass('ReadyDis')
@@ -53,6 +54,16 @@ export class ReadyDis
             singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
             {
                 this.ready.SetShopData(shop_info);
+            }
+            singleton.netSingleton.game.cb_role_buy_merge=(target_role_index:number, target_role:common.Role, is_update:boolean)=>
+            {
+                this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+            }
+            singleton.netSingleton.game.cb_role_merge=(source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>
+            {
+                this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
+                this.roleArea.rolesNode[source_role_index].destroy();
+                this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
             }
             this.father=father;
             //主要界面
@@ -112,11 +123,11 @@ export class ReadyDis
         this.coinText.string=""+this.ready.coin;
     }
 
-    Waiting(sw:boolean)
+    Waiting(valve:boolean)
     {
-        
+        this.waitingPanel.getComponent(BlockInputEvents).enabled=valve;
+        this.waitingPanel.active=valve;
     }
-
     //刷新商店
     async RefreshShop()
     {
@@ -124,14 +135,11 @@ export class ReadyDis
         console.log('refresh');
         this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
     }
-
-
-
-    private UpdatePlayerInfo(_coinNum:number)
+    //更新玩家信息
+    UpdatePlayerInfo(_coinNum:number)
     {
         this.coinText.string=""+_coinNum;
     }
-
 
     onEvent()
     {

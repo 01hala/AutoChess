@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, error, Node } from 'cc';
 import * as skill from '../battle/skill/skill_base'
 import * as common from "../serverSDK/common"
 import { ShopProp, ShopRole } from '../serverSDK/common';
@@ -116,6 +116,12 @@ export class Ready
     public async Move(index_befor:number,index_after:number)
     {
         await singleton.netSingleton.game.move(index_befor,index_after);
+    }
+
+    public async Upgrade(_callback:()=>void)
+    {
+        //await singleton.netSingleton.game.move(index_befor,index_after);
+        _callback();
     }
 }
 
