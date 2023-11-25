@@ -1,4 +1,5 @@
 import { _decorator, BlockInputEvents, Button, Component, Label, Node, Sprite } from 'cc';
+import { PropsType } from '../other/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -27,11 +28,18 @@ export class InfoPanel extends Component
 
     }
     
-    Open(id:number)
+    Open(id:number,propType?:PropsType)
     {
-        this.node.setSiblingIndex(99);
-        this.node.getComponent(BlockInputEvents).enabled=true;
-        this.infoLabel.string="角色ID:"+id;
+        if(null!=propType)
+        {
+
+        }
+        else
+        {
+            this.node.setSiblingIndex(99);
+            this.node.getComponent(BlockInputEvents).enabled=true;
+            this.infoLabel.string="角色ID:"+id;
+        }
     }
 
     Exit()

@@ -85,7 +85,10 @@ export class ShopArea extends Component
         
     }
 
-
+    async BuyProp(_index:number)
+    {
+        
+    }
 
 
 }

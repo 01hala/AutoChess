@@ -95,6 +95,12 @@ export class RoleIcon extends Component
 /*----------------------------------------------------------------------------------------------------------------*/
         this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
         {
+            //重新注册按钮事件
+            this.node.on(Button.EventType.CLICK,()=>
+            {
+                singleton.netSingleton.ready.infoPanel.active=true;
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+            });
             this.touchStartPoint = new Vec2(0, 0);
             this.Adsorption();
         }, this);
@@ -153,6 +159,7 @@ export class RoleIcon extends Component
 //拖拽中
         this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
         {
+            //关闭按钮事件
             this.node.off(Button.EventType.CLICK);
             //计算位移坐标
             let node: Node = event.currentTarget;

@@ -84,3 +84,9 @@ export enum Direction {
     Self = 5,
     Cross = 6,
 }
+
+export enum PropsType
+{
+    None=0,
+    Food=1,
+}
