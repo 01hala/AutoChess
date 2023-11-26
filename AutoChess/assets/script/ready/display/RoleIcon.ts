@@ -142,7 +142,7 @@ export class RoleIcon extends Component
                     if(!this.isBuy)
                     {
                         this.isBuy=true;
-                        this.shopArea.BuyRole(this.index, this.node,this.isBuy);
+                        this.shopArea.BuyRole(this.index, this.node, this.isBuy);
                         if(null==this.target)
                         {
                             this.roleNode.destroy();

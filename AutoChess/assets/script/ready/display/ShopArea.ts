@@ -112,12 +112,20 @@ export class ShopArea extends Component
         console.log(this.shopRoles.length);
         for(let i=0;i<this.shopRoles.length;i++)
         {
-            if(this.shopRoles[i] && _isBuy)
+            if(!this.shopRoles[i])
             {
-                await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
-                this.roleArea.rolesNode.push(_obj);
-                this.shopRoles[i] = null;
+                continue;
             }
+
+            let role = this.shopRoles[i].getComponent(RoleIcon);
+            if (!role || !role.isBuy)
+            {
+                continue;
+            }
+
+            await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i, _index);
+            this.roleArea.rolesNode.push(_obj);
+            this.shopRoles[i] = null;
         }
         
     }
