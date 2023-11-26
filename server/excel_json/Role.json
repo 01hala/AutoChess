@@ -1,7 +1,8 @@
 {
-    "1": {
-        "Id": 1,
+    "100001": {
+        "Id": 100001,
         "Name": "暂无",
+        "Skill": 1,
         "Stage": 1,
         "Price": 3,
         "Attack": 1,
@@ -9,9 +10,10 @@
         "Fetters": 1,
         "Res": "prefab/Roles/Role_1"
     },
-    "2": {
-        "Id": 2,
+    "100002": {
+        "Id": 100002,
         "Name": "暂无",
+        "Skill": 2,
         "Stage": 5,
         "Price": 4,
         "Attack": 4,
@@ -19,9 +21,10 @@
         "Fetters": 2,
         "Res": "prefab/Roles/Role_2"
     },
-    "3": {
-        "Id": 3,
+    "100003": {
+        "Id": 100003,
         "Name": "暂无",
+        "Skill": 3,
         "Stage": 1,
         "Price": 3,
         "Attack": 2,
@@ -29,9 +32,10 @@
         "Fetters": 3,
         "Res": "prefab/Roles/Role_3"
     },
-    "4": {
-        "Id": 4,
+    "100004": {
+        "Id": 100004,
         "Name": "暂无",
+        "Skill": 4,
         "Stage": 3,
         "Price": 3,
         "Attack": 2,
@@ -39,9 +43,10 @@
         "Fetters": 4,
         "Res": "prefab/Roles/Role_4"
     },
-    "5": {
-        "Id": 5,
+    "100005": {
+        "Id": 100005,
         "Name": "暂无",
+        "Skill": 5,
         "Stage": 5,
         "Price": 4,
         "Attack": 8,
@@ -49,9 +54,10 @@
         "Fetters": 3,
         "Res": "prefab/Roles/Role_5"
     },
-    "6": {
-        "Id": 6,
+    "100006": {
+        "Id": 100006,
         "Name": "暂无",
+        "Skill": 6,
         "Stage": 2,
         "Price": 3,
         "Attack": 3,
@@ -59,9 +65,10 @@
         "Fetters": 5,
         "Res": "prefab/Roles/Role_6"
     },
-    "7": {
-        "Id": 7,
+    "100007": {
+        "Id": 100007,
         "Name": "暂无",
+        "Skill": 7,
         "Stage": 4,
         "Price": 4,
         "Attack": 1,
@@ -69,9 +76,10 @@
         "Fetters": 5,
         "Res": "prefab/Roles/Role_7"
     },
-    "8": {
-        "Id": 8,
+    "100008": {
+        "Id": 100008,
         "Name": "暂无",
+        "Skill": 8,
         "Stage": 5,
         "Price": 3,
         "Attack": 4,
@@ -79,9 +87,10 @@
         "Fetters": 6,
         "Res": "prefab/Roles/Role_8"
     },
-    "9": {
-        "Id": 9,
+    "100009": {
+        "Id": 100009,
         "Name": "暂无",
+        "Skill": 9,
         "Stage": 3,
         "Price": 3,
         "Attack": 1,
@@ -89,9 +98,10 @@
         "Fetters": 7,
         "Res": "prefab/Roles/Role_9"
     },
-    "10": {
-        "Id": 10,
+    "100010": {
+        "Id": 100010,
         "Name": "暂无",
+        "Skill": 10,
         "Stage": 1,
         "Price": 3,
         "Attack": 2,
@@ -99,9 +109,10 @@
         "Fetters": 7,
         "Res": "prefab/Roles/Role_10"
     },
-    "11": {
-        "Id": 11,
+    "100011": {
+        "Id": 100011,
         "Name": "暂无",
+        "Skill": 11,
         "Stage": 2,
         "Price": 4,
         "Attack": 2,
@@ -109,9 +120,10 @@
         "Fetters": 6,
         "Res": "prefab/Roles/Role_11"
     },
-    "12": {
-        "Id": 12,
+    "100012": {
+        "Id": 100012,
         "Name": "暂无",
+        "Skill": 12,
         "Stage": 3,
         "Price": 3,
         "Attack": 1,
@@ -119,9 +131,10 @@
         "Fetters": 8,
         "Res": "prefab/Roles/Role_12"
     },
-    "13": {
-        "Id": 13,
+    "100013": {
+        "Id": 100013,
         "Name": "暂无",
+        "Skill": 13,
         "Stage": 6,
         "Price": 4,
         "Attack": 7,
@@ -129,9 +142,10 @@
         "Fetters": 9,
         "Res": "prefab/Roles/Role_13"
     },
-    "14": {
-        "Id": 14,
+    "100014": {
+        "Id": 100014,
         "Name": "暂无",
+        "Skill": 14,
         "Stage": 6,
         "Price": 5,
         "Attack": 3,
@@ -139,9 +153,10 @@
         "Fetters": 8,
         "Res": "prefab/Roles/Role_14"
     },
-    "15": {
-        "Id": 15,
+    "100015": {
+        "Id": 100015,
         "Name": "暂无",
+        "Skill": 15,
         "Stage": 4,
         "Price": 4,
         "Attack": 1,
@@ -149,9 +164,10 @@
         "Fetters": 3,
         "Res": "prefab/Roles/Role_15"
     },
-    "16": {
-        "Id": 16,
+    "100016": {
+        "Id": 100016,
         "Name": "暂无",
+        "Skill": 16,
         "Stage": 6,
         "Price": 5,
         "Attack": 2,
@@ -159,9 +175,10 @@
         "Fetters": 5,
         "Res": "prefab/Roles/Role_16"
     },
-    "17": {
-        "Id": 17,
+    "100017": {
+        "Id": 100017,
         "Name": "暂无",
+        "Skill": 17,
         "Stage": 3,
         "Price": 3,
         "Attack": 2,
@@ -169,9 +186,10 @@
         "Fetters": 10,
         "Res": "prefab/Roles/Role_17"
     },
-    "18": {
-        "Id": 18,
+    "100018": {
+        "Id": 100018,
         "Name": "暂无",
+        "Skill": 18,
         "Stage": 2,
         "Price": 3,
         "Attack": 4,
@@ -179,9 +197,10 @@
         "Fetters": 11,
         "Res": "prefab/Roles/Role_18"
     },
-    "19": {
-        "Id": 19,
+    "100019": {
+        "Id": 100019,
         "Name": "暂无",
+        "Skill": 19,
         "Stage": 3,
         "Price": 3,
         "Attack": 4,
@@ -189,9 +208,10 @@
         "Fetters": 13,
         "Res": "prefab/Roles/Role_19"
     },
-    "20": {
-        "Id": 20,
+    "100020": {
+        "Id": 100020,
         "Name": "暂无",
+        "Skill": 20,
         "Stage": 5,
         "Price": 4,
         "Attack": 6,
@@ -199,9 +219,10 @@
         "Fetters": 2,
         "Res": "prefab/Roles/Role_20"
     },
-    "21": {
-        "Id": 21,
+    "100021": {
+        "Id": 100021,
         "Name": "暂无",
+        "Skill": 21,
         "Stage": 6,
         "Price": 5,
         "Attack": 1,
@@ -209,9 +230,10 @@
         "Fetters": 6,
         "Res": "prefab/Roles/Role_21"
     },
-    "22": {
-        "Id": 22,
+    "100022": {
+        "Id": 100022,
         "Name": "暂无",
+        "Skill": 22,
         "Stage": 4,
         "Price": 3,
         "Attack": 4,
@@ -219,9 +241,10 @@
         "Fetters": 4,
         "Res": "prefab/Roles/Role_22"
     },
-    "23": {
-        "Id": 23,
+    "100023": {
+        "Id": 100023,
         "Name": "暂无",
+        "Skill": 23,
         "Stage": 1,
         "Price": 3,
         "Attack": 2,
@@ -229,9 +252,10 @@
         "Fetters": 10,
         "Res": "prefab/Roles/Role_23"
     },
-    "24": {
-        "Id": 24,
+    "100024": {
+        "Id": 100024,
         "Name": "暂无",
+        "Skill": 24,
         "Stage": 1,
         "Price": 3,
         "Attack": 4,
@@ -239,9 +263,10 @@
         "Fetters": 12,
         "Res": "prefab/Roles/Role_24"
     },
-    "25": {
-        "Id": 25,
+    "100025": {
+        "Id": 100025,
         "Name": "暂无",
+        "Skill": 25,
         "Stage": 5,
         "Price": 3,
         "Attack": 2,
@@ -249,9 +274,10 @@
         "Fetters": 10,
         "Res": "prefab/Roles/Role_25"
     },
-    "26": {
-        "Id": 26,
+    "100026": {
+        "Id": 100026,
         "Name": "暂无",
+        "Skill": 26,
         "Stage": 3,
         "Price": 3,
         "Attack": 1,
@@ -259,9 +285,10 @@
         "Fetters": 7,
         "Res": "prefab/Roles/Role_26"
     },
-    "27": {
-        "Id": 27,
+    "100027": {
+        "Id": 100027,
         "Name": "暂无",
+        "Skill": 27,
         "Stage": 4,
         "Price": 5,
         "Attack": 4,
@@ -269,9 +296,10 @@
         "Fetters": 9,
         "Res": "prefab/Roles/Role_27"
     },
-    "28": {
-        "Id": 28,
+    "100028": {
+        "Id": 100028,
         "Name": "暂无",
+        "Skill": 28,
         "Stage": 4,
         "Price": 4,
         "Attack": 3,
@@ -279,9 +307,10 @@
         "Fetters": 7,
         "Res": "prefab/Roles/Role_28"
     },
-    "29": {
-        "Id": 29,
+    "100029": {
+        "Id": 100029,
         "Name": "暂无",
+        "Skill": 29,
         "Stage": 3,
         "Price": 4,
         "Attack": 1,
@@ -289,9 +318,10 @@
         "Fetters": 13,
         "Res": "prefab/Roles/Role_29"
     },
-    "30": {
-        "Id": 30,
+    "100030": {
+        "Id": 100030,
         "Name": "暂无",
+        "Skill": 30,
         "Stage": 5,
         "Price": 3,
         "Attack": 4,
@@ -299,9 +329,10 @@
         "Fetters": 13,
         "Res": "prefab/Roles/Role_30"
     },
-    "31": {
-        "Id": 31,
+    "100031": {
+        "Id": 100031,
         "Name": "暂无",
+        "Skill": 31,
         "Stage": 2,
         "Price": 3,
         "Attack": 1,
@@ -309,9 +340,10 @@
         "Fetters": 12,
         "Res": "prefab/Roles/Role_31"
     },
-    "32": {
-        "Id": 32,
+    "100032": {
+        "Id": 100032,
         "Name": "暂无",
+        "Skill": 32,
         "Stage": 2,
         "Price": 3,
         "Attack": 2,
@@ -319,9 +351,10 @@
         "Fetters": 3,
         "Res": "prefab/Roles/Role_32"
     },
-    "33": {
-        "Id": 33,
+    "100033": {
+        "Id": 100033,
         "Name": "暂无",
+        "Skill": 33,
         "Stage": 1,
         "Price": 3,
         "Attack": 1,
@@ -329,9 +362,10 @@
         "Fetters": 9,
         "Res": "prefab/Roles/Role_33"
     },
-    "34": {
-        "Id": 34,
+    "100034": {
+        "Id": 100034,
         "Name": "暂无",
+        "Skill": 34,
         "Stage": 2,
         "Price": 3,
         "Attack": 3,
@@ -339,9 +373,10 @@
         "Fetters": 1,
         "Res": "prefab/Roles/Role_34"
     },
-    "35": {
-        "Id": 35,
+    "100035": {
+        "Id": 100035,
         "Name": "暂无",
+        "Skill": 35,
         "Stage": 3,
         "Price": 4,
         "Attack": 2,
@@ -349,9 +384,10 @@
         "Fetters": 11,
         "Res": "prefab/Roles/Role_35"
     },
-    "36": {
-        "Id": 36,
+    "100036": {
+        "Id": 100036,
         "Name": "暂无",
+        "Skill": 36,
         "Stage": 3,
         "Price": 3,
         "Attack": 1,
@@ -359,9 +395,10 @@
         "Fetters": 3,
         "Res": "prefab/Roles/Role_36"
     },
-    "37": {
-        "Id": 37,
+    "100037": {
+        "Id": 100037,
         "Name": "暂无",
+        "Skill": 37,
         "Stage": 1,
         "Price": 3,
         "Attack": 2,
@@ -369,9 +406,10 @@
         "Fetters": 11,
         "Res": "prefab/Roles/Role_37"
     },
-    "38": {
-        "Id": 38,
+    "100038": {
+        "Id": 100038,
         "Name": "暂无",
+        "Skill": 38,
         "Stage": 4,
         "Price": 4,
         "Attack": 2,
@@ -379,9 +417,10 @@
         "Fetters": 11,
         "Res": "prefab/Roles/Role_38"
     },
-    "39": {
-        "Id": 39,
+    "100039": {
+        "Id": 100039,
         "Name": "暂无",
+        "Skill": 39,
         "Stage": 2,
         "Price": 3,
         "Attack": 1,
@@ -389,9 +428,10 @@
         "Fetters": 11,
         "Res": "prefab/Roles/Role_39"
     },
-    "40": {
-        "Id": 40,
+    "100040": {
+        "Id": 100040,
         "Name": "暂无",
+        "Skill": 40,
         "Stage": 4,
         "Price": 4,
         "Attack": 4,
@@ -399,9 +439,10 @@
         "Fetters": 4,
         "Res": "prefab/Roles/Role_40"
     },
-    "41": {
-        "Id": 41,
+    "100041": {
+        "Id": 100041,
         "Name": "暂无",
+        "Skill": 41,
         "Stage": 1,
         "Price": 3,
         "Attack": 3,
@@ -409,9 +450,10 @@
         "Fetters": 10,
         "Res": "prefab/Roles/Role_41"
     },
-    "42": {
-        "Id": 42,
+    "100042": {
+        "Id": 100042,
         "Name": "暂无",
+        "Skill": 42,
         "Stage": 2,
         "Price": 3,
         "Attack": 4,
@@ -419,9 +461,10 @@
         "Fetters": 2,
         "Res": "prefab/Roles/Role_42"
     },
-    "43": {
-        "Id": 43,
+    "100043": {
+        "Id": 100043,
         "Name": "暂无",
+        "Skill": 43,
         "Stage": 4,
         "Price": 5,
         "Attack": 2,
@@ -429,9 +472,10 @@
         "Fetters": 14,
         "Res": "prefab/Roles/Role_43"
     },
-    "44": {
-        "Id": 44,
+    "100044": {
+        "Id": 100044,
         "Name": "暂无",
+        "Skill": 44,
         "Stage": 1,
         "Price": 3,
         "Attack": 1,
@@ -439,9 +483,10 @@
         "Fetters": 9,
         "Res": "prefab/Roles/Role_44"
     },
-    "45": {
-        "Id": 45,
+    "100045": {
+        "Id": 100045,
         "Name": "暂无",
+        "Skill": 45,
         "Stage": 1,
         "Price": 3,
         "Attack": 4,
@@ -449,9 +494,10 @@
         "Fetters": 2,
         "Res": "prefab/Roles/Role_45"
     },
-    "46": {
-        "Id": 46,
+    "100046": {
+        "Id": 100046,
         "Name": "暂无",
+        "Skill": 46,
         "Stage": 6,
         "Price": 4,
         "Attack": 4,
@@ -459,9 +505,10 @@
         "Fetters": 12,
         "Res": "prefab/Roles/Role_46"
     },
-    "47": {
-        "Id": 47,
+    "100047": {
+        "Id": 100047,
         "Name": "暂无",
+        "Skill": 47,
         "Stage": 2,
         "Price": 3,
         "Attack": 2,
@@ -469,9 +516,10 @@
         "Fetters": 12,
         "Res": "prefab/Roles/Role_47"
     },
-    "48": {
-        "Id": 48,
+    "100048": {
+        "Id": 100048,
         "Name": "暂无",
+        "Skill": 48,
         "Stage": 3,
         "Price": 3,
         "Attack": 2,
@@ -479,9 +527,10 @@
         "Fetters": 1,
         "Res": "prefab/Roles/Role_48"
     },
-    "49": {
-        "Id": 49,
+    "100049": {
+        "Id": 100049,
         "Name": "暂无",
+        "Skill": 49,
         "Stage": 1,
         "Price": 3,
         "Attack": 3,
@@ -489,9 +538,10 @@
         "Fetters": 1,
         "Res": "prefab/Roles/Role_49"
     },
-    "50": {
-        "Id": 50,
+    "100050": {
+        "Id": 100050,
         "Name": "暂无",
+        "Skill": 50,
         "Stage": 5,
         "Price": 4,
         "Attack": 3,
@@ -499,9 +549,10 @@
         "Fetters": 5,
         "Res": "prefab/Roles/Role_50"
     },
-    "51": {
-        "Id": 51,
+    "100051": {
+        "Id": 100051,
         "Name": "暂无",
+        "Skill": 51,
         "Stage": 6,
         "Price": 3,
         "Attack": 6,
@@ -509,9 +560,10 @@
         "Fetters": 11,
         "Res": "prefab/Roles/Role_51"
     },
-    "52": {
-        "Id": 52,
+    "100052": {
+        "Id": 100052,
         "Name": "暂无",
+        "Skill": 52,
         "Stage": 1,
         "Price": 3,
         "Attack": 1,
@@ -519,9 +571,10 @@
         "Fetters": 6,
         "Res": "prefab/Roles/Role_52"
     },
-    "53": {
-        "Id": 53,
+    "100053": {
+        "Id": 100053,
         "Name": "暂无",
+        "Skill": 53,
         "Stage": 6,
         "Price": 5,
         "Attack": 5,
@@ -529,9 +582,10 @@
         "Fetters": 14,
         "Res": "prefab/Roles/Role_53"
     },
-    "54": {
-        "Id": 54,
+    "100054": {
+        "Id": 100054,
         "Name": "暂无",
+        "Skill": 54,
         "Stage": 4,
         "Price": 4,
         "Attack": 3,
