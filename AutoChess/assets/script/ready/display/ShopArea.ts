@@ -42,6 +42,10 @@ export class ShopArea extends Component
         {
             this.rolesSquare.push(t);
         }
+        for(let t of this.node.getChildByPath("TopArea/Role").children)
+        {
+            this.PropsSquare.push(t);
+        }
         this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
     }
 
@@ -73,6 +77,7 @@ export class ShopArea extends Component
             {
                 if(roles[i])
                 {
+                    console.log("shopRoleId: ",roles[i].RoleID);
                     let newNode=instantiate(this.roleIcon);
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
@@ -81,6 +86,7 @@ export class ShopArea extends Component
                     this.shopRoles.push(newNode);
                 }
             }
+            
         }
         if(props)
         {

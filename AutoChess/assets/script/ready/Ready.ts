@@ -118,11 +118,6 @@ export class Ready
         await singleton.netSingleton.game.move(index_befor,index_after);
     }
 
-    public async Upgrade(_callback:()=>void)
-    {
-        //await singleton.netSingleton.game.move(index_befor,index_after);
-        _callback();
-    }
 }
 
 

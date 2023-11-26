@@ -85,121 +85,132 @@ export class RoleIcon extends Component
     //初始化
     async Init(id:number,hp:number,atk:number)
     {
-        let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
-        let r=new role.Role(0,id,1,0,Camp.Self,map);
-        this.roleNode=await this.SpawnRole(r);
-        this.originalPos=this.node.getPosition();
-        this.roleId=id;
+        try
+        {
+            let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
+            console.log("new role");
+            let r=new role.Role(0,id,1,0,Camp.Self,map);
+            console.log('RoleIcon spawn role: ',id);
+            this.roleNode=await this.SpawnRole(r);
+            this.originalPos=this.node.getPosition();
+            this.roleId=id;
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
-        this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
-        {
-            //重新注册按钮事件
-            this.node.on(Button.EventType.CLICK,()=>
+            this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
-                singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
-            });
-            this.touchStartPoint = new Vec2(0, 0);
-            this.Adsorption();
-        }, this);
-    //拖拽结束↓ 拖拽取消↑
-        this.myTouch.on(Input.EventType.TOUCH_END, async () => 
-        {
-            //重新注册按钮事件
-            this.node.on(Button.EventType.CLICK,()=>
-            {
-                singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
-            });
-            //还原起始值
-            this.touchStartPoint = new Vec2(0, 0);
-            //是否出售
-            if(!this.isSale)
-            {
-                if(null!=this.index)
+                //重新注册按钮事件
+                this.node.on(Button.EventType.CLICK,()=>
                 {
-                    await this.roleArea.MovePos(this.index,this.tempIndex);
-                }
-                this.index=this.tempIndex;
-            }
-            else
+                    singleton.netSingleton.ready.infoPanel.active=true;
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+                });
+                this.touchStartPoint = new Vec2(0, 0);
+                this.Adsorption();
+            }, this);
+        //拖拽结束↓ 拖拽取消↑
+            this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
-                this.roleNode.active=false;
-                await this.roleArea.SaleRole(this.index);
-                this.roleNode.destroy();
-                this.node.destroy();
-            }
-            if(null != this.index)
-            {
-                if(!this.isBuy)
+                //重新注册按钮事件
+                this.node.on(Button.EventType.CLICK,()=>
                 {
-                    this.isBuy=true;
-                    this.shopArea.BuyRole(this.index, this.node);
-                    if(null==this.target)
+                    singleton.netSingleton.ready.infoPanel.active=true;
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+                });
+                //还原起始值
+                this.touchStartPoint = new Vec2(0, 0);
+                //是否出售
+                if(!this.isSale)
+                {
+                    if(null!=this.index)
                     {
-                        this.roleNode.destroy();
-                        this.node.destroy();
+                        await this.roleArea.MovePos(this.index,this.tempIndex);
+                    }
+                    this.index=this.tempIndex;
+                }
+                else
+                {
+                    this.roleNode.active=false;
+                    await this.roleArea.SaleRole(this.index);
+                    this.roleNode.destroy();
+                    this.node.destroy();
+                }
+                if(null != this.index)
+                {
+                    if(!this.isBuy)
+                    {
+                        this.isBuy=true;
+                        this.shopArea.BuyRole(this.index, this.node);
+                        if(null==this.target)
+                        {
+                            this.roleNode.destroy();
+                            this.node.destroy();
+                        }
                     }
                 }
-            }
-            //换位
-            if(this.isSwitch && !this.isSale)//是否交换位置
+                //换位
+                if(this.isSwitch && !this.isSale)//是否交换位置
+                {
+                    this.roleArea.SwitchPos(this.index,this.target,this.t);
+                    this.target=this.tempTarget;
+                    this.roleArea.targets.set(this.target.name,this.node);
+                    this.isSwitch=false;
+                }
+                //吸附缓动
+                this.Adsorption();
+                
+            }, this);
+    //拖拽中
+            this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
             {
-                this.roleArea.SwitchPos(this.index,this.target,this.t);
-                this.target=this.tempTarget;
-                this.roleArea.targets.set(this.target.name,this.node);
-                this.isSwitch=false;
-            }
-            //吸附缓动
-            this.Adsorption();
-            
-        }, this);
-//拖拽中
-        this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
-        {
-            //关闭按钮事件
-            this.node.off(Button.EventType.CLICK);
-            //计算位移坐标
-            let node: Node = event.currentTarget;
-            let pos = new Vec2();
-            let shit = pos.set(event.getUILocation());
-            let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
-            let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
-            //隐藏图标并显示角色实体
-            this.roleNode.active=true;
-            this.iconMask.active=false;
-            //设置坐标
-            node.setPosition(x, y, 0);
-        }, this);
-    //拖拽开始
-        this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
-        {
-            let node: Node = event.currentTarget;
-
-            this.touchStartPoint.set(event.getUILocation());
-
-            let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
-            let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
-
-            this.touchStartPoint = new Vec2(x, y);
-        }, this);
+                //关闭按钮事件
+                this.node.off(Button.EventType.CLICK);
+                //计算位移坐标
+                let node: Node = event.currentTarget;
+                let pos = new Vec2();
+                let shit = pos.set(event.getUILocation());
+                let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
+                let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
+                //隐藏图标并显示角色实体
+                this.roleNode.active=true;
+                this.iconMask.active=false;
+                //设置坐标
+                node.setPosition(x, y, 0);
+            }, this);
+        //拖拽开始
+            this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
+            {
+                let node: Node = event.currentTarget;
+    
+                this.touchStartPoint.set(event.getUILocation());
+    
+                let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
+                let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
+    
+                this.touchStartPoint = new Vec2(x, y);
+            }, this);
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
-        this.iconMask.active=true;
+            this.iconMask.active=true;
+        }
+        catch (error)
+        {
+            console.error('RoleIcon 下 Ini 错误 err：',error);
+        }
+        
     }
 
     SpawnRole(r:role.Role):Promise<Node>
     {
         return new Promise (async (resolve)=>
         {
+            console.log("spawn role:",r.id);
             let address: string = "Role_";
             //let roleRes=""+address+r[i].id;
             let roleRes = address + "1";
             let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-
+            
             let role = instantiate(newNode);
             role.setParent(this.node);
             let roleDis = role.getComponent(RoleDis);
