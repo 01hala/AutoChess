@@ -5586,6 +5586,10 @@
       "__uuid__": "934f3478-0307-4694-9a02-342b5e6b18a8",
       "__expectedType__": "cc.Prefab"
     },
+    "propIcon": {
+      "__uuid__": "14367fc7-c389-4675-8084-436e2284489b",
+      "__expectedType__": "cc.Prefab"
+    },
     "panel": {
       "__id__": 1
     },

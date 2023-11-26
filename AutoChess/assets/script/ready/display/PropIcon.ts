@@ -45,7 +45,7 @@ export class PropIcon extends Component
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
             this.iconMask=this.node.getChildByName("IconMask");
-            this.iconMask.active=false;
+            //this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
             
             this.node.on(Button.EventType.CLICK,()=>
@@ -55,12 +55,12 @@ export class PropIcon extends Component
             });
     }
 
-    async Init(id:number,hp:number,atk:number)
+    async Init()
     {
         // let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
         // let r=new role.Role(0,id,1,0,Camp.Self,map);
         // this.roleNode=await this.SpawnRole(r);
-        // this.originalPos=this.node.getPosition();
+        this.originalPos=this.node.getPosition();
         // this.roleId=id;
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
@@ -93,6 +93,7 @@ export class PropIcon extends Component
                 /*
                  *此处购买道具
                  */
+                console.log('道具使用成功！');
                 this.node.destroy();
                 return;
             }
@@ -148,7 +149,7 @@ export class PropIcon extends Component
             {
                 if(null!=this.roleArea.GetTargetValue(otherCollider.node.name))
                 { 
-                    this.target=otherCollider.node;
+                    this.target=this.roleArea.GetTargetValue(otherCollider.node.name);
                 }
             }
 
