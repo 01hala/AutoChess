@@ -25,7 +25,7 @@ export class Team {
                 properties.set(enums.Property.HP, r.HP);
                 properties.set(enums.Property.TotalHP, r.HP);
                 properties.set(enums.Property.Attack, r.Attack);
-                this.roleList.push(new role.Role(index, r.RoleID, r.Level,r.Exp, selfCamp, properties, r.additionBuffer));
+                this.roleList.push(new role.Role(index, r.RoleID, r.SkillID, r.Level, r.Number, selfCamp, properties, r.additionBuffer));
             }
             index++;
         }

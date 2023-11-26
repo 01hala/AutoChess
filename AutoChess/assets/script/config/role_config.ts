@@ -9,6 +9,7 @@ export class RoleConfig {
     public Id : number;
     public Name : string;
     public Stage : number;
+    public SkillID: number;
     public Price : number;
     public Attack : number;
     public Hp : number;
@@ -35,6 +36,7 @@ export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
                 let rolec = new RoleConfig();
                 rolec.Id = v["Id"];
                 rolec.Name = v["Name"];
+                rolec.SkillID = v["Skill"];
                 rolec.Stage = v["Stage"];
                 rolec.Price = v["Price"];
                 rolec.Attack = v["Attack"];

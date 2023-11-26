@@ -17,6 +17,7 @@ import * as singleton from '../../netDriver/netSingleton';
 import { ShopArea } from './ShopArea';
 import { Camp, Property } from '../../other/enums';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
+import { config } from '../../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -89,7 +90,8 @@ export class RoleIcon extends Component
         {
             let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
             console.log("new role");
-            let r=new role.Role(0,id,1,0,Camp.Self,map);
+            let cfg = config.RoleConfig.get(id);
+            let r=new role.Role(0, id, cfg.SkillID, 1, 0, Camp.Self, map);
             console.log('RoleIcon spawn role: ',id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
@@ -338,7 +340,9 @@ export class RoleIcon extends Component
     GetUpgrade(t:common.Role,is_update:boolean)
     {
         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-        let r=new role.Role(0,this.roleId,1,0,Camp.Self,map);
+        
+        let cfg = config.RoleConfig.get(this.roleId);
+        let r=new role.Role(0,this.roleId, cfg.SkillID, 1,0,Camp.Self,map);
         this.roleNode.getComponent(RoleDis).Refresh(r);
         if(is_update)
         {

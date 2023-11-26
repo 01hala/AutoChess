@@ -98,6 +98,7 @@ namespace Match
 
         public ShopProp randomShopProp(int stage)
         {
+            Log.Log.trace("randomShopProp stage:{0}", stage);
             if (config.Config.FoodStageConfigs.TryGetValue(stage, out var basePool))
             {
                 var foodConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
@@ -189,6 +190,10 @@ namespace Match
                 if (p != null)
                 {
                     shopData.SalePropList.Add(p);
+                }
+                else
+                {
+                    Log.Log.trace("_refresh shopData.SalePropList null");
                 }
             }
 
