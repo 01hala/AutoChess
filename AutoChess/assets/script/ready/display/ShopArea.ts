@@ -18,12 +18,21 @@ export class ShopArea extends Component
         displayName: "图标预制体"
     })
     public roleIcon:Node;
+    @property({
+        type: Prefab,
+        displayName: "食物图标预制体"
+    })
+    public propIcon:Node;
 
     public rolesSquare:Node[]=[];
+
+    public PropsSquare:Node[]=[];
     @property(Node)
     public panel:Node;
 
     private shopRoles:Node[]=[];
+
+    private shopProps:Node[]=[];
 
     private roleArea:RoleArea;
 
@@ -52,7 +61,12 @@ export class ShopArea extends Component
         {
             t.destroy();
         }
+        for(let t of this.shopProps)
+        {
+            t.destroy();
+        }
         this.shopRoles=[];
+        this.shopProps=[];
         if(roles)
         {
             for(let i=0;i<roles.length;i++)
@@ -67,6 +81,22 @@ export class ShopArea extends Component
                     this.shopRoles.push(newNode);
                 }
             }
+        }
+        if(props)
+        {
+            for(let i=0;i<props.length;i++)
+            {
+                if(props[i]) 
+                {
+                    let newNode=instantiate(this.propIcon);
+                    newNode.setParent(this.panel);
+                    //console.log(newNode.parent.name);
+                    newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
+                    //newNode.getComponent(RoleIcon).Init(props[i].PropID,roles[i].HP,roles[i].Attack);
+                    this.shopRoles.push(newNode);
+                }
+            }
+            
         }
     }
 
