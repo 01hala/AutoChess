@@ -339,61 +339,88 @@ namespace Match
                 {
                     if (config.Config.FoodConfigs.TryGetValue(p.PropID, out var foodcfg))
                     {
+                        var rs = new List<Role>();
+                        if (foodcfg.Count > 1)
+                        {
+                            var exclude = new List<int>();
+                            for (int i = 0; i < foodcfg.Count && rs.Count < battleData.RoleList.Count;)
+                            {
+                                var tmp_index = RandomHelper.RandomInt(battleData.RoleList.Count);
+                                if (exclude.Contains(tmp_index))
+                                {
+                                    continue;
+                                }
+                                rs.Add(battleData.RoleList[tmp_index]);
+                                exclude.Add(tmp_index);
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            rs.Add(r);
+                        }
+
                         bool is_update = false;
                         bool is_syncope = false;
-                        switch ((BufferAndEquipEffect)foodcfg.Effect)
+                        foreach (var e in foodcfg.Effect)
                         {
-                            case BufferAndEquipEffect.AddHP:
+                            foreach (var _r in rs)
                             {
-                                if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                switch ((BufferAndEquipEffect)e)
                                 {
-                                    r.TempHP += foodcfg.HpBonus;
-                                }
-                                else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
-                                {
-                                    r.HP-= foodcfg.HpBonus;
+                                    case BufferAndEquipEffect.AddHP:
+                                        {
+                                            if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                            {
+                                                _r.TempHP += foodcfg.HpBonus;
+                                            }
+                                            else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                            {
+                                                _r.HP -= foodcfg.HpBonus;
+                                            }
+                                        }
+                                        break;
+
+                                    case BufferAndEquipEffect.AddAttack:
+                                        {
+                                            if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                            {
+                                                _r.TempAttack += foodcfg.AttackBonus;
+                                            }
+                                            else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                            {
+                                                _r.Attack -= foodcfg.AttackBonus;
+                                            }
+                                        }
+                                        break;
+
+                                    case BufferAndEquipEffect.AddBuffer:
+                                        {
+                                            if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                            {
+                                                _r.TempAdditionBuffer += foodcfg.Vaule;
+                                            }
+                                            else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                            {
+                                                _r.additionBuffer -= foodcfg.Vaule;
+                                            }
+                                        }
+                                        break;
+
+                                    case BufferAndEquipEffect.Syncope:
+                                        {
+                                            battleData.RoleList[role_index] = null;
+                                            shop_skill_roles[role_index] = null;
+
+                                            evs.Add(new shop_event()
+                                            {
+                                                ev = EMRoleShopEvent.syncope,
+                                                index = role_index
+                                            });
+                                        }
+                                        break;
                                 }
                             }
-                            break;
-
-                            case BufferAndEquipEffect.AddAttack:
-                            {
-                                if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
-                                {
-                                    r.TempAttack += foodcfg.AttackBonus;
-                                }
-                                else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
-                                {
-                                    r.Attack -= foodcfg.AttackBonus;
-                                }
-                            }
-                            break;
-
-                            case BufferAndEquipEffect.AddBuffer:
-                            {
-                                if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
-                                {
-                                    r.TempAdditionBuffer += foodcfg.Vaule;
-                                }
-                                else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
-                                {
-                                    r.additionBuffer -= foodcfg.Vaule;
-                                }
-                            }
-                            break;
-
-                            case BufferAndEquipEffect.Syncope:
-                            {
-                                battleData.RoleList[role_index] = null;
-                                shop_skill_roles[role_index] = null;
-
-                                evs.Add(new shop_event()
-                                {
-                                    ev = EMRoleShopEvent.syncope,
-                                    index = role_index
-                                });
-                            }
-                            break;
                         }
 
                         BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, r, is_update, is_syncope);

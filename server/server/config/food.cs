@@ -11,11 +11,12 @@ namespace config
         public string Name;
         public int Price;
         public int Stage;
-        public int Effect;
+        public int[] Effect;
         public int EffectScope;
         public int AttackBonus;
         public int HpBonus;
         public int Vaule;
+        public int Count;
 
         public static Dictionary<int, List<FoodConfig> > LoadStage(Dictionary<int, FoodConfig> cfg)
         {
@@ -62,11 +63,19 @@ namespace config
                 foodc.Name = (string)o["Name"];
                 foodc.Price = (int)o["Price"];
                 foodc.Stage = (int)o["Stage"];
-                foodc.Effect = (int)o["Effect"];
+                var effect = (string)o["Effect"];
+                var es = effect.Split('|');
+                var e = new List<int>();
+                foreach (var s in es)
+                {
+                    e.Add(int.Parse(s));
+                }
+                foodc.Effect = e.ToArray();
                 foodc.EffectScope = (int)o["EffectScope"];
                 foodc.AttackBonus = (int)o["AttackBonus"];
                 foodc.HpBonus = (int)o["HpBonus"];
                 foodc.Vaule = (int)o["Vaule"];
+                foodc.Count = (int)o["Count"];
 
                 obj[foodc.Id] = foodc;
             }
