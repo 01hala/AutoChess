@@ -87,12 +87,13 @@ export class PropIcon extends Component
             });
             //还原起始值
             this.touchStartPoint = new Vec2(0, 0);
-
+            this.index=this.tempIndex;
             if(null != this.target)
             {
                 /*
                  *此处购买道具
                  */
+                this.shopArea.BuyProp(this.index);
                 console.log('道具使用成功！');
                 this.node.destroy();
                 return;
@@ -140,6 +141,7 @@ export class PropIcon extends Component
             if(null!=otherCollider)
             {
                 this.target=null;
+                this.index=null;
             }
         },this);
 
@@ -149,6 +151,8 @@ export class PropIcon extends Component
             {
                 if(null!=this.roleArea.GetTargetValue(otherCollider.node.name))
                 { 
+                    let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
+                    this.tempIndex=Number(num);
                     this.target=this.roleArea.GetTargetValue(otherCollider.node.name);
                 }
             }
