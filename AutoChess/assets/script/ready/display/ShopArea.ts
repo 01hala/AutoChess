@@ -8,6 +8,7 @@ import { ShopIndex, ShopProp, ShopRole } from '../../serverSDK/common';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
 import { RoleArea } from './RoleArea';
+import { PropIcon } from './PropIcon';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -42,7 +43,7 @@ export class ShopArea extends Component
         {
             this.rolesSquare.push(t);
         }
-        for(let t of this.node.getChildByPath("TopArea/Role").children)
+        for(let t of this.node.getChildByPath("TopArea/Prop").children)
         {
             this.PropsSquare.push(t);
         }
@@ -98,7 +99,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
-                    //newNode.getComponent(RoleIcon).Init(props[i].PropID,roles[i].HP,roles[i].Attack);
+                    newNode.getComponent(PropIcon).Init();
                     this.shopRoles.push(newNode);
                 }
             }
@@ -106,12 +107,12 @@ export class ShopArea extends Component
         }
     }
 
-    async BuyRole(_index:number, _obj:Node)
+    async BuyRole(_index:number, _obj:Node , _isBuy:boolean)
     {
         console.log(this.shopRoles.length);
         for(let i=0;i<this.shopRoles.length;i++)
         {
-            if(this.shopRoles[i] && this.shopRoles[i].getComponent(RoleIcon).isBuy)
+            if(this.shopRoles[i] && _isBuy)
             {
                 await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
                 this.roleArea.rolesNode.push(_obj);
