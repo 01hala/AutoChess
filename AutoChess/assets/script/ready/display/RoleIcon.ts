@@ -54,6 +54,7 @@ export class RoleIcon extends Component
     public isBuy:boolean=false;
     public isSale:boolean=false;
     private isSwitch:boolean=false;
+    private isMerge:boolean=false;
 
     private tempTarget:Node=null;
     private t:Node=null;
@@ -226,6 +227,7 @@ export class RoleIcon extends Component
             {
                 if(null!=otherCollider && 1 == otherCollider.tag)
                 {
+                    this.isMerge=false;
                     //console.log(otherCollider.name);
                     for(let i=0;i<this.roleArea.targets.size;i++)
                     {
@@ -264,6 +266,10 @@ export class RoleIcon extends Component
                     {
                         this.tempTarget=otherCollider.node;
                         this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
+                        if(this.t.getComponent(RoleIcon).roleId==this.roleId)
+                        {
+                            this.isMerge=true;
+                        }
                         this.isSwitch=true;
                     }
                     else
