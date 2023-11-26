@@ -19,12 +19,14 @@ namespace Match
     {
         public int index;
         public int roleID;
+        public int skillID;
         public bool is_trigger = false;
 
-        public shop_skill_role(int _index, int _roleID)
+        public shop_skill_role(int _index, int _roleID, int _skillID)
         {
             index = _index;
             roleID = _roleID;
+            skillID = _skillID;
         }
 
         public bool Trigger(List<shop_event> evs)
@@ -35,7 +37,7 @@ namespace Match
             }
 
             ShopSkillConfig skill;
-            if (!config.Config.ShopSkillConfigs.TryGetValue(roleID, out skill))
+            if (!config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
             {
                 return false;
             }
@@ -357,7 +359,7 @@ namespace Match
             }
 
             ShopSkillConfig skill;
-            if (!config.Config.ShopSkillConfigs.TryGetValue(roleID, out skill))
+            if (!config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
             {
                 return;
             }

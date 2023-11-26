@@ -9,6 +9,7 @@ namespace config
     {
         public int Id;
         public string Name;
+        public int SkillID;
         public int Stage;
         public int Level;
         public int Price;
@@ -61,6 +62,7 @@ namespace config
                 var rolec = new RoleConfig();
                 rolec.Id = (int)o["Id"];
                 rolec.Name = (string)o["Name"];
+                rolec.SkillID = (int)o["Skill"];
                 rolec.Stage = (int)o["Stage"];
                 rolec.Price = (int)o["Price"];
                 rolec.Attack = (int)o["Attack"];

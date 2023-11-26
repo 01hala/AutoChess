@@ -102,6 +102,7 @@ namespace Abelkhan
     {
         public Int32 RoleID;
         public Int32 Level;
+        public Int32 SkillID;
         public Int32 Number;
         public Int32 HP;
         public Int32 Attack;
@@ -117,6 +118,7 @@ namespace Abelkhan
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("Level", _struct.Level);
+            _protocol.Add("SkillID", _struct.SkillID);
             _protocol.Add("Number", _struct.Number);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
@@ -138,6 +140,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkillID"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.SkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Number"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
@@ -215,6 +220,7 @@ namespace Abelkhan
     public class ShopRole
     {
         public Int32 RoleID;
+        public Int32 SkillID;
         public Int32 HP;
         public Int32 Attack;
         public bool IsFreeze;
@@ -225,6 +231,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
+            _protocol.Add("SkillID", _struct.SkillID);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
             _protocol.Add("IsFreeze", _struct.IsFreeze);
@@ -239,6 +246,9 @@ namespace Abelkhan
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
                     _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkillID"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.SkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "HP"){
                     _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.HP = ((MsgPack.MessagePackObject)i.Value).AsInt32();

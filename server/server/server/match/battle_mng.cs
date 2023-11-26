@@ -85,6 +85,7 @@ namespace Match
                 {
                     var r = new ShopRole();
                     r.RoleID = roleConfig.Id;
+                    r.SkillID = roleConfig.SkillID;
                     r.HP = roleConfig.Hp;
                     r.Attack = roleConfig.Attack;
                     r.IsFreeze = false;
@@ -143,6 +144,8 @@ namespace Match
 
         private void _refresh()
         {
+            Log.Log.trace("_refresh begin!");
+
             var rmRoleList = new List<ShopRole>();
             foreach (var r in shopData.SaleRoleList)
             {
@@ -179,7 +182,7 @@ namespace Match
                 }
             }
 
-            for(int i = 0; i < 3 && shopData.SalePropList.Count < 3; ++i)
+            while (shopData.SalePropList.Count < 3)
             {
                 var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
                 var p = randomShopProp(stage);
@@ -188,6 +191,8 @@ namespace Match
                     shopData.SalePropList.Add(p);
                 }
             }
+
+            Log.Log.trace("_refresh end!");
         }
 
         public void start_round()
@@ -270,6 +275,7 @@ namespace Match
 
                     r.RoleID = s.RoleID;
                     r.Level = 1;
+                    r.SkillID = s.SkillID;
                     r.Number = 1;
                     r.HP = s.HP;
                     r.Attack = s.Attack;
@@ -279,7 +285,7 @@ namespace Match
                     r.TempAdditionBuffer = 0;
 
                     battleData.RoleList[role_index] = r;
-                    shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID);
+                    shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID, r.SkillID);
                 }
                 else
                 {
@@ -343,7 +349,7 @@ namespace Match
                         if (foodcfg.Count > 1)
                         {
                             var exclude = new List<int>();
-                            for (int i = 0; i < foodcfg.Count && rs.Count < battleData.RoleList.Count;)
+                            for (int i = 0; i < foodcfg.Count || rs.Count < battleData.RoleList.Count;)
                             {
                                 var tmp_index = RandomHelper.RandomInt(battleData.RoleList.Count);
                                 if (exclude.Contains(tmp_index))

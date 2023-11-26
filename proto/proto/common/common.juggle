@@ -14,6 +14,7 @@ struct UserData
 struct Role {
 	int32 RoleID;
 	int32 Level;
+	int32 SkillID;
 	int32 Number;
 	int32 HP;
 	int32 Attack;
@@ -44,6 +45,7 @@ enum ShopIndex {
 
 struct ShopRole {
 	int32 RoleID;
+	int32 SkillID;
 	int32 HP;
 	int32 Attack;
 	bool IsFreeze;
