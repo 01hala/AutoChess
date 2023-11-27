@@ -5,7 +5,7 @@
  * 图标拖拽类
  */
 
-import { _decorator, Button, Collider, Collider2D, Component, Contact2DType, director, EventTouch, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Node, Prefab, rect, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
+import { _decorator, Asset, Button, Collider, Collider2D, Component, Contact2DType, director, EventTouch, ImageAsset, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Mask, Node, Prefab, rect, Sprite, SpriteAtlas, SpriteFrame, Texture2D, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
@@ -90,11 +90,13 @@ export class RoleIcon extends Component
         {
             let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
             console.log("new role");
-            let r=new role.Role(0,id,1,0,Camp.Self,map);
+            let r=new role.Role(0,id,1,0,0,Camp.Self,map);
             console.log('RoleIcon spawn role: ',id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
             this.roleId=id;
+            
+            this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame= await this.LoadImg("Role_",id);
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
@@ -197,7 +199,7 @@ export class RoleIcon extends Component
         }
         catch (error)
         {
-            console.error('RoleIcon 下 Ini 错误 err：',error);
+            console.error('RoleIcon 下 Ini 错误 err: ',error);
         }
         
     }
@@ -206,18 +208,45 @@ export class RoleIcon extends Component
     {
         return new Promise (async (resolve)=>
         {
-            console.log("spawn role:",r.id);
+            //console.log("spawn role:",r.id);
             let address: string = "Role_";
-            //let roleRes=""+address+r[i].id;
-            let roleRes = address + "1";
-            let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-            
+            let roleRes=""+address+r.id;
+            //let roleRes = address + "100001";
+            let newNode=null;
+            newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+            if(null==newNode)
+            {
+                console.warn('RoleIcon 里的 SpawnRole 异常 : bundle中没有此角色,替换为默认角色');
+                roleRes = address + "100001";
+                newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+            }
+
             let role = instantiate(newNode);
             role.setParent(this.node);
             let roleDis = role.getComponent(RoleDis);
             roleDis.Refresh(r);
             role.active=false;
             resolve(role);
+        });
+    }
+
+    LoadImg(_address:string,_id:number):Promise<SpriteFrame>
+    {
+        return new Promise(async (resolve)=>
+        {
+            let imgRes=""+_address+_id;
+            let temp=await BundleManager.Instance.LoadImgsFromBundle("Avatar", imgRes);
+            if(null==temp)
+            {
+                console.warn('RoleIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
+                imgRes=""+_address+100001;
+                temp=await BundleManager.Instance.LoadImgsFromBundle("Avatar", imgRes);
+            }
+            let texture=new Texture2D();
+            texture.image=temp;
+            let sp=new SpriteFrame();
+            sp.texture=texture;
+            resolve(sp);
         });
     }
 
@@ -344,7 +373,7 @@ export class RoleIcon extends Component
     GetUpgrade(t:common.Role,is_update:boolean)
     {
         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-        let r=new role.Role(0,this.roleId,1,0,Camp.Self,map);
+        let r=new role.Role(0,this.roleId,1,0,0,Camp.Self,map);
         this.roleNode.getComponent(RoleDis).Refresh(r);
         if(is_update)
         {

@@ -64,11 +64,18 @@ export class ShopArea extends Component
     {
         for(let t of this.shopRoles)
         {
-            t.destroy();
+            if(t)
+            {
+                t.destroy();
+            }
+            
         }
         for(let t of this.shopProps)
         {
-            t.destroy();
+            if(t)
+            {
+                t.destroy();
+            }
         }
         this.shopRoles=[];
         this.shopProps=[];
@@ -109,7 +116,7 @@ export class ShopArea extends Component
 
     async BuyRole(_index:number, _obj:Node)
     {
-        console.log(this.shopRoles.length);
+        //console.log(this.shopRoles.length);
         for(let i=0;i<this.shopRoles.length;i++)
         {
             if(this.shopRoles[i] == _obj)
@@ -122,9 +129,17 @@ export class ShopArea extends Component
         
     }
 
-    async BuyProp(_index:number)
+    async BuyProp(_index:number,_obj:Node)
     {
-        
+        for(let i=0;i<this.shopProps.length;i++)
+        {
+            if(this.shopProps[i] == _obj)
+            {
+                await singleton.netSingleton.ready.ready.Buy(ShopIndex.Prop , i , _index);
+                this.roleArea.rolesNode.push(_obj);
+                this.shopProps[i] = null;
+            }
+        }
     }
 
 

@@ -93,6 +93,8 @@ export class Ready
 
     public async Buy(shop_index: common.ShopIndex,index:number,role_index:number)
     {
+        console.log(`shop_index:${shop_index}, index:${index}, role_index:${role_index}`);
+
         await singleton.netSingleton.game.buy(shop_index,index,role_index);
 
         let ev = new skill.Event();

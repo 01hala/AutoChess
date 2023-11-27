@@ -81,7 +81,7 @@ export class Role
 {
     public RoleID : number = 0;
     public Level : number = 0;
-    public Exp:number=0;
+    public SkillID : number = 0;
     public Number : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
@@ -108,6 +108,9 @@ export function protcol_to_Role(_protocol:any){
         }
         else if (key === "Level"){
             _struct.Level = val as number;
+        }
+        else if (key === "SkillID"){
+            _struct.SkillID = val as number;
         }
         else if (key === "Number"){
             _struct.Number = val as number;
@@ -172,6 +175,7 @@ export function protcol_to_UserBattleData(_protocol:any){
 export class ShopRole
 {
     public RoleID : number = 0;
+    public SkillID : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
     public IsFreeze : boolean = false;
@@ -191,6 +195,9 @@ export function protcol_to_ShopRole(_protocol:any){
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "RoleID"){
             _struct.RoleID = val as number;
+        }
+        else if (key === "SkillID"){
+            _struct.SkillID = val as number;
         }
         else if (key === "HP"){
             _struct.HP = val as number;
