@@ -146,7 +146,7 @@ export class login extends Component {
             if(null==singleton.netSingleton.ready)
             {
                 //新的一局游戏
-                let _ready = new Ready(shop_info);
+                let _ready = new Ready(battle_info, shop_info);
                 singleton.netSingleton.ready=new ReadyDis(_ready);
                 await singleton.netSingleton.ready.start(this.bk.node);
                 this._setProgress(1.0);

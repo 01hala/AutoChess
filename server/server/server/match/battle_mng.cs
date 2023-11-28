@@ -65,6 +65,7 @@ namespace Match
             battleData = new UserBattleData();
             battleData.User = new UserInformation();
             battleData.RoleList = new List<Role>() { null, null, null, null, null, null };
+            battleData.coin = 10;
 
             shop_skill_roles = new List<shop_skill_role> { null, null, null, null, null, null };
 
@@ -202,6 +203,8 @@ namespace Match
 
         public void start_round()
         {
+            battleData.coin = 10;
+
             _refresh();
 
             evs.Add(new shop_event()
@@ -263,6 +266,12 @@ namespace Match
 
         public em_error buy(ShopIndex shop_index, int index, int role_index)
         {
+            if (battleData.coin < 3)
+            {
+                return em_error.no_enough_coin;
+            }
+            battleData.coin -= 3;
+
             var r = battleData.RoleList[role_index];
 
             if (shop_index == ShopIndex.Role)

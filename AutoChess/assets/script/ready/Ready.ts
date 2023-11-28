@@ -28,8 +28,10 @@ export class Ready
 
     public on_event : ((evs:skill.Event[]) => Promise<void>) = null;
 
-    public constructor(self:common.ShopData) 
+    public constructor(battle_info:common.UserBattleData, self:common.ShopData) 
     {
+        this.coin = battle_info.coin;
+
         this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
     }
@@ -51,6 +53,7 @@ export class Ready
 
     public SetCoins(count:number)
     {
+        console.log(`SetCoins coin:${count}`);
         if(count)
         {
             this.coin=count;
