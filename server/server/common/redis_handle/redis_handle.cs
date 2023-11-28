@@ -23,6 +23,21 @@ namespace Abelkhan
             _connHelper.Recover(ref connectionMultiplexer, ref database, e);
         }
 
+        public Task<bool> Expire(string key, int timeout)
+        {
+            while (true)
+            {
+                try
+                {
+                    return database.KeyExpireAsync(key, System.TimeSpan.FromMilliseconds(timeout));
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
         public Task<bool> SetStrData(string key, string data, int timeout)
         {
             while (true)

@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using System.Numerics;
 
 namespace Login
 {
@@ -66,6 +67,7 @@ namespace Login
                     var _proxy = Login._player_proxy_mng.get_player(_player_proxy_name);
                     if (_proxy != null)
                     {
+                        await Login._redis_handle.Expire(key, RedisHelp.PlayerSvrInfoCacheTimeout);
                         try_player_login(_proxy, account, rsp);
                     }
                     else
@@ -154,6 +156,7 @@ namespace Login
                         var _proxy = Login._player_proxy_mng.get_player(_player_proxy_name);
                         if (_proxy != null)
                         {
+                            await Login._redis_handle.Expire(key, RedisHelp.PlayerSvrInfoCacheTimeout);
                             try_player_login(_proxy, account, session.openid, session.anonymous_openid, rsp);
                         }
                         else
@@ -244,6 +247,7 @@ namespace Login
                         var _proxy = Login._player_proxy_mng.get_player(_player_proxy_name);
                         if (_proxy != null)
                         {
+                            await Login._redis_handle.Expire(key, RedisHelp.PlayerSvrInfoCacheTimeout);
                             try_player_login(_proxy, account, session.openid, rsp);
                         }
                         else
