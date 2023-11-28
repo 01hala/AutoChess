@@ -87,7 +87,8 @@ export class PropIcon extends Component
             });
             //还原起始值
             this.touchStartPoint = new Vec2(0, 0);
-            if(null != this.target)
+            //console.log(this.target.name);
+            if(null != this.index || null != this.target)
             {
                 console.log('buy food');
                 /*
@@ -140,8 +141,11 @@ export class PropIcon extends Component
         {
             if(null!=otherCollider && 1 == otherCollider.tag)
             {
-                this.target=null;
-                this.index=null;
+                if(this.roleArea.GetTargetValue(otherCollider.node.name)==this.target)
+                {
+                    this.target=null;
+                    this.index=null;
+                }
             }
         },this);
 
