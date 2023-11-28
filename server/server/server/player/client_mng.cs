@@ -293,7 +293,7 @@ namespace Player
             _avatar.ClientUUID = uuid;
 
             var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);
-            Player._redis_handle.SetStrData(uuid_key, _avatar.SDKUUID);
+            Player._redis_handle.SetStrData(uuid_key, _avatar.SDKUUID, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             return _avatar;
         }

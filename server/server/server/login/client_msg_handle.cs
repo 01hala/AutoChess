@@ -18,7 +18,7 @@ namespace Login
             Log.Log.trace("try_player_login _proxy.name:{0}", _proxy.name);
 
             var key = RedisHelp.BuildPlayerSvrCacheKey(account);
-            Login._redis_handle.SetStrData(key, _proxy.name);
+            Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login_no_token(account).callBack((token) => {
                 rsp.rsp(_proxy.name, token);
@@ -75,7 +75,7 @@ namespace Login
                 }
 
                 var gate_key = RedisHelp.BuildPlayerGateCacheKey(account);
-                await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid));
+                await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid), RedisHelp.PlayerSvrInfoCacheTimeout);
             }
             catch (System.Exception ex)
             {
@@ -93,7 +93,7 @@ namespace Login
             Log.Log.trace("try_player_login _proxy.name:{0}", _proxy.name);
 
             var key = RedisHelp.BuildPlayerSvrCacheKey(account);
-            Login._redis_handle.SetStrData(key, _proxy.name);
+            Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login(code, anonymous_code).callBack((token) => {
                 rsp.rsp(_proxy.name, token);
@@ -163,7 +163,7 @@ namespace Login
                     }
 
                     var gate_key = RedisHelp.BuildPlayerGateCacheKey(account);
-                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid));
+                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid), RedisHelp.PlayerSvrInfoCacheTimeout);
                 }
                 catch (System.Exception ex)
                 {
@@ -192,7 +192,7 @@ namespace Login
             Log.Log.trace("try_player_login _proxy.name:{0}", _proxy.name);
 
             var key = RedisHelp.BuildPlayerSvrCacheKey(account);
-            Login._redis_handle.SetStrData(key, _proxy.name);
+            Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login(code, "").callBack((token) => {
                 rsp.rsp(_proxy.name, token);
@@ -253,7 +253,7 @@ namespace Login
                     }
 
                     var gate_key = RedisHelp.BuildPlayerGateCacheKey(account);
-                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid));
+                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid), RedisHelp.PlayerSvrInfoCacheTimeout);
                 }
                 catch (System.Exception ex)
                 {
