@@ -174,41 +174,49 @@ export class RoleDis extends Component
         return this.delay(300, () => { });
     }
 
-    Intensifier(value: number[]) 
+    async Intensifier(value: number[]) 
     {
-        try {
+        try 
+        {
             let type: Property;
             let anim: Animation = this.intensifierText.getComponent(Animation);
             let wait: boolean;
             anim.on(Animation.EventType.FINISHED, () => 
             {
+                anim.stop();
                 this.intensifierText.active = false;
+                anim.resume();
             }, this);
 
-            anim.on(Animation.EventType.PLAY, () => 
+            tween(this.node).to(0,{}).call(()=>
+            {   
+                if (0 != value[0]) 
+                {
+                    anim.resume();
+                    this.intensifierText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[0] + "</outline></color>";
+                    this.intensifierText.active = true;
+                    anim.play();
+                }
+            }).delay(0.7).call(()=>
             {
-                wait = true;
-            }, this);
+                if (0 != value[1]) 
+                {
+                    anim.resume();
+                    this.intensifierText.getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[1] + "</outline></color>";
+                    this.intensifierText.active = true;
+                    anim.play();
+                }
+                
+            }).delay(0.7).call(()=>
+            {
+                anim.stop();
+                this.intensifierText.active = false;
+            }).start();
 
-            if (0 != value[0]) 
+            return this.delay(1500,()=>
             {
-                wait = false;
-                this.intensifierText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[0] + "</outline></color>";
-                this.intensifierText.active = true;
-                anim.play();
-            }
-            if (wait) 
-            {
-                this.delay(300, () => { });
-            }
-            if (0 != value[1]) 
-            {
-                wait = false;
-                this.intensifierText.getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[1] + "</outline></color>"
-                this.intensifierText.active = true;
-                anim.play();
-            }
-            this.delay(300, () => { });
+                
+            })
         }
         catch (err) 
         {

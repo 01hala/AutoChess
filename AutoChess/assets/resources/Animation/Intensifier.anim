@@ -7,11 +7,11 @@
       "embeddedPlayerGroups": []
     },
     "_native": "",
-    "sample": 60,
+    "sample": 24,
     "speed": 1,
     "wrapMode": 1,
     "enableTrsBlending": false,
-    "_duration": 0.25,
+    "_duration": 0.6666666666666666,
     "_hash": 500763545,
     "_tracks": [
       {
@@ -23,11 +23,7 @@
     ],
     "_exoticAnimation": null,
     "_events": [],
-    "_embeddedPlayers": [],
-    "_additiveSettings": {
-      "__id__": 22
-    },
-    "_auxiliaryCurveEntries": []
+    "_embeddedPlayers": []
   },
   {
     "__type__": "cc.animation.VectorTrack",
@@ -70,8 +66,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.08333333333333333,
-      0.13333333333333333
+      0.2083333283662796,
+      0.3333333432674408,
+      0.625,
+      0.6666666865348816
     ],
     "_values": [
       {
@@ -109,6 +107,34 @@
         "leftTangentWeight": 1,
         "easingMethod": 0,
         "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 0,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": {
+          "tangentMode": 0
+        }
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 0,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": {
+          "tangentMode": 0
+        }
       }
     ],
     "preExtrapolation": 1,
@@ -124,8 +150,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.08333333333333333,
-      0.13333333333333333
+      0.2083333283662796,
+      0.3333333432674408,
+      0.625,
+      0.6666666865348816
     ],
     "_values": [
       {
@@ -163,6 +191,34 @@
         "leftTangentWeight": 1,
         "easingMethod": 0,
         "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 110,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": {
+          "tangentMode": 0
+        }
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 85,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": {
+          "tangentMode": 0
+        }
       }
     ],
     "preExtrapolation": 1,
@@ -178,8 +234,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.08333333333333333,
-      0.13333333333333333
+      0.2083333283662796,
+      0.3333333432674408,
+      0.625,
+      0.6666666865348816
     ],
     "_values": [
       {
@@ -217,6 +275,34 @@
         "leftTangentWeight": 1,
         "easingMethod": 0,
         "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 0,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": {
+          "tangentMode": 0
+        }
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 0,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": {
+          "tangentMode": 0
+        }
       }
     ],
     "preExtrapolation": 1,
@@ -320,8 +406,8 @@
   {
     "__type__": "cc.RealCurve",
     "_times": [
-      0.13333333333333333,
-      0.25
+      0.3333333432674408,
+      0.625
     ],
     "_values": [
       {
@@ -351,10 +437,5 @@
     ],
     "preExtrapolation": 1,
     "postExtrapolation": 1
-  },
-  {
-    "__type__": "cc.AnimationClipAdditiveSettings",
-    "enabled": false,
-    "refClip": null
   }
 ]
