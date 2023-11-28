@@ -50,11 +50,15 @@ export class Queue extends Component
             try 
             {
                 let address: string = "Role_";
-                //let roleRes=""+address+r[i].id;
-                let roleRes = address + "1";
+                let roleRes=""+address+r.id;
+                //let roleRes = address + "100001";
                 let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-                let role = instantiate(newNode);
-
+                if(null==newNode)
+                {
+                    roleRes = address + "100001";
+                    newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+                }
+                let role = instantiate(newNode); 
                 this.node.addChild(role);
 
                 //r.roleNode = role;

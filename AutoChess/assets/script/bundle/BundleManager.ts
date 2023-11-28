@@ -65,6 +65,38 @@ export class BundleManager
         });
     }
 
+    LoadImgsFromBundle(bundleRes:string, assetsRes:string): Promise<ImageAsset>
+    {
+        return new Promise(async (resolve) =>
+        {
+            try {
+                let bundle : AssetManager.Bundle = null;
+                if (this.bundles.has(bundleRes)) {
+                    bundle = this.bundles.get(bundleRes);
+                }
+                else {
+                    bundle = await this.loadBundle(bundleRes);
+                    this.bundles.set(bundleRes, bundle);
+                }
+
+                bundle.load(assetsRes, ImageAsset, (error, img) => {
+                    if(error) {
+                        console.warn(this.res+"下的 LoadImgsFromBundle 没有读取到资源,err:", error.message);
+                        resolve(null);
+                    }
+                    else {
+                        resolve(img);
+                    }
+                });
+            }
+            catch (err) {
+                console.warn(this.res+"下的 LoadImgsFromBundle 错误:"+err);
+                resolve(null);
+            }    
+        });
+    }
+    
+
     loadAssetsFromUrl(url:string) : Promise<Asset> {
         return new Promise((resolve) => {
             try {

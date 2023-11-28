@@ -2,14 +2,12 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "e007b961-38bf-48b6-b8b8-fad8b67fb324",
+  "uuid": "1f226120-e23c-4596-9a2d-728c9104cacf",
   "files": [],
   "subMetas": {},
   "userData": {
     "compressionType": {},
-    "isRemoteBundle": {
-      "wechatgame": true
-    },
-    "bundleName": "RolesImg"
+    "isRemoteBundle": {},
+    "isBundle": true
   }
 }
