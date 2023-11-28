@@ -87,12 +87,14 @@ export class PropIcon extends Component
             });
             //还原起始值
             this.touchStartPoint = new Vec2(0, 0);
-
-            if(null != this.target)
+            //console.log(this.target.name);
+            if(null != this.index || null != this.target)
             {
+                console.log('buy food');
                 /*
                  *此处购买道具
                  */
+                this.shopArea.BuyProp(this.index,this.node);
                 console.log('道具使用成功！');
                 this.node.destroy();
                 return;
@@ -137,9 +139,13 @@ export class PropIcon extends Component
     {
         this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
         {
-            if(null!=otherCollider)
+            if(null!=otherCollider && 1 == otherCollider.tag)
             {
-                this.target=null;
+                if(this.roleArea.GetTargetValue(otherCollider.node.name)==this.target)
+                {
+                    this.target=null;
+                    this.index=null;
+                }
             }
         },this);
 
@@ -149,7 +155,10 @@ export class PropIcon extends Component
             {
                 if(null!=this.roleArea.GetTargetValue(otherCollider.node.name))
                 { 
+                    let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
+                    this.index=Number(num);
                     this.target=this.roleArea.GetTargetValue(otherCollider.node.name);
+                    console.log(this.target.name,this.index);
                 }
             }
 
