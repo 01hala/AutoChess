@@ -122,6 +122,8 @@ export class BattleDis
             this.victory.active = true;
             this.victory.getComponent(Label).string = this.battle.GetWinCamp() == Camp.Self ? "战斗胜利!" : "战斗失败!";
 
+            await sleep(5000);
+
             netSingleton.game.confirm_round_victory(this.battle.GetWinCamp() == Camp.Self);
         }
         catch(error)

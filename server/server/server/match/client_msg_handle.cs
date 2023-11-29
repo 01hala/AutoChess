@@ -76,12 +76,12 @@ namespace Match
                     }
                     else
                     {
+                        _player.start_round();
+                        _player.do_skill();
+
                         _player.BattleClientCaller.get_client(_player.ClientUUID).battle_plan_refresh(_player.BattleData, _player.ShopData);
                     }
                 }
-
-                _player.start_round();
-                _player.do_skill();
 
                 rsp.rsp();
             }

@@ -47,11 +47,12 @@ export class ReadyDis
             //准备开始
             this.ready.StartReady();
             //this.coinText.string=""+this.ready.coin;
-            await this.RefreshShop();
+            //await this.RefreshShop();
             if(battle_info.round>1)
             {
                 await this.Restore(battle_info);
             }
+            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
             //隐藏等待界面
             this.waitingPanel.getComponent(BlockInputEvents).enabled=false;
             this.waitingPanel.active=false;
