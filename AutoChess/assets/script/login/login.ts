@@ -153,16 +153,11 @@ export class login extends Component {
                 //新的一局游戏
                 let _ready = new Ready(battle_info, shop_info);
                 singleton.netSingleton.ready=new ReadyDis(_ready);
-                await singleton.netSingleton.ready.start(this.bk.node);
+                await singleton.netSingleton.ready.start(this.bk.node,battle_info);
                 this._setProgress(1.0);
                 this._loading.done();
                 console.log("Start Ready sucess!");
             }
-            else
-            {
-                singleton.netSingleton.ready.Restore();
-            }
-           
         }
 
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {

@@ -79,3 +79,5 @@ hotaru:角色合并、食物图标模板以及相关代码
 hotaru:动态加载角色和头像
 2023/11/28
 hotaru:修bug、使用道具后的效果
+2023/11/29
+hotaru:在rolearea里添加ResetTeam，实现游戏循环

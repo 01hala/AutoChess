@@ -46,7 +46,7 @@ export class RoleIcon extends Component
     private rolePrefab:Prefab;
 
     
-    private iconMask:Node;
+    public iconMask:Node;
 
     public originalPos:Vec3;
     private tweenNode:Tween<Node>;
@@ -86,13 +86,13 @@ export class RoleIcon extends Component
         
     }
     //初始化
-    async Init(id:number,hp:number,atk:number)
+    async Init(id:number,hp:number,atk:number,teamindex:number=-1)
     {
         try
         {
             let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
             console.log("new role");
-            let r=new role.Role(-1,id,id-100000,0,0,Camp.Self,map);
+            let r=new role.Role(teamindex,id,id-100000,0,0,Camp.Self,map);
             console.log('RoleIcon spawn role: ',id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
@@ -197,7 +197,11 @@ export class RoleIcon extends Component
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
-            this.iconMask.active=true;
+            if(!this.isBuy)
+            {
+                this.iconMask.active=true;
+            }
+            
         }
         catch (error)
         {
@@ -227,7 +231,11 @@ export class RoleIcon extends Component
             role.setParent(this.node);
             let roleDis = role.getComponent(RoleDis);
             roleDis.Refresh(r);
-            role.active=false;
+            if(!this.isBuy)
+            {
+                role.active=false;
+            }
+            
             resolve(role);
         });
     }

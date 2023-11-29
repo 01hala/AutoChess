@@ -5,6 +5,7 @@ import { ShopArea } from './ShopArea';
 import * as singleton from '../../netDriver/netSingleton';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
 import { RoleIcon } from './RoleIcon';
+import { config } from '../../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -19,15 +20,23 @@ export class PropIcon extends Component
     private tempTarget:Node=null;
     //道具ID
     public propId:number;
+    //道具属性
+    public attackBonus:number;
+    public hpBonus:number;
+    public vaule:number;
+    //道具效果
+    public effect:number[]=[];
+    //目标位置
     public index:number;
-
     private tempIndex:number;
-     //父级面板
-     private panel:Node;
-     //图标碰撞体
+    //锁存，判断是否购买
+    public isBuy:boolean=false;
+    //父级面板
+    private panel:Node;
+    //图标碰撞体
     private collider:Collider2D;
-     //拖拽起始位置
-     private touchStartPoint: Vec2 = new Vec2(0, 0);
+    //拖拽起始位置
+    private touchStartPoint: Vec2 = new Vec2(0, 0);
     //各操作区域
     private roleArea:RoleArea;
     private shopArea:ShopArea;
@@ -35,10 +44,10 @@ export class PropIcon extends Component
     public originalPos:Vec3;
     //缓动
     private tweenNode:Tween<Node>;
-
+    //图标
     private iconMask:Node;
 
-    public isBuy:boolean=false;
+    
 
     protected onLoad(): void 
     {
@@ -56,13 +65,20 @@ export class PropIcon extends Component
             });
     }
 
-    async Init()
+    async Init(_id:number,_type:PropsType)
     {
-        // let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
-        // let r=new role.Role(0,id,1,0,Camp.Self,map);
-        // this.roleNode=await this.SpawnRole(r);
         this.originalPos=this.node.getPosition();
-        // this.roleId=id;
+        this.propId=_id;
+        this.propType=_type;
+        let jconfig=null;
+        if(_type==PropsType.Food)
+        {
+            jconfig=config.FoodConfig.get(_id);
+            this.effect=jconfig.Effect;
+            this.hpBonus=jconfig.HpBonus;
+            this.attackBonus=jconfig.AttackBonus;
+        }
+        
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
@@ -94,9 +110,12 @@ export class PropIcon extends Component
                 if(!this.target.getComponent(RoleIcon).eatFoodLock)
                 {
                     //console.log('buy food');
-                    let value=[1,1];
+                    let value=[this.hpBonus,this.attackBonus];
                     this.target.getComponent(RoleIcon).eatFoodLock=true;
-                    this.target.getComponent(RoleIcon).GetIntensifier(value);
+                    if(this.effect.includes(1) || this.effect.includes(2))
+                    {
+                        this.target.getComponent(RoleIcon).GetIntensifier(value);
+                    }
                     this.shopArea.BuyProp(this.index,this.node);
                     console.log('道具使用成功！');
                     this.node.destroy();
