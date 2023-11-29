@@ -141,6 +141,7 @@ export class UserBattleData
 {
     public User : UserInformation | null = null;
     public coin : number = 0;
+    public round : number = 0;
     public RoleList : Role[] = [];
 
 }
@@ -161,6 +162,9 @@ export function protcol_to_UserBattleData(_protocol:any){
         }
         else if (key === "coin"){
             _struct.coin = val as number;
+        }
+        else if (key === "round"){
+            _struct.round = val as number;
         }
         else if (key === "RoleList"){
             _struct.RoleList = [];
