@@ -15,7 +15,6 @@ import { login } from '../../login/login';
 import { RoleIcon } from './RoleIcon';
 const { ccclass, property } = _decorator;
 
-@ccclass('ReadyDis')
 export class ReadyDis 
  {
     public father:Node;
@@ -114,6 +113,10 @@ export class ReadyDis
         {
             console.error("ReadyDis 里的 start 错误 err:",error);
         }
+    }
+
+    public destory() {
+        this.panelNode.destroy();
     }
 
     Restore()

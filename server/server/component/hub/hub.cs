@@ -73,7 +73,7 @@ namespace Hub
             _dbproxys = new ConcurrentDictionary<string, DBProxyProxy>();
 
             var redismq_url = _root_config.get_value_string("redis_for_mq");
-            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name);
+            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name, 100);
             _gates = new GateManager(_redis_mq_service);
 
             _closeHandle = new CloseHandle();

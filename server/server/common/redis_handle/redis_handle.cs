@@ -23,13 +23,13 @@ namespace Abelkhan
             _connHelper.Recover(ref connectionMultiplexer, ref database, e);
         }
 
-        public Task<bool> SetStrData(string key, string data)
+        public Task<bool> Expire(string key, int timeout)
         {
             while (true)
             {
                 try
                 {
-                    return database.StringSetAsync(key, data);
+                    return database.KeyExpireAsync(key, System.TimeSpan.FromMilliseconds(timeout));
                 }
                 catch (RedisTimeoutException e)
                 {
@@ -38,9 +38,31 @@ namespace Abelkhan
             }
         }
 
-        public Task<bool> SetData<T>(string key, T data)
+        public Task<bool> SetStrData(string key, string data, int timeout)
         {
-            return SetStrData(key, JsonConvert.SerializeObject(data));
+            while (true)
+            {
+                try
+                {
+                    if (timeout != 0)
+                    {
+                        return database.StringSetAsync(key, data, System.TimeSpan.FromMilliseconds(timeout));
+                    }
+                    else
+                    {
+                        return database.StringSetAsync(key, data);
+                    }
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
+        public Task<bool> SetData<T>(string key, T data, int timeout = 0)
+        {
+            return SetStrData(key, JsonConvert.SerializeObject(data), timeout);
         }
 
         public Task<RedisValue> GetStrData(string key)

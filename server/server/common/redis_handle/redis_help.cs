@@ -32,5 +32,7 @@ namespace Abelkhan
         {
             return $"Player:PlayerGuidCache:{guid}";
         }
+
+        static public int PlayerSvrInfoCacheTimeout = 1000 * 60 * 30;
     }
 }

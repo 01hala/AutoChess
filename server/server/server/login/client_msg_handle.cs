@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using System.Numerics;
 
 namespace Login
 {
@@ -18,7 +19,7 @@ namespace Login
             Log.Log.trace("try_player_login _proxy.name:{0}", _proxy.name);
 
             var key = RedisHelp.BuildPlayerSvrCacheKey(account);
-            Login._redis_handle.SetStrData(key, _proxy.name);
+            Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login_no_token(account).callBack((token) => {
                 rsp.rsp(_proxy.name, token);
@@ -66,6 +67,7 @@ namespace Login
                     var _proxy = Login._player_proxy_mng.get_player(_player_proxy_name);
                     if (_proxy != null)
                     {
+                        await Login._redis_handle.Expire(key, RedisHelp.PlayerSvrInfoCacheTimeout);
                         try_player_login(_proxy, account, rsp);
                     }
                     else
@@ -75,7 +77,7 @@ namespace Login
                 }
 
                 var gate_key = RedisHelp.BuildPlayerGateCacheKey(account);
-                await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid));
+                await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid), RedisHelp.PlayerSvrInfoCacheTimeout);
             }
             catch (System.Exception ex)
             {
@@ -93,7 +95,7 @@ namespace Login
             Log.Log.trace("try_player_login _proxy.name:{0}", _proxy.name);
 
             var key = RedisHelp.BuildPlayerSvrCacheKey(account);
-            Login._redis_handle.SetStrData(key, _proxy.name);
+            Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login(code, anonymous_code).callBack((token) => {
                 rsp.rsp(_proxy.name, token);
@@ -154,6 +156,7 @@ namespace Login
                         var _proxy = Login._player_proxy_mng.get_player(_player_proxy_name);
                         if (_proxy != null)
                         {
+                            await Login._redis_handle.Expire(key, RedisHelp.PlayerSvrInfoCacheTimeout);
                             try_player_login(_proxy, account, session.openid, session.anonymous_openid, rsp);
                         }
                         else
@@ -163,7 +166,7 @@ namespace Login
                     }
 
                     var gate_key = RedisHelp.BuildPlayerGateCacheKey(account);
-                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid));
+                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid), RedisHelp.PlayerSvrInfoCacheTimeout);
                 }
                 catch (System.Exception ex)
                 {
@@ -192,7 +195,7 @@ namespace Login
             Log.Log.trace("try_player_login _proxy.name:{0}", _proxy.name);
 
             var key = RedisHelp.BuildPlayerSvrCacheKey(account);
-            Login._redis_handle.SetStrData(key, _proxy.name);
+            Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login(code, "").callBack((token) => {
                 rsp.rsp(_proxy.name, token);
@@ -244,6 +247,7 @@ namespace Login
                         var _proxy = Login._player_proxy_mng.get_player(_player_proxy_name);
                         if (_proxy != null)
                         {
+                            await Login._redis_handle.Expire(key, RedisHelp.PlayerSvrInfoCacheTimeout);
                             try_player_login(_proxy, account, session.openid, rsp);
                         }
                         else
@@ -253,7 +257,7 @@ namespace Login
                     }
 
                     var gate_key = RedisHelp.BuildPlayerGateCacheKey(account);
-                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid));
+                    await Login._redis_handle.SetStrData(gate_key, Hub.Hub._gates.get_client_gate_name(uuid), RedisHelp.PlayerSvrInfoCacheTimeout);
                 }
                 catch (System.Exception ex)
                 {

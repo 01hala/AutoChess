@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, tween, Button, UITransform, Label } from 'cc';
+import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
@@ -14,6 +14,7 @@ import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { Role } from '../../serverSDK/common';
+import { netSingleton } from '../../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -27,6 +28,9 @@ export class BattleDis
     //敌我队列
     public selfQueue:Queue;
     public enemyQueue:Queue;
+
+    //胜利或者失败
+    private victory:Node;
 
     private gmBtn:Button;
     private pauseBtn:Button;
@@ -79,6 +83,9 @@ export class BattleDis
                     pauseNode.getChildByName("Label").getComponent(Label).string = "pause";
                 }
             }, this);
+
+            this.victory = this.panelNode.getChildByName("victory");
+            this.victory.active = false;
     
             await this.PutRole();
             this.father=father;
@@ -111,6 +118,11 @@ export class BattleDis
             {
                 await this.battle.TickBattle();
             }
+
+            this.victory.active = true;
+            this.victory.getComponent(Label).string = this.battle.GetWinCamp() == Camp.Self ? "战斗胜利!" : "战斗失败!";
+
+            netSingleton.game.confirm_round_victory(this.battle.GetWinCamp() == Camp.Self);
         }
         catch(error)
         {

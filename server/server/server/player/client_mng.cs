@@ -264,6 +264,10 @@ namespace Player
             {
                 _avatar = await avatarMgr.load_or_create(sdk_uuid, "");
             }
+
+            var player_svr_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
+            await Player._redis_handle.SetStrData(player_svr_key, Hub.Hub.name, RedisHelp.PlayerSvrInfoCacheTimeout);
+
             _avatar.onDestory += () =>
             {
                 var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(_avatar.ClientUUID);
@@ -293,7 +297,7 @@ namespace Player
             _avatar.ClientUUID = uuid;
 
             var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);
-            Player._redis_handle.SetStrData(uuid_key, _avatar.SDKUUID);
+            Player._redis_handle.SetStrData(uuid_key, _avatar.SDKUUID, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             return _avatar;
         }
@@ -315,10 +319,11 @@ namespace Player
             {
                 var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);
                 var sdk_uuid = await Player._redis_handle.GetStrData(uuid_key);
+                await Player._redis_handle.Expire(uuid_key, RedisHelp.PlayerSvrInfoCacheTimeout);
 
                 var gate_key = RedisHelp.BuildPlayerGateCacheKey(sdk_uuid);
                 var gate_name = await Player._redis_handle.GetStrData(gate_key);
-
+                await Player._redis_handle.Expire(gate_key, RedisHelp.PlayerSvrInfoCacheTimeout);
 
                 _avatar = await avatarMgr.load_or_create(sdk_uuid, uuid);
                 Hub.Hub._gates.client_seep(uuid, gate_name);
