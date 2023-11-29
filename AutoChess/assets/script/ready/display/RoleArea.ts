@@ -1,6 +1,8 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
+import { Role } from '../../serverSDK/common';
+import { BundleManager } from '../../bundle/BundleManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleArea')
@@ -67,6 +69,35 @@ export class RoleArea extends Component
         {
             this.rolesNode=[];
         }
+    }
+
+    async ResetTeam(_roleList:Role[])
+    {
+        try
+        {
+            let r=await BundleManager.Instance.loadAssetsFromBundle("Icons","RoleIcon") as Prefab;
+
+            for(let i=0;i<_roleList.length;i++)
+            {
+                if(_roleList[i]!=null)
+                {
+                    let obj = instantiate(r);
+                    obj.setParent(this.node.parent);
+                    obj.setWorldPosition(this.node.getChildByPath("Node").children[i].worldPosition);
+                    obj.getComponent(RoleIcon).isBuy=true;
+                    //obj.getComponent(RoleIcon).roleNode.active=true;
+                    obj.getComponent(RoleIcon).index=i;
+                    obj.getComponent(RoleIcon).target=this.targets[i];
+                    obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack,i);
+                    //obj.getComponent(RoleIcon).iconMask.active=false;
+                }
+            }
+        }
+        catch(error)
+        {
+            console.error("RoleArea 里的 ResetTeam 错误 err:",error);
+        }
+        
     }
 
 }
