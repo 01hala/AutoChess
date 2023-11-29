@@ -53,7 +53,7 @@ export class Ready
 
     public SetCoins(count:number)
     {
-        console.log(`SetCoins coin:${count}`);
+        //console.log(`SetCoins coin:${count}`);
         if(count)
         {
             this.coin=count;

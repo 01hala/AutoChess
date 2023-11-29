@@ -69,7 +69,7 @@ export class ReadyDis
         {
             this.ready.SetCoins(battle_info.coin);
             this.ready.SetRoles(battle_info.RoleList);
-            console.log('player coin: ',battle_info.coin);
+            //console.log('player coin: ',battle_info.coin);
             this.UpdatePlayerInfo(battle_info.coin);
         }
         singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
@@ -78,13 +78,22 @@ export class ReadyDis
         }
         singleton.netSingleton.game.cb_role_buy_merge=(target_role_index:number, target_role:common.Role, is_update:boolean)=>
         {
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+            console.log('cb_role_buy_merge',target_role_index);
+            let str="Location_"+target_role_index;
+            this.roleArea.targets.get(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
         }
         singleton.netSingleton.game.cb_role_merge=(source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>
         {
-            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
-            this.roleArea.rolesNode[source_role_index].destroy();
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+            console.log('cb_role_merge',source_role_index);
+            let str="Location_"+source_role_index;
+            this.roleArea.targets.get(str).getComponent(RoleIcon).roleNode.destroy();
+            this.roleArea.targets.get(str).getComponent(RoleIcon).destroy();
+            //this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
+            //this.roleArea.rolesNode[source_role_index].destroy();
+            str="Location_"+target_role_index;
+            this.roleArea.targets.get(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
         }
         this.father=father;
         //主要界面
