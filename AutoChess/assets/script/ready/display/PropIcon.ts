@@ -4,6 +4,7 @@ import { RoleArea } from './RoleArea';
 import { ShopArea } from './ShopArea';
 import * as singleton from '../../netDriver/netSingleton';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
+import { RoleIcon } from './RoleIcon';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -90,14 +91,17 @@ export class PropIcon extends Component
             //console.log(this.target.name);
             if(null != this.index || null != this.target)
             {
-                console.log('buy food');
-                /*
-                 *此处购买道具
-                 */
-                this.shopArea.BuyProp(this.index,this.node);
-                console.log('道具使用成功！');
-                this.node.destroy();
-                return;
+                if(!this.target.getComponent(RoleIcon).eatFoodLock)
+                {
+                    //console.log('buy food');
+                    let value=[1,1];
+                    this.target.getComponent(RoleIcon).eatFoodLock=true;
+                    this.target.getComponent(RoleIcon).GetIntensifier(value);
+                    this.shopArea.BuyProp(this.index,this.node);
+                    console.log('道具使用成功！');
+                    this.node.destroy();
+                    return;
+                }
             }
             //吸附缓动
             this.Adsorption();

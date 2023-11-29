@@ -49,6 +49,7 @@ export class ReadyDis
             {
                 this.ready.SetCoins(battle_info.coin);
                 this.ready.SetRoles(battle_info.RoleList);
+                console.log('player coin: ',battle_info.coin);
                 this.UpdatePlayerInfo(battle_info.coin);
             }
             singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
@@ -103,7 +104,7 @@ export class ReadyDis
             });
             //准备开始
             this.ready.StartReady();
-            this.coinText.string=""+this.ready.coin;
+            //this.coinText.string=""+this.ready.coin;
             await this.RefreshShop();
             //隐藏等待界面
             this.waitingPanel.getComponent(BlockInputEvents).enabled=false;

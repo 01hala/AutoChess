@@ -17,7 +17,8 @@ namespace Abelkhan
         login_dy_faild = 3,
         no_enough_strength = 4,
         no_role_in_index_to_sale = 5,
-        not_same_role_to_update = 6
+        not_same_role_to_update = 6,
+        no_enough_coin = 7
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
 /*this module code is codegen by abelkhan codegen for c#*/
