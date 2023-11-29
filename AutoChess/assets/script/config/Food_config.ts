@@ -41,8 +41,8 @@ export async function LoadFoodConfig() : Promise<Map<number, FoodConfig>> {
                 foodc.Name = v["Name"];
                 foodc.Price = v["Price"];
                 foodc.Stage = v["Price"];
-                let effect=v["Effect"].map(String);
-                let es:string=effect.split('|');
+                let effect=v["Effect"];
+                let es:string[]=effect.split('|');
                 let e:number[]=[];
                 for(let s of es)
                 {
