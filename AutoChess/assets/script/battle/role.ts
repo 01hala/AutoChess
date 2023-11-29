@@ -67,12 +67,12 @@ export class Role {
 
         let roleConfig = config.config.RoleConfig.get(this.id);
 
-        let skill = createSkill(roleConfig.Id, this.level);
+        let skill = createSkill(roleConfig.SkillID, this.level);
         if (skill) {
             this.skill.push(skill);
         }
 
-        let buffer = createBuffer(roleConfig.Id);
+        let buffer = createBuffer(roleConfig.SkillID);
         if (buffer) {
             this.buffer.push(buffer);
         }
