@@ -53,7 +53,6 @@ namespace Match
 
         public int count = 10;
         public int victory = 0;
-        public int round = 1;
 
         private List<int> skip_level = new List<int>();
 
@@ -66,6 +65,7 @@ namespace Match
             battleData.User = new UserInformation();
             battleData.RoleList = new List<Role>() { null, null, null, null, null, null };
             battleData.coin = 10;
+            battleData.round = 1;
 
             shop_skill_roles = new List<shop_skill_role> { null, null, null, null, null, null };
 
@@ -176,7 +176,7 @@ namespace Match
 
             while (shopData.SaleRoleList.Count < 3)
             {
-                var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
                 var r = randomShopRole(stage);
                 if (r != null)
                 {
@@ -186,7 +186,7 @@ namespace Match
 
             while (shopData.SalePropList.Count < 3)
             {
-                var stage = config.ShopProbabilityConfig.RandomStage((round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
                 var p = randomShopProp(stage);
                 if (p != null)
                 {

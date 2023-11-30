@@ -9,6 +9,7 @@ import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
 import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
+import { PropsType } from '../../other/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -106,7 +107,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
-                    newNode.getComponent(PropIcon).Init();
+                    newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food);
                     this.shopRoles.push(newNode);
                 }
             }

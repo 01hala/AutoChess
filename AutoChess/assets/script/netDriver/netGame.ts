@@ -37,7 +37,9 @@ export class netGame {
             this.cb_shop_info.call(null, shop_info);
         }
         this.match_c.cb_shop_skill_effect = (effect:match_c.ShopSkillEffect) => {
-            this.cb_shop_skill_effect.call(null, effect);
+            if (this.cb_shop_skill_effect) {
+                this.cb_shop_skill_effect.call(null, effect);
+            }
         }
     }
 

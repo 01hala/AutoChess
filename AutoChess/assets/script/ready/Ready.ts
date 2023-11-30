@@ -34,6 +34,9 @@ export class Ready
 
         this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
+
+        console.log("shopRoles:", this.shopRoles);
+        console.log("props:", this.props);
     }
 
     public GetShopRoles():ShopRole[]

@@ -145,23 +145,26 @@ export class login extends Component {
             //singleton.netSingleton.game.battle();
             if(null==singleton.netSingleton.ready)
             {
+                if (singleton.netSingleton.battle) {
+                    singleton.netSingleton.battle.destory();
+                    singleton.netSingleton.battle = null;
+                }
+
                 //新的一局游戏
                 let _ready = new Ready(battle_info, shop_info);
                 singleton.netSingleton.ready=new ReadyDis(_ready);
-                await singleton.netSingleton.ready.start(this.bk.node);
+                await singleton.netSingleton.ready.start(this.bk.node,battle_info);
                 this._setProgress(1.0);
                 this._loading.done();
                 console.log("Start Ready sucess!");
             }
-            else
-            {
-                singleton.netSingleton.ready.Restore();
-            }
-           
         }
 
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
             console.log("cb_battle start round!");
+
+            singleton.netSingleton.ready.destory();
+            singleton.netSingleton.ready = null;
 
             let _battle = new Battle(self, target);
             singleton.netSingleton.battle = new BattleDis(_battle);

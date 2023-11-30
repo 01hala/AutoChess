@@ -52,8 +52,8 @@ namespace Match
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
-                _player.round++;
-                Match._redis_handle.PushList($"AutoChess:battle:{_player.round}", _player.BattleData);
+                _player.BattleData.round++;
+                Match._redis_handle.PushList($"AutoChess:battle:{_player.BattleData.round}", _player.BattleData);
 
                 if (is_victory)
                 {
@@ -76,12 +76,12 @@ namespace Match
                     }
                     else
                     {
+                        _player.start_round();
+                        _player.do_skill();
+
                         _player.BattleClientCaller.get_client(_player.ClientUUID).battle_plan_refresh(_player.BattleData, _player.ShopData);
                     }
                 }
-
-                _player.start_round();
-                _player.do_skill();
 
                 rsp.rsp();
             }
@@ -104,10 +104,10 @@ namespace Match
                 _player.end_round();
                 _player.do_skill();
 
-                var target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{_player.round}");
+                var target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{_player.BattleData.round}");
                 if (target == null)
                 {
-                    target = getRandomBattleData(_player.round, targetSetUp);
+                    target = getRandomBattleData(_player.BattleData.round, targetSetUp);
                 }
 
                 rsp.rsp(_player.BattleData, target);
