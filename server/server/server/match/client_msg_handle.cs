@@ -57,20 +57,20 @@ namespace Match
 
                 if (is_victory)
                 {
-                    _player.victory++;
+                    _player.BattleData.victory++;
                 }
                 else
                 {
-                    _player.count--;
+                    _player.BattleData.faild--;
                 }
 
-                if (_player.victory >= 10)
+                if (_player.BattleData.victory >= 10)
                 {
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
                 }
                 else
                 {
-                    if (_player.count <= 0)
+                    if (_player.BattleData.faild <= 0)
                     {
                         _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(false);
                     }

@@ -120,17 +120,29 @@ export class BattleDis
             }
 
             this.victory.active = true;
-            this.victory.getComponent(Label).string = this.battle.GetWinCamp() == Camp.Self ? "战斗胜利!" : "战斗失败!";
+            let is_victory = this.battle.GetWinCamp() == Camp.Self;
+            if ((is_victory && (this.battle.victory + 1) < 10) ||
+                (!is_victory && (this.battle.faild - 1) > 0))
+            {
+                this.victory.getComponent(Label).string = is_victory ? "战斗胜利!" : "战斗失败!";
+            }
 
-            await sleep(5000);
+            await sleep(4000);
 
-            netSingleton.game.confirm_round_victory(this.battle.GetWinCamp() == Camp.Self);
+            netSingleton.game.confirm_round_victory(is_victory);
         }
         catch(error)
         {
             console.error("BattleDis 下的 TickBattle 错误 err:", error);
         }
         
+    }
+
+    async SetGameVictory(is_victory:boolean) {
+        this.victory.active = true;
+        this.victory.getComponent(Label).string = is_victory ? "游戏胜利!" : "游戏失败!";
+
+        await sleep(4000);
     }
 
     async PutRole()

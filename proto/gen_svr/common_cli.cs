@@ -175,6 +175,8 @@ namespace Abelkhan
         public UserInformation User;
         public Int32 coin;
         public Int32 round;
+        public Int32 victory;
+        public Int32 faild;
         public List<Role> RoleList;
         public static MsgPack.MessagePackObjectDictionary UserBattleData_to_protcol(UserBattleData _struct){
         if (_struct == null) {
@@ -185,6 +187,8 @@ namespace Abelkhan
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("coin", _struct.coin);
             _protocol.Add("round", _struct.round);
+            _protocol.Add("victory", _struct.victory);
+            _protocol.Add("faild", _struct.faild);
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
@@ -209,6 +213,12 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "round"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.round = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "victory"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.victory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "faild"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.faild = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.RoleList = new List<Role>();
