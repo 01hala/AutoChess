@@ -37,6 +37,7 @@ export class Ready
 
         console.log("shopRoles:", this.shopRoles);
         console.log("props:", this.props);
+        console.log("battle_info.RoleList:", battle_info.RoleList);
     }
 
     public GetShopRoles():ShopRole[]
