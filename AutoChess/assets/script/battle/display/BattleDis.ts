@@ -235,7 +235,7 @@ export class BattleDis
                         let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
                         allAwait.push(self.getComponent(RoleDis).RemoteAttack(
-                            selfpos, targetpos,this.father));
+                            selfpos, targetpos,this.father,target));
                     }
                 });
             }

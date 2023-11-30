@@ -209,6 +209,7 @@ export class RoleDis extends Component
                 
             }).delay(0.7).call(()=>
             {
+                this.changeAtt();
                 anim.stop();
                 this.intensifierText.active = false;
             }).start();
@@ -241,7 +242,7 @@ export class RoleDis extends Component
         });
     }
 
-    RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node) 
+    RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node,target:Node) 
     {
         try 
         {
@@ -254,6 +255,7 @@ export class RoleDis extends Component
             //this.delay(700, () => { });
             return this.delay(700, () => 
             {
+                target.getComponent(RoleDis).changeAtt();
                 // if (this.tAttack) {
                 //     this.tAttack.stop();
                 //     this.tAttack = null;
