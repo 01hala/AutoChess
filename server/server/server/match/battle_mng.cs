@@ -264,6 +264,189 @@ namespace Match
             return false;
         }
 
+        public em_error buy_role(int index, int role_index)
+        {
+            var r = battleData.RoleList[role_index];
+            var s = shopData.SaleRoleList[index];
+
+            if (s == null)
+            {
+                return em_error.db_error;
+            }
+
+            if (r == null)
+            {
+                r = new Role();
+
+                r.RoleID = s.RoleID;
+                r.Level = 1;
+                r.SkillID = s.SkillID;
+                r.Number = 1;
+                r.HP = s.HP;
+                r.Attack = s.Attack;
+                r.TempHP = 0;
+                r.TempAttack = 0;
+                r.additionBuffer = 0;
+                r.TempAdditionBuffer = 0;
+
+                battleData.RoleList[role_index] = r;
+                shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID, r.SkillID);
+            }
+            else
+            {
+                if (r.RoleID != s.RoleID)
+                {
+                    return em_error.not_same_role_to_update;
+                }
+
+                r.Number += 1;
+                var oldLevel = r.Level;
+                r.Level = r.Number / 3 + 1;
+                r.HP += 1;
+                r.Attack += 1;
+
+                if (r.Level > oldLevel)
+                {
+                    evs.Add(new shop_event()
+                    {
+                        ev = EMRoleShopEvent.update,
+                        index = role_index
+                    });
+
+                    if (!skip_level.Contains(r.Level))
+                    {
+                        var stage = r.Level + 1;
+                        if (stage > 6)
+                        {
+                            stage = 6;
+                        }
+                        shopData.SaleRoleList.Add(randomShopRole(stage));
+                    }
+
+                    BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);
+                }
+                else
+                {
+                    BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, false);
+                }
+            }
+
+            shopData.SaleRoleList[index] = null;
+
+            return em_error.success;
+        }
+
+        public em_error buy_food(ShopProp p, int index, int role_index)
+        {
+            var r = battleData.RoleList[role_index];
+            if (r == null)
+            {
+                return em_error.db_error;
+            }
+
+
+            if (config.Config.FoodConfigs.TryGetValue(p.PropID, out var foodcfg))
+            {
+                var rs = new List<Role>();
+                if (foodcfg.Count > 1)
+                {
+                    var exclude = new List<int>();
+                    for (int i = 0; i < foodcfg.Count || rs.Count < battleData.RoleList.Count;)
+                    {
+                        var tmp_index = RandomHelper.RandomInt(battleData.RoleList.Count);
+                        if (exclude.Contains(tmp_index))
+                        {
+                            continue;
+                        }
+                        rs.Add(battleData.RoleList[tmp_index]);
+                        exclude.Add(tmp_index);
+                        i++;
+                    }
+                }
+                else
+                {
+                    rs.Add(r);
+                }
+
+                bool is_update = false;
+                bool is_syncope = false;
+                foreach (var e in foodcfg.Effect)
+                {
+                    foreach (var _r in rs)
+                    {
+                        switch ((BufferAndEquipEffect)e)
+                        {
+                            case BufferAndEquipEffect.AddHP:
+                                {
+                                    if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                    {
+                                        _r.TempHP += foodcfg.HpBonus;
+                                    }
+                                    else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                    {
+                                        _r.HP -= foodcfg.HpBonus;
+                                    }
+                                }
+                                break;
+
+                            case BufferAndEquipEffect.AddAttack:
+                                {
+                                    if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                    {
+                                        _r.TempAttack += foodcfg.AttackBonus;
+                                    }
+                                    else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                    {
+                                        _r.Attack -= foodcfg.AttackBonus;
+                                    }
+                                }
+                                break;
+
+                            case BufferAndEquipEffect.AddBuffer:
+                                {
+                                    if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
+                                    {
+                                        _r.TempAdditionBuffer += foodcfg.Vaule;
+                                    }
+                                    else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
+                                    {
+                                        _r.additionBuffer -= foodcfg.Vaule;
+                                    }
+                                }
+                                break;
+
+                            case BufferAndEquipEffect.Syncope:
+                                {
+                                    battleData.RoleList[role_index] = null;
+                                    shop_skill_roles[role_index] = null;
+
+                                    evs.Add(new shop_event()
+                                    {
+                                        ev = EMRoleShopEvent.syncope,
+                                        index = role_index
+                                    });
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, r, is_update, is_syncope);
+
+                evs.Add(new shop_event()
+                {
+                    ev = EMRoleShopEvent.food,
+                    index = role_index
+                });
+            }
+            else
+            {
+                return em_error.db_error;
+            }
+
+            return em_error.success;
+        }
+
         public em_error buy(ShopIndex shop_index, int index, int role_index)
         {
             if (battleData.coin < 3)
@@ -272,83 +455,16 @@ namespace Match
             }
             battleData.coin -= 3;
 
-            var r = battleData.RoleList[role_index];
-
             if (shop_index == ShopIndex.Role)
             {
-                var s = shopData.SaleRoleList[index];
-
-                if (s == null)
+                var result = buy_role(index, role_index);
+                if (result != em_error.success)
                 {
-                    return em_error.db_error;
+                    return result;
                 }
-
-                if (r == null)
-                {
-                    r = new Role();
-
-                    r.RoleID = s.RoleID;
-                    r.Level = 1;
-                    r.SkillID = s.SkillID;
-                    r.Number = 1;
-                    r.HP = s.HP;
-                    r.Attack = s.Attack;
-                    r.TempHP = 0;
-                    r.TempAttack = 0;
-                    r.additionBuffer = 0;
-                    r.TempAdditionBuffer = 0;
-
-                    battleData.RoleList[role_index] = r;
-                    shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID, r.SkillID);
-                }
-                else
-                {
-                    if (r.RoleID != s.RoleID)
-                    {
-                        return em_error.not_same_role_to_update;
-                    }
-
-                    r.Number += 1;
-                    var oldLevel = r.Level;
-                    r.Level = r.Number / 3 + 1;
-                    r.HP += 1;
-                    r.Attack += 1;
-
-                    if (r.Level > oldLevel)
-                    {
-                        evs.Add(new shop_event()
-                        {
-                            ev = EMRoleShopEvent.update,
-                            index = role_index
-                        });
-
-                        if (!skip_level.Contains(r.Level))
-                        {
-                            var stage = r.Level + 1;
-                            if (stage > 6)
-                            {
-                                stage = 6;
-                            }
-                            shopData.SaleRoleList.Add(randomShopRole(stage));
-                        }
-
-                        BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);
-                    }
-                    else
-                    {
-                        BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, false);
-                    }
-                }
-
-                shopData.SaleRoleList[index] = null;
             }
             else if (shop_index == ShopIndex.Prop)
             {
-                if (r == null)
-                {
-                    return em_error.db_error;
-                }
-
                 var p = shopData.SalePropList[index];
                 if (p == null)
                 {
@@ -357,103 +473,10 @@ namespace Match
 
                 if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
                 {
-                    if (config.Config.FoodConfigs.TryGetValue(p.PropID, out var foodcfg))
+                    var result = buy_food(p, index, role_index);
+                    if (result != em_error.success)
                     {
-                        var rs = new List<Role>();
-                        if (foodcfg.Count > 1)
-                        {
-                            var exclude = new List<int>();
-                            for (int i = 0; i < foodcfg.Count || rs.Count < battleData.RoleList.Count;)
-                            {
-                                var tmp_index = RandomHelper.RandomInt(battleData.RoleList.Count);
-                                if (exclude.Contains(tmp_index))
-                                {
-                                    continue;
-                                }
-                                rs.Add(battleData.RoleList[tmp_index]);
-                                exclude.Add(tmp_index);
-                                i++;
-                            }
-                        }
-                        else
-                        {
-                            rs.Add(r);
-                        }
-
-                        bool is_update = false;
-                        bool is_syncope = false;
-                        foreach (var e in foodcfg.Effect)
-                        {
-                            foreach (var _r in rs)
-                            {
-                                switch ((BufferAndEquipEffect)e)
-                                {
-                                    case BufferAndEquipEffect.AddHP:
-                                        {
-                                            if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
-                                            {
-                                                _r.TempHP += foodcfg.HpBonus;
-                                            }
-                                            else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
-                                            {
-                                                _r.HP -= foodcfg.HpBonus;
-                                            }
-                                        }
-                                        break;
-
-                                    case BufferAndEquipEffect.AddAttack:
-                                        {
-                                            if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
-                                            {
-                                                _r.TempAttack += foodcfg.AttackBonus;
-                                            }
-                                            else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
-                                            {
-                                                _r.Attack -= foodcfg.AttackBonus;
-                                            }
-                                        }
-                                        break;
-
-                                    case BufferAndEquipEffect.AddBuffer:
-                                        {
-                                            if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
-                                            {
-                                                _r.TempAdditionBuffer += foodcfg.Vaule;
-                                            }
-                                            else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
-                                            {
-                                                _r.additionBuffer -= foodcfg.Vaule;
-                                            }
-                                        }
-                                        break;
-
-                                    case BufferAndEquipEffect.Syncope:
-                                        {
-                                            battleData.RoleList[role_index] = null;
-                                            shop_skill_roles[role_index] = null;
-
-                                            evs.Add(new shop_event()
-                                            {
-                                                ev = EMRoleShopEvent.syncope,
-                                                index = role_index
-                                            });
-                                        }
-                                        break;
-                                }
-                            }
-                        }
-
-                        BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, r, is_update, is_syncope);
-
-                        evs.Add(new shop_event()
-                        {
-                            ev = EMRoleShopEvent.food,
-                            index = role_index
-                        });
-                    }
-                    else
-                    {
-                        return em_error.db_error;
+                        return result;
                     }
                 }
 
