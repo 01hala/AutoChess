@@ -51,9 +51,6 @@ namespace Match
 
         private List<shop_event> evs = new List<shop_event>();
 
-        public int count = 10;
-        public int victory = 0;
-
         private List<int> skip_level = new List<int>();
 
         public battle_player(string _clientUUID, battle_client_caller _caller, List<int> roleList) 
@@ -66,6 +63,8 @@ namespace Match
             battleData.RoleList = new List<Role>() { null, null, null, null, null, null };
             battleData.coin = 10;
             battleData.round = 1;
+            battleData.victory = 0;
+            battleData.faild = 5;
 
             shop_skill_roles = new List<shop_skill_role> { null, null, null, null, null, null };
 

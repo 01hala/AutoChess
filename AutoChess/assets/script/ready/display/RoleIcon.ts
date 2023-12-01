@@ -153,16 +153,24 @@ export class RoleIcon extends Component
                         }
                     }
                 }
+                console.log(this.isMerge);
                 //换位
                 if(this.isSwitch && !this.isSale)//是否交换位置
                 {
-                    this.roleArea.SwitchPos(this.index,this.target,this.t);
-                    this.target=this.tempTarget;
-                    this.roleArea.targets.set(this.target.name,this.node);
-                    this.isSwitch=false;
+                    if(!this.isMerge)
+                    {
+                        this.roleArea.SwitchPos(this.index,this.target,this.t);
+                        this.target=this.tempTarget;
+                        this.roleArea.targets.set(this.target.name,this.node);
+                        this.isSwitch=false;
+                    }
                 }
                 //吸附缓动
-                this.Adsorption();
+                if(!this.isMerge)
+                {
+                    this.Adsorption();
+                }
+                
                 
             }, this);
     //拖拽中
@@ -266,7 +274,6 @@ export class RoleIcon extends Component
             {
                 if(null!=otherCollider && 1 == otherCollider.tag)
                 {
-                    this.isMerge=false;
                     //console.log(otherCollider.name);
                     for(let i=0;i<this.roleArea.targets.size;i++)
                     {
@@ -274,8 +281,14 @@ export class RoleIcon extends Component
                         {
                             //console.log("set null");
                             this.roleArea.targets.set(otherCollider.node.name,null);
+                            //this.isMerge=false;
                             //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
                             return;
+                        }
+                        let o=this.roleArea.GetTargetValue(otherCollider.node.name).getComponent(RoleIcon).roleId;
+                        if(this.roleId==o)
+                        {
+                            this.isMerge=false;
                         }
                     }
                 }
@@ -284,6 +297,7 @@ export class RoleIcon extends Component
                     if(this.isBuy)
                     {
                         this.isSale=false;
+                        
                     }
                 }
             },this);
@@ -305,10 +319,12 @@ export class RoleIcon extends Component
                     {
                         this.tempTarget=otherCollider.node;
                         this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
+                        console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
                         if(this.t.getComponent(RoleIcon).roleId==this.roleId)
                         {
                             this.isMerge=true;
                         }
+                        console.log(this.isMerge);
                         this.isSwitch=true;
                     }
                     else
@@ -323,6 +339,7 @@ export class RoleIcon extends Component
                     {
                         this.isSale=true;
                         this.isSwitch=false;
+                        this.isMerge=false;
                     }
                     
                 }

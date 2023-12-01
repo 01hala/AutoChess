@@ -36,6 +36,8 @@ struct UserBattleData
 	UserInformation User; // 用户信息
 	int32 coin;
 	int32 round;
+	int32 victory;
+	int32 faild;
 	Role[] RoleList; // 角色列表
 }
 

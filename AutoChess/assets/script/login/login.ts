@@ -160,6 +160,14 @@ export class login extends Component {
             }
         }
 
+        singleton.netSingleton.game.cb_battle_victory = async (is_victory:boolean) => {
+            if (singleton.netSingleton.battle) {
+                await singleton.netSingleton.battle.SetGameVictory(is_victory);
+            }
+
+            singleton.netSingleton.game.start_battle();
+        }
+
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
             console.log("cb_battle start round!");
 

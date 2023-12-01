@@ -209,6 +209,7 @@ export class RoleDis extends Component
                 
             }).delay(0.7).call(()=>
             {
+                this.changeAtt();
                 anim.stop();
                 this.intensifierText.active = false;
             }).start();
