@@ -145,7 +145,7 @@ export class netGame {
         })
     }
 
-    public confirm_round_victory(is_victory:boolean) {
+    public confirm_round_victory(is_victory:match.battle_victory) {
         this.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(()=>{
         }, ()=>{
             console.log("confirm_round_victory err");

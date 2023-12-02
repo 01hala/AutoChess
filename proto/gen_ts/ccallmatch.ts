@@ -2,6 +2,12 @@ import * as client_handle from "./client_handle";
 import * as common from "./common";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
+export enum battle_victory{
+    faild = -1,
+    tie = 0,
+    victory = 1
+}
+
 /*this struct code is codegen by abelkhan codegen for typescript*/
 export class RoleSetUp
 {
@@ -757,7 +763,7 @@ export class plan_hubproxy
         return cb_start_round1_obj;
     }
 
-    public confirm_round_victory(is_victory:boolean){
+    public confirm_round_victory(is_victory:battle_victory){
         let uuid_e5597e65_791a_5923_ac90_94a6aa039d4f = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
 
         let _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0:any[] = [uuid_e5597e65_791a_5923_ac90_94a6aa039d4f];

@@ -8,6 +8,11 @@ namespace Abelkhan
 {
 /*this enum code is codegen by abelkhan codegen for c#*/
 
+    public enum battle_victory{
+        faild = -1,
+        tie = 0,
+        victory = 1
+    }
 /*this struct code is codegen by abelkhan codegen for c#*/
     public class RoleSetUp
     {
@@ -1030,12 +1035,12 @@ namespace Abelkhan
             }            return cb_start_round1_obj;
         }
 
-        public plan_confirm_round_victory_cb confirm_round_victory(bool is_victory){
+        public plan_confirm_round_victory_cb confirm_round_victory(battle_victory is_victory){
             var uuid_e5597e65_791a_5923_ac90_94a6aa039d4f = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
 
             var _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0 = new ArrayList();
             _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0.Add(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f);
-            _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0.Add(is_victory);
+            _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0.Add((int)is_victory);
             _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_confirm_round_victory", _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0);
 
             var cb_confirm_round_victory_obj = new plan_confirm_round_victory_cb(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f, rsp_cb_plan_handle);

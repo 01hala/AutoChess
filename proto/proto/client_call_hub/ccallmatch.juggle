@@ -9,6 +9,12 @@ module gm {
     set_formation req(RoleSetUp[] self, RoleSetUp[] target) rsp() err(int32 err);
 }
 
+enum battle_victory {
+    faild = -1;
+    tie = 0;
+    victory = 1;
+}
+
 module plan {
     buy req(ShopIndex shop_index, int32 index, int32 role_index) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
     move req(int32 role1_index, int32 role2_index) rsp(UserBattleData info) err(int32 err);
@@ -18,5 +24,5 @@ module plan {
     start_round req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
     start_round1 req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
 
-    confirm_round_victory req(bool is_victory) rsp() err();
+    confirm_round_victory req(battle_victory is_victory) rsp() err();
 }

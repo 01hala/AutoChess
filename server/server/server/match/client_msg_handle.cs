@@ -43,7 +43,7 @@ namespace Match
             }
         }
 
-        private void Plan_Module_on_confirm_round_victory(bool is_victory)
+        private void Plan_Module_on_confirm_round_victory(battle_victory is_victory)
         {
             var rsp = plan_Module.rsp as plan_confirm_round_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -55,11 +55,11 @@ namespace Match
                 _player.BattleData.round++;
                 Match._redis_handle.PushList($"AutoChess:battle:{_player.BattleData.round}", _player.BattleData);
 
-                if (is_victory)
+                if (is_victory == battle_victory.victory)
                 {
                     _player.BattleData.victory++;
                 }
-                else
+                else if (is_victory == battle_victory.faild)
                 {
                     _player.BattleData.faild--;
                 }
