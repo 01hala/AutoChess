@@ -76,6 +76,7 @@ export class ReadyDis
         singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
         {
             this.ready.SetShopData(shop_info);
+            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
         }
         singleton.netSingleton.game.cb_role_buy_merge=(target_role_index:number, target_role:common.Role, is_update:boolean)=>
         {
@@ -154,9 +155,8 @@ export class ReadyDis
     //刷新商店
     async RefreshShop()
     {
-        await this.ready.Refresh();
+        this.ready.Refresh();
         console.log('refresh');
-        this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
     }
     //更新玩家信息
     UpdatePlayerInfo(_coinNum:number)
