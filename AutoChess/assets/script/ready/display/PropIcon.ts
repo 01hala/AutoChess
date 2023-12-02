@@ -116,7 +116,7 @@ export class PropIcon extends Component
                     {
                         //this.target.getComponent(RoleIcon).GetIntensifier(value);
                     }
-                    this.shopArea.BuyProp(this.index,this.node);
+                    await this.shopArea.BuyProp(this.index,this.node);
                     console.log('道具使用成功！');
                     this.node.destroy();
                     return;

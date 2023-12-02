@@ -106,6 +106,14 @@ export class ReadyDis
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
             //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
         }
+        singleton.netSingleton.game.cb_role_eat_food=(food_id:number,target_role_index:number,target_role:common.Role,is_update:boolean)=>
+        {
+            let str="Location_"+target_role_index;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock=true;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+        }
+        
+
         this.father=father;
         //主要界面
         let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
