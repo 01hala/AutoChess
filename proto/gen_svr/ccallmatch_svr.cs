@@ -199,6 +199,31 @@ namespace Abelkhan
 
     }
 
+    public class plan_freeze_rsp : Common.Response {
+        private string _client_uuid_7a949231_d386_34d8_8952_29d48e8ff5ca;
+        private UInt64 uuid_df10db92_ca86_3e8a_998c_7c3379106d78;
+        public plan_freeze_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_7a949231_d386_34d8_8952_29d48e8ff5ca = client_uuid;
+            uuid_df10db92_ca86_3e8a_998c_7c3379106d78 = _uuid;
+        }
+
+        public void rsp(ShopData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
+            var _argv_7a949231_d386_34d8_8952_29d48e8ff5ca = new ArrayList();
+            _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add(uuid_df10db92_ca86_3e8a_998c_7c3379106d78);
+            _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add(ShopData.ShopData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
+            Hub.Hub._gates.call_client(_client_uuid_7a949231_d386_34d8_8952_29d48e8ff5ca, "plan_rsp_cb_freeze_rsp", _argv_7a949231_d386_34d8_8952_29d48e8ff5ca);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_7a949231_d386_34d8_8952_29d48e8ff5ca = new ArrayList();
+            _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add(uuid_df10db92_ca86_3e8a_998c_7c3379106d78);
+            _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_7a949231_d386_34d8_8952_29d48e8ff5ca, "plan_rsp_cb_freeze_err", _argv_7a949231_d386_34d8_8952_29d48e8ff5ca);
+        }
+
+    }
+
     public class plan_start_round_rsp : Common.Response {
         private string _client_uuid_a79b5af5_d482_3045_beb1_226490350eb9;
         private UInt64 uuid_97ffaf54_0704_3c31_a7a9_8d8c6a6d2f49;
@@ -281,6 +306,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("plan_move", move);
             Hub.Hub._modules.add_mothed("plan_sale_role", sale_role);
             Hub.Hub._modules.add_mothed("plan_refresh", refresh);
+            Hub.Hub._modules.add_mothed("plan_freeze", freeze);
             Hub.Hub._modules.add_mothed("plan_start_round", start_round);
             Hub.Hub._modules.add_mothed("plan_start_round1", start_round1);
             Hub.Hub._modules.add_mothed("plan_confirm_round_victory", confirm_round_victory);
@@ -328,6 +354,18 @@ namespace Abelkhan
             rsp = new plan_refresh_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_refresh != null){
                 on_refresh();
+            }
+            rsp = null;
+        }
+
+        public event Action<ShopIndex, Int32> on_freeze;
+        public void freeze(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _shop_index = (ShopIndex)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _index = ((MsgPack.MessagePackObject)inArray[2]).AsInt32();
+            rsp = new plan_freeze_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_freeze != null){
+                on_freeze(_shop_index, _index);
             }
             rsp = null;
         }

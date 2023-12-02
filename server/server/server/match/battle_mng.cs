@@ -383,7 +383,7 @@ namespace Match
                                     }
                                     else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
                                     {
-                                        _r.HP -= foodcfg.HpBonus;
+                                        _r.HP += foodcfg.HpBonus;
                                     }
                                 }
                                 break;
@@ -396,7 +396,7 @@ namespace Match
                                     }
                                     else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
                                     {
-                                        _r.Attack -= foodcfg.AttackBonus;
+                                        _r.Attack += foodcfg.AttackBonus;
                                     }
                                 }
                                 break;
@@ -405,11 +405,11 @@ namespace Match
                                 {
                                     if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
                                     {
-                                        _r.TempAdditionBuffer += foodcfg.Vaule;
+                                        _r.TempAdditionBuffer = foodcfg.Vaule;
                                     }
                                     else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
                                     {
-                                        _r.additionBuffer -= foodcfg.Vaule;
+                                        _r.additionBuffer = foodcfg.Vaule;
                                     }
                                 }
                                 break;
@@ -494,6 +494,26 @@ namespace Match
             clear_skill_tag();
 
             return em_error.success;
+        }
+
+        public void freeze(ShopIndex shop_index, int index)
+        {
+            if (shop_index == ShopIndex.Role)
+            {
+                var s = shopData.SaleRoleList[index];
+                if (s != null)
+                {
+                    s.IsFreeze= true;
+                }
+            }
+            else if (shop_index == ShopIndex.Prop)
+            {
+                var s = shopData.SalePropList[index];
+                if (s != null)
+                {
+                    s.IsFreeze = true;
+                }
+            }
         }
 
         public void move(int role_index1, int role_index2)
