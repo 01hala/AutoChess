@@ -20,6 +20,7 @@ export class netGame {
     public cb_shop_skill_effect : (effect:match_c.ShopSkillEffect) => void;
     public cb_role_buy_merge : (target_role_index:number, target_role:common.Role, is_update:boolean) => void;
     public cb_role_merge : (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void;
+    public cb_role_eat_food : (food_id:number, target_role_index:number, target_role:common.Role, is_update:boolean, is_syncope:boolean)=>void;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_match = new match.plan_caller(cli.cli_handle);
@@ -39,6 +40,21 @@ export class netGame {
         this.match_c.cb_shop_skill_effect = (effect:match_c.ShopSkillEffect) => {
             if (this.cb_shop_skill_effect) {
                 this.cb_shop_skill_effect.call(null, effect);
+            }
+        }
+        this.match_c.cb_role_buy_merge = (target_role_index:number, target_role:common.Role, is_update:boolean) => {
+            if (this.cb_role_buy_merge) {
+                this.cb_role_buy_merge.call(null, target_role_index, target_role, is_update);
+            }
+        }
+        this.match_c.cb_role_merge = (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean) => {
+            if (this.cb_role_merge) {
+                this.cb_role_merge.call(null, source_role_index, target_role_index, target_role, is_update);
+            }
+        }
+        this.match_c.cb_role_eat_food = (food_id:number, target_role_index:number, target_role:common.Role, is_update:boolean, is_syncope:boolean) => {
+            if (this.cb_role_eat_food) {
+                this.cb_role_eat_food.call(null, food_id, target_role_index, target_role, is_update, is_syncope);
             }
         }
     }
