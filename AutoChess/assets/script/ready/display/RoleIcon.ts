@@ -325,6 +325,8 @@ export class RoleIcon extends Component
                     else if(this.isBuy) //检测换位或者合并
                     {
                         this.tempTarget=otherCollider.node;
+                        let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
+                        this.tempIndex=Number(num);
                         this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
                         console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
                         if(this.t.getComponent(RoleIcon).roleId==this.roleId)
