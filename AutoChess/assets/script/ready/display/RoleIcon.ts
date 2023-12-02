@@ -59,7 +59,7 @@ export class RoleIcon extends Component
     private tempTarget:Node=null;
     private t:Node=null;
     //锁存，防止使用食物过快,导致bug
-    public eatFoodLock:boolean=false;
+    public upgradeLock:boolean=false;
 
     protected async onLoad()
     {
@@ -127,7 +127,7 @@ export class RoleIcon extends Component
                 //是否出售
                 if(!this.isSale)
                 {
-                    if(null!=this.index)
+                    if(null!=this.index && !this.upgradeLock)
                     {
                         await this.roleArea.MovePos(this.index,this.tempIndex);
                     }
@@ -139,17 +139,20 @@ export class RoleIcon extends Component
                     await this.roleArea.SaleRole(this.index);
                     this.roleNode.destroy();
                     this.node.destroy();
+                    return;
                 }
-                if(null != this.index)
+                if(null != this.index && !this.upgradeLock)
                 {
-                    if(!this.isBuy)
+                    if(!this.isBuy && singleton.netSingleton.ready.ready.GetCoins()>=3)
                     {
                         this.isBuy=true;
                         this.shopArea.BuyRole(this.index, this.node);
                         if(null==this.target)
                         {
+                            this.upgradeLock=true;
                             this.roleNode.destroy();
                             this.node.destroy();
+                            return;
                         }
                     }
                 }
@@ -399,31 +402,35 @@ export class RoleIcon extends Component
         console.log("tarnspos!");
     }
     //合并升级
-    GetUpgrade(t:common.Role,is_update:boolean)
+    async GetUpgrade(t:common.Role,is_update:boolean)
     {
+        let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
+
         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
         let r=new role.Role(this.index,this.roleId,this.roleId-100000,t.Level,0,Camp.Self,map);
         this.roleNode.getComponent(RoleDis).Refresh(r);
+        await this.roleNode.getComponent(RoleDis).Intensifier(value);
         if(is_update)
         {
             this.roleNode.getComponent(RoleDis).LevelUp();
         }
+        this.upgradeLock=false;
     }
 
     async GetIntensifier(value :number[])
     {
-        if(this.eatFoodLock)
-        {
-            let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
-            let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
-            let exp=this.roleNode.getComponent(RoleDis).Exp;
-            let level=this.roleNode.getComponent(RoleDis).Level;
-            let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
-            let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
-            this.roleNode.getComponent(RoleDis).Refresh(r);
-            await this.roleNode.getComponent(RoleDis).Intensifier(value);
-        }
-        this.eatFoodLock=false;
+        // if(this.eatFoodLock)
+        // {
+        //     let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
+        //     let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
+        //     let exp=this.roleNode.getComponent(RoleDis).Exp;
+        //     let level=this.roleNode.getComponent(RoleDis).Level;
+        //     let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
+        //     let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
+        //     this.roleNode.getComponent(RoleDis).Refresh(r);
+        //     await this.roleNode.getComponent(RoleDis).Intensifier(value);
+        // }
+        // this.eatFoodLock=false;
     }
 
     // GetUiPos(node:Node):Vec3

@@ -82,6 +82,7 @@ export class ReadyDis
         {
             console.log('cb_role_buy_merge',target_role_index);
             let str="Location_"+target_role_index;
+            this.roleArea.targets.get(str).getComponent(RoleIcon).upgradeLock=true;
             this.roleArea.targets.get(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
             //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
         }
@@ -94,6 +95,7 @@ export class ReadyDis
             //this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
             //this.roleArea.rolesNode[source_role_index].destroy();
             str="Location_"+target_role_index;
+            this.roleArea.targets.get(str).getComponent(RoleIcon).upgradeLock=true;
             this.roleArea.targets.get(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
             //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
         }

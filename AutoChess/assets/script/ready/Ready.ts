@@ -20,7 +20,7 @@ export class Ready
 
     private roles:common.Role[];
 
-    public coin:number=0;
+    private coin:number=0;
 
     //private freezeRoles:Role[]=[];
 
@@ -61,6 +61,14 @@ export class Ready
         if(count)
         {
             this.coin=count;
+        }
+    }
+
+    public GetCoins()
+    {
+        if(this.coin)
+        {
+            return this.coin
         }
     }
 

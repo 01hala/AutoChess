@@ -107,14 +107,14 @@ export class PropIcon extends Component
             //console.log(this.target.name);
             if(null != this.index || null != this.target)
             {
-                if(!this.target.getComponent(RoleIcon).eatFoodLock)
+                if(!this.target.getComponent(RoleIcon).upgradeLock)
                 {
                     //console.log('buy food');
                     let value=[this.hpBonus,this.attackBonus];
-                    this.target.getComponent(RoleIcon).eatFoodLock=true;
+                    //this.target.getComponent(RoleIcon).upgradeLock=true;
                     if(this.effect.includes(1) || this.effect.includes(2))
                     {
-                        this.target.getComponent(RoleIcon).GetIntensifier(value);
+                        //this.target.getComponent(RoleIcon).GetIntensifier(value);
                     }
                     this.shopArea.BuyProp(this.index,this.node);
                     console.log('道具使用成功！');
