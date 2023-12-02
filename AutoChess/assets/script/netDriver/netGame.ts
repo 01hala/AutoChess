@@ -95,13 +95,16 @@ export class netGame {
     }
     
     public refresh() {
-        this.c_match.get_hub(this.match_name).refresh().callBack((shop_info)=>{
-            this.cb_shop_info.call(null, shop_info);
-        }, (err)=>{
-            console.log("refresh err:", err);
-        }).timeout(3000, ()=>{
-            console.log("refresh timeout!");
-        })
+        return new Promise<void>((resolve) => {
+            this.c_match.get_hub(this.match_name).refresh().callBack((shop_info)=>{
+                this.cb_shop_info.call(null, shop_info);
+                resolve();
+            }, (err)=>{
+                console.log("refresh err:", err);
+            }).timeout(3000, ()=>{
+                console.log("refresh timeout!");
+            })
+        });
     }
     
     //战斗阶段(测试用)

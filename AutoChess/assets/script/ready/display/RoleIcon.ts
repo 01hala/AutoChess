@@ -285,10 +285,12 @@ export class RoleIcon extends Component
                             //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
                             return;
                         }
-                        let o=this.roleArea.GetTargetValue(otherCollider.node.name).getComponent(RoleIcon).roleId;
-                        if(this.roleId==o)
-                        {
-                            this.isMerge=false;
+                        if (this.roleArea.GetTargetValue(otherCollider.node.name)) {
+                            let o=this.roleArea.GetTargetValue(otherCollider.node.name).getComponent(RoleIcon).roleId;
+                            if(this.roleId==o)
+                            {
+                                this.isMerge=false;
+                            }
                         }
                     }
                 }

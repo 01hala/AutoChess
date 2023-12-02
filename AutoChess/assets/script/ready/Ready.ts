@@ -88,9 +88,9 @@ export class Ready
         this.AddReadyEvent(ev);
     }
 
-    public Refresh()
+    public async Refresh()
     {
-        singleton.netSingleton.game.refresh();
+        await singleton.netSingleton.game.refresh();
     }
 
     public StartBattle()
