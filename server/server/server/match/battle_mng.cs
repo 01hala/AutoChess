@@ -369,9 +369,9 @@ namespace Match
 
                 bool is_update = false;
                 bool is_syncope = false;
-                foreach (var e in foodcfg.Effect)
+                foreach (var _r in rs)
                 {
-                    foreach (var _r in rs)
+                    foreach (var e in foodcfg.Effect)
                     {
                         switch ((BufferAndEquipEffect)e)
                         {
@@ -428,9 +428,9 @@ namespace Match
                                 break;
                         }
                     }
-                }
 
-                BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, r, is_update, is_syncope);
+                    BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, _r, is_update, is_syncope);
+                }
 
                 evs.Add(new shop_event()
                 {
