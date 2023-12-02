@@ -105,7 +105,7 @@ export class PropIcon extends Component
             //还原起始值
             this.touchStartPoint = new Vec2(0, 0);
             //console.log(this.target.name);
-            if(null != this.index || null != this.target)
+            if(null != this.index || null != this.target && singleton.netSingleton.ready.ready.GetCoins()>=3)
             {
                 if(!this.target.getComponent(RoleIcon).upgradeLock)
                 {

@@ -77,6 +77,10 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
             let roleInfo=new RoleInfo();
 
             attack=Math.round(attack);                                          //四舍五入
+            if(attack<1)
+            {
+                attack=1;
+            }
 
             if(Camp.Self==selfInfo.camp)
             {
@@ -100,7 +104,7 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
                 roleInfo.index=index;
             }
             recipientRoles.forEach((role)=>{
-                role.BeHurted(this.attack, self, battle);
+                role.BeHurted(attack, self, battle);
                 //console.log("远程攻击角色受伤 :",attack);
             });
 
