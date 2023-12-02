@@ -350,7 +350,7 @@ namespace Match
                 if (foodcfg.Count > 1)
                 {
                     var exclude = new List<int>();
-                    for (int i = 0; i < foodcfg.Count || rs.Count < battleData.RoleList.Count;)
+                    for (int i = 0; i < foodcfg.Count && rs.Count < battleData.RoleList.Count;)
                     {
                         var tmp_index = RandomHelper.RandomInt(battleData.RoleList.Count);
                         if (exclude.Contains(tmp_index))
@@ -498,6 +498,11 @@ namespace Match
 
         public void move(int role_index1, int role_index2)
         {
+            if (role_index1 == role_index2)
+            {
+                return;
+            }
+
             var r1 = battleData.RoleList[role_index1];
             var r2 = battleData.RoleList[role_index2];
 

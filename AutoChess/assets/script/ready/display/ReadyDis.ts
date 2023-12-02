@@ -93,10 +93,16 @@ export class ReadyDis
         }
         singleton.netSingleton.game.cb_role_merge=(source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>
         {
-            console.log('cb_role_merge',source_role_index);
+            console.log('cb_role_merge source_role_index:',source_role_index);
+            console.log('cb_role_merge target_role_index:',target_role_index);
             let str="Location_"+source_role_index;
-            this.roleArea.targets.get(str).getComponent(RoleIcon).roleNode.destroy();
-            this.roleArea.targets.get(str).getComponent(RoleIcon).destroy();
+            let sourceRoleIcon = this.roleArea.targets.get(str).getComponent(RoleIcon)
+            if (sourceRoleIcon) {
+                if (sourceRoleIcon.roleNode) {
+                    sourceRoleIcon.roleNode.destroy();
+                }
+                sourceRoleIcon.destroy();
+            }
             //this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
             //this.roleArea.rolesNode[source_role_index].destroy();
             str="Location_"+target_role_index;
