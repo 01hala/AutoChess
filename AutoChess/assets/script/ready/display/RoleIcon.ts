@@ -146,10 +146,9 @@ export class RoleIcon extends Component
                     if(!this.isBuy && singleton.netSingleton.ready.ready.GetCoins()>=3)
                     {
                         this.isBuy=true;
-                        this.shopArea.BuyRole(this.index, this.node);
+                        await this.shopArea.BuyRole(this.index, this.node);
                         if(null==this.target)
                         {
-                            this.upgradeLock=true;
                             this.roleNode.destroy();
                             this.node.destroy();
                             return;
@@ -283,7 +282,10 @@ export class RoleIcon extends Component
                         if(this.roleArea.GetTargetValue(otherCollider.node.name)==selfCollider.node)
                         {
                             //console.log("set null");
-                            this.roleArea.targets.set(otherCollider.node.name,null);
+                            if(!this.isMerge)
+                            {
+                                this.roleArea.targets.set(otherCollider.node.name,null);
+                            }
                             //this.isMerge=false;
                             //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
                             return;
@@ -320,7 +322,7 @@ export class RoleIcon extends Component
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
                     }
-                    else if(this.isBuy)
+                    else if(this.isBuy) //检测换位或者合并
                     {
                         this.tempTarget=otherCollider.node;
                         this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
@@ -334,6 +336,7 @@ export class RoleIcon extends Component
                     }
                     else
                     {
+                        this.target=null;
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.tempIndex=Number(num);
                     }
