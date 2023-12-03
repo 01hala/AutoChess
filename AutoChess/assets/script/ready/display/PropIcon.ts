@@ -1,4 +1,4 @@
-import { _decorator, Button, Collider2D, Component, Contact2DType, EventTouch, Input, IPhysics2DContact, Node, tween, Tween, Vec2, Vec3, view } from 'cc';
+import { _decorator, Button, Collider2D, Component, Contact2DType, EventTouch, Input, IPhysics2DContact, Node, Sprite, SpriteFrame, Texture2D, tween, Tween, Vec2, Vec3, view } from 'cc';
 import { PropsType } from '../../other/enums';
 import { RoleArea } from './RoleArea';
 import { ShopArea } from './ShopArea';
@@ -6,6 +6,7 @@ import * as singleton from '../../netDriver/netSingleton';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
 import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
+import { BundleManager } from '../../bundle/BundleManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -78,7 +79,7 @@ export class PropIcon extends Component
             this.hpBonus=jconfig.HpBonus;
             this.attackBonus=jconfig.AttackBonus;
         }
-        
+        this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame= await this.LoadImg("battle_icon_",_id);
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
@@ -188,6 +189,26 @@ export class PropIcon extends Component
         }, this);
     }
 
+    LoadImg(_address:string,_id:number):Promise<SpriteFrame>
+    {
+        return new Promise(async (resolve)=>
+        {
+            let imgRes=""+_address+_id;
+            let temp=await BundleManager.Instance.LoadImgsFromBundle("Props", imgRes);
+            if(null==temp)
+            {
+                console.warn('propIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
+                imgRes=""+_address+1001;
+                temp=await BundleManager.Instance.LoadImgsFromBundle("Props", imgRes);
+            }
+            let texture=new Texture2D();
+            texture.image=temp;
+            let sp=new SpriteFrame();
+            sp.texture=texture;
+            resolve(sp);
+        });
+    }
+    
     update(deltaTime: number) {
         
     }
