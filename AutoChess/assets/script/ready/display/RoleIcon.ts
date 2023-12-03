@@ -277,8 +277,7 @@ export class RoleIcon extends Component
                 if(null!=otherCollider && 1 == otherCollider.tag)
                 {
                     //console.log(otherCollider.name);
-                    for(let i=0;i<this.roleArea.targets.size;i++)
-                    {
+                    
                         if(this.roleArea.GetTargetValue(otherCollider.node.name)==selfCollider.node)
                         {
                             //console.log("set null");
@@ -288,36 +287,44 @@ export class RoleIcon extends Component
                             }
                             //this.isMerge=false;
                             //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
-                            return;
                         }
-                        if (this.roleArea.GetTargetValue(otherCollider.node.name)) {
+                        if (this.roleArea.GetTargetValue(otherCollider.node.name)) 
+                        {
                             let o=this.roleArea.GetTargetValue(otherCollider.node.name).getComponent(RoleIcon).roleId;
                             if(this.roleId==o)
                             {
                                 this.isMerge=false;
                             }
                         }
-                    }
                 }
                 if(null!=otherCollider && 2 == otherCollider.tag)
                 {
                     if(this.isBuy)
                     {
                         this.isSale=false;
-                        
                     }
                 }
             },this);
 
             this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
             {
+                if(null!=otherCollider && 2 == otherCollider.tag)
+                {
+                    this.index=null;
+                    this.tempIndex=null;
+                    if(this.isBuy)
+                    {
+                        this.isSale=true;
+                        this.isSwitch=false;
+                        this.isMerge=false;
+                    }
+                }
                 if(null!=otherCollider && 1 == otherCollider.tag)
                 {
                     if(null==this.roleArea.GetTargetValue(otherCollider.node.name))
                     { 
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.tempIndex=Number(num);
-                        //console.log(this.index);
                         this.target=otherCollider.node;
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
@@ -343,16 +350,7 @@ export class RoleIcon extends Component
                         this.tempIndex=Number(num);
                     }
                 }  
-                if(null!=otherCollider && 2 == otherCollider.tag)
-                {
-                    if(this.isBuy)
-                    {
-                        this.isSale=true;
-                        this.isSwitch=false;
-                        this.isMerge=false;
-                    }
-                    
-                }
+                
             }, this);
   
     }
@@ -365,7 +363,7 @@ export class RoleIcon extends Component
     //拖拽吸附
     Adsorption()
     {
-        if(null!=this.target && !this.isSale)
+        if(null!=this.target && !this.isSale && null!=this.index)
         {
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
