@@ -108,7 +108,7 @@ export class ShopArea extends Component
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
                     newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food);
-                    this.shopRoles.push(newNode);
+                    this.shopProps.push(newNode);
                 }
             }
             

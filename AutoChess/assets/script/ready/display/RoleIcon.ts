@@ -146,10 +146,9 @@ export class RoleIcon extends Component
                     if(!this.isBuy && singleton.netSingleton.ready.ready.GetCoins()>=3)
                     {
                         this.isBuy=true;
-                        this.shopArea.BuyRole(this.index, this.node);
+                        await this.shopArea.BuyRole(this.index, this.node);
                         if(null==this.target)
                         {
-                            this.upgradeLock=true;
                             this.roleNode.destroy();
                             this.node.destroy();
                             return;
@@ -283,7 +282,10 @@ export class RoleIcon extends Component
                         if(this.roleArea.GetTargetValue(otherCollider.node.name)==selfCollider.node)
                         {
                             //console.log("set null");
-                            this.roleArea.targets.set(otherCollider.node.name,null);
+                            if(!this.isMerge)
+                            {
+                                this.roleArea.targets.set(otherCollider.node.name,null);
+                            }
                             //this.isMerge=false;
                             //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
                             return;
@@ -320,9 +322,11 @@ export class RoleIcon extends Component
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
                     }
-                    else if(this.isBuy)
+                    else if(this.isBuy) //检测换位或者合并
                     {
                         this.tempTarget=otherCollider.node;
+                        let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
+                        this.tempIndex=Number(num);
                         this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
                         console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
                         if(this.t.getComponent(RoleIcon).roleId==this.roleId)
@@ -334,6 +338,7 @@ export class RoleIcon extends Component
                     }
                     else
                     {
+                        this.target=null;
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.tempIndex=Number(num);
                     }
@@ -419,18 +424,18 @@ export class RoleIcon extends Component
 
     async GetIntensifier(value :number[])
     {
-        // if(this.eatFoodLock)
-        // {
-        //     let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
-        //     let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
-        //     let exp=this.roleNode.getComponent(RoleDis).Exp;
-        //     let level=this.roleNode.getComponent(RoleDis).Level;
-        //     let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
-        //     let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
-        //     this.roleNode.getComponent(RoleDis).Refresh(r);
-        //     await this.roleNode.getComponent(RoleDis).Intensifier(value);
-        // }
-        // this.eatFoodLock=false;
+        if(this.upgradeLock)
+        {
+            let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
+            let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
+            let exp=this.roleNode.getComponent(RoleDis).Exp;
+            let level=this.roleNode.getComponent(RoleDis).Level;
+            let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
+            let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
+            this.roleNode.getComponent(RoleDis).Refresh(r);
+            await this.roleNode.getComponent(RoleDis).Intensifier(value);
+        }
+        this.upgradeLock=false;
     }
 
     // GetUiPos(node:Node):Vec3
