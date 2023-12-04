@@ -34,6 +34,7 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         value0 = skillConfig.Level3Value_1;
         value1 = skillConfig.Level3Value_2;
     }
+    console.log("skillID:", skillID, " level:", level, " value0:", value0, " value1", value1);
 
     let skillObj:skill.SkillBase = null;
     switch(skillConfig.Effect) {
@@ -54,9 +55,9 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         break;
         case 3:
         {
-            if(isInteger(value0))
+            if(value0 > 1)
             {
-                skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, value0,false);
+                skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, Math.floor(value0),false);
             }
             else
             {

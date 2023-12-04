@@ -60,7 +60,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try
         {
-            console.log("try to use remote skill");
+            console.log("try to use remote Skill_RemoteAtk_3 attack:", this.attack);
             //let battleEvent : Event = new Event();
             //battleEvent.type = EventType.RemoteInjured;
             //battleEvent.spellcaster = selfInfo;
