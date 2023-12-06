@@ -7,11 +7,11 @@
       "embeddedPlayerGroups": []
     },
     "_native": "",
-    "sample": 60,
+    "sample": 30,
     "speed": 1,
     "wrapMode": 1,
     "enableTrsBlending": false,
-    "_duration": 0.13333333333333333,
+    "_duration": 0.26666666666666666,
     "_hash": 500763545,
     "_tracks": [
       {
@@ -20,11 +20,7 @@
     ],
     "_exoticAnimation": null,
     "_events": [],
-    "_embeddedPlayers": [],
-    "_additiveSettings": {
-      "__id__": 11
-    },
-    "_auxiliaryCurveEntries": []
+    "_embeddedPlayers": []
   },
   {
     "__type__": "cc.animation.VectorTrack",
@@ -67,10 +63,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.03333333333333333,
       0.06666666666666667,
-      0.1,
-      0.13333333333333333
+      0.13333333333333333,
+      0.2,
+      0.26666666666666666
     ],
     "_values": [
       {
@@ -147,10 +143,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.03333333333333333,
       0.06666666666666667,
-      0.1,
-      0.13333333333333333
+      0.13333333333333333,
+      0.2,
+      0.26666666666666666
     ],
     "_values": [
       {
@@ -227,10 +223,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.03333333333333333,
       0.06666666666666667,
-      0.1,
-      0.13333333333333333
+      0.13333333333333333,
+      0.2,
+      0.26666666666666666
     ],
     "_values": [
       {
@@ -309,10 +305,5 @@
     "_values": [],
     "preExtrapolation": 1,
     "postExtrapolation": 1
-  },
-  {
-    "__type__": "cc.AnimationClipAdditiveSettings",
-    "enabled": false,
-    "refClip": null
   }
 ]
