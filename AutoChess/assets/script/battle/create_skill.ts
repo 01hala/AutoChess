@@ -40,6 +40,7 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
     switch(skillConfig.Effect) {
         case 1:
         {
+            console.log("Skill_AttGain_1 skillConfig:", skillConfig);
             if (skillConfig.ObjectDirection != enums.Direction.None) {
                 skillObj = new Skill_AttGain_1.Skill_AttGain_1(skillConfig.Priority, value0, value1, skillConfig.ObjectDirection);
             }
