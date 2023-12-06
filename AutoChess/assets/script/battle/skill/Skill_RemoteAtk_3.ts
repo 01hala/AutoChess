@@ -28,6 +28,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
         this.isAll=isAll;
 
         //this.event.type=EventType.RemoteInjured;
+        console.log("create Skill_RemoteAtk_3 attack:", this.attack);
     }
 
     event:Event=new Event();
@@ -95,12 +96,6 @@ export class Skill_RemoteAtk_3 extends SkillBase
 
     private SkillEffect_2(selfInfo: RoleInfo, battle: Battle)         //场上全部生效
     {
-        let battleEvent : Event = new Event();
-        battleEvent.type = EventType.RemoteInjured;
-        battleEvent.spellcaster = selfInfo;
-        battleEvent.recipient = [];
-        battleEvent.value = [];
-
         let self:Role=null;
 
         if(Camp.Self==selfInfo.camp)
@@ -118,19 +113,12 @@ export class Skill_RemoteAtk_3 extends SkillBase
         for(let t of enemyRoles)
         {
             recipientRoles.push(t);
-            let roleInfo=new RoleInfo();
-
-            roleInfo.camp=t.selfCamp;
-            if(Camp.Enemy==selfInfo.camp) roleInfo.index=battle.GetSelfTeam().GetRoleIndex(t);
-            else roleInfo.index=battle.GetEnemyTeam().GetRoleIndex(t);
-            battleEvent.recipient.push(roleInfo);
         }
 
         for(let role of recipientRoles)
         {
             role.BeHurted(this.attack, self, battle)
         }
-        battle.AddBattleEvent(battleEvent);
     }
 }
 
