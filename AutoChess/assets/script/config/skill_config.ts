@@ -56,7 +56,7 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
                 skillc.EffectTime = v["EffectTime"];
                 skillc.Effect = v["Effect"];
                 skillc.ObjCount = v["ObjCount"];
-                skillc.ObjectDirection = v["ObjectDirection"];
+                skillc.ObjectDirection = v["ObjDirection"];
                 skillc.Level1Value_1 = v["Level1Value_1"];
                 skillc.Level1Value_2 = v["Level1Value_2"];
                 skillc.Level2Value_1 = v["Level2Value_1"];

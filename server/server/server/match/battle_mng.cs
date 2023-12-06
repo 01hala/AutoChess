@@ -350,7 +350,7 @@ namespace Match
                 if (foodcfg.Count > 1)
                 {
                     var exclude = new List<int>();
-                    for (int i = 0; i < foodcfg.Count || rs.Count < battleData.RoleList.Count;)
+                    for (int i = 0; i < foodcfg.Count && rs.Count < battleData.RoleList.Count;)
                     {
                         var tmp_index = RandomHelper.RandomInt(battleData.RoleList.Count);
                         if (exclude.Contains(tmp_index))
@@ -369,9 +369,9 @@ namespace Match
 
                 bool is_update = false;
                 bool is_syncope = false;
-                foreach (var e in foodcfg.Effect)
+                foreach (var _r in rs)
                 {
-                    foreach (var _r in rs)
+                    foreach (var e in foodcfg.Effect)
                     {
                         switch ((BufferAndEquipEffect)e)
                         {
@@ -383,7 +383,7 @@ namespace Match
                                     }
                                     else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
                                     {
-                                        _r.HP -= foodcfg.HpBonus;
+                                        _r.HP += foodcfg.HpBonus;
                                     }
                                 }
                                 break;
@@ -396,7 +396,7 @@ namespace Match
                                     }
                                     else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
                                     {
-                                        _r.Attack -= foodcfg.AttackBonus;
+                                        _r.Attack += foodcfg.AttackBonus;
                                     }
                                 }
                                 break;
@@ -405,11 +405,11 @@ namespace Match
                                 {
                                     if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
                                     {
-                                        _r.TempAdditionBuffer += foodcfg.Vaule;
+                                        _r.TempAdditionBuffer = foodcfg.Vaule;
                                     }
                                     else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
                                     {
-                                        _r.additionBuffer -= foodcfg.Vaule;
+                                        _r.additionBuffer = foodcfg.Vaule;
                                     }
                                 }
                                 break;
@@ -428,9 +428,9 @@ namespace Match
                                 break;
                         }
                     }
-                }
 
-                BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, r, is_update, is_syncope);
+                    BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, _r, is_update, is_syncope);
+                }
 
                 evs.Add(new shop_event()
                 {
@@ -496,8 +496,33 @@ namespace Match
             return em_error.success;
         }
 
+        public void freeze(ShopIndex shop_index, int index)
+        {
+            if (shop_index == ShopIndex.Role)
+            {
+                var s = shopData.SaleRoleList[index];
+                if (s != null)
+                {
+                    s.IsFreeze= true;
+                }
+            }
+            else if (shop_index == ShopIndex.Prop)
+            {
+                var s = shopData.SalePropList[index];
+                if (s != null)
+                {
+                    s.IsFreeze = true;
+                }
+            }
+        }
+
         public void move(int role_index1, int role_index2)
         {
+            if (role_index1 == role_index2)
+            {
+                return;
+            }
+
             var r1 = battleData.RoleList[role_index1];
             var r2 = battleData.RoleList[role_index2];
 

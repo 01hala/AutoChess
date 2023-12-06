@@ -77,6 +77,16 @@ export class netGame {
         });
     }
 
+    public freeze(shop_index:common.ShopIndex, index:number) {
+        this.c_match.get_hub(this.match_name).freeze(shop_index, index).callBack((data:common.ShopData) => {
+            this.cb_shop_info.call(null, data);
+        }, (err) => {
+            console.log("freeze err:", err);
+        }).timeout(3000, ()=>{
+            console.log("freeze timeout!");
+        })
+    }
+
     public cb_battle_info: (battle_info:common.UserBattleData) => void;
     public cb_shop_info: (shop_info:common.ShopData) => void;
     public buy(shop_index:common.ShopIndex, index:number, role_index:number) {
@@ -145,7 +155,7 @@ export class netGame {
         })
     }
 
-    public confirm_round_victory(is_victory:boolean) {
+    public confirm_round_victory(is_victory:match.battle_victory) {
         this.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(()=>{
         }, ()=>{
             console.log("confirm_round_victory err");

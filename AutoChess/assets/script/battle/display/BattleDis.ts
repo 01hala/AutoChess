@@ -15,6 +15,7 @@ import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { Role } from '../../serverSDK/common';
 import { netSingleton } from '../../netDriver/netSingleton';
+import { battle_victory } from '../../serverSDK/ccallmatch';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -120,11 +121,21 @@ export class BattleDis
             }
 
             this.victory.active = true;
-            let is_victory = this.battle.GetWinCamp() == Camp.Self;
-            if ((is_victory && (this.battle.victory + 1) < 10) ||
-                (!is_victory && (this.battle.faild - 1) > 0))
+            let is_victory = battle_victory.tie;
+            if (this.battle.GetWinCamp() == Camp.Self) {
+                is_victory = battle_victory.victory;
+            }
+            else if (this.battle.GetWinCamp() == Camp.Enemy) {
+                is_victory = battle_victory.faild;
+            }
+
+            if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
+                (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
             {
-                this.victory.getComponent(Label).string = is_victory ? "战斗胜利!" : "战斗失败!";
+                this.victory.getComponent(Label).string = (is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
+            }
+            else if (is_victory == battle_victory.tie) {
+                this.victory.getComponent(Label).string = "战斗平局!";
             }
 
             await sleep(4000);

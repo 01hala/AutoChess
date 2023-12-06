@@ -28,10 +28,10 @@ export class SkillTrigger_Syncope_11 extends SkillTriggerBase {
         {
             for (let element of frameEvent) {
                 if(EventType.Syncope == element.type){
-                    for (let _recipient of element.recipient) {
-                        if(_recipient.camp == selfInfo.camp && _recipient.index == selfInfo.index) {
-                            return true;
-                        }
+                    console.log("CheckSkill element:", element, " selfInfo:", selfInfo);
+                    if(element.spellcaster.camp == selfInfo.camp && element.spellcaster.index == selfInfo.index) {
+                        console.log("CheckSkill Syncope!");
+                        return true;
                     }
                 } 
             }

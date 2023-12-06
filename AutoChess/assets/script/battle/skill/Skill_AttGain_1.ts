@@ -44,11 +44,11 @@ export class Skill_AttGain_1 extends SkillBase
     {
         try
         {
-            if(null==this.numberOfRole || 0==this.numberOfRole)
+            if(!this.numberOfRole || 0==this.numberOfRole)
             {
                 this.SkillEffect_1(selfInfo,battle);    
             }
-            else if(null==this.dir)
+            else if(!this.dir)
             {
                 this.SkillEffect_2(selfInfo,battle);  
             }
@@ -63,7 +63,7 @@ export class Skill_AttGain_1 extends SkillBase
 
     SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void          //指定某一对象生效
     {
-        
+        console.log("Skill_AttGain_1 SkillEffect_1! selfInfo:", selfInfo, " dir:", this.dir);
         try
         {
             let event = new Event();
@@ -71,7 +71,7 @@ export class Skill_AttGain_1 extends SkillBase
             event.spellcaster = selfInfo;
             event.recipient = [];
 
-            let teamTemp:Role[]=null;
+            let teamTemp:Team=null;
             let recipientRole:Role=null;
 
             let roleInfo = new RoleInfo();
@@ -80,58 +80,59 @@ export class Skill_AttGain_1 extends SkillBase
 
             if(Camp.Self==selfInfo.camp)
             {
-                teamTemp=battle.GetSelfTeam().GetRoles();  
+                teamTemp=battle.GetSelfTeam();  
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                teamTemp=battle.GetEnemyTeam().GetRoles();
+                teamTemp=battle.GetEnemyTeam();
             }
             switch(this.dir)
                 {
-                    case 0:
-                        recipientRole=teamTemp[selfInfo.index];
+                    case Direction.None:
+                        recipientRole=teamTemp.GetRole(selfInfo.index);
                         roleInfo.index = selfInfo.index;
                         break;
-                    case 1:
+                    case Direction.Forward:
                         if(selfInfo.index>=3)
                         {
-                            recipientRole=teamTemp[selfInfo.index-3];
+                            recipientRole=teamTemp.GetRole(selfInfo.index-3);
                             roleInfo.index = selfInfo.index-3;
                         }
                         break;
-                    case 2:
+                    case Direction.Back:
                         if(selfInfo.index<3)
                         {
-                            recipientRole=teamTemp[selfInfo.index+3];
+                            console.log("Skill_AttGain_1 SkillEffect_1! dir:", this.dir, " teamTemp:", teamTemp);
+                            recipientRole=teamTemp.GetRole(selfInfo.index+3);
                             roleInfo.index = selfInfo.index+3;
                         }
                         break;
-                    case 3:
+                    case Direction.Rigiht:
                         if(2!=selfInfo.index && 5!=selfInfo.index)
                         {
                             if(1==selfInfo.index||4==selfInfo.index)
                             {
-                                recipientRole=teamTemp[selfInfo.index-3];
+                                recipientRole=teamTemp.GetRole(selfInfo.index-3);
                                 roleInfo.index = selfInfo.index-3;
                             }
                             if(0==selfInfo.index||3==selfInfo.index)
                             {
-                                recipientRole=teamTemp[selfInfo.index+2];
+                                recipientRole=teamTemp.GetRole(selfInfo.index+2);
                                 roleInfo.index = selfInfo.index+2;
                             }
                         }
                         break;
-                    case 4:
+                    case Direction.Left:
                         if(1!=selfInfo.index && 4!= selfInfo.index)
                         {
                             if(0==selfInfo.index||3==selfInfo.index)
                             {
-                                recipientRole=battle.GetSelfTeam().GetRole(selfInfo.index+1);
+                                recipientRole=teamTemp.GetRole(selfInfo.index+1);
                                 roleInfo.index = selfInfo.index+1;
                             }
                             if(2==selfInfo.index||5==selfInfo.index)
                             {
-                                recipientRole=battle.GetSelfTeam().GetRole(selfInfo.index-2);
+                                recipientRole=teamTemp.GetRole(selfInfo.index-2);
                                 roleInfo.index = selfInfo.index-2;
                             }
                         }
@@ -142,6 +143,7 @@ export class Skill_AttGain_1 extends SkillBase
             
             if(null!=recipientRole)
             {
+                console.log("recipientRole:", recipientRole, " ChangeProperties!");
                 recipientRole.ChangeProperties(Property.HP, recipientRole.GetProperty(Property.HP) + this.health);
                 recipientRole.ChangeProperties(Property.TotalHP, recipientRole.GetProperty(Property.TotalHP) + this.health);
                 recipientRole.ChangeProperties(Property.Attack,recipientRole.GetProperty(Property.Attack) + this.attack);
@@ -159,7 +161,7 @@ export class Skill_AttGain_1 extends SkillBase
 
     SkillEffect_2(selfInfo: RoleInfo, battle: Battle):void          //随机一对象生效
     {
-        
+        console.log("Skill_AttGain_1 SkillEffect_2!");
         try
         {
             let event = new Event();
@@ -194,6 +196,7 @@ export class Skill_AttGain_1 extends SkillBase
             }
             recipientRoles.forEach((role) => 
             {
+                console.log("recipientRoles role:", role, " ChangeProperties!");
                 role.ChangeProperties(Property.HP, role.GetProperty(Property.HP) + this.health);
                 role.ChangeProperties(Property.TotalHP, role.GetProperty(Property.TotalHP) + this.health);
                 role.ChangeProperties(Property.Attack,role.GetProperty(Property.Attack) + this.attack);

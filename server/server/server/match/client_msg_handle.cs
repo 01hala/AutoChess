@@ -18,10 +18,30 @@ namespace Match
             plan_Module.on_refresh += Plan_Module_on_refresh;
             plan_Module.on_start_round1 += Plan_Module_on_start_round1;
             plan_Module.on_confirm_round_victory += Plan_Module_on_confirm_round_victory;
+            plan_Module.on_freeze += Plan_Module_on_freeze;
 
             plan_Module.on_start_round += Plan_Module_on_start_round;
 
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
+        }
+
+        private void Plan_Module_on_freeze(ShopIndex shop_index, int index)
+        {
+            var rsp = plan_Module.rsp as plan_freeze_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _player = Match.battle_Mng.get_battle_player(uuid);
+                _player.freeze(shop_index, index);
+
+                rsp.rsp(_player.ShopData);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_confirm_round_victory error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private void Plan_Module_on_move(int role_index1, int role_index2)
@@ -43,7 +63,7 @@ namespace Match
             }
         }
 
-        private void Plan_Module_on_confirm_round_victory(bool is_victory)
+        private void Plan_Module_on_confirm_round_victory(battle_victory is_victory)
         {
             var rsp = plan_Module.rsp as plan_confirm_round_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -55,11 +75,11 @@ namespace Match
                 _player.BattleData.round++;
                 Match._redis_handle.PushList($"AutoChess:battle:{_player.BattleData.round}", _player.BattleData);
 
-                if (is_victory)
+                if (is_victory == battle_victory.victory)
                 {
                     _player.BattleData.victory++;
                 }
-                else
+                else if (is_victory == battle_victory.faild)
                 {
                     _player.BattleData.faild--;
                 }

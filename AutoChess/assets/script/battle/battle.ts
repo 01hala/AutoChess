@@ -106,6 +106,8 @@ export class Battle {
         if (this.evs.length > 0) {
             this.evs = [];
 
+            console.log("TickBattle evs:", evs);
+
             let selfTeam = this.selfTeam.GetRoles();
             for(let index in selfTeam) {
                 let role = selfTeam[index];

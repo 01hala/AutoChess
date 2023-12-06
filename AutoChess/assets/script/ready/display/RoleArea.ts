@@ -50,6 +50,7 @@ export class RoleArea extends Component
 
     async MovePos(_indexBefor:number,_indexAfter:number)
     {
+        console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
         singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
     }
 
