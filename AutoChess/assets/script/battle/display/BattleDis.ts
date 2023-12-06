@@ -348,7 +348,9 @@ export class BattleDis
                                 //console.warn("敌方role",r.index);
                                 if(r)
                                 {
+                                    
                                     //console.warn("敌方角色远程受伤表现");
+                                    allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                     allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
                             }
@@ -373,6 +375,7 @@ export class BattleDis
                                 if(r)
                                 {
                                     //console.warn("我方角色远程受伤表现");
+                                    allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                     allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
                             }

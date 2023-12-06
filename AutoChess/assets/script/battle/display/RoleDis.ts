@@ -46,6 +46,7 @@ export class RoleDis extends Component
     private levelSprite: Node;
     //增益提示
     private intensifierText: Node;
+    private behurtedText:Node;
     //受伤效果
     private bandage: Node;
     //字体
@@ -64,8 +65,10 @@ export class RoleDis extends Component
             this.levelSprite = this.node.getChildByName("LevelSprite");
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
+            this.behurtedText=this.node.getChildByName("BeHurtedText");
             this.bandage.active = false;
             this.intensifierText.active = false;
+            this.behurtedText.active=false;
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
 
@@ -174,7 +177,41 @@ export class RoleDis extends Component
         return this.delay(300, () => { });
     }
 
-    async Intensifier(value: number[],stack:number) 
+    async BeHurted(_value:number)
+    {
+        try
+        {
+            let hurtedAnim: Animation=this.behurtedText.getComponent(Animation);
+            hurtedAnim.on(Animation.EventType.FINISHED, () => 
+            {
+                hurtedAnim.stop();
+                this.behurtedText.active = false;
+                hurtedAnim.resume();
+            }, this);
+            let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
+
+            tween(this.node).to(0,{}).call(()=>
+            {
+                hurtedAnim.resume();
+                hitAnim.resume();
+                this.behurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + _value + "</outline></color>";
+                this.behurtedText.active=true;
+                hurtedAnim.play();
+                hitAnim.play();
+            }).start();
+
+            return this.delay(700,()=>
+            {
+                
+            });
+        }
+        catch(err)
+        {
+            console.error("RoleDis 下的 BeHurted 错误 err:" + err);
+        }
+    }
+
+    async Intensifier(value: number[],stack?:number) 
     {
         try 
         {
@@ -188,8 +225,11 @@ export class RoleDis extends Component
                 anim.resume();
             }, this);
 
-            this.Exp=stack%3;
-
+            if(stack)
+            {
+                this.Exp=stack%3;
+            }
+            
             tween(this.node).to(0,{}).call(()=>
             {   
                 if (0 != value[0]) 
