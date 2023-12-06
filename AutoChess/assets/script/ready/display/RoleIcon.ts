@@ -404,7 +404,7 @@ export class RoleIcon extends Component
         //this.node.setWorldPosition(Vec3);
         console.log("tarnspos!");
     }
-    //合并升级
+    //合并、升级
     async GetUpgrade(t:common.Role,is_update:boolean)
     {
         let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
@@ -412,29 +412,29 @@ export class RoleIcon extends Component
         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
         let r=new role.Role(this.index,this.roleId,this.roleId-100000,t.Level,0,Camp.Self,map);
         this.roleNode.getComponent(RoleDis).Refresh(r);
-        await this.roleNode.getComponent(RoleDis).Intensifier(value);
+        await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
         if(is_update)
         {
-            this.roleNode.getComponent(RoleDis).LevelUp();
+            this.roleNode.getComponent(RoleDis).LevelUp(t.Level);
         }
         this.upgradeLock=false;
     }
 
-    async GetIntensifier(value :number[])
-    {
-        if(this.upgradeLock)
-        {
-            let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
-            let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
-            let exp=this.roleNode.getComponent(RoleDis).Exp;
-            let level=this.roleNode.getComponent(RoleDis).Level;
-            let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
-            let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
-            this.roleNode.getComponent(RoleDis).Refresh(r);
-            await this.roleNode.getComponent(RoleDis).Intensifier(value);
-        }
-        this.upgradeLock=false;
-    }
+    // async GetIntensifier(value :number[])
+    // {
+    //     if(this.upgradeLock)
+    //     {
+    //         let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
+    //         let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
+    //         let exp=this.roleNode.getComponent(RoleDis).Exp;
+    //         let level=this.roleNode.getComponent(RoleDis).Level;
+    //         let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
+    //         let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
+    //         this.roleNode.getComponent(RoleDis).Refresh(r);
+    //         await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
+    //     }
+    //     this.upgradeLock=false;
+    // }
 
     // GetUiPos(node:Node):Vec3
     // {

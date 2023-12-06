@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp, EventType, Property } from '../../other/enums';
 import { Battle } from '../../battle/battle';
@@ -174,7 +174,7 @@ export class RoleDis extends Component
         return this.delay(300, () => { });
     }
 
-    async Intensifier(value: number[]) 
+    async Intensifier(value: number[],stack:number) 
     {
         try 
         {
@@ -187,6 +187,8 @@ export class RoleDis extends Component
                 this.intensifierText.active = false;
                 anim.resume();
             }, this);
+
+            this.Exp=stack%3;
 
             tween(this.node).to(0,{}).call(()=>
             {   
@@ -224,6 +226,39 @@ export class RoleDis extends Component
             console.warn("RoleDis 下的 Intensifier 错误 err:" + err);
         }
 
+    }
+
+    async LevelUp(_level:number)
+    {
+        try
+        {
+            let str="lvl_"+_level;
+            let sf:SpriteFrame=await this.LoadImg("LvRing",str);
+            tween(this.node).to(0.1,
+                {
+                    scale:new Vec3(1.1,1.1,1)
+                })
+            .call(()=>
+            {
+                this.Level=_level;
+                this.levelSprite.getComponent(Sprite).spriteFrame=sf;
+            })
+            .delay(0.1).to(0.1,
+                {
+                    scale:new Vec3(1,1,1)
+                })
+            .start();
+
+            return this.delay(300,()=>
+            {
+                
+            })
+        }
+        catch(error)
+        {
+            console.error("RoleDis 下的 LevelUp 错误 err:" + error);
+        }
+        
     }
 
     ShiftPos(vec:Vec3)
@@ -268,11 +303,6 @@ export class RoleDis extends Component
         }
     }
 
-    LevelUp()
-    {
-        
-    }
-
     Exit() 
     {
         try 
@@ -296,6 +326,26 @@ export class RoleDis extends Component
             console.warn("RoleDis 下的 Exit 错误 err:" + err);
         }
 
+    }
+
+    private LoadImg(_bundle:string,_address:string):Promise<SpriteFrame>
+    {
+        return new Promise(async (resolve)=>
+        {
+            let imgRes=""+_address;
+            let temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
+            // if(null==temp)
+            // {
+            //     console.warn('propIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
+            //     imgRes=""+_address+1001;
+            //     temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
+            // }
+            let texture=new Texture2D();
+            texture.image=temp;
+            let sp=new SpriteFrame();
+            sp.texture=texture;
+            resolve(sp);
+        });
     }
 }
 
