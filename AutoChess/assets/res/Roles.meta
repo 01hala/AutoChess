@@ -10,6 +10,7 @@
     "isRemoteBundle": {
       "wechatgame": true
     },
-    "bundleName": "RolesImg"
+    "bundleName": "RolesImg",
+    "isBundle": true
   }
 }

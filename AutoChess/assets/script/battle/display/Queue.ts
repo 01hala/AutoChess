@@ -49,24 +49,26 @@ export class Queue extends Component
         {
             try 
             {
-                let address: string = "Role_";
-                let roleRes=""+address+r.id;
-                //let roleRes = address + "100001";
-                let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-                if(null==newNode)
-                {
-                    roleRes = address + "100001";
-                    newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-                }
+                // let address: string = "Role_";
+                // let roleRes=""+address+r.id;
+                // //let roleRes = address + "100001";
+                // let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+                // if(null==newNode)
+                // {
+                //     roleRes = address + "100001";
+                //     newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+                // }
+
+                let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePrefab") as Prefab;
                 let role = instantiate(newNode); 
                 this.node.addChild(role);
 
                 //r.roleNode = role;
                 this.roleNodes[r.index] = role;
-                console.log("role:", r);
+                //console.log("role:", r);
 
                 let roleDis = role.getComponent(RoleDis.RoleDis);
-                await roleDis.Refresh(r);
+                await roleDis.Refresh(r,true);
                 resolve(role);
             }
             catch (error) 

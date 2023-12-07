@@ -225,22 +225,22 @@ export class RoleIcon extends Component
         return new Promise (async (resolve)=>
         {
             //console.log("spawn role:",r.id);
-            let address: string = "Role_";
-            let roleRes=""+address+r.id;
+            //let address: string = "Role_";
+            //let roleRes=""+address+r.id;
             //let roleRes = address + "100001";
-            let newNode=null;
-            newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-            if(null==newNode)
-            {
-                console.warn('RoleIcon 里的 SpawnRole 异常 : bundle中没有此角色,替换为默认角色');
-                roleRes = address + "100001";
-                newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-            }
-
+            // let newNode=null;
+            // newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+            // if(null==newNode)
+            // {
+            //     console.warn('RoleIcon 里的 SpawnRole 异常 : bundle中没有此角色,替换为默认角色');
+            //     roleRes = address + "100001";
+            //     newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+            // }
+            let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePrefab") as Prefab;
             let role = instantiate(newNode);
             role.setParent(this.node);
             let roleDis = role.getComponent(RoleDis);
-            roleDis.Refresh(r);
+            roleDis.Refresh(r,true);
             if(!this.isBuy)
             {
                 role.active=false;
