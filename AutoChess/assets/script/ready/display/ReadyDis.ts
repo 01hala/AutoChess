@@ -70,50 +70,8 @@ export class ReadyDis
 
     async Init(father:Node)
     {
-        //注册回调
-        singleton.netSingleton.game.cb_battle_info=(battle_info:common.UserBattleData)=>
-        {
-            this.ready.SetCoins(battle_info.coin);
-            this.ready.SetRoles(battle_info.RoleList);
-            //console.log('player coin: ',battle_info.coin);
-            this.UpdatePlayerInfo(battle_info);
-        }
-        singleton.netSingleton.game.cb_shop_info=(shop_info:common.ShopData)=>
-        {
-            console.log("shop_info:", shop_info);
-            this.ready.SetShopData(shop_info);
-        }
-        singleton.netSingleton.game.cb_role_buy_merge=(target_role_index:number, target_role:common.Role, is_update:boolean)=>
-        {
-            console.log('cb_role_buy_merge',target_role_index);
-            let str="Location_"+target_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock=true;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
-            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
-        }
-        singleton.netSingleton.game.cb_role_merge=(source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>
-        {
-            console.log('cb_role_merge,source_role:',source_role_index);
-            let str="Location_"+source_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
-            this.roleArea.targets.set(str,null);
-            //this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
-            //this.roleArea.rolesNode[source_role_index].destroy();
-            console.log('cb_role_merge,target_role:',target_role_index);
-            str="Location_"+target_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock=true;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
-            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
-        }
-        singleton.netSingleton.game.cb_role_eat_food=(food_id:number,target_role_index:number,target_role:common.Role,is_update:boolean)=>
-        {
-            let str="Location_"+target_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock=true;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role,is_update);
-        }
+        this.RegCallBack();
         
-
         this.father=father;
         //主要界面
         let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
@@ -155,9 +113,51 @@ export class ReadyDis
         });
     }
 
+    private RegCallBack()
+    {
+        //注册回调
+        singleton.netSingleton.game.cb_battle_info = (battle_info: common.UserBattleData) => {
+            this.ready.SetCoins(battle_info.coin);
+            this.ready.SetRoles(battle_info.RoleList);
+            //console.log('player coin: ',battle_info.coin);
+            this.UpdatePlayerInfo(battle_info);
+        };
+        singleton.netSingleton.game.cb_shop_info = (shop_info: common.ShopData) => {
+            console.log("shop_info:", shop_info);
+            this.ready.SetShopData(shop_info);
+        };
+        singleton.netSingleton.game.cb_role_buy_merge = (target_role_index: number, target_role: common.Role, is_update: boolean) => {
+            console.log('cb_role_buy_merge', target_role_index);
+            let str = "Location_" + target_role_index;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+        };
+        singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
+            console.log('cb_role_merge,source_role:', source_role_index);
+            let str = "Location_" + source_role_index;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
+            this.roleArea.targets.set(str, null);
+            //this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
+            //this.roleArea.rolesNode[source_role_index].destroy();
+            console.log('cb_role_merge,target_role:', target_role_index);
+            str = "Location_" + target_role_index;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+        };
+        singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
+            let str = "Location_" + target_role_index;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+        };
+    }
+
     async Restore(_battle_info:common.UserBattleData)
     {
         await this.roleArea.ResetTeam(_battle_info.RoleList);
+        this.UpdatePlayerInfo(_battle_info);
         //---------------------------//
         //此处更新玩家生命、阶段、奖杯数//
         //---------------------------//

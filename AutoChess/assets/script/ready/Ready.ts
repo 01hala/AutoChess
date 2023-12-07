@@ -135,6 +135,11 @@ export class Ready
         await singleton.netSingleton.game.move(index_befor,index_after);
     }
 
+    public async Freeze(shop_index: common.ShopIndex,index:number)
+    {
+        await singleton.netSingleton.game.freeze(shop_index,index);
+    }
+
 }
 
 
