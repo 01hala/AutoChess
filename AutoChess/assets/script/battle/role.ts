@@ -119,10 +119,6 @@ export class Role {
             ev.spellcaster.camp = this.selfCamp;
             ev.spellcaster.index = selfIndex;
             ev.recipient = [];
-            let recipient = new skill.RoleInfo();
-            recipient.camp = enemy.selfCamp;
-            recipient.index = enemyIndex;
-            ev.recipient.push(recipient);
             ev.value = [];
             ev.value.push(damage);
             battle.AddBattleEvent(ev);
