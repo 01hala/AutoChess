@@ -89,6 +89,7 @@ namespace Abelkhan
             _client_handle.modulemanager.add_mothed("battle_client_role_buy_merge", role_buy_merge);
             _client_handle.modulemanager.add_mothed("battle_client_role_merge", role_merge);
             _client_handle.modulemanager.add_mothed("battle_client_role_eat_food", role_eat_food);
+            _client_handle.modulemanager.add_mothed("battle_client_role_update_refresh_shop", role_update_refresh_shop);
         }
 
         public event Action<bool> on_battle_victory;
@@ -155,6 +156,14 @@ namespace Abelkhan
             var _is_syncope = ((MsgPack.MessagePackObject)inArray[4]).AsBoolean();
             if (on_role_eat_food != null){
                 on_role_eat_food(_food_id, _target_role_index, _target_role, _is_update, _is_syncope);
+            }
+        }
+
+        public event Action<ShopData> on_role_update_refresh_shop;
+        public void role_update_refresh_shop(IList<MsgPack.MessagePackObject> inArray){
+            var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_role_update_refresh_shop != null){
+                on_role_update_refresh_shop(_info);
             }
         }
 

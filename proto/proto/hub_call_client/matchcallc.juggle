@@ -18,4 +18,5 @@ module battle_client {
     role_buy_merge ntf(int32 target_role_index, Role target_role, bool is_update);
     role_merge ntf(int32 source_role_index, int32 target_role_index, Role target_role, bool is_update);
     role_eat_food ntf(int32 food_id, int32 target_role_index, Role target_role, bool is_update, bool is_syncope);
+    role_update_refresh_shop ntf(ShopData info);
 }

@@ -314,12 +314,16 @@ namespace Match
 
                     if (!skip_level.Contains(r.Level))
                     {
+                        skip_level.Add(r.Level);
+
                         var stage = r.Level + 1;
                         if (stage > 6)
                         {
                             stage = 6;
                         }
                         shopData.SaleRoleList.Add(randomShopRole(stage));
+
+                        BattleClientCaller.get_client(ClientUUID).role_update_refresh_shop(shopData);
                     }
 
                     BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);

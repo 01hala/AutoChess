@@ -62,6 +62,7 @@ export class battle_client_module extends client_handle.imodule {
         this._client_handle._modulemng.add_method("battle_client_role_buy_merge", this.role_buy_merge.bind(this));
         this._client_handle._modulemng.add_method("battle_client_role_merge", this.role_merge.bind(this));
         this._client_handle._modulemng.add_method("battle_client_role_eat_food", this.role_eat_food.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_role_update_refresh_shop", this.role_update_refresh_shop.bind(this));
 
         this.cb_battle_victory = null;
         this.cb_battle_plan_refresh = null;
@@ -70,6 +71,7 @@ export class battle_client_module extends client_handle.imodule {
         this.cb_role_buy_merge = null;
         this.cb_role_merge = null;
         this.cb_role_eat_food = null;
+        this.cb_role_update_refresh_shop = null;
     }
 
     public cb_battle_victory : (is_victory:boolean)=>void | null;
@@ -143,6 +145,15 @@ export class battle_client_module extends client_handle.imodule {
         _argv_.push(inArray[4]);
         if (this.cb_role_eat_food){
             this.cb_role_eat_food.apply(null, _argv_);
+        }
+    }
+
+    public cb_role_update_refresh_shop : (info:common.ShopData)=>void | null;
+    role_update_refresh_shop(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(common.protcol_to_ShopData(inArray[0]));
+        if (this.cb_role_update_refresh_shop){
+            this.cb_role_update_refresh_shop.apply(null, _argv_);
         }
     }
 
