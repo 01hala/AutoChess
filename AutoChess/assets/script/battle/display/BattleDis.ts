@@ -360,6 +360,7 @@ export class BattleDis
                             r = this.selfQueue.roleNodes[ev.spellcaster.index];
                             if (r)
                             {
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                 allAwait.push(r.getComponent(RoleDis).changeAtt());
                             }
                         }
@@ -385,6 +386,7 @@ export class BattleDis
                             r = this.enemyQueue.roleNodes[ev.spellcaster.index];
                             if (r) 
                             {
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                 allAwait.push(r.getComponent(RoleDis).changeAtt());
                             }
                         }

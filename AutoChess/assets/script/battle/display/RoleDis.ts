@@ -60,7 +60,7 @@ export class RoleDis extends Component
 
     private idText:RichText;
 
-    protected onLoad(): void {
+    protected async onLoad(): Promise<void> {
         try {
             this.levelSprite = this.node.getChildByName("LevelSprite");
             this.intensifierText = this.node.getChildByName("IntensifierText");
@@ -76,14 +76,13 @@ export class RoleDis extends Component
             //this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
             //this.hpText.font = this.atkText.font = this.typeface;
 
-            
-
             this.AttackInit();
         }
         catch (err) {
             console.warn("RoleDis 下的 onLoad 错误 err:" + err);
         }
     }
+    
 
     start() 
     {
@@ -97,9 +96,24 @@ export class RoleDis extends Component
         }
     }
 
-    async Refresh(roleInfo: Role) 
+    async Refresh(roleInfo: Role,isnew?:boolean) 
     {
         this.roleInfo = roleInfo;
+        if(isnew)
+        {
+            this.RoleId=roleInfo.id;
+            let str="Role_"+this.RoleId;
+            if(null==this.idText)
+            {
+                this.idText=this.node.getChildByPath("ID").getComponent(RichText);
+            }
+            this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
+            let sf:SpriteFrame=await this.LoadImg("RolesImg",str);
+            if(sf)
+            {
+                this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;
+            }
+        }
         await this.changeAtt();
     }
 
@@ -119,7 +133,7 @@ export class RoleDis extends Component
         this.originalPos = new Vec3(this.node.position);
     }
 
-    Attack(readyLocation: Vec3, battleLocation: Vec3, camp: Camp) 
+    Attack(readyLocation: Vec3, battleLocation: Vec3, camp: Camp ) 
     {
         try 
         {
@@ -163,8 +177,9 @@ export class RoleDis extends Component
             
             this.Hp = Math.round(this.roleInfo.GetProperty(Property.HP));
             this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));
-            this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
-            if (this.hpText && this.atkText) {
+            
+            if (this.hpText && this.atkText) 
+            {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
             }
@@ -281,7 +296,10 @@ export class RoleDis extends Component
             .call(()=>
             {
                 this.Level=_level;
-                this.levelSprite.getComponent(Sprite).spriteFrame=sf;
+                if(sf)
+                {
+                    this.levelSprite.getComponent(Sprite).spriteFrame=sf;
+                }
             })
             .delay(0.1).to(0.1,
                 {
@@ -374,12 +392,13 @@ export class RoleDis extends Component
         {
             let imgRes=""+_address;
             let temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
-            // if(null==temp)
-            // {
-            //     console.warn('propIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
-            //     imgRes=""+_address+1001;
-            //     temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
-            // }
+            if(null==temp)
+            {
+                 console.warn('propIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
+                 resolve(null);
+                 //imgRes=""+_address+1001;
+                 //temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
+            }
             let texture=new Texture2D();
             texture.image=temp;
             let sp=new SpriteFrame();
