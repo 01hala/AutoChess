@@ -58,11 +58,14 @@ export class ShopArea extends Component
 
     start() 
     {
+        
         if(wx.getSystemInfoSync().safeArea.height==wx.getSystemInfoSync().screenHeight)
         {
             return;
         }
-        let outPos:Vec3=this.cam.getComponent(Camera).screenToWorld(new Vec3(0,15,0));
+        let bpttomHeigh=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height)/2;
+
+        let outPos:Vec3=this.cam.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeigh,0));
         this.node.getComponent(Widget).bottom=outPos.y;
     }
 
@@ -158,12 +161,12 @@ export class ShopArea extends Component
         {
             this.freezeArea.active=true;
             this.freezeArea.getComponent(BlockInputEvents).enabled=true;
-            tween(this.freezeArea).to(0.1,{position:new Vec3(0,0,0)}).start();
+            tween(this.freezeArea).to(0.1,{position:new Vec3(0,170,0)}).start();
         }
         else
         {
             this.freezeArea.getComponent(BlockInputEvents).enabled=false;
-            tween(this.freezeArea).to(0.1,{position:new Vec3(0,-170,0)}).call(()=>
+            tween(this.freezeArea).to(0.1,{position:new Vec3(0,0,0)}).call(()=>
             {
                 this.freezeArea.active=false;
             }).start();
