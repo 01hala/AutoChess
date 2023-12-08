@@ -163,7 +163,7 @@ export class RoleIcon extends Component
                 {
                     console.log("RoleFreeze!!!");
                     this.freezeLock=!this.freezeLock;
-                    this.shopArea.FreezeEntity(common.ShopIndex.Role,this.node);
+                    this.shopArea.FreezeEntity(common.ShopIndex.Role,this.node , this.freezeLock);
                 }
                 //换位
                 if(this.isSwitch && !this.isSale)//是否交换位置

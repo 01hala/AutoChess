@@ -135,7 +135,7 @@ export class PropIcon extends Component
             {
                 console.log("PropFreeze!!!");
                 this.freezeLock=!this.freezeLock;
-                this.shopArea.FreezeEntity(common.ShopIndex.Prop,this.node);
+                this.shopArea.FreezeEntity(common.ShopIndex.Prop,this.node, this.freezeLock);
             }
             //吸附缓动
             this.Adsorption();

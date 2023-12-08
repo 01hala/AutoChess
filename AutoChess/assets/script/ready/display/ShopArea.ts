@@ -152,17 +152,19 @@ export class ShopArea extends Component
     {
         if(_flag)
         {
+            this.freezeArea.active=true;
             this.freezeArea.getComponent(BlockInputEvents).enabled=true;
             tween(this.freezeArea).to(0.1,{position:new Vec3(0,0,0)}).start();
         }
         else
         {
             this.freezeArea.getComponent(BlockInputEvents).enabled=false;
+            this.freezeArea.active=false;
             tween(this.freezeArea).to(0.1,{position:new Vec3(0,-170,0)}).start();
         }
     }
 
-    async FreezeEntity(_shop_index:common.ShopIndex,_obj:Node)
+    async FreezeEntity(_shop_index:common.ShopIndex,_obj:Node , _isFreeze:boolean)
     {
         if(common.ShopIndex.Prop==_shop_index)
         {
@@ -170,7 +172,7 @@ export class ShopArea extends Component
             {
                 if(this.shopProps[i] == _obj)
                 {
-                    await singleton.netSingleton.ready.ready.Freeze(_shop_index , i);
+                    await singleton.netSingleton.ready.ready.Freeze(_shop_index , i,_isFreeze);
                 }
             }
         }
@@ -180,7 +182,7 @@ export class ShopArea extends Component
             {
                 if(this.shopRoles[i] == _obj)
                 {
-                    await singleton.netSingleton.ready.ready.Freeze(_shop_index , i);
+                    await singleton.netSingleton.ready.ready.Freeze(_shop_index , i ,_isFreeze);
                 }
             }
         }
