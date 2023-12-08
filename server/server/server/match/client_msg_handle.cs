@@ -25,7 +25,7 @@ namespace Match
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
         }
 
-        private void Plan_Module_on_freeze(ShopIndex shop_index, int index)
+        private void Plan_Module_on_freeze(ShopIndex shop_index, int index, bool is_freeze)
         {
             var rsp = plan_Module.rsp as plan_freeze_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -33,7 +33,7 @@ namespace Match
             try
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
-                _player.freeze(shop_index, index);
+                _player.freeze(shop_index, index, is_freeze);
 
                 rsp.rsp(_player.ShopData);
             }

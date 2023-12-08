@@ -358,14 +358,15 @@ namespace Abelkhan
             rsp = null;
         }
 
-        public event Action<ShopIndex, Int32> on_freeze;
+        public event Action<ShopIndex, Int32, bool> on_freeze;
         public void freeze(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _shop_index = (ShopIndex)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
             var _index = ((MsgPack.MessagePackObject)inArray[2]).AsInt32();
+            var _is_freeze = ((MsgPack.MessagePackObject)inArray[3]).AsBoolean();
             rsp = new plan_freeze_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_freeze != null){
-                on_freeze(_shop_index, _index);
+                on_freeze(_shop_index, _index, _is_freeze);
             }
             rsp = null;
         }

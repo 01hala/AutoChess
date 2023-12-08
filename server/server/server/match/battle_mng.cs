@@ -500,14 +500,14 @@ namespace Match
             return em_error.success;
         }
 
-        public void freeze(ShopIndex shop_index, int index)
+        public void freeze(ShopIndex shop_index, int index, bool is_freeze)
         {
             if (shop_index == ShopIndex.Role)
             {
                 var s = shopData.SaleRoleList[index];
                 if (s != null)
                 {
-                    s.IsFreeze= true;
+                    s.IsFreeze= is_freeze;
                 }
             }
             else if (shop_index == ShopIndex.Prop)
@@ -515,7 +515,7 @@ namespace Match
                 var s = shopData.SalePropList[index];
                 if (s != null)
                 {
-                    s.IsFreeze = true;
+                    s.IsFreeze = is_freeze;
                 }
             }
         }

@@ -83,9 +83,9 @@ export class netGame {
         });
     }
 
-    public freeze(shop_index:common.ShopIndex, index:number) {
+    public freeze(shop_index:common.ShopIndex, index:number, is_freeze:boolean) {
         return new Promise<void>((resolve) => {
-            this.c_match.get_hub(this.match_name).freeze(shop_index, index).callBack((data:common.ShopData) => {
+            this.c_match.get_hub(this.match_name).freeze(shop_index, index, is_freeze).callBack((data:common.ShopData) => {
                 this.cb_shop_info.call(null, data);
                 resolve();
             }, (err) => {

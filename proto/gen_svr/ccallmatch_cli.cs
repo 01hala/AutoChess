@@ -1107,13 +1107,14 @@ namespace Abelkhan
             }            return cb_refresh_obj;
         }
 
-        public plan_freeze_cb freeze(ShopIndex shop_index, Int32 index){
+        public plan_freeze_cb freeze(ShopIndex shop_index, Int32 index, bool is_freeze){
             var uuid_1f361e1a_a45d_5d41_8158_c66b4bc5aad6 = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
 
             var _argv_7a949231_d386_34d8_8952_29d48e8ff5ca = new ArrayList();
             _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add(uuid_1f361e1a_a45d_5d41_8158_c66b4bc5aad6);
             _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add((int)shop_index);
             _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add(index);
+            _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.Add(is_freeze);
             _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_freeze", _argv_7a949231_d386_34d8_8952_29d48e8ff5ca);
 
             var cb_freeze_obj = new plan_freeze_cb(uuid_1f361e1a_a45d_5d41_8158_c66b4bc5aad6, rsp_cb_plan_handle);

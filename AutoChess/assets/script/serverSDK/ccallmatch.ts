@@ -808,12 +808,13 @@ export class plan_hubproxy
         return cb_refresh_obj;
     }
 
-    public freeze(shop_index:common.ShopIndex, index:number){
+    public freeze(shop_index:common.ShopIndex, index:number, is_freeze:boolean){
         let uuid_1f361e1a_a45d_5d41_8158_c66b4bc5aad6 = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
 
         let _argv_7a949231_d386_34d8_8952_29d48e8ff5ca:any[] = [uuid_1f361e1a_a45d_5d41_8158_c66b4bc5aad6];
         _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.push(shop_index);
         _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.push(index);
+        _argv_7a949231_d386_34d8_8952_29d48e8ff5ca.push(is_freeze);
         this._client_handle.call_hub(this.hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_freeze", _argv_7a949231_d386_34d8_8952_29d48e8ff5ca);
         let cb_freeze_obj = new plan_freeze_cb(uuid_1f361e1a_a45d_5d41_8158_c66b4bc5aad6, rsp_cb_plan_handle);
         if (rsp_cb_plan_handle){
