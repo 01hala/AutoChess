@@ -58,7 +58,11 @@ export class ShopArea extends Component
 
     start() 
     {
-        let outPos:Vec3=this.cam.getComponent(Camera).screenToWorld(new Vec3(0,0,0));
+        if(wx.getSystemInfoSync().safeArea.height==wx.getSystemInfoSync().screenHeight)
+        {
+            return;
+        }
+        let outPos:Vec3=this.cam.getComponent(Camera).screenToWorld(new Vec3(0,15,0));
         this.node.getComponent(Widget).bottom=outPos.y;
     }
 
@@ -159,8 +163,10 @@ export class ShopArea extends Component
         else
         {
             this.freezeArea.getComponent(BlockInputEvents).enabled=false;
-            this.freezeArea.active=false;
-            tween(this.freezeArea).to(0.1,{position:new Vec3(0,-170,0)}).start();
+            tween(this.freezeArea).to(0.1,{position:new Vec3(0,-170,0)}).call(()=>
+            {
+                this.freezeArea.active=false;
+            }).start();
         }
     }
 
