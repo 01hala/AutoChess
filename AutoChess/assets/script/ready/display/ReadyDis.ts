@@ -130,8 +130,7 @@ export class ReadyDis
             console.log('cb_role_buy_merge', target_role_index);
             let str = "Location_" + target_role_index;
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
-            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);;
         };
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
@@ -139,13 +138,11 @@ export class ReadyDis
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
             this.roleArea.targets.set(str, null);
-            //this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
-            //this.roleArea.rolesNode[source_role_index].destroy();
+            
             console.log('cb_role_merge,target_role:', target_role_index);
             str = "Location_" + target_role_index;
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
-            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role,is_update);
         };
         singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             let str = "Location_" + target_role_index;

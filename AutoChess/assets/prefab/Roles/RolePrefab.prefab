@@ -85,7 +85,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "LevleSprite",
+    "_name": "LevelSprite",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1

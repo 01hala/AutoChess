@@ -442,7 +442,7 @@ export class RoleIcon extends Component
         await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
         if(is_update)
         {
-            this.roleNode.getComponent(RoleDis).LevelUp(t.Level);
+            await this.roleNode.getComponent(RoleDis).LevelUp(t.Level);
         }
         this.upgradeLock=false;
     }

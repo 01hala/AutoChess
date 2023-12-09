@@ -147,53 +147,25 @@ namespace Match
         {
             Log.Log.trace("_refresh begin!");
 
-            var rmRoleList = new List<ShopRole>();
-            foreach (var r in shopData.SaleRoleList)
+            for (var i = 0; i < shopData.SaleRoleList.Count; i++)
             {
+                var r = shopData.SaleRoleList[i];
                 if (r == null || !r.IsFreeze)
                 {
-                    rmRoleList.Add(r);
+                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                    r = randomShopRole(stage);
+                    shopData.SaleRoleList[i] = r;
                 }
             }
-            foreach (var r in rmRoleList)
-            {
-                shopData.SaleRoleList.Remove(r);
-            }
 
-            var rmPropList = new List<ShopProp>();
-            foreach (var p in shopData.SalePropList)
+            for (var i = 0; i < shopData.SalePropList.Count; i++)
             {
+                var p = shopData.SalePropList[i];
                 if (p == null || !p.IsFreeze)
                 {
-                    rmPropList.Add(p);
-                }
-            }
-            foreach (var p in rmPropList)
-            {
-                shopData.SalePropList.Remove(p);
-            }
-
-            while (shopData.SaleRoleList.Count < 3)
-            {
-                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                var r = randomShopRole(stage);
-                if (r != null)
-                {
-                    shopData.SaleRoleList.Add(r);
-                }
-            }
-
-            while (shopData.SalePropList.Count < 3)
-            {
-                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                var p = randomShopProp(stage);
-                if (p != null)
-                {
-                    shopData.SalePropList.Add(p);
-                }
-                else
-                {
-                    Log.Log.trace("_refresh shopData.SalePropList null");
+                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                    p = randomShopProp(stage);
+                    shopData.SalePropList[i] = p;
                 }
             }
 
@@ -306,6 +278,8 @@ namespace Match
 
                 if (r.Level > oldLevel)
                 {
+                    BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);
+
                     evs.Add(new shop_event()
                     {
                         ev = EMRoleShopEvent.update,
@@ -325,8 +299,6 @@ namespace Match
 
                         BattleClientCaller.get_client(ClientUUID).role_update_refresh_shop(shopData);
                     }
-
-                    BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);
                 }
                 else
                 {
