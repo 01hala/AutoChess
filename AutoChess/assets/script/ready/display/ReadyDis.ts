@@ -152,6 +152,11 @@ export class ReadyDis
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
         };
+        singleton.netSingleton.game.cb_role_update_refresh_shop=(shop_info: common.ShopData)=> {
+            this.ready.SetShopData(shop_info);
+            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
+        }
+
     }
 
     async Restore(_battle_info:common.UserBattleData)
