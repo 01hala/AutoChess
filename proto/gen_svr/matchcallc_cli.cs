@@ -76,6 +76,38 @@ namespace Abelkhan
         }
     }
 
+    public class Fetters
+    {
+        public Int32 fetters_id;
+        public Int32 number;
+        public static MsgPack.MessagePackObjectDictionary Fetters_to_protcol(Fetters _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("fetters_id", _struct.fetters_id);
+            _protocol.Add("number", _struct.number);
+            return _protocol;
+        }
+        public static Fetters protcol_to_Fetters(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74 = new Fetters();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "fetters_id"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.fetters_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "number"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74;
+        }
+    }
+
 /*this module code is codegen by abelkhan codegen for c#*/
     public class battle_client_module : Common.IModule {
         public Client.Client _client_handle;
@@ -90,6 +122,7 @@ namespace Abelkhan
             _client_handle.modulemanager.add_mothed("battle_client_role_merge", role_merge);
             _client_handle.modulemanager.add_mothed("battle_client_role_eat_food", role_eat_food);
             _client_handle.modulemanager.add_mothed("battle_client_role_update_refresh_shop", role_update_refresh_shop);
+            _client_handle.modulemanager.add_mothed("battle_client_fetters_info", fetters_info);
         }
 
         public event Action<bool> on_battle_victory;
@@ -164,6 +197,18 @@ namespace Abelkhan
             var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
             if (on_role_update_refresh_shop != null){
                 on_role_update_refresh_shop(_info);
+            }
+        }
+
+        public event Action<List<Fetters>> on_fetters_info;
+        public void fetters_info(IList<MsgPack.MessagePackObject> inArray){
+            var _info = new List<Fetters>();
+            var _protocol_arrayinfo = ((MsgPack.MessagePackObject)inArray[0]).AsList();
+            foreach (var v_d856b000_56e0_5f62_a6f3_e6a0c7859745 in _protocol_arrayinfo){
+                _info.Add(Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)v_d856b000_56e0_5f62_a6f3_e6a0c7859745).AsDictionary()));
+            }
+            if (on_fetters_info != null){
+                on_fetters_info(_info);
             }
         }
 

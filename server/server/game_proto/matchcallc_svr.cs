@@ -76,6 +76,38 @@ namespace Abelkhan
         }
     }
 
+    public class Fetters
+    {
+        public Int32 fetters_id;
+        public Int32 number;
+        public static MsgPack.MessagePackObjectDictionary Fetters_to_protcol(Fetters _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("fetters_id", _struct.fetters_id);
+            _protocol.Add("number", _struct.number);
+            return _protocol;
+        }
+        public static Fetters protcol_to_Fetters(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74 = new Fetters();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "fetters_id"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.fetters_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "number"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74;
+        }
+    }
+
 /*this caller code is codegen by abelkhan codegen for c#*/
 /*this cb code is codegen by abelkhan for c#*/
     public class battle_client_rsp_cb : Common.IModule {
@@ -153,6 +185,16 @@ namespace Abelkhan
             var _argv_97214742_cb28_340f_a4d0_e7e39743a356 = new ArrayList();
             _argv_97214742_cb28_340f_a4d0_e7e39743a356.Add(ShopData.ShopData_to_protcol(info));
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_update_refresh_shop", _argv_97214742_cb28_340f_a4d0_e7e39743a356);
+        }
+
+        public void fetters_info(List<Fetters> info){
+            var _argv_2465681a_a205_3e91_8b5b_a53cd2e8b9dc = new ArrayList();
+            var _array_391fd3d4_2d55_3f5e_9223_7f450a814a15 = new ArrayList();
+            foreach(var v_0c15545d_d42a_5fe0_bed7_a9496851e88b in info){
+                _array_391fd3d4_2d55_3f5e_9223_7f450a814a15.Add(Fetters.Fetters_to_protcol(v_0c15545d_d42a_5fe0_bed7_a9496851e88b));
+            }
+            _argv_2465681a_a205_3e91_8b5b_a53cd2e8b9dc.Add(_array_391fd3d4_2d55_3f5e_9223_7f450a814a15);
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_fetters_info", _argv_2465681a_a205_3e91_8b5b_a53cd2e8b9dc);
         }
 
     }
