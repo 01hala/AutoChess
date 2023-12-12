@@ -22,7 +22,7 @@ export class netGame {
     public cb_role_merge : (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void;
     public cb_role_eat_food : (food_id:number, target_role_index:number, target_role:common.Role, is_update:boolean, is_syncope:boolean)=>void;
     public cb_role_update_refresh_shop : (shop_info:common.ShopData) => void;
-    public cb_fetters_info : (info:match_c.Fetters[]) => void;
+    public cb_fetters_info : (info:common.Fetters[]) => void;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_match = new match.plan_caller(cli.cli_handle);
@@ -64,7 +64,7 @@ export class netGame {
                 this.cb_role_update_refresh_shop.call(null, shop_info);
             }
         }
-        this.match_c.cb_fetters_info = (info:match_c.Fetters[]) => {
+        this.match_c.cb_fetters_info = (info:common.Fetters[]) => {
             if (this.cb_fetters_info) {
                 this.cb_fetters_info.call(null, info);
             }

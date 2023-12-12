@@ -214,14 +214,14 @@ namespace Match
 
             foreach(var r in battleData.RoleList)
             {
-                if (mapFetters.TryGetValue(r.FettersSkillID, out var fetters))
+                if (mapFetters.TryGetValue(r.FettersSkillID.fetters_id, out var fetters))
                 {
                     fetters.number++;
                 }
                 else
                 {
-                    mapFetters.Add(r.FettersSkillID, new Fetters() { 
-                        fetters_id = r.FettersSkillID,
+                    mapFetters.Add(r.FettersSkillID.fetters_id, new Fetters() { 
+                        fetters_id = r.FettersSkillID.fetters_id,
                         number = 1
                     });
                 }
@@ -233,6 +233,14 @@ namespace Match
                 if (fetters.number > 1)
                 {
                     fetters_info.Add(fetters);
+
+                    foreach (var r in battleData.RoleList)
+                    {
+                        if (r.FettersSkillID.fetters_id == fetters.fetters_id)
+                        {
+                            r.FettersSkillID.number = fetters.number;
+                        }
+                    }
                 }
             }
 
@@ -294,7 +302,11 @@ namespace Match
 
                 if (config.Config.RoleConfigs.TryGetValue(r.RoleID, out RoleConfig rcfg))
                 {
-                    r.FettersSkillID = rcfg.Fetters;
+                    r.FettersSkillID = new Fetters()
+                    {
+                        fetters_id = rcfg.Fetters,
+                        number = 2
+                    };
                 }
 
                 battleData.RoleList[role_index] = r;

@@ -98,12 +98,44 @@ namespace Abelkhan
         }
     }
 
+    public class Fetters
+    {
+        public Int32 fetters_id;
+        public Int32 number;
+        public static MsgPack.MessagePackObjectDictionary Fetters_to_protcol(Fetters _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("fetters_id", _struct.fetters_id);
+            _protocol.Add("number", _struct.number);
+            return _protocol;
+        }
+        public static Fetters protcol_to_Fetters(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74 = new Fetters();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "fetters_id"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.fetters_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "number"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74;
+        }
+    }
+
     public class Role
     {
         public Int32 RoleID;
         public Int32 Level;
         public Int32 SkillID;
-        public Int32 FettersSkillID;
+        public Fetters FettersSkillID;
         public Int32 Number;
         public Int32 HP;
         public Int32 Attack;
@@ -120,7 +152,7 @@ namespace Abelkhan
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("Level", _struct.Level);
             _protocol.Add("SkillID", _struct.SkillID);
-            _protocol.Add("FettersSkillID", _struct.FettersSkillID);
+            _protocol.Add("FettersSkillID", new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(_struct.FettersSkillID)));
             _protocol.Add("Number", _struct.Number);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
@@ -147,7 +179,7 @@ namespace Abelkhan
                     _structe15dab07_4671_3806_9f26_9880fe20019d.SkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "FettersSkillID"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.FettersSkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.FettersSkillID = Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)i.Value).AsDictionary());
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Number"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Number = ((MsgPack.MessagePackObject)i.Value).AsInt32();

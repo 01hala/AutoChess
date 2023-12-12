@@ -77,12 +77,40 @@ export function protcol_to_UserData(_protocol:any){
     return _struct;
 }
 
+export class Fetters
+{
+    public fetters_id : number = 0;
+    public number : number = 0;
+
+}
+
+export function Fetters_to_protcol(_struct:Fetters){
+    return _struct;
+}
+
+export function protcol_to_Fetters(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new Fetters();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "fetters_id"){
+            _struct.fetters_id = val as number;
+        }
+        else if (key === "number"){
+            _struct.number = val as number;
+        }
+    }
+    return _struct;
+}
+
 export class Role
 {
     public RoleID : number = 0;
     public Level : number = 0;
     public SkillID : number = 0;
-    public FettersSkillID : number = 0;
+    public FettersSkillID : Fetters | null = null;
     public Number : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
@@ -114,7 +142,7 @@ export function protcol_to_Role(_protocol:any){
             _struct.SkillID = val as number;
         }
         else if (key === "FettersSkillID"){
-            _struct.FettersSkillID = val as number;
+            _struct.FettersSkillID = protcol_to_Fetters(val);
         }
         else if (key === "Number"){
             _struct.Number = val as number;

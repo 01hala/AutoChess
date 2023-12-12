@@ -11,11 +11,16 @@ struct UserData
 	int32[] RoleList; // 角色列表
 }
 
+struct Fetters {
+    int32 fetters_id;
+    int32 number;
+}
+
 struct Role {
 	int32 RoleID;
 	int32 Level;
 	int32 SkillID;
-	int32 FettersSkillID;
+	Fetters FettersSkillID;
 	int32 Number;
 	int32 HP;
 	int32 Attack;

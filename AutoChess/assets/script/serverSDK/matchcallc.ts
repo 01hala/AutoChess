@@ -49,34 +49,6 @@ export function protcol_to_ShopSkillEffect(_protocol:any){
     return _struct;
 }
 
-export class Fetters
-{
-    public fetters_id : number = 0;
-    public number : number = 0;
-
-}
-
-export function Fetters_to_protcol(_struct:Fetters){
-    return _struct;
-}
-
-export function protcol_to_Fetters(_protocol:any){
-    if (_protocol == null) {
-        return null;
-    }
-
-    let _struct = new Fetters();
-    for (const [key, val] of Object.entries(_protocol)) {
-        if (key === "fetters_id"){
-            _struct.fetters_id = val as number;
-        }
-        else if (key === "number"){
-            _struct.number = val as number;
-        }
-    }
-    return _struct;
-}
-
 /*this module code is codegen by abelkhan codegen for typescript*/
 export class battle_client_module extends client_handle.imodule {
     public _client_handle:client_handle.client;
@@ -187,12 +159,12 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_fetters_info : (info:Fetters[])=>void | null;
+    public cb_fetters_info : (info:common.Fetters[])=>void | null;
     fetters_info(inArray:any[]){
         let _argv_:any[] = [];
         let _array_:any[] = [];
         for(let v_ of inArray[0]){
-            _array_.push(protcol_to_Fetters(v_));
+            _array_.push(common.protcol_to_Fetters(v_));
         }
         _argv_.push(_array_);
         if (this.cb_fetters_info){
