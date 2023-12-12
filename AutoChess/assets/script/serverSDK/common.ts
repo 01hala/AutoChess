@@ -1,11 +1,18 @@
 import * as client_handle from "./client_handle";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
-export enum ShopSkillEffectEM{
+export enum SkillEffectEM{
     AddProperty = 1,
-    AddCoin = 2,
-    RefreshShop = 3,
-    AddEquipment = 4
+    RecoverHP = 2,
+    RemoteAttack = 3,
+    Summon = 4,
+    AddCoin = 5,
+    ExchangeProperty = 6,
+    GainShield = 7,
+    RefreshShop = 8,
+    ChangePosition = 9,
+    AddEquipment = 10,
+    ReductionHurt = 11
 }
 
 export enum ShopIndex{

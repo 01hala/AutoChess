@@ -8,7 +8,7 @@ export class ShopSkillEffect
     public spellcaster : number = 0;
     public recipient : number[] = [];
     public skill_id : number = 0;
-    public effect : common.ShopSkillEffectEM = common.ShopSkillEffectEM.AddProperty;
+    public effect : common.SkillEffectEM = common.SkillEffectEM.AddProperty;
     public value : number[] = [];
 
 }
@@ -37,7 +37,7 @@ export function protcol_to_ShopSkillEffect(_protocol:any){
             _struct.skill_id = val as number;
         }
         else if (key === "effect"){
-            _struct.effect = val as common.ShopSkillEffectEM;
+            _struct.effect = val as common.SkillEffectEM;
         }
         else if (key === "value"){
             _struct.value = [];

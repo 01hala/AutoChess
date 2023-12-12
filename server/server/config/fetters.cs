@@ -2,30 +2,33 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using System.Linq;
 
 namespace config
 {
-    public class ShopSkillConfig
+    public class FettersConfig
     {
         public int Id;
         public string Name;
-        public string Type;
-        public Priority Priority;
-        public EMShopEvent EffectTime;
-        public Abelkhan.ShopSkillEffectEM Effect;
-        public int ObjCount;
-        public Direction ObjectDirection;
+        public EMSkillEvent EffectTime;
+        public Abelkhan.SkillEffectEM Effect;
+        public List<int> RoleNum;
+        public List<int> ObjCount;
         public EffectScope EffectScope;
-        public int Level1Value_1;
-        public int Level1Value_2;
-        public int Level2Value_1;
-        public int Level2Value_2;
-        public int Level3Value_1;
-        public int Level3Value_2;
+        public int Stage1value_1;
+        public int Stage1value_2;
+        public int Stage2value_1;
+        public int Stage2value_2;
+        public int Stage3value_1;
+        public int Stage3value_2;
+        public int Stage4value_1;
+        public int Stage4value_2;
+        public int SummonId;
+        public int SummonLevel;
 
-        public static Dictionary<int, ShopSkillConfig> Load(string path)
+        public static Dictionary<int, FettersConfig> Load(string path)
         {
-            var obj = new Dictionary<int, ShopSkillConfig>();
+            var obj = new Dictionary<int, FettersConfig>();
 
             FileStream fs = File.OpenRead(path);
             byte[] data = new byte[fs.Length];
@@ -45,24 +48,33 @@ namespace config
             var handle = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(System.Text.Encoding.Default.GetString(data));
             foreach (var o in handle.Values)
             {
-                var skillc = new ShopSkillConfig();
-                skillc.Id = (int)o["Id"];
-                skillc.Name = (string)o["Name"];
-                skillc.Type = (string)o["Type"];
-                skillc.Priority = (Priority)o["Priority"];
-                skillc.EffectTime = (EMShopEvent)o["EffectTime"];
-                skillc.Effect = (Abelkhan.ShopSkillEffectEM)o["Effect"];
-                skillc.ObjCount = (int)o["ObjCount"];
-                skillc.ObjectDirection = (Direction)o["ObjDirection"];
-                skillc.EffectScope = (EffectScope)o["EffectScope"];
-                skillc.Level1Value_1 = (int)o["Level1Value_1"];
-                skillc.Level1Value_2 = (int)o["Level1Value_2"];
-                skillc.Level2Value_1 = (int)o["Level2Value_1"];
-                skillc.Level2Value_2 = (int)o["Level2Value_2"];
-                skillc.Level3Value_1 = (int)o["Level3Value_1"];
-                skillc.Level3Value_2 = (int)o["Level3Value_2"];
+                var fettersc = new FettersConfig();
+                fettersc.Id = (int)o["Id"];
+                fettersc.Name = (string)o["Name"];
+                fettersc.EffectTime = (EMSkillEvent)o["EffectTime"];
+                fettersc.Effect = (Abelkhan.SkillEffectEM)o["Effect"];
+                
+                var num = (string)o["RoleNum"];
+                var roleNum = num.Split("|");
+                fettersc.RoleNum = roleNum.Select(int.Parse).ToList();
 
-                obj[skillc.Id] = skillc;
+                var count = (string)o["ObjCount"];
+                var objCount = count.Split("|");
+                fettersc.ObjCount = objCount.Select(int.Parse).ToList();
+
+                fettersc.EffectScope = (EffectScope)o["EffectScope"];
+                fettersc.Stage1value_1 = (int)o["Stage1value_1"];
+                fettersc.Stage1value_2 = (int)o["Stage1value_2"];
+                fettersc.Stage2value_1 = (int)o["Stage2value_1"];
+                fettersc.Stage2value_2 = (int)o["Stage2value_2"];
+                fettersc.Stage3value_1 = (int)o["Stage3value_1"];
+                fettersc.Stage3value_2 = (int)o["Stage3value_2"];
+                fettersc.Stage4value_1 = (int)o["Stage4value_1"];
+                fettersc.Stage4value_2 = (int)o["Stage4value_2"];
+                fettersc.SummonId = (int)o["SummonId"];
+                fettersc.SummonLevel = (int)o["SummonLevel"];
+
+                obj[fettersc.Id] = fettersc;
             }
 
             return obj;

@@ -11,8 +11,8 @@ namespace config
         public string Name;
         public string Type;
         public Priority Priority;
-        public EMShopEvent EffectTime;
-        public Abelkhan.ShopSkillEffectEM Effect;
+        public EMSkillEvent EffectTime;
+        public Abelkhan.SkillEffectEM Effect;
         public int ObjCount;
         public Direction ObjectDirection;
         public EffectScope EffectScope;
@@ -50,8 +50,8 @@ namespace config
                 skillc.Name = (string)o["Name"];
                 skillc.Type = (string)o["Type"];
                 skillc.Priority = (Priority)o["Priority"];
-                skillc.EffectTime = (EMShopEvent)o["EffectTime"];
-                skillc.Effect = (Abelkhan.ShopSkillEffectEM)o["Effect"];
+                skillc.EffectTime = (EMSkillEvent)o["EffectTime"];
+                skillc.Effect = (Abelkhan.SkillEffectEM)o["Effect"];
                 skillc.ObjCount = (int)o["ObjCount"];
                 skillc.ObjectDirection = (Direction)o["ObjDirection"];
                 skillc.EffectScope = (EffectScope)o["EffectScope"];

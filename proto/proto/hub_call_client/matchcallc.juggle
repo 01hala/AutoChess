@@ -4,7 +4,7 @@ struct ShopSkillEffect {
     int32 spellcaster;
     int32[] recipient;
     int32 skill_id;
-    ShopSkillEffectEM effect;
+    SkillEffectEM effect;
     int32[] value;
 }
 

@@ -48,7 +48,7 @@ namespace Match
                 {
                     case EMRoleShopEvent.sales:
                     {
-                        if (skill.EffectTime == EMShopEvent.sales)
+                        if (skill.EffectTime == EMSkillEvent.sales)
                         {
                             return true;
                         }
@@ -56,7 +56,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.buy:
                     {
-                        if (skill.EffectTime == EMShopEvent.buy)
+                        if (skill.EffectTime == EMSkillEvent.buy)
                         {
                             return true;
                         }
@@ -64,11 +64,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.update:
                     {
-                        if (skill.EffectTime ==EMShopEvent.self_update && index == ev.index)
-                        {
-                            return true;
-                        }
-                        else if (skill.EffectTime == EMShopEvent.camp_update && index != ev.index)
+                        if (skill.EffectTime ==EMSkillEvent.update)
                         {
                             return true;
                         }
@@ -76,11 +72,11 @@ namespace Match
                     break;
                     case EMRoleShopEvent.food:
                     {
-                        if (skill.EffectTime == EMShopEvent.self_food && index == ev.index)
+                        if (skill.EffectTime == EMSkillEvent.eat_food && index == ev.index)
                         {
                             return true;
                         }
-                        else if (skill.EffectTime == EMShopEvent.camp_food && index != ev.index)
+                        else if (skill.EffectTime == EMSkillEvent.camp_eat_food && index != ev.index)
                         {
                             return true;
                         }
@@ -88,7 +84,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.start_round:
                     {
-                        if (skill.EffectTime == EMShopEvent.start_round)
+                        if (skill.EffectTime == EMSkillEvent.start_round)
                         {
                             return true;
                         }
@@ -96,7 +92,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.end_round:
                     {
-                        if (skill.EffectTime == EMShopEvent.end_round)
+                        if (skill.EffectTime == EMSkillEvent.end_round)
                         {
                             return true;
                         }
@@ -104,15 +100,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.syncope:
                     {
-                        if (skill.EffectTime == EMShopEvent.syncope)
-                        {
-                            return true;
-                        }
-                    }
-                    break;
-                    case EMRoleShopEvent.refresh:
-                    {
-                        if (skill.EffectTime == EMShopEvent.refresh)
+                        if (skill.EffectTime == EMSkillEvent.syncope)
                         {
                             return true;
                         }
@@ -130,7 +118,7 @@ namespace Match
             skilleffect.skill_id = skill.Id;
             skilleffect.spellcaster = index;
             skilleffect.recipient = new List<int>();
-            skilleffect.effect = ShopSkillEffectEM.AddProperty;
+            skilleffect.effect = SkillEffectEM.AddProperty;
 
             Role r = null;
             switch ((int)skill.ObjectDirection)
@@ -325,7 +313,7 @@ namespace Match
             skilleffect.skill_id = skill.Id;
             skilleffect.spellcaster = index;
             skilleffect.recipient = new List<int>();
-            skilleffect.effect = ShopSkillEffectEM.AddCoin;
+            skilleffect.effect = SkillEffectEM.AddCoin;
             skilleffect.value = new List<int>() { addCoin };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
 
@@ -342,7 +330,7 @@ namespace Match
             skilleffect.skill_id = skill.Id;
             skilleffect.spellcaster = index;
             skilleffect.recipient = new List<int>();
-            skilleffect.effect = ShopSkillEffectEM.RefreshShop;
+            skilleffect.effect =SkillEffectEM.RefreshShop;
             skilleffect.value = new List<int>();
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
 
@@ -366,25 +354,25 @@ namespace Match
 
             switch (skill.Effect)
             {
-                case ShopSkillEffectEM.AddProperty:
+                case SkillEffectEM.AddProperty:
                 {
                     AddProperty(skill, _player);
                 }
                 break;
 
-                case ShopSkillEffectEM.AddCoin:
+                case SkillEffectEM.AddCoin:
                 {
                     AddCoin(skill, _player);
                 }
                 break;
 
-                case ShopSkillEffectEM.RefreshShop:
+                case SkillEffectEM.RefreshShop:
                 {
                     RefreshShop(skill, _player);
                 }
                 break;
 
-                case ShopSkillEffectEM.AddEquipment:
+                case SkillEffectEM.AddEquipment:
                 {
 
                 }

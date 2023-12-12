@@ -14,7 +14,7 @@ namespace Abelkhan
         public Int32 spellcaster;
         public List<Int32> recipient;
         public Int32 skill_id;
-        public ShopSkillEffectEM effect;
+        public SkillEffectEM effect;
         public List<Int32> value;
         public static MsgPack.MessagePackObjectDictionary ShopSkillEffect_to_protcol(ShopSkillEffect _struct){
         if (_struct == null) {
@@ -62,7 +62,7 @@ namespace Abelkhan
                     _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.skill_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "effect"){
-                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.effect = (ShopSkillEffectEM)((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.effect = (SkillEffectEM)((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "value"){
                     _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.value = new List<Int32>();
