@@ -208,6 +208,37 @@ namespace Match
             clear_skill_tag();
         }
 
+        private void check_fetters()
+        {
+            var mapFetters = new Dictionary<int, Fetters>();
+
+            foreach(var r in battleData.RoleList)
+            {
+                if (mapFetters.TryGetValue(r.FettersSkillID, out var fetters))
+                {
+                    fetters.number++;
+                }
+                else
+                {
+                    mapFetters.Add(r.FettersSkillID, new Fetters() { 
+                        fetters_id = r.FettersSkillID,
+                        number = 1
+                    });
+                }
+            }
+
+            var fetters_info = new List<Fetters>();
+            foreach(var fetters in mapFetters.Values)
+            {
+                if (fetters.number > 1)
+                {
+                    fetters_info.Add(fetters);
+                }
+            }
+
+            BattleClientCaller.get_client(ClientUUID).fetters_info(fetters_info);
+        }
+
         public bool sale_role(int index)
         {
             var r = battleData.RoleList[index];
@@ -228,6 +259,7 @@ namespace Match
                 });
 
                 clear_skill_tag();
+                check_fetters();
 
                 return true;
             }
@@ -260,8 +292,15 @@ namespace Match
                 r.additionBuffer = 0;
                 r.TempAdditionBuffer = 0;
 
+                if (config.Config.RoleConfigs.TryGetValue(r.RoleID, out RoleConfig rcfg))
+                {
+                    r.FettersSkillID = rcfg.Fetters;
+                }
+
                 battleData.RoleList[role_index] = r;
                 shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID, r.SkillID);
+
+                check_fetters();
             }
             else
             {
