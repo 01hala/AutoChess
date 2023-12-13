@@ -108,6 +108,7 @@ namespace Abelkhan
     public class Fetters
     {
         public Int32 fetters_id;
+        public Int32 fetters_level;
         public Int32 number;
         public static MsgPack.MessagePackObjectDictionary Fetters_to_protcol(Fetters _struct){
         if (_struct == null) {
@@ -116,6 +117,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("fetters_id", _struct.fetters_id);
+            _protocol.Add("fetters_level", _struct.fetters_level);
             _protocol.Add("number", _struct.number);
             return _protocol;
         }
@@ -128,6 +130,9 @@ namespace Abelkhan
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "fetters_id"){
                     _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.fetters_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fetters_level"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.fetters_level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "number"){
                     _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.number = ((MsgPack.MessagePackObject)i.Value).AsInt32();

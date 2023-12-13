@@ -10,6 +10,7 @@ namespace config
     {
         public int Id;
         public string Name;
+        public Priority Priority;
         public EMSkillEvent EffectTime;
         public Abelkhan.SkillEffectEM Effect;
         public List<int> RoleNum;
@@ -62,6 +63,7 @@ namespace config
                 var objCount = count.Split("|");
                 fettersc.ObjCount = objCount.Select(int.Parse).ToList();
 
+                fettersc.Priority = (Priority) o["Priority"];
                 fettersc.EffectScope = (EffectScope)o["EffectScope"];
                 fettersc.Stage1value_1 = (int)o["Stage1value_1"];
                 fettersc.Stage1value_2 = (int)o["Stage1value_2"];

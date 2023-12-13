@@ -70,7 +70,6 @@ namespace config
         start_round = 5, //回合开始
         end_round = 6,   //回合结束
         syncope = 7,     //晕厥时
-        refresh = 8,     //商店更新时
     }
 
     public static class Config

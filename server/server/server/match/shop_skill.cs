@@ -15,40 +15,87 @@ namespace Match
         public int index;
     }
 
+    public class skill_execute
+    {
+        public Priority Priority;
+        public Action execute;
+    }
+
     public class shop_skill_role
     {
         public int index;
         public int roleID;
         public int skillID;
+        public int fettersSkillID;
+        public int fettersLevel;
         public bool is_trigger = false;
 
-        public shop_skill_role(int _index, int _roleID, int _skillID)
+        public shop_skill_role(int _index, int _roleID, int _skillID, int _fettersSkillID, int _fettersLevel)
         {
             index = _index;
             roleID = _roleID;
             skillID = _skillID;
+            fettersSkillID = _fettersSkillID;
+            fettersLevel = _fettersLevel;
         }
 
-        public bool Trigger(List<shop_event> evs)
+        public List<skill_execute> Trigger(List<shop_event> evs, battle_player _player)
         {
             if (is_trigger)
             {
-                return false;
+                return null;
             }
+
+            var ret = new List<skill_execute>();
 
             ShopSkillConfig skill;
-            if (!config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
+            if (config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
             {
-                return false;
+                if (TriggerSkill(evs, skill.EffectTime))
+                {
+                    ret.Add(new skill_execute()
+                    {
+                        Priority = skill.Priority,
+                        execute = () =>
+                        {
+                            UseSkill(_player);
+                        }
+                    });
+                }
             }
 
+            FettersConfig fettersc;
+            if (config.Config.FettersConfigs.TryGetValue(fettersSkillID, out fettersc))
+            {
+                if (TriggerSkill(evs, fettersc.EffectTime))
+                {
+                    ret.Add(new skill_execute()
+                    {
+                        Priority = fettersc.Priority,
+                        execute = () =>
+                        {
+                            UseFettersSkill(_player);
+                        }
+                    });
+                }
+            }
+
+            return ret;
+        }
+
+        private bool TriggerSkill(List<shop_event> evs, EMSkillEvent EffectTime)
+        {
             foreach(var ev in evs)
             {
                 switch (ev.ev)
                 {
                     case EMRoleShopEvent.sales:
                     {
-                        if (skill.EffectTime == EMSkillEvent.sales)
+                        if (EffectTime == EMSkillEvent.sales && index == ev.index)
+                        {
+                            return true;
+                        }
+                        else if (EffectTime == EMSkillEvent.camp_sales && index != ev.index)
                         {
                             return true;
                         }
@@ -56,7 +103,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.buy:
                     {
-                        if (skill.EffectTime == EMSkillEvent.buy)
+                        if (EffectTime == EMSkillEvent.buy)
                         {
                             return true;
                         }
@@ -64,7 +111,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.update:
                     {
-                        if (skill.EffectTime ==EMSkillEvent.update)
+                        if (EffectTime ==EMSkillEvent.update)
                         {
                             return true;
                         }
@@ -72,11 +119,11 @@ namespace Match
                     break;
                     case EMRoleShopEvent.food:
                     {
-                        if (skill.EffectTime == EMSkillEvent.eat_food && index == ev.index)
+                        if (EffectTime == EMSkillEvent.eat_food && index == ev.index)
                         {
                             return true;
                         }
-                        else if (skill.EffectTime == EMSkillEvent.camp_eat_food && index != ev.index)
+                        else if (EffectTime == EMSkillEvent.camp_eat_food && index != ev.index)
                         {
                             return true;
                         }
@@ -84,7 +131,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.start_round:
                     {
-                        if (skill.EffectTime == EMSkillEvent.start_round)
+                        if (EffectTime == EMSkillEvent.start_round)
                         {
                             return true;
                         }
@@ -92,7 +139,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.end_round:
                     {
-                        if (skill.EffectTime == EMSkillEvent.end_round)
+                        if (EffectTime == EMSkillEvent.end_round)
                         {
                             return true;
                         }
@@ -100,7 +147,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.syncope:
                     {
-                        if (skill.EffectTime == EMSkillEvent.syncope)
+                        if (EffectTime == EMSkillEvent.syncope)
                         {
                             return true;
                         }
@@ -112,6 +159,24 @@ namespace Match
             return false;
         }
 
+        private void AddProperty(battle_player _player, int target_index, EffectScope scope, int hp, int attack)
+        {
+            Role target_r = _player.BattleData.RoleList[target_index];
+            if (target_r != null)
+            {
+                if (scope == EffectScope.SingleBattle)
+                {
+                    target_r.TempHP += hp;
+                    target_r.TempAttack += attack;
+                }
+                else if (scope == EffectScope.WholeGame)
+                {
+                    target_r.HP += hp;
+                    target_r.Attack += attack;
+                }
+            }
+        }
+
         private void AddProperty(ShopSkillConfig skill, battle_player _player)
         {
             var skilleffect = new ShopSkillEffect();
@@ -120,7 +185,7 @@ namespace Match
             skilleffect.recipient = new List<int>();
             skilleffect.effect = SkillEffectEM.AddProperty;
 
-            Role r = null;
+            int target_index = -1;
             switch ((int)skill.ObjectDirection)
             {
                 case 1:
@@ -128,17 +193,17 @@ namespace Match
                     if (index == 4)
                     {
                         skilleffect.recipient.Add(2);
-                        r = _player.BattleData.RoleList[2];
+                        target_index = 2;
                     }
                     else if (index == 5)
                     {
                         skilleffect.recipient.Add(1);
-                        r = _player.BattleData.RoleList[1];
+                        target_index = 1;
                     }
                     else if (index == 6)
                     {
                         skilleffect.recipient.Add(3);
-                        r = _player.BattleData.RoleList[3];
+                        target_index = 3;
                     }
                 }
                 break;
@@ -148,17 +213,17 @@ namespace Match
                     if (index == 1)
                     {
                         skilleffect.recipient.Add(5);
-                        r = _player.BattleData.RoleList[5];
+                        target_index = 5;
                     }
                     else if (index == 2)
                     {
                         skilleffect.recipient.Add(4);
-                        r = _player.BattleData.RoleList[4];
+                        target_index = 4;
                     }
                     else if (index == 3)
                     {
                         skilleffect.recipient.Add(6);
-                        r = _player.BattleData.RoleList[6];
+                        target_index = 6;
                     }
                 }
                 break;
@@ -168,22 +233,22 @@ namespace Match
                     if (index == 2)
                     {
                         skilleffect.recipient.Add(1);
-                        r = _player.BattleData.RoleList[1];
+                        target_index = 1;
                     }
                     else if (index == 1)
                     {
                         skilleffect.recipient.Add(3);
-                        r = _player.BattleData.RoleList[3];
+                        target_index = 3;
                     }
                     else if (index == 4)
                     {
                         skilleffect.recipient.Add(5);
-                        r = _player.BattleData.RoleList[5];
+                        target_index = 5;
                     }
                     else if (index == 5)
                     {
                         skilleffect.recipient.Add(6);
-                        r = _player.BattleData.RoleList[6];
+                        target_index = 6;
                     }
                 }
                 break;
@@ -193,22 +258,22 @@ namespace Match
                     if (index == 3)
                     {
                         skilleffect.recipient.Add(1);
-                        r = _player.BattleData.RoleList[1];
+                        target_index = 1;
                     }
                     else if (index == 1)
                     {
                         skilleffect.recipient.Add(2);
-                        r = _player.BattleData.RoleList[2];
+                        target_index = 2;
                     }
                     else if (index == 6)
                     {
                         skilleffect.recipient.Add(5);
-                        r = _player.BattleData.RoleList[5];
+                        target_index = 5;
                     }
                     else if (index == 5)
                     {
                         skilleffect.recipient.Add(4);
-                        r = _player.BattleData.RoleList[4];
+                        target_index = 4;
                     }
                 }
                 break;
@@ -216,59 +281,33 @@ namespace Match
                 case 5:
                 {
                     skilleffect.recipient.Add(index);
-                    r = _player.BattleData.RoleList[index];
+                    target_index = index;
                 }
                 break;
             }
 
-            if (r != null)
+            if (target_index > 0)
             {
+                var r = _player.BattleData.RoleList[index];
                 switch (r.Level)
                 {
                     case 1:
                     {
-                        if (skill.EffectScope == EffectScope.SingleBattle)
-                        {
-                            r.TempHP += skill.Level1Value_1;
-                            r.TempAttack += skill.Level1Value_2;
-                        }
-                        else if (skill.EffectScope == EffectScope.WholeGame)
-                        {
-                            r.HP += skill.Level1Value_1;
-                            r.Attack += skill.Level1Value_2;
-                        }
+                        AddProperty(_player, target_index, skill.EffectScope, skill.Level1Value_1, skill.Level1Value_2);
                         skilleffect.value = new List<int>() { skill.Level1Value_1, skill.Level1Value_2 };
                     }
                     break;
 
                     case 2:
                     {
-                        if (skill.EffectScope == EffectScope.SingleBattle)
-                        {
-                            r.TempHP += skill.Level2Value_1;
-                            r.TempAttack += skill.Level2Value_2;
-                        }
-                        else if (skill.EffectScope == EffectScope.WholeGame)
-                        {
-                            r.HP += skill.Level2Value_1;
-                            r.Attack += skill.Level2Value_2;
-                        }
+                        AddProperty(_player, target_index, skill.EffectScope, skill.Level2Value_1, skill.Level2Value_2);
                         skilleffect.value = new List<int>() { skill.Level2Value_1, skill.Level2Value_2 };
                     }
                     break;
 
                     case 3:
                     {
-                        if (skill.EffectScope == EffectScope.SingleBattle)
-                        {
-                            r.TempHP += skill.Level3Value_1;
-                            r.TempAttack += skill.Level3Value_2;
-                        }
-                        else if (skill.EffectScope == EffectScope.WholeGame)
-                        {
-                            r.HP += skill.Level3Value_1;
-                            r.Attack += skill.Level3Value_2;
-                        }
+                        AddProperty(_player, target_index, skill.EffectScope, skill.Level3Value_1, skill.Level3Value_2);
                         skilleffect.value = new List<int>() { skill.Level3Value_1, skill.Level3Value_2 };
                     }
                     break;
@@ -281,6 +320,11 @@ namespace Match
             }
         }
 
+        private void AddCoin(battle_player _player, int num)
+        {
+            _player.BattleData.coin += num;
+        }
+
         private void AddCoin(ShopSkillConfig skill, battle_player _player)
         {
             var addCoin = 0;
@@ -290,24 +334,22 @@ namespace Match
                 case 1:
                 {
                     addCoin = skill.Level1Value_1;
-                    _player.BattleData.coin += skill.Level1Value_1;
                 }
                 break;
 
                 case 2:
                 {
                     addCoin = skill.Level2Value_1;
-                    _player.BattleData.coin += skill.Level2Value_1;
                 }
                 break;
 
                 case 3:
                 {
                     addCoin = skill.Level3Value_1;
-                    _player.BattleData.coin += skill.Level3Value_1;
                 }
                 break;
             }
+            AddCoin(_player, addCoin);
 
             var skilleffect = new ShopSkillEffect();
             skilleffect.skill_id = skill.Id;
@@ -316,7 +358,6 @@ namespace Match
             skilleffect.effect = SkillEffectEM.AddCoin;
             skilleffect.value = new List<int>() { addCoin };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
-
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
             is_trigger = true;
@@ -339,13 +380,8 @@ namespace Match
             is_trigger = true;
         }
 
-        public void UseSkill(battle_player _player)
+        private void UseSkill(battle_player _player)
         {
-            if (is_trigger)
-            {
-                return;
-            }
-
             ShopSkillConfig skill;
             if (!config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
             {
@@ -369,6 +405,152 @@ namespace Match
                 case SkillEffectEM.RefreshShop:
                 {
                     RefreshShop(skill, _player);
+                }
+                break;
+
+                case SkillEffectEM.AddEquipment:
+                {
+
+                }
+                break;
+            }
+        }
+
+        private void AddProperty(FettersConfig fetters, battle_player _player)
+        {
+            var count_index = fetters.ObjCount.Count < fettersLevel ? fetters.ObjCount.Count - 1 : fettersLevel - 1;
+            var count = fetters.ObjCount[count_index];
+
+            var exclude_list = new List<int>();
+            var target_list = new List<int>();
+            while (target_list.Count < count)
+            {
+                int target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
+                if (exclude_list.Contains(target_index))
+                {
+                    continue;
+                }
+                exclude_list.Add(target_index);
+
+                if ((_player.BattleData.RoleList[target_index] != null))
+                {
+                    target_list.Add(target_index);
+                }
+
+                target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
+            }
+
+            foreach (var target_index in target_list)
+            { 
+                if (target_index > 0)
+                {
+                    switch (fettersLevel)
+                    {
+                        case 1:
+                        {
+                            AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage1value_1, fetters.Stage1value_2);
+                        }
+                        break;
+
+                        case 2:
+                        {
+                            AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage2value_1, fetters.Stage2value_2);
+                        }
+                        break;
+
+                        case 3:
+                        {
+                            AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage3value_1, fetters.Stage3value_2);
+                        }
+                        break;
+
+                        case 4:
+                        {
+                            AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage4value_1, fetters.Stage4value_2);
+                        }
+                        break;
+                    }
+
+                    is_trigger = true;
+                }
+            }
+
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+        }
+
+        private void AddCoin(FettersConfig fetters, battle_player _player)
+        {
+            var addCoin = 0;
+            switch (fettersLevel)
+            {
+                case 1:
+                {
+                    addCoin = fetters.Stage1value_1;
+                }
+                break;
+
+                case 2:
+                {
+                    addCoin = fetters.Stage2value_1;
+                }
+                break;
+
+                case 3:
+                {
+                    addCoin = fetters.Stage3value_1;
+                }
+                break;
+
+                case 4:
+                {
+                    addCoin = fetters.Stage4value_1;
+                }
+                break;
+            }
+            AddCoin(_player, addCoin);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+
+            is_trigger = true;
+        }
+
+        private void RefreshShop(FettersConfig fetters, battle_player _player)
+        {
+            _player.refresh();
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+
+            is_trigger = true;
+        }
+
+        private void UseFettersSkill(battle_player _player)
+        {
+            if (fettersLevel <= 0)
+            {
+                return;
+            }
+
+            FettersConfig fetters;
+            if (!config.Config.FettersConfigs.TryGetValue(fettersSkillID, out fetters))
+            {
+                return;
+            }
+
+            switch (fetters.Effect)
+            {
+                case SkillEffectEM.AddProperty:
+                {
+                    AddProperty(fetters, _player);
+                }
+                break;
+
+                case SkillEffectEM.AddCoin:
+                {
+                    AddCoin(fetters, _player);
+                }
+                break;
+
+                case SkillEffectEM.RefreshShop:
+                {
+                    RefreshShop(fetters, _player);
                 }
                 break;
 

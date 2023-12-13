@@ -13,6 +13,7 @@ struct UserData
 
 struct Fetters {
     int32 fetters_id;
+	int32 fetters_level;
     int32 number;
 }
 

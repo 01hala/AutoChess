@@ -87,6 +87,7 @@ export function protcol_to_UserData(_protocol:any){
 export class Fetters
 {
     public fetters_id : number = 0;
+    public fetters_level : number = 0;
     public number : number = 0;
 
 }
@@ -104,6 +105,9 @@ export function protcol_to_Fetters(_protocol:any){
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "fetters_id"){
             _struct.fetters_id = val as number;
+        }
+        else if (key === "fetters_level"){
+            _struct.fetters_level = val as number;
         }
         else if (key === "number"){
             _struct.number = val as number;

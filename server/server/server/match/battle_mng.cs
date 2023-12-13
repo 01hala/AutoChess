@@ -121,11 +121,46 @@ namespace Match
                 var tmp_evs = new List<shop_event>(evs);
                 evs.Clear();
 
+                var _trigger_skill = new Dictionary<Priority, List<Action>>();
                 foreach (var _skill_role in shop_skill_roles)
                 {
-                    if (_skill_role != null && _skill_role.Trigger(tmp_evs))
+                    if (_skill_role != null)
                     {
-                        _skill_role.UseSkill(this);
+                        var execute = _skill_role.Trigger(tmp_evs, this);
+                        if (execute != null)
+                        {
+                            foreach(var e in execute)
+                            {
+                                if (!_trigger_skill.TryGetValue(e.Priority, out var action_list))
+                                {
+                                    action_list = new List<Action>();
+                                    _trigger_skill[e.Priority] = action_list;
+                                }
+                                action_list.Add(e.execute);
+                            }
+                        }
+                    }
+                }
+
+                if (_trigger_skill.TryGetValue(Priority.Hight, out var hight_execute_list))
+                {
+                    foreach (var e in hight_execute_list)
+                    {
+                        e.Invoke();
+                    }
+                }
+                if (_trigger_skill.TryGetValue(Priority.Normal, out var normal_execute_list))
+                {
+                    foreach (var e in normal_execute_list)
+                    {
+                        e.Invoke();
+                    }
+                }
+                if (_trigger_skill.TryGetValue(Priority.Low, out var low_execute_list))
+                {
+                    foreach (var e in low_execute_list)
+                    {
+                        e.Invoke();
                     }
                 }
 
@@ -199,13 +234,22 @@ namespace Match
         public void refresh()
         {
             _refresh();
+        }
 
-            evs.Add(new shop_event()
+        private int check_fetters_level(Fetters fetters)
+        {
+            if (config.Config.FettersConfigs.TryGetValue(fetters.fetters_id, out var fettersConfig))
             {
-                ev = EMRoleShopEvent.refresh
-            });
+                for(int i = fettersConfig.RoleNum.Count - 1; i >= 0; i--)
+                {
+                    if (fetters.number >= fettersConfig.RoleNum[i])
+                    {
+                        return i + 1;
+                    }
+                }
+            }
 
-            clear_skill_tag();
+            return 0;
         }
 
         private void check_fetters()
@@ -220,8 +264,9 @@ namespace Match
                 }
                 else
                 {
-                    mapFetters.Add(r.FettersSkillID.fetters_id, new Fetters() { 
+                    mapFetters.Add(r.FettersSkillID.fetters_id, new Fetters() {
                         fetters_id = r.FettersSkillID.fetters_id,
+                        fetters_level = 0,
                         number = 1
                     });
                 }
@@ -230,15 +275,27 @@ namespace Match
             var fetters_info = new List<Fetters>();
             foreach(var fetters in mapFetters.Values)
             {
+                foreach (var r in battleData.RoleList)
+                {
+                    if (r.FettersSkillID.fetters_id == fetters.fetters_id)
+                    {
+                        r.FettersSkillID.number = fetters.number;
+                    }
+                }
+
                 if (fetters.number > 1)
                 {
-                    fetters_info.Add(fetters);
+                    fetters.fetters_level = check_fetters_level(fetters);
+                    if (fetters.fetters_level > 0)
+                    {
+                        fetters_info.Add(fetters);
+                    }
 
                     foreach (var r in battleData.RoleList)
                     {
                         if (r.FettersSkillID.fetters_id == fetters.fetters_id)
                         {
-                            r.FettersSkillID.number = fetters.number;
+                            r.FettersSkillID.fetters_level = fetters.fetters_level;
                         }
                     }
                 }
@@ -305,14 +362,14 @@ namespace Match
                     r.FettersSkillID = new Fetters()
                     {
                         fetters_id = rcfg.Fetters,
-                        number = 2
+                        fetters_level = 0,
+                        number = 1
                     };
                 }
+                check_fetters();
 
                 battleData.RoleList[role_index] = r;
-                shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID, r.SkillID);
-
-                check_fetters();
+                shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
             }
             else
             {
