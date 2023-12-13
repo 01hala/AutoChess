@@ -425,6 +425,11 @@ namespace Match
             var target_list = new List<int>();
             while (target_list.Count < count)
             {
+                if (exclude_list.Count >= _player.BattleData.RoleList.Count)
+                {
+                    break;
+                }
+
                 int target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
                 if (exclude_list.Contains(target_index))
                 {
