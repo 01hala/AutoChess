@@ -388,25 +388,7 @@ namespace Match
                 {
                     BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);
 
-                    evs.Add(new shop_event()
-                    {
-                        ev = EMRoleShopEvent.update,
-                        index = role_index
-                    });
-
-                    if (!skip_level.Contains(r.Level))
-                    {
-                        skip_level.Add(r.Level);
-
-                        var stage = r.Level + 1;
-                        if (stage > 6)
-                        {
-                            stage = 6;
-                        }
-                        shopData.SaleRoleList.Add(randomShopRole(stage));
-
-                        BattleClientCaller.get_client(ClientUUID).role_update_refresh_shop(shopData);
-                    }
+                    check_update_skip_level(role_index);
                 }
                 else
                 {
@@ -417,6 +399,30 @@ namespace Match
             shopData.SaleRoleList[index] = null;
 
             return em_error.success;
+        }
+
+        public void check_update_skip_level(int index)
+        {
+            evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.update,
+                index = index
+            });
+
+            var r = battleData.RoleList[index];
+            if (!skip_level.Contains(r.Level))
+            {
+                skip_level.Add(r.Level);
+
+                var stage = r.Level + 1;
+                if (stage > 6)
+                {
+                    stage = 6;
+                }
+                shopData.SaleRoleList.Add(randomShopRole(stage));
+
+                BattleClientCaller.get_client(ClientUUID).role_update_refresh_shop(shopData);
+            }
         }
 
         public em_error buy_food(ShopProp p, int index, int role_index)
@@ -635,21 +641,7 @@ namespace Match
 
                     if (r2.Level > oldLevel)
                     {
-                        evs.Add(new shop_event()
-                        {
-                            ev = EMRoleShopEvent.update,
-                            index = role_index2
-                        });
-
-                        if (!skip_level.Contains(r2.Level))
-                        {
-                            var stage = r2.Level + 1;
-                            if (stage > 6)
-                            {
-                                stage = 6;
-                            }
-                            shopData.SaleRoleList.Add(randomShopRole(stage));
-                        }
+                        check_update_skip_level(role_index2);
 
                         BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, true);
                     }

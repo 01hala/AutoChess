@@ -380,6 +380,18 @@ namespace Match
             is_trigger = true;
         }
 
+        private void UpdateLevel(battle_player _player)
+        {
+            var r = _player.BattleData.RoleList[index];
+            r.Level += 1;
+            var addNum = (r.Level + 1) * 3 - r.Number;
+            r.Number += addNum;
+            r.HP += addNum;
+            r.Attack += addNum;
+
+            _player.check_update_skip_level(index);
+        }
+
         private void UseSkill(battle_player _player)
         {
             ShopSkillConfig skill;
@@ -405,6 +417,23 @@ namespace Match
                 case SkillEffectEM.RefreshShop:
                 {
                     RefreshShop(skill, _player);
+                }
+                break;
+
+                case SkillEffectEM.UpdateLevel:
+                {
+                    UpdateLevel(_player);
+                }
+                break;
+
+                case SkillEffectEM.SummonShop:
+                {
+                }
+                break;
+
+                case SkillEffectEM.AddBuffer:
+                {
+
                 }
                 break;
 

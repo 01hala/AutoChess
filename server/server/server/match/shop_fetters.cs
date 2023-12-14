@@ -152,6 +152,23 @@ namespace Match
                 }
                 break;
 
+                case SkillEffectEM.UpdateLevel:
+                {
+                    UpdateLevel(_player);
+                }
+                break;
+
+                case SkillEffectEM.SummonShop:
+                {
+                }
+                break;
+
+                case SkillEffectEM.AddBuffer:
+                {
+
+                }
+                break;
+
                 case SkillEffectEM.AddEquipment:
                 {
 
