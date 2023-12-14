@@ -147,7 +147,7 @@ namespace Match
                     break;
                     case EMRoleShopEvent.syncope:
                     {
-                        if (EffectTime == EMSkillEvent.syncope)
+                        if (EffectTime == EMSkillEvent.syncope && index == ev.index)
                         {
                             return true;
                         }

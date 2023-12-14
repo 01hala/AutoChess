@@ -5,14 +5,15 @@ export enum SkillEffectEM{
     AddProperty = 1,
     RecoverHP = 2,
     RemoteAttack = 3,
-    Summon = 4,
+    SummonBattle = 4,
     AddCoin = 5,
     ExchangeProperty = 6,
     GainShield = 7,
     RefreshShop = 8,
     ChangePosition = 9,
     AddEquipment = 10,
-    ReductionHurt = 11
+    ReductionHurt = 11,
+    SummonShop = 12
 }
 
 export enum ShopIndex{

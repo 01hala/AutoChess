@@ -362,7 +362,7 @@
         "Type": "Summon",
         "Priority": "Normal",
         "EffectTime": 5,
-        "Effect": 4,
+        "Effect": 12,
         "ObjCount": 0,
         "ObjDirection": 5,
         "EffectScope": 2,
