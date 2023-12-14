@@ -165,6 +165,31 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_fetters_info", _argv_2465681a_a205_3e91_8b5b_a53cd2e8b9dc);
         }
 
+        public void role_skill_update(Int32 role_index, Role _role){
+            var _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a = new ArrayList();
+            _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a.Add(role_index);
+            _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a.Add(Role.Role_to_protcol(_role));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_skill_update", _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a);
+        }
+
+        public void role_add_property(UserBattleData battle_info){
+            var _argv_5442ab1d_8c6f_3bf5_a4a2_d1662f209f08 = new ArrayList();
+            _argv_5442ab1d_8c6f_3bf5_a4a2_d1662f209f08.Add(UserBattleData.UserBattleData_to_protcol(battle_info));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_add_property", _argv_5442ab1d_8c6f_3bf5_a4a2_d1662f209f08);
+        }
+
+        public void add_coin(Int32 coin){
+            var _argv_68d61429_8f03_329b_a588_1069fa6d4cff = new ArrayList();
+            _argv_68d61429_8f03_329b_a588_1069fa6d4cff.Add(coin);
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_add_coin", _argv_68d61429_8f03_329b_a588_1069fa6d4cff);
+        }
+
+        public void shop_summon(UserBattleData battle_info){
+            var _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a = new ArrayList();
+            _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a.Add(UserBattleData.UserBattleData_to_protcol(battle_info));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_shop_summon", _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a);
+        }
+
     }
 
     public class battle_client_multicast {

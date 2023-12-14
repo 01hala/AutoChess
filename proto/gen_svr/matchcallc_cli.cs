@@ -91,6 +91,10 @@ namespace Abelkhan
             _client_handle.modulemanager.add_mothed("battle_client_role_eat_food", role_eat_food);
             _client_handle.modulemanager.add_mothed("battle_client_role_update_refresh_shop", role_update_refresh_shop);
             _client_handle.modulemanager.add_mothed("battle_client_fetters_info", fetters_info);
+            _client_handle.modulemanager.add_mothed("battle_client_role_skill_update", role_skill_update);
+            _client_handle.modulemanager.add_mothed("battle_client_role_add_property", role_add_property);
+            _client_handle.modulemanager.add_mothed("battle_client_add_coin", add_coin);
+            _client_handle.modulemanager.add_mothed("battle_client_shop_summon", shop_summon);
         }
 
         public event Action<bool> on_battle_victory;
@@ -177,6 +181,39 @@ namespace Abelkhan
             }
             if (on_fetters_info != null){
                 on_fetters_info(_info);
+            }
+        }
+
+        public event Action<Int32, Role> on_role_skill_update;
+        public void role_skill_update(IList<MsgPack.MessagePackObject> inArray){
+            var _role_index = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var __role = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            if (on_role_skill_update != null){
+                on_role_skill_update(_role_index, __role);
+            }
+        }
+
+        public event Action<UserBattleData> on_role_add_property;
+        public void role_add_property(IList<MsgPack.MessagePackObject> inArray){
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_role_add_property != null){
+                on_role_add_property(_battle_info);
+            }
+        }
+
+        public event Action<Int32> on_add_coin;
+        public void add_coin(IList<MsgPack.MessagePackObject> inArray){
+            var _coin = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            if (on_add_coin != null){
+                on_add_coin(_coin);
+            }
+        }
+
+        public event Action<UserBattleData> on_shop_summon;
+        public void shop_summon(IList<MsgPack.MessagePackObject> inArray){
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_shop_summon != null){
+                on_shop_summon(_battle_info);
             }
         }
 

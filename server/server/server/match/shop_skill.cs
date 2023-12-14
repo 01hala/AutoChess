@@ -330,6 +330,7 @@ namespace Match
 
                 _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
                 _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+                _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
 
                 is_trigger = true;
             }
@@ -338,6 +339,7 @@ namespace Match
         private void AddCoin(battle_player _player, int num)
         {
             _player.BattleData.coin += num;
+            _player.BattleClientCaller.get_client(_player.ClientUUID).add_coin(_player.BattleData.coin);
         }
 
         private void AddCoin(ShopSkillConfig skill, battle_player _player)
@@ -405,6 +407,7 @@ namespace Match
             r.Attack += addNum;
 
             _player.check_update_skip_level(index);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).role_skill_update(index, r);
         }
 
         private void SummonShop(battle_player _player, shop_event trigger_ev)
@@ -438,7 +441,7 @@ namespace Match
             }
             if (_player.add_role(summon_index, skill.SummonId, skill.SummonLevel))
             {
-
+                _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(_player.BattleData);
             }
         }
 

@@ -74,6 +74,7 @@ namespace Match
             }
 
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
         }
 
         private void AddCoin(FettersConfig fetters, battle_player _player)
@@ -150,7 +151,7 @@ namespace Match
             }
             if (_player.add_role(summon_index, fetters.SummonId, fetters.SummonLevel))
             {
-
+                _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(_player.BattleData);
             }
         }
 
