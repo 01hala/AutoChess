@@ -20,7 +20,9 @@ namespace Abelkhan
         ChangePosition = 9,
         AddEquipment = 10,
         ReductionHurt = 11,
-        SummonShop = 12
+        UpdateLevel = 12,
+        SummonShop = 13,
+        AddBuffer = 14
     }
     public enum ShopIndex{
         Role = 0,
