@@ -114,7 +114,14 @@ namespace Match
 
         private void RefreshShop(FettersConfig fetters, battle_player _player)
         {
-            _player.refresh();
+            if (fetters.RefreshItemID != 0 && fetters.RefreshItemNum != 0)
+            {
+                _player.add_shop_item(fetters.RefreshItemID, fetters.RefreshItemNum);
+            }
+            else
+            {
+                _player.refresh();
+            }
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
             is_trigger = true;

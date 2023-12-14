@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using Amazon.Util.Internal;
 using config;
 using System;
 using System.Collections.Generic;
@@ -234,6 +235,37 @@ namespace Match
         public void refresh()
         {
             _refresh();
+        }
+
+        public void add_shop_item(int refresh_item_id, int refresh_item_num)
+        {
+            for (var i = 0; i < shopData.SalePropList.Count; i++)
+            {
+                var p1 = shopData.SalePropList[i];
+                if (p1 == null && refresh_item_num > 0)
+                {
+                    var p = new ShopProp();
+                    p.PropID = refresh_item_id;
+                    p.IsFreeze = false;
+
+                    shopData.SalePropList[i] = p;
+                    --refresh_item_num;
+                }
+            }
+
+            for (var i = 0; i < shopData.SalePropList.Count; i++)
+            {
+                var p1 = shopData.SalePropList[i];
+                if (!p1.IsFreeze && p1.PropID != refresh_item_id && refresh_item_num > 0)
+                {
+                    var p = new ShopProp();
+                    p.PropID = refresh_item_id;
+                    p.IsFreeze = false;
+
+                    shopData.SalePropList[i] = p;
+                    --refresh_item_num;
+                }
+            }
         }
 
         private int check_fetters_level(Fetters fetters)

@@ -16,7 +16,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "2": {
         "Id": 2,
@@ -35,7 +37,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "3": {
         "Id": 3,
@@ -54,7 +58,9 @@
         "Stage4value_1": 5,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "4": {
         "Id": 4,
@@ -73,7 +79,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "5": {
         "Id": 5,
@@ -92,7 +100,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 1,
-        "SummonLevel": 1
+        "SummonLevel": 1,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "6": {
         "Id": 6,
@@ -111,7 +121,9 @@
         "Stage4value_1": 4,
         "Stage4value_2": 0,
         "SummonId": 3,
-        "SummonLevel": 1
+        "SummonLevel": 1,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "7": {
         "Id": 7,
@@ -130,7 +142,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "8": {
         "Id": 8,
@@ -149,7 +163,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 1013,
+        "RefreshItemNum": 2
     },
     "9": {
         "Id": 9,
@@ -168,7 +184,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "10": {
         "Id": 10,
@@ -187,7 +205,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "11": {
         "Id": 11,
@@ -206,7 +226,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "12": {
         "Id": 12,
@@ -225,7 +247,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "13": {
         "Id": 13,
@@ -244,7 +268,9 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     },
     "14": {
         "Id": 14,
@@ -263,6 +289,8 @@
         "Stage4value_1": 0,
         "Stage4value_2": 0,
         "SummonId": 0,
-        "SummonLevel": 0
+        "SummonLevel": 0,
+        "RefreshItemID": 0,
+        "RefreshItemNum": 0
     }
 }

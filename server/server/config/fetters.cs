@@ -26,6 +26,8 @@ namespace config
         public int Stage4value_2;
         public int SummonId;
         public int SummonLevel;
+        public int RefreshItemID;
+        public int RefreshItemNum;
 
         public static Dictionary<int, FettersConfig> Load(string path)
         {
@@ -75,6 +77,8 @@ namespace config
                 fettersc.Stage4value_2 = (int)o["Stage4value_2"];
                 fettersc.SummonId = (int)o["SummonId"];
                 fettersc.SummonLevel = (int)o["SummonLevel"];
+                fettersc.RefreshItemID = (int)o["RefreshItemID"];
+                fettersc.RefreshItemNum = (int)o["RefreshItemNum"];
 
                 obj[fettersc.Id] = fettersc;
             }
