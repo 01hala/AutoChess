@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using Abelkhan;
 
 namespace config
 {
@@ -22,6 +23,8 @@ namespace config
         public int Level2Value_2;
         public int Level3Value_1;
         public int Level3Value_2;
+        public int SummonId;
+        public int SummonLevel;
 
         public static Dictionary<int, ShopSkillConfig> Load(string path)
         {
@@ -61,6 +64,8 @@ namespace config
                 skillc.Level2Value_2 = (int)o["Level2Value_2"];
                 skillc.Level3Value_1 = (int)o["Level3Value_1"];
                 skillc.Level3Value_2 = (int)o["Level3Value_2"];
+                skillc.SummonId = (int)o["SummonId"];
+                skillc.SummonLevel = (int)o["SummonLevel"];
 
                 obj[skillc.Id] = skillc;
             }

@@ -320,11 +320,50 @@ namespace Match
 
                 evs.Add(new shop_event()
                 {
-                    ev = EMRoleShopEvent.sales
+                    ev = EMRoleShopEvent.sales,
+                    index = index,
+                    skill_id = r.SkillID,
+                    role_level = r.Level,
+                    fetters_id = r.FettersSkillID.fetters_id,
+                    fetters_level = r.FettersSkillID.fetters_level
                 });
 
                 clear_skill_tag();
                 check_fetters();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool add_role(int role_index, int role_id, int role_Level)
+        {
+            if (config.Config.RoleConfigs.TryGetValue(role_id, out RoleConfig rcfg))
+            {
+                var r = new Role();
+
+                r.RoleID = role_id;
+                r.Level = role_Level;
+                r.SkillID = rcfg.SkillID;
+                r.Number = (r.Level - 1) * 3 + 1;
+                r.HP = rcfg.Hp + r.Number - 1;
+                r.Attack = rcfg.Attack + r.Number - 1;
+                r.TempHP = 0;
+                r.TempAttack = 0;
+                r.additionBuffer = 0;
+                r.TempAdditionBuffer = 0;
+                r.FettersSkillID = new Fetters()
+                {
+                    fetters_id = rcfg.Fetters,
+                    fetters_level = 0,
+                    number = 1
+                };
+
+                battleData.RoleList[role_index] = r;
+                check_fetters();
+
+                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
 
                 return true;
             }
@@ -344,32 +383,7 @@ namespace Match
 
             if (r == null)
             {
-                r = new Role();
-
-                r.RoleID = s.RoleID;
-                r.Level = 1;
-                r.SkillID = s.SkillID;
-                r.Number = 1;
-                r.HP = s.HP;
-                r.Attack = s.Attack;
-                r.TempHP = 0;
-                r.TempAttack = 0;
-                r.additionBuffer = 0;
-                r.TempAdditionBuffer = 0;
-
-                if (config.Config.RoleConfigs.TryGetValue(r.RoleID, out RoleConfig rcfg))
-                {
-                    r.FettersSkillID = new Fetters()
-                    {
-                        fetters_id = rcfg.Fetters,
-                        fetters_level = 0,
-                        number = 1
-                    };
-                }
-                check_fetters();
-
-                battleData.RoleList[role_index] = r;
-                shop_skill_roles[role_index] = new shop_skill_role(index, s.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
+                add_role(index, s.RoleID, 1);
             }
             else
             {
@@ -380,7 +394,7 @@ namespace Match
 
                 r.Number += 1;
                 var oldLevel = r.Level;
-                r.Level = r.Number / 3 + 1;
+                r.Level = 1 + (r.Number - 1) / 3 ;
                 r.HP += 1;
                 r.Attack += 1;
 
@@ -403,18 +417,23 @@ namespace Match
 
         public void check_update_skip_level(int index)
         {
+            var r = battleData.RoleList[index];
+
             evs.Add(new shop_event()
             {
                 ev = EMRoleShopEvent.update,
-                index = index
+                index = index,
+                skill_id = r.SkillID,
+                role_level = r.Level,
+                fetters_id = r.FettersSkillID.fetters_id,
+                fetters_level = r.FettersSkillID.fetters_level
             });
 
-            var r = battleData.RoleList[index];
             if (!skip_level.Contains(r.Level))
             {
                 skip_level.Add(r.Level);
 
-                var stage = r.Level + 1;
+                var stage = r.Level;
                 if (stage > 6)
                 {
                     stage = 6;
@@ -512,7 +531,11 @@ namespace Match
                                     evs.Add(new shop_event()
                                     {
                                         ev = EMRoleShopEvent.syncope,
-                                        index = role_index
+                                        index = role_index,
+                                        skill_id = r.SkillID,
+                                        role_level = r.Level,
+                                        fetters_id = r.FettersSkillID.fetters_id,
+                                        fetters_level = r.FettersSkillID.fetters_level
                                     });
                                 }
                                 break;
@@ -525,7 +548,11 @@ namespace Match
                 evs.Add(new shop_event()
                 {
                     ev = EMRoleShopEvent.food,
-                    index = role_index
+                    index = role_index,
+                    skill_id = r.SkillID,
+                    role_level = r.Level,
+                    fetters_id = r.FettersSkillID.fetters_id,
+                    fetters_level = r.FettersSkillID.fetters_level
                 });
             }
             else
@@ -578,7 +605,7 @@ namespace Match
 
             evs.Add(new shop_event()
             {
-                ev = EMRoleShopEvent.buy
+                ev = EMRoleShopEvent.buy,
             });
 
             clear_skill_tag();

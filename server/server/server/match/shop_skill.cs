@@ -13,11 +13,16 @@ namespace Match
     {
         public EMRoleShopEvent ev;
         public int index;
+        public int role_level;
+        public int skill_id;
+        public int fetters_level;
+        public int fetters_id;
     }
 
     public class skill_execute
     {
         public Priority Priority;
+        public shop_event trigger_ev;
         public Action execute;
     }
 
@@ -51,14 +56,14 @@ namespace Match
             ShopSkillConfig skill;
             if (config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
             {
-                if (TriggerSkill(evs, skill.EffectTime))
+                if (TriggerSkill(evs, skill.EffectTime, out var ev))
                 {
                     ret.Add(new skill_execute()
                     {
                         Priority = skill.Priority,
                         execute = () =>
                         {
-                            UseSkill(_player);
+                            UseSkill(_player, ev);
                         }
                     });
                 }
@@ -67,14 +72,14 @@ namespace Match
             FettersConfig fettersc;
             if (config.Config.FettersConfigs.TryGetValue(fettersSkillID, out fettersc))
             {
-                if (TriggerSkill(evs, fettersc.EffectTime))
+                if (TriggerSkill(evs, fettersc.EffectTime, out var ev))
                 {
                     ret.Add(new skill_execute()
                     {
                         Priority = fettersc.Priority,
                         execute = () =>
                         {
-                            UseFettersSkill(_player);
+                            UseFettersSkill(_player, ev);
                         }
                     });
                 }
@@ -83,7 +88,7 @@ namespace Match
             return ret;
         }
 
-        private bool TriggerSkill(List<shop_event> evs, EMSkillEvent EffectTime)
+        private bool TriggerSkill(List<shop_event> evs, EMSkillEvent EffectTime, out shop_event trigger_ev)
         {
             foreach(var ev in evs)
             {
@@ -93,10 +98,12 @@ namespace Match
                     {
                         if (EffectTime == EMSkillEvent.sales && index == ev.index)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                         else if (EffectTime == EMSkillEvent.camp_sales && index != ev.index)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                     }
@@ -105,6 +112,7 @@ namespace Match
                     {
                         if (EffectTime == EMSkillEvent.buy)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                     }
@@ -113,6 +121,7 @@ namespace Match
                     {
                         if (EffectTime ==EMSkillEvent.update)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                     }
@@ -121,10 +130,12 @@ namespace Match
                     {
                         if (EffectTime == EMSkillEvent.eat_food && index == ev.index)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                         else if (EffectTime == EMSkillEvent.camp_eat_food && index != ev.index)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                     }
@@ -133,6 +144,7 @@ namespace Match
                     {
                         if (EffectTime == EMSkillEvent.start_round)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                     }
@@ -141,6 +153,7 @@ namespace Match
                     {
                         if (EffectTime == EMSkillEvent.end_round)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                     }
@@ -149,6 +162,7 @@ namespace Match
                     {
                         if (EffectTime == EMSkillEvent.syncope && index == ev.index)
                         {
+                            trigger_ev = ev;
                             return true;
                         }
                     }
@@ -156,6 +170,7 @@ namespace Match
                 }
             }
 
+            trigger_ev = null;
             return false;
         }
 
@@ -384,7 +399,7 @@ namespace Match
         {
             var r = _player.BattleData.RoleList[index];
             r.Level += 1;
-            var addNum = (r.Level + 1) * 3 - r.Number;
+            var addNum = (r.Level - 1) * 3 + 1 - r.Number;
             r.Number += addNum;
             r.HP += addNum;
             r.Attack += addNum;
@@ -392,7 +407,42 @@ namespace Match
             _player.check_update_skip_level(index);
         }
 
-        private void UseSkill(battle_player _player)
+        private void SummonShop(battle_player _player, shop_event trigger_ev)
+        {
+            int summon_index = -1;
+            if (_player.BattleData.RoleList[trigger_ev.index] == null)
+            {
+                summon_index = trigger_ev.index;
+            }
+            else
+            {
+                for (int i = 0; i < _player.BattleData.RoleList.Count; i++)
+                {
+                    if (_player.BattleData.RoleList[i] == null)
+                    {
+                        summon_index = i;
+                        break;
+                    }
+                }
+            }
+
+            if (summon_index < 0)
+            {
+                return;
+            }
+
+            ShopSkillConfig skill;
+            if (!config.Config.ShopSkillConfigs.TryGetValue(trigger_ev.skill_id, out skill))
+            {
+                return;
+            }
+            if (_player.add_role(summon_index, skill.SummonId, skill.SummonLevel))
+            {
+
+            }
+        }
+
+        private void UseSkill(battle_player _player, shop_event trigger_ev)
         {
             ShopSkillConfig skill;
             if (!config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
@@ -428,6 +478,7 @@ namespace Match
 
                 case SkillEffectEM.SummonShop:
                 {
+                    SummonShop(_player, trigger_ev);
                 }
                 break;
 

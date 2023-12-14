@@ -119,7 +119,42 @@ namespace Match
             is_trigger = true;
         }
 
-        private void UseFettersSkill(battle_player _player)
+        private void FettersSummonShop(battle_player _player, shop_event trigger_ev)
+        {
+            int summon_index = -1;
+            if (_player.BattleData.RoleList[trigger_ev.index] == null)
+            {
+                summon_index = trigger_ev.index;
+            }
+            else
+            {
+                for (int i = 0; i < _player.BattleData.RoleList.Count; i++)
+                {
+                    if (_player.BattleData.RoleList[i] == null)
+                    {
+                        summon_index = i;
+                        break;
+                    }
+                }
+            }
+
+            if (summon_index < 0)
+            {
+                return;
+            }
+
+            FettersConfig fetters;
+            if (!config.Config.FettersConfigs.TryGetValue(trigger_ev.fetters_id, out fetters))
+            {
+                return;
+            }
+            if (_player.add_role(summon_index, fetters.SummonId, fetters.SummonLevel))
+            {
+
+            }
+        }
+
+        private void UseFettersSkill(battle_player _player, shop_event trigger_ev)
         {
             if (fettersLevel <= 0)
             {
@@ -160,6 +195,7 @@ namespace Match
 
                 case SkillEffectEM.SummonShop:
                 {
+                    FettersSummonShop(_player, trigger_ev);
                 }
                 break;
 
