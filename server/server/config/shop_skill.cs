@@ -25,6 +25,7 @@ namespace config
         public int Level3Value_2;
         public int SummonId;
         public int SummonLevel;
+        public int AddBufferID;
 
         public static Dictionary<int, ShopSkillConfig> Load(string path)
         {
@@ -66,6 +67,7 @@ namespace config
                 skillc.Level3Value_2 = (int)o["Level3Value_2"];
                 skillc.SummonId = (int)o["SummonId"];
                 skillc.SummonLevel = (int)o["SummonLevel"];
+                skillc.AddBufferID = (int)o["AddBufferID"];
 
                 obj[skillc.Id] = skillc;
             }

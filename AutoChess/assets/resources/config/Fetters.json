@@ -18,7 +18,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "2": {
         "Id": 2,
@@ -39,7 +40,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "3": {
         "Id": 3,
@@ -60,7 +62,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "4": {
         "Id": 4,
@@ -81,7 +84,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "5": {
         "Id": 5,
@@ -102,7 +106,8 @@
         "SummonId": 1,
         "SummonLevel": 1,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "6": {
         "Id": 6,
@@ -123,7 +128,8 @@
         "SummonId": 3,
         "SummonLevel": 1,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "7": {
         "Id": 7,
@@ -144,7 +150,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "8": {
         "Id": 8,
@@ -165,7 +172,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 1013,
-        "RefreshItemNum": 2
+        "RefreshItemNum": 2,
+        "AddBufferID": 0
     },
     "9": {
         "Id": 9,
@@ -186,7 +194,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "10": {
         "Id": 10,
@@ -207,7 +216,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "11": {
         "Id": 11,
@@ -228,7 +238,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "12": {
         "Id": 12,
@@ -249,7 +260,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "13": {
         "Id": 13,
@@ -270,7 +282,8 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     },
     "14": {
         "Id": 14,
@@ -291,6 +304,7 @@
         "SummonId": 0,
         "SummonLevel": 0,
         "RefreshItemID": 0,
-        "RefreshItemNum": 0
+        "RefreshItemNum": 0,
+        "AddBufferID": 0
     }
 }

@@ -15,7 +15,6 @@ namespace Match
         {
             var count_index = fetters.ObjCount.Count < fettersLevel ? fetters.ObjCount.Count - 1 : fettersLevel - 1;
             var count = fetters.ObjCount[count_index];
-
             var target_list = GetTargetIndex(_player, 0, count);
             foreach (var target_index in target_list)
             { 
@@ -141,6 +140,17 @@ namespace Match
             }
         }
 
+        private void AddBuffer(FettersConfig fetters, battle_player _player)
+        {
+            var count_index = fetters.ObjCount.Count < fettersLevel ? fetters.ObjCount.Count - 1 : fettersLevel - 1;
+            var count = fetters.ObjCount[count_index];
+            var target_list = GetTargetIndex(_player, 0, count);
+            foreach (var target_index in target_list)
+            {
+                AddBuffer(_player, target_index, fetters.EffectScope, fetters.AddBufferID);
+            }
+        }
+
         private void UseFettersSkill(battle_player _player, shop_event trigger_ev)
         {
             if (fettersLevel <= 0)
@@ -188,7 +198,7 @@ namespace Match
 
                 case SkillEffectEM.AddBuffer:
                 {
-
+                    AddBuffer(fetters, _player);
                 }
                 break;
 

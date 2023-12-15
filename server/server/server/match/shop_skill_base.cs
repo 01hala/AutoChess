@@ -1,6 +1,7 @@
 ﻿using Abelkhan;
 using config;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -407,6 +408,22 @@ namespace Match
             if (_player.add_role(summon_index, skill.SummonId, skill.SummonLevel))
             {
                 _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(_player.BattleData);
+            }
+        }
+
+        private void AddBuffer(battle_player _player, int target_index, EffectScope scope, int buffer_id)
+        {
+            Role target_r = _player.BattleData.RoleList[target_index];
+            if (target_r != null)
+            {
+                if (scope == EffectScope.SingleBattle)
+                {
+                    target_r.TempAdditionBuffer.Add(buffer_id);
+                }
+                else if (scope == EffectScope.WholeGame)
+                {
+                    target_r.additionBuffer.Add(buffer_id);
+                }
             }
         }
     }

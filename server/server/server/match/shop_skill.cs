@@ -97,6 +97,15 @@ namespace Match
             is_trigger = true;
         }
 
+        private void AddBuffer(ShopSkillConfig skill, battle_player _player)
+        {
+            var target_list = GetTargetIndex(_player, skill.ObjectDirection, skill.ObjCount);
+            foreach (var target_index in target_list)
+            {
+                AddBuffer(_player, target_index, skill.EffectScope, skill.AddBufferID);
+            }
+        }
+
         private void UseSkill(battle_player _player, shop_event trigger_ev)
         {
             ShopSkillConfig skill;
@@ -139,7 +148,7 @@ namespace Match
 
                 case SkillEffectEM.AddBuffer:
                 {
-
+                    AddBuffer(skill, _player);
                 }
                 break;
 

@@ -28,6 +28,7 @@ namespace config
         public int SummonLevel;
         public int RefreshItemID;
         public int RefreshItemNum;
+        public int AddBufferID;
 
         public static Dictionary<int, FettersConfig> Load(string path)
         {
@@ -79,6 +80,7 @@ namespace config
                 fettersc.SummonLevel = (int)o["SummonLevel"];
                 fettersc.RefreshItemID = (int)o["RefreshItemID"];
                 fettersc.RefreshItemNum = (int)o["RefreshItemNum"];
+                fettersc.AddBufferID = (int)o["AddBufferID"]; 
 
                 obj[fettersc.Id] = fettersc;
             }
