@@ -9,6 +9,7 @@ import * as battle from './battle'
 import * as enums from '../other/enums'
 import * as common from '../serverSDK/common'
 import * as create_skill from './create_skill'
+import * as create_fetters from './create_fetters'
 import * as create_trigger from './create_trigger'
 import * as create_buffer from './create_buffer'
 import * as config from '../config/config'
@@ -24,6 +25,20 @@ function createSkill(id:number, level:number) : SkillInfo {
         let skill = new SkillInfo();
         skill.trigger = create_trigger.CreateTrigger(skillConfig.EffectTime);
         skill.skill = create_skill.CreateSkill(level, id);
+    
+        if (skill.trigger && skill.skill) {
+            return skill;
+        }
+    }
+    return null;
+}
+
+function createFettersSkill(id:number, level:number) : SkillInfo {
+    let fettersConfig = config.config.FettersConfig.get(id);
+    if (fettersConfig) {
+        let skill = new SkillInfo();
+        skill.trigger = create_trigger.CreateTrigger(fettersConfig.EffectTime);
+        skill.skill = create_fetters.CreateFetters(level, id);
     
         if (skill.trigger && skill.skill) {
             return skill;
@@ -76,6 +91,13 @@ export class Role {
             let buffer = createBuffer(roleConfig.SkillID);
             if (buffer) {
                 this.buffer.push(buffer);
+            }
+        }
+
+        if (fetters.fetters_level > 0) {
+            let skill = createFettersSkill(fetters.fetters_id, fetters.fetters_level);
+            if (skill) {
+                this.skill.push(skill);
             }
         }
         

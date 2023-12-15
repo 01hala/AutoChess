@@ -8,9 +8,11 @@ import * as buffer_config from './buffer_config'
 import * as role_config from './role_config'
 import * as bundle_config from './bundle_config'
 import * as Food_config from './Food_config';
+import * as fetters from './fetters_config'
 
 export class config {
     public static SkillConfig : Map<number, skill_config.SkillConfig>;
+    public static FettersConfig:Map<number,fetters.FettersConfig>
     public static BufferConfig : Map<number, buffer_config.BufferConfig>;
     public static RoleConfig : Map<number, role_config.RoleConfig>;
     public static BundleConfig:Map<number, bundle_config.BundleConfig>;
@@ -18,6 +20,7 @@ export class config {
 
     public static async load() {
         config.SkillConfig = await skill_config.LoadSkillConfig();
+        config.FettersConfig = await fetters.LoadFettersConfig();
         config.BufferConfig = await buffer_config.LoadBufferConfig();
         config.RoleConfig = await role_config.LoadRoleConfig();
         config.BundleConfig=await bundle_config.LoadBundleConfig();
