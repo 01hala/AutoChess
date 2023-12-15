@@ -22,10 +22,10 @@ export class Team {
             if(null!=r)
             {
                 let properties = new Map<enums.Property, number>();
-                properties.set(enums.Property.HP, r.HP);
-                properties.set(enums.Property.TotalHP, r.HP);
-                properties.set(enums.Property.Attack, r.Attack);
-                this.roleList.push(new role.Role(index, r.RoleID, r.SkillID, r.Level, r.Number, selfCamp, properties, r.additionBuffer));
+                properties.set(enums.Property.HP, r.HP + r.TempHP);
+                properties.set(enums.Property.TotalHP, r.HP + r.TempHP);
+                properties.set(enums.Property.Attack, r.Attack + r.TempAttack);
+                this.roleList.push(new role.Role(index, r.RoleID, r.Level, r.Number, selfCamp, properties, r.FettersSkillID, [...r.additionBuffer, ...r.TempAdditionBuffer]));
             }
             index++;
         }

@@ -9,7 +9,8 @@ import { SkillBase,Event, RoleInfo,SkillTriggerBase, } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role } from '../role';
-import { Camp, Direction, SkillType, Property, EventType } from '../../other/enums';
+import { Camp, SkillType, Property, EventType } from '../../other/enums';
+import { Direction } from '../../serverSDK/common'
 import { random } from '../util';
 
 export class Skill_AttGain_1 extends SkillBase 

@@ -46,6 +46,7 @@ enum Direction
     Rigiht = 3;
     Left = 4;
     Self = 5;
+	Cross = 6;
 }
 
 enum BufferAndEquipEffect
@@ -84,7 +85,7 @@ enum EMSkillEvent
     be_hurt = 18;        //受伤时
     camp_be_hurt = 19;   //友方受伤时
     enemy_summon = 20;   //敌人被召唤或推动时
-    camp__summon = 21;   //伙伴被召唤时
+    camp_summon = 21;    //伙伴被召唤时
     front_be_hurt = 22;  //前方伙伴受伤时
     before_attack = 23;  //攻击前
 }

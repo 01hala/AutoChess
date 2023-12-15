@@ -13,7 +13,8 @@ export enum Direction{
     Back = 2,
     Rigiht = 3,
     Left = 4,
-    Self = 5
+    Self = 5,
+    Cross = 6
 }
 
 export enum BufferAndEquipEffect{
@@ -49,7 +50,7 @@ export enum EMSkillEvent{
     be_hurt = 18,
     camp_be_hurt = 19,
     enemy_summon = 20,
-    camp__summon = 21,
+    camp_summon = 21,
     front_be_hurt = 22,
     before_attack = 23
 }

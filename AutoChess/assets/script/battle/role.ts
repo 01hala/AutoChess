@@ -7,6 +7,7 @@ import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
 import * as enums from '../other/enums'
+import * as common from '../serverSDK/common'
 import * as create_skill from './create_skill'
 import * as create_trigger from './create_trigger'
 import * as create_buffer from './create_buffer'
@@ -53,10 +54,9 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(index:number, id:number, skillid:number, level:number, exp:number, selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionBuffer?:number) {
+    public constructor(index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[]) {
         this.index = index;
         this.id=id;
-        this.skillid = skillid;
         this.level=level;
         this.exp=exp;
         this.selfCamp = selfCamp;
@@ -66,19 +66,24 @@ export class Role {
         })
 
         let roleConfig = config.config.RoleConfig.get(this.id);
+        this.skillid = roleConfig.SkillID;
 
         let skill = createSkill(roleConfig.SkillID, this.level);
         if (skill) {
             this.skill.push(skill);
         }
-
-        let buffer = createBuffer(roleConfig.SkillID);
-        if (buffer) {
-            this.buffer.push(buffer);
+        else {
+            let buffer = createBuffer(roleConfig.SkillID);
+            if (buffer) {
+                this.buffer.push(buffer);
+            }
         }
-        buffer = createBuffer(additionBuffer);
-        if (buffer) {
-            this.buffer.push(buffer);
+        
+        for (let id of additionBuffer) {
+            let buffer = createBuffer(id);
+            if (buffer) {
+                this.buffer.push(buffer);
+            }
         }
     }
 

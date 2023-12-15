@@ -4,13 +4,8 @@
  * 2023/10/2
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction, ChangePositionType, SwapPropertiesType } from '../other/enums';
-
-export enum Priority {
-    Low = 1,
-    Normal = 2,
-    Hight = 3,
-}
+import { ChangePositionType, SwapPropertiesType } from '../other/enums';
+import { Direction, Priority } from '../serverSDK/common';
 
 export class SkillConfig {
     public Id: number;
