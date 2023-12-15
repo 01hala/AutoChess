@@ -8,6 +8,54 @@ namespace Abelkhan
 {
 /*this enum code is codegen by abelkhan codegen for c#*/
 
+    public enum Priority{
+        Low = 1,
+        Normal = 2,
+        Hight = 3
+    }
+    public enum Direction{
+        None = 0,
+        Forward = 1,
+        Back = 2,
+        Rigiht = 3,
+        Left = 4,
+        Self = 5
+    }
+    public enum BufferAndEquipEffect{
+        AddHP = 1,
+        AddAttack = 2,
+        AddBuffer = 3,
+        Syncope = 4
+    }
+    public enum EffectScope{
+        SingleBattle = 1,
+        WholeGame = 2
+    }
+    public enum EMSkillEvent{
+        start_round = 1,
+        end_round = 2,
+        start_battle = 3,
+        buy = 4,
+        sales = 5,
+        camp_sales = 6,
+        update = 7,
+        syncope = 8,
+        camp_syncope = 9,
+        strengthen = 10,
+        use_skill = 11,
+        eat_food = 12,
+        camp_eat_food = 13,
+        kill = 14,
+        front_attack = 15,
+        camp_attack3 = 16,
+        front_attack3 = 17,
+        be_hurt = 18,
+        camp_be_hurt = 19,
+        enemy_summon = 20,
+        camp__summon = 21,
+        front_be_hurt = 22,
+        before_attack = 23
+    }
     public enum SkillEffectEM{
         AddProperty = 1,
         RecoverHP = 2,

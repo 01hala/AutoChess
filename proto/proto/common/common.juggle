@@ -31,6 +31,64 @@ struct Role {
 	int32[] TempAdditionBuffer;
 }
 
+enum Priority
+{
+    Low = 1;
+    Normal = 2;
+    Hight = 3;
+}
+
+enum Direction
+{
+    None = 0;
+    Forward = 1;
+    Back = 2;
+    Rigiht = 3;
+    Left = 4;
+    Self = 5;
+}
+
+enum BufferAndEquipEffect
+{
+    AddHP = 1;
+    AddAttack = 2;
+    AddBuffer = 3;
+    Syncope = 4;
+}
+
+enum EffectScope
+{
+    SingleBattle = 1;
+    WholeGame = 2;
+}
+
+enum EMSkillEvent
+{
+    start_round = 1;     //休整开始时
+    end_round = 2;       //休整结束时
+    start_battle = 3;    //战斗开始时
+    buy = 4;             //购买时
+    sales = 5;           //出售时
+    camp_sales = 6;      //友方出售时
+    update = 7;          //升级后
+    syncope = 8;         //晕厥时
+    camp_syncope = 9;    //伙伴晕厥时
+    strengthen = 10;     //受到强化时
+    use_skill = 11;      //释放技能后
+    eat_food = 12;       //吃掉食物时
+    camp_eat_food = 13;  //友方吃掉食物时
+    kill = 14;           //击倒后
+    front_attack = 15;   //前方伙伴攻击时
+    camp_attack3 = 16;   //友方攻击三次后
+    front_attack3 = 17;  //前方攻击三次后
+    be_hurt = 18;        //受伤时
+    camp_be_hurt = 19;   //友方受伤时
+    enemy_summon = 20;   //敌人被召唤或推动时
+    camp__summon = 21;   //伙伴被召唤时
+    front_be_hurt = 22;  //前方伙伴受伤时
+    before_attack = 23;  //攻击前
+}
+
 enum SkillEffectEM {
 	AddProperty = 1;
 	RecoverHP = 2;
