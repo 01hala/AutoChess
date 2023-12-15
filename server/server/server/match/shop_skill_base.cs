@@ -174,6 +174,153 @@ namespace Match
             return false;
         }
 
+        private List<int> GetTargetIndex(battle_player _player, Direction ObjectDirection, int ObjCount)
+        {
+            var target_list = new List<int>();
+
+            if (ObjCount > 1)
+            {
+                var exclude_list = new List<int>();
+                while (target_list.Count < ObjCount)
+                {
+                    if (exclude_list.Count >= _player.BattleData.RoleList.Count)
+                    {
+                        break;
+                    }
+
+                    int target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
+                    if (exclude_list.Contains(target_index))
+                    {
+                        continue;
+                    }
+                    exclude_list.Add(target_index);
+
+                    if ((_player.BattleData.RoleList[target_index] != null))
+                    {
+                        target_list.Add(target_index);
+                    }
+                }
+            }
+            else
+            {
+
+                int target_index = -1;
+                switch ((int)ObjectDirection)
+                {
+                    case 0:
+                    {
+                        var exclude_list = new List<int>();
+                        while (target_list.Count < 1)
+                        {
+                            if (exclude_list.Count >= _player.BattleData.RoleList.Count)
+                            {
+                                break;
+                            }
+
+                            target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
+                            if (exclude_list.Contains(target_index))
+                            {
+                                continue;
+                            }
+
+                            exclude_list.Add(target_index);
+                            if ((_player.BattleData.RoleList[target_index] != null))
+                            {
+                                target_list.Add(target_index);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+
+                    case 1:
+                    {
+                        if (index == 4)
+                        {
+                            target_index = 2;
+                        }
+                        else if (index == 5)
+                        {
+                            target_index = 1;
+                        }
+                        else if (index == 6)
+                        {
+                            target_index = 3;
+                        }
+                    }
+                    break;
+
+                    case 2:
+                    {
+                        if (index == 1)
+                        {
+                            target_index = 5;
+                        }
+                        else if (index == 2)
+                        {
+                            target_index = 4;
+                        }
+                        else if (index == 3)
+                        {
+                            target_index = 6;
+                        }
+                    }
+                    break;
+
+                    case 3:
+                    {
+                        if (index == 2)
+                        {
+                            target_index = 1;
+                        }
+                        else if (index == 1)
+                        {
+                            target_index = 3;
+                        }
+                        else if (index == 4)
+                        {
+                            target_index = 5;
+                        }
+                        else if (index == 5)
+                        {
+                            target_index = 6;
+                        }
+                    }
+                    break;
+
+                    case 4:
+                    {
+                        if (index == 3)
+                        {
+                            target_index = 1;
+                        }
+                        else if (index == 1)
+                        {
+                            target_index = 2;
+                        }
+                        else if (index == 6)
+                        {
+                            target_index = 5;
+                        }
+                        else if (index == 5)
+                        {
+                            target_index = 4;
+                        }
+                    }
+                    break;
+
+                    case 5:
+                    {
+                        target_index = index;
+                    }
+                    break;
+                }
+                target_list.Add(target_index);
+            }
+
+            return target_list;
+        }
+
         private void AddProperty(battle_player _player, int target_index, EffectScope scope, int hp, int attack)
         {
             Role target_r = _player.BattleData.RoleList[target_index];

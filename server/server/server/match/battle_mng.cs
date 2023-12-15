@@ -383,8 +383,8 @@ namespace Match
                 r.Attack = rcfg.Attack + r.Number - 1;
                 r.TempHP = 0;
                 r.TempAttack = 0;
-                r.additionBuffer = 0;
-                r.TempAdditionBuffer = 0;
+                r.additionBuffer = new ();
+                r.TempAdditionBuffer = new();
                 r.FettersSkillID = new Fetters()
                 {
                     fetters_id = rcfg.Fetters,
@@ -546,11 +546,11 @@ namespace Match
                                 {
                                     if ((EffectScope)foodcfg.EffectScope == EffectScope.SingleBattle)
                                     {
-                                        _r.TempAdditionBuffer = foodcfg.Vaule;
+                                        _r.TempAdditionBuffer.Add(foodcfg.Vaule);
                                     }
                                     else if ((EffectScope)foodcfg.EffectScope == EffectScope.WholeGame)
                                     {
-                                        _r.additionBuffer = foodcfg.Vaule;
+                                        _r.additionBuffer.Add(foodcfg.Vaule);
                                     }
                                 }
                                 break;

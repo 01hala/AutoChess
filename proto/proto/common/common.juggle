@@ -27,8 +27,8 @@ struct Role {
 	int32 Attack;
 	int32 TempHP;
 	int32 TempAttack;
-	int32 additionBuffer;
-	int32 TempAdditionBuffer;
+	int32[] additionBuffer;
+	int32[] TempAdditionBuffer;
 }
 
 enum SkillEffectEM {

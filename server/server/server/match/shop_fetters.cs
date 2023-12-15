@@ -16,28 +16,7 @@ namespace Match
             var count_index = fetters.ObjCount.Count < fettersLevel ? fetters.ObjCount.Count - 1 : fettersLevel - 1;
             var count = fetters.ObjCount[count_index];
 
-            var exclude_list = new List<int>();
-            var target_list = new List<int>();
-            while (target_list.Count < count)
-            {
-                if (exclude_list.Count >= _player.BattleData.RoleList.Count)
-                {
-                    break;
-                }
-
-                int target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
-                if (exclude_list.Contains(target_index))
-                {
-                    continue;
-                }
-                exclude_list.Add(target_index);
-
-                if ((_player.BattleData.RoleList[target_index] != null))
-                {
-                    target_list.Add(target_index);
-                }
-            }
-
+            var target_list = GetTargetIndex(_player, 0, count);
             foreach (var target_index in target_list)
             { 
                 if (target_index > 0)

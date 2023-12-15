@@ -130,8 +130,8 @@ export class Role
     public Attack : number = 0;
     public TempHP : number = 0;
     public TempAttack : number = 0;
-    public additionBuffer : number = 0;
-    public TempAdditionBuffer : number = 0;
+    public additionBuffer : number[] = [];
+    public TempAdditionBuffer : number[] = [];
 
 }
 
@@ -174,10 +174,16 @@ export function protcol_to_Role(_protocol:any){
             _struct.TempAttack = val as number;
         }
         else if (key === "additionBuffer"){
-            _struct.additionBuffer = val as number;
+            _struct.additionBuffer = [];
+            for(let v_ of val as any) {
+                _struct.additionBuffer.push(v_);
+            }
         }
         else if (key === "TempAdditionBuffer"){
-            _struct.TempAdditionBuffer = val as number;
+            _struct.TempAdditionBuffer = [];
+            for(let v_ of val as any) {
+                _struct.TempAdditionBuffer.push(v_);
+            }
         }
     }
     return _struct;

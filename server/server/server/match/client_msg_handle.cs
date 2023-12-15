@@ -186,10 +186,12 @@ namespace Match
                 role.Level = level;
                 role.HP = rolec.Hp * role.Level;
                 role.Attack = rolec.Attack * role.Level;
+                role.TempAdditionBuffer = new List<int>();
+                role.additionBuffer = new List<int>();
 
                 var indexBuffer = RandomHelper.RandomInt(config.Config.BufferConfigs.Values.Count);
                 var bufferc = config.Config.BufferConfigs.Values.ElementAt(indexBuffer);
-                role.additionBuffer = bufferc.Id;
+                role.additionBuffer.Add(bufferc.Id);
 
                 data.RoleList.Add(role);
             }

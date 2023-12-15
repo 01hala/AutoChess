@@ -156,8 +156,8 @@ namespace Abelkhan
         public Int32 Attack;
         public Int32 TempHP;
         public Int32 TempAttack;
-        public Int32 additionBuffer;
-        public Int32 TempAdditionBuffer;
+        public List<Int32> additionBuffer;
+        public List<Int32> TempAdditionBuffer;
         public static MsgPack.MessagePackObjectDictionary Role_to_protcol(Role _struct){
         if (_struct == null) {
             return null;
@@ -173,8 +173,20 @@ namespace Abelkhan
             _protocol.Add("Attack", _struct.Attack);
             _protocol.Add("TempHP", _struct.TempHP);
             _protocol.Add("TempAttack", _struct.TempAttack);
-            _protocol.Add("additionBuffer", _struct.additionBuffer);
-            _protocol.Add("TempAdditionBuffer", _struct.TempAdditionBuffer);
+            if (_struct.additionBuffer != null) {
+                var _array_additionBuffer = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.additionBuffer){
+                    _array_additionBuffer.Add(v_);
+                }
+                _protocol.Add("additionBuffer", new MsgPack.MessagePackObject(_array_additionBuffer));
+            }
+            if (_struct.TempAdditionBuffer != null) {
+                var _array_TempAdditionBuffer = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.TempAdditionBuffer){
+                    _array_TempAdditionBuffer.Add(v_);
+                }
+                _protocol.Add("TempAdditionBuffer", new MsgPack.MessagePackObject(_array_TempAdditionBuffer));
+            }
             return _protocol;
         }
         public static Role protcol_to_Role(MsgPack.MessagePackObjectDictionary _protocol){
@@ -212,10 +224,18 @@ namespace Abelkhan
                     _structe15dab07_4671_3806_9f26_9880fe20019d.TempAttack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "additionBuffer"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TempAdditionBuffer"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionBuffer = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionBuffer = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionBuffer.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
                 }
             }
             return _structe15dab07_4671_3806_9f26_9880fe20019d;
