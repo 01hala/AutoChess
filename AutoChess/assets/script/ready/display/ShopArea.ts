@@ -136,7 +136,7 @@ export class ShopArea extends Component
             if(this.shopRoles[i] == _obj)
             {
                 await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
-                this.roleArea.rolesNode.push(_obj);
+                this.roleArea.rolesNode[_index]=_obj;
                 this.shopRoles[i] = null;
             }
         }
@@ -161,7 +161,7 @@ export class ShopArea extends Component
         {
             this.freezeArea.active=true;
             this.freezeArea.getComponent(BlockInputEvents).enabled=true;
-            tween(this.freezeArea).to(0.1,{position:new Vec3(0,170,0)}).start();
+            tween(this.freezeArea).to(0.2,{position:new Vec3(0,170,0)}).start();
         }
         else
         {

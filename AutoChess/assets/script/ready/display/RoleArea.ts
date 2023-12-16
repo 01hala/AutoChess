@@ -10,7 +10,7 @@ export class RoleArea extends Component
 {
     public targets:Map<string,Node> = new Map();
 
-    public rolesNode:Node[]=[];
+    public rolesNode:Node[]=[null,null,null,null,null,null];
     public presenceNum:number;
 
     onLoad() 
@@ -43,33 +43,38 @@ export class RoleArea extends Component
     async SwitchPos(_selfIndex:number,_selfPosTarget:Node,_switchNode:Node)
     {
         await this.MovePos(_selfIndex,_switchNode.getComponent(RoleIcon).index);
-        this.targets.set(_selfPosTarget.name,_switchNode);
         _switchNode.getComponent(RoleIcon).target=_selfPosTarget;
         _switchNode.getComponent(RoleIcon).TransPos(_selfPosTarget.worldPosition);
+        this.targets.set(_selfPosTarget.name,_switchNode);
     }
 
     async MovePos(_indexBefor:number,_indexAfter:number)
     {
         console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
-        singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
+        let t=this.rolesNode[_indexBefor];
+        this.rolesNode[_indexAfter]=this.rolesNode[_indexBefor];
+        this.rolesNode[_indexBefor]=t;
+        await singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
     }
 
     async SaleRole(index:number)
     {
         console.log("SaleRole index:" + index);
-        for(let i:number=0;i<this.rolesNode.length;i++)
-        {
-            if(this.rolesNode[i].getComponent(RoleIcon).index==index)
-            {
-                singleton.netSingleton.ready.ready.Sale(index);
-                this.rolesNode.splice(i,1);
-                return;
-            }
-        }
-        if(this.rolesNode.length<=0)
-        {
-            this.rolesNode=[];
-        }
+        singleton.netSingleton.ready.ready.Sale(index);
+        this.rolesNode[index]=null;
+        // for(let i:number=0;i<this.rolesNode.length;i++)
+        // {
+        //     if(this.rolesNode[i].getComponent(RoleIcon).index==index)
+        //     {
+        //         singleton.netSingleton.ready.ready.Sale(index);
+        //         this.rolesNode.splice(i,1);
+        //         return;
+        //     }
+        // }
+        // if(this.rolesNode.length<=0)
+        // {
+        //     this.rolesNode=[];
+        // }
     }
 
     async ResetTeam(_roleList:Role[])
@@ -91,7 +96,7 @@ export class RoleArea extends Component
                     obj.getComponent(RoleIcon).target=this.targets[i];
                     obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, 1 , 1 , false , _roleList[i].FettersSkillID , i);
                     //obj.getComponent(RoleIcon).iconMask.active=false;
-                    this.rolesNode.push(obj);
+                    this.rolesNode[i]=obj;
                 }
             }
         }
