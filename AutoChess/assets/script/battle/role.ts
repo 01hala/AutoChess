@@ -94,17 +94,19 @@ export class Role {
             }
         }
 
-        if (fetters.fetters_level > 0) {
+        if (fetters && fetters.fetters_level > 0) {
             let skill = createFettersSkill(fetters.fetters_id, fetters.fetters_level);
             if (skill) {
                 this.skill.push(skill);
             }
         }
         
-        for (let id of additionBuffer) {
-            let buffer = createBuffer(id);
-            if (buffer) {
-                this.buffer.push(buffer);
+        if (additionBuffer) {
+            for (let id of additionBuffer) {
+                let buffer = createBuffer(id);
+                if (buffer) {
+                    this.buffer.push(buffer);
+                }
             }
         }
     }

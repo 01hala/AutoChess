@@ -35,8 +35,8 @@ export async function LoadFettersConfig() : Promise<Map<number, FettersConfig>> 
     return new Promise<Map<number, FettersConfig>>((resolve, reject)=>{
         let map = new Map<number, FettersConfig>();
 
-        console.log("Load Skill Config begin!");
-        resources.load('config/Skill', (err: any, res: JsonAsset) => {
+        console.log("Load Fetters Config begin!");
+        resources.load('config/Fetters', (err: any, res: JsonAsset) => {
             if (err) {
                 error(err.message || err);
                 return;
@@ -55,6 +55,7 @@ export async function LoadFettersConfig() : Promise<Map<number, FettersConfig>> 
                 fettersc.RoleNum =  v["RoleNum"];
 
                 var count:string = v["ObjCount"];
+                console.log("ObjCount:", count);
                 var objCount = count.split("|");
                 fettersc.ObjCount =  objCount.map(Number);
 
@@ -77,7 +78,7 @@ export async function LoadFettersConfig() : Promise<Map<number, FettersConfig>> 
             });
         })
 
-        console.log("Load Skill Config end!");
+        console.log("Load Fetters Config end!");
         resolve(map);
     });
 }

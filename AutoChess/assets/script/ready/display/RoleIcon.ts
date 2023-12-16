@@ -82,13 +82,13 @@ export class RoleIcon extends Component
        }
     }
     //初始化
-    async Init(id:number,hp:number,atk:number,teamindex:number=-1)
+    async Init(id:number,hp:number,atk:number, f:common.Fetters, teamindex:number=-1)
     {
         try
         {
             let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
             console.log("new role");
-            let r=new role.Role(teamindex,id,id-100000,1,1,Camp.Self,map);
+            let r=new role.Role(teamindex, id, 1, 1, Camp.Self, map, f);
             console.log('RoleIcon spawn role: ',id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
@@ -437,7 +437,7 @@ export class RoleIcon extends Component
         let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
 
         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-        let r=new role.Role(this.index,this.roleId,this.roleId-100000,t.Level,t.Number,Camp.Self,map);
+        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self, map, t.FettersSkillID);
         this.roleNode.getComponent(RoleDis).Refresh(r);
         await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
         if(is_update)

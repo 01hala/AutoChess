@@ -4,7 +4,7 @@
  * 2023/10/2
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction, ChangePositionType, SwapPropertiesType } from '../other/enums';
+import { ChangePositionType, SwapPropertiesType } from '../other/enums';
 
 
 export class FoodConfig {
@@ -41,6 +41,7 @@ export async function LoadFoodConfig() : Promise<Map<number, FoodConfig>> {
                 foodc.Name = v["Name"];
                 foodc.Price = v["Price"];
                 foodc.Stage = v["Price"];
+
                 let effect=v["Effect"];
                 let es:string[]=effect.split('|');
                 let e:number[]=[];
@@ -49,6 +50,7 @@ export async function LoadFoodConfig() : Promise<Map<number, FoodConfig>> {
                     e.push(parseInt(s));
                 }
                 foodc.Effect=e;
+                
                 foodc.EffectScope = v["EffectScope"];
                 foodc.Count = v["Count"];
                 foodc.AttackBonus= v["AttackBonus"];

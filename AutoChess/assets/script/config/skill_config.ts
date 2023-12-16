@@ -26,6 +26,7 @@ export class SkillConfig {
     public SummonLevel: number;
     public ChangePositionType : ChangePositionType;
     public SwapPropertiesType : SwapPropertiesType;
+    public AddBufferID: number;
 }
 
 export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
@@ -62,6 +63,7 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
                 skillc.SummonLevel = v["SummonLevel"];
                 skillc.ChangePositionType = v["ChangePositionType"];
                 skillc.SwapPropertiesType = v["SwapPropertiesType"];
+                skillc.AddBufferID =  v["AddBufferID"];
 
                 map.set(parseInt(k), skillc);
             });

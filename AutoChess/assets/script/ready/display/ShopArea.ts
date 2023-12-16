@@ -11,6 +11,7 @@ import * as common from "../../serverSDK/common"
 import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';
+import { config } from '../../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -104,7 +105,13 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
+
+                    let config_r = config.RoleConfig.get(roles[i].RoleID);
+                    let fetters = new common.Fetters();
+                    fetters.fetters_id = config_r.Fetters;
+                    fetters.fetters_level = 0;
+
+                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack, fetters);
                     this.shopRoles.push(newNode);
                 }
             }

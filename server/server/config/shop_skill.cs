@@ -23,7 +23,7 @@ namespace config
         public int Level2Value_2;
         public int Level3Value_1;
         public int Level3Value_2;
-        public int SummonId;
+        public List<int> SummonId;
         public int SummonLevel;
         public int AddBufferID;
 
@@ -65,7 +65,10 @@ namespace config
                 skillc.Level2Value_2 = (int)o["Level2Value_2"];
                 skillc.Level3Value_1 = (int)o["Level3Value_1"];
                 skillc.Level3Value_2 = (int)o["Level3Value_2"];
-                skillc.SummonId = (int)o["SummonId"];
+
+                var SummonId = (string)o["SummonId"];
+                skillc.SummonId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(SummonId);
+
                 skillc.SummonLevel = (int)o["SummonLevel"];
                 skillc.AddBufferID = (int)o["AddBufferID"];
 

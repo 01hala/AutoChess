@@ -183,25 +183,43 @@ namespace Match
         {
             Log.Log.trace("_refresh begin!");
 
-            for (var i = 0; i < shopData.SaleRoleList.Count; i++)
+            for (var i = 0; i < 3/*shopData.SaleRoleList.Count*/; i++)
             {
-                var r = shopData.SaleRoleList[i];
-                if (r == null || !r.IsFreeze)
+                if (i < shopData.SaleRoleList.Count)
+                {
+                    var r = shopData.SaleRoleList[i];
+                    if (r == null || !r.IsFreeze)
+                    {
+                        var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                        r = randomShopRole(stage);
+                        shopData.SaleRoleList[i] = r;
+                    }
+                }
+                else
                 {
                     var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                    r = randomShopRole(stage);
-                    shopData.SaleRoleList[i] = r;
+                    var r = randomShopRole(stage);
+                    shopData.SaleRoleList.Add(r);
                 }
             }
 
-            for (var i = 0; i < shopData.SalePropList.Count; i++)
+            for (var i = 0; i < 3/*shopData.SalePropList.Count*/; i++)
             {
-                var p = shopData.SalePropList[i];
-                if (p == null || !p.IsFreeze)
+                if (i < shopData.SalePropList.Count)
+                {
+                    var p = shopData.SalePropList[i];
+                    if (p == null || !p.IsFreeze)
+                    {
+                        var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                        p = randomShopProp(stage);
+                        shopData.SalePropList[i] = p;
+                    }
+                }
+                else
                 {
                     var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                    p = randomShopProp(stage);
-                    shopData.SalePropList[i] = p;
+                    var p = randomShopProp(stage);
+                    shopData.SalePropList.Add(p);
                 }
             }
 
@@ -290,17 +308,21 @@ namespace Match
 
             foreach(var r in battleData.RoleList)
             {
-                if (mapFetters.TryGetValue(r.FettersSkillID.fetters_id, out var fetters))
+                if (r != null)
                 {
-                    fetters.number++;
-                }
-                else
-                {
-                    mapFetters.Add(r.FettersSkillID.fetters_id, new Fetters() {
-                        fetters_id = r.FettersSkillID.fetters_id,
-                        fetters_level = 0,
-                        number = 1
-                    });
+                    if (mapFetters.TryGetValue(r.FettersSkillID.fetters_id, out var fetters))
+                    {
+                        fetters.number++;
+                    }
+                    else
+                    {
+                        mapFetters.Add(r.FettersSkillID.fetters_id, new Fetters()
+                        {
+                            fetters_id = r.FettersSkillID.fetters_id,
+                            fetters_level = 0,
+                            number = 1
+                        });
+                    }
                 }
             }
 
@@ -309,7 +331,7 @@ namespace Match
             {
                 foreach (var r in battleData.RoleList)
                 {
-                    if (r.FettersSkillID.fetters_id == fetters.fetters_id)
+                    if (r != null && r.FettersSkillID.fetters_id == fetters.fetters_id)
                     {
                         r.FettersSkillID.number = fetters.number;
                     }
@@ -325,7 +347,7 @@ namespace Match
 
                     foreach (var r in battleData.RoleList)
                     {
-                        if (r.FettersSkillID.fetters_id == fetters.fetters_id)
+                        if (r != null && r.FettersSkillID.fetters_id == fetters.fetters_id)
                         {
                             r.FettersSkillID.fetters_level = fetters.fetters_level;
                         }
