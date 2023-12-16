@@ -437,7 +437,10 @@ namespace Match
 
             if (r == null)
             {
-                add_role(index, s.RoleID, 1);
+                if (!add_role(role_index, s.RoleID, 1))
+                {
+                    return em_error.db_error;
+                }
             }
             else
             {
