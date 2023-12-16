@@ -104,7 +104,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
+                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID , roles[i].HP , roles[i].Attack , 1 , 1 ,roles[i].IsFreeze);
                     this.shopRoles.push(newNode);
                 }
             }
@@ -120,7 +120,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
-                    newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food);
+                    newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food,props[i].IsFreeze);
                     this.shopProps.push(newNode);
                 }
             }

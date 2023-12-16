@@ -42,6 +42,7 @@ export class RoleIcon extends Component
     private shopArea:ShopArea;
     //图标
     public iconMask:Node;
+    private freezeSprite:Node;
     //初始位置
     public originalPos:Vec3;
     private tweenNode:Tween<Node>;
@@ -64,6 +65,8 @@ export class RoleIcon extends Component
        try
        {
             this.panel=this.node.parent;
+            this.freezeSprite=this.node.getChildByPath("FreezeSprite");
+            this.freezeSprite.active=false;
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
             this.iconMask=this.node.getChildByName("IconMask");
@@ -82,144 +85,22 @@ export class RoleIcon extends Component
        }
     }
     //初始化
-    async Init(id:number,hp:number,atk:number,teamindex:number=-1)
+    async Init(_Id:number , _Hp:number , _Atk:number , _level:number , _exp:number , _freeze, _fetters:common.Fetters=null , _teamindex:number=-1)
     {
         try
         {
-            let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
+            let map=new Map<Property,number>().set(Property.HP,_Hp).set(Property.Attack,_Atk);
             console.log("new role");
-            let r=new role.Role(teamindex,id,id-100000,1,1,Camp.Self,map);
-            console.log('RoleIcon spawn role: ',id);
+            let r=new role.Role(_teamindex , _Id , _level , _exp , Camp.Self , map , _fetters);
+            console.log('RoleIcon spawn role: ',_Id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
-            this.roleId=id;
+            this.roleId=_Id;
             
-            this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame= await this.LoadImg("Role_",id);
-/*----------------------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------拖拽事件---------------------------------------------------------*/
-/*----------------------------------------------------------------------------------------------------------------*/
-            this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
-            {
-                //重新注册按钮事件
-                this.node.on(Button.EventType.CLICK,()=>
-                {
-                    singleton.netSingleton.ready.infoPanel.active=true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
-                });
-                //隐藏冻结栏
-                this.shopArea.ShowFreezeArea(false);
-                //重置值
-                this.touchStartPoint = new Vec2(0, 0);
-                this.Adsorption();
-            }, this);
-    //拖拽结束↓ 拖拽取消↑
-            this.myTouch.on(Input.EventType.TOUCH_END, async () => 
-            {
-                //重新注册按钮事件
-                this.node.on(Button.EventType.CLICK,()=>
-                {
-                    singleton.netSingleton.ready.infoPanel.active=true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
-                });
-                //隐藏冻结栏
-                this.shopArea.ShowFreezeArea(false);
-                //还原起始值
-                this.touchStartPoint = new Vec2(0, 0);
-                //移动角色且判断是否出售
-                if(!this.isSale)
-                {
-                    if(null!=this.index && !this.upgradeLock)
-                    {
-                        await this.roleArea.MovePos(this.index,this.tempIndex);
-                    }
-                    this.index=this.tempIndex;
-                }
-                else
-                {
-                    this.roleNode.active=false;
-                    await this.roleArea.SaleRole(this.index);
-                    this.roleNode.destroy();
-                    this.node.destroy();
-                    return;
-                }
-                //购买、合并角色
-                if(null != this.index && !this.upgradeLock)
-                {
-                    if(!this.isBuy && singleton.netSingleton.ready.ready.GetCoins()>=3)
-                    {
-                        this.isBuy=true;
-                        await this.shopArea.BuyRole(this.index, this.node);
-                        if(null==this.target)
-                        {
-                            this.roleNode.destroy();
-                            this.node.destroy();
-                            return;
-                        }
-                    }
-                }
-                //console.log(this.isMerge);
-                //冻结角色
-                if(this.isFreeze && !this.isBuy)
-                {
-                    console.log("RoleFreeze!!!");
-                    this.freezeLock=!this.freezeLock;
-                    this.shopArea.FreezeEntity(common.ShopIndex.Role,this.node , this.freezeLock);
-                }
-                //换位
-                if(this.isSwitch && !this.isSale)//是否交换位置
-                {
-                    if(!this.isMerge)
-                    {
-                        this.roleArea.SwitchPos(this.index,this.target,this.t);
-                        this.target=this.tempTarget;
-                        this.roleArea.targets.set(this.target.name,this.node);
-                        this.isSwitch=false;
-                    }
-                }
-                //吸附缓动
-                if(!this.isMerge)
-                {
-                    this.Adsorption();
-                }
-                
-                
-            }, this);
-    //拖拽中
-            this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
-            {
-                //关闭按钮事件
-                this.node.off(Button.EventType.CLICK);
-                //计算位移坐标
-                let node: Node = event.currentTarget;
-                let pos = new Vec2();
-                let shit = pos.set(event.getUILocation());
-                let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
-                let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
-                //隐藏图标并显示角色实体
-                this.roleNode.active=true;
-                this.iconMask.active=false;
-                //设置坐标
-                node.setPosition(x, y, 0);
-            }, this);
-        //拖拽开始
-            this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
-            {
-                //显示冻结栏
-                if(!this.isBuy)
-                {
-                    this.shopArea.ShowFreezeArea(true);
-                }
-                //触摸到的对象
-                let node: Node = event.currentTarget;
-                //设置ui坐标
-                this.touchStartPoint.set(event.getUILocation());
-                let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
-                let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
-                this.touchStartPoint = new Vec2(x, y);
-            }, this);
-/*----------------------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------拖拽事件---------------------------------------------------------*/
-/*----------------------------------------------------------------------------------------------------------------*/
+            this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame= await this.LoadImg("Role_",_Id);
+            this.freezeLock=_freeze;
+            this.freezeSprite.active=_freeze;
+            this.DragEvent();
             if(!this.isBuy)
             {
                 this.iconMask.active=true;
@@ -231,8 +112,130 @@ export class RoleIcon extends Component
             console.error('RoleIcon 下 Ini 错误 err: ',error);
         }
     }
+
+/*----------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------拖拽事件---------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------*/
+    private DragEvent()
+    {
+        try
+        {
+        //拖拽取消
+            this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => {
+                //重新注册按钮事件
+                this.node.on(Button.EventType.CLICK, () => {
+                    singleton.netSingleton.ready.infoPanel.active = true;
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+                });
+                //隐藏冻结栏
+                this.shopArea.ShowFreezeArea(false);
+                //重置值
+                this.touchStartPoint = new Vec2(0, 0);
+                this.Adsorption();
+            }, this);
+        //拖拽结束
+            this.myTouch.on(Input.EventType.TOUCH_END, async () => {
+                //重新注册按钮事件
+                this.node.on(Button.EventType.CLICK, () => {
+                    singleton.netSingleton.ready.infoPanel.active = true;
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+                });
+                //隐藏冻结栏
+                this.shopArea.ShowFreezeArea(false);
+                //还原起始值
+                this.touchStartPoint = new Vec2(0, 0);
+                //移动角色且判断是否出售
+                if (!this.isSale) {
+                    if (null != this.index && !this.upgradeLock) {
+                        await this.roleArea.MovePos(this.index, this.tempIndex);
+                    }
+                    this.index = this.tempIndex;
+                }
+                else {
+                    this.roleNode.active = false;
+                    await this.roleArea.SaleRole(this.index);
+                    this.roleNode.destroy();
+                    this.node.destroy();
+                    return;
+                }
+                //购买、合并角色
+                if (null != this.index && !this.upgradeLock) {
+                    if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) {
+                        this.isBuy = true;
+                        this.freezeSprite.active = false;
+                        await this.shopArea.BuyRole(this.index, this.node);
+                        if (null == this.target) {
+                            this.roleNode.destroy();
+                            this.node.destroy();
+                            return;
+                        }
+                    }
+                }
+                //console.log(this.isMerge);
+                //冻结角色
+                if (this.isFreeze && !this.isBuy) {
+                    console.log("RoleFreeze!!!");
+                    this.freezeLock = !this.freezeLock;
+                    this.freezeSprite.active = this.freezeLock;
+                    this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
+                }
+                //换位
+                if (this.isSwitch && !this.isSale)//是否交换位置
+                {
+                    if (!this.isMerge) {
+                        this.roleArea.SwitchPos(this.index, this.target, this.t);
+                        this.target = this.tempTarget;
+                        this.roleArea.targets.set(this.target.name, this.node);
+                        this.isSwitch = false;
+                    }
+                }
+                //吸附缓动
+                if (!this.isMerge) {
+                    this.Adsorption();
+                }
+            }, this);
+        //拖拽中
+            this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => {
+                //关闭按钮事件
+                this.node.off(Button.EventType.CLICK);
+                //计算位移坐标
+                let node: Node = event.currentTarget;
+                let pos = new Vec2();
+                let shit = pos.set(event.getUILocation());
+                let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
+                let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
+                //隐藏图标并显示角色实体
+                this.roleNode.active = true;
+                this.iconMask.active = false;
+                //设置坐标
+                node.setPosition(x, y, 0);
+            }, this);
+        //拖拽开始
+            this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => {
+                //显示冻结栏
+                if (!this.isBuy) {
+                    this.shopArea.ShowFreezeArea(true);
+                }
+                //触摸到的对象
+                let node: Node = event.currentTarget;
+                //设置ui坐标
+                this.touchStartPoint.set(event.getUILocation());
+                let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
+                let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
+                this.touchStartPoint = new Vec2(x, y);
+            }, this);
+        }
+        catch(error)
+        {
+            console.error('RoleIcon 下 DragEvent 错误 err: ',error);
+        }
+    }
+/*----------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------拖拽事件---------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------*/
+
     //生成角色
-    SpawnRole(r:role.Role):Promise<Node>
+    private SpawnRole(r:role.Role):Promise<Node>
     {
         return new Promise (async (resolve)=>
         {
@@ -262,7 +265,7 @@ export class RoleIcon extends Component
         });
     }
     //加载图片
-    LoadImg(_address:string,_id:number):Promise<SpriteFrame>
+    private LoadImg(_address:string,_id:number):Promise<SpriteFrame>
     {
         return new Promise(async (resolve)=>
         {
@@ -388,7 +391,7 @@ export class RoleIcon extends Component
 /*------------------------------------------------碰撞检测---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
     //拖拽吸附
-    Adsorption()
+    private Adsorption()
     {
         if(null!=this.target && !this.isSale && null!=this.index)
         {
@@ -419,7 +422,7 @@ export class RoleIcon extends Component
         
     }
     //互相换位
-    TransPos(Vec3:Vec3)
+    public TransPos(Vec3:Vec3)
     {
         this.tweenNode=tween(this.node).to(0.1,{worldPosition:Vec3})
         .call(()=>
@@ -437,7 +440,7 @@ export class RoleIcon extends Component
         let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
 
         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-        let r=new role.Role(this.index,this.roleId,this.roleId-100000,t.Level,t.Number,Camp.Self,map);
+        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
         this.roleNode.getComponent(RoleDis).Refresh(r);
         await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
         if(is_update)
