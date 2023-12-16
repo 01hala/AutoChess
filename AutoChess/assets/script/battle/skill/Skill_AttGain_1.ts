@@ -43,7 +43,7 @@ export class Skill_AttGain_1 extends SkillBase
     public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
     {
         try
-        {
+        {            console.log("加属性");
             if(null==this.numberOfRole || 0==this.numberOfRole)
             {
                 this.SkillEffect_1(selfInfo,battle);    
@@ -159,7 +159,6 @@ export class Skill_AttGain_1 extends SkillBase
 
     SkillEffect_2(selfInfo: RoleInfo, battle: Battle):void          //随机一对象生效
     {
-        
         try
         {
             let event = new Event();
