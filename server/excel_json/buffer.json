@@ -26,5 +26,19 @@
         "Type": 2,
         "Value": 1,
         "Round": 1
+    },
+    "5": {
+        "Id": 5,
+        "Name": "虚弱",
+        "Type": 0,
+        "Value": 1,
+        "Round": 1
+    },
+    "6": {
+        "Id": 6,
+        "Name": "圣盾",
+        "Type": 0,
+        "Value": 1,
+        "Round": 1
     }
 }

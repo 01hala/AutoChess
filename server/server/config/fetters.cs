@@ -65,7 +65,14 @@ namespace config
 
                 var count = (string)o["ObjCount"];
                 var objCount = count.Split("|");
-                fettersc.ObjCount = objCount.Select(int.Parse).ToList();
+                fettersc.ObjCount = new();
+                foreach (var c in objCount)
+                {
+                    if (!string.IsNullOrEmpty(c) && !string.IsNullOrWhiteSpace(c))
+                    {
+                        fettersc.ObjCount.Add(int.Parse(c));
+                    }
+                }
 
                 fettersc.Priority = (Priority) o["Priority"];
                 fettersc.EffectScope = (EffectScope)o["EffectScope"];

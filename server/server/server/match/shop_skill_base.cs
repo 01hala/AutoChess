@@ -405,9 +405,12 @@ namespace Match
             {
                 return;
             }
-            if (_player.add_role(summon_index, skill.SummonId, skill.SummonLevel))
+            foreach (var SummonId in skill.SummonId)
             {
-                _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(_player.BattleData);
+                if (_player.add_role(summon_index, SummonId, skill.SummonLevel))
+                {
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(_player.BattleData);
+                }
             }
         }
 
