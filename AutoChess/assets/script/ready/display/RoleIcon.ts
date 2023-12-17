@@ -168,6 +168,10 @@ export class RoleIcon extends Component
                         if(null != this.target || this.isMerge)
                         {
                             this.isBuy = true;
+                            if(!this.isMerge)
+                            {
+                                this.roleArea.targets.set(this.target.name,this.node);
+                            }
                             await this.shopArea.BuyRole(this.index, this.node);
                         }
 
@@ -199,9 +203,8 @@ export class RoleIcon extends Component
                     }
                 }
                 //吸附缓动
-                if (!this.isMerge) {
-                    this.Adsorption();
-                }
+                this.Adsorption();
+               
             }, this);
     //拖拽中
             this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => {
@@ -352,7 +355,7 @@ export class RoleIcon extends Component
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.tempIndex=Number(num);
                         this.target=otherCollider.node;
-                        this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
+                        //this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
                         this.isMerge=false;
                     }
@@ -420,7 +423,7 @@ export class RoleIcon extends Component
     //拖拽吸附
     private Adsorption()
     {
-        if(null!=this.target && !this.isSale && null!=this.index)
+        if(null!=this.target && !this.isSale && null!=this.index && this.isBuy)
         {
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>

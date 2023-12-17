@@ -206,9 +206,12 @@ export class BattleDis
                         //console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
                         //let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
                         let roleNode = this.selfQueue.roleNodes[ev.spellcaster.index];
-                        allAwait.push(roleNode.getComponent(RoleDis).Attack(
-                            this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp));
-                        selfAttack = true;
+                        if(null != roleNode)
+                        {
+                            allAwait.push(roleNode.getComponent(RoleDis).Attack(
+                                this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp));
+                            selfAttack = true;
+                        }
                     }
                 }
                 else if (Camp.Enemy == ev.spellcaster.camp)
@@ -217,9 +220,12 @@ export class BattleDis
                     {
                         //let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
                         let roleNode = this.enemyQueue.roleNodes[ev.spellcaster.index];
-                        allAwait.push(roleNode.getComponent(RoleDis).Attack(
-                            this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp));
-                        enemyAttack = true;
+                        if(null != roleNode)
+                        {
+                            allAwait.push(roleNode.getComponent(RoleDis).Attack(
+                                this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp));
+                            enemyAttack = true;
+                        }
                     }
                 }
             }

@@ -99,6 +99,7 @@ export class RoleDis extends Component
     async Refresh(roleInfo: Role,isnew?:boolean) 
     {
         this.roleInfo = roleInfo;
+        await this.changeAtt();
         if(isnew)
         {
             this.RoleId=roleInfo.id;
@@ -113,8 +114,15 @@ export class RoleDis extends Component
             {
                 this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;
             }
+            
         }
-        await this.changeAtt();
+        let str="lvl_"+roleInfo.level;
+        let lvlsf:SpriteFrame=await  this.LoadImg("LvRing",str);
+        if(lvlsf)
+        {   
+            this.levelSprite.getComponent(Sprite).spriteFrame=lvlsf;
+        }
+        
     }
 
     delay(ms: number, release: () => void): Promise<void> 
@@ -294,7 +302,7 @@ export class RoleDis extends Component
             let sf:SpriteFrame=await this.LoadImg("LvRing",str);
             tween(this.node).to(0.1,
                 {
-                    scale:new Vec3(1.1,1.1,1)
+                    //scale:new Vec3(1.1,1.1,1)
                 })
             .call(()=>
             {
@@ -306,7 +314,7 @@ export class RoleDis extends Component
             })
             .delay(0.1).to(0.1,
                 {
-                    scale:new Vec3(1,1,1)
+                    //scale:new Vec3(1,1,1)
                 })
             .start();
 

@@ -181,14 +181,14 @@ export class ReadyDis
         this.waitingPanel.active=valve;
     }
     //刷新商店
-    async RefreshShop()
+    private async RefreshShop()
     {
         await this.ready.Refresh();
         console.log('refresh');
         this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
     }
     //更新玩家信息
-    UpdatePlayerInfo(_battle_info:common.UserBattleData)
+    private UpdatePlayerInfo(_battle_info:common.UserBattleData)
     {
         this.coinText.string=""+_battle_info.coin;
         this.heathText.string=""+_battle_info.faild;

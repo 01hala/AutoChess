@@ -94,7 +94,7 @@ export class RoleArea extends Component
                     //obj.getComponent(RoleIcon).roleNode.active=true;
                     obj.getComponent(RoleIcon).index=i;
                     obj.getComponent(RoleIcon).target=this.targets[i];
-                    obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, 1 , 1 , false , _roleList[i].FettersSkillID , i);
+                    obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
                     //obj.getComponent(RoleIcon).iconMask.active=false;
                     this.rolesNode[i]=obj;
                 }

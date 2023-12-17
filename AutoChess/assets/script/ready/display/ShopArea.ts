@@ -130,7 +130,7 @@ export class ShopArea extends Component
 
     async BuyRole(_index:number, _obj:Node)
     {
-        //console.log(this.shopRoles.length);
+        console.log('buy Role');
         for(let i=0;i<this.shopRoles.length;i++)
         {
             if(this.shopRoles[i] == _obj)
