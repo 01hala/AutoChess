@@ -42,19 +42,39 @@ export class RoleArea extends Component
 
     async SwitchPos(_selfIndex:number,_selfPosTarget:Node,_switchNode:Node)
     {
-        await this.MovePos(_selfIndex,_switchNode.getComponent(RoleIcon).index);
-        _switchNode.getComponent(RoleIcon).target=_selfPosTarget;
+        //await this.MovePos(_selfIndex,_switchNode.getComponent(RoleIcon).index);
         _switchNode.getComponent(RoleIcon).TransPos(_selfPosTarget.worldPosition);
-        this.targets.set(_selfPosTarget.name,_switchNode);
+        _switchNode.getComponent(RoleIcon).target=_selfPosTarget;
+        _switchNode.getComponent(RoleIcon).index=_selfIndex;
+        //this.targets.set(_selfPosTarget.name,_switchNode);
     }
 
     async MovePos(_indexBefor:number,_indexAfter:number)
     {
-        console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
-        let t=this.rolesNode[_indexBefor];
+        //this.LogShowRoles();
+        console.log('-------------');
+        //console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
+        let t=this.rolesNode[_indexAfter];
         this.rolesNode[_indexAfter]=this.rolesNode[_indexBefor];
         this.rolesNode[_indexBefor]=t;
+        this.LogShowRoles();
         await singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
+    }
+
+    private LogShowRoles()
+    {
+        for(let i=0;i<6;i++)
+        {
+            if(this.rolesNode[i])
+            {
+                console.log(i,': ',this.rolesNode[i].getComponent(RoleIcon).roleId);
+            }
+            else
+            {
+                console.log(i,': null');
+            }
+            
+        }
     }
 
     async SaleRole(index:number)
@@ -94,7 +114,7 @@ export class RoleArea extends Component
                     //obj.getComponent(RoleIcon).roleNode.active=true;
                     obj.getComponent(RoleIcon).index=i;
                     obj.getComponent(RoleIcon).target=this.targets[i];
-                    obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
+                    await obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
                     //obj.getComponent(RoleIcon).iconMask.active=false;
                     this.rolesNode[i]=obj;
                 }

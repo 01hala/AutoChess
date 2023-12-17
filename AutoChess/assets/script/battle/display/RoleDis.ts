@@ -99,7 +99,6 @@ export class RoleDis extends Component
     async Refresh(roleInfo: Role,isnew?:boolean) 
     {
         this.roleInfo = roleInfo;
-        await this.changeAtt();
         if(isnew)
         {
             this.RoleId=roleInfo.id;
@@ -114,15 +113,8 @@ export class RoleDis extends Component
             {
                 this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;
             }
-            
         }
-        let str="lvl_"+roleInfo.level;
-        let lvlsf:SpriteFrame=await  this.LoadImg("LvRing",str);
-        if(lvlsf)
-        {   
-            this.levelSprite.getComponent(Sprite).spriteFrame=lvlsf;
-        }
-        
+        await this.changeAtt();
     }
 
     delay(ms: number, release: () => void): Promise<void> 
@@ -177,7 +169,7 @@ export class RoleDis extends Component
         }
     }
 
-    changeAtt() 
+    async changeAtt() 
     {
         try 
         {
@@ -185,11 +177,17 @@ export class RoleDis extends Component
             
             this.Hp = Math.round(this.roleInfo.GetProperty(Property.HP));
             this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));
-            
+            this.Level=this.roleInfo.level;
             if (this.hpText && this.atkText) 
             {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+            }
+            let str="lvl_"+this.Level;
+            let lvlsf:SpriteFrame=await this.LoadImg("LvRing",str);
+            if(lvlsf)
+            {   
+                this.levelSprite.getComponent(Sprite).spriteFrame=lvlsf;
             }
         }
         catch (err) 
@@ -294,23 +292,24 @@ export class RoleDis extends Component
 
     }
 
-    async LevelUp(_level:number)
+    //缓动有bug暂时空置
+    async LevelUp()
     {
         try
         {
-            let str="lvl_"+_level;
-            let sf:SpriteFrame=await this.LoadImg("LvRing",str);
+            //let str="lvl_"+_level;
+            //let sf:SpriteFrame=await this.LoadImg("LvRing",str);
             tween(this.node).to(0.1,
                 {
                     //scale:new Vec3(1.1,1.1,1)
                 })
             .call(()=>
             {
-                this.Level=_level;
-                if(sf)
-                {
-                    this.levelSprite.getComponent(Sprite).spriteFrame=sf;
-                }
+                //this.Level=_level;
+                //if(sf)
+                //{
+                    //this.levelSprite.getComponent(Sprite).spriteFrame=sf;
+                //}
             })
             .delay(0.1).to(0.1,
                 {
