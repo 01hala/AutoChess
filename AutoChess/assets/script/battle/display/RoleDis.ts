@@ -230,9 +230,7 @@ export class RoleDis extends Component
     {
         try 
         {
-            let type: Property;
             let anim: Animation = this.intensifierText.getComponent(Animation);
-            let wait: boolean;
             anim.on(Animation.EventType.FINISHED, () => 
             {
                 anim.stop();
@@ -244,8 +242,7 @@ export class RoleDis extends Component
             {
                 this.Exp=stack%3;
             }
-            
-            tween(this.node).to(0,{}).call(()=>
+            let newtween:Tween<Node>=tween(this.node).to(0,{}).call(()=>
             {   
                 if (0 != value[0]) 
                 {
@@ -253,6 +250,7 @@ export class RoleDis extends Component
                     this.intensifierText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[0] + "</outline></color>";
                     this.intensifierText.active = true;
                     anim.play();
+                    console.log("生命值增加");
                 }
             }).delay(0.7).call(()=>
             {
@@ -262,6 +260,7 @@ export class RoleDis extends Component
                     this.intensifierText.getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[1] + "</outline></color>";
                     this.intensifierText.active = true;
                     anim.play();
+                    console.log("攻击力增加");
                 }
                 
             }).delay(0.7).call(()=>
@@ -273,7 +272,11 @@ export class RoleDis extends Component
 
             return this.delay(1500,()=>
             {
-                
+                if(newtween)
+                {
+                    newtween.stop();
+                    newtween=null;
+                }
             })
         }
         catch (err) 
