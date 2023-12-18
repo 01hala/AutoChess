@@ -237,7 +237,7 @@ namespace Match
                 ev = EMRoleShopEvent.start_round
             });
 
-            clear_skill_tag();
+            clear_skill_tag(); 
         }
 
         public void end_round()
@@ -302,7 +302,7 @@ namespace Match
             return 0;
         }
 
-        private void check_fetters()
+        public List<Fetters> check_fetters()
         {
             var mapFetters = new Dictionary<int, Fetters>();
 
@@ -345,17 +345,27 @@ namespace Match
                         fetters_info.Add(fetters);
                     }
 
-                    foreach (var r in battleData.RoleList)
+                    for(var i = 0; i < battleData.RoleList.Count; i++)
                     {
+                        var r = battleData.RoleList[i];
                         if (r != null && r.FettersSkillID.fetters_id == fetters.fetters_id)
                         {
                             r.FettersSkillID.fetters_level = fetters.fetters_level;
+
+                            var shop_r = shop_skill_roles[i];
+                            if (shop_r != null)
+                            {
+                                shop_r.fettersSkillID = fetters.fetters_id;
+                                shop_r.fettersLevel = fetters.fetters_level;
+                            }
                         }
                     }
                 }
             }
 
             BattleClientCaller.get_client(ClientUUID).fetters_info(fetters_info);
+
+            return fetters_info;
         }
 
         public bool sale_role(int index)
@@ -416,7 +426,6 @@ namespace Match
 
                 battleData.RoleList[role_index] = r;
                 check_fetters();
-
                 shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
 
                 return true;

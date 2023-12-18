@@ -93,11 +93,16 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_battle_plan_refresh : (battle_info:common.UserBattleData, shop_info:common.ShopData)=>void | null;
+    public cb_battle_plan_refresh : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[])=>void | null;
     battle_plan_refresh(inArray:any[]){
         let _argv_:any[] = [];
         _argv_.push(common.protcol_to_UserBattleData(inArray[0]));
         _argv_.push(common.protcol_to_ShopData(inArray[1]));
+        let _array_:any[] = [];
+        for(let v_ of inArray[2]){
+            _array_.push(common.protcol_to_Fetters(v_));
+        }
+        _argv_.push(_array_);
         if (this.cb_battle_plan_refresh){
             this.cb_battle_plan_refresh.apply(null, _argv_);
         }

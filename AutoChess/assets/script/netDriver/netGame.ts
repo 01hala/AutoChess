@@ -36,8 +36,8 @@ export class netGame {
         this.match_c.cb_battle_victory = (is_victory:boolean) => {
             this.cb_battle_victory.call(null, is_victory);
         }
-        this.match_c.cb_battle_plan_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
-            this.cb_start_battle.call(null, battle_info, shop_info);
+        this.match_c.cb_battle_plan_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[]) => {
+            this.cb_start_battle.call(null, battle_info, shop_info, fetters_info);
         }
         this.match_c.cb_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
             this.cb_battle_info.call(null, battle_info);
@@ -101,11 +101,11 @@ export class netGame {
 
     private match_name:string = "";
     //准备阶段
-    public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData) => void;
+    public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
     public start_battle() {
         this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info)=>{
             this.match_name = match_name;
-            this.cb_start_battle.call(null, battle_info, shop_info);
+            this.cb_start_battle.call(null, battle_info, shop_info, null);
         }, (err)=>{
             console.log("start_battle err:", err);
         }).timeout(3000, ()=>{

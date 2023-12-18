@@ -105,12 +105,17 @@ namespace Abelkhan
             }
         }
 
-        public event Action<UserBattleData, ShopData> on_battle_plan_refresh;
+        public event Action<UserBattleData, ShopData, List<Fetters>> on_battle_plan_refresh;
         public void battle_plan_refresh(IList<MsgPack.MessagePackObject> inArray){
             var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
             var _shop_info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _fetters_info = new List<Fetters>();
+            var _protocol_arrayfetters_info = ((MsgPack.MessagePackObject)inArray[2]).AsList();
+            foreach (var v_096776fa_67e9_5066_90ca_647b76dcad2e in _protocol_arrayfetters_info){
+                _fetters_info.Add(Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)v_096776fa_67e9_5066_90ca_647b76dcad2e).AsDictionary()));
+            }
             if (on_battle_plan_refresh != null){
-                on_battle_plan_refresh(_battle_info, _shop_info);
+                on_battle_plan_refresh(_battle_info, _shop_info, _fetters_info);
             }
         }
 
