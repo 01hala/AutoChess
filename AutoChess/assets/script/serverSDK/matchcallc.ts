@@ -213,10 +213,11 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_shop_summon : (battle_info:common.UserBattleData)=>void | null;
+    public cb_shop_summon : (role_index:number, _role:common.Role)=>void | null;
     shop_summon(inArray:any[]){
         let _argv_:any[] = [];
-        _argv_.push(common.protcol_to_UserBattleData(inArray[0]));
+        _argv_.push(inArray[0]);
+        _argv_.push(common.protcol_to_Role(inArray[1]));
         if (this.cb_shop_summon){
             this.cb_shop_summon.apply(null, _argv_);
         }

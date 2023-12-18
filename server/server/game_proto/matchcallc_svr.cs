@@ -189,9 +189,10 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_add_coin", _argv_68d61429_8f03_329b_a588_1069fa6d4cff);
         }
 
-        public void shop_summon(UserBattleData battle_info){
+        public void shop_summon(Int32 role_index, Role _role){
             var _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a = new ArrayList();
-            _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a.Add(UserBattleData.UserBattleData_to_protcol(battle_info));
+            _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a.Add(role_index);
+            _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a.Add(Role.Role_to_protcol(_role));
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_shop_summon", _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a);
         }
 

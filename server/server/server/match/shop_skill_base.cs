@@ -378,38 +378,39 @@ namespace Match
 
         private void SummonShop(battle_player _player, shop_event trigger_ev)
         {
-            int summon_index = -1;
-            if (_player.BattleData.RoleList[trigger_ev.index] == null)
-            {
-                summon_index = trigger_ev.index;
-            }
-            else
-            {
-                for (int i = 0; i < _player.BattleData.RoleList.Count; i++)
-                {
-                    if (_player.BattleData.RoleList[i] == null)
-                    {
-                        summon_index = i;
-                        break;
-                    }
-                }
-            }
-
-            if (summon_index < 0)
-            {
-                return;
-            }
-
             ShopSkillConfig skill;
             if (!config.Config.ShopSkillConfigs.TryGetValue(trigger_ev.skill_id, out skill))
             {
                 return;
             }
+
             foreach (var SummonId in skill.SummonId)
             {
+                int summon_index = -1;
+                if (_player.BattleData.RoleList[trigger_ev.index] == null)
+                {
+                    summon_index = trigger_ev.index;
+                }
+                else
+                {
+                    for (int i = 0; i < _player.BattleData.RoleList.Count; i++)
+                    {
+                        if (_player.BattleData.RoleList[i] == null)
+                        {
+                            summon_index = i;
+                            break;
+                        }
+                    }
+                }
+
+                if (summon_index < 0)
+                {
+                    return;
+                }
+
                 if (_player.add_role(summon_index, SummonId, skill.SummonLevel))
                 {
-                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(_player.BattleData);
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
                 }
             }
         }
