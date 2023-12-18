@@ -55,7 +55,7 @@ export class RoleIcon extends Component
     //临时变量
     private tempIndex:number;
     private tempTarget:Node=null;
-    private t:Node=null;
+    private tempMergeRole:Node=null;
     //锁存，防止使用食物过快,导致bug
     public upgradeLock:boolean=false;
     public freezeLock:boolean=false;
@@ -91,7 +91,7 @@ export class RoleIcon extends Component
     }
 
     //初始化
-    async Init(_Id:number , _Hp:number , _Atk:number , _level:number , _stack:number , _freeze, _fetters:common.Fetters=null , _teamindex:number=-1)
+    async Init(_Id:number , _Hp:number , _Atk:number , _level:number , _stack:number , _freeze:boolean, _fetters:common.Fetters=null , _teamindex:number=-1)
     {
         try
         {
@@ -170,8 +170,7 @@ export class RoleIcon extends Component
                         if (!this.isMerge) 
                         {
                             //console.log('switch : ',this.t.getComponent(RoleIcon).roleId);
-                            
-                            this.roleArea.SwitchPos(beforeIndex, berforeTarget, this.t);
+                            this.roleArea.SwitchPos(beforeIndex, berforeTarget, this.tempMergeRole);
                             //this.roleArea.targets.set(this.target.name, this.node);
                             this.isSwitch = false;
                         }
@@ -273,18 +272,6 @@ export class RoleIcon extends Component
     {
         return new Promise (async (resolve)=>
         {
-            //console.log("spawn role:",r.id);
-            //let address: string = "Role_";
-            //let roleRes=""+address+r.id;
-            //let roleRes = address + "100001";
-            // let newNode=null;
-            // newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-            // if(null==newNode)
-            // {
-            //     console.warn('RoleIcon 里的 SpawnRole 异常 : bundle中没有此角色,替换为默认角色');
-            //     roleRes = address + "100001";
-            //     newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-            // }
             let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePrefab") as Prefab;
             let role = instantiate(newNode);
             role.setParent(this.node);
@@ -379,9 +366,9 @@ export class RoleIcon extends Component
                     else if (this.isBuy) //检测换位或者合并
                     {
                         //this.tempTarget = otherCollider.node;
-                        this.t = this.roleArea.rolesNode[this.tempIndex];
+                        this.tempMergeRole = this.roleArea.rolesNode[this.tempIndex];
                         //console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
-                        if (this.t.getComponent(RoleIcon).roleId == this.roleId) {
+                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId) {
                             this.isMerge = true;
                         }
                         else {
@@ -392,9 +379,9 @@ export class RoleIcon extends Component
                     }
                     else {
                         this.target = null;
-                        this.t = this.roleArea.rolesNode[this.tempIndex];
+                        this.tempMergeRole = this.roleArea.rolesNode[this.tempIndex];
                         //console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
-                        if (this.t.getComponent(RoleIcon).roleId == this.roleId) {
+                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId) {
                             this.isMerge = true;
                         }
                         else {

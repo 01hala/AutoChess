@@ -85,3 +85,5 @@ hotaru:在rolearea里添加ResetTeam，实现游戏循环
 hotaru:修改角色加载逻辑、新增冻结区域及其判断、屏幕适配
 2023/12/16
 hotaru:亿点小修改
+2023/12/19
+hotaru:接入羁绊技能回调

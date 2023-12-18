@@ -19,6 +19,7 @@ export class Ready
     private shopRoles:ShopRole[];
 
     private roles:common.Role[];
+    private fetters_info:common.Fetters[];
 
     private coin:number=0;
 
@@ -28,26 +29,41 @@ export class Ready
 
     public on_event : ((evs:skill.Event[]) => Promise<void>) = null;
 
-    public constructor(battle_info:common.UserBattleData, self:common.ShopData) 
+    public constructor(battle_info:common.UserBattleData, self:common.ShopData , fetters_info?:common.Fetters[]) 
     {
         this.coin = battle_info.coin;
 
         this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
+        this.fetters_info=fetters_info;
 
-        console.log("shopRoles:", this.shopRoles);
-        console.log("props:", this.props);
-        console.log("battle_info.RoleList:", battle_info.RoleList);
+        //console.log("shopRoles:", this.shopRoles);
+        //console.log("props:", this.props);
+        //console.log("battle_info.RoleList:", battle_info.RoleList);
     }
 
     public GetShopRoles():ShopRole[]
     {
-        return this.shopRoles;
+        if(this.shopRoles)
+        {
+            return this.shopRoles;
+        }
     }
 
     public GetShopProps():ShopProp[]
     {
-        return this.props;
+        if(this.props)
+        {
+            return this.props;
+        }
+    }
+
+    public GetFetters():common.Fetters[]
+    {
+        if(this.fetters_info)
+        {
+            return this.fetters_info;
+        }
     }
 
     public AddReadyEvent(ev:skill.Event)

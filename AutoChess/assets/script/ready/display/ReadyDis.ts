@@ -82,7 +82,7 @@ export class ReadyDis
         this.waitingPanel=instantiate(panel);
         this.waitingPanel.setParent(this.panelNode);
         this.waitingPanel.setSiblingIndex(100);
-        //角色信息二级界面
+        //信息二级界面
         panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "Information") as Prefab;
         this.infoPanel=instantiate(panel);
         this.infoPanel.setParent(this.panelNode);
@@ -128,9 +128,11 @@ export class ReadyDis
         };
         singleton.netSingleton.game.cb_role_buy_merge = (target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_buy_merge', target_role_index);
-            let str = "Location_" + target_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);;
+            //let str = "Location_" + target_role_index;
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
+            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);;
         };
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
@@ -143,22 +145,47 @@ export class ReadyDis
             this.roleArea.rolesNode[source_role_index]=null;
             console.log('cb_role_merge,target_role:', target_role_index);
 
-            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
-            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
 
-            str = "Location_" + target_role_index;                                                                      
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;                //不知道为什么用列表不能播放动画，只能用字典来获取组件
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            //str = "Location_" + target_role_index;                                                                      
+            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;                
+            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
         };
         singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
-            let str = "Location_" + target_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            // let str = "Location_" + target_role_index;
+            // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
+            // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
         };
         singleton.netSingleton.game.cb_role_update_refresh_shop=(shop_info: common.ShopData)=> {
             this.ready.SetShopData(shop_info);
             this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
-        }
+        };
+        singleton.netSingleton.game.cb_add_coin=(coin:number)=>
+        {
+            this.ready.SetCoins(coin);
+            this.coinText.string=""+coin;
+        };
+        singleton.netSingleton.game.cb_role_skill_update=(role_index:number,_role:common.Role)=>
+        {
+            this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role,false);
+        };
+        singleton.netSingleton.game.cb_role_add_property=(battle_info:common.UserBattleData)=>
+        {
+            for(let i=0;i<this.roleArea.rolesNode.length;i++)
+            {
+                if(null != this.roleArea.rolesNode[i])
+                {
+                    this.roleArea.rolesNode[i].getComponent(RoleIcon).GetUpgrade(battle_info.RoleList[i],false);
+                }
+            }
+        };
+        singleton.netSingleton.game.cb_shop_summon=(role_index:number, _role:common.Role)=>
+        { 
+            this.roleArea.SummonRole(role_index,_role);
+        };
 
     }
 
