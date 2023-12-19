@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using Abelkhan;
 
 namespace config
 {
@@ -11,8 +12,8 @@ namespace config
         public string Name;
         public string Type;
         public Priority Priority;
-        public EMShopEvent EffectTime;
-        public Abelkhan.ShopSkillEffectEM Effect;
+        public EMSkillEvent EffectTime;
+        public Abelkhan.SkillEffectEM Effect;
         public int ObjCount;
         public Direction ObjectDirection;
         public EffectScope EffectScope;
@@ -22,6 +23,9 @@ namespace config
         public int Level2Value_2;
         public int Level3Value_1;
         public int Level3Value_2;
+        public List<int> SummonId;
+        public int SummonLevel;
+        public int AddBufferID;
 
         public static Dictionary<int, ShopSkillConfig> Load(string path)
         {
@@ -50,8 +54,8 @@ namespace config
                 skillc.Name = (string)o["Name"];
                 skillc.Type = (string)o["Type"];
                 skillc.Priority = (Priority)o["Priority"];
-                skillc.EffectTime = (EMShopEvent)o["EffectTime"];
-                skillc.Effect = (Abelkhan.ShopSkillEffectEM)o["Effect"];
+                skillc.EffectTime = (EMSkillEvent)o["EffectTime"];
+                skillc.Effect = (Abelkhan.SkillEffectEM)o["Effect"];
                 skillc.ObjCount = (int)o["ObjCount"];
                 skillc.ObjectDirection = (Direction)o["ObjDirection"];
                 skillc.EffectScope = (EffectScope)o["EffectScope"];
@@ -61,6 +65,12 @@ namespace config
                 skillc.Level2Value_2 = (int)o["Level2Value_2"];
                 skillc.Level3Value_1 = (int)o["Level3Value_1"];
                 skillc.Level3Value_2 = (int)o["Level3Value_2"];
+
+                var SummonId = (string)o["SummonId"];
+                skillc.SummonId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(SummonId);
+
+                skillc.SummonLevel = (int)o["SummonLevel"];
+                skillc.AddBufferID = (int)o["AddBufferID"];
 
                 obj[skillc.Id] = skillc;
             }

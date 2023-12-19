@@ -43,11 +43,6 @@ export enum SwapPropertiesType {
     RandomSwap = 3,
 }
 
-/*
- * ��������
- * Editor:Hotaru
- * 2023.09.25
- */
 export enum SkillType
 {
     Intensifier = 1,
@@ -73,16 +68,6 @@ export enum Camp {
     Tie = 0,
     Self = 1,
     Enemy = 2,
-}
-
-export enum Direction {
-    None = 0,
-    Forward = 1,
-    Back = 2,
-    Rigiht = 3,
-    Left = 4,
-    Self = 5,
-    Cross = 6,
 }
 
 export enum PropsType

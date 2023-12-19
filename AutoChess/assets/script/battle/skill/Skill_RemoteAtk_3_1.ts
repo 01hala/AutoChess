@@ -63,49 +63,36 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
     {
         try
         {
-            console.log("try to use remote skill");
-            //let battleEvent : Event = new Event();
-            //battleEvent.type = EventType.RemoteInjured;
-            //battleEvent.spellcaster = selfInfo;
-            //battleEvent.recipient = [];
-            //battleEvent.value = [];
-
             let recipientRoles:Role[] = new Array();
             let self:Role = null;
             let enemyRoles:Role[] = null;
 
-            let roleInfo=new RoleInfo();
-
             attack=Math.round(attack);                                          //四舍五入
+            if(attack<1)
+            {
+                attack=1;
+            }
+            console.log("try to use remote Skill_RemoteAtk_3_1 attack:", attack);
 
             if(Camp.Self==selfInfo.camp)
             {
                 self = battle.GetSelfTeam().GetRole(selfInfo.index);
                 enemyRoles=battle.GetEnemyTeam().GetRoles().slice();
-
-                roleInfo.camp=Camp.Enemy;
             }
             if(Camp.Enemy==selfInfo.camp)
             {
                 self = battle.GetEnemyTeam().GetRole(selfInfo.index);
                 enemyRoles=battle.GetSelfTeam().GetRoles().slice();
-
-                roleInfo.camp=Camp.Self;
             }
             while(recipientRoles.length < this.numberOfRole && enemyRoles.length > 0) {
                 let index = random(0, enemyRoles.length);
                 recipientRoles.push(enemyRoles[index]);
                 enemyRoles.splice(index, 1);
-
-                roleInfo.index=index;
             }
             recipientRoles.forEach((role)=>{
-                role.BeHurted(this.attack, self, battle);
-                //console.log("远程攻击角色受伤 :",attack);
+                role.BeHurted(attack, self, battle);
+                console.log("Skill_RemoteAtk_3_1 远程攻击角色受伤 :",attack);
             });
-
-            //battleEvent.recipient.push(roleInfo);
-            //battle.AddBattleEvent(battleEvent);
         }
         catch (error) 
         {

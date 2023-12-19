@@ -1,11 +1,75 @@
 import * as client_handle from "./client_handle";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
-export enum ShopSkillEffectEM{
+export enum Priority{
+    Low = 1,
+    Normal = 2,
+    Hight = 3
+}
+
+export enum Direction{
+    None = 0,
+    Forward = 1,
+    Back = 2,
+    Rigiht = 3,
+    Left = 4,
+    Self = 5,
+    Cross = 6
+}
+
+export enum BufferAndEquipEffect{
+    AddHP = 1,
+    AddAttack = 2,
+    AddBuffer = 3,
+    Syncope = 4
+}
+
+export enum EffectScope{
+    SingleBattle = 1,
+    WholeGame = 2
+}
+
+export enum EMSkillEvent{
+    start_round = 1,
+    end_round = 2,
+    start_battle = 3,
+    buy = 4,
+    sales = 5,
+    camp_sales = 6,
+    update = 7,
+    syncope = 8,
+    camp_syncope = 9,
+    strengthen = 10,
+    use_skill = 11,
+    eat_food = 12,
+    camp_eat_food = 13,
+    kill = 14,
+    front_attack = 15,
+    camp_attack3 = 16,
+    front_attack3 = 17,
+    be_hurt = 18,
+    camp_be_hurt = 19,
+    enemy_summon = 20,
+    camp_summon = 21,
+    front_be_hurt = 22,
+    before_attack = 23
+}
+
+export enum SkillEffectEM{
     AddProperty = 1,
-    AddCoin = 2,
-    RefreshShop = 3,
-    AddEquipment = 4
+    RecoverHP = 2,
+    RemoteAttack = 3,
+    SummonBattle = 4,
+    AddCoin = 5,
+    ExchangeProperty = 6,
+    GainShield = 7,
+    RefreshShop = 8,
+    ChangePosition = 9,
+    AddEquipment = 10,
+    ReductionHurt = 11,
+    UpdateLevel = 12,
+    SummonShop = 13,
+    AddBuffer = 14
 }
 
 export enum ShopIndex{
@@ -77,18 +141,51 @@ export function protcol_to_UserData(_protocol:any){
     return _struct;
 }
 
+export class Fetters
+{
+    public fetters_id : number = 0;
+    public fetters_level : number = 0;
+    public number : number = 0;
+
+}
+
+export function Fetters_to_protcol(_struct:Fetters){
+    return _struct;
+}
+
+export function protcol_to_Fetters(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new Fetters();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "fetters_id"){
+            _struct.fetters_id = val as number;
+        }
+        else if (key === "fetters_level"){
+            _struct.fetters_level = val as number;
+        }
+        else if (key === "number"){
+            _struct.number = val as number;
+        }
+    }
+    return _struct;
+}
+
 export class Role
 {
     public RoleID : number = 0;
     public Level : number = 0;
     public SkillID : number = 0;
+    public FettersSkillID : Fetters | null = null;
     public Number : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
     public TempHP : number = 0;
     public TempAttack : number = 0;
-    public additionBuffer : number = 0;
-    public TempAdditionBuffer : number = 0;
+    public additionBuffer : number[] = [];
+    public TempAdditionBuffer : number[] = [];
 
 }
 
@@ -112,6 +209,9 @@ export function protcol_to_Role(_protocol:any){
         else if (key === "SkillID"){
             _struct.SkillID = val as number;
         }
+        else if (key === "FettersSkillID"){
+            _struct.FettersSkillID = protcol_to_Fetters(val);
+        }
         else if (key === "Number"){
             _struct.Number = val as number;
         }
@@ -128,10 +228,16 @@ export function protcol_to_Role(_protocol:any){
             _struct.TempAttack = val as number;
         }
         else if (key === "additionBuffer"){
-            _struct.additionBuffer = val as number;
+            _struct.additionBuffer = [];
+            for(let v_ of val as any) {
+                _struct.additionBuffer.push(v_);
+            }
         }
         else if (key === "TempAdditionBuffer"){
-            _struct.TempAdditionBuffer = val as number;
+            _struct.TempAdditionBuffer = [];
+            for(let v_ of val as any) {
+                _struct.TempAdditionBuffer.push(v_);
+            }
         }
     }
     return _struct;
@@ -142,6 +248,8 @@ export class UserBattleData
     public User : UserInformation | null = null;
     public coin : number = 0;
     public round : number = 0;
+    public victory : number = 0;
+    public faild : number = 0;
     public RoleList : Role[] = [];
 
 }
@@ -165,6 +273,12 @@ export function protcol_to_UserBattleData(_protocol:any){
         }
         else if (key === "round"){
             _struct.round = val as number;
+        }
+        else if (key === "victory"){
+            _struct.victory = val as number;
+        }
+        else if (key === "faild"){
+            _struct.faild = val as number;
         }
         else if (key === "RoleList"){
             _struct.RoleList = [];

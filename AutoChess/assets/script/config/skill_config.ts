@@ -4,13 +4,8 @@
  * 2023/10/2
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction, ChangePositionType, SwapPropertiesType } from '../other/enums';
-
-export enum Priority {
-    Low = 1,
-    Normal = 2,
-    Hight = 3,
-}
+import { ChangePositionType, SwapPropertiesType } from '../other/enums';
+import { Direction, Priority } from '../serverSDK/common';
 
 export class SkillConfig {
     public Id: number;
@@ -31,6 +26,7 @@ export class SkillConfig {
     public SummonLevel: number;
     public ChangePositionType : ChangePositionType;
     public SwapPropertiesType : SwapPropertiesType;
+    public AddBufferID: number;
 }
 
 export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
@@ -56,7 +52,7 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
                 skillc.EffectTime = v["EffectTime"];
                 skillc.Effect = v["Effect"];
                 skillc.ObjCount = v["ObjCount"];
-                skillc.ObjectDirection = v["ObjectDirection"];
+                skillc.ObjectDirection = v["ObjDirection"];
                 skillc.Level1Value_1 = v["Level1Value_1"];
                 skillc.Level1Value_2 = v["Level1Value_2"];
                 skillc.Level2Value_1 = v["Level2Value_1"];
@@ -67,6 +63,7 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
                 skillc.SummonLevel = v["SummonLevel"];
                 skillc.ChangePositionType = v["ChangePositionType"];
                 skillc.SwapPropertiesType = v["SwapPropertiesType"];
+                skillc.AddBufferID =  v["AddBufferID"];
 
                 map.set(parseInt(k), skillc);
             });

@@ -81,3 +81,5 @@ hotaru:动态加载角色和头像
 hotaru:修bug、使用道具后的效果
 2023/11/29
 hotaru:在rolearea里添加ResetTeam，实现游戏循环
+2023/12/08
+hotaru:修改角色加载逻辑、新增冻结区域及其判断、屏幕适配

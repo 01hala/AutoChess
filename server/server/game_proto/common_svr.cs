@@ -8,11 +8,70 @@ namespace Abelkhan
 {
 /*this enum code is codegen by abelkhan codegen for c#*/
 
-    public enum ShopSkillEffectEM{
+    public enum Priority{
+        Low = 1,
+        Normal = 2,
+        Hight = 3
+    }
+    public enum Direction{
+        None = 0,
+        Forward = 1,
+        Back = 2,
+        Rigiht = 3,
+        Left = 4,
+        Self = 5,
+        Cross = 6
+    }
+    public enum BufferAndEquipEffect{
+        AddHP = 1,
+        AddAttack = 2,
+        AddBuffer = 3,
+        Syncope = 4
+    }
+    public enum EffectScope{
+        SingleBattle = 1,
+        WholeGame = 2
+    }
+    public enum EMSkillEvent{
+        start_round = 1,
+        end_round = 2,
+        start_battle = 3,
+        buy = 4,
+        sales = 5,
+        camp_sales = 6,
+        update = 7,
+        syncope = 8,
+        camp_syncope = 9,
+        strengthen = 10,
+        use_skill = 11,
+        eat_food = 12,
+        camp_eat_food = 13,
+        kill = 14,
+        front_attack = 15,
+        camp_attack3 = 16,
+        front_attack3 = 17,
+        be_hurt = 18,
+        camp_be_hurt = 19,
+        enemy_summon = 20,
+        camp_summon = 21,
+        front_be_hurt = 22,
+        before_attack = 23
+    }
+    public enum SkillEffectEM{
         AddProperty = 1,
-        AddCoin = 2,
-        RefreshShop = 3,
-        AddEquipment = 4
+        RecoverHP = 2,
+        RemoteAttack = 3,
+        SummonBattle = 4,
+        AddCoin = 5,
+        ExchangeProperty = 6,
+        GainShield = 7,
+        RefreshShop = 8,
+        ChangePosition = 9,
+        AddEquipment = 10,
+        ReductionHurt = 11,
+        UpdateLevel = 12,
+        SummonShop = 13,
+        AddBuffer = 14
     }
     public enum ShopIndex{
         Role = 0,
@@ -98,18 +157,56 @@ namespace Abelkhan
         }
     }
 
+    public class Fetters
+    {
+        public Int32 fetters_id;
+        public Int32 fetters_level;
+        public Int32 number;
+        public static MsgPack.MessagePackObjectDictionary Fetters_to_protcol(Fetters _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("fetters_id", _struct.fetters_id);
+            _protocol.Add("fetters_level", _struct.fetters_level);
+            _protocol.Add("number", _struct.number);
+            return _protocol;
+        }
+        public static Fetters protcol_to_Fetters(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74 = new Fetters();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "fetters_id"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.fetters_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fetters_level"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.fetters_level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "number"){
+                    _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74.number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _struct961e84f4_4c48_3c50_8e9a_4b4f3c786e74;
+        }
+    }
+
     public class Role
     {
         public Int32 RoleID;
         public Int32 Level;
         public Int32 SkillID;
+        public Fetters FettersSkillID;
         public Int32 Number;
         public Int32 HP;
         public Int32 Attack;
         public Int32 TempHP;
         public Int32 TempAttack;
-        public Int32 additionBuffer;
-        public Int32 TempAdditionBuffer;
+        public List<Int32> additionBuffer;
+        public List<Int32> TempAdditionBuffer;
         public static MsgPack.MessagePackObjectDictionary Role_to_protcol(Role _struct){
         if (_struct == null) {
             return null;
@@ -119,13 +216,26 @@ namespace Abelkhan
             _protocol.Add("RoleID", _struct.RoleID);
             _protocol.Add("Level", _struct.Level);
             _protocol.Add("SkillID", _struct.SkillID);
+            _protocol.Add("FettersSkillID", new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(_struct.FettersSkillID)));
             _protocol.Add("Number", _struct.Number);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
             _protocol.Add("TempHP", _struct.TempHP);
             _protocol.Add("TempAttack", _struct.TempAttack);
-            _protocol.Add("additionBuffer", _struct.additionBuffer);
-            _protocol.Add("TempAdditionBuffer", _struct.TempAdditionBuffer);
+            if (_struct.additionBuffer != null) {
+                var _array_additionBuffer = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.additionBuffer){
+                    _array_additionBuffer.Add(v_);
+                }
+                _protocol.Add("additionBuffer", new MsgPack.MessagePackObject(_array_additionBuffer));
+            }
+            if (_struct.TempAdditionBuffer != null) {
+                var _array_TempAdditionBuffer = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.TempAdditionBuffer){
+                    _array_TempAdditionBuffer.Add(v_);
+                }
+                _protocol.Add("TempAdditionBuffer", new MsgPack.MessagePackObject(_array_TempAdditionBuffer));
+            }
             return _protocol;
         }
         public static Role protcol_to_Role(MsgPack.MessagePackObjectDictionary _protocol){
@@ -144,6 +254,9 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkillID"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.SkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "FettersSkillID"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.FettersSkillID = Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)i.Value).AsDictionary());
+                }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Number"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
@@ -160,10 +273,18 @@ namespace Abelkhan
                     _structe15dab07_4671_3806_9f26_9880fe20019d.TempAttack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "additionBuffer"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structe15dab07_4671_3806_9f26_9880fe20019d.additionBuffer.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TempAdditionBuffer"){
-                    _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionBuffer = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionBuffer = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structe15dab07_4671_3806_9f26_9880fe20019d.TempAdditionBuffer.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
                 }
             }
             return _structe15dab07_4671_3806_9f26_9880fe20019d;
@@ -175,6 +296,8 @@ namespace Abelkhan
         public UserInformation User;
         public Int32 coin;
         public Int32 round;
+        public Int32 victory;
+        public Int32 faild;
         public List<Role> RoleList;
         public static MsgPack.MessagePackObjectDictionary UserBattleData_to_protcol(UserBattleData _struct){
         if (_struct == null) {
@@ -185,6 +308,8 @@ namespace Abelkhan
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("coin", _struct.coin);
             _protocol.Add("round", _struct.round);
+            _protocol.Add("victory", _struct.victory);
+            _protocol.Add("faild", _struct.faild);
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
@@ -209,6 +334,12 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "round"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.round = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "victory"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.victory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "faild"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.faild = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.RoleList = new List<Role>();

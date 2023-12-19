@@ -3,13 +3,15 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
+import { _decorator, BlockInputEvents, Camera, Canvas, Component, instantiate, Node, Prefab, tween, Tween, UITransform, Vec3, view, Widget } from 'cc';
 import { ShopIndex, ShopProp, ShopRole } from '../../serverSDK/common';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
+import * as common from "../../serverSDK/common"
 import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';
+import { config } from '../../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -25,18 +27,20 @@ export class ShopArea extends Component
         displayName: "食物图标预制体"
     })
     public propIcon:Node;
-
+    //物体位置
     public rolesSquare:Node[]=[];
-
     public PropsSquare:Node[]=[];
     @property(Node)
     public panel:Node;
-
+    public cam:Node;
+    //物体列表
     private shopRoles:Node[]=[];
-
     private shopProps:Node[]=[];
-
+    //各操作区域
     private roleArea:RoleArea;
+    private freezeArea:Node;
+
+    
 
     protected onLoad(): void 
     {
@@ -49,11 +53,21 @@ export class ShopArea extends Component
             this.PropsSquare.push(t);
         }
         this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
+        this.freezeArea=this.node.getChildByPath("FreezeArea");
+        this.cam=this.panel.parent.getChildByPath("Camera");
     }
 
     start() 
     {
-        //this.Init();
+        
+        if(wx.getSystemInfoSync().safeArea.height==wx.getSystemInfoSync().screenHeight)
+        {
+            return;
+        }
+        let bpttomHeigh=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height)/2;
+
+        let outPos:Vec3=this.cam.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeigh,0));
+        this.node.getComponent(Widget).bottom=outPos.y;
     }
 
     update(deltaTime: number) 
@@ -91,7 +105,13 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack);
+
+                    let config_r = config.RoleConfig.get(roles[i].RoleID);
+                    let fetters = new common.Fetters();
+                    fetters.fetters_id = config_r.Fetters;
+                    fetters.fetters_level = 0;
+
+                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack, fetters);
                     this.shopRoles.push(newNode);
                 }
             }
@@ -108,7 +128,7 @@ export class ShopArea extends Component
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
                     newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food);
-                    this.shopRoles.push(newNode);
+                    this.shopProps.push(newNode);
                 }
             }
             
@@ -137,8 +157,49 @@ export class ShopArea extends Component
             if(this.shopProps[i] == _obj)
             {
                 await singleton.netSingleton.ready.ready.Buy(ShopIndex.Prop , i , _index);
-                this.roleArea.rolesNode.push(_obj);
                 this.shopProps[i] = null;
+            }
+        }
+    }
+
+    ShowFreezeArea(_flag:boolean)
+    {
+        if(_flag)
+        {
+            this.freezeArea.active=true;
+            this.freezeArea.getComponent(BlockInputEvents).enabled=true;
+            tween(this.freezeArea).to(0.1,{position:new Vec3(0,170,0)}).start();
+        }
+        else
+        {
+            this.freezeArea.getComponent(BlockInputEvents).enabled=false;
+            tween(this.freezeArea).to(0.1,{position:new Vec3(0,0,0)}).call(()=>
+            {
+                this.freezeArea.active=false;
+            }).start();
+        }
+    }
+
+    async FreezeEntity(_shop_index:common.ShopIndex,_obj:Node , _isFreeze:boolean)
+    {
+        if(common.ShopIndex.Prop==_shop_index)
+        {
+            for(let i=0;i<this.shopProps.length;i++)
+            {
+                if(this.shopProps[i] == _obj)
+                {
+                    await singleton.netSingleton.ready.ready.Freeze(_shop_index , i,_isFreeze);
+                }
+            }
+        }
+        if(common.ShopIndex.Role==_shop_index)
+        {
+            for(let i=0;i<this.shopRoles.length;i++)
+            {
+                if(this.shopRoles[i] == _obj)
+                {
+                    await singleton.netSingleton.ready.ready.Freeze(_shop_index , i ,_isFreeze);
+                }
             }
         }
     }

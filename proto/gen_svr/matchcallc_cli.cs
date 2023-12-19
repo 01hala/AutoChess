@@ -14,7 +14,7 @@ namespace Abelkhan
         public Int32 spellcaster;
         public List<Int32> recipient;
         public Int32 skill_id;
-        public ShopSkillEffectEM effect;
+        public SkillEffectEM effect;
         public List<Int32> value;
         public static MsgPack.MessagePackObjectDictionary ShopSkillEffect_to_protcol(ShopSkillEffect _struct){
         if (_struct == null) {
@@ -62,7 +62,7 @@ namespace Abelkhan
                     _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.skill_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "effect"){
-                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.effect = (ShopSkillEffectEM)((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.effect = (SkillEffectEM)((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "value"){
                     _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.value = new List<Int32>();
@@ -89,6 +89,12 @@ namespace Abelkhan
             _client_handle.modulemanager.add_mothed("battle_client_role_buy_merge", role_buy_merge);
             _client_handle.modulemanager.add_mothed("battle_client_role_merge", role_merge);
             _client_handle.modulemanager.add_mothed("battle_client_role_eat_food", role_eat_food);
+            _client_handle.modulemanager.add_mothed("battle_client_role_update_refresh_shop", role_update_refresh_shop);
+            _client_handle.modulemanager.add_mothed("battle_client_fetters_info", fetters_info);
+            _client_handle.modulemanager.add_mothed("battle_client_role_skill_update", role_skill_update);
+            _client_handle.modulemanager.add_mothed("battle_client_role_add_property", role_add_property);
+            _client_handle.modulemanager.add_mothed("battle_client_add_coin", add_coin);
+            _client_handle.modulemanager.add_mothed("battle_client_shop_summon", shop_summon);
         }
 
         public event Action<bool> on_battle_victory;
@@ -155,6 +161,59 @@ namespace Abelkhan
             var _is_syncope = ((MsgPack.MessagePackObject)inArray[4]).AsBoolean();
             if (on_role_eat_food != null){
                 on_role_eat_food(_food_id, _target_role_index, _target_role, _is_update, _is_syncope);
+            }
+        }
+
+        public event Action<ShopData> on_role_update_refresh_shop;
+        public void role_update_refresh_shop(IList<MsgPack.MessagePackObject> inArray){
+            var _info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_role_update_refresh_shop != null){
+                on_role_update_refresh_shop(_info);
+            }
+        }
+
+        public event Action<List<Fetters>> on_fetters_info;
+        public void fetters_info(IList<MsgPack.MessagePackObject> inArray){
+            var _info = new List<Fetters>();
+            var _protocol_arrayinfo = ((MsgPack.MessagePackObject)inArray[0]).AsList();
+            foreach (var v_d856b000_56e0_5f62_a6f3_e6a0c7859745 in _protocol_arrayinfo){
+                _info.Add(Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)v_d856b000_56e0_5f62_a6f3_e6a0c7859745).AsDictionary()));
+            }
+            if (on_fetters_info != null){
+                on_fetters_info(_info);
+            }
+        }
+
+        public event Action<Int32, Role> on_role_skill_update;
+        public void role_skill_update(IList<MsgPack.MessagePackObject> inArray){
+            var _role_index = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var __role = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            if (on_role_skill_update != null){
+                on_role_skill_update(_role_index, __role);
+            }
+        }
+
+        public event Action<UserBattleData> on_role_add_property;
+        public void role_add_property(IList<MsgPack.MessagePackObject> inArray){
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_role_add_property != null){
+                on_role_add_property(_battle_info);
+            }
+        }
+
+        public event Action<Int32> on_add_coin;
+        public void add_coin(IList<MsgPack.MessagePackObject> inArray){
+            var _coin = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            if (on_add_coin != null){
+                on_add_coin(_coin);
+            }
+        }
+
+        public event Action<UserBattleData> on_shop_summon;
+        public void shop_summon(IList<MsgPack.MessagePackObject> inArray){
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_shop_summon != null){
+                on_shop_summon(_battle_info);
             }
         }
 

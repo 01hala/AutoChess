@@ -7,7 +7,9 @@ import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
 import * as enums from '../other/enums'
+import * as common from '../serverSDK/common'
 import * as create_skill from './create_skill'
+import * as create_fetters from './create_fetters'
 import * as create_trigger from './create_trigger'
 import * as create_buffer from './create_buffer'
 import * as config from '../config/config'
@@ -23,6 +25,20 @@ function createSkill(id:number, level:number) : SkillInfo {
         let skill = new SkillInfo();
         skill.trigger = create_trigger.CreateTrigger(skillConfig.EffectTime);
         skill.skill = create_skill.CreateSkill(level, id);
+    
+        if (skill.trigger && skill.skill) {
+            return skill;
+        }
+    }
+    return null;
+}
+
+function createFettersSkill(id:number, level:number) : SkillInfo {
+    let fettersConfig = config.config.FettersConfig.get(id);
+    if (fettersConfig) {
+        let skill = new SkillInfo();
+        skill.trigger = create_trigger.CreateTrigger(fettersConfig.EffectTime);
+        skill.skill = create_fetters.CreateFetters(level, id);
     
         if (skill.trigger && skill.skill) {
             return skill;
@@ -53,10 +69,9 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(index:number, id:number, skillid:number, level:number, exp:number, selfCamp: enums.Camp, properties : Map<enums.Property, number>, additionBuffer?:number) {
+    public constructor(index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[]) {
         this.index = index;
         this.id=id;
-        this.skillid = skillid;
         this.level=level;
         this.exp=exp;
         this.selfCamp = selfCamp;
@@ -66,19 +81,33 @@ export class Role {
         })
 
         let roleConfig = config.config.RoleConfig.get(this.id);
+        this.skillid = roleConfig.SkillID;
 
         let skill = createSkill(roleConfig.SkillID, this.level);
         if (skill) {
             this.skill.push(skill);
         }
-
-        let buffer = createBuffer(roleConfig.SkillID);
-        if (buffer) {
-            this.buffer.push(buffer);
+        else {
+            let buffer = createBuffer(roleConfig.SkillID);
+            if (buffer) {
+                this.buffer.push(buffer);
+            }
         }
-        buffer = createBuffer(additionBuffer);
-        if (buffer) {
-            this.buffer.push(buffer);
+
+        if (fetters && fetters.fetters_level > 0) {
+            let skill = createFettersSkill(fetters.fetters_id, fetters.fetters_level);
+            if (skill) {
+                this.skill.push(skill);
+            }
+        }
+        
+        if (additionBuffer) {
+            for (let id of additionBuffer) {
+                let buffer = createBuffer(id);
+                if (buffer) {
+                    this.buffer.push(buffer);
+                }
+            }
         }
     }
 
@@ -119,10 +148,6 @@ export class Role {
             ev.spellcaster.camp = this.selfCamp;
             ev.spellcaster.index = selfIndex;
             ev.recipient = [];
-            let recipient = new skill.RoleInfo();
-            recipient.camp = enemy.selfCamp;
-            recipient.index = enemyIndex;
-            ev.recipient.push(recipient);
             ev.value = [];
             ev.value.push(damage);
             battle.AddBattleEvent(ev);

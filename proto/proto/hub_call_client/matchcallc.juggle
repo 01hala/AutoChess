@@ -4,7 +4,7 @@ struct ShopSkillEffect {
     int32 spellcaster;
     int32[] recipient;
     int32 skill_id;
-    ShopSkillEffectEM effect;
+    SkillEffectEM effect;
     int32[] value;
 }
 
@@ -18,4 +18,11 @@ module battle_client {
     role_buy_merge ntf(int32 target_role_index, Role target_role, bool is_update);
     role_merge ntf(int32 source_role_index, int32 target_role_index, Role target_role, bool is_update);
     role_eat_food ntf(int32 food_id, int32 target_role_index, Role target_role, bool is_update, bool is_syncope);
+    role_update_refresh_shop ntf(ShopData info);
+    fetters_info ntf(Fetters[] info);
+	
+	role_skill_update ntf(int32 role_index, Role _role);
+	role_add_property ntf(UserBattleData battle_info);
+	add_coin ntf(int32 coin);
+	shop_summon ntf(UserBattleData battle_info);
 }

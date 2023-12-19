@@ -15,9 +15,15 @@ export class Battle {
 
     private evs:skill.Event[] = [];
 
+    public victory = 0;
+    public faild = 0;
+
     public constructor(self:common.UserBattleData, target:common.UserBattleData) {
         this.selfTeam = new team.Team(enums.Camp.Self, self.RoleList);
         this.enemyTeam = new team.Team(enums.Camp.Enemy, target.RoleList);
+
+        this.victory = self.victory;
+        this.faild = self.faild;
     }
 
     public GetSelfTeam() : team.Team {
@@ -99,6 +105,8 @@ export class Battle {
 
         if (this.evs.length > 0) {
             this.evs = [];
+
+            console.log("TickBattle evs:", evs);
 
             let selfTeam = this.selfTeam.GetRoles();
             for(let index in selfTeam) {

@@ -14,7 +14,7 @@ namespace Abelkhan
         public Int32 spellcaster;
         public List<Int32> recipient;
         public Int32 skill_id;
-        public ShopSkillEffectEM effect;
+        public SkillEffectEM effect;
         public List<Int32> value;
         public static MsgPack.MessagePackObjectDictionary ShopSkillEffect_to_protcol(ShopSkillEffect _struct){
         if (_struct == null) {
@@ -62,7 +62,7 @@ namespace Abelkhan
                     _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.skill_id = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "effect"){
-                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.effect = (ShopSkillEffectEM)((MsgPack.MessagePackObject)i.Value).AsInt32();
+                    _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.effect = (SkillEffectEM)((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "value"){
                     _struct65920e74_e4bd_3add_b5ce_2729ba6c3234.value = new List<Int32>();
@@ -147,6 +147,47 @@ namespace Abelkhan
             _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(is_update);
             _argv_9752e987_da9a_3510_b580_1a5c8a9dd457.Add(is_syncope);
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_eat_food", _argv_9752e987_da9a_3510_b580_1a5c8a9dd457);
+        }
+
+        public void role_update_refresh_shop(ShopData info){
+            var _argv_97214742_cb28_340f_a4d0_e7e39743a356 = new ArrayList();
+            _argv_97214742_cb28_340f_a4d0_e7e39743a356.Add(ShopData.ShopData_to_protcol(info));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_update_refresh_shop", _argv_97214742_cb28_340f_a4d0_e7e39743a356);
+        }
+
+        public void fetters_info(List<Fetters> info){
+            var _argv_2465681a_a205_3e91_8b5b_a53cd2e8b9dc = new ArrayList();
+            var _array_391fd3d4_2d55_3f5e_9223_7f450a814a15 = new ArrayList();
+            foreach(var v_0c15545d_d42a_5fe0_bed7_a9496851e88b in info){
+                _array_391fd3d4_2d55_3f5e_9223_7f450a814a15.Add(Fetters.Fetters_to_protcol(v_0c15545d_d42a_5fe0_bed7_a9496851e88b));
+            }
+            _argv_2465681a_a205_3e91_8b5b_a53cd2e8b9dc.Add(_array_391fd3d4_2d55_3f5e_9223_7f450a814a15);
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_fetters_info", _argv_2465681a_a205_3e91_8b5b_a53cd2e8b9dc);
+        }
+
+        public void role_skill_update(Int32 role_index, Role _role){
+            var _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a = new ArrayList();
+            _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a.Add(role_index);
+            _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a.Add(Role.Role_to_protcol(_role));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_skill_update", _argv_eafae214_aba1_3e76_a68b_a5ab9edd110a);
+        }
+
+        public void role_add_property(UserBattleData battle_info){
+            var _argv_5442ab1d_8c6f_3bf5_a4a2_d1662f209f08 = new ArrayList();
+            _argv_5442ab1d_8c6f_3bf5_a4a2_d1662f209f08.Add(UserBattleData.UserBattleData_to_protcol(battle_info));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_add_property", _argv_5442ab1d_8c6f_3bf5_a4a2_d1662f209f08);
+        }
+
+        public void add_coin(Int32 coin){
+            var _argv_68d61429_8f03_329b_a588_1069fa6d4cff = new ArrayList();
+            _argv_68d61429_8f03_329b_a588_1069fa6d4cff.Add(coin);
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_add_coin", _argv_68d61429_8f03_329b_a588_1069fa6d4cff);
+        }
+
+        public void shop_summon(UserBattleData battle_info){
+            var _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a = new ArrayList();
+            _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a.Add(UserBattleData.UserBattleData_to_protcol(battle_info));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_shop_summon", _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a);
         }
 
     }

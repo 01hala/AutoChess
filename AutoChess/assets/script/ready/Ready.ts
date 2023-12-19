@@ -20,7 +20,7 @@ export class Ready
 
     private roles:common.Role[];
 
-    public coin:number=0;
+    private coin:number=0;
 
     //private freezeRoles:Role[]=[];
 
@@ -37,6 +37,7 @@ export class Ready
 
         console.log("shopRoles:", this.shopRoles);
         console.log("props:", this.props);
+        console.log("battle_info.RoleList:", battle_info.RoleList);
     }
 
     public GetShopRoles():ShopRole[]
@@ -56,10 +57,18 @@ export class Ready
 
     public SetCoins(count:number)
     {
-        console.log(`SetCoins coin:${count}`);
+        //console.log(`SetCoins coin:${count}`);
         if(count)
         {
             this.coin=count;
+        }
+    }
+
+    public GetCoins()
+    {
+        if(this.coin)
+        {
+            return this.coin
         }
     }
 
@@ -87,9 +96,9 @@ export class Ready
         this.AddReadyEvent(ev);
     }
 
-    public Refresh()
+    public async Refresh()
     {
-        singleton.netSingleton.game.refresh();
+        await singleton.netSingleton.game.refresh();
     }
 
     public StartBattle()
@@ -124,6 +133,11 @@ export class Ready
     public async Move(index_befor:number,index_after:number)
     {
         await singleton.netSingleton.game.move(index_befor,index_after);
+    }
+
+    public async Freeze(shop_index: common.ShopIndex,index:number,_isFreeze:boolean)
+    {
+        await singleton.netSingleton.game.freeze(shop_index,index, _isFreeze);
     }
 
 }

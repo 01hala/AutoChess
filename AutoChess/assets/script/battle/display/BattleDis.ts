@@ -15,6 +15,7 @@ import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { Role } from '../../serverSDK/common';
 import { netSingleton } from '../../netDriver/netSingleton';
+import { battle_victory } from '../../serverSDK/ccallmatch';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -120,17 +121,39 @@ export class BattleDis
             }
 
             this.victory.active = true;
-            this.victory.getComponent(Label).string = this.battle.GetWinCamp() == Camp.Self ? "战斗胜利!" : "战斗失败!";
+            let is_victory = battle_victory.tie;
+            if (this.battle.GetWinCamp() == Camp.Self) {
+                is_victory = battle_victory.victory;
+            }
+            else if (this.battle.GetWinCamp() == Camp.Enemy) {
+                is_victory = battle_victory.faild;
+            }
 
-            await sleep(5000);
+            if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
+                (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
+            {
+                this.victory.getComponent(Label).string = (is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
+            }
+            else if (is_victory == battle_victory.tie) {
+                this.victory.getComponent(Label).string = "战斗平局!";
+            }
 
-            netSingleton.game.confirm_round_victory(this.battle.GetWinCamp() == Camp.Self);
+            await sleep(4000);
+
+            netSingleton.game.confirm_round_victory(is_victory);
         }
         catch(error)
         {
             console.error("BattleDis 下的 TickBattle 错误 err:", error);
         }
         
+    }
+
+    async SetGameVictory(is_victory:boolean) {
+        this.victory.active = true;
+        this.victory.getComponent(Label).string = is_victory ? "游戏胜利!" : "游戏失败!";
+
+        await sleep(4000);
     }
 
     async PutRole()
@@ -325,7 +348,9 @@ export class BattleDis
                                 //console.warn("敌方role",r.index);
                                 if(r)
                                 {
+                                    
                                     //console.warn("敌方角色远程受伤表现");
+                                    allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                     allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
                             }
@@ -335,6 +360,7 @@ export class BattleDis
                             r = this.selfQueue.roleNodes[ev.spellcaster.index];
                             if (r)
                             {
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                 allAwait.push(r.getComponent(RoleDis).changeAtt());
                             }
                         }
@@ -350,6 +376,7 @@ export class BattleDis
                                 if(r)
                                 {
                                     //console.warn("我方角色远程受伤表现");
+                                    allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                     allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
                             }
@@ -359,6 +386,7 @@ export class BattleDis
                             r = this.enemyQueue.roleNodes[ev.spellcaster.index];
                             if (r) 
                             {
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                 allAwait.push(r.getComponent(RoleDis).changeAtt());
                             }
                         }

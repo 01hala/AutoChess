@@ -29,8 +29,6 @@ export class RoleIcon extends Component
     //角色信息
     public roleId:number;
     public index:number;
-
-    private tempIndex:number;
     //父级面板
     private panel:Node;
     //图标碰撞体
@@ -42,30 +40,29 @@ export class RoleIcon extends Component
     //各操作区域
     private roleArea:RoleArea;
     private shopArea:ShopArea;
-
-    private rolePrefab:Prefab;
-
-    
+    //图标
     public iconMask:Node;
-
+    //初始位置
     public originalPos:Vec3;
     private tweenNode:Tween<Node>;
-
+    //判定flag
     public isBuy:boolean=false;
     public isSale:boolean=false;
     private isSwitch:boolean=false;
     private isMerge:boolean=false;
-
+    private isFreeze:boolean=false;
+    //临时变量
+    private tempIndex:number;
     private tempTarget:Node=null;
     private t:Node=null;
     //锁存，防止使用食物过快,导致bug
-    public eatFoodLock:boolean=false;
+    public upgradeLock:boolean=false;
+    public freezeLock:boolean=false;
 
     protected async onLoad()
     {
        try
        {
-            //this.canvas=director.getScene().getChildByPath("Canvas");
             this.panel=this.node.parent;
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
@@ -83,16 +80,15 @@ export class RoleIcon extends Component
        {
             console.error("RoleIconTouch 下的 onLoad 错误",error);
        }
-        
     }
     //初始化
-    async Init(id:number,hp:number,atk:number,teamindex:number=-1)
+    async Init(id:number,hp:number,atk:number, f:common.Fetters, teamindex:number=-1)
     {
         try
         {
             let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
             console.log("new role");
-            let r=new role.Role(teamindex,id,id-100000,0,0,Camp.Self,map);
+            let r=new role.Role(teamindex, id, 1, 1, Camp.Self, map, f);
             console.log('RoleIcon spawn role: ',id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
@@ -110,10 +106,13 @@ export class RoleIcon extends Component
                     singleton.netSingleton.ready.infoPanel.active=true;
                     singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
                 });
+                //隐藏冻结栏
+                this.shopArea.ShowFreezeArea(false);
+                //重置值
                 this.touchStartPoint = new Vec2(0, 0);
                 this.Adsorption();
             }, this);
-        //拖拽结束↓ 拖拽取消↑
+    //拖拽结束↓ 拖拽取消↑
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
                 //重新注册按钮事件
@@ -122,12 +121,14 @@ export class RoleIcon extends Component
                     singleton.netSingleton.ready.infoPanel.active=true;
                     singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
                 });
+                //隐藏冻结栏
+                this.shopArea.ShowFreezeArea(false);
                 //还原起始值
                 this.touchStartPoint = new Vec2(0, 0);
-                //是否出售
+                //移动角色且判断是否出售
                 if(!this.isSale)
                 {
-                    if(null!=this.index)
+                    if(null!=this.index && !this.upgradeLock)
                     {
                         await this.roleArea.MovePos(this.index,this.tempIndex);
                     }
@@ -139,30 +140,48 @@ export class RoleIcon extends Component
                     await this.roleArea.SaleRole(this.index);
                     this.roleNode.destroy();
                     this.node.destroy();
+                    return;
                 }
-                if(null != this.index)
+                //购买、合并角色
+                if(null != this.index && !this.upgradeLock)
                 {
-                    if(!this.isBuy)
+                    if(!this.isBuy && singleton.netSingleton.ready.ready.GetCoins()>=3)
                     {
                         this.isBuy=true;
-                        this.shopArea.BuyRole(this.index, this.node);
+                        await this.shopArea.BuyRole(this.index, this.node);
                         if(null==this.target)
                         {
                             this.roleNode.destroy();
                             this.node.destroy();
+                            return;
                         }
                     }
+                }
+                //console.log(this.isMerge);
+                //冻结角色
+                if(this.isFreeze && !this.isBuy)
+                {
+                    console.log("RoleFreeze!!!");
+                    this.freezeLock=!this.freezeLock;
+                    this.shopArea.FreezeEntity(common.ShopIndex.Role,this.node , this.freezeLock);
                 }
                 //换位
                 if(this.isSwitch && !this.isSale)//是否交换位置
                 {
-                    this.roleArea.SwitchPos(this.index,this.target,this.t);
-                    this.target=this.tempTarget;
-                    this.roleArea.targets.set(this.target.name,this.node);
-                    this.isSwitch=false;
+                    if(!this.isMerge)
+                    {
+                        this.roleArea.SwitchPos(this.index,this.target,this.t);
+                        this.target=this.tempTarget;
+                        this.roleArea.targets.set(this.target.name,this.node);
+                        this.isSwitch=false;
+                    }
                 }
                 //吸附缓动
-                this.Adsorption();
+                if(!this.isMerge)
+                {
+                    this.Adsorption();
+                }
+                
                 
             }, this);
     //拖拽中
@@ -185,13 +204,17 @@ export class RoleIcon extends Component
         //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
+                //显示冻结栏
+                if(!this.isBuy)
+                {
+                    this.shopArea.ShowFreezeArea(true);
+                }
+                //触摸到的对象
                 let node: Node = event.currentTarget;
-    
+                //设置ui坐标
                 this.touchStartPoint.set(event.getUILocation());
-    
                 let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
                 let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
-    
                 this.touchStartPoint = new Vec2(x, y);
             }, this);
 /*----------------------------------------------------------------------------------------------------------------*/
@@ -207,30 +230,29 @@ export class RoleIcon extends Component
         {
             console.error('RoleIcon 下 Ini 错误 err: ',error);
         }
-        
     }
-
+    //生成角色
     SpawnRole(r:role.Role):Promise<Node>
     {
         return new Promise (async (resolve)=>
         {
             //console.log("spawn role:",r.id);
-            let address: string = "Role_";
-            let roleRes=""+address+r.id;
+            //let address: string = "Role_";
+            //let roleRes=""+address+r.id;
             //let roleRes = address + "100001";
-            let newNode=null;
-            newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-            if(null==newNode)
-            {
-                console.warn('RoleIcon 里的 SpawnRole 异常 : bundle中没有此角色,替换为默认角色');
-                roleRes = address + "100001";
-                newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
-            }
-
+            // let newNode=null;
+            // newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+            // if(null==newNode)
+            // {
+            //     console.warn('RoleIcon 里的 SpawnRole 异常 : bundle中没有此角色,替换为默认角色');
+            //     roleRes = address + "100001";
+            //     newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", roleRes) as Prefab;
+            // }
+            let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePrefab") as Prefab;
             let role = instantiate(newNode);
             role.setParent(this.node);
             let roleDis = role.getComponent(RoleDis);
-            roleDis.Refresh(r);
+            roleDis.Refresh(r,true);
             if(!this.isBuy)
             {
                 role.active=false;
@@ -239,7 +261,7 @@ export class RoleIcon extends Component
             resolve(role);
         });
     }
-
+    //加载图片
     LoadImg(_address:string,_id:number):Promise<SpriteFrame>
     {
         return new Promise(async (resolve)=>
@@ -259,26 +281,39 @@ export class RoleIcon extends Component
             resolve(sp);
         });
     }
-
+/*----------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------碰撞检测---------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------*/
     start() 
     {
+    //出--------------------------------------------------------------------------出------------------------------------------------------------------------------出//
         this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
             {
+                //场上角色区域
                 if(null!=otherCollider && 1 == otherCollider.tag)
                 {
-                    this.isMerge=false;
                     //console.log(otherCollider.name);
-                    for(let i=0;i<this.roleArea.targets.size;i++)
-                    {
+                    
                         if(this.roleArea.GetTargetValue(otherCollider.node.name)==selfCollider.node)
                         {
                             //console.log("set null");
-                            this.roleArea.targets.set(otherCollider.node.name,null);
+                            if(!this.isMerge)
+                            {
+                                this.roleArea.targets.set(otherCollider.node.name,null);
+                            }
+                            //this.isMerge=false;
                             //console.log(otherCollider.node.name,this.roleArea.targets.get(otherCollider.node.name));
-                            return;
                         }
-                    }
+                        if (this.roleArea.GetTargetValue(otherCollider.node.name)) 
+                        {
+                            let o=this.roleArea.GetTargetValue(otherCollider.node.name).getComponent(RoleIcon).roleId;
+                            if(this.roleId==o)
+                            {
+                                this.isMerge=false;
+                            }
+                        }
                 }
+                //商店区域
                 if(null!=otherCollider && 2 == otherCollider.tag)
                 {
                     if(this.isBuy)
@@ -286,59 +321,76 @@ export class RoleIcon extends Component
                         this.isSale=false;
                     }
                 }
+                //冻结区域
+                if(null!=otherCollider && 3 == otherCollider.tag)
+                {
+                    this.isFreeze=false;
+                }
             },this);
-
+    //进--------------------------------------------------------------------------进------------------------------------------------------------------------------进//
             this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
             {
+                //场上角色区域
                 if(null!=otherCollider && 1 == otherCollider.tag)
                 {
                     if(null==this.roleArea.GetTargetValue(otherCollider.node.name))
                     { 
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.tempIndex=Number(num);
-                        //console.log(this.index);
                         this.target=otherCollider.node;
                         this.roleArea.targets.set(otherCollider.node.name,selfCollider.node);
                         this.isSwitch=false;
                     }
-                    else if(this.isBuy)
+                    else if(this.isBuy) //检测换位或者合并
                     {
                         this.tempTarget=otherCollider.node;
+                        let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
+                        this.tempIndex=Number(num);
                         this.t=this.roleArea.GetTargetValue(otherCollider.node.name);
+                        console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
                         if(this.t.getComponent(RoleIcon).roleId==this.roleId)
                         {
                             this.isMerge=true;
                         }
+                        console.log(this.isMerge);
                         this.isSwitch=true;
                     }
                     else
                     {
+                        this.target=null;
                         let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
                         this.tempIndex=Number(num);
                     }
                 }  
+                //商店区域
                 if(null!=otherCollider && 2 == otherCollider.tag)
                 {
+                    this.index=null;
+                    this.tempIndex=null;
                     if(this.isBuy)
                     {
                         this.isSale=true;
                         this.isSwitch=false;
+                        this.isMerge=false;
                     }
-                    
+                }
+                //冻结区域
+                if(null!=otherCollider && 3 == otherCollider.tag)
+                {
+                    if(!this.isBuy)
+                    {
+                        this.isFreeze=true;
+                    }
                 }
             }, this);
-  
     }
-
-    update(deltaTime: number) 
-    {
-
-    }
-
+/*----------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------碰撞检测---------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------*/
     //拖拽吸附
     Adsorption()
     {
-        if(null!=this.target && !this.isSale)
+        if(null!=this.target && !this.isSale && null!=this.index)
         {
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
@@ -379,33 +431,37 @@ export class RoleIcon extends Component
         //this.node.setWorldPosition(Vec3);
         console.log("tarnspos!");
     }
-    //合并升级
-    GetUpgrade(t:common.Role,is_update:boolean)
+    //合并、升级
+    async GetUpgrade(t:common.Role,is_update:boolean)
     {
+        let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
+
         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-        let r=new role.Role(this.index,this.roleId,this.roleId-100000,t.Level,0,Camp.Self,map);
+        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self, map, t.FettersSkillID);
         this.roleNode.getComponent(RoleDis).Refresh(r);
+        await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
         if(is_update)
         {
-            this.roleNode.getComponent(RoleDis).LevelUp();
+            await this.roleNode.getComponent(RoleDis).LevelUp(t.Level);
         }
+        this.upgradeLock=false;
     }
 
-    async GetIntensifier(value :number[])
-    {
-        if(this.eatFoodLock)
-        {
-            let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
-            let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
-            let exp=this.roleNode.getComponent(RoleDis).Exp;
-            let level=this.roleNode.getComponent(RoleDis).Level;
-            let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
-            let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
-            this.roleNode.getComponent(RoleDis).Refresh(r);
-            await this.roleNode.getComponent(RoleDis).Intensifier(value);
-        }
-        this.eatFoodLock=false;
-    }
+    // async GetIntensifier(value :number[])
+    // {
+    //     if(this.upgradeLock)
+    //     {
+    //         let hp=this.roleNode.getComponent(RoleDis).Hp+value[0];
+    //         let atk=this.roleNode.getComponent(RoleDis).AtkNum+value[1];
+    //         let exp=this.roleNode.getComponent(RoleDis).Exp;
+    //         let level=this.roleNode.getComponent(RoleDis).Level;
+    //         let map=new Map<Property,number>().set(Property.HP,hp).set(Property.Attack,atk);
+    //         let r=new role.Role(this.index,this.roleId,100000-this.roleId,level,exp,Camp.Self,map);
+    //         this.roleNode.getComponent(RoleDis).Refresh(r);
+    //         await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
+    //     }
+    //     this.upgradeLock=false;
+    // }
 
     // GetUiPos(node:Node):Vec3
     // {
