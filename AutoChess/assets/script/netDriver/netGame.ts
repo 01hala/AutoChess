@@ -23,6 +23,10 @@ export class netGame {
     public cb_role_eat_food : (food_id:number, target_role_index:number, target_role:common.Role, is_update:boolean, is_syncope:boolean)=>void;
     public cb_role_update_refresh_shop : (shop_info:common.ShopData) => void;
     public cb_fetters_info : (info:common.Fetters[]) => void;
+    public cb_role_skill_update : (role_index:number, _role:common.Role) => void;
+    public cb_role_add_property : (battle_info:common.UserBattleData) => void;
+    public cb_add_coin : (coin:number) => void;
+    public cb_shop_summon : (role_index:number, _role:common.Role) => void;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_match = new match.plan_caller(cli.cli_handle);
@@ -32,8 +36,8 @@ export class netGame {
         this.match_c.cb_battle_victory = (is_victory:boolean) => {
             this.cb_battle_victory.call(null, is_victory);
         }
-        this.match_c.cb_battle_plan_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
-            this.cb_start_battle.call(null, battle_info, shop_info);
+        this.match_c.cb_battle_plan_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[]) => {
+            this.cb_start_battle.call(null, battle_info, shop_info, fetters_info);
         }
         this.match_c.cb_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
             this.cb_battle_info.call(null, battle_info);
@@ -69,6 +73,26 @@ export class netGame {
                 this.cb_fetters_info.call(null, info);
             }
         }
+        this.match_c.cb_role_skill_update = (role_index:number, _role:common.Role) => {
+            if (this.cb_role_skill_update) {
+                this.cb_role_skill_update.call(null, role_index, _role);
+            }
+        }
+        this.match_c.cb_role_add_property = (battle_info:common.UserBattleData) => {
+            if (this.cb_role_add_property) {
+                this.cb_role_add_property.call(null, battle_info);
+            }
+        }
+        this.match_c.cb_add_coin = (coin:number) => {
+            if (this.cb_add_coin) {
+                this.cb_add_coin.call(null, coin);
+            }
+        }
+        this.match_c.cb_shop_summon = (role_index:number, _role:common.Role) => {
+            if (this.cb_shop_summon) {
+                this.cb_shop_summon.call(null, role_index, _role);
+            }
+        }
     }
 
     public set_formationf(self:match.RoleSetUp[], target:match.RoleSetUp[]) {
@@ -77,11 +101,11 @@ export class netGame {
 
     private match_name:string = "";
     //准备阶段
-    public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData) => void;
+    public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
     public start_battle() {
         this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info)=>{
             this.match_name = match_name;
-            this.cb_start_battle.call(null, battle_info, shop_info);
+            this.cb_start_battle.call(null, battle_info, shop_info, null);
         }, (err)=>{
             console.log("start_battle err:", err);
         }).timeout(3000, ()=>{

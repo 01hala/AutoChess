@@ -11,7 +11,6 @@ import * as common from "../../serverSDK/common"
 import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';
-import { config } from '../../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -105,13 +104,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-
-                    let config_r = config.RoleConfig.get(roles[i].RoleID);
-                    let fetters = new common.Fetters();
-                    fetters.fetters_id = config_r.Fetters;
-                    fetters.fetters_level = 0;
-
-                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID,roles[i].HP,roles[i].Attack, fetters);
+                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID , roles[i].HP , roles[i].Attack , 1 , 1 ,roles[i].IsFreeze);
                     this.shopRoles.push(newNode);
                 }
             }
@@ -127,7 +120,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
-                    newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food);
+                    newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food,props[i].IsFreeze);
                     this.shopProps.push(newNode);
                 }
             }
@@ -137,13 +130,13 @@ export class ShopArea extends Component
 
     async BuyRole(_index:number, _obj:Node)
     {
-        //console.log(this.shopRoles.length);
+        console.log('buy Role');
         for(let i=0;i<this.shopRoles.length;i++)
         {
             if(this.shopRoles[i] == _obj)
             {
                 await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
-                this.roleArea.rolesNode.push(_obj);
+                this.roleArea.rolesNode[_index]=_obj;
                 this.shopRoles[i] = null;
             }
         }
@@ -168,7 +161,7 @@ export class ShopArea extends Component
         {
             this.freezeArea.active=true;
             this.freezeArea.getComponent(BlockInputEvents).enabled=true;
-            tween(this.freezeArea).to(0.1,{position:new Vec3(0,170,0)}).start();
+            tween(this.freezeArea).to(0.2,{position:new Vec3(0,170,0)}).start();
         }
         else
         {

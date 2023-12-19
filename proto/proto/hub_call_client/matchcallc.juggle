@@ -10,7 +10,7 @@ struct ShopSkillEffect {
 
 module battle_client {
     battle_victory ntf(bool is_victory);
-    battle_plan_refresh ntf(UserBattleData battle_info, ShopData shop_info);
+    battle_plan_refresh ntf(UserBattleData battle_info, ShopData shop_info, Fetters[] fetters_info);
 
     shop_skill_effect ntf(ShopSkillEffect effect);
     refresh ntf(UserBattleData battle_info, ShopData info);
@@ -24,5 +24,5 @@ module battle_client {
 	role_skill_update ntf(int32 role_index, Role _role);
 	role_add_property ntf(UserBattleData battle_info);
 	add_coin ntf(int32 coin);
-	shop_summon ntf(UserBattleData battle_info);
+	shop_summon ntf(int32 role_index, Role _role);
 }

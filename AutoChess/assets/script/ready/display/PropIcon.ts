@@ -49,133 +49,165 @@ export class PropIcon extends Component
     private tweenNode:Tween<Node>;
     //图标
     private iconMask:Node;
+    private freezeSprite:Node;
     //判定flag
     private isFreeze: boolean;
 
     protected onLoad(): void 
     {
         this.panel=this.node.parent;
-            this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
-            this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
-            this.iconMask=this.node.getChildByName("IconMask");
-            //this.iconMask.active=false;
-            this.collider=this.node.getComponent(Collider2D);
+        this.freezeSprite=this.node.getChildByPath("FreezeSprite");
+        this.freezeSprite.active=false;
+        this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
+        this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
+        this.iconMask=this.node.getChildByName("IconMask");
+        //this.iconMask.active=false;
+        this.collider=this.node.getComponent(Collider2D);
             
-            this.node.on(Button.EventType.CLICK,()=>
-            {
-                singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
-            });
+        this.node.on(Button.EventType.CLICK,()=>
+        {
+            singleton.netSingleton.ready.infoPanel.active=true;
+            singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
+        });
     }
     //初始化
-    async Init(_id:number,_type:PropsType)
+    async Init(_id:number,_type:PropsType,_freeze:boolean)
     {
-        this.originalPos=this.node.getPosition();
-        this.propId=_id;
-        this.propType=_type;
-        let jconfig=null;
-        if(_type==PropsType.Food)
+        try
         {
-            jconfig=config.FoodConfig.get(_id);
-            this.effect=jconfig.Effect;
-            this.hpBonus=jconfig.HpBonus;
-            this.attackBonus=jconfig.AttackBonus;
+            this.originalPos = this.node.getPosition();
+            this.propId = _id;
+            this.propType = _type;
+            let jconfig = null;
+            if (_type == PropsType.Food) 
+            {
+                jconfig = config.FoodConfig.get(_id);
+                this.effect = jconfig.Effect;
+                this.hpBonus = jconfig.HpBonus;
+                this.attackBonus = jconfig.AttackBonus;
+            }
+            this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+            this.freezeLock = _freeze;
+            this.freezeSprite.active = _freeze;
+
+            this.DragEvent();
+
+            this.iconMask.active = true;
         }
-        this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame= await this.LoadImg("battle_icon_",_id);
-/*----------------------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------拖拽事件---------------------------------------------------------*/
-/*----------------------------------------------------------------------------------------------------------------*/
-        this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
+        catch(error)
         {
-            //重新注册按钮事件
-            this.node.on(Button.EventType.CLICK,()=>
-            {
-                singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
-            });
-            //隐藏冻结栏
-            this.shopArea.ShowFreezeArea(false);
-            //还原起始值
-            this.touchStartPoint = new Vec2(0, 0);
-            this.Adsorption();
-        }, this);
-//拖拽结束↓ 拖拽取消↑
-        this.myTouch.on(Input.EventType.TOUCH_END, async () => 
-        {
-            //重新注册按钮事件
-            this.node.on(Button.EventType.CLICK,()=>
-            {
-                singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
-            });
-            //隐藏冻结栏
-            this.shopArea.ShowFreezeArea(false);
-            //还原起始值
-            this.touchStartPoint = new Vec2(0, 0);
-            //使用道具
-            if(null != this.index || null != this.target && singleton.netSingleton.ready.ready.GetCoins()>=3)
-            {
-                if(!this.target.getComponent(RoleIcon).upgradeLock)
-                {
-                    //console.log('buy food');
-                    let value=[this.hpBonus,this.attackBonus];
-                    //this.target.getComponent(RoleIcon).upgradeLock=true;
-                    if(this.effect.includes(1) || this.effect.includes(2))
-                    {
-                        //this.target.getComponent(RoleIcon).GetIntensifier(value);
-                    }
-                    await this.shopArea.BuyProp(this.index,this.node);
-                    console.log('道具使用成功！');
-                    this.node.destroy();
-                    return;
-                }
-            }
-            //冻结道具
-            if(this.isFreeze && !this.isBuy)
-            {
-                console.log("PropFreeze!!!");
-                this.freezeLock=!this.freezeLock;
-                this.shopArea.FreezeEntity(common.ShopIndex.Prop,this.node, this.freezeLock);
-            }
-            //吸附缓动
-            this.Adsorption();
-            
-        }, this);
-//拖拽中
-        this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
-        {
-            //关闭按钮事件
-            this.node.off(Button.EventType.CLICK);
-            //计算位移坐标
-            let node: Node = event.currentTarget;
-            let pos = new Vec2();
-            let shit = pos.set(event.getUILocation());
-            let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
-            let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
-            //设置坐标
-            node.setPosition(x, y, 0);
-        }, this);
-//拖拽开始
-        this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
-        {
-            //显示冻结栏
-            if(!this.isBuy)
-            {
-                this.shopArea.ShowFreezeArea(true);
-            }
-            //触摸到的对象
-            let node: Node = event.currentTarget;
-            //设置ui坐标
-            this.touchStartPoint.set(event.getUILocation());
-            let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
-            let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
-            this.touchStartPoint = new Vec2(x, y);
-        }, this);
-/*----------------------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------拖拽事件---------------------------------------------------------*/
-/*----------------------------------------------------------------------------------------------------------------*/
-        this.iconMask.active=true;
+            console.error('PropIcon 下 Init 错误 err: ',error);
+        }
+        
     }
+
+/*----------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------拖拽事件---------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------*/
+    private DragEvent()
+    {
+        try
+        {
+    //拖拽取消
+            this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
+            {
+                //重新注册按钮事件
+                this.node.on(Button.EventType.CLICK,()=>
+                {
+                    singleton.netSingleton.ready.infoPanel.active=true;
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
+                });
+                //隐藏冻结栏
+                this.shopArea.ShowFreezeArea(false);
+                //还原起始值
+                this.touchStartPoint = new Vec2(0, 0);
+                this.Adsorption();
+            }, this);
+    //拖拽结束
+            this.myTouch.on(Input.EventType.TOUCH_END, async () => 
+            {
+                //重新注册按钮事件
+                this.node.on(Button.EventType.CLICK,()=>
+                {
+                    singleton.netSingleton.ready.infoPanel.active=true;
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
+                });
+                //隐藏冻结栏
+                this.shopArea.ShowFreezeArea(false);
+                //还原起始值
+                this.touchStartPoint = new Vec2(0, 0);
+                //使用道具
+                if(null != this.index || null != this.target && singleton.netSingleton.ready.ready.GetCoins()>=3)
+                {
+                    if(!this.target.getComponent(RoleIcon).upgradeLock)
+                    {
+                        this.freezeSprite.active=false;
+                        //console.log('buy food');
+                        let value=[this.hpBonus,this.attackBonus];
+                        //this.target.getComponent(RoleIcon).upgradeLock=true;
+                        if(this.effect.includes(1) || this.effect.includes(2))
+                        {
+                            //this.target.getComponent(RoleIcon).GetIntensifier(value);
+                        }
+                        await this.shopArea.BuyProp(this.index,this.node);
+                        console.log('道具使用成功！');
+                        this.node.destroy();
+                        return;
+                    }
+                }
+                //冻结道具
+                if(this.isFreeze && !this.isBuy)
+                {
+                    console.log("PropFreeze!!!");
+                    this.freezeLock=!this.freezeLock;
+                    this.freezeSprite.active=this.freezeLock;
+                    this.shopArea.FreezeEntity(common.ShopIndex.Prop,this.node, this.freezeLock);
+                }
+                //吸附缓动
+                this.Adsorption();
+                
+            }, this);
+    //拖拽中
+            this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
+            {
+                //关闭按钮事件
+                this.node.off(Button.EventType.CLICK);
+                //计算位移坐标
+                let node: Node = event.currentTarget;
+                let pos = new Vec2();
+                let shit = pos.set(event.getUILocation());
+                let x = shit.x - view.getVisibleSize().width / 2 - this.touchStartPoint.x;
+                let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
+                //设置坐标
+                node.setPosition(x, y, 0);
+            }, this);
+    //拖拽开始
+            this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
+            {
+                //显示冻结栏
+                if(!this.isBuy)
+                {
+                    this.shopArea.ShowFreezeArea(true);
+                }
+                //触摸到的对象
+                let node: Node = event.currentTarget;
+                //设置ui坐标
+                this.touchStartPoint.set(event.getUILocation());
+                let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
+                let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
+                this.touchStartPoint = new Vec2(x, y);
+            }, this);
+        }
+        catch(error)
+        {
+            console.error('PropIcon 下 DragEvent 错误 err: ',error);
+        }
+    }
+/*----------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------拖拽事件---------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------*/
+
+
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------碰撞检测---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
@@ -230,19 +262,28 @@ export class PropIcon extends Component
     {
         return new Promise(async (resolve)=>
         {
-            let imgRes=""+_address+_id;
-            let temp=await BundleManager.Instance.LoadImgsFromBundle("Props", imgRes);
-            if(null==temp)
+            try
             {
-                console.warn('propIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
-                imgRes=""+_address+1001;
-                temp=await BundleManager.Instance.LoadImgsFromBundle("Props", imgRes);
+                let imgRes=""+_address+_id;
+                let temp=await BundleManager.Instance.LoadImgsFromBundle("Props", imgRes);
+                if(null==temp)
+                {
+                    console.warn('propIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
+                    imgRes=""+_address+1001;
+                    temp=await BundleManager.Instance.LoadImgsFromBundle("Props", imgRes);
+                }
+                let texture=new Texture2D();
+                texture.image=temp;
+                let sp=new SpriteFrame();
+                sp.texture=texture;
+                resolve(sp);
             }
-            let texture=new Texture2D();
-            texture.image=temp;
-            let sp=new SpriteFrame();
-            sp.texture=texture;
-            resolve(sp);
+            catch(error)
+            {
+                console.error('PropIcon 下 LoadImg 错误 err: ',error);
+                resolve(null);
+            }
+            
         });
     }
     
@@ -252,12 +293,19 @@ export class PropIcon extends Component
 
     Adsorption()
     {
-        this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
-        .call(()=>
-         {
-             this.tweenNode.stop();
-        })
-        .start();
+        try
+        {
+            this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
+            .call(()=>
+             {
+                 this.tweenNode.stop();
+            })
+            .start();
+        }
+        catch(error)
+        {
+            console.error('PropIcon 下 Adsorption 错误 err: ',error);
+        }
     }
 }
 

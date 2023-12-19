@@ -135,13 +135,19 @@ export class ReadyDis
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
             let str = "Location_" + source_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
+            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
+            this.roleArea.rolesNode[source_role_index].destroy();
+            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
+            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
             this.roleArea.targets.set(str, null);
-            
+            this.roleArea.rolesNode[source_role_index]=null;
             console.log('cb_role_merge,target_role:', target_role_index);
-            str = "Location_" + target_role_index;
-            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
+
+            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
+            //this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+
+            str = "Location_" + target_role_index;                                                                      
+            this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;                //不知道为什么用列表不能播放动画，只能用字典来获取组件
             this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
         };
         singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
@@ -175,14 +181,14 @@ export class ReadyDis
         this.waitingPanel.active=valve;
     }
     //刷新商店
-    async RefreshShop()
+    private async RefreshShop()
     {
         await this.ready.Refresh();
         console.log('refresh');
         this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
     }
     //更新玩家信息
-    UpdatePlayerInfo(_battle_info:common.UserBattleData)
+    private UpdatePlayerInfo(_battle_info:common.UserBattleData)
     {
         this.coinText.string=""+_battle_info.coin;
         this.heathText.string=""+_battle_info.faild;

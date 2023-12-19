@@ -169,7 +169,7 @@ export class RoleDis extends Component
         }
     }
 
-    changeAtt() 
+    async changeAtt() 
     {
         try 
         {
@@ -177,11 +177,17 @@ export class RoleDis extends Component
             
             this.Hp = Math.round(this.roleInfo.GetProperty(Property.HP));
             this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));
-            
+            this.Level=this.roleInfo.level;
             if (this.hpText && this.atkText) 
             {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+            }
+            let str="lvl_"+this.Level;
+            let lvlsf:SpriteFrame=await this.LoadImg("LvRing",str);
+            if(lvlsf)
+            {   
+                this.levelSprite.getComponent(Sprite).spriteFrame=lvlsf;
             }
         }
         catch (err) 
@@ -230,9 +236,7 @@ export class RoleDis extends Component
     {
         try 
         {
-            let type: Property;
             let anim: Animation = this.intensifierText.getComponent(Animation);
-            let wait: boolean;
             anim.on(Animation.EventType.FINISHED, () => 
             {
                 anim.stop();
@@ -244,8 +248,7 @@ export class RoleDis extends Component
             {
                 this.Exp=stack%3;
             }
-            
-            tween(this.node).to(0,{}).call(()=>
+            let newtween:Tween<Node>=tween(this.node).to(0,{}).call(()=>
             {   
                 if (0 != value[0]) 
                 {
@@ -253,6 +256,7 @@ export class RoleDis extends Component
                     this.intensifierText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[0] + "</outline></color>";
                     this.intensifierText.active = true;
                     anim.play();
+                    console.log("生命值增加");
                 }
             }).delay(0.7).call(()=>
             {
@@ -262,6 +266,7 @@ export class RoleDis extends Component
                     this.intensifierText.getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[1] + "</outline></color>";
                     this.intensifierText.active = true;
                     anim.play();
+                    console.log("攻击力增加");
                 }
                 
             }).delay(0.7).call(()=>
@@ -273,7 +278,11 @@ export class RoleDis extends Component
 
             return this.delay(1500,()=>
             {
-                
+                if(newtween)
+                {
+                    newtween.stop();
+                    newtween=null;
+                }
             })
         }
         catch (err) 
@@ -283,27 +292,28 @@ export class RoleDis extends Component
 
     }
 
-    async LevelUp(_level:number)
+    //缓动有bug暂时空置
+    async LevelUp()
     {
         try
         {
-            let str="lvl_"+_level;
-            let sf:SpriteFrame=await this.LoadImg("LvRing",str);
+            //let str="lvl_"+_level;
+            //let sf:SpriteFrame=await this.LoadImg("LvRing",str);
             tween(this.node).to(0.1,
                 {
-                    scale:new Vec3(1.1,1.1,1)
+                    //scale:new Vec3(1.1,1.1,1)
                 })
             .call(()=>
             {
-                this.Level=_level;
-                if(sf)
-                {
-                    this.levelSprite.getComponent(Sprite).spriteFrame=sf;
-                }
+                //this.Level=_level;
+                //if(sf)
+                //{
+                    //this.levelSprite.getComponent(Sprite).spriteFrame=sf;
+                //}
             })
             .delay(0.1).to(0.1,
                 {
-                    scale:new Vec3(1,1,1)
+                    //scale:new Vec3(1,1,1)
                 })
             .start();
 

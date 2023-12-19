@@ -93,11 +93,16 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_battle_plan_refresh : (battle_info:common.UserBattleData, shop_info:common.ShopData)=>void | null;
+    public cb_battle_plan_refresh : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[])=>void | null;
     battle_plan_refresh(inArray:any[]){
         let _argv_:any[] = [];
         _argv_.push(common.protcol_to_UserBattleData(inArray[0]));
         _argv_.push(common.protcol_to_ShopData(inArray[1]));
+        let _array_:any[] = [];
+        for(let v_ of inArray[2]){
+            _array_.push(common.protcol_to_Fetters(v_));
+        }
+        _argv_.push(_array_);
         if (this.cb_battle_plan_refresh){
             this.cb_battle_plan_refresh.apply(null, _argv_);
         }
@@ -208,10 +213,11 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_shop_summon : (battle_info:common.UserBattleData)=>void | null;
+    public cb_shop_summon : (role_index:number, _role:common.Role)=>void | null;
     shop_summon(inArray:any[]){
         let _argv_:any[] = [];
-        _argv_.push(common.protcol_to_UserBattleData(inArray[0]));
+        _argv_.push(inArray[0]);
+        _argv_.push(common.protcol_to_Role(inArray[1]));
         if (this.cb_shop_summon){
             this.cb_shop_summon.apply(null, _argv_);
         }
