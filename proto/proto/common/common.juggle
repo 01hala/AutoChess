@@ -65,29 +65,30 @@ enum EffectScope
 
 enum EMSkillEvent
 {
-    start_round = 1;     //休整开始时
-    end_round = 2;       //休整结束时
-    start_battle = 3;    //战斗开始时
-    buy = 4;             //购买时
-    sales = 5;           //出售时
-    camp_sales = 6;      //友方出售时
-    update = 7;          //升级后
-    syncope = 8;         //晕厥时
-    camp_syncope = 9;    //伙伴晕厥时
-    strengthen = 10;     //受到强化时
-    use_skill = 11;      //释放技能后
-    eat_food = 12;       //吃掉食物时
-    camp_eat_food = 13;  //友方吃掉食物时
-    kill = 14;           //击倒后
-    front_attack = 15;   //前方伙伴攻击时
-    camp_attack3 = 16;   //友方攻击三次后
-    front_attack3 = 17;  //前方攻击三次后
-    be_hurt = 18;        //受伤时
-    camp_be_hurt = 19;   //友方受伤时
-    enemy_summon = 20;   //敌人被召唤或推动时
-    camp_summon = 21;    //伙伴被召唤时
-    front_be_hurt = 22;  //前方伙伴受伤时
-    before_attack = 23;  //攻击前
+    start_round = 1;     		//休整开始时
+    end_round = 2;       		//休整结束时
+    start_battle = 3;    		//战斗开始时
+    buy = 4;             		//购买时
+    sales = 5;           		//出售时
+    camp_sales = 6;      		//友方出售时
+    update = 7;          		//升级后
+    syncope = 8;         		//晕厥时
+    camp_syncope = 9;    		//伙伴晕厥时
+    strengthen = 10;     		//受到强化时
+    use_skill = 11;      		//释放技能后
+    eat_food = 12;       		//吃掉食物时
+    camp_eat_food = 13;  		//友方吃掉食物时
+    kill = 14;           		//击倒后
+    front_attack = 15;   		//前方伙伴攻击时
+    camp_attack3 = 16;   		//友方攻击三次后
+    front_attack3 = 17;  		//前方攻击三次后
+    be_hurt = 18;        		//受伤时
+    camp_be_hurt = 19;   		//友方受伤时
+    enemy_summon = 20;   		//敌人被召唤或推动时
+    camp_summon = 21;    		//伙伴被召唤时
+    front_be_hurt = 22;  		//前方伙伴受伤时
+    before_attack = 23;  		//攻击前
+	add_mechanic_syncope = 24;  //所有机械师晕厥时
 }
 
 enum SkillEffectEM {
@@ -105,6 +106,8 @@ enum SkillEffectEM {
 	UpdateLevel = 12;
 	SummonShop = 13;
 	AddBuffer = 14;
+	AddBuildValue = 15;
+	AttackAll = 16;
 }
 
 struct UserBattleData
@@ -114,6 +117,7 @@ struct UserBattleData
 	int32 round;
 	int32 victory;
 	int32 faild;
+	int32 buildValue;
 	Role[] RoleList; // 角色列表
 }
 

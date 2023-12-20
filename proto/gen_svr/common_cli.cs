@@ -55,7 +55,8 @@ namespace Abelkhan
         enemy_summon = 20,
         camp_summon = 21,
         front_be_hurt = 22,
-        before_attack = 23
+        before_attack = 23,
+        add_mechanic_syncope = 24
     }
     public enum SkillEffectEM{
         AddProperty = 1,
@@ -71,7 +72,9 @@ namespace Abelkhan
         ReductionHurt = 11,
         UpdateLevel = 12,
         SummonShop = 13,
-        AddBuffer = 14
+        AddBuffer = 14,
+        AddBuildValue = 15,
+        AttackAll = 16
     }
     public enum ShopIndex{
         Role = 0,
@@ -298,6 +301,7 @@ namespace Abelkhan
         public Int32 round;
         public Int32 victory;
         public Int32 faild;
+        public Int32 buildValue;
         public List<Role> RoleList;
         public static MsgPack.MessagePackObjectDictionary UserBattleData_to_protcol(UserBattleData _struct){
         if (_struct == null) {
@@ -310,6 +314,7 @@ namespace Abelkhan
             _protocol.Add("round", _struct.round);
             _protocol.Add("victory", _struct.victory);
             _protocol.Add("faild", _struct.faild);
+            _protocol.Add("buildValue", _struct.buildValue);
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
@@ -340,6 +345,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "faild"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.faild = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buildValue"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.buildValue = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.RoleList = new List<Role>();

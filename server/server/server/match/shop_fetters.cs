@@ -151,6 +151,39 @@ namespace Match
             }
         }
 
+        private void AddBuildValue(FettersConfig fetters, battle_player _player)
+        {
+            var buildValue = 0;
+            switch (fettersLevel)
+            {
+                case 1:
+                {
+                    buildValue = fetters.Stage1value_1;
+                }
+                break;
+
+                case 2:
+                {
+                    buildValue = fetters.Stage2value_1;
+                }
+                break;
+
+                case 3:
+                {
+                    buildValue = fetters.Stage3value_1;
+                }
+                break;
+
+                case 4:
+                {
+                    buildValue = fetters.Stage4value_1;
+                }
+                break;
+            }
+            _player.BattleData.buildValue += buildValue;
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+        }
+
         private void UseFettersSkill(battle_player _player, shop_event trigger_ev)
         {
             if (fettersLevel <= 0)
@@ -199,6 +232,12 @@ namespace Match
                 case SkillEffectEM.AddBuffer:
                 {
                     AddBuffer(fetters, _player);
+                }
+                break;
+
+                case SkillEffectEM.AddBuildValue:
+                {
+                    AddBuildValue(fetters, _player);
                 }
                 break;
 
