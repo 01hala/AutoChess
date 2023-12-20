@@ -88,7 +88,7 @@ enum EMSkillEvent
     camp_summon = 21;    		//伙伴被召唤时
     front_be_hurt = 22;  		//前方伙伴受伤时
     before_attack = 23;  		//攻击前
-	add_mechanic_syncope = 24;  //所有机械师晕厥时
+	all_mechanic_syncope = 24;  //所有机械师晕厥时
 }
 
 enum SkillEffectEM {

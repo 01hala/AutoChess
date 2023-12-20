@@ -88,7 +88,19 @@ export function CreateFetters(level:number, fettersID:number) : skill.SkillBase 
             skillObj = new Skill_Shields_6.Skill_Shields_6(fettersConfig.Priority, value0, value1,common.Direction.None);
         }
         break;
+        case common.SkillEffectEM.AttackAll:
+        {
+            // to do ...
+        }
+        break;
+
     }
 
     return skillObj;
+}
+
+
+export function CreateMechanicFettersSummon(level:number, buildValue:number) : skill.SkillBase {
+    // to do ...
+    return null;
 }

@@ -69,7 +69,7 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[]) {
+    public constructor(index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, buildValue:number, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[]) {
         this.index = index;
         this.id=id;
         this.level=level;
@@ -98,6 +98,16 @@ export class Role {
             let skill = createFettersSkill(fetters.fetters_id, fetters.fetters_level);
             if (skill) {
                 this.skill.push(skill);
+            }
+
+            if (fetters.fetters_id == config.config.MechanicFetters) {
+                let skill = new SkillInfo();
+                skill.trigger = create_trigger.CreateTrigger(common.EMSkillEvent.all_mechanic_syncope);
+                skill.skill = create_fetters.CreateMechanicFettersSummon(fetters.fetters_level, id);
+            
+                if (skill.trigger && skill.skill) {
+                    this.skill.push(skill);
+                }
             }
         }
         

@@ -53,7 +53,7 @@ export enum EMSkillEvent{
     camp_summon = 21,
     front_be_hurt = 22,
     before_attack = 23,
-    add_mechanic_syncope = 24
+    all_mechanic_syncope = 24
 }
 
 export enum SkillEffectEM{
