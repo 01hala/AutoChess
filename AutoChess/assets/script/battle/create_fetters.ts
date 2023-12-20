@@ -15,6 +15,7 @@ import * as Skill_Summon_4 from './skill/Skill_Summon_4'
 import * as Skill_SwapProperties_5 from './skill/Skill_SwapProperties_5'
 import * as Skill_Shields_6 from './skill/Skill_Shields_6'
 import * as Skill_ChangePosition_7 from './skill/Skill_ChangePosition_7'
+import { Skill_AttackAll } from './skill/Skill_AttackAll'
 
 export function CreateFetters(level:number, fettersID:number) : skill.SkillBase {
     let fettersConfig = config.config.FettersConfig.get(fettersID);
@@ -90,17 +91,17 @@ export function CreateFetters(level:number, fettersID:number) : skill.SkillBase 
         break;
         case common.SkillEffectEM.AttackAll:
         {
-            // to do ...
+            skillObj=new Skill_AttackAll(fettersConfig.Priority,value0);
         }
         break;
-
     }
 
     return skillObj;
 }
 
-
 export function CreateMechanicFettersSummon(level:number, buildValue:number) : skill.SkillBase {
     // to do ...
+    let skillObj:skill.SkillBase = null;
+    skillObj=new Skill_Summon_4.Skill_Summon_4(null, null);
     return null;
 }

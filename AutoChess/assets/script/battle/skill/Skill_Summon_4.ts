@@ -56,12 +56,12 @@ export class Skill_Summon_4 extends SkillBase
             let added:Role;
             if(Camp.Self==selfInfo.camp)
             {
-                added=new Role(-1,this.addedID,0, this.addedLevel,0, Camp.Self, this.addedProperties, 0);
+                added=new Role(-1,this.addedID,0, this.addedLevel,0, Camp.Self, this.addedProperties,null);
                 added.index = battle.GetSelfTeam().AddRole(added);
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                added=new Role(-1,this.addedID,0, this.addedLevel,0, Camp.Enemy, this.addedProperties, 0);
+                added=new Role(-1,this.addedID,0, this.addedLevel,0, Camp.Enemy, this.addedProperties, null);
                 added.index = battle.GetEnemyTeam().AddRole(added);
             }
 

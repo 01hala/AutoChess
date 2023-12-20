@@ -5,7 +5,7 @@
  * 触发器——释放技能(羁绊)
  */
 import { Event, RoleInfo, SkillTriggerBase } from "../skill/skill_base";
-import { Camp, Direction, EventType, SkillType } from '../../other/enums';
+import { Camp,  EventType, SkillType } from '../../other/enums';
 
 export class SkillTrigger_UsedSKill_14 extends SkillTriggerBase
 {

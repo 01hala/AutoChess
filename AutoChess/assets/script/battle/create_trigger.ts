@@ -14,6 +14,7 @@ import * as SkillTrigger_Syncope_11 from './trigger/SkillTrigger_Syncope_11'
 import * as SkillTrigger_ChangeSelfLocation_12 from './trigger/SkillTrigger_ChangeSelfLocation_12'
 import * as SkillTrigger_ChangeEnemyLocation_13 from './trigger/SkillTrigger_ChangeEnemyLocation_13'
 import * as SkillTrigger_UsedSKill_14 from './trigger/SkillTrigger_UsedSKill_14'
+import { SkillTrigger_AllSyncope } from './trigger/SkillTrigger_AllSyncope'
 
 export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
     let triggerObj: skill.SkillTriggerBase = null;
@@ -66,7 +67,7 @@ export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
         break;
         case common.EMSkillEvent.all_mechanic_syncope:
         {
-            // to do ...
+            triggerObj=new SkillTrigger_AllSyncope(1);
         }
         break;
     }
