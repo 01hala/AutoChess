@@ -214,11 +214,12 @@ namespace Abelkhan
             }
         }
 
-        public event Action<UserBattleData> on_shop_summon;
+        public event Action<Int32, Role> on_shop_summon;
         public void shop_summon(IList<MsgPack.MessagePackObject> inArray){
-            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            var _role_index = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var __role = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             if (on_shop_summon != null){
-                on_shop_summon(_battle_info);
+                on_shop_summon(_role_index, __role);
             }
         }
 

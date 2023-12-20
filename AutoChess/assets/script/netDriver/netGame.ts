@@ -26,7 +26,7 @@ export class netGame {
     public cb_role_skill_update : (role_index:number, _role:common.Role) => void;
     public cb_role_add_property : (battle_info:common.UserBattleData) => void;
     public cb_add_coin : (coin:number) => void;
-    public cb_shop_summon : (battle_info: common.UserBattleData) => void;
+    public cb_shop_summon : (role_index:number, _role:common.Role) => void;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_match = new match.plan_caller(cli.cli_handle);
@@ -88,9 +88,9 @@ export class netGame {
                 this.cb_add_coin.call(null, coin);
             }
         }
-        this.match_c.cb_shop_summon = (battle_info:common.UserBattleData) => {
+        this.match_c.cb_shop_summon = (role_index:number, _role:common.Role) => {
             if (this.cb_shop_summon) {
-                this.cb_shop_summon.call(null, battle_info);
+                this.cb_shop_summon.call(null, role_index, _role);
             }
         }
     }

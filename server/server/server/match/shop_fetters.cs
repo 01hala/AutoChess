@@ -136,7 +136,7 @@ namespace Match
             }
             if (_player.add_role(summon_index, fetters.SummonId, fetters.SummonLevel))
             {
-                _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(_player.BattleData);
+                _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
             }
         }
 
