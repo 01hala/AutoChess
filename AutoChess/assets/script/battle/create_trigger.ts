@@ -64,6 +64,11 @@ export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
             triggerObj = new SkillTrigger_UsedSKill_14.SkillTrigger_UsedSKill_14();
         }
         break;
+        case common.EMSkillEvent.all_mechanic_syncope:
+        {
+            // to do ...
+        }
+        break;
     }
     
     return triggerObj;

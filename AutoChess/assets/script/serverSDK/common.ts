@@ -52,7 +52,8 @@ export enum EMSkillEvent{
     enemy_summon = 20,
     camp_summon = 21,
     front_be_hurt = 22,
-    before_attack = 23
+    before_attack = 23,
+    all_mechanic_syncope = 24
 }
 
 export enum SkillEffectEM{
@@ -69,7 +70,9 @@ export enum SkillEffectEM{
     ReductionHurt = 11,
     UpdateLevel = 12,
     SummonShop = 13,
-    AddBuffer = 14
+    AddBuffer = 14,
+    AddBuildValue = 15,
+    AttackAll = 16
 }
 
 export enum ShopIndex{
@@ -250,6 +253,7 @@ export class UserBattleData
     public round : number = 0;
     public victory : number = 0;
     public faild : number = 0;
+    public buildValue : number = 0;
     public RoleList : Role[] = [];
 
 }
@@ -279,6 +283,9 @@ export function protcol_to_UserBattleData(_protocol:any){
         }
         else if (key === "faild"){
             _struct.faild = val as number;
+        }
+        else if (key === "buildValue"){
+            _struct.buildValue = val as number;
         }
         else if (key === "RoleList"){
             _struct.RoleList = [];

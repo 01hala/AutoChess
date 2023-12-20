@@ -119,7 +119,7 @@
         "Name": "机械师",
         "Priority": "Normal",
         "EffectTime": 1,
-        "Effect": 4,
+        "Effect": 15,
         "RoleNum": "2|3|5|6",
         "ObjCount": "",
         "EffectScope": 2,

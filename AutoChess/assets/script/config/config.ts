@@ -11,6 +11,8 @@ import * as Food_config from './Food_config';
 import * as fetters from './fetters_config'
 
 export class config {
+    public static MechanicFetters = 6;
+
     public static SkillConfig : Map<number, skill_config.SkillConfig>;
     public static FettersConfig:Map<number,fetters.FettersConfig>
     public static BufferConfig : Map<number, buffer_config.BufferConfig>;
