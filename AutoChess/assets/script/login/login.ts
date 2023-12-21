@@ -141,7 +141,7 @@ export class login extends Component {
             console.log("login sucess!");
         }
         //准备阶段
-        singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
+        singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData , fetters_info:common.Fetters[]) => {
             //singleton.netSingleton.game.battle();
             if(null==singleton.netSingleton.ready)
             {
@@ -151,7 +151,7 @@ export class login extends Component {
                 }
 
                 //新的一局游戏
-                let _ready = new Ready(battle_info, shop_info);
+                let _ready = new Ready(battle_info, shop_info ,fetters_info);
                 singleton.netSingleton.ready=new ReadyDis(_ready);
                 await singleton.netSingleton.ready.start(this.bk.node,battle_info);
                 this._setProgress(1.0);
