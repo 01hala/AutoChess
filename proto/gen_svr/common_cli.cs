@@ -302,6 +302,7 @@ namespace Abelkhan
         public Int32 victory;
         public Int32 faild;
         public Int32 buildValue;
+        public List<Fetters> FettersList;
         public List<Role> RoleList;
         public static MsgPack.MessagePackObjectDictionary UserBattleData_to_protcol(UserBattleData _struct){
         if (_struct == null) {
@@ -315,6 +316,13 @@ namespace Abelkhan
             _protocol.Add("victory", _struct.victory);
             _protocol.Add("faild", _struct.faild);
             _protocol.Add("buildValue", _struct.buildValue);
+            if (_struct.FettersList != null) {
+                var _array_FettersList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.FettersList){
+                    _array_FettersList.Add( new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(v_)));
+                }
+                _protocol.Add("FettersList", new MsgPack.MessagePackObject(_array_FettersList));
+            }
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
@@ -348,6 +356,13 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buildValue"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.buildValue = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "FettersList"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.FettersList = new List<Fetters>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.FettersList.Add(Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.RoleList = new List<Role>();

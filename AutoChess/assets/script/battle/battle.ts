@@ -19,8 +19,8 @@ export class Battle {
     public faild = 0;
 
     public constructor(self:common.UserBattleData, target:common.UserBattleData) {
-        this.selfTeam = new team.Team(enums.Camp.Self, self.buildValue, self.RoleList);
-        this.enemyTeam = new team.Team(enums.Camp.Enemy, target.buildValue, target.RoleList);
+        this.selfTeam = new team.Team(enums.Camp.Self, self, self.RoleList);
+        this.enemyTeam = new team.Team(enums.Camp.Enemy, target, target.RoleList);
 
         this.victory = self.victory;
         this.faild = self.faild;

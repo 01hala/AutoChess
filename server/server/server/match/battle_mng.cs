@@ -364,6 +364,7 @@ namespace Match
             }
 
             BattleClientCaller.get_client(ClientUUID).fetters_info(fetters_info);
+            battleData.FettersList = fetters_info;
 
             return fetters_info;
         }

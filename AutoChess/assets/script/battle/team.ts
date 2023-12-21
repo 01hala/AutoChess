@@ -10,9 +10,11 @@ import * as enums from '../other/enums'
 
 export class Team {
     private roleList : role.Role[];
+    private battleData : common.UserBattleData;
 
-    public constructor(selfCamp: enums.Camp, BuildValue:number, RoleList : common.Role[] ) {
+    public constructor(selfCamp: enums.Camp, battleData:common.UserBattleData, RoleList : common.Role[] ) {
         this.roleList = [];
+        this.battleData = battleData;
 
         console.log("RoleList:", RoleList);
 
@@ -25,10 +27,14 @@ export class Team {
                 properties.set(enums.Property.HP, r.HP + r.TempHP);
                 properties.set(enums.Property.TotalHP, r.HP + r.TempHP);
                 properties.set(enums.Property.Attack, r.Attack + r.TempAttack);
-                this.roleList.push(new role.Role(index, r.RoleID, r.Level, r.Number, selfCamp, BuildValue, properties, r.FettersSkillID, [...r.additionBuffer, ...r.TempAdditionBuffer]));
+                this.roleList.push(new role.Role(index, r.RoleID, r.Level, r.Number, selfCamp, properties, r.FettersSkillID, [...r.additionBuffer, ...r.TempAdditionBuffer]));
             }
             index++;
         }
+    }
+
+    public GetBattleData() {
+        return this.battleData;
     }
 
     public GetRole(index:number) : role.Role {

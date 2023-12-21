@@ -118,6 +118,7 @@ struct UserBattleData
 	int32 victory;
 	int32 faild;
 	int32 buildValue;
+	Fetters[] FettersList;
 	Role[] RoleList; // 角色列表
 }
 

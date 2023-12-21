@@ -254,6 +254,7 @@ export class UserBattleData
     public victory : number = 0;
     public faild : number = 0;
     public buildValue : number = 0;
+    public FettersList : Fetters[] = [];
     public RoleList : Role[] = [];
 
 }
@@ -286,6 +287,12 @@ export function protcol_to_UserBattleData(_protocol:any){
         }
         else if (key === "buildValue"){
             _struct.buildValue = val as number;
+        }
+        else if (key === "FettersList"){
+            _struct.FettersList = [];
+            for(let v_ of val as any) {
+                _struct.FettersList.push(protcol_to_Fetters(v_));
+            }
         }
         else if (key === "RoleList"){
             _struct.RoleList = [];

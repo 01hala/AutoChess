@@ -97,7 +97,7 @@ export class RoleIcon extends Component
         {
             let map=new Map<Property,number>().set(Property.HP,_Hp).set(Property.Attack,_Atk);
             console.log("new role");
-            let r=new role.Role(_teamindex , _Id , _level , _stack , Camp.Self , map , _fetters);
+            let r=new role.Role(_teamindex, _Id, _level, _stack, Camp.Self, map, _fetters);
             console.log('RoleIcon spawn role: ',_Id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
