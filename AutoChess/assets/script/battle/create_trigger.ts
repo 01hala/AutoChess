@@ -67,6 +67,7 @@ export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
         break;
         case common.EMSkillEvent.all_mechanic_syncope:
         {
+            //还需要传入一个battle
             triggerObj=new SkillTrigger_AllSyncope(1);
         }
         break;

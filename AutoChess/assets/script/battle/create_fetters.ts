@@ -102,6 +102,6 @@ export function CreateFetters(level:number, fettersID:number) : skill.SkillBase 
 export function CreateMechanicFettersSummon(level:number, buildValue:number) : skill.SkillBase {
     // to do ...
     let skillObj:skill.SkillBase = null;
-    skillObj=new Skill_Summon_4.Skill_Summon_4(null, null);
+    skillObj=new Skill_Summon_4.Skill_SummonMecha(null,null,level,buildValue);
     return null;
 }
