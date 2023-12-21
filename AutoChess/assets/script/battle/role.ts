@@ -63,6 +63,7 @@ export class Role {
     public exp:number;
 
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
+    public fetter:common.Fetters;
     public buffer : buffer.Buffer[] = [];
     private skill_is_lock : boolean = false;
 
@@ -75,6 +76,7 @@ export class Role {
         this.level=level;
         this.exp=exp;
         this.selfCamp = selfCamp;
+        this.fetter=fetters;
         
         properties.forEach((v, k) => {
             this.properties.set(k, v);

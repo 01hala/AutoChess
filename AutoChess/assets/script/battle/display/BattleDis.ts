@@ -315,7 +315,7 @@ export class BattleDis
                 {
                     continue;
                 }
-
+                console.log("检测到加属性事件");
                 //受到增益者            
                 ev.recipient.forEach(element=>{
                     if(Camp.Self==element.camp){
