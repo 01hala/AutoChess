@@ -197,24 +197,24 @@ export class Role {
         return false;
     }
 
-    private checkSubstituteDamageFront() : boolean {
+    private checkSubstituteDamageFront() : number {
         for (let b of this.buffer) {
             if (enums.BufferType.SubstituteDamageFront == b.BufferType && b.Round > 0) {
                 --b.Round;
-                return true;
+                return b.Value;
             }
         }
-        return false;
+        return -1;
     }
 
-    private checkSubstituteDamageRandom() : boolean {
+    private checkSubstituteDamageRandom() : number {
         for (let b of this.buffer) {
             if (enums.BufferType.SubstituteDamageRandom == b.BufferType && b.Round > 0) {
                 --b.Round;
-                return true;
+                return b.Value;
             }
         }
-        return false;
+        return -1;
     }
 
     private checkShields():boolean
@@ -246,7 +246,7 @@ export class Role {
         return list;
     }
 
-    private getSubstituteDamage(battle: battle.Battle) : Role {
+    private getSubstituteDamage(battle: battle.Battle) : [Role,number] {
         let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
         let selfIndex = selfTeam.GetRoleIndex(this);
         
@@ -258,12 +258,15 @@ export class Role {
                 continue;
             }
             
-            if ((i - selfIndex) == 1 && r.checkSubstituteDamageFront()) {
-                return r;
+            let bufferNumber:number;
+            bufferNumber = r.checkSubstituteDamageFront();
+            if ((i - selfIndex) == 1 && -1!=bufferNumber) {
+                return [r,bufferNumber];
             }
-
-            if (r.checkSubstituteDamageRandom()) {
-                return r;
+            
+            bufferNumber=r.checkSubstituteDamageRandom();
+            if (-1!=bufferNumber) {
+                return [r,bufferNumber];
             }
         }
 
@@ -374,13 +377,15 @@ export class Role {
         }
         
         let list = this.getShareDamageArray(battle);
-        let substitute = this.getSubstituteDamage(battle);
+        let substituteTuple = this.getSubstituteDamage(battle);
+        let substitute=substituteTuple[0];
+        let value=substituteTuple[1];
         let damage = enemy.GetProperty(enums.Property.Attack) + enemy.getintensifierAtk() / list.length;
         console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {
             if (null != substitute && this == r) {
                 //console.log("role substitute!");
-                substitute.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
+                substitute.BeHurted(damage-value, enemy, battle, enums.EventType.AttackInjured);
             }
             else {
                 if (enemy.checkInevitableKill() && this == r) {
@@ -388,7 +393,7 @@ export class Role {
                     continue;
                 }
                 //console.log("role AttackInjured!");
-                r.BeHurted(damage, enemy, battle, enums.EventType.AttackInjured);
+                r.BeHurted(damage-value, enemy, battle, enums.EventType.AttackInjured);
             }
         }
     }

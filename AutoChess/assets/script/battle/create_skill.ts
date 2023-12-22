@@ -15,6 +15,7 @@ import * as Skill_Summon_4 from './skill/Skill_Summon_4'
 import * as Skill_SwapProperties_5 from './skill/Skill_SwapProperties_5'
 import * as Skill_Shields_6 from './skill/Skill_Shields_6'
 import * as Skill_ChangePosition_7 from './skill/Skill_ChangePosition_7'
+import * as Skill_SubstituteDamage_11 from './skill/Skill_SubstituteDamage_11'
 
 export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
     let skillConfig = config.config.SkillConfig.get(skillID);
@@ -92,6 +93,10 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         case common.SkillEffectEM.ChangePosition:
         {
             skillObj = new Skill_ChangePosition_7.Skill_ChangePosition_7(skillConfig.Priority, skillConfig.ChangePositionType, value0, value1);
+        }
+        break;
+        case common.SkillEffectEM.SubstituteDamage:{
+            skillObj = new Skill_SubstituteDamage_11.Skill_SubstituteDamage_11(skillConfig.Priority, skillConfig.ChangePositionType, value0, value1);
         }
         break;
     }

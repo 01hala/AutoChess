@@ -15,6 +15,7 @@ import * as SkillTrigger_ChangeSelfLocation_12 from './trigger/SkillTrigger_Chan
 import * as SkillTrigger_ChangeEnemyLocation_13 from './trigger/SkillTrigger_ChangeEnemyLocation_13'
 import * as SkillTrigger_UsedSKill_14 from './trigger/SkillTrigger_UsedSKill_14'
 import { SkillTrigger_AllMechaniSyncope } from './trigger/SkillTrigger_AllMechaniSyncope'
+import { SkillTrigger_FriendlysideInjured_19 } from './trigger/SkillTrigger_FriendlysideInjured_19'
 
 export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
     let triggerObj: skill.SkillTriggerBase = null;
@@ -63,6 +64,10 @@ export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
         case common.EMSkillEvent.use_skill:
         {
             triggerObj = new SkillTrigger_UsedSKill_14.SkillTrigger_UsedSKill_14();
+        }
+        break;
+        case common.EMSkillEvent.front_be_hurt:{
+            triggerObj=new SkillTrigger_FriendlysideInjured_19(common.Direction.Forward);
         }
         break;
         case common.EMSkillEvent.all_mechanic_syncope:

@@ -9,9 +9,10 @@ import { SkillBase,Event, RoleInfo,SkillTriggerBase, } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role} from '../role';
-import { BufferType, Camp, Direction, SkillType } from '../../other/enums';
+import { BufferType, Camp,  SkillType } from '../../other/enums';
 import { random } from '../util';
 import { Buffer } from '../buffer/buffer';
+import { Direction } from '../../serverSDK/common';
 
 export class Skill_Shields_6 extends SkillBase 
 {

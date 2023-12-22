@@ -30,6 +30,7 @@ export enum EventType {
     SwapProperties = 17,
     IntensifierProperties = 18,
     Exit = 19,
+    FriendlysideInjured=20,
 }
 
 export enum ChangePositionType {

@@ -195,3 +195,7 @@ export class Battle {
         return this.CheckEndBattle();
     }
 }
+
+export function GetSelfTeam() {
+    throw new Error('Function not implemented.')
+}

@@ -67,12 +67,13 @@ export enum SkillEffectEM{
     RefreshShop = 8,
     ChangePosition = 9,
     AddEquipment = 10,
-    ReductionHurt = 11,
+    SubstituteDamage = 11,
     UpdateLevel = 12,
     SummonShop = 13,
     AddBuffer = 14,
     AddBuildValue = 15,
-    AttackAll = 16
+    AttackAll = 16,
+    
 }
 
 export enum ShopIndex{
