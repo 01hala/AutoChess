@@ -19,6 +19,9 @@ namespace config
         public const int FoodIDMin = 1000;
         public const int FoodIDMax = 1999;
 
+        public const int EquipIDMin = 2000;
+        public const int EquipIDMax = 2999;
+
         public static Dictionary<int, RoleConfig> RoleConfigs;
         public static Dictionary<int, List<RoleConfig> > RoleStageConfigs;
         public static Dictionary<int, FoodConfig> FoodConfigs;

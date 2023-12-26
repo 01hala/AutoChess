@@ -179,6 +179,19 @@ namespace Match
             }
         }
 
+        private void _reset()
+        {
+            foreach (var r in battleData.RoleList)
+            {
+                if (r != null)
+                {
+                    r.TempHP = 0;
+                    r.TempAttack = 0;
+                    r.TempAdditionBuffer.Clear();
+                }
+            }
+        }
+
         private void _refresh()
         {
             Log.Log.trace("_refresh begin!");
@@ -230,6 +243,7 @@ namespace Match
         {
             battleData.coin = 10;
 
+            _reset();
             _refresh();
 
             evs.Add(new shop_event()
@@ -630,6 +644,24 @@ namespace Match
             return em_error.success;
         }
 
+        public em_error buy_equip(ShopProp p, int index, int role_index)
+        {
+            var r = battleData.RoleList[role_index];
+            if (r == null)
+            {
+                return em_error.db_error;
+            }
+
+
+            if (config.Config.EquipConfigs.TryGetValue(p.PropID, out var equipcfg))
+            {
+                r.equipID = equipcfg.Id;
+            }
+            
+            return em_error.success;
+        }
+        
+
         public em_error buy(ShopIndex shop_index, int index, int role_index)
         {
             if (battleData.coin < 3)
@@ -661,6 +693,18 @@ namespace Match
                     {
                         return result;
                     }
+                }
+                else if (p.PropID >= config.Config.EquipIDMin && p.PropID <= config.Config.EquipIDMax)
+                {
+                    var result = buy_equip(p, index, role_index);
+                    if (result != em_error.success)
+                    {
+                        return result;
+                    }
+                }
+                else
+                {
+                    return em_error.db_error;
                 }
 
                 shopData.SalePropList[index] = null;
