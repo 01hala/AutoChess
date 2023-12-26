@@ -22,6 +22,7 @@ struct Role {
 	int32 Level;
 	int32 SkillID;
 	Fetters FettersSkillID;
+	int32 equipID;
 	int32 Number;
 	int32 HP;
 	int32 Attack;

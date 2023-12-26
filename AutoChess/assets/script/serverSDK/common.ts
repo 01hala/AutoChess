@@ -67,13 +67,12 @@ export enum SkillEffectEM{
     RefreshShop = 8,
     ChangePosition = 9,
     AddEquipment = 10,
-    SubstituteDamage = 11,
+    ReductionHurt = 11,
     UpdateLevel = 12,
     SummonShop = 13,
     AddBuffer = 14,
     AddBuildValue = 15,
-    AttackAll = 16,
-    
+    AttackAll = 16
 }
 
 export enum ShopIndex{
@@ -183,6 +182,7 @@ export class Role
     public Level : number = 0;
     public SkillID : number = 0;
     public FettersSkillID : Fetters | null = null;
+    public equipID : number = 0;
     public Number : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
@@ -215,6 +215,9 @@ export function protcol_to_Role(_protocol:any){
         }
         else if (key === "FettersSkillID"){
             _struct.FettersSkillID = protcol_to_Fetters(val);
+        }
+        else if (key === "equipID"){
+            _struct.equipID = val as number;
         }
         else if (key === "Number"){
             _struct.Number = val as number;

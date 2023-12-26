@@ -203,6 +203,7 @@ namespace Abelkhan
         public Int32 Level;
         public Int32 SkillID;
         public Fetters FettersSkillID;
+        public Int32 equipID;
         public Int32 Number;
         public Int32 HP;
         public Int32 Attack;
@@ -220,6 +221,7 @@ namespace Abelkhan
             _protocol.Add("Level", _struct.Level);
             _protocol.Add("SkillID", _struct.SkillID);
             _protocol.Add("FettersSkillID", new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(_struct.FettersSkillID)));
+            _protocol.Add("equipID", _struct.equipID);
             _protocol.Add("Number", _struct.Number);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
@@ -259,6 +261,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "FettersSkillID"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.FettersSkillID = Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)i.Value).AsDictionary());
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "equipID"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.equipID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Number"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
