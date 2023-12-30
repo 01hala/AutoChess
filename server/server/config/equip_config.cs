@@ -10,9 +10,31 @@ namespace config
         public int Id;
         public string Name;
         public int Price;
-        public int Type;
+        public int Stage;
         public int Effect;
-        public int Value;
+        public int AttackBonus;
+        public int HpBonus;
+        public string Value;
+
+        public static Dictionary<int, List<EquipConfig>> LoadStage(Dictionary<int, EquipConfig> cfg)
+        {
+            var stage = new Dictionary<int, List<EquipConfig>>();
+
+            foreach (var f in cfg.Values)
+            {
+                if (f.Stage > 0)
+                {
+                    if (!stage.TryGetValue(f.Stage, out List<EquipConfig> equips))
+                    {
+                        equips = new List<EquipConfig>();
+                        stage[f.Stage] = equips;
+                    }
+                    equips.Add(f);
+                }
+            }
+
+            return stage;
+        }
 
         public static Dictionary<int, EquipConfig> Load(string path)
         {
@@ -40,9 +62,11 @@ namespace config
                 equipc.Id = (int)o["Id"];
                 equipc.Name = (string)o["Name"];
                 equipc.Price = (int)o["Price"];
-                equipc.Type = (int)o["Type"];
+                equipc.Stage = (int)o["Stage"];
                 equipc.Effect = (int)o["Effect"];
-                equipc.Value = (int)o["Value"];
+                equipc.AttackBonus = (int)o["AttackBonus"];
+                equipc.HpBonus = (int)o["HpBonus"];
+                equipc.Value = (string)o["Value"];
 
                 obj[equipc.Id] = equipc;
             }

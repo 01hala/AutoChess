@@ -100,16 +100,35 @@ namespace Match
         public ShopProp randomShopProp(int stage)
         {
             Log.Log.trace("randomShopProp stage:{0}", stage);
-            if (config.Config.FoodStageConfigs.TryGetValue(stage, out var basePool))
+            var r = RandomHelper.RandomInt(2);
+            if (r < 1)
             {
-                var foodConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
-                if (foodConfig != null)
+                if (config.Config.FoodStageConfigs.TryGetValue(stage, out var basePool))
                 {
-                    var p = new ShopProp();
-                    p.PropID = foodConfig.Id;
-                    p.IsFreeze= false;
+                    var foodConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
+                    if (foodConfig != null)
+                    {
+                        var p = new ShopProp();
+                        p.PropID = foodConfig.Id;
+                        p.IsFreeze = false;
 
-                    return p;
+                        return p;
+                    }
+                }
+            }
+            else
+            {
+                if (config.Config.EquipStageConfigs.TryGetValue(stage, out var basePool))
+                {
+                    var equipConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
+                    if (equipConfig != null)
+                    {
+                        var p = new ShopProp();
+                        p.PropID = equipConfig.Id;
+                        p.IsFreeze = false;
+
+                        return p;
+                    }
                 }
             }
             return null;

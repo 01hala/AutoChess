@@ -29,6 +29,7 @@ namespace config
         public static Dictionary<int, ShopProbabilityConfig> ShopProbabilityConfigs;
         public static Dictionary<int, BufferConfig> BufferConfigs;
         public static Dictionary<int, EquipConfig> EquipConfigs;
+        public static Dictionary<int, List<EquipConfig>> EquipStageConfigs;
         public static Dictionary<int, FettersConfig> FettersConfigs;
         public static Dictionary<int, ShopSkillConfig> ShopSkillConfigs;
 
@@ -41,6 +42,7 @@ namespace config
             ShopProbabilityConfigs = ShopProbabilityConfig.Load(Path.Combine(path, "ShopProbability.json"));
             BufferConfigs = BufferConfig.Load(Path.Combine(path, "buffer.json"));
             EquipConfigs = EquipConfig.Load(Path.Combine(path, "Equip.json"));
+            EquipStageConfigs = EquipConfig.LoadStage(EquipConfigs);
             FettersConfigs = FettersConfig.Load(Path.Combine(path, "Fetters.json"));
             ShopSkillConfigs = ShopSkillConfig.Load(Path.Combine(path, "Shop_Skill.json"));
         }
