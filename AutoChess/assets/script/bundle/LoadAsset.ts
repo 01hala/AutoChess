@@ -3,13 +3,15 @@ import { BundleManager } from "./BundleManager";
 
 export class loadAssets 
 {
-    public LoadImg(_bundle:string , _address:string , _id:number):Promise<SpriteFrame>
+    public LoadImg(_address:string):Promise<SpriteFrame>
     {
         return new Promise(async (resolve)=>
         {
             try
             {
-                let temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, _address);
+                let ads:string[]=_address.split('/');
+
+                let temp=await BundleManager.Instance.LoadImgsFromBundle(ads[0], ads[1]);
                 if(null==temp)
                 {
                     console.warn('loadAssets 里的 LoadImg 异常 : bundle中没有此图片,替换为默认图片');
