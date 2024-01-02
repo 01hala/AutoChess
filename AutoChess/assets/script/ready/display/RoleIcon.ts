@@ -17,6 +17,7 @@ import * as singleton from '../../netDriver/netSingleton';
 import { ShopArea } from './ShopArea';
 import { Camp, Property } from '../../other/enums';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
+import { config } from '../../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -491,6 +492,45 @@ export class RoleIcon extends Component
             console.error('RoleIcon 下 GetUpgrade 错误 err: ',error);
         }
         
+    }
+    //玩家装备上购买的装备
+    async Equipping(t:common.Role,equip_id:number){
+        try
+        {
+            let equipInfo=config.EquipConfig[equip_id];
+            for(let effect of equipInfo.Effect){
+                switch(effect){
+                    case 1:case 2:{
+                        let value =[equipInfo.HpBonus,equipInfo.AttackBonus];
+                        await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
+                    }break;
+                    case 3:{
+                        let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
+                        for(let temp of equipInfo.Value){
+                            t.additionBuffer.push(temp);
+                        }
+                        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+                        this.roleNode.getComponent(RoleDis).Refresh(r);
+                    }break;
+                    case 4:break;
+                    case 5:break;
+                    case 6:break;
+                    case 7:{
+                        //如果召唤的效果等同于id为x的召唤技能，特殊效果值是召唤技能的id，则使用下面的代码
+                        let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
+                        for(let temp of equipInfo.Value){
+                            t.additionSkill.push(temp);
+                        }
+                        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer,t.additionSkill);
+                        this.roleNode.getComponent(RoleDis).Refresh(r);
+                    }break;
+                }
+            }
+        }
+        catch(error)
+        {
+            console.error('RoleIcon 下 Equipping 错误 err: ',error);
+        }
     }
 
     // async GetIntensifier(value :number[])

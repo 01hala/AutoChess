@@ -90,14 +90,13 @@ export class PropIcon extends Component
             }
             else if(_type == PropsType.Equip)
             {
-                //等装备config载入逻辑写好后这里要改
-                jconfig = config.FoodConfig.get(_id);
+                jconfig = config.EquipConfig.get(_id);
                 this.effect = jconfig.Effect;
                 this.hpBonus = jconfig.HpBonus;
                 this.attackBonus = jconfig.AttackBonus;
                 this.vaule=jconfig.value;
                 //差一个载入图标的逻辑，因为还不清楚装备区域
-                this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+                //this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
             }
 
             this.freezeLock = _freeze;
