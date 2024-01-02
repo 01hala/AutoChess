@@ -3,7 +3,7 @@ import { BundleManager } from "./BundleManager";
 
 export class loadAssets 
 {
-    public LoadImg(_address:string):Promise<SpriteFrame>
+    public static LoadImg(_address:string):Promise<SpriteFrame>
     {
         return new Promise(async (resolve)=>
         {
@@ -14,7 +14,7 @@ export class loadAssets
                 let temp=await BundleManager.Instance.LoadImgsFromBundle(ads[0], ads[1]);
                 if(null==temp)
                 {
-                    console.warn('loadAssets 里的 LoadImg 异常 : bundle中没有此图片,替换为默认图片');
+                    console.warn(`loadAssets 里的 LoadImg 异常 : 路径${_address}下没有此图片,替换为默认图片`);
                     resolve(null);
                 }
                 let texture=new Texture2D();

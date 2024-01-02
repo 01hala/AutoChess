@@ -75,4 +75,5 @@ export enum PropsType
 {
     None=0,
     Food=1,
+    Equip=2,
 }

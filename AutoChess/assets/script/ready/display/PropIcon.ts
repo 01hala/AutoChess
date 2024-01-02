@@ -8,6 +8,7 @@ import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
 import { BundleManager } from '../../bundle/BundleManager';
 import * as common from '../../serverSDK/common';
+import { loadAssets } from '../../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -73,15 +74,8 @@ export class PropIcon extends Component
             this.originalPos = this.node.getPosition();
             this.propId = _id;
             this.propType = _type;
-            let jconfig = null;
-            if (_type == PropsType.Food) 
-            {
-                jconfig = config.FoodConfig.get(_id);
-                this.effect = jconfig.Effect;
-                this.hpBonus = jconfig.HpBonus;
-                this.attackBonus = jconfig.AttackBonus;
-            }
-            this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+            this.LoadOnConfig();
+            
             this.freezeLock = _freeze;
             this.freezeSprite.active = _freeze;
 
@@ -94,6 +88,33 @@ export class PropIcon extends Component
             console.error('PropIcon 下 Init 错误 err: ',error);
         }
         
+    }
+
+    private async LoadOnConfig()
+    {
+        let jconfig = null;
+        switch(this.propType)
+        {
+            case PropsType.Food:
+                {
+                    jconfig = config.FoodConfig.get(this.propId);
+                    this.effect = jconfig.Effect;
+                    this.hpBonus = jconfig.HpBonus;
+                    this.attackBonus = jconfig.AttackBonus;
+                    let img = await loadAssets.LoadImg(jconfig.AttackBonus.Res);
+                    if(img)
+                    {
+                        this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = img;
+                    }
+                    
+                }
+                break;
+            case PropsType.Equip:
+                {
+
+                }
+            
+        }
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/
