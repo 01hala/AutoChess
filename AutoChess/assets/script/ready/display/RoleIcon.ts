@@ -72,12 +72,8 @@ export class RoleIcon extends Component
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
+            this.RegBtn(true);
 
-            this.node.on(Button.EventType.CLICK,()=>
-            {
-                singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
-            });
        }
        catch(error)
        {
@@ -146,10 +142,7 @@ export class RoleIcon extends Component
             {
                 this.OffTirrger();
                 //重新注册按钮事件
-                this.node.on(Button.EventType.CLICK, () => {
-                    singleton.netSingleton.ready.infoPanel.active = true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
-                });
+                this.RegBtn(true);
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
@@ -227,7 +220,7 @@ export class RoleIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
             {
                 //关闭按钮事件
-                this.node.off(Button.EventType.CLICK);
+                this.RegBtn(false);
                 //显示冻结栏
                 if (!this.isBuy) 
                 {
@@ -304,6 +297,28 @@ export class RoleIcon extends Component
             resolve(sp);
         });
     }
+/*----------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------拖拽事件---------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------*/
+
+    private RegBtn(flag:boolean)
+    {
+        if(flag)
+        {
+            //注册按钮事件
+            this.node.on(Button.EventType.CLICK,()=>
+            {
+                singleton.netSingleton.ready.infoPanel.active=true;
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.roleId);
+            });
+        }
+        else
+        {
+            //关闭按钮事件
+            this.node.off(Button.EventType.CLICK);
+        }
+    }
+
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------碰撞检测---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
