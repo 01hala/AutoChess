@@ -189,6 +189,7 @@ export class Role
     public TempHP : number = 0;
     public TempAttack : number = 0;
     public additionBuffer : number[] = [];
+    public additionSkill : number[]=[];
     public TempAdditionBuffer : number[] = [];
 
 }

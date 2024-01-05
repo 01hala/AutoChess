@@ -70,7 +70,7 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[]) {
+    public constructor(index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[],additionSkill?:number[]) {
         this.index = index;
         this.id=id;
         this.level=level;
@@ -86,8 +86,15 @@ export class Role {
         this.skillid = roleConfig.SkillID;
 
         let skill = createSkill(roleConfig.SkillID, this.level);
-        if (skill) {
+        let additionSkills:SkillInfo[];
+        if(additionSkill&&additionSkill.length>0){            
+            for(let t of additionSkill){
+                additionSkills.push(createSkill(t,this.level));
+            }
+        }
+        if (skill||additionSkills.length>0) {
             this.skill.push(skill);
+            for(let t of additionSkills) this.skill.push(t);
         }
         else {
             let buffer = createBuffer(roleConfig.SkillID);

@@ -4,7 +4,7 @@
  * 2023/10/14
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction, ChangePositionType, SwapPropertiesType } from '../other/enums';
+import {ChangePositionType, SwapPropertiesType } from '../other/enums';
 
 
 export class BundleConfig 

@@ -17,7 +17,7 @@ export class EquipConfig {
     public Vaule:number;
 }
 
-export async function LoadFoodConfig() : Promise<Map<number, EquipConfig>>
+export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
 {
     return new Promise<Map<number, EquipConfig>>((resolve, reject)=>
     {
