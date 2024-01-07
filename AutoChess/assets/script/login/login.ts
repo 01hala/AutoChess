@@ -14,6 +14,7 @@ import * as config from '../config/config';
 import { BundleManager } from '../bundle/BundleManager';
 import { Ready } from '../ready/Ready';
 import { ReadyDis } from '../ready/display/ReadyDis';
+import { MainInterface } from '../mainInterface/MainInterface';
 
 @ccclass('login')
 export class login extends Component {
@@ -132,11 +133,16 @@ export class login extends Component {
             singleton.netSingleton.player.create_role(this.nick_name, this.nick_name, this.avatar_url);
         };
 
-        singleton.netSingleton.player.cb_player_login_sucess = () => {
+        singleton.netSingleton.player.cb_player_login_sucess = async () => {
             this._progress += 0.1;
             this._setProgress(this._progress);
+            //进入主界面
+            singleton.netSingleton.mainInterface=new MainInterface();
+            await singleton.netSingleton.mainInterface.start(this.bk.node);
+            this._setProgress(1.0);
+            this._loading.done();
             //开始准备阶段
-            singleton.netSingleton.game.start_battle();
+            //singleton.netSingleton.game.start_battle();
 
             console.log("login sucess!");
         }
