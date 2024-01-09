@@ -11,7 +11,7 @@
     "6c48a": {
       "importer": "texture",
       "uuid": "35ce8523-1d34-48fb-bacc-f281d4bf430b@6c48a",
-      "displayName": "微信图片_20240107191021",
+      "displayName": "临时主界面背景图",
       "id": "6c48a",
       "name": "texture",
       "userData": {
@@ -35,7 +35,7 @@
     "f9941": {
       "importer": "sprite-frame",
       "uuid": "35ce8523-1d34-48fb-bacc-f281d4bf430b@f9941",
-      "displayName": "微信图片_20240107191021",
+      "displayName": "临时主界面背景图",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {

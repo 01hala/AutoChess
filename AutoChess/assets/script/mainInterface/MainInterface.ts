@@ -21,6 +21,7 @@ export class MainInterface
         this.father=father;
         let panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface") as Prefab;
         this.mainInterface=instantiate(panel);
+        this.father.addChild(this.mainInterface);
 
         this.mainPanel=this.mainInterface.getChildByPath("MainPanel")
         this.startGamePanel=this.mainInterface.getChildByPath("StartGamePanel");
