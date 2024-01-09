@@ -1,7 +1,7 @@
 /*
- * SkillTrigger_Injured_10.ts
+ * SkillTrigger_FriendlysideInjured_19.ts
  * author: Guanliu
- * 2023/10/1
+ * 2023/12/22
  * 触发条件：友方受伤时
  */
 import { _decorator, Component, debug, log, Node, random } from 'cc';

@@ -5,7 +5,7 @@
  */
 #include <chrono>
 #include <random>
-#include <fmt/format.h>
+#include <format>
 
 #include <concurrent/string_tools.h>
 
@@ -89,26 +89,44 @@ void modulemng::reg_method(std::string method_name, std::tuple<std::shared_ptr<I
     method_set.insert(std::make_pair(method_name, method));
 }
 
-void modulemng::process_event(std::shared_ptr<Ichannel> _ch, const msgpack11::MsgPack::array& _event) {
+void modulemng::enque_event(std::shared_ptr<Ichannel> _ch, const msgpack11::MsgPack::array& _event) {
     try {
-        std::string method_name = _event[0].string_value();
-        auto it_module = method_set.find(method_name);
-        if (it_module != method_set.end()) {
-            std::shared_ptr<Imodule> _module;
-            std::function<void(const msgpack11::MsgPack::array& doc)> _method;
-            std::tie(_module, _method) = it_module->second;
-            Imodule::current_ch = _ch;
-            _method(_event[1].array_items());
-            Imodule::current_ch = nullptr;
-        }
-        else {
-            throw Exception(fmt::format("do not have a method named:{0}", method_name));
+        event_que.push(std::make_pair(_ch, _event));
+    }
+    catch (std::exception e)
+    {
+        throw Exception(std::format("System.Exception:{0}", e.what()));
+    }
+}
+
+int modulemng::process_event() {
+    try {
+        std::pair<std::shared_ptr<Ichannel>, msgpack11::MsgPack::array> event_;
+        while (event_que.pop(event_)) {
+            std::shared_ptr<Ichannel> _ch = event_.first;
+            const msgpack11::MsgPack::array _event = event_.second;
+
+            std::string method_name = _event[0].string_value();
+            auto it_module = method_set.find(method_name);
+            if (it_module != method_set.end()) {
+                std::shared_ptr<Imodule> _module;
+                std::function<void(const msgpack11::MsgPack::array& doc)> _method;
+                std::tie(_module, _method) = it_module->second;
+                Imodule::current_ch = _ch;
+                _method(_event[1].array_items());
+                Imodule::current_ch = nullptr;
+            }
+            else {
+                throw Exception(std::format("do not have a method named:{0}", method_name));
+            }
         }
     }
     catch (std::exception e)
     {
-        throw Exception(fmt::format("System.Exception:{0}", e.what()));
+        throw Exception(std::format("System.Exception:{0}", e.what()));
     }
+
+    return 0;
 }
 
 int64_t TinyTimer::tick;

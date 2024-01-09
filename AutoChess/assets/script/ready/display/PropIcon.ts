@@ -74,8 +74,28 @@ export class PropIcon extends Component
             this.originalPos = this.node.getPosition();
             this.propId = _id;
             this.propType = _type;
-            this.LoadOnConfig();
-            
+            let jconfig = null;
+            if (_type == PropsType.Food) 
+            {
+                jconfig = config.FoodConfig.get(_id);
+                this.effect = jconfig.Effect;
+                this.hpBonus = jconfig.HpBonus;
+                this.attackBonus = jconfig.AttackBonus;
+                //这句从下面移到if里来了，因为还要写装备的逻辑，但是没仔细看不知道会不会出问题，所以写个注释标记一下
+                this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+            }
+            else if(_type == PropsType.Equip)
+            {
+                jconfig = config.EquipConfig.get(_id);
+                this.effect = jconfig.Effect;
+                this.hpBonus = jconfig.HpBonus;
+                this.attackBonus = jconfig.AttackBonus;
+                this.vaule=jconfig.value;
+                //差一个载入图标的逻辑，因为还不清楚装备区域
+                //this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+            }
+			this.LoadOnConfig();
+
             this.freezeLock = _freeze;
             this.freezeSprite.active = _freeze;
 
