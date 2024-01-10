@@ -26,7 +26,7 @@ export class MainInterface
         this.mainPanel=this.mainInterface.getChildByPath("MainPanel")
         this.startGamePanel=this.mainInterface.getChildByPath("StartGamePanel");
 
-        this.startBtn=this.mainInterface.getChildByPath("MainPanel/Start_Btn");
+        this.startBtn=this.mainInterface.getChildByPath("MainPanel/StartHouse/Start_Btn");
         this.startGameBtn=this.mainInterface.getChildByPath("StartGamePanel/StartGame_Btn");
 
         this.Init();
