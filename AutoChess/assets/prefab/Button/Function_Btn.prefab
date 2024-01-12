@@ -247,7 +247,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -282,12 +282,12 @@
     },
     "clickEvents": [],
     "_interactable": true,
-    "_transition": 2,
+    "_transition": 1,
     "_normalColor": {
       "__type__": "cc.Color",
-      "r": 214,
-      "g": 214,
-      "b": 214,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_hoverColor": {
@@ -299,20 +299,20 @@
     },
     "_pressedColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 170,
+      "g": 170,
+      "b": 170,
       "a": 255
     },
     "_disabledColor": {
       "__type__": "cc.Color",
-      "r": 124,
-      "g": 124,
-      "b": 124,
+      "r": 82,
+      "g": 82,
+      "b": 82,
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": {
@@ -329,9 +329,7 @@
     },
     "_duration": 0.1,
     "_zoomScale": 1.2,
-    "_target": {
-      "__id__": 1
-    },
+    "_target": null,
     "_id": ""
   },
   {
@@ -347,6 +345,7 @@
       "__id__": 0
     },
     "fileId": "ddfBZA3hVIo7fYSHLB9pIB",
+    "instance": null,
     "targetOverrides": null
   }
 ]

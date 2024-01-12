@@ -74,6 +74,7 @@ export class MainInterface
             }).delay(0.4).call(()=>
             {
                 this.btnList.getComponent(Animation).resume();
+                this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
             }).start();
 
         },this);
