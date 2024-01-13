@@ -82,40 +82,44 @@ export class Role {
             this.properties.set(k, v);
         })
 
-        let roleConfig = config.config.RoleConfig.get(this.id);
-        this.skillid = roleConfig.SkillID;
 
-        let skill = createSkill(roleConfig.SkillID, this.level);
-        let additionSkills:SkillInfo[];
-        if(additionSkill&&additionSkill.length>0){            
-            for(let t of additionSkill){
-                additionSkills.push(createSkill(t,this.level));
+        if(additionSkill)
+        {
+            let roleConfig = config.config.RoleConfig.get(this.id);
+            this.skillid = roleConfig.SkillID;
+    
+            let skill = createSkill(roleConfig.SkillID, this.level);
+            let additionSkills:SkillInfo[];
+            if(additionSkill&&additionSkill.length>0){            
+                for(let t of additionSkill){
+                    additionSkills.push(createSkill(t,this.level));
+                }
             }
-        }
-        if (skill||additionSkills.length>0) {
-            this.skill.push(skill);
-            for(let t of additionSkills) this.skill.push(t);
-        }
-        else {
-            let buffer = createBuffer(roleConfig.SkillID);
-            if (buffer) {
-                this.buffer.push(buffer);
-            }
-        }
-
-        if (fetters && fetters.fetters_level > 0) {
-            let skill = createFettersSkill(fetters.fetters_id, fetters.fetters_level);
-            if (skill) {
+            if (skill||additionSkills.length>0) {
                 this.skill.push(skill);
+                for(let t of additionSkills) this.skill.push(t);
             }
-
-            if (fetters.fetters_id == config.config.MechanicFetters) {
-                let skill = new SkillInfo();
-                skill.trigger = create_trigger.CreateTrigger(common.EMSkillEvent.all_mechanic_syncope);
-                skill.skill = create_fetters.CreateMechanicFettersSummon(fetters.fetters_level, id);
-            
-                if (skill.trigger && skill.skill) {
+            else {
+                let buffer = createBuffer(roleConfig.SkillID);
+                if (buffer) {
+                    this.buffer.push(buffer);
+                }
+            }
+    
+            if (fetters && fetters.fetters_level > 0) {
+                let skill = createFettersSkill(fetters.fetters_id, fetters.fetters_level);
+                if (skill) {
                     this.skill.push(skill);
+                }
+    
+                if (fetters.fetters_id == config.config.MechanicFetters) {
+                    let skill = new SkillInfo();
+                    skill.trigger = create_trigger.CreateTrigger(common.EMSkillEvent.all_mechanic_syncope);
+                    skill.skill = create_fetters.CreateMechanicFettersSummon(fetters.fetters_level, id);
+                
+                    if (skill.trigger && skill.skill) {
+                        this.skill.push(skill);
+                    }
                 }
             }
         }
