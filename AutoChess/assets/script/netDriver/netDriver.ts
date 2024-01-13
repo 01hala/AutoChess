@@ -3,6 +3,8 @@ const { ccclass, property } = _decorator;
 
 import * as cli from '../serverSDK/client_handle';
 
+import { netSingleton } from "./netSingleton"
+
 /**
  * Predefined variables
  * Name = netDriver
@@ -26,10 +28,10 @@ import * as cli from '../serverSDK/client_handle';
  
      private conn_gate_svr(url:string) {
          return new Promise<void>(resolve => {
+            cli.cli_handle.onGateConnect = () => {
+                resolve();
+            }
              cli.cli_handle.connect_gate(url);
-             cli.cli_handle.onGateConnect = () => {
-                 resolve();
-             }
          });
      }
  
@@ -40,7 +42,9 @@ import * as cli from '../serverSDK/client_handle';
          //await this.conn_gate_svr("ws://127.0.0.1:3001");
          await this.conn_gate_svr("wss://zzq.ucat.games:3001");
 
+         console.log("conn_gate_svr complete!");
          this.node.emit("connect", 1);
+         netSingleton.is_conn_gate = true;
      }
  
      update (deltaTime: number) {

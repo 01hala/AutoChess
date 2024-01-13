@@ -6,6 +6,7 @@ import { ReadyDis } from '../ready/display/ReadyDis';
 import { MainInterface } from '../mainInterface/MainInterface';
 
 export class netSingleton {
+    public static is_conn_gate = false;
     public static player = new player.netPlayer(); 
     public static game = new game.netGame();
     public static battle:BattleDis = null;

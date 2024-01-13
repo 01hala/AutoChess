@@ -61,8 +61,9 @@ export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
                 map.set(parseInt(k), equipc);
                 console.log("Load Equips Config End!");
             });
-        })
 
+            resolve(map);
+        });
     });
 
 }

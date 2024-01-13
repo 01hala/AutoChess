@@ -60,9 +60,9 @@ export async function LoadFoodConfig() : Promise<Map<number, FoodConfig>> {
 
                 map.set(parseInt(k), foodc);
             });
-        })
 
-        console.log("Load Food Config end!");
-        resolve(map);
+            console.log("Load Food Config end!");
+            resolve(map);
+        });
     });
 }
