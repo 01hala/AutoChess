@@ -321,12 +321,12 @@
     "propertyPath": [
       "_active"
     ],
-    "value": false
+    "value": true
   },
   {
     "__type__": "cc.TargetInfo",
     "localID": [
-      "2fyU5/LbxDSokFA/yKokAe"
+      "fcG53EyA9B5qESziDDV3Ao"
     ]
   },
   {
