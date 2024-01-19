@@ -63,7 +63,7 @@ export class MainInterface
         {
             this.storePanel.active=true;
             this.mainPanel.active=false;
-            this.storePanel.getComponent(StorePanel).CheckStoreToggle();
+            this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
             this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked=true;
         },this);
 
