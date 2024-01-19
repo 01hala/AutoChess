@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Button, Component, instantiate, Node, Prefab, tween } from 'cc';
+import { _decorator, Animation, animation, Button, Component, instantiate, Node, Prefab, Toggle, tween } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
@@ -64,6 +64,7 @@ export class MainInterface
             this.storePanel.active=true;
             this.mainPanel.active=false;
             this.storePanel.getComponent(StorePanel).CheckStoreToggle();
+            this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked=true;
         },this);
 
         this.startGameBtn.on(Button.EventType.CLICK,()=>

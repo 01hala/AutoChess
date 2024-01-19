@@ -1782,7 +1782,7 @@
       "__id__": 58
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 74
@@ -2373,7 +2373,11 @@
     "__prefab": {
       "__id__": 102
     },
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 103
+      }
+    ],
     "_interactable": true,
     "_transition": 0,
     "_normalColor": {
@@ -2416,11 +2420,7 @@
     "_target": {
       "__id__": 90
     },
-    "checkEvents": [
-      {
-        "__id__": 103
-      }
-    ],
+    "checkEvents": [],
     "_isChecked": false,
     "_checkMark": {
       "__id__": 94
@@ -2725,7 +2725,11 @@
     "__prefab": {
       "__id__": 117
     },
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 118
+      }
+    ],
     "_interactable": true,
     "_transition": 0,
     "_normalColor": {
@@ -2768,11 +2772,7 @@
     "_target": {
       "__id__": 105
     },
-    "checkEvents": [
-      {
-        "__id__": 118
-      }
-    ],
+    "checkEvents": [],
     "_isChecked": false,
     "_checkMark": {
       "__id__": 109
@@ -3077,7 +3077,11 @@
     "__prefab": {
       "__id__": 132
     },
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 133
+      }
+    ],
     "_interactable": true,
     "_transition": 0,
     "_normalColor": {
@@ -3120,11 +3124,7 @@
     "_target": {
       "__id__": 120
     },
-    "checkEvents": [
-      {
-        "__id__": 133
-      }
-    ],
+    "checkEvents": [],
     "_isChecked": true,
     "_checkMark": {
       "__id__": 124
@@ -9189,8 +9189,7 @@
       "__id__": 0
     },
     "fileId": "71aorCQDVKT595JsWvXZQo",
-    "instance": null,
-    "targetOverrides": null,
+    "targetOverrides": [],
     "nestedPrefabInstanceRoots": [
       {
         "__id__": 335

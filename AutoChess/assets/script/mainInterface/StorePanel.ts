@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, instantiate, Node, Prefab, primitives } from 'cc';
+import { _decorator, Button, Component, instantiate, Node, Prefab, primitives, Toggle } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 const { ccclass, property } = _decorator;
@@ -17,16 +17,17 @@ export class StorePanel extends Component
     private cardEditPage:Node;
     private rechargePage:Node;
 
+    public toggleGroup:Node;
+
     onLoad()
     {
         this.backBtn=this.node.getChildByPath("Back_Btn");
         this.pageViewContent=this.node.getChildByPath("StoreArea/PageView/view/content");
+        this.toggleGroup=this.node.getChildByPath("ToggleGroup");
     }
 
     async start() 
     {
-        await this.LoadPre();
-
         this.backBtn.on(Button.EventType.CLICK,()=>
         {
             this.node.active=false;
@@ -37,34 +38,26 @@ export class StorePanel extends Component
 
     }
 
-    async LoadPre()
-    {
-        try
-        {
-            this.storePagePre=await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage") as Prefab;
-            this.cardEditPre=await BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage") as Prefab;
-            this.rechargePre=await BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage") as Prefab;
-        }
-        catch(error)
-        {
-            console.error('StorePanel 下 LoadPre 错误 err: ',error);
-        }
-    }
 
-    CheckStoreToggle()
+    async CheckStoreToggle()
     {
         try
         {
-            if(this.cardEditPage)
+            if(!this.toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked)
             {
-                this.cardEditPage.destroy();
+                console.log("CheckStoreToggle!!!");
+                for (let node of this.pageViewContent.children) 
+                {
+                    node.destroy();
+                }
+                if (!this.storePagePre) 
+                {
+                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage") as Prefab;
+                }
+                this.storePage = instantiate(this.storePagePre);
+                this.pageViewContent.addChild(this.storePage);
             }
-            if(this.rechargePage)
-            {
-                this.rechargePage.destroy();
-            }
-            this.storePage=instantiate(this.storePagePre);
-            this.pageViewContent.addChild(this.storePage);
+            
         }
         catch(error)
         {
@@ -73,20 +66,23 @@ export class StorePanel extends Component
         
     }
 
-    CheckCardEditToggle()
+    async CheckCardEditToggle()
     {
         try
         {
-            if(this.storePage)
+            if(!this.toggleGroup.getChildByPath("CardEdit").getComponent(Toggle).isChecked)
             {
-                this.storePage.destroy();
+                console.log("CheckCardEditToggle!!!");
+                for (let node of this.pageViewContent.children) {
+                    node.destroy();
+                }
+                if (!this.cardEditPre) {
+                    this.cardEditPre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage") as Prefab;
+                }
+                this.cardEditPage = instantiate(this.cardEditPre);
+                this.pageViewContent.addChild(this.cardEditPage);
             }
-            if(this.rechargePage)
-            {
-                this.rechargePage.destroy();
-            }
-            this.cardEditPage=instantiate(this.cardEditPre);
-            this.pageViewContent.addChild(this.cardEditPage);
+           
         }
         catch(error)
         {
@@ -94,20 +90,23 @@ export class StorePanel extends Component
         }
     }
 
-    CheckRechargeToggle()
+    async CheckRechargeToggle()
     {
         try
         {
-            if(this.storePage)
+            if(!this.toggleGroup.getChildByPath("Recharge").getComponent(Toggle).isChecked)
             {
-                this.storePage.destroy();
+                console.log("CheckRechargeToggle!!!");
+                for (let node of this.pageViewContent.children) {
+                    node.destroy();
+                }
+                if (!this.rechargePre) {
+                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage") as Prefab;
+                }
+                this.rechargePage = instantiate(this.rechargePre);
+                this.pageViewContent.addChild(this.rechargePage);
             }
-            if(this.cardEditPage)
-            {
-                this.cardEditPage.destroy();
-            }
-            this.rechargePage=instantiate(this.rechargePre);
-            this.pageViewContent.addChild(this.rechargePage);
+            
         }
         catch(error)
         {
@@ -116,7 +115,8 @@ export class StorePanel extends Component
         
     }
 
-    update(deltaTime: number) {
+    update(deltaTime: number) 
+    {
         
     }
 }
