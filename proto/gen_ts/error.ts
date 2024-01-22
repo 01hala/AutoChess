@@ -11,7 +11,9 @@ export enum em_error{
     no_enough_strength = 4,
     no_role_in_index_to_sale = 5,
     not_same_role_to_update = 6,
-    no_enough_coin = 7
+    no_enough_coin = 7,
+    already_have_role = 8,
+    no_exist_role_group = 9
 }
 
 /*this struct code is codegen by abelkhan codegen for typescript*/

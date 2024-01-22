@@ -4,6 +4,16 @@ struct UserInformation
 	int64 UserGuid; // 用户uid
 }
 
+struct RoleCardInfo {
+	int32 roleID;
+	bool isTatter;
+	int32 Number;
+}
+
+struct Bag {
+	RoleCardInfo[] ItemList;
+}
+
 struct RoleGroup
 {
 	int32 CardDeck; // 角色卡组ID
@@ -12,9 +22,11 @@ struct RoleGroup
 
 struct UserData
 {
-	UserInformation User; // 用户信息
-	int32 Strength; // 体力
-	RoleGroup[] roleGroup;
+	UserInformation User;	// 用户信息
+	int32 Strength;			// 体力
+	int32 gold;				// 金币
+	Bag bag;				// 背包
+	RoleGroup[] roleGroup;	// 卡组 玩家自行编辑
 }
 
 struct Fetters {

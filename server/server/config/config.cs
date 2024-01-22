@@ -24,7 +24,7 @@ namespace config
 
         public static Dictionary<int, RoleConfig> RoleConfigs;
         public static Dictionary<int, List<RoleConfig> > RoleStageConfigs;
-        public static Dictionary<int, List<RoleConfig>> RoleCardDeckConfigs;
+        public static Dictionary<int, List<RoleConfig> > RoleGradeConfigs;
         public static Dictionary<int, FoodConfig> FoodConfigs;
         public static Dictionary<int, List<FoodConfig> > FoodStageConfigs;
         public static Dictionary<int, ShopProbabilityConfig> ShopProbabilityConfigs;
@@ -37,8 +37,8 @@ namespace config
         public static void Load(string path)
         {
             RoleConfigs = RoleConfig.Load(Path.Combine(path, "Role.json"));
+            RoleGradeConfigs = RoleConfig.LoadGrade(RoleConfigs);
             RoleStageConfigs = RoleConfig.LoadStage(RoleConfigs);
-            RoleCardDeckConfigs = RoleConfig.LoadCardDeck(RoleConfigs);
             FoodConfigs = FoodConfig.Load(Path.Combine(path, "Food.json"));
             FoodStageConfigs = FoodConfig.LoadStage(FoodConfigs);
             ShopProbabilityConfigs = ShopProbabilityConfig.Load(Path.Combine(path, "ShopProbability.json"));

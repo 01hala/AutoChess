@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using avatar;
+using bag;
 using Hub;
 using MongoDB.Bson;
 using OfflineMsg;
@@ -54,23 +55,20 @@ namespace Player
         public static IHostingData Create()
         {
             var RoleGroup = new List<RoleGroup>();
-            if (config.Config.RoleCardDeckConfigs.TryGetValue(101, out var roleCardDeckConfig))
+            var roleList = new List<int>();
+            foreach (var cfg in config.Config.RoleConfigs.Values)
             {
-                var roleList = new List<int>();
-                foreach(var cfg in roleCardDeckConfig)
+                if (cfg.ActiveState == 1)
                 {
-                    if (cfg.ActiveState == 1)
-                    {
-                        roleList.Append(cfg.Id);
-                    }
+                    roleList.Add(cfg.Id);
                 }
-
-                RoleGroup.Add(new RoleGroup()
-                {
-                    CardDeck = 101,
-                    RoleList = roleList,
-                });
             }
+
+            RoleGroup.Add(new RoleGroup()
+            {
+                CardDeck = 101,
+                RoleList = roleList,
+            });
 
             return new PlayerInfo()
             {
@@ -82,6 +80,8 @@ namespace Player
                         UserGuid = 0,
                     },
                     Strength = 100,
+                    gold = 100,
+                    bag = new Abelkhan.Bag(),
                     roleGroup = RoleGroup,
                 },
                 lastTickStrengthTime = Timerservice.Tick
@@ -149,7 +149,7 @@ namespace Player
                 var _roleList = new BsonArray();
                 foreach (var _role in _group.RoleList)
                 {
-                    _roleList.Append(_role);
+                    _roleList.Add(_role);
                 }
 
                 var _RoleGroup = new BsonDocument()
@@ -179,6 +179,39 @@ namespace Player
         public List<int> BattleRoleGroup()
         {
             return info.roleGroup[currentRolrGroup].RoleList;
+        }
+
+        public Tuple<em_error, CardPacket> BuyCardPacket()
+        {
+            if (info.gold <= 1)
+            {
+                return Tuple.Create(em_error.no_enough_coin, (CardPacket)null);
+            }
+            info.gold -= 1;
+
+            var packet = new CardPacket();
+            for(int i = 0; i < 5; i++)
+            {
+                var grade = RandomHelper.RandomInt(3) + 1;
+                var isTatter = RandomHelper.RandomInt(100) < 1;
+
+                var gradeGroup = config.Config.RoleGradeConfigs[grade];
+                var cfg = gradeGroup[RandomHelper.RandomInt(gradeGroup.Count)];
+
+                packet.ItemList.Add(new RoleCardInfo()
+                {
+                    roleID = cfg.Id,
+                    isTatter = isTatter,
+                    Number = 1
+                });
+            }
+
+            return Tuple.Create(em_error.success, packet);
+        }
+
+        public em_error BuyRoleGroup()
+        {
+            return em_error.success;
         }
 
         public void AddStrength(int _strength)
