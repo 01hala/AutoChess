@@ -181,6 +181,23 @@ namespace Player
             return info.roleGroup[currentRolrGroup].RoleList;
         }
 
+        private void AddCardItem(RoleCardInfo infoCard)
+        {
+            if (infoCard.isTatter)
+            {
+                foreach (var i in info.bag.ItemList)
+                {
+                    if (i.roleID == infoCard.roleID)
+                    {
+                        i.Number += infoCard.Number;
+                        return;
+                    }
+                }
+            }
+
+            info.bag.ItemList.Add(infoCard);
+        }
+
         public Tuple<em_error, CardPacket> BuyCardPacket()
         {
             if (info.gold <= 1)
@@ -198,12 +215,15 @@ namespace Player
                 var gradeGroup = config.Config.RoleGradeConfigs[grade];
                 var cfg = gradeGroup[RandomHelper.RandomInt(gradeGroup.Count)];
 
-                packet.ItemList.Add(new RoleCardInfo()
+                var infoCard = new RoleCardInfo()
                 {
                     roleID = cfg.Id,
                     isTatter = isTatter,
                     Number = 1
-                });
+                };
+
+                packet.ItemList.Add(infoCard);
+                AddCardItem(infoCard);
             }
 
             return Tuple.Create(em_error.success, packet);
@@ -211,12 +231,33 @@ namespace Player
 
         public em_error BuyCardMerge(int _roleID)
         {
-            return em_error.success;
-        }
+            foreach (var i in info.bag.ItemList)
+            {
+                if (i.roleID == _roleID)
+                {
+                    if (i.Number >= 8)
+                    {
+                        i.Number -= 8;
 
-        public em_error BuyRoleGroup()
-        {
-            return em_error.success;
+                        if (i.Number <= 0)
+                        {
+                            info.bag.ItemList.Remove(i);
+                        }
+
+                        var infoCard = new RoleCardInfo()
+                        {
+                            roleID = _roleID,
+                            isTatter = false,
+                            Number = 1
+                        };
+                        AddCardItem(infoCard);
+
+                        return em_error.success;
+                    }
+                }
+            }
+
+            return em_error.no_enough_card;
         }
 
         public void AddStrength(int _strength)

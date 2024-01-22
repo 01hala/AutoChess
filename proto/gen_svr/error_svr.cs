@@ -20,7 +20,8 @@ namespace Abelkhan
         not_same_role_to_update = 6,
         no_enough_coin = 7,
         already_have_role = 8,
-        no_exist_role_group = 9
+        no_exist_role_group = 9,
+        no_enough_card = 10
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
 /*this caller code is codegen by abelkhan codegen for c#*/
