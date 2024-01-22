@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, Node, Sprite } from 'cc';
+import { _decorator, Button, Component, debug, log, Node, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -34,6 +34,7 @@ export class RoleCard extends Component
     {
         this.node.on(Button.EventType.CLICK,()=>
         {
+            console.log(singleton.netSingleton.mainInterface.infoPanel.parent.active);
             singleton.netSingleton.mainInterface.infoPanel.active = true;
             singleton.netSingleton.mainInterface.infoPanel.getComponent(InfoPanel).OpenSimple(this.roleId);
 

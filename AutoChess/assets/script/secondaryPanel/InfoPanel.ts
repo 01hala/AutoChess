@@ -15,10 +15,10 @@ export class InfoPanel extends Component
     onLoad()
     {
         this.node.getComponent(BlockInputEvents).enabled=false;
-        this.exitBtn=this.node.getChildByPath("InfoBoard/Exit_Btn").getComponent(Button);
+        this.exitBtn=this.node.getChildByPath("Detailed/Exit_Btn").getComponent(Button);
         
-        this.simpleInfoLabel=this.node.getChildByPath("InfoBoard/Simple/RoleIntroduce").getComponent(Label);
-        this.simpleSculpture=this.node.getChildByPath("InfoBoard/Simple/Sculpture/Sprite").getComponent(Sprite);
+        this.simpleInfoLabel=this.node.getChildByPath("Simple/RoleIntroduce").getComponent(Label);
+        this.simpleSculpture=this.node.getChildByPath("Simple/Sculpture/Sprite").getComponent(Sprite);
         this.simpleBoard=this.node.getChildByPath("Simple");
         this.detailedPanel=this.node.getChildByPath("Detailed");
 
@@ -26,8 +26,8 @@ export class InfoPanel extends Component
 
     start() 
     {
-        this.simpleBoard.active=false;
-        this.detailedPanel.active=false;
+        //this.simpleBoard.active=false;
+        //this.detailedPanel.active=false;
 
         this.exitBtn.node.on(Button.EventType.CLICK,()=>
         {
@@ -42,24 +42,36 @@ export class InfoPanel extends Component
     
     OpenSimple(id:number,propType?:PropsType)
     {
-
-        if(null!=propType)
+        try
         {
-
+            if(this.detailedPanel.active)
+            {
+                this.detailedPanel.active=false;
+            }
+    
+            if(null!=propType)
+            {
+    
+            }
+            else
+            {
+                this.simpleBoard.active=true;
+                this.node.setSiblingIndex(99);
+                this.node.getComponent(BlockInputEvents).enabled=true;
+                this.simpleInfoLabel.string="角色ID:"+id;
+            }
         }
-        else
+        catch(error)
         {
-            this.simpleBoard.active=true;
-            this.node.setSiblingIndex(99);
-            this.node.getComponent(BlockInputEvents).enabled=true;
-            this.simpleInfoLabel.string="角色ID:"+id;
+            console.error('InfoPanel 下 OpenSimple 错误 err: ',error);
         }
+        
     }
 
     Exit()
     {
-        this.simpleBoard.active=false;
-        this.detailedPanel.active=false;
+        //this.simpleBoard.active=false;
+        //this.detailedPanel.active=false;
         this.node.getComponent(BlockInputEvents).enabled=false;
         this.node.active=false;
     }
