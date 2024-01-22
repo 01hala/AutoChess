@@ -81,8 +81,21 @@ namespace Match
         {
             if (config.Config.RoleStageConfigs.TryGetValue(stage, out var basePool))
             {
-                var roleConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
-                if (roleConfig != null && rolePool.Contains(roleConfig.Id))
+                var realPool = new List<RoleConfig>();
+                foreach (var cfg in basePool)
+                {
+                    if (cfg != null && rolePool.Contains(cfg.Id))
+                    {
+                        realPool.Add(cfg);
+                    }
+                }
+                if (realPool.Count <= 0)
+                {
+                    return null;
+                }
+
+                var roleConfig = realPool[RandomHelper.RandomInt(realPool.Count)];
+                if (roleConfig != null)
                 {
                     var r = new ShopRole();
                     r.RoleID = roleConfig.Id;
