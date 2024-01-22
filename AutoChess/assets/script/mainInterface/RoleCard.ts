@@ -11,9 +11,7 @@ export class RoleCard extends Component
 
     private lock:boolean=false;
 
-    public roleId:number;
-
-    public storePanel:Node;
+    public roleId:number = 0;
 
     public get Lock()
     {
@@ -41,16 +39,23 @@ export class RoleCard extends Component
 
         },this);
 
-        this.Init();
     }
 
-    private async Init()
+    public async Init(_id:number)
     {
-        let path="Avatar/Role_"+this.roleId;
-        let img=await loadAssets.LoadImg(path);
-        if(img)
+        try
         {
-            this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
+            this.roleId=_id;
+            let path="Avatar/Role_"+this.roleId;
+            let img=await loadAssets.LoadImg(path);
+            if(img)
+            {
+                this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
+            }
+        }
+        catch(error)
+        {
+            console.error('RoleCard 下 Init 错误 err: ',error);
         }
     }
 

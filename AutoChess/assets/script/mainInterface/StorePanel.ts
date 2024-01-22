@@ -143,13 +143,13 @@ export class StorePanel extends Component
                     // let path="Avatar/Role_"+i;
                     // let img=await loadAssets.LoadImg(path);
                     let card=instantiate(cardPre);
-                    card.getComponent(RoleCard).storePanel=this.node;
-                    card.getComponent(RoleCard).roleId=i;
                     // if(img)
                     // {
                     //     card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
                     // }
                     this.cardListPage.addChild(card);
+                    //card.getComponent(RoleCard).storePanel=this.node;
+                    card.getComponent(RoleCard).Init(i);
                     if(i%8==0)
                     {
                         this.cardListPage=instantiate(this.cardListPre);
