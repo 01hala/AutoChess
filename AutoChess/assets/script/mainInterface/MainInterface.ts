@@ -1,18 +1,22 @@
-import { _decorator, Animation, animation, Button, Component, instantiate, Node, Prefab, tween } from 'cc';
+import { _decorator, Animation, animation, Button, Component, instantiate, Node, Prefab, Toggle, tween } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
+import { StorePanel } from './StorePanel';
 const { ccclass, property } = _decorator;
 
 export class MainInterface 
 {
     public father:Node;
 
-    private mainInterface:Node;
+    public mainNode:Node;
 
-    private mainPanel:Node
-    private startGamePanel:Node;
+    public mainPanel:Node
+    public startGamePanel:Node;
+    public storePanel:Node;
 
     private startBtn:Node;
+    private storeBtn:Node;
+
     private startGameBtn:Node;
     private BackMainBtn:Node;
 
@@ -25,17 +29,20 @@ export class MainInterface
     {
         this.father=father;
         let panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface") as Prefab;
-        this.mainInterface=instantiate(panel);
-        this.father.addChild(this.mainInterface);
+        this.mainNode=instantiate(panel);
+        this.father.addChild(this.mainNode);
 
-        this.mainPanel=this.mainInterface.getChildByPath("MainPanel")
-        this.startGamePanel=this.mainInterface.getChildByPath("StartGamePanel");
+        this.mainPanel=this.mainNode.getChildByPath("MainPanel")
+        this.startGamePanel=this.mainNode.getChildByPath("StartGamePanel");
+        this.storePanel=this.mainNode.getChildByPath("StorePanel");
 
-        this.startBtn=this.mainInterface.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");
-        this.startGameBtn=this.mainInterface.getChildByPath("StartGamePanel/StartGame_Btn");
-        this.BackMainBtn=this.mainInterface.getChildByPath("StartGamePanel/Back_Btn");
+        this.startBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");
+        this.storeBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");
 
-        this.btnList=this.mainInterface.getChildByPath("MainPanel/UiLayer/BtnList");
+        this.startGameBtn=this.mainNode.getChildByPath("StartGamePanel/StartGame_Btn");
+        this.BackMainBtn=this.mainNode.getChildByPath("StartGamePanel/Back_Btn");
+
+        this.btnList=this.mainNode.getChildByPath("MainPanel/UiLayer/BtnList");
 
         this.Init();
     }
@@ -43,12 +50,21 @@ export class MainInterface
     Init() 
     {
         this.startGamePanel.active=false;
+        this.storePanel.active=false;
 
         this.startBtn.on(Button.EventType.CLICK,()=>
         {
             this.startGamePanel.active=true;
             this.mainPanel.active=false;
 
+        },this);
+
+        this.storeBtn.on(Button.EventType.CLICK,()=>
+        {
+            this.storePanel.active=true;
+            this.mainPanel.active=false;
+            this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
+            this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked=true;
         },this);
 
         this.startGameBtn.on(Button.EventType.CLICK,()=>
