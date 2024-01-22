@@ -35,7 +35,7 @@ namespace Player
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _match = Player.match_Proxy_Mng.get_match_proxy();
-                _match.start_battle(uuid, _avatar.PlayerInfo().roleGroup[0].RoleList).callBack((battle, shop) =>
+                _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup()).callBack((battle, shop) =>
                 {
                     rsp.rsp(_match.name, battle, shop);
                 }, rsp.err);
@@ -56,7 +56,7 @@ namespace Player
             try
             {
                 var _avatar = Player.client_Mng.create_player(uuid, name, nick_name);
-                rsp.rsp(_avatar.PlayerInfo());
+                rsp.rsp(_avatar.PlayerInfo().Info());
             }
             catch (LoginException ex)
             {
@@ -82,16 +82,16 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                    if (string.IsNullOrEmpty(_data.Data.info.User.UserName) && _data.Data.info.User.UserGuid == 0)
+                    if (string.IsNullOrEmpty(_data.Data.Info().User.UserName) && _data.Data.Info().User.UserGuid == 0)
                     {
                         rsp.err((int)em_error.unregistered_palyer);
                     }
                     else
                     {
-                        _data.Data.info.User.UserName = name;
+                        _data.Data.Info().User.UserName = name;
                         _data.write_back();
 
-                        rsp.rsp(_avatar.PlayerInfo());
+                        rsp.rsp(_avatar.PlayerInfo().Info());
 
                         await Player.offline_Msg_Mng.process_offline_msg(_avatar.Guid.ToString());
                     }

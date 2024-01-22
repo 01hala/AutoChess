@@ -42,8 +42,9 @@ namespace Player
 
     public class PlayerInfo : IHostingData
     {
-        public UserData info;
-        public long lastTickStrengthTime;
+        private UserData info;
+        private int currentRolrGroup = 101;
+        private long lastTickStrengthTime;
 
         public static string Type()
         {
@@ -170,6 +171,16 @@ namespace Player
             return doc;
         }
 
+        public UserData Info()
+        {
+            return info;
+        }
+
+        public List<int> BattleRoleGroup()
+        {
+            return info.roleGroup[currentRolrGroup].RoleList;
+        }
+
         public void AddStrength(int _strength)
         {
             info.Strength += _strength;
@@ -217,10 +228,10 @@ namespace Player
 
     public static class AvatarExtensions
     {
-        public static UserData PlayerInfo(this Avatar avatar)
+        public static PlayerInfo PlayerInfo(this Avatar avatar)
         {
             var _data = avatar.get_real_hosting_data<PlayerInfo>();
-            return _data.Data.info;
+            return _data.Data;
         }
     }
 
@@ -352,8 +363,8 @@ namespace Player
         {
             var _avatar = avatarMgr.get_avatar(uuid);
             var info = _avatar.get_real_hosting_data<PlayerInfo>();
-            info.Data.info.User.UserName = nick_name;
-            info.Data.info.User.UserGuid = _avatar.Guid;
+            info.Data.Info().User.UserName = nick_name;
+            info.Data.Info().User.UserGuid = _avatar.Guid;
 
             return _avatar;
         }
