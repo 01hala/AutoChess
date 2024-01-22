@@ -209,6 +209,11 @@ namespace Player
             return Tuple.Create(em_error.success, packet);
         }
 
+        public em_error BuyCardMerge(int _roleID)
+        {
+            return em_error.success;
+        }
+
         public em_error BuyRoleGroup()
         {
             return em_error.success;

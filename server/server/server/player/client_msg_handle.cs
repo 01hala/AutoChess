@@ -54,14 +54,38 @@ namespace Player
             }
             catch (System.Exception ex)
             {
-                Log.Log.err($"Player_shop_Module_on_bug_role err:{ex}");
+                Log.Log.err($"Player_shop_Module_on_buy_card_packet err:{ex}");
                 rsp.err((int)em_error.db_error);
             }
         }
 
-        private void Player_shop_Module_on_buy_card_merge(int _roleID)
+        private async void Player_shop_Module_on_buy_card_merge(int _roleID)
         {
-            Log.Log.trace("on_bug_group begin!");
+            Log.Log.trace("on_bug_role begin!");
+
+            var rsp = player_shop_Module.rsp as player_shop_buy_card_merge_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var err = _data.Data.BuyCardMerge(_roleID);
+                if (err != 0)
+                {
+                    rsp.err((int)err);
+                }
+                else
+                {
+                    _data.write_back();
+                    rsp.rsp(_roleID, _data.Data.Info().bag);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_shop_Module_on_buy_card_merge err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Player_battle_Module_on_start_battle()
