@@ -4,11 +4,17 @@ struct UserInformation
 	int64 UserGuid; // 用户uid
 }
 
+struct RoleGroup
+{
+	int32 CardDeck; // 角色卡组ID
+	int32[] RoleList; // 角色列表
+}
+
 struct UserData
 {
 	UserInformation User; // 用户信息
 	int32 Strength; // 体力
-	int32[] RoleList; // 角色列表
+	RoleGroup[] roleGroup;
 }
 
 struct Fetters {

@@ -109,11 +109,42 @@ export function protcol_to_UserInformation(_protocol:any){
     return _struct;
 }
 
+export class RoleGroup
+{
+    public CardDeck : number = 0;
+    public RoleList : number[] = [];
+
+}
+
+export function RoleGroup_to_protcol(_struct:RoleGroup){
+    return _struct;
+}
+
+export function protcol_to_RoleGroup(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new RoleGroup();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "CardDeck"){
+            _struct.CardDeck = val as number;
+        }
+        else if (key === "RoleList"){
+            _struct.RoleList = [];
+            for(let v_ of val as any) {
+                _struct.RoleList.push(v_);
+            }
+        }
+    }
+    return _struct;
+}
+
 export class UserData
 {
     public User : UserInformation | null = null;
     public Strength : number = 0;
-    public RoleList : number[] = [];
+    public roleGroup : RoleGroup[] = [];
 
 }
 
@@ -134,10 +165,10 @@ export function protcol_to_UserData(_protocol:any){
         else if (key === "Strength"){
             _struct.Strength = val as number;
         }
-        else if (key === "RoleList"){
-            _struct.RoleList = [];
+        else if (key === "roleGroup"){
+            _struct.roleGroup = [];
             for(let v_ of val as any) {
-                _struct.RoleList.push(v_);
+                _struct.roleGroup.push(protcol_to_RoleGroup(v_));
             }
         }
     }
@@ -189,7 +220,6 @@ export class Role
     public TempHP : number = 0;
     public TempAttack : number = 0;
     public additionBuffer : number[] = [];
-    public additionSkill : number[]=[];
     public TempAdditionBuffer : number[] = [];
 
 }

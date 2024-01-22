@@ -113,11 +113,53 @@ namespace Abelkhan
         }
     }
 
+    public class RoleGroup
+    {
+        public Int32 CardDeck;
+        public List<Int32> RoleList;
+        public static MsgPack.MessagePackObjectDictionary RoleGroup_to_protcol(RoleGroup _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("CardDeck", _struct.CardDeck);
+            if (_struct.RoleList != null) {
+                var _array_RoleList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.RoleList){
+                    _array_RoleList.Add(v_);
+                }
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
+            }
+            return _protocol;
+        }
+        public static RoleGroup protcol_to_RoleGroup(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct04eefd6b_dfea_3615_a69b_58efca74ef74 = new RoleGroup();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "CardDeck"){
+                    _struct04eefd6b_dfea_3615_a69b_58efca74ef74.CardDeck = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
+                    _struct04eefd6b_dfea_3615_a69b_58efca74ef74.RoleList = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct04eefd6b_dfea_3615_a69b_58efca74ef74.RoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
+                }
+            }
+            return _struct04eefd6b_dfea_3615_a69b_58efca74ef74;
+        }
+    }
+
     public class UserData
     {
         public UserInformation User;
         public Int32 Strength;
-        public List<Int32> RoleList;
+        public List<RoleGroup> roleGroup;
         public static MsgPack.MessagePackObjectDictionary UserData_to_protcol(UserData _struct){
         if (_struct == null) {
             return null;
@@ -126,12 +168,12 @@ namespace Abelkhan
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("Strength", _struct.Strength);
-            if (_struct.RoleList != null) {
-                var _array_RoleList = new List<MsgPack.MessagePackObject>();
-                foreach(var v_ in _struct.RoleList){
-                    _array_RoleList.Add(v_);
+            if (_struct.roleGroup != null) {
+                var _array_roleGroup = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.roleGroup){
+                    _array_roleGroup.Add( new MsgPack.MessagePackObject(RoleGroup.RoleGroup_to_protcol(v_)));
                 }
-                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
+                _protocol.Add("roleGroup", new MsgPack.MessagePackObject(_array_roleGroup));
             }
             return _protocol;
         }
@@ -148,11 +190,11 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Strength"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.Strength = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList = new List<Int32>();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "roleGroup"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.roleGroup = new List<RoleGroup>();
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
                     foreach (var v_ in _protocol_array){
-                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.roleGroup.Add(RoleGroup.protcol_to_RoleGroup(((MsgPack.MessagePackObject)v_).AsDictionary()));
                     }
                 }
             }
