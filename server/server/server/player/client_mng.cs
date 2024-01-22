@@ -7,6 +7,7 @@ using Service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Player
@@ -41,8 +42,9 @@ namespace Player
 
     public class PlayerInfo : IHostingData
     {
-        public UserData info;
-        public long lastTickStrengthTime;
+        private UserData info;
+        private int currentRolrGroup = 101;
+        private long lastTickStrengthTime;
 
         public static string Type()
         {
@@ -51,6 +53,25 @@ namespace Player
 
         public static IHostingData Create()
         {
+            var RoleGroup = new List<RoleGroup>();
+            if (config.Config.RoleCardDeckConfigs.TryGetValue(101, out var roleCardDeckConfig))
+            {
+                var roleList = new List<int>();
+                foreach(var cfg in roleCardDeckConfig)
+                {
+                    if (cfg.ActiveState == 1)
+                    {
+                        roleList.Append(cfg.Id);
+                    }
+                }
+
+                RoleGroup.Add(new RoleGroup()
+                {
+                    CardDeck = 101,
+                    RoleList = roleList,
+                });
+            }
+
             return new PlayerInfo()
             {
                 info = new UserData()
@@ -61,7 +82,7 @@ namespace Player
                         UserGuid = 0,
                     },
                     Strength = 100,
-                    RoleList = new(config.Config.RoleConfigs.Keys),
+                    roleGroup = RoleGroup,
                 },
                 lastTickStrengthTime = Timerservice.Tick
             };
@@ -79,7 +100,7 @@ namespace Player
                         UserGuid = 0,
                     },
                     Strength = 0,
-                    RoleList = new(),
+                    roleGroup = new(),
                 }
             };
 
@@ -89,9 +110,23 @@ namespace Player
 
             info.info.Strength = data.GetValue("Strength").AsInt32;
 
-            foreach (var role in data.GetValue("RoleList").AsBsonArray)
+            foreach (var group in data.GetValue("RoleGroup").AsBsonArray)
             {
-                info.info.RoleList.Add(role.AsInt32);
+                var CardDeck = group.AsBsonDocument.GetValue("CardDeck").AsInt32;
+                var RoleList = group.AsBsonDocument.GetValue("RoleList").AsBsonArray;
+
+                var roleGroup = new RoleGroup()
+                {
+                    CardDeck = CardDeck,
+                    RoleList = new List<int>(),
+                };
+
+                foreach (var role in RoleList)
+                {
+                    roleGroup.RoleList.Add(role.AsInt32);
+                }
+
+                info.info.roleGroup.Add(roleGroup);
             }
 
             if (data.Contains("lastTickStrengthTime"))
@@ -109,9 +144,21 @@ namespace Player
         public BsonDocument Store()
         {
             var roleList = new BsonArray();
-            foreach (var _role in info.RoleList)
+            foreach (var _group in info.roleGroup)
             {
-                roleList.Add(_role);
+                var _roleList = new BsonArray();
+                foreach (var _role in _group.RoleList)
+                {
+                    _roleList.Append(_role);
+                }
+
+                var _RoleGroup = new BsonDocument()
+                {
+                    { "CardDeck", _group.CardDeck },
+                    { "RoleList", _roleList },
+                };
+
+                roleList.Add(_RoleGroup);
             }
 
             var doc = new BsonDocument
@@ -122,6 +169,16 @@ namespace Player
                 { "lastTickStrengthTime", lastTickStrengthTime }
             };
             return doc;
+        }
+
+        public UserData Info()
+        {
+            return info;
+        }
+
+        public List<int> BattleRoleGroup()
+        {
+            return info.roleGroup[currentRolrGroup].RoleList;
         }
 
         public void AddStrength(int _strength)
@@ -171,10 +228,10 @@ namespace Player
 
     public static class AvatarExtensions
     {
-        public static UserData PlayerInfo(this Avatar avatar)
+        public static PlayerInfo PlayerInfo(this Avatar avatar)
         {
             var _data = avatar.get_real_hosting_data<PlayerInfo>();
-            return _data.Data.info;
+            return _data.Data;
         }
     }
 
@@ -306,8 +363,8 @@ namespace Player
         {
             var _avatar = avatarMgr.get_avatar(uuid);
             var info = _avatar.get_real_hosting_data<PlayerInfo>();
-            info.Data.info.User.UserName = nick_name;
-            info.Data.info.User.UserGuid = _avatar.Guid;
+            info.Data.Info().User.UserName = nick_name;
+            info.Data.Info().User.UserGuid = _avatar.Guid;
 
             return _avatar;
         }

@@ -8,7 +8,9 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_1"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100001"
     },
     "100002": {
         "Id": 100002,
@@ -19,7 +21,9 @@
         "Attack": 4,
         "Hp": 3,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_2"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100002"
     },
     "100003": {
         "Id": 100003,
@@ -30,7 +34,9 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_3"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100003"
     },
     "100004": {
         "Id": 100004,
@@ -41,7 +47,9 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 4,
-        "Res": "prefab/Roles/Role_4"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100004"
     },
     "100005": {
         "Id": 100005,
@@ -52,7 +60,9 @@
         "Attack": 8,
         "Hp": 4,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_5"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100005"
     },
     "100006": {
         "Id": 100006,
@@ -63,7 +73,9 @@
         "Attack": 3,
         "Hp": 6,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_6"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100006"
     },
     "100007": {
         "Id": 100007,
@@ -74,7 +86,9 @@
         "Attack": 1,
         "Hp": 1,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_7"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100007"
     },
     "100008": {
         "Id": 100008,
@@ -85,7 +99,9 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_8"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100008"
     },
     "100009": {
         "Id": 100009,
@@ -96,7 +112,9 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_9"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100009"
     },
     "100010": {
         "Id": 100010,
@@ -107,7 +125,9 @@
         "Attack": 2,
         "Hp": 3,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_10"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100010"
     },
     "100011": {
         "Id": 100011,
@@ -118,7 +138,9 @@
         "Attack": 2,
         "Hp": 5,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_11"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100011"
     },
     "100012": {
         "Id": 100012,
@@ -129,7 +151,9 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 8,
-        "Res": "prefab/Roles/Role_12"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100012"
     },
     "100013": {
         "Id": 100013,
@@ -140,7 +164,9 @@
         "Attack": 7,
         "Hp": 10,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_13"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100013"
     },
     "100014": {
         "Id": 100014,
@@ -151,7 +177,9 @@
         "Attack": 3,
         "Hp": 5,
         "Fetters": 8,
-        "Res": "prefab/Roles/Role_14"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100014"
     },
     "100015": {
         "Id": 100015,
@@ -162,7 +190,9 @@
         "Attack": 1,
         "Hp": 7,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_15"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100015"
     },
     "100016": {
         "Id": 100016,
@@ -173,7 +203,9 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_16"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100016"
     },
     "100017": {
         "Id": 100017,
@@ -184,7 +216,9 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_17"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100017"
     },
     "100018": {
         "Id": 100018,
@@ -195,7 +229,9 @@
         "Attack": 4,
         "Hp": 1,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_18"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100018"
     },
     "100019": {
         "Id": 100019,
@@ -206,7 +242,9 @@
         "Attack": 4,
         "Hp": 1,
         "Fetters": 13,
-        "Res": "prefab/Roles/Role_19"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100019"
     },
     "100020": {
         "Id": 100020,
@@ -217,7 +255,9 @@
         "Attack": 6,
         "Hp": 3,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_20"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100020"
     },
     "100021": {
         "Id": 100021,
@@ -228,7 +268,9 @@
         "Attack": 1,
         "Hp": 1,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_21"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100021"
     },
     "100022": {
         "Id": 100022,
@@ -239,7 +281,9 @@
         "Attack": 4,
         "Hp": 4,
         "Fetters": 4,
-        "Res": "prefab/Roles/Role_22"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100022"
     },
     "100023": {
         "Id": 100023,
@@ -250,7 +294,9 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_23"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100023"
     },
     "100024": {
         "Id": 100024,
@@ -261,7 +307,9 @@
         "Attack": 4,
         "Hp": 1,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_24"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100024"
     },
     "100025": {
         "Id": 100025,
@@ -272,7 +320,9 @@
         "Attack": 2,
         "Hp": 8,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_25"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100025"
     },
     "100026": {
         "Id": 100026,
@@ -283,7 +333,9 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_26"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100026"
     },
     "100027": {
         "Id": 100027,
@@ -294,7 +346,9 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_27"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100027"
     },
     "100028": {
         "Id": 100028,
@@ -305,7 +359,9 @@
         "Attack": 3,
         "Hp": 5,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_28"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100028"
     },
     "100029": {
         "Id": 100029,
@@ -316,7 +372,9 @@
         "Attack": 1,
         "Hp": 6,
         "Fetters": 13,
-        "Res": "prefab/Roles/Role_29"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100029"
     },
     "100030": {
         "Id": 100030,
@@ -327,7 +385,9 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 13,
-        "Res": "prefab/Roles/Role_30"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100030"
     },
     "100031": {
         "Id": 100031,
@@ -338,7 +398,9 @@
         "Attack": 1,
         "Hp": 4,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_31"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100031"
     },
     "100032": {
         "Id": 100032,
@@ -349,7 +411,9 @@
         "Attack": 2,
         "Hp": 5,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_32"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100032"
     },
     "100033": {
         "Id": 100033,
@@ -360,7 +424,9 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_33"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100033"
     },
     "100034": {
         "Id": 100034,
@@ -371,7 +437,9 @@
         "Attack": 3,
         "Hp": 3,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_34"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100034"
     },
     "100035": {
         "Id": 100035,
@@ -382,7 +450,9 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_35"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100035"
     },
     "100036": {
         "Id": 100036,
@@ -393,7 +463,9 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_36"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100036"
     },
     "100037": {
         "Id": 100037,
@@ -404,7 +476,9 @@
         "Attack": 2,
         "Hp": 3,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_37"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100037"
     },
     "100038": {
         "Id": 100038,
@@ -415,7 +489,9 @@
         "Attack": 2,
         "Hp": 3,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_38"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100038"
     },
     "100039": {
         "Id": 100039,
@@ -426,7 +502,9 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_39"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100039"
     },
     "100040": {
         "Id": 100040,
@@ -437,7 +515,9 @@
         "Attack": 4,
         "Hp": 7,
         "Fetters": 4,
-        "Res": "prefab/Roles/Role_40"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100040"
     },
     "100041": {
         "Id": 100041,
@@ -448,7 +528,9 @@
         "Attack": 3,
         "Hp": 2,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_41"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100041"
     },
     "100042": {
         "Id": 100042,
@@ -459,7 +541,9 @@
         "Attack": 4,
         "Hp": 6,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_42"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100042"
     },
     "100043": {
         "Id": 100043,
@@ -470,7 +554,9 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 14,
-        "Res": "prefab/Roles/Role_43"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100043"
     },
     "100044": {
         "Id": 100044,
@@ -481,7 +567,9 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_44"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100044"
     },
     "100045": {
         "Id": 100045,
@@ -492,7 +580,9 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_45"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100045"
     },
     "100046": {
         "Id": 100046,
@@ -503,7 +593,9 @@
         "Attack": 4,
         "Hp": 4,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_46"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100046"
     },
     "100047": {
         "Id": 100047,
@@ -514,7 +606,9 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_47"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100047"
     },
     "100048": {
         "Id": 100048,
@@ -525,7 +619,9 @@
         "Attack": 2,
         "Hp": 5,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_48"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100048"
     },
     "100049": {
         "Id": 100049,
@@ -536,7 +632,9 @@
         "Attack": 3,
         "Hp": 2,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_49"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100049"
     },
     "100050": {
         "Id": 100050,
@@ -547,7 +645,9 @@
         "Attack": 3,
         "Hp": 4,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_50"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100050"
     },
     "100051": {
         "Id": 100051,
@@ -558,7 +658,9 @@
         "Attack": 6,
         "Hp": 4,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_51"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100051"
     },
     "100052": {
         "Id": 100052,
@@ -569,7 +671,9 @@
         "Attack": 1,
         "Hp": 1,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_52"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100052"
     },
     "100053": {
         "Id": 100053,
@@ -580,7 +684,9 @@
         "Attack": 5,
         "Hp": 5,
         "Fetters": 14,
-        "Res": "prefab/Roles/Role_53"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100053"
     },
     "100054": {
         "Id": 100054,
@@ -591,6 +697,8 @@
         "Attack": 3,
         "Hp": 3,
         "Fetters": 14,
-        "Res": "prefab/Roles/Role_54"
+        "CardDeck": 101,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100054"
     }
 }
