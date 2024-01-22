@@ -120,6 +120,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
                     newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
+                    console.log("props id:"+props[i].PropID)
                     newNode.getComponent(PropIcon).Init(props[i].PropID,PropsType.Food,props[i].IsFreeze);
                     this.shopProps.push(newNode);
                 }
