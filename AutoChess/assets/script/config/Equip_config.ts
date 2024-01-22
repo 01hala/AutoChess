@@ -51,6 +51,7 @@ export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
                 equipc.HpBonus = v["HpBonus"];
 
                 let value =v["Value"];
+                console.log("value:", value);
                 let vs:string[]=value.split('|');
                 let v1:number[]=[];
                 for(let s of vs)

@@ -165,7 +165,7 @@ namespace Player
             {
                 { "User", new BsonDocument { {"UserName", info.User.UserName}, { "UserUid", info.User.UserGuid} } },
                 { "Strength", info.Strength },
-                { "RoleList",  roleList },
+                { "RoleGroup",  roleList },
                 { "lastTickStrengthTime", lastTickStrengthTime }
             };
             return doc;
