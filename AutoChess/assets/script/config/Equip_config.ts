@@ -22,7 +22,7 @@ export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
     return new Promise<Map<number, EquipConfig>>((resolve, reject)=>
     {
         let map =new Map<number, EquipConfig>();
-
+        console.log("Load Equips Config begin!");
         resources.load('config/Equip', (err: any, res: JsonAsset) => {
             if (err) {
                 error(err.message || err);
@@ -50,7 +50,7 @@ export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
                 equipc.AttackBonus= v["AttackBonus"];
                 equipc.HpBonus = v["HpBonus"];
 
-                let value =v["Vaule"];
+                let value =v["Value"];
                 let vs:string[]=value.split('|');
                 let v1:number[]=[];
                 for(let s of vs)
@@ -59,9 +59,11 @@ export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
                 }
 
                 map.set(parseInt(k), equipc);
+                console.log("Load Equips Config End!");
             });
-        })
 
+            resolve(map);
+        });
     });
 
 }

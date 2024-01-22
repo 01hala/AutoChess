@@ -46,9 +46,9 @@ export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
 
                 map.set(parseInt(k), rolec);
             });
-        });
 
-        console.log("Load Role Config end!");
-        resolve(map);
+            console.log("Load Role Config end!");
+            resolve(map);
+        });
     });
 }

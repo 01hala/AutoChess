@@ -37,9 +37,9 @@ export async function LoadBufferConfig() : Promise<Map<number, BufferConfig>> {
 
                 map.set(parseInt(k), bufferc);
             });
-        });
 
-        console.log("Load Buffer Config end!");
-        resolve(map);
+            console.log("Load Buffer Config end!");
+            resolve(map);
+        });
     });
 }

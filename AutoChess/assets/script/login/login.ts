@@ -114,8 +114,9 @@ export class login extends Component {
         });
     }
 
-    async start() {
+    async start() {  
         await config.config.load();
+        console.log("login start!");
 
         this._loading = new load.Loading();
         this._setProgress = this._loading.load(this.bk.node);
@@ -191,10 +192,18 @@ export class login extends Component {
         }
 
         this.netNode.on("connect", (e)=>{
+            console.log("on net connect!");
+
             this._progress += 0.1;
             this._setProgress(this._progress);
             this.wxLogin();
         });
+
+        if (singleton.netSingleton.is_conn_gate) {
+            this._progress += 0.1;
+            this._setProgress(this._progress);
+            this.wxLogin();
+        }
     }
 
     update(deltaTime: number) {

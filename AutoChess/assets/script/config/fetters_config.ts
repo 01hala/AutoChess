@@ -76,9 +76,9 @@ export async function LoadFettersConfig() : Promise<Map<number, FettersConfig>> 
 
                 map.set(parseInt(k), fettersc);
             });
-        })
 
-        console.log("Load Fetters Config end!");
-        resolve(map);
+            console.log("Load Fetters Config end!");
+            resolve(map);
+        });
     });
 }
