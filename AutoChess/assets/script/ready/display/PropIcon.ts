@@ -151,7 +151,7 @@ export class PropIcon extends Component
                 this.node.on(Button.EventType.CLICK,()=>
                 {
                     singleton.netSingleton.ready.infoPanel.active=true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenSimple(this.propId,this.propType);
                 });
                 this.OffTirrger();
                 //隐藏冻结栏
@@ -261,7 +261,7 @@ export class PropIcon extends Component
             this.node.on(Button.EventType.CLICK,()=>
             {
                 singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenSimple(this.propId,this.propType);
             });
         }
         else

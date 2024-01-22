@@ -25,12 +25,19 @@ export class MainInterface
 
     private btnListSwitch:boolean=false;
 
+    public infoPanel:Node;
+
     async start(father:Node)
     {
         this.father=father;
         let panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface") as Prefab;
         this.mainNode=instantiate(panel);
         this.father.addChild(this.mainNode);
+
+        panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "Information") as Prefab;
+        this.infoPanel=instantiate(panel);
+        this.infoPanel.setParent(this.mainNode);
+        this.infoPanel.active=false;
 
         this.mainPanel=this.mainNode.getChildByPath("MainPanel")
         this.startGamePanel=this.mainNode.getChildByPath("StartGamePanel");

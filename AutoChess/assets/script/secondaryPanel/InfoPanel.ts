@@ -6,44 +6,60 @@ const { ccclass, property } = _decorator;
 export class InfoPanel extends Component 
 {
     private exitBtn:Button;
-    private infoLabel:Label;
-    private sculpture:Sprite;
+    private simpleInfoLabel:Label;
+    private simpleSculpture:Sprite;
+
+    private simpleBoard:Node;
+    private detailedPanel:Node;
 
     onLoad()
     {
         this.node.getComponent(BlockInputEvents).enabled=false;
         this.exitBtn=this.node.getChildByPath("InfoBoard/Exit_Btn").getComponent(Button);
-        this.exitBtn.node.on(Button.EventType.CLICK,()=>
-        {
-            this.Exit();
-        });
-
-        this.infoLabel=this.node.getChildByPath("InfoBoard/RoleIntroduce").getComponent(Label);
-        this.sculpture=this.node.getChildByPath("InfoBoard/Sculpture/Sprite").getComponent(Sprite);
+        
+        this.simpleInfoLabel=this.node.getChildByPath("InfoBoard/Simple/RoleIntroduce").getComponent(Label);
+        this.simpleSculpture=this.node.getChildByPath("InfoBoard/Simple/Sculpture/Sprite").getComponent(Sprite);
+        this.simpleBoard=this.node.getChildByPath("Simple");
+        this.detailedPanel=this.node.getChildByPath("Detailed");
 
     }
 
     start() 
     {
+        this.simpleBoard.active=false;
+        this.detailedPanel.active=false;
 
+        this.exitBtn.node.on(Button.EventType.CLICK,()=>
+        {
+            this.Exit();
+        });
+
+        this.simpleBoard.on(Button.EventType.CLICK,()=>
+        {
+            this.Exit();
+        },this);
     }
     
-    Open(id:number,propType?:PropsType)
+    OpenSimple(id:number,propType?:PropsType)
     {
+
         if(null!=propType)
         {
 
         }
         else
         {
+            this.simpleBoard.active=true;
             this.node.setSiblingIndex(99);
             this.node.getComponent(BlockInputEvents).enabled=true;
-            this.infoLabel.string="角色ID:"+id;
+            this.simpleInfoLabel.string="角色ID:"+id;
         }
     }
 
     Exit()
     {
+        this.simpleBoard.active=false;
+        this.detailedPanel.active=false;
         this.node.getComponent(BlockInputEvents).enabled=false;
         this.node.active=false;
     }

@@ -3,6 +3,7 @@ import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../config/config';
 import { loadAssets } from '../bundle/LoadAsset';
+import { RoleCard } from './RoleCard';
 const { ccclass, property } = _decorator;
 
 @ccclass('StorePanel')
@@ -139,13 +140,15 @@ export class StorePanel extends Component
                 jconfig=config.RoleConfig.get(i);
                 if(jconfig!=null)
                 {
-                    let path="Avatar/Role_"+i;
-                    let img=await loadAssets.LoadImg(path);
+                    // let path="Avatar/Role_"+i;
+                    // let img=await loadAssets.LoadImg(path);
                     let card=instantiate(cardPre);
-                    if(img)
-                    {
-                        card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
-                    }
+                    card.getComponent(RoleCard).storePanel=this.node;
+                    card.getComponent(RoleCard).roleId=i;
+                    // if(img)
+                    // {
+                    //     card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
+                    // }
                     this.cardListPage.addChild(card);
                     if(i%8==0)
                     {
