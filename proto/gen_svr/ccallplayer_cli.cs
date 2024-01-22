@@ -389,11 +389,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<Int32, Bag> on_buy_card_merge_cb;
+        public event Action<Int32, UserData> on_buy_card_merge_cb;
         public event Action<Int32> on_buy_card_merge_err;
         public event Action on_buy_card_merge_timeout;
 
-        public player_shop_buy_card_merge_cb callBack(Action<Int32, Bag> cb, Action<Int32> err)
+        public player_shop_buy_card_merge_cb callBack(Action<Int32, UserData> cb, Action<Int32> err)
         {
             on_buy_card_merge_cb += cb;
             on_buy_card_merge_err += err;
@@ -408,11 +408,11 @@ namespace Abelkhan
             on_buy_card_merge_timeout += timeout_cb;
         }
 
-        public void call_cb(Int32 roleID, Bag infoBag)
+        public void call_cb(Int32 roleID, UserData info)
         {
             if (on_buy_card_merge_cb != null)
             {
-                on_buy_card_merge_cb(roleID, infoBag);
+                on_buy_card_merge_cb(roleID, info);
             }
         }
 
@@ -490,11 +490,11 @@ namespace Abelkhan
         public void buy_card_merge_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _roleID = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            var _infoBag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
             var rsp = try_get_and_del_buy_card_merge_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_roleID, _infoBag);
+                rsp.call_cb(_roleID, _info);
             }
         }
 

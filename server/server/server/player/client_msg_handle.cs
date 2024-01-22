@@ -78,7 +78,7 @@ namespace Player
                 else
                 {
                     _data.write_back();
-                    rsp.rsp(_roleID, _data.Data.Info().bag);
+                    rsp.rsp(_roleID, _data.Data.Info());
                 }
             }
             catch (System.Exception ex)

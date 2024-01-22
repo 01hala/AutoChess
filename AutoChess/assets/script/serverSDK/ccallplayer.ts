@@ -269,7 +269,7 @@ export class player_shop_buy_card_merge_cb{
     private cb_uuid : number;
     private module_rsp_cb : player_shop_rsp_cb;
 
-    public event_buy_card_merge_handle_cb : (roleID:number, infoBag:common.Bag)=>void | null;
+    public event_buy_card_merge_handle_cb : (roleID:number, info:common.UserData)=>void | null;
     public event_buy_card_merge_handle_err : (err:number)=>void | null;
     public event_buy_card_merge_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : player_shop_rsp_cb){
@@ -280,7 +280,7 @@ export class player_shop_buy_card_merge_cb{
         this.event_buy_card_merge_handle_timeout = null;
     }
 
-    callBack(_cb:(roleID:number, infoBag:common.Bag)=>void, _err:(err:number)=>void)
+    callBack(_cb:(roleID:number, info:common.UserData)=>void, _err:(err:number)=>void)
     {
         this.event_buy_card_merge_handle_cb = _cb;
         this.event_buy_card_merge_handle_err = _err;
@@ -348,7 +348,7 @@ export class player_shop_rsp_cb extends client_handle.imodule {
         let uuid = inArray[0];
         let _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586:any[] = [];
         _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.push(inArray[1]);
-        _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.push(common.protcol_to_Bag(inArray[2]));
+        _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.push(common.protcol_to_UserData(inArray[2]));
         var rsp = this.try_get_and_del_buy_card_merge_cb(uuid);
         if (rsp && rsp.event_buy_card_merge_handle_cb) {
             rsp.event_buy_card_merge_handle_cb.apply(null, _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586);
