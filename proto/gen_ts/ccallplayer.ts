@@ -3,6 +3,33 @@ import * as common from "./common";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
 /*this struct code is codegen by abelkhan codegen for typescript*/
+export class CardPacket
+{
+    public ItemList : common.RoleCardInfo[] = [];
+
+}
+
+export function CardPacket_to_protcol(_struct:CardPacket){
+    return _struct;
+}
+
+export function protcol_to_CardPacket(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new CardPacket();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "ItemList"){
+            _struct.ItemList = [];
+            for(let v_ of val as any) {
+                _struct.ItemList.push(common.protcol_to_RoleCardInfo(v_));
+            }
+        }
+    }
+    return _struct;
+}
+
 /*this caller code is codegen by abelkhan codegen for typescript*/
 export class player_login_player_login_cb{
     private cb_uuid : number;
@@ -205,6 +232,209 @@ export class player_login_hubproxy
             rsp_cb_player_login_handle.map_create_role.set(uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21, cb_create_role_obj);
         }
         return cb_create_role_obj;
+    }
+
+}
+export class player_shop_buy_card_packet_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : player_shop_rsp_cb;
+
+    public event_buy_card_packet_handle_cb : (infoCardPacket:CardPacket, infoBag:common.Bag)=>void | null;
+    public event_buy_card_packet_handle_err : (err:number)=>void | null;
+    public event_buy_card_packet_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : player_shop_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_buy_card_packet_handle_cb = null;
+        this.event_buy_card_packet_handle_err = null;
+        this.event_buy_card_packet_handle_timeout = null;
+    }
+
+    callBack(_cb:(infoCardPacket:CardPacket, infoBag:common.Bag)=>void, _err:(err:number)=>void)
+    {
+        this.event_buy_card_packet_handle_cb = _cb;
+        this.event_buy_card_packet_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.buy_card_packet_timeout(this.cb_uuid); }, tick);
+        this.event_buy_card_packet_handle_timeout = timeout_cb;
+    }
+
+}
+
+export class player_shop_buy_card_merge_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : player_shop_rsp_cb;
+
+    public event_buy_card_merge_handle_cb : (roleID:number, info:common.UserData)=>void | null;
+    public event_buy_card_merge_handle_err : (err:number)=>void | null;
+    public event_buy_card_merge_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : player_shop_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_buy_card_merge_handle_cb = null;
+        this.event_buy_card_merge_handle_err = null;
+        this.event_buy_card_merge_handle_timeout = null;
+    }
+
+    callBack(_cb:(roleID:number, info:common.UserData)=>void, _err:(err:number)=>void)
+    {
+        this.event_buy_card_merge_handle_cb = _cb;
+        this.event_buy_card_merge_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.buy_card_merge_timeout(this.cb_uuid); }, tick);
+        this.event_buy_card_merge_handle_timeout = timeout_cb;
+    }
+
+}
+
+/*this cb code is codegen by abelkhan for ts*/
+export class player_shop_rsp_cb extends client_handle.imodule {
+    public map_buy_card_packet:Map<number, player_shop_buy_card_packet_cb>;
+    public map_buy_card_merge:Map<number, player_shop_buy_card_merge_cb>;
+    constructor(modules:client_handle.modulemng){
+        super();
+        this.map_buy_card_packet = new Map<number, player_shop_buy_card_packet_cb>();
+        modules.add_method("player_shop_rsp_cb_buy_card_packet_rsp", this.buy_card_packet_rsp.bind(this));
+        modules.add_method("player_shop_rsp_cb_buy_card_packet_err", this.buy_card_packet_err.bind(this));
+        this.map_buy_card_merge = new Map<number, player_shop_buy_card_merge_cb>();
+        modules.add_method("player_shop_rsp_cb_buy_card_merge_rsp", this.buy_card_merge_rsp.bind(this));
+        modules.add_method("player_shop_rsp_cb_buy_card_merge_err", this.buy_card_merge_err.bind(this));
+    }
+    public buy_card_packet_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f:any[] = [];
+        _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.push(protcol_to_CardPacket(inArray[1]));
+        _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.push(common.protcol_to_Bag(inArray[2]));
+        var rsp = this.try_get_and_del_buy_card_packet_cb(uuid);
+        if (rsp && rsp.event_buy_card_packet_handle_cb) {
+            rsp.event_buy_card_packet_handle_cb.apply(null, _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f);
+        }
+    }
+
+    public buy_card_packet_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f:any[] = [];
+        _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.push(inArray[1]);
+        var rsp = this.try_get_and_del_buy_card_packet_cb(uuid);
+        if (rsp && rsp.event_buy_card_packet_handle_err) {
+            rsp.event_buy_card_packet_handle_err.apply(null, _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f);
+        }
+    }
+
+    public buy_card_packet_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_buy_card_packet_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_buy_card_packet_handle_timeout) {
+                rsp.event_buy_card_packet_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_buy_card_packet_cb(uuid : number){
+        var rsp = this.map_buy_card_packet.get(uuid);
+        this.map_buy_card_packet.delete(uuid);
+        return rsp;
+    }
+
+    public buy_card_merge_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586:any[] = [];
+        _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.push(inArray[1]);
+        _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.push(common.protcol_to_UserData(inArray[2]));
+        var rsp = this.try_get_and_del_buy_card_merge_cb(uuid);
+        if (rsp && rsp.event_buy_card_merge_handle_cb) {
+            rsp.event_buy_card_merge_handle_cb.apply(null, _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586);
+        }
+    }
+
+    public buy_card_merge_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586:any[] = [];
+        _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.push(inArray[1]);
+        var rsp = this.try_get_and_del_buy_card_merge_cb(uuid);
+        if (rsp && rsp.event_buy_card_merge_handle_err) {
+            rsp.event_buy_card_merge_handle_err.apply(null, _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586);
+        }
+    }
+
+    public buy_card_merge_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_buy_card_merge_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_buy_card_merge_handle_timeout) {
+                rsp.event_buy_card_merge_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_buy_card_merge_cb(uuid : number){
+        var rsp = this.map_buy_card_merge.get(uuid);
+        this.map_buy_card_merge.delete(uuid);
+        return rsp;
+    }
+
+}
+
+let rsp_cb_player_shop_handle : player_shop_rsp_cb | null = null;
+export class player_shop_caller {
+    private _hubproxy:player_shop_hubproxy;
+    constructor(_client:client_handle.client){
+        if (rsp_cb_player_shop_handle == null){
+            rsp_cb_player_shop_handle = new player_shop_rsp_cb(_client._modulemng);
+        }
+        this._hubproxy = new player_shop_hubproxy(_client);
+    }
+
+    public get_hub(hub_name:string)
+    {
+        this._hubproxy.hub_name_77f83686_46a0_3ea6_923e_63294a905f09 = hub_name;
+        return this._hubproxy;
+    }
+
+}
+
+export class player_shop_hubproxy
+{
+    private uuid_77f83686_46a0_3ea6_923e_63294a905f09 : number = Math.round(Math.random() * 1000);
+
+    public hub_name_77f83686_46a0_3ea6_923e_63294a905f09:string;
+    private _client_handle:client_handle.client;
+
+    constructor(client_handle_:client_handle.client)
+    {
+        this._client_handle = client_handle_;
+    }
+
+    public buy_card_packet(){
+        let uuid_d332a5dd_6b0d_5825_a53a_071dbd10b6a4 = Math.round(this.uuid_77f83686_46a0_3ea6_923e_63294a905f09++);
+
+        let _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f:any[] = [uuid_d332a5dd_6b0d_5825_a53a_071dbd10b6a4];
+        this._client_handle.call_hub(this.hub_name_77f83686_46a0_3ea6_923e_63294a905f09, "player_shop_buy_card_packet", _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f);
+        let cb_buy_card_packet_obj = new player_shop_buy_card_packet_cb(uuid_d332a5dd_6b0d_5825_a53a_071dbd10b6a4, rsp_cb_player_shop_handle);
+        if (rsp_cb_player_shop_handle){
+            rsp_cb_player_shop_handle.map_buy_card_packet.set(uuid_d332a5dd_6b0d_5825_a53a_071dbd10b6a4, cb_buy_card_packet_obj);
+        }
+        return cb_buy_card_packet_obj;
+    }
+
+    public buy_card_merge(roleID:number){
+        let uuid_18eed6ca_7674_52e6_b275_3f39b727fbfa = Math.round(this.uuid_77f83686_46a0_3ea6_923e_63294a905f09++);
+
+        let _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586:any[] = [uuid_18eed6ca_7674_52e6_b275_3f39b727fbfa];
+        _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.push(roleID);
+        this._client_handle.call_hub(this.hub_name_77f83686_46a0_3ea6_923e_63294a905f09, "player_shop_buy_card_merge", _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586);
+        let cb_buy_card_merge_obj = new player_shop_buy_card_merge_cb(uuid_18eed6ca_7674_52e6_b275_3f39b727fbfa, rsp_cb_player_shop_handle);
+        if (rsp_cb_player_shop_handle){
+            rsp_cb_player_shop_handle.map_buy_card_merge.set(uuid_18eed6ca_7674_52e6_b275_3f39b727fbfa, cb_buy_card_merge_obj);
+        }
+        return cb_buy_card_merge_obj;
     }
 
 }

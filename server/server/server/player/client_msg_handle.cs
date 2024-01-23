@@ -6,6 +6,7 @@ using System;
 using MsgPack.Serialization;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Player
 {
@@ -13,15 +14,78 @@ namespace Player
     {
         private readonly player_login_module player_login_Module;
         private readonly player_battle_module player_battle_Module;
+        private readonly player_shop_module player_shop_Module;
 
         public client_msg_handle()
         {
-            player_login_Module = new ();
+            player_login_Module = new();
             player_login_Module.on_player_login += Login_Player_Module_on_player_login;
             player_login_Module.on_create_role += Player_login_Module_on_create_role;
 
-            player_battle_Module = new ();
+            player_battle_Module = new();
             player_battle_Module.on_start_battle += Player_battle_Module_on_start_battle;
+
+            player_shop_Module = new();
+            player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
+            player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
+        }
+
+        private async void Player_shop_Module_on_buy_card_packet()
+        {
+            Log.Log.trace("on_bug_role begin!");
+
+            var rsp = player_shop_Module.rsp as player_shop_buy_card_packet_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var (err, packet) = _data.Data.BuyCardPacket();
+                if (err != 0)
+                {
+                    rsp.err((int)err);
+                }
+                else
+                {
+                    _data.write_back();
+                    rsp.rsp(packet, _data.Data.Info().bag);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_shop_Module_on_buy_card_packet err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
+        }
+
+        private async void Player_shop_Module_on_buy_card_merge(int _roleID)
+        {
+            Log.Log.trace("on_bug_role begin!");
+
+            var rsp = player_shop_Module.rsp as player_shop_buy_card_merge_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var err = _data.Data.BuyCardMerge(_roleID);
+                if (err != 0)
+                {
+                    rsp.err((int)err);
+                }
+                else
+                {
+                    _data.write_back();
+                    rsp.rsp(_roleID, _data.Data.Info());
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_shop_Module_on_buy_card_merge err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Player_battle_Module_on_start_battle()
@@ -42,7 +106,8 @@ namespace Player
             }
             catch (System.Exception ex)
             {
-                Log.Log.err($"{ex}");
+                Log.Log.err($"Player_battle_Module_on_start_battle: err{ex}");
+                rsp.err((int)em_error.db_error);
             }
         }
 
@@ -65,7 +130,8 @@ namespace Player
             }
             catch (System.Exception ex)
             {
-                Log.Log.err($"{ex}");
+                Log.Log.err($"Player_login_Module_on_create_role err:{ex}");
+                rsp.err((int)em_error.db_error);
             }
         }
 

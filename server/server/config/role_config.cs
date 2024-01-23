@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using System.Diagnostics;
 
 namespace config
 {
@@ -16,26 +17,26 @@ namespace config
         public int Attack;
         public int Hp;
         public int Fetters;
-        public int CardDeck;
+        public int Grade;
         public int ActiveState;
         public string Res;
 
-        public static Dictionary<int, List<RoleConfig> > LoadCardDeck(Dictionary<int, RoleConfig> cfg)
+        public static Dictionary<int, List<RoleConfig>> LoadGrade(Dictionary<int, RoleConfig> cfg)
         {
-            var cardDeck = new Dictionary<int, List<RoleConfig>>();
+            var grade = new Dictionary<int, List<RoleConfig>>();
 
             foreach (var r in cfg.Values)
             {
-                if (!cardDeck.TryGetValue(r.CardDeck, out List<RoleConfig> roles))
+                if (!grade.TryGetValue(r.Grade, out List<RoleConfig> roles))
                 {
                     roles = new List<RoleConfig>();
-                    cardDeck[r.CardDeck] = roles;
+                    grade[r.Grade] = roles;
                 }
 
                 roles.Add(r);
             }
 
-            return cardDeck;
+            return grade;
         }
 
         public static Dictionary<int, List<RoleConfig> > LoadStage(Dictionary<int, RoleConfig> cfg)
@@ -87,7 +88,7 @@ namespace config
                 rolec.Attack = (int)o["Attack"];
                 rolec.Hp = (int)o["Hp"];
                 rolec.Fetters = (int)o["Fetters"];
-                rolec.CardDeck = (int)o["CardDeck"];
+                rolec.Grade = (int)o["Grade"]; 
                 rolec.ActiveState = (int)o["ActiveState"];
                 rolec.Res = (string)o["Res"];
 

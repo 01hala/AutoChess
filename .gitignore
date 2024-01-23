@@ -419,7 +419,7 @@ node_modules/
 # WebStorm
 #//////////////////////////
 .idea/
-
+*.zip
 .build
 lib
 lib_debug
