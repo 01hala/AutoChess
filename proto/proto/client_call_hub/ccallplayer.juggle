@@ -12,6 +12,8 @@ struct CardPacket {
 module player_shop {
     buy_card_packet req() rsp(CardPacket infoCardPacket, Bag infoBag) err(int32 err);
 	buy_card_merge req(int32 roleID) rsp(int32 roleID, UserData info) err(int32 err);
+
+	edit_role_group req(RoleGroup roleGroup) rsp(UserData info) err(int32 err);
 }
 
 module player_battle {

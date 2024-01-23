@@ -295,10 +295,41 @@ export class player_shop_buy_card_merge_cb{
 
 }
 
+export class player_shop_edit_role_group_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : player_shop_rsp_cb;
+
+    public event_edit_role_group_handle_cb : (info:common.UserData)=>void | null;
+    public event_edit_role_group_handle_err : (err:number)=>void | null;
+    public event_edit_role_group_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : player_shop_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_edit_role_group_handle_cb = null;
+        this.event_edit_role_group_handle_err = null;
+        this.event_edit_role_group_handle_timeout = null;
+    }
+
+    callBack(_cb:(info:common.UserData)=>void, _err:(err:number)=>void)
+    {
+        this.event_edit_role_group_handle_cb = _cb;
+        this.event_edit_role_group_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.edit_role_group_timeout(this.cb_uuid); }, tick);
+        this.event_edit_role_group_handle_timeout = timeout_cb;
+    }
+
+}
+
 /*this cb code is codegen by abelkhan for ts*/
 export class player_shop_rsp_cb extends client_handle.imodule {
     public map_buy_card_packet:Map<number, player_shop_buy_card_packet_cb>;
     public map_buy_card_merge:Map<number, player_shop_buy_card_merge_cb>;
+    public map_edit_role_group:Map<number, player_shop_edit_role_group_cb>;
     constructor(modules:client_handle.modulemng){
         super();
         this.map_buy_card_packet = new Map<number, player_shop_buy_card_packet_cb>();
@@ -307,6 +338,9 @@ export class player_shop_rsp_cb extends client_handle.imodule {
         this.map_buy_card_merge = new Map<number, player_shop_buy_card_merge_cb>();
         modules.add_method("player_shop_rsp_cb_buy_card_merge_rsp", this.buy_card_merge_rsp.bind(this));
         modules.add_method("player_shop_rsp_cb_buy_card_merge_err", this.buy_card_merge_err.bind(this));
+        this.map_edit_role_group = new Map<number, player_shop_edit_role_group_cb>();
+        modules.add_method("player_shop_rsp_cb_edit_role_group_rsp", this.edit_role_group_rsp.bind(this));
+        modules.add_method("player_shop_rsp_cb_edit_role_group_err", this.edit_role_group_err.bind(this));
     }
     public buy_card_packet_rsp(inArray:any[]){
         let uuid = inArray[0];
@@ -380,6 +414,41 @@ export class player_shop_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public edit_role_group_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_f4590bd7_2111_3754_bf86_154d25227f01:any[] = [];
+        _argv_f4590bd7_2111_3754_bf86_154d25227f01.push(common.protcol_to_UserData(inArray[1]));
+        var rsp = this.try_get_and_del_edit_role_group_cb(uuid);
+        if (rsp && rsp.event_edit_role_group_handle_cb) {
+            rsp.event_edit_role_group_handle_cb.apply(null, _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+        }
+    }
+
+    public edit_role_group_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_f4590bd7_2111_3754_bf86_154d25227f01:any[] = [];
+        _argv_f4590bd7_2111_3754_bf86_154d25227f01.push(inArray[1]);
+        var rsp = this.try_get_and_del_edit_role_group_cb(uuid);
+        if (rsp && rsp.event_edit_role_group_handle_err) {
+            rsp.event_edit_role_group_handle_err.apply(null, _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+        }
+    }
+
+    public edit_role_group_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_edit_role_group_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_edit_role_group_handle_timeout) {
+                rsp.event_edit_role_group_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_edit_role_group_cb(uuid : number){
+        var rsp = this.map_edit_role_group.get(uuid);
+        this.map_edit_role_group.delete(uuid);
+        return rsp;
+    }
+
 }
 
 let rsp_cb_player_shop_handle : player_shop_rsp_cb | null = null;
@@ -435,6 +504,19 @@ export class player_shop_hubproxy
             rsp_cb_player_shop_handle.map_buy_card_merge.set(uuid_18eed6ca_7674_52e6_b275_3f39b727fbfa, cb_buy_card_merge_obj);
         }
         return cb_buy_card_merge_obj;
+    }
+
+    public edit_role_group(roleGroup:common.RoleGroup){
+        let uuid_fb4329da_a395_54e4_805b_3c8e1c458077 = Math.round(this.uuid_77f83686_46a0_3ea6_923e_63294a905f09++);
+
+        let _argv_f4590bd7_2111_3754_bf86_154d25227f01:any[] = [uuid_fb4329da_a395_54e4_805b_3c8e1c458077];
+        _argv_f4590bd7_2111_3754_bf86_154d25227f01.push(common.RoleGroup_to_protcol(roleGroup));
+        this._client_handle.call_hub(this.hub_name_77f83686_46a0_3ea6_923e_63294a905f09, "player_shop_edit_role_group", _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+        let cb_edit_role_group_obj = new player_shop_edit_role_group_cb(uuid_fb4329da_a395_54e4_805b_3c8e1c458077, rsp_cb_player_shop_handle);
+        if (rsp_cb_player_shop_handle){
+            rsp_cb_player_shop_handle.map_edit_role_group.set(uuid_fb4329da_a395_54e4_805b_3c8e1c458077, cb_edit_role_group_obj);
+        }
+        return cb_edit_role_group_obj;
     }
 
 }

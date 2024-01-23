@@ -235,6 +235,7 @@ namespace Abelkhan
         public Int32 Strength;
         public Int32 gold;
         public Bag bag;
+        public List<Int32> RoleList;
         public List<RoleGroup> roleGroup;
         public static MsgPack.MessagePackObjectDictionary UserData_to_protcol(UserData _struct){
         if (_struct == null) {
@@ -246,6 +247,13 @@ namespace Abelkhan
             _protocol.Add("Strength", _struct.Strength);
             _protocol.Add("gold", _struct.gold);
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
+            if (_struct.RoleList != null) {
+                var _array_RoleList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.RoleList){
+                    _array_RoleList.Add(v_);
+                }
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
+            }
             if (_struct.roleGroup != null) {
                 var _array_roleGroup = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.roleGroup){
@@ -273,6 +281,13 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "roleGroup"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.roleGroup = new List<RoleGroup>();

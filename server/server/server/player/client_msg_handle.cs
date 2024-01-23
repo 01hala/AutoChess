@@ -28,11 +28,41 @@ namespace Player
             player_shop_Module = new();
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
+            player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
+        }
+
+        private async void Player_shop_Module_on_edit_role_group(RoleGroup _group)
+        {
+            Log.Log.trace("on_edit_role_group begin!");
+
+            var rsp = player_shop_Module.rsp as player_shop_edit_role_group_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var err = _data.Data.EditRoleGroup(_group);
+                if (err != 0)
+                {
+                    rsp.err((int)err);
+                }
+                else
+                {
+                    _data.write_back();
+                    rsp.rsp(_data.Data.Info());
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_shop_Module_on_edit_role_group err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Player_shop_Module_on_buy_card_packet()
         {
-            Log.Log.trace("on_bug_role begin!");
+            Log.Log.trace("on_buy_card_packet begin!");
 
             var rsp = player_shop_Module.rsp as player_shop_buy_card_packet_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -61,7 +91,7 @@ namespace Player
 
         private async void Player_shop_Module_on_buy_card_merge(int _roleID)
         {
-            Log.Log.trace("on_bug_role begin!");
+            Log.Log.trace("on_buy_card_merge begin!");
 
             var rsp = player_shop_Module.rsp as player_shop_buy_card_merge_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;

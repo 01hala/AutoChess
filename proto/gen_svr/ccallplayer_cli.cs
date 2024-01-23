@@ -434,10 +434,67 @@ namespace Abelkhan
 
     }
 
+    public class player_shop_edit_role_group_cb
+    {
+        private UInt64 cb_uuid;
+        private player_shop_rsp_cb module_rsp_cb;
+
+        public player_shop_edit_role_group_cb(UInt64 _cb_uuid, player_shop_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action<UserData> on_edit_role_group_cb;
+        public event Action<Int32> on_edit_role_group_err;
+        public event Action on_edit_role_group_timeout;
+
+        public player_shop_edit_role_group_cb callBack(Action<UserData> cb, Action<Int32> err)
+        {
+            on_edit_role_group_cb += cb;
+            on_edit_role_group_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.edit_role_group_timeout(cb_uuid);
+            });
+            on_edit_role_group_timeout += timeout_cb;
+        }
+
+        public void call_cb(UserData info)
+        {
+            if (on_edit_role_group_cb != null)
+            {
+                on_edit_role_group_cb(info);
+            }
+        }
+
+        public void call_err(Int32 err)
+        {
+            if (on_edit_role_group_err != null)
+            {
+                on_edit_role_group_err(err);
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_edit_role_group_timeout != null)
+            {
+                on_edit_role_group_timeout();
+            }
+        }
+
+    }
+
 /*this cb code is codegen by abelkhan for c#*/
     public class player_shop_rsp_cb : Common.IModule {
         public Dictionary<UInt64, player_shop_buy_card_packet_cb> map_buy_card_packet;
         public Dictionary<UInt64, player_shop_buy_card_merge_cb> map_buy_card_merge;
+        public Dictionary<UInt64, player_shop_edit_role_group_cb> map_edit_role_group;
         public player_shop_rsp_cb(Common.ModuleManager modules)
         {
             map_buy_card_packet = new Dictionary<UInt64, player_shop_buy_card_packet_cb>();
@@ -446,6 +503,9 @@ namespace Abelkhan
             map_buy_card_merge = new Dictionary<UInt64, player_shop_buy_card_merge_cb>();
             modules.add_mothed("player_shop_rsp_cb_buy_card_merge_rsp", buy_card_merge_rsp);
             modules.add_mothed("player_shop_rsp_cb_buy_card_merge_err", buy_card_merge_err);
+            map_edit_role_group = new Dictionary<UInt64, player_shop_edit_role_group_cb>();
+            modules.add_mothed("player_shop_rsp_cb_edit_role_group_rsp", edit_role_group_rsp);
+            modules.add_mothed("player_shop_rsp_cb_edit_role_group_err", edit_role_group_err);
         }
 
         public void buy_card_packet_rsp(IList<MsgPack.MessagePackObject> inArray){
@@ -526,6 +586,44 @@ namespace Abelkhan
             }
         }
 
+        public void edit_role_group_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var rsp = try_get_and_del_edit_role_group_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb(_info);
+            }
+        }
+
+        public void edit_role_group_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var rsp = try_get_and_del_edit_role_group_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err(_err);
+            }
+        }
+
+        public void edit_role_group_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_edit_role_group_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private player_shop_edit_role_group_cb try_get_and_del_edit_role_group_cb(UInt64 uuid){
+            lock(map_edit_role_group)
+            {
+                if (map_edit_role_group.TryGetValue(uuid, out player_shop_edit_role_group_cb rsp))
+                {
+                    map_edit_role_group.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
     }
 
     public class player_shop_caller {
@@ -593,6 +691,20 @@ namespace Abelkhan
             lock(rsp_cb_player_shop_handle.map_buy_card_merge)
             {                rsp_cb_player_shop_handle.map_buy_card_merge.Add(uuid_18eed6ca_7674_52e6_b275_3f39b727fbfa, cb_buy_card_merge_obj);
             }            return cb_buy_card_merge_obj;
+        }
+
+        public player_shop_edit_role_group_cb edit_role_group(RoleGroup roleGroup){
+            var uuid_fb4329da_a395_54e4_805b_3c8e1c458077 = (UInt64)Interlocked.Increment(ref uuid_77f83686_46a0_3ea6_923e_63294a905f09);
+
+            var _argv_f4590bd7_2111_3754_bf86_154d25227f01 = new ArrayList();
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(uuid_fb4329da_a395_54e4_805b_3c8e1c458077);
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(RoleGroup.RoleGroup_to_protcol(roleGroup));
+            _client_handle.call_hub(hub_name_77f83686_46a0_3ea6_923e_63294a905f09, "player_shop_edit_role_group", _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+
+            var cb_edit_role_group_obj = new player_shop_edit_role_group_cb(uuid_fb4329da_a395_54e4_805b_3c8e1c458077, rsp_cb_player_shop_handle);
+            lock(rsp_cb_player_shop_handle.map_edit_role_group)
+            {                rsp_cb_player_shop_handle.map_edit_role_group.Add(uuid_fb4329da_a395_54e4_805b_3c8e1c458077, cb_edit_role_group_obj);
+            }            return cb_edit_role_group_obj;
         }
 
     }
