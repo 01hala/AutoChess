@@ -109,6 +109,9 @@ export class netPlayer {
         });;
     }
 
+    //更新玩家账户信息
+    public cb_updata_player_data:(_playerInfo:common.UserData)=>void;
+
     //合并碎片
     public cb_buy_card_merge:(_roleId:number,_playerInfo:common.UserData) => void;
     public buy_card_merge(_id:number)
