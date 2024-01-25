@@ -140,7 +140,7 @@ export class netPlayer {
         })
     }
 
-    public cb_edit_role_group:(_userData:common.UserData)=>void;
+    public cb_edit_role_group:(_userInfo:common.UserData)=>void;
     public edit_role_group(_roleGroup:common.RoleGroup)
     {
         this.c_player_shop_caller.get_hub(this.player_name).edit_role_group(_roleGroup).callBack((info:common.UserData)=>

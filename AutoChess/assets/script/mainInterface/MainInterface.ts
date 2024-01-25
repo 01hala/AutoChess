@@ -2,7 +2,7 @@ import { _decorator, Animation, animation, Button, Component, instantiate, Node,
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
-import { Bag, RoleCardInfo } from '../serverSDK/common';
+import { Bag, RoleCardInfo, UserData } from '../serverSDK/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
 const { ccclass, property } = _decorator;
 
@@ -145,8 +145,16 @@ export class MainInterface
     {
         singleton.netSingleton.player.cb_buy_card_packet=(_cardPacketInfo:CardPacket,_bagInfo:Bag)=>
         {
-
+            //回调打开弹窗显示获得的卡牌或者碎片
         };
+        singleton.netSingleton.player.cb_buy_card_merge=(_roleId:number,_playerInfo:UserData)=>
+        {
+            //回调合并碎片后获得卡牌
+        }
+        singleton.netSingleton.player.cb_edit_role_group=(_userInfo:UserData)=>
+        {
+            //回调编辑卡组
+        }
     }
 
 }
