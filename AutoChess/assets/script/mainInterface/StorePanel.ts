@@ -10,7 +10,7 @@ const { ccclass, property } = _decorator;
 export class StorePanel extends Component 
 {
     private backBtn:Node;
-    private pageViewContent:Node;
+    private pageView:PageView;
 
     private storePagePre:Prefab;
     private cardListPre:Prefab;
@@ -25,7 +25,7 @@ export class StorePanel extends Component
     onLoad()
     {
         this.backBtn=this.node.getChildByPath("Back_Btn");
-        this.pageViewContent=this.node.getChildByPath("StoreArea/PageView/view/content");
+        this.pageView=this.node.getChildByPath("StoreArea/PageView").getComponent(PageView);
         this.toggleGroup=this.node.getChildByPath("ToggleGroup");
     }
 
@@ -58,7 +58,10 @@ export class StorePanel extends Component
                     this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage") as Prefab;
                 }
                 this.storePage = instantiate(this.storePagePre);
-                this.pageViewContent.addChild(this.storePage);
+                this.pageView.addPage(this.storePage);
+
+                this.InitStore();
+                //this.pageViewContent.addChild(this.storePage);
             }
             
         }
@@ -82,7 +85,7 @@ export class StorePanel extends Component
                     this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage") as Prefab;
                 }
                 this.cardListPage = instantiate(this.cardListPre);
-                this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).addPage(this.cardListPage);
+                this.pageView.addPage(this.cardListPage);
                 //this.pageViewContent.addChild(this.cardListPage);
                 this.LoadCard();
             }
@@ -107,7 +110,7 @@ export class StorePanel extends Component
                     this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage") as Prefab;
                 }
                 this.rechargePage = instantiate(this.rechargePre);
-                this.pageViewContent.addChild(this.rechargePage);
+                this.pageView.addPage(this.rechargePage);
                 //this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).addPage(this.cardListPage);
             }
             
@@ -121,7 +124,7 @@ export class StorePanel extends Component
 
     private ClearPageView()
     {
-        for (let node of this.pageViewContent.children) {
+        for (let node of this.pageView.node.getChildByPath("view/content").children) {
             node.destroy();
         }
     }
@@ -140,22 +143,14 @@ export class StorePanel extends Component
                 jconfig=config.RoleConfig.get(i);
                 if(jconfig!=null)
                 {
-                    // let path="Avatar/Role_"+i;
-                    // let img=await loadAssets.LoadImg(path);
                     let card=instantiate(cardPre);
-                    // if(img)
-                    // {
-                    //     card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
-                    // }
                     this.cardListPage.addChild(card);
                     //card.getComponent(RoleCard).storePanel=this.node;
                     card.getComponent(RoleCard).Init(i);
                     if(i%8==0)
                     {
                         this.cardListPage=instantiate(this.cardListPre);
-                        //this.pageViewContent.addChild(this.cardListPage);
-                        this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).addPage(this.cardListPage);
-                        console.log(this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).getPages().length);
+                        this.pageView.addPage(this.cardListPage);
                     }
                     i++;
                 }
@@ -167,6 +162,15 @@ export class StorePanel extends Component
         {
             console.error('StorePanel 下 LoadCard 错误 err: ',error);
         }
+    }
+
+    InitStore()
+    {
+        //购买卡包
+        this.storePage.getChildByPath("Commodity").on(Button.EventType.CLICK,()=>
+        {
+            singleton.netSingleton.player.buy_card_packet();
+        },this);
     }
 
     update(deltaTime: number) 
