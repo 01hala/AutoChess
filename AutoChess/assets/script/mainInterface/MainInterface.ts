@@ -4,6 +4,7 @@ import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
 import { Bag, RoleCardInfo, UserData } from '../serverSDK/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
+import { StorePrompt } from './StorePrompt';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -12,6 +13,13 @@ export class PlyaerAccount
     public money:number;//金币
     public diamond:number;//钻石
     public playerBag:Bag;//背包
+
+    constructor()
+    {
+        this.money=0;
+        this.diamond=0;
+        this.playerBag=null;
+    }
 }
 
 export class MainInterface 
@@ -36,8 +44,11 @@ export class MainInterface
     private btnList:Node;
     //伸缩按钮区切换开关
     private btnListSwitch:boolean=false;
-    //二级信息界面
+    //二级界面
     public infoPanel:Node;
+    public storePrompt:Node;
+    //玩家信息
+    public playerData:PlyaerAccount;
 
     async start(father:Node)
     {
@@ -52,6 +63,11 @@ export class MainInterface
             this.infoPanel=instantiate(panel);
             this.infoPanel.setParent(this.mainNode);
             this.infoPanel.active=false;
+
+            panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePromptPanel") as Prefab;
+            this.storePrompt=instantiate(panel);
+            this.storePrompt.setParent(this.mainNode);
+            this.storePrompt.active=false;
     
             this.mainPanel=this.mainNode.getChildByPath("MainPanel")
             this.startGamePanel=this.mainNode.getChildByPath("StartGamePanel");
@@ -79,6 +95,7 @@ export class MainInterface
         try
         {
             this.RegCallBack();
+            this.playerData=new PlyaerAccount();
 
             this.startGamePanel.active=false;
             this.storePanel.active=false;
@@ -146,6 +163,11 @@ export class MainInterface
         singleton.netSingleton.player.cb_buy_card_packet=(_cardPacketInfo:CardPacket,_bagInfo:Bag)=>
         {
             //回调打开弹窗显示获得的卡牌或者碎片
+            if(_bagInfo && _cardPacketInfo)
+            {
+                this.playerData.playerBag=_bagInfo;
+                this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
+            }
         };
         singleton.netSingleton.player.cb_buy_card_merge=(_roleId:number,_playerInfo:UserData)=>
         {

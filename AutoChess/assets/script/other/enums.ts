@@ -77,3 +77,9 @@ export enum PropsType
     Food=1,
     Equip=2,
 }
+
+export enum StoreCommodityType
+{
+    None=0,
+    CardPacket=1
+}
