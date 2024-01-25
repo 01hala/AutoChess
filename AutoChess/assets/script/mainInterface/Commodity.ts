@@ -8,6 +8,7 @@ export class Commodity extends Component {
         
     }
 
+
     start() 
     {
 
