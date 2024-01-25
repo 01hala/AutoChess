@@ -181,11 +181,37 @@ namespace Abelkhan
 
     }
 
+    public class player_shop_edit_role_group_rsp : Common.Response {
+        private string _client_uuid_f4590bd7_2111_3754_bf86_154d25227f01;
+        private UInt64 uuid_3c34b0db_b131_3d40_9a91_219d271016cb;
+        public player_shop_edit_role_group_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_f4590bd7_2111_3754_bf86_154d25227f01 = client_uuid;
+            uuid_3c34b0db_b131_3d40_9a91_219d271016cb = _uuid;
+        }
+
+        public void rsp(UserData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
+            var _argv_f4590bd7_2111_3754_bf86_154d25227f01 = new ArrayList();
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(uuid_3c34b0db_b131_3d40_9a91_219d271016cb);
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(UserData.UserData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
+            Hub.Hub._gates.call_client(_client_uuid_f4590bd7_2111_3754_bf86_154d25227f01, "player_shop_rsp_cb_edit_role_group_rsp", _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_f4590bd7_2111_3754_bf86_154d25227f01 = new ArrayList();
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(uuid_3c34b0db_b131_3d40_9a91_219d271016cb);
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_f4590bd7_2111_3754_bf86_154d25227f01, "player_shop_rsp_cb_edit_role_group_err", _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+        }
+
+    }
+
     public class player_shop_module : Common.IModule {
         public player_shop_module()
         {
             Hub.Hub._modules.add_mothed("player_shop_buy_card_packet", buy_card_packet);
             Hub.Hub._modules.add_mothed("player_shop_buy_card_merge", buy_card_merge);
+            Hub.Hub._modules.add_mothed("player_shop_edit_role_group", edit_role_group);
         }
 
         public event Action on_buy_card_packet;
@@ -205,6 +231,17 @@ namespace Abelkhan
             rsp = new player_shop_buy_card_merge_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_buy_card_merge != null){
                 on_buy_card_merge(_roleID);
+            }
+            rsp = null;
+        }
+
+        public event Action<RoleGroup> on_edit_role_group;
+        public void edit_role_group(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _roleGroup = RoleGroup.protcol_to_RoleGroup(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            rsp = new player_shop_edit_role_group_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_edit_role_group != null){
+                on_edit_role_group(_roleGroup);
             }
             rsp = null;
         }

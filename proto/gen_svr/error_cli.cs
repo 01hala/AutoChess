@@ -21,7 +21,8 @@ namespace Abelkhan
         no_enough_coin = 7,
         already_have_role = 8,
         no_exist_role_group = 9,
-        no_enough_card = 10
+        no_enough_card = 10,
+        no_exist_role_card = 11
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
 /*this module code is codegen by abelkhan codegen for c#*/

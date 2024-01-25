@@ -67,7 +67,7 @@ namespace Player
             RoleGroup.Add(new RoleGroup()
             {
                 CardDeck = 101,
-                RoleList = roleList,
+                RoleList = new List<int>(roleList),
             });
 
             return new PlayerInfo()
@@ -82,6 +82,7 @@ namespace Player
                     Strength = 100,
                     gold = 100,
                     bag = new Abelkhan.Bag(),
+                    RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,
                 },
                 lastTickStrengthTime = Timerservice.Tick
@@ -100,6 +101,7 @@ namespace Player
                         UserGuid = 0,
                     },
                     Strength = 0,
+                    RoleList = new (),
                     roleGroup = new(),
                 }
             };
@@ -109,6 +111,11 @@ namespace Player
             info.info.User.UserGuid = user.GetValue("UserUid").AsInt64;
 
             info.info.Strength = data.GetValue("Strength").AsInt32;
+
+            foreach (var role in data.GetValue("RoleList").AsBsonArray)
+            {
+                info.info.RoleList.Add(role.AsInt32);
+            }
 
             foreach (var group in data.GetValue("RoleGroup").AsBsonArray)
             {
@@ -144,6 +151,12 @@ namespace Player
         public BsonDocument Store()
         {
             var roleList = new BsonArray();
+            foreach(var id in info.RoleList)
+            {
+                roleList.Add(id);
+            }
+
+            var roleGroup = new BsonArray();
             foreach (var _group in info.roleGroup)
             {
                 var _roleList = new BsonArray();
@@ -158,14 +171,15 @@ namespace Player
                     { "RoleList", _roleList },
                 };
 
-                roleList.Add(_RoleGroup);
+                roleGroup.Add(_RoleGroup);
             }
 
             var doc = new BsonDocument
             {
                 { "User", new BsonDocument { {"UserName", info.User.UserName}, { "UserUid", info.User.UserGuid} } },
                 { "Strength", info.Strength },
-                { "RoleGroup",  roleList },
+                { "RoleList", roleList },
+                { "RoleGroup",  roleGroup },
                 { "lastTickStrengthTime", lastTickStrengthTime }
             };
             return doc;
@@ -195,7 +209,14 @@ namespace Player
                 }
             }
 
-            info.bag.ItemList.Add(infoCard);
+            if (!info.RoleList.Contains(infoCard.roleID))
+            {
+                info.RoleList.Add(infoCard.roleID);
+            }
+            else
+            {
+                info.bag.ItemList.Add(infoCard);
+            }
         }
 
         public Tuple<em_error, CardPacket> BuyCardPacket()
@@ -258,6 +279,29 @@ namespace Player
             }
 
             return em_error.no_enough_card;
+        }
+
+        public em_error EditRoleGroup(RoleGroup _group)
+        {
+            foreach(var id in _group.RoleList)
+            {
+                if (!info.RoleList.Contains(id))
+                {
+                    return em_error.no_exist_role_card;
+                }
+            }
+
+            foreach(var _g in info.roleGroup)
+            {
+                if (_g.CardDeck == _group.CardDeck)
+                {
+                    _g.RoleList = _group.RoleList;
+                    return em_error.success;
+                }
+            }
+
+            info.roleGroup.Add(_group);
+            return em_error.success;
         }
 
         public void AddStrength(int _strength)
