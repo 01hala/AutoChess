@@ -490,11 +490,68 @@ namespace Abelkhan
 
     }
 
+    public class player_shop_get_user_data_cb
+    {
+        private UInt64 cb_uuid;
+        private player_shop_rsp_cb module_rsp_cb;
+
+        public player_shop_get_user_data_cb(UInt64 _cb_uuid, player_shop_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action<UserData> on_get_user_data_cb;
+        public event Action<Int32> on_get_user_data_err;
+        public event Action on_get_user_data_timeout;
+
+        public player_shop_get_user_data_cb callBack(Action<UserData> cb, Action<Int32> err)
+        {
+            on_get_user_data_cb += cb;
+            on_get_user_data_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.get_user_data_timeout(cb_uuid);
+            });
+            on_get_user_data_timeout += timeout_cb;
+        }
+
+        public void call_cb(UserData info)
+        {
+            if (on_get_user_data_cb != null)
+            {
+                on_get_user_data_cb(info);
+            }
+        }
+
+        public void call_err(Int32 err)
+        {
+            if (on_get_user_data_err != null)
+            {
+                on_get_user_data_err(err);
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_get_user_data_timeout != null)
+            {
+                on_get_user_data_timeout();
+            }
+        }
+
+    }
+
 /*this cb code is codegen by abelkhan for c#*/
     public class player_shop_rsp_cb : Common.IModule {
         public Dictionary<UInt64, player_shop_buy_card_packet_cb> map_buy_card_packet;
         public Dictionary<UInt64, player_shop_buy_card_merge_cb> map_buy_card_merge;
         public Dictionary<UInt64, player_shop_edit_role_group_cb> map_edit_role_group;
+        public Dictionary<UInt64, player_shop_get_user_data_cb> map_get_user_data;
         public player_shop_rsp_cb(Common.ModuleManager modules)
         {
             map_buy_card_packet = new Dictionary<UInt64, player_shop_buy_card_packet_cb>();
@@ -506,6 +563,9 @@ namespace Abelkhan
             map_edit_role_group = new Dictionary<UInt64, player_shop_edit_role_group_cb>();
             modules.add_mothed("player_shop_rsp_cb_edit_role_group_rsp", edit_role_group_rsp);
             modules.add_mothed("player_shop_rsp_cb_edit_role_group_err", edit_role_group_err);
+            map_get_user_data = new Dictionary<UInt64, player_shop_get_user_data_cb>();
+            modules.add_mothed("player_shop_rsp_cb_get_user_data_rsp", get_user_data_rsp);
+            modules.add_mothed("player_shop_rsp_cb_get_user_data_err", get_user_data_err);
         }
 
         public void buy_card_packet_rsp(IList<MsgPack.MessagePackObject> inArray){
@@ -624,6 +684,44 @@ namespace Abelkhan
             }
         }
 
+        public void get_user_data_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var rsp = try_get_and_del_get_user_data_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb(_info);
+            }
+        }
+
+        public void get_user_data_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var rsp = try_get_and_del_get_user_data_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err(_err);
+            }
+        }
+
+        public void get_user_data_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_get_user_data_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private player_shop_get_user_data_cb try_get_and_del_get_user_data_cb(UInt64 uuid){
+            lock(map_get_user_data)
+            {
+                if (map_get_user_data.TryGetValue(uuid, out player_shop_get_user_data_cb rsp))
+                {
+                    map_get_user_data.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
     }
 
     public class player_shop_caller {
@@ -705,6 +803,19 @@ namespace Abelkhan
             lock(rsp_cb_player_shop_handle.map_edit_role_group)
             {                rsp_cb_player_shop_handle.map_edit_role_group.Add(uuid_fb4329da_a395_54e4_805b_3c8e1c458077, cb_edit_role_group_obj);
             }            return cb_edit_role_group_obj;
+        }
+
+        public player_shop_get_user_data_cb get_user_data(){
+            var uuid_5bd45dc3_80d1_5e9b_9f9d_33fd5ad88068 = (UInt64)Interlocked.Increment(ref uuid_77f83686_46a0_3ea6_923e_63294a905f09);
+
+            var _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b = new ArrayList();
+            _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b.Add(uuid_5bd45dc3_80d1_5e9b_9f9d_33fd5ad88068);
+            _client_handle.call_hub(hub_name_77f83686_46a0_3ea6_923e_63294a905f09, "player_shop_get_user_data", _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b);
+
+            var cb_get_user_data_obj = new player_shop_get_user_data_cb(uuid_5bd45dc3_80d1_5e9b_9f9d_33fd5ad88068, rsp_cb_player_shop_handle);
+            lock(rsp_cb_player_shop_handle.map_get_user_data)
+            {                rsp_cb_player_shop_handle.map_get_user_data.Add(uuid_5bd45dc3_80d1_5e9b_9f9d_33fd5ad88068, cb_get_user_data_obj);
+            }            return cb_get_user_data_obj;
         }
 
     }

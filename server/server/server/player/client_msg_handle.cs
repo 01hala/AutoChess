@@ -7,6 +7,7 @@ using MsgPack.Serialization;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace Player
 {
@@ -29,6 +30,27 @@ namespace Player
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
+            player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_shop_Module_on_get_user_data()
+        {
+            Log.Log.trace("on_get_user_data begin!");
+
+            var rsp = player_shop_Module.rsp as player_shop_edit_role_group_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                rsp.rsp(_data.Data.Info());
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_shop_Module_on_get_user_data err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Player_shop_Module_on_edit_role_group(RoleGroup _group)
