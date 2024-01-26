@@ -389,8 +389,12 @@ export class Role {
         
         let list = this.getShareDamageArray(battle);
         let substituteTuple = this.getSubstituteDamage(battle);
-        let substitute=substituteTuple[0];
-        let value=substituteTuple[1];
+        let substitute = null;
+        let value = 0;
+        if (substituteTuple) {
+            substitute=substituteTuple[0];
+            value=substituteTuple[1];
+        }
         let damage = enemy.GetProperty(enums.Property.Attack) + enemy.getintensifierAtk() / list.length;
         console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {
