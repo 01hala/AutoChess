@@ -127,7 +127,7 @@ export class ReadyDis
             this.ready.SetShopData(shop_info);
         };
         singleton.netSingleton.game.cb_role_buy_merge = (target_role_index: number, target_role: common.Role, is_update: boolean) => {
-            console.log('cb_role_buy_merge', target_role_index);
+            console.log('cb_role_buy_merge', target_role_index, ' this.roleArea.rolesNode:',  this.roleArea.rolesNode);
             //let str = "Location_" + target_role_index;
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
