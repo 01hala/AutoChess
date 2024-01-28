@@ -33,6 +33,7 @@ export class SkillTrigger_RoundStarts_5 extends SkillTriggerBase
             {
                 if(EventType.RoundStarts==b.type)
                 {
+                    console.log(`SkillTrigger_RoundStarts_5 selfInfo${selfInfo}`)
                     return true;
                 }
             }
