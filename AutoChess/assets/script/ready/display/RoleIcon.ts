@@ -191,7 +191,7 @@ export class RoleIcon extends Component
                             // {
                             //     this.roleArea.targets.set(this.target.name,this.node);
                             // }
-                            await this.shopArea.BuyRole(this.index, this.node);
+                            await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
                         }
 
                         if (this.isMerge) {
@@ -533,10 +533,11 @@ export class RoleIcon extends Component
                     case 7:{
                         //如果召唤的效果等同于id为x的召唤技能，特殊效果值是召唤技能的id，则使用下面的代码
                         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
+                        var additionSkill = [];
                         for(let temp of equipInfo.Value){
-                            t.additionSkill.push(temp);
+                            additionSkill.push(temp);
                         }
-                        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer,t.additionSkill);
+                        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer,additionSkill);
                         this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                 }
