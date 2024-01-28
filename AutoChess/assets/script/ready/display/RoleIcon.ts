@@ -191,7 +191,7 @@ export class RoleIcon extends Component
                             // {
                             //     this.roleArea.targets.set(this.target.name,this.node);
                             // }
-                            await this.shopArea.BuyRole(this.index, this.node);
+                            await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
                         }
 
                         if (this.isMerge) {

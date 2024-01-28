@@ -126,13 +126,21 @@ export class ReadyDis
             console.log("shop_info:", shop_info);
             this.ready.SetShopData(shop_info);
         };
-        singleton.netSingleton.game.cb_role_buy_merge = (target_role_index: number, target_role: common.Role, is_update: boolean) => {
-            console.log('cb_role_buy_merge', target_role_index);
-            //let str = "Location_" + target_role_index;
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);;
+        singleton.netSingleton.game.cb_role_buy_merge = (target_role_index: number, target_role: common.Role, is_update: boolean) => 
+        {
+            try
+            {
+                console.log('cb_role_buy_merge', target_role_index);
+                //let str = "Location_" + target_role_index;
+                this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
+                this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+                //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
+                //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);;
+            }
+           catch(error)
+           {
+                console.error("cb_role_buy_merge 错误: ",(error));
+           }
         };
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
