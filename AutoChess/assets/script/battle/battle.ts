@@ -43,6 +43,7 @@ export class Battle {
     public StartBattle() {
         let ev = new skill.Event();
         ev.type = enums.EventType.BattleBegin;
+        console.log("推送战斗开始事件");
         this.AddBattleEvent(ev);
     }
 

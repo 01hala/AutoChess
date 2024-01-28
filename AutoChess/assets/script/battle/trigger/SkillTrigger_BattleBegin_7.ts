@@ -29,6 +29,7 @@ export class SkillTrigger_BattleBegin_7 extends SkillTriggerBase
     {
         try 
         {
+            console.log("尝试触发战斗开始触发器事件");
             for(let b of frameEvent)
             {
                 if(EventType.BattleBegin==b.type)
@@ -38,7 +39,7 @@ export class SkillTrigger_BattleBegin_7 extends SkillTriggerBase
                 }
             }
             return false;
-        } 
+        }                                                      
         catch (error) 
         {
             console.warn(this.res+"下的 CheckSkill 错误");
