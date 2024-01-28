@@ -129,7 +129,7 @@ export class ShopArea extends Component
         }
     }
 
-    async BuyRole(_index:number, _obj:Node)
+    async BuyRole(_index:number, _obj:Node ,_isMerge:boolean)
     {
         console.log('buy Role');
         for(let i=0;i<this.shopRoles.length;i++)
@@ -137,7 +137,10 @@ export class ShopArea extends Component
             if(this.shopRoles[i] == _obj)
             {
                 await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
-                this.roleArea.rolesNode[_index]=_obj;
+                if(!_isMerge)
+                {
+                    this.roleArea.rolesNode[_index]=_obj;
+                }
                 this.shopRoles[i] = null;
             }
         }
