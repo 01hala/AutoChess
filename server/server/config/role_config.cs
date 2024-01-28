@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using System.Diagnostics;
 
 namespace config
 {
@@ -16,8 +17,27 @@ namespace config
         public int Attack;
         public int Hp;
         public int Fetters;
-        public int Hermes;
+        public int Grade;
+        public int ActiveState;
         public string Res;
+
+        public static Dictionary<int, List<RoleConfig>> LoadGrade(Dictionary<int, RoleConfig> cfg)
+        {
+            var grade = new Dictionary<int, List<RoleConfig>>();
+
+            foreach (var r in cfg.Values)
+            {
+                if (!grade.TryGetValue(r.Grade, out List<RoleConfig> roles))
+                {
+                    roles = new List<RoleConfig>();
+                    grade[r.Grade] = roles;
+                }
+
+                roles.Add(r);
+            }
+
+            return grade;
+        }
 
         public static Dictionary<int, List<RoleConfig> > LoadStage(Dictionary<int, RoleConfig> cfg)
         {
@@ -68,6 +88,8 @@ namespace config
                 rolec.Attack = (int)o["Attack"];
                 rolec.Hp = (int)o["Hp"];
                 rolec.Fetters = (int)o["Fetters"];
+                rolec.Grade = (int)o["Grade"]; 
+                rolec.ActiveState = (int)o["ActiveState"];
                 rolec.Res = (string)o["Res"];
 
                 obj[rolec.Id] = rolec;

@@ -11,7 +11,8 @@
         "AttackBonus": 1,
         "HpBonus": 1,
         "Vaule": 0,
-        "Count": 1
+        "Count": 1,
+        "Res": "Props/battle_icon_1001"
     },
     "1002": {
         "Id": 1002,
@@ -25,7 +26,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Vaule": 1,
-        "Count": 7
+        "Count": 7,
+        "Res": "Props/battle_icon_1002"
     },
     "1003": {
         "Id": 1003,
@@ -39,7 +41,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Vaule": 0,
-        "Count": 1
+        "Count": 1,
+        "Res": "Props/battle_icon_1003"
     },
     "1004": {
         "Id": 1004,
@@ -53,7 +56,8 @@
         "AttackBonus": 3,
         "HpBonus": 3,
         "Vaule": 0,
-        "Count": 1
+        "Count": 1,
+        "Res": "Props/battle_icon_1004"
     },
     "1005": {
         "Id": 1005,
@@ -67,7 +71,8 @@
         "AttackBonus": 1,
         "HpBonus": 1,
         "Vaule": 0,
-        "Count": 2
+        "Count": 2,
+        "Res": "Props/battle_icon_1005"
     },
     "1006": {
         "Id": 1006,
@@ -81,7 +86,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Vaule": 1,
-        "Count": 7
+        "Count": 7,
+        "Res": "Props/battle_icon_1006"
     },
     "1007": {
         "Id": 1007,
@@ -95,7 +101,8 @@
         "AttackBonus": 2,
         "HpBonus": 1,
         "Vaule": 0,
-        "Count": 7
+        "Count": 7,
+        "Res": "Props/battle_icon_1007"
     },
     "1008": {
         "Id": 1008,
@@ -109,7 +116,8 @@
         "AttackBonus": 2,
         "HpBonus": 2,
         "Vaule": 0,
-        "Count": 1
+        "Count": 1,
+        "Res": "Props/battle_icon_1008"
     },
     "1009": {
         "Id": 1009,
@@ -123,7 +131,8 @@
         "AttackBonus": 1,
         "HpBonus": 1,
         "Vaule": 1,
-        "Count": 1
+        "Count": 1,
+        "Res": "Props/battle_icon_1009"
     },
     "1010": {
         "Id": 1010,
@@ -137,7 +146,8 @@
         "AttackBonus": 1,
         "HpBonus": 1,
         "Vaule": 0,
-        "Count": 4
+        "Count": 4,
+        "Res": "Props/battle_icon_1010"
     },
     "1011": {
         "Id": 1011,
@@ -151,7 +161,8 @@
         "AttackBonus": 2,
         "HpBonus": 2,
         "Vaule": 0,
-        "Count": 3
+        "Count": 3,
+        "Res": "Props/battle_icon_1011"
     },
     "1012": {
         "Id": 1012,
@@ -165,7 +176,8 @@
         "AttackBonus": 3,
         "HpBonus": 3,
         "Vaule": 0,
-        "Count": 1
+        "Count": 1,
+        "Res": "Props/battle_icon_1012"
     },
     "1013": {
         "Id": 1013,
@@ -179,6 +191,7 @@
         "AttackBonus": 1,
         "HpBonus": 1,
         "Vaule": 0,
-        "Count": 1
+        "Count": 1,
+        "Res": "Props/battle_icon_1013"
     }
 }

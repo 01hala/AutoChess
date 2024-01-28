@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using avatar;
+using bag;
 using Hub;
 using MongoDB.Bson;
 using OfflineMsg;
@@ -7,6 +8,7 @@ using Service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Player
@@ -41,8 +43,9 @@ namespace Player
 
     public class PlayerInfo : IHostingData
     {
-        public UserData info;
-        public long lastTickStrengthTime;
+        private UserData info;
+        private int currentRolrGroup = 101;
+        private long lastTickStrengthTime;
 
         public static string Type()
         {
@@ -51,6 +54,22 @@ namespace Player
 
         public static IHostingData Create()
         {
+            var RoleGroup = new List<RoleGroup>();
+            var roleList = new List<int>();
+            foreach (var cfg in config.Config.RoleConfigs.Values)
+            {
+                if (cfg.ActiveState == 1)
+                {
+                    roleList.Add(cfg.Id);
+                }
+            }
+
+            RoleGroup.Add(new RoleGroup()
+            {
+                CardDeck = 101,
+                RoleList = new List<int>(roleList),
+            });
+
             return new PlayerInfo()
             {
                 info = new UserData()
@@ -61,7 +80,10 @@ namespace Player
                         UserGuid = 0,
                     },
                     Strength = 100,
-                    RoleList = new(config.Config.RoleConfigs.Keys),
+                    gold = 100,
+                    bag = new Abelkhan.Bag(),
+                    RoleList = new List<int>(roleList),
+                    roleGroup = RoleGroup,
                 },
                 lastTickStrengthTime = Timerservice.Tick
             };
@@ -79,7 +101,8 @@ namespace Player
                         UserGuid = 0,
                     },
                     Strength = 0,
-                    RoleList = new(),
+                    RoleList = new (),
+                    roleGroup = new(),
                 }
             };
 
@@ -94,6 +117,25 @@ namespace Player
                 info.info.RoleList.Add(role.AsInt32);
             }
 
+            foreach (var group in data.GetValue("RoleGroup").AsBsonArray)
+            {
+                var CardDeck = group.AsBsonDocument.GetValue("CardDeck").AsInt32;
+                var RoleList = group.AsBsonDocument.GetValue("RoleList").AsBsonArray;
+
+                var roleGroup = new RoleGroup()
+                {
+                    CardDeck = CardDeck,
+                    RoleList = new List<int>(),
+                };
+
+                foreach (var role in RoleList)
+                {
+                    roleGroup.RoleList.Add(role.AsInt32);
+                }
+
+                info.info.roleGroup.Add(roleGroup);
+            }
+
             if (data.Contains("lastTickStrengthTime"))
             {
                 info.lastTickStrengthTime = data.GetValue("lastTickStrengthTime").AsInt64;
@@ -103,25 +145,181 @@ namespace Player
                 info.lastTickStrengthTime = Timerservice.Tick;
             }
 
+            if (data.Contains("currentRolrGroup"))
+            {
+                info.currentRolrGroup = data.GetValue("currentRolrGroup").AsInt32;
+            }
+            else
+            {
+                info.currentRolrGroup = info.info.roleGroup[0].CardDeck;
+            }
+
             return info;
         }
 
         public BsonDocument Store()
         {
             var roleList = new BsonArray();
-            foreach (var _role in info.RoleList)
+            foreach(var id in info.RoleList)
             {
-                roleList.Add(_role);
+                roleList.Add(id);
+            }
+
+            var roleGroup = new BsonArray();
+            foreach (var _group in info.roleGroup)
+            {
+                var _roleList = new BsonArray();
+                foreach (var _role in _group.RoleList)
+                {
+                    _roleList.Add(_role);
+                }
+
+                var _RoleGroup = new BsonDocument()
+                {
+                    { "CardDeck", _group.CardDeck },
+                    { "RoleList", _roleList },
+                };
+
+                roleGroup.Add(_RoleGroup);
             }
 
             var doc = new BsonDocument
             {
                 { "User", new BsonDocument { {"UserName", info.User.UserName}, { "UserUid", info.User.UserGuid} } },
                 { "Strength", info.Strength },
-                { "RoleList",  roleList },
-                { "lastTickStrengthTime", lastTickStrengthTime }
+                { "RoleList", roleList },
+                { "RoleGroup",  roleGroup },
+                { "lastTickStrengthTime", lastTickStrengthTime },
+                { "currentRolrGroup", currentRolrGroup }
             };
             return doc;
+        }
+
+        public UserData Info()
+        {
+            return info;
+        }
+
+        public List<int> BattleRoleGroup()
+        {
+            foreach(var roleGroup in info.roleGroup)
+            {
+                if (roleGroup.CardDeck == currentRolrGroup)
+                {
+                    return roleGroup.RoleList;
+                }
+            }
+
+            return null;
+        }
+
+        private void AddCardItem(RoleCardInfo infoCard)
+        {
+            if (infoCard.isTatter)
+            {
+                foreach (var i in info.bag.ItemList)
+                {
+                    if (i.roleID == infoCard.roleID)
+                    {
+                        i.Number += infoCard.Number;
+                        return;
+                    }
+                }
+            }
+
+            if (!info.RoleList.Contains(infoCard.roleID))
+            {
+                info.RoleList.Add(infoCard.roleID);
+            }
+            else
+            {
+                info.bag.ItemList.Add(infoCard);
+            }
+        }
+
+        public Tuple<em_error, CardPacket> BuyCardPacket()
+        {
+            if (info.gold <= 1)
+            {
+                return Tuple.Create(em_error.no_enough_coin, (CardPacket)null);
+            }
+            info.gold -= 1;
+
+            var packet = new CardPacket();
+            for(int i = 0; i < 5; i++)
+            {
+                var grade = RandomHelper.RandomInt(3) + 1;
+                var isTatter = RandomHelper.RandomInt(100) < 1;
+
+                var gradeGroup = config.Config.RoleGradeConfigs[grade];
+                var cfg = gradeGroup[RandomHelper.RandomInt(gradeGroup.Count)];
+
+                var infoCard = new RoleCardInfo()
+                {
+                    roleID = cfg.Id,
+                    isTatter = isTatter,
+                    Number = 1
+                };
+
+                packet.ItemList.Add(infoCard);
+                AddCardItem(infoCard);
+            }
+
+            return Tuple.Create(em_error.success, packet);
+        }
+
+        public em_error BuyCardMerge(int _roleID)
+        {
+            foreach (var i in info.bag.ItemList)
+            {
+                if (i.roleID == _roleID)
+                {
+                    if (i.Number >= 8)
+                    {
+                        i.Number -= 8;
+
+                        if (i.Number <= 0)
+                        {
+                            info.bag.ItemList.Remove(i);
+                        }
+
+                        var infoCard = new RoleCardInfo()
+                        {
+                            roleID = _roleID,
+                            isTatter = false,
+                            Number = 1
+                        };
+                        AddCardItem(infoCard);
+
+                        return em_error.success;
+                    }
+                }
+            }
+
+            return em_error.no_enough_card;
+        }
+
+        public em_error EditRoleGroup(RoleGroup _group)
+        {
+            foreach(var id in _group.RoleList)
+            {
+                if (!info.RoleList.Contains(id))
+                {
+                    return em_error.no_exist_role_card;
+                }
+            }
+
+            foreach(var _g in info.roleGroup)
+            {
+                if (_g.CardDeck == _group.CardDeck)
+                {
+                    _g.RoleList = _group.RoleList;
+                    return em_error.success;
+                }
+            }
+
+            info.roleGroup.Add(_group);
+            return em_error.success;
         }
 
         public void AddStrength(int _strength)
@@ -171,10 +369,10 @@ namespace Player
 
     public static class AvatarExtensions
     {
-        public static UserData PlayerInfo(this Avatar avatar)
+        public static PlayerInfo PlayerInfo(this Avatar avatar)
         {
             var _data = avatar.get_real_hosting_data<PlayerInfo>();
-            return _data.Data.info;
+            return _data.Data;
         }
     }
 
@@ -306,8 +504,8 @@ namespace Player
         {
             var _avatar = avatarMgr.get_avatar(uuid);
             var info = _avatar.get_real_hosting_data<PlayerInfo>();
-            info.Data.info.User.UserName = nick_name;
-            info.Data.info.User.UserGuid = _avatar.Guid;
+            info.Data.Info().User.UserName = nick_name;
+            info.Data.Info().User.UserGuid = _avatar.Guid;
 
             return _avatar;
         }

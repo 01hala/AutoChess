@@ -18,6 +18,7 @@ export class FoodConfig {
     public HpBonus:number;
     public Vaule:number;
     public Count:number;
+    public Res:string;
 
 }
 
@@ -55,12 +56,13 @@ export async function LoadFoodConfig() : Promise<Map<number, FoodConfig>> {
                 foodc.Count = v["Count"];
                 foodc.AttackBonus= v["AttackBonus"];
                 foodc.HpBonus = v["HpBonus"];
+                foodc.Res=v["Res"];
 
                 map.set(parseInt(k), foodc);
             });
-        })
 
-        console.log("Load Food Config end!");
-        resolve(map);
+            console.log("Load Food Config end!");
+            resolve(map);
+        });
     });
 }

@@ -6,6 +6,8 @@ export class Loading {
     private _load:Node = null;
 
     public load(father:Node) : (progress:number) => void {
+        console.log("Loading load begin!");
+
         try {
             if (this._load == null) {
                 this._load = instantiate(Loading.loading);

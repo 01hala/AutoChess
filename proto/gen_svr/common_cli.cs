@@ -113,11 +113,130 @@ namespace Abelkhan
         }
     }
 
+    public class RoleCardInfo
+    {
+        public Int32 roleID;
+        public bool isTatter;
+        public Int32 Number;
+        public static MsgPack.MessagePackObjectDictionary RoleCardInfo_to_protcol(RoleCardInfo _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("roleID", _struct.roleID);
+            _protocol.Add("isTatter", _struct.isTatter);
+            _protocol.Add("Number", _struct.Number);
+            return _protocol;
+        }
+        public static RoleCardInfo protcol_to_RoleCardInfo(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct9b5d9e88_7bbe_3017_8694_d1d46da4038b = new RoleCardInfo();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "roleID"){
+                    _struct9b5d9e88_7bbe_3017_8694_d1d46da4038b.roleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "isTatter"){
+                    _struct9b5d9e88_7bbe_3017_8694_d1d46da4038b.isTatter = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Number"){
+                    _struct9b5d9e88_7bbe_3017_8694_d1d46da4038b.Number = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _struct9b5d9e88_7bbe_3017_8694_d1d46da4038b;
+        }
+    }
+
+    public class Bag
+    {
+        public List<RoleCardInfo> ItemList;
+        public static MsgPack.MessagePackObjectDictionary Bag_to_protcol(Bag _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            if (_struct.ItemList != null) {
+                var _array_ItemList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.ItemList){
+                    _array_ItemList.Add( new MsgPack.MessagePackObject(RoleCardInfo.RoleCardInfo_to_protcol(v_)));
+                }
+                _protocol.Add("ItemList", new MsgPack.MessagePackObject(_array_ItemList));
+            }
+            return _protocol;
+        }
+        public static Bag protcol_to_Bag(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct23cf1144_5c0a_3d4a_aa2d_962de72b2fc1 = new Bag();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "ItemList"){
+                    _struct23cf1144_5c0a_3d4a_aa2d_962de72b2fc1.ItemList = new List<RoleCardInfo>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct23cf1144_5c0a_3d4a_aa2d_962de72b2fc1.ItemList.Add(RoleCardInfo.protcol_to_RoleCardInfo(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
+            }
+            return _struct23cf1144_5c0a_3d4a_aa2d_962de72b2fc1;
+        }
+    }
+
+    public class RoleGroup
+    {
+        public Int32 CardDeck;
+        public List<Int32> RoleList;
+        public static MsgPack.MessagePackObjectDictionary RoleGroup_to_protcol(RoleGroup _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("CardDeck", _struct.CardDeck);
+            if (_struct.RoleList != null) {
+                var _array_RoleList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.RoleList){
+                    _array_RoleList.Add(v_);
+                }
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
+            }
+            return _protocol;
+        }
+        public static RoleGroup protcol_to_RoleGroup(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct04eefd6b_dfea_3615_a69b_58efca74ef74 = new RoleGroup();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "CardDeck"){
+                    _struct04eefd6b_dfea_3615_a69b_58efca74ef74.CardDeck = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
+                    _struct04eefd6b_dfea_3615_a69b_58efca74ef74.RoleList = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct04eefd6b_dfea_3615_a69b_58efca74ef74.RoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
+                }
+            }
+            return _struct04eefd6b_dfea_3615_a69b_58efca74ef74;
+        }
+    }
+
     public class UserData
     {
         public UserInformation User;
         public Int32 Strength;
+        public Int32 gold;
+        public Bag bag;
         public List<Int32> RoleList;
+        public List<RoleGroup> roleGroup;
         public static MsgPack.MessagePackObjectDictionary UserData_to_protcol(UserData _struct){
         if (_struct == null) {
             return null;
@@ -126,12 +245,21 @@ namespace Abelkhan
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("Strength", _struct.Strength);
+            _protocol.Add("gold", _struct.gold);
+            _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
                     _array_RoleList.Add(v_);
                 }
                 _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
+            }
+            if (_struct.roleGroup != null) {
+                var _array_roleGroup = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.roleGroup){
+                    _array_roleGroup.Add( new MsgPack.MessagePackObject(RoleGroup.RoleGroup_to_protcol(v_)));
+                }
+                _protocol.Add("roleGroup", new MsgPack.MessagePackObject(_array_roleGroup));
             }
             return _protocol;
         }
@@ -148,11 +276,24 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Strength"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.Strength = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "gold"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.gold = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());
+                }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList = new List<Int32>();
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
                     foreach (var v_ in _protocol_array){
                         _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "roleGroup"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.roleGroup = new List<RoleGroup>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.roleGroup.Add(RoleGroup.protcol_to_RoleGroup(((MsgPack.MessagePackObject)v_).AsDictionary()));
                     }
                 }
             }

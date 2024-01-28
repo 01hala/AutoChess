@@ -39,9 +39,9 @@ export async function LoadBundleConfig() : Promise<Map<number, BundleConfig >> {
 
                 map.set(parseInt(k), bundlec);
             });
-        })
 
-        console.log("Load Bundle Config end!");
-        resolve(map);
+            console.log("Load Bundle Config end!");
+            resolve(map);
+        });
     });
 }

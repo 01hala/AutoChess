@@ -9,6 +9,43 @@ namespace Abelkhan
 /*this enum code is codegen by abelkhan codegen for c#*/
 
 /*this struct code is codegen by abelkhan codegen for c#*/
+    public class CardPacket
+    {
+        public List<RoleCardInfo> ItemList;
+        public static MsgPack.MessagePackObjectDictionary CardPacket_to_protcol(CardPacket _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            if (_struct.ItemList != null) {
+                var _array_ItemList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.ItemList){
+                    _array_ItemList.Add( new MsgPack.MessagePackObject(RoleCardInfo.RoleCardInfo_to_protcol(v_)));
+                }
+                _protocol.Add("ItemList", new MsgPack.MessagePackObject(_array_ItemList));
+            }
+            return _protocol;
+        }
+        public static CardPacket protcol_to_CardPacket(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct9640929f_4b83_3911_9478_43f795de0dff = new CardPacket();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "ItemList"){
+                    _struct9640929f_4b83_3911_9478_43f795de0dff.ItemList = new List<RoleCardInfo>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct9640929f_4b83_3911_9478_43f795de0dff.ItemList.Add(RoleCardInfo.protcol_to_RoleCardInfo(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
+            }
+            return _struct9640929f_4b83_3911_9478_43f795de0dff;
+        }
+    }
+
 /*this module code is codegen by abelkhan codegen for c#*/
     public class player_login_player_login_rsp : Common.Response {
         private string _client_uuid_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b;
@@ -87,6 +124,160 @@ namespace Abelkhan
             rsp = new player_login_create_role_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_create_role != null){
                 on_create_role(_name, _nick_name);
+            }
+            rsp = null;
+        }
+
+    }
+    public class player_shop_buy_card_packet_rsp : Common.Response {
+        private string _client_uuid_d6e5c9ba_cae6_3d78_9c94_378cfb18564f;
+        private UInt64 uuid_6cc6ca26_b510_30a9_b2f0_f793ad4e59e7;
+        public player_shop_buy_card_packet_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_d6e5c9ba_cae6_3d78_9c94_378cfb18564f = client_uuid;
+            uuid_6cc6ca26_b510_30a9_b2f0_f793ad4e59e7 = _uuid;
+        }
+
+        public void rsp(CardPacket infoCardPacket_87571aec_d5bf_3fad_a494_b4071b3ecf42, Bag infoBag_084949a2_36eb_35a5_ae7f_87587a1a619e){
+            var _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f = new ArrayList();
+            _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.Add(uuid_6cc6ca26_b510_30a9_b2f0_f793ad4e59e7);
+            _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.Add(CardPacket.CardPacket_to_protcol(infoCardPacket_87571aec_d5bf_3fad_a494_b4071b3ecf42));
+            _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.Add(Bag.Bag_to_protcol(infoBag_084949a2_36eb_35a5_ae7f_87587a1a619e));
+            Hub.Hub._gates.call_client(_client_uuid_d6e5c9ba_cae6_3d78_9c94_378cfb18564f, "player_shop_rsp_cb_buy_card_packet_rsp", _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f = new ArrayList();
+            _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.Add(uuid_6cc6ca26_b510_30a9_b2f0_f793ad4e59e7);
+            _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_d6e5c9ba_cae6_3d78_9c94_378cfb18564f, "player_shop_rsp_cb_buy_card_packet_err", _argv_d6e5c9ba_cae6_3d78_9c94_378cfb18564f);
+        }
+
+    }
+
+    public class player_shop_buy_card_merge_rsp : Common.Response {
+        private string _client_uuid_dee721ae_80aa_378d_8cc9_48d93bcb0586;
+        private UInt64 uuid_7e0e8665_898a_3741_b32e_c8d1052d040b;
+        public player_shop_buy_card_merge_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_dee721ae_80aa_378d_8cc9_48d93bcb0586 = client_uuid;
+            uuid_7e0e8665_898a_3741_b32e_c8d1052d040b = _uuid;
+        }
+
+        public void rsp(Int32 roleID_e6394c85_b087_3274_a3ef_e9e95d2e9412, UserData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
+            var _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586 = new ArrayList();
+            _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.Add(uuid_7e0e8665_898a_3741_b32e_c8d1052d040b);
+            _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.Add(roleID_e6394c85_b087_3274_a3ef_e9e95d2e9412);
+            _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.Add(UserData.UserData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
+            Hub.Hub._gates.call_client(_client_uuid_dee721ae_80aa_378d_8cc9_48d93bcb0586, "player_shop_rsp_cb_buy_card_merge_rsp", _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586 = new ArrayList();
+            _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.Add(uuid_7e0e8665_898a_3741_b32e_c8d1052d040b);
+            _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_dee721ae_80aa_378d_8cc9_48d93bcb0586, "player_shop_rsp_cb_buy_card_merge_err", _argv_dee721ae_80aa_378d_8cc9_48d93bcb0586);
+        }
+
+    }
+
+    public class player_shop_edit_role_group_rsp : Common.Response {
+        private string _client_uuid_f4590bd7_2111_3754_bf86_154d25227f01;
+        private UInt64 uuid_3c34b0db_b131_3d40_9a91_219d271016cb;
+        public player_shop_edit_role_group_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_f4590bd7_2111_3754_bf86_154d25227f01 = client_uuid;
+            uuid_3c34b0db_b131_3d40_9a91_219d271016cb = _uuid;
+        }
+
+        public void rsp(UserData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
+            var _argv_f4590bd7_2111_3754_bf86_154d25227f01 = new ArrayList();
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(uuid_3c34b0db_b131_3d40_9a91_219d271016cb);
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(UserData.UserData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
+            Hub.Hub._gates.call_client(_client_uuid_f4590bd7_2111_3754_bf86_154d25227f01, "player_shop_rsp_cb_edit_role_group_rsp", _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_f4590bd7_2111_3754_bf86_154d25227f01 = new ArrayList();
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(uuid_3c34b0db_b131_3d40_9a91_219d271016cb);
+            _argv_f4590bd7_2111_3754_bf86_154d25227f01.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_f4590bd7_2111_3754_bf86_154d25227f01, "player_shop_rsp_cb_edit_role_group_err", _argv_f4590bd7_2111_3754_bf86_154d25227f01);
+        }
+
+    }
+
+    public class player_shop_get_user_data_rsp : Common.Response {
+        private string _client_uuid_f56b8d13_7bcd_3a7e_b0c6_0413a872738b;
+        private UInt64 uuid_0963daaa_6e31_39c9_8fe9_c84b6e499348;
+        public player_shop_get_user_data_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_f56b8d13_7bcd_3a7e_b0c6_0413a872738b = client_uuid;
+            uuid_0963daaa_6e31_39c9_8fe9_c84b6e499348 = _uuid;
+        }
+
+        public void rsp(UserData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
+            var _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b = new ArrayList();
+            _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b.Add(uuid_0963daaa_6e31_39c9_8fe9_c84b6e499348);
+            _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b.Add(UserData.UserData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
+            Hub.Hub._gates.call_client(_client_uuid_f56b8d13_7bcd_3a7e_b0c6_0413a872738b, "player_shop_rsp_cb_get_user_data_rsp", _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b = new ArrayList();
+            _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b.Add(uuid_0963daaa_6e31_39c9_8fe9_c84b6e499348);
+            _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_f56b8d13_7bcd_3a7e_b0c6_0413a872738b, "player_shop_rsp_cb_get_user_data_err", _argv_f56b8d13_7bcd_3a7e_b0c6_0413a872738b);
+        }
+
+    }
+
+    public class player_shop_module : Common.IModule {
+        public player_shop_module()
+        {
+            Hub.Hub._modules.add_mothed("player_shop_buy_card_packet", buy_card_packet);
+            Hub.Hub._modules.add_mothed("player_shop_buy_card_merge", buy_card_merge);
+            Hub.Hub._modules.add_mothed("player_shop_edit_role_group", edit_role_group);
+            Hub.Hub._modules.add_mothed("player_shop_get_user_data", get_user_data);
+        }
+
+        public event Action on_buy_card_packet;
+        public void buy_card_packet(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            rsp = new player_shop_buy_card_packet_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_buy_card_packet != null){
+                on_buy_card_packet();
+            }
+            rsp = null;
+        }
+
+        public event Action<Int32> on_buy_card_merge;
+        public void buy_card_merge(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _roleID = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            rsp = new player_shop_buy_card_merge_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_buy_card_merge != null){
+                on_buy_card_merge(_roleID);
+            }
+            rsp = null;
+        }
+
+        public event Action<RoleGroup> on_edit_role_group;
+        public void edit_role_group(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _roleGroup = RoleGroup.protcol_to_RoleGroup(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            rsp = new player_shop_edit_role_group_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_edit_role_group != null){
+                on_edit_role_group(_roleGroup);
+            }
+            rsp = null;
+        }
+
+        public event Action on_get_user_data;
+        public void get_user_data(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            rsp = new player_shop_get_user_data_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_get_user_data != null){
+                on_get_user_data();
             }
             rsp = null;
         }

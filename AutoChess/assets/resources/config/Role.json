@@ -8,7 +8,10 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_1"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100001",
+        "Avatar": "Avatar/Role_100001"
     },
     "100002": {
         "Id": 100002,
@@ -19,7 +22,10 @@
         "Attack": 4,
         "Hp": 3,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_2"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100002",
+        "Avatar": "Avatar/Role_100002"
     },
     "100003": {
         "Id": 100003,
@@ -30,7 +36,10 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_3"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100003",
+        "Avatar": "Avatar/Role_100003"
     },
     "100004": {
         "Id": 100004,
@@ -41,7 +50,10 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 4,
-        "Res": "prefab/Roles/Role_4"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100004",
+        "Avatar": "Avatar/Role_100004"
     },
     "100005": {
         "Id": 100005,
@@ -52,7 +64,10 @@
         "Attack": 8,
         "Hp": 4,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_5"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100005",
+        "Avatar": "Avatar/Role_100005"
     },
     "100006": {
         "Id": 100006,
@@ -63,7 +78,10 @@
         "Attack": 3,
         "Hp": 6,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_6"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100006",
+        "Avatar": "Avatar/Role_100006"
     },
     "100007": {
         "Id": 100007,
@@ -74,7 +92,10 @@
         "Attack": 1,
         "Hp": 1,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_7"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100007",
+        "Avatar": "Avatar/Role_100007"
     },
     "100008": {
         "Id": 100008,
@@ -85,7 +106,10 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_8"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100008",
+        "Avatar": "Avatar/Role_100008"
     },
     "100009": {
         "Id": 100009,
@@ -96,7 +120,10 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_9"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100009",
+        "Avatar": "Avatar/Role_100009"
     },
     "100010": {
         "Id": 100010,
@@ -107,7 +134,10 @@
         "Attack": 2,
         "Hp": 3,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_10"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100010",
+        "Avatar": "Avatar/Role_100010"
     },
     "100011": {
         "Id": 100011,
@@ -118,7 +148,10 @@
         "Attack": 2,
         "Hp": 5,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_11"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100011",
+        "Avatar": "Avatar/Role_100011"
     },
     "100012": {
         "Id": 100012,
@@ -129,7 +162,10 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 8,
-        "Res": "prefab/Roles/Role_12"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100012",
+        "Avatar": "Avatar/Role_100012"
     },
     "100013": {
         "Id": 100013,
@@ -140,7 +176,10 @@
         "Attack": 7,
         "Hp": 10,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_13"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100013",
+        "Avatar": "Avatar/Role_100013"
     },
     "100014": {
         "Id": 100014,
@@ -151,7 +190,10 @@
         "Attack": 3,
         "Hp": 5,
         "Fetters": 8,
-        "Res": "prefab/Roles/Role_14"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100014",
+        "Avatar": "Avatar/Role_100014"
     },
     "100015": {
         "Id": 100015,
@@ -162,7 +204,10 @@
         "Attack": 1,
         "Hp": 7,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_15"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100015",
+        "Avatar": "Avatar/Role_100015"
     },
     "100016": {
         "Id": 100016,
@@ -173,7 +218,10 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_16"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100016",
+        "Avatar": "Avatar/Role_100016"
     },
     "100017": {
         "Id": 100017,
@@ -184,7 +232,10 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_17"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100017",
+        "Avatar": "Avatar/Role_100017"
     },
     "100018": {
         "Id": 100018,
@@ -195,7 +246,10 @@
         "Attack": 4,
         "Hp": 1,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_18"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100018",
+        "Avatar": "Avatar/Role_100018"
     },
     "100019": {
         "Id": 100019,
@@ -206,7 +260,10 @@
         "Attack": 4,
         "Hp": 1,
         "Fetters": 13,
-        "Res": "prefab/Roles/Role_19"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100019",
+        "Avatar": "Avatar/Role_100019"
     },
     "100020": {
         "Id": 100020,
@@ -217,7 +274,10 @@
         "Attack": 6,
         "Hp": 3,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_20"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100020",
+        "Avatar": "Avatar/Role_100020"
     },
     "100021": {
         "Id": 100021,
@@ -228,7 +288,10 @@
         "Attack": 1,
         "Hp": 1,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_21"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100021",
+        "Avatar": "Avatar/Role_100021"
     },
     "100022": {
         "Id": 100022,
@@ -239,7 +302,10 @@
         "Attack": 4,
         "Hp": 4,
         "Fetters": 4,
-        "Res": "prefab/Roles/Role_22"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100022",
+        "Avatar": "Avatar/Role_100022"
     },
     "100023": {
         "Id": 100023,
@@ -250,7 +316,10 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_23"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100023",
+        "Avatar": "Avatar/Role_100023"
     },
     "100024": {
         "Id": 100024,
@@ -261,7 +330,10 @@
         "Attack": 4,
         "Hp": 1,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_24"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100024",
+        "Avatar": "Avatar/Role_100024"
     },
     "100025": {
         "Id": 100025,
@@ -272,7 +344,10 @@
         "Attack": 2,
         "Hp": 8,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_25"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100025",
+        "Avatar": "Avatar/Role_100025"
     },
     "100026": {
         "Id": 100026,
@@ -283,7 +358,10 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_26"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100026",
+        "Avatar": "Avatar/Role_100026"
     },
     "100027": {
         "Id": 100027,
@@ -294,7 +372,10 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_27"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100027",
+        "Avatar": "Avatar/Role_100027"
     },
     "100028": {
         "Id": 100028,
@@ -305,7 +386,10 @@
         "Attack": 3,
         "Hp": 5,
         "Fetters": 7,
-        "Res": "prefab/Roles/Role_28"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100028",
+        "Avatar": "Avatar/Role_100028"
     },
     "100029": {
         "Id": 100029,
@@ -316,7 +400,10 @@
         "Attack": 1,
         "Hp": 6,
         "Fetters": 13,
-        "Res": "prefab/Roles/Role_29"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100029",
+        "Avatar": "Avatar/Role_100029"
     },
     "100030": {
         "Id": 100030,
@@ -327,7 +414,10 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 13,
-        "Res": "prefab/Roles/Role_30"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100030",
+        "Avatar": "Avatar/Role_100030"
     },
     "100031": {
         "Id": 100031,
@@ -338,7 +428,10 @@
         "Attack": 1,
         "Hp": 4,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_31"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100031",
+        "Avatar": "Avatar/Role_100031"
     },
     "100032": {
         "Id": 100032,
@@ -349,7 +442,10 @@
         "Attack": 2,
         "Hp": 5,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_32"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100032",
+        "Avatar": "Avatar/Role_100032"
     },
     "100033": {
         "Id": 100033,
@@ -360,7 +456,10 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_33"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100033",
+        "Avatar": "Avatar/Role_100033"
     },
     "100034": {
         "Id": 100034,
@@ -371,7 +470,10 @@
         "Attack": 3,
         "Hp": 3,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_34"
+        "Grade": 1,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100034",
+        "Avatar": "Avatar/Role_100034"
     },
     "100035": {
         "Id": 100035,
@@ -382,7 +484,10 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_35"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100035",
+        "Avatar": "Avatar/Role_100035"
     },
     "100036": {
         "Id": 100036,
@@ -393,7 +498,10 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 3,
-        "Res": "prefab/Roles/Role_36"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100036",
+        "Avatar": "Avatar/Role_100036"
     },
     "100037": {
         "Id": 100037,
@@ -404,7 +512,10 @@
         "Attack": 2,
         "Hp": 3,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_37"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100037",
+        "Avatar": "Avatar/Role_100037"
     },
     "100038": {
         "Id": 100038,
@@ -415,7 +526,10 @@
         "Attack": 2,
         "Hp": 3,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_38"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100038",
+        "Avatar": "Avatar/Role_100038"
     },
     "100039": {
         "Id": 100039,
@@ -426,7 +540,10 @@
         "Attack": 1,
         "Hp": 3,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_39"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100039",
+        "Avatar": "Avatar/Role_100039"
     },
     "100040": {
         "Id": 100040,
@@ -437,7 +554,10 @@
         "Attack": 4,
         "Hp": 7,
         "Fetters": 4,
-        "Res": "prefab/Roles/Role_40"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100040",
+        "Avatar": "Avatar/Role_100040"
     },
     "100041": {
         "Id": 100041,
@@ -448,7 +568,10 @@
         "Attack": 3,
         "Hp": 2,
         "Fetters": 10,
-        "Res": "prefab/Roles/Role_41"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100041",
+        "Avatar": "Avatar/Role_100041"
     },
     "100042": {
         "Id": 100042,
@@ -459,7 +582,10 @@
         "Attack": 4,
         "Hp": 6,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_42"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100042",
+        "Avatar": "Avatar/Role_100042"
     },
     "100043": {
         "Id": 100043,
@@ -470,7 +596,10 @@
         "Attack": 2,
         "Hp": 4,
         "Fetters": 14,
-        "Res": "prefab/Roles/Role_43"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100043",
+        "Avatar": "Avatar/Role_100043"
     },
     "100044": {
         "Id": 100044,
@@ -481,7 +610,10 @@
         "Attack": 1,
         "Hp": 2,
         "Fetters": 9,
-        "Res": "prefab/Roles/Role_44"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100044",
+        "Avatar": "Avatar/Role_100044"
     },
     "100045": {
         "Id": 100045,
@@ -492,7 +624,10 @@
         "Attack": 4,
         "Hp": 2,
         "Fetters": 2,
-        "Res": "prefab/Roles/Role_45"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100045",
+        "Avatar": "Avatar/Role_100045"
     },
     "100046": {
         "Id": 100046,
@@ -503,7 +638,10 @@
         "Attack": 4,
         "Hp": 4,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_46"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100046",
+        "Avatar": "Avatar/Role_100046"
     },
     "100047": {
         "Id": 100047,
@@ -514,7 +652,10 @@
         "Attack": 2,
         "Hp": 2,
         "Fetters": 12,
-        "Res": "prefab/Roles/Role_47"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100047",
+        "Avatar": "Avatar/Role_100047"
     },
     "100048": {
         "Id": 100048,
@@ -525,7 +666,10 @@
         "Attack": 2,
         "Hp": 5,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_48"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100048",
+        "Avatar": "Avatar/Role_100048"
     },
     "100049": {
         "Id": 100049,
@@ -536,7 +680,10 @@
         "Attack": 3,
         "Hp": 2,
         "Fetters": 1,
-        "Res": "prefab/Roles/Role_49"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100049",
+        "Avatar": "Avatar/Role_100049"
     },
     "100050": {
         "Id": 100050,
@@ -547,7 +694,10 @@
         "Attack": 3,
         "Hp": 4,
         "Fetters": 5,
-        "Res": "prefab/Roles/Role_50"
+        "Grade": 2,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100050",
+        "Avatar": "Avatar/Role_100050"
     },
     "100051": {
         "Id": 100051,
@@ -558,7 +708,10 @@
         "Attack": 6,
         "Hp": 4,
         "Fetters": 11,
-        "Res": "prefab/Roles/Role_51"
+        "Grade": 3,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100051",
+        "Avatar": "Avatar/Role_100051"
     },
     "100052": {
         "Id": 100052,
@@ -569,7 +722,10 @@
         "Attack": 1,
         "Hp": 1,
         "Fetters": 6,
-        "Res": "prefab/Roles/Role_52"
+        "Grade": 3,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100052",
+        "Avatar": "Avatar/Role_100052"
     },
     "100053": {
         "Id": 100053,
@@ -580,7 +736,10 @@
         "Attack": 5,
         "Hp": 5,
         "Fetters": 14,
-        "Res": "prefab/Roles/Role_53"
+        "Grade": 3,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100053",
+        "Avatar": "Avatar/Role_100053"
     },
     "100054": {
         "Id": 100054,
@@ -591,6 +750,9 @@
         "Attack": 3,
         "Hp": 3,
         "Fetters": 14,
-        "Res": "prefab/Roles/Role_54"
+        "Grade": 3,
+        "ActiveState": 1,
+        "Res": "RolesImg/Role_100054",
+        "Avatar": "Avatar/Role_100054"
     }
 }

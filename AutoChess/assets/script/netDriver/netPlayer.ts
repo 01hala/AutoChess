@@ -7,10 +7,14 @@ import * as player_login from "../serverSDK/ccallplayer"
 
 import * as player_client from "../serverSDK/playercallc"
 
+
+
 export class netPlayer {
     private c_login_caller : login.login_caller;
     public player_name = "";
     private c_player_login_caller : player_login.player_login_caller;
+
+    private c_player_caller:player_login.player_shop_caller;
 
     public cb_archive_sync : () => void;
     public cb_battle_victory : () => void;
@@ -23,6 +27,8 @@ export class netPlayer {
         this.c_player_login_caller = new player_login.player_login_caller(cli.cli_handle);
 
         this.player_client_module = new player_client.player_client_module(cli.cli_handle);
+        this.c_player_caller=new player_login.player_shop_caller(cli.cli_handle);
+
         this.player_client_module.cb_archive_sync = (info) => {
             this.UserData = info;
             if (this.cb_archive_sync) {
@@ -32,6 +38,7 @@ export class netPlayer {
         this.player_client_module.cb_battle_victory = () => {
             this.cb_battle_victory.call(null);
         }
+
     }
 
     private login_callback(player_name:string, token:string, nick_name:string) {
@@ -100,5 +107,67 @@ export class netPlayer {
         }).timeout(3000, ()=>{
             console.log("create role timeout");
         });;
+    }
+
+    //更新玩家账户信息
+    public cb_get_user_data:(_playerInfo:common.UserData)=>void;
+    public get_user_data()
+    {
+        this.c_player_caller.get_hub(this.player_name).get_user_data().callBack((_playerInfo:common.UserData)=>
+        {
+            this.cb_get_user_data(_playerInfo);
+        },(err)=>
+        {
+            console.log("get user data error:" + err);
+        }).timeout(3000,()=>
+        {
+            console.log("get user data timeout");
+        });
+    }
+
+    //合并碎片
+    public cb_buy_card_merge:(_roleId:number,_playerInfo:common.UserData) => void;
+    public buy_card_merge(_id:number)
+    {
+        this.c_player_caller.get_hub(this.player_name).buy_card_merge(_id).callBack((roleId,info)=>
+        {
+            this.cb_buy_card_merge(roleId,info);
+        },(err)=>
+        {
+            console.log("buy card merge error:" + err);
+        }).timeout(3000,()=>
+        {
+            console.log("buy card merge timeout");
+        })
+    }
+    //购买卡包
+    public cb_buy_card_packet:(_cardPacketInfo:player_login.CardPacket,_bagInfo:common.Bag)=>void;
+    public buy_card_packet()
+    {
+        this.c_player_caller.get_hub(this.player_name).buy_card_packet().callBack((cardpacket,bag)=>
+        {
+            this.cb_buy_card_packet(cardpacket,bag);
+        },(err)=>
+        {
+            console.log("buy card packet error:" + err);
+        }).timeout(3000,()=>
+        {
+            console.log("buy card packet timeout");
+        })
+    }
+
+    public cb_edit_role_group:(_userInfo:common.UserData)=>void;
+    public edit_role_group(_roleGroup:common.RoleGroup)
+    {
+        this.c_player_caller.get_hub(this.player_name).edit_role_group(_roleGroup).callBack((info:common.UserData)=>
+        {
+            this.cb_edit_role_group(info);
+        },(err)=>
+        {
+            console.log("edit role group:" + err);
+        }).timeout(3000,()=>
+        {
+            console.log("edit role group timeout");
+        })
     }
 }

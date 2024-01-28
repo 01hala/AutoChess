@@ -14,6 +14,7 @@ import * as config from '../config/config';
 import { BundleManager } from '../bundle/BundleManager';
 import { Ready } from '../ready/Ready';
 import { ReadyDis } from '../ready/display/ReadyDis';
+import { MainInterface } from '../mainInterface/MainInterface';
 
 @ccclass('login')
 export class login extends Component {
@@ -113,8 +114,9 @@ export class login extends Component {
         });
     }
 
-    async start() {
+    async start() {  
         await config.config.load();
+        console.log("login start!");
 
         this._loading = new load.Loading();
         this._setProgress = this._loading.load(this.bk.node);
@@ -132,11 +134,16 @@ export class login extends Component {
             singleton.netSingleton.player.create_role(this.nick_name, this.nick_name, this.avatar_url);
         };
 
-        singleton.netSingleton.player.cb_player_login_sucess = () => {
+        singleton.netSingleton.player.cb_player_login_sucess = async () => {
             this._progress += 0.1;
             this._setProgress(this._progress);
+            //进入主界面
+            singleton.netSingleton.mainInterface=new MainInterface();
+            await singleton.netSingleton.mainInterface.start(this.bk.node);
+            this._setProgress(1.0);
+            this._loading.done();
             //开始准备阶段
-            singleton.netSingleton.game.start_battle();
+            //singleton.netSingleton.game.start_battle();
 
             console.log("login sucess!");
         }
@@ -185,10 +192,18 @@ export class login extends Component {
         }
 
         this.netNode.on("connect", (e)=>{
+            console.log("on net connect!");
+
             this._progress += 0.1;
             this._setProgress(this._progress);
             this.wxLogin();
         });
+
+        if (singleton.netSingleton.is_conn_gate) {
+            this._progress += 0.1;
+            this._setProgress(this._progress);
+            this.wxLogin();
+        }
     }
 
     update(deltaTime: number) {

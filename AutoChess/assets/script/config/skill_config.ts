@@ -67,9 +67,9 @@ export async function LoadSkillConfig() : Promise<Map<number, SkillConfig>> {
 
                 map.set(parseInt(k), skillc);
             });
-        })
 
-        console.log("Load Skill Config end!");
-        resolve(map);
+            console.log("Load Skill Config end!");
+            resolve(map);
+        });
     });
 }

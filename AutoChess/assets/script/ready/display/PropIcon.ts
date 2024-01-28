@@ -8,6 +8,7 @@ import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
 import { BundleManager } from '../../bundle/BundleManager';
 import * as common from '../../serverSDK/common';
+import { loadAssets } from '../../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -63,41 +64,52 @@ export class PropIcon extends Component
         this.iconMask=this.node.getChildByName("IconMask");
         //this.iconMask.active=false;
         this.collider=this.node.getComponent(Collider2D);
-            
-        this.node.on(Button.EventType.CLICK,()=>
-        {
-            singleton.netSingleton.ready.infoPanel.active=true;
-            singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
-        });
+        this.RegBtn(true);
     }
+
+    private checkPropType(propId:number) : PropsType {
+        if (propId >= 1001 && propId <= 1999) {
+            return PropsType.Food;
+        }
+
+        if (propId >= 3001 && propId <= 3999) {
+            return PropsType.Equip;
+        }
+
+        return PropsType.None;
+    }
+
     //初始化
-    async Init(_id:number,_type:PropsType,_freeze:boolean)
+    async Init(_id:number, _freeze:boolean)
     {
         try
         {
             this.originalPos = this.node.getPosition();
             this.propId = _id;
-            this.propType = _type;
-            let jconfig = null;
-            if (_type == PropsType.Food) 
-            {
-                jconfig = config.FoodConfig.get(_id);
-                this.effect = jconfig.Effect;
-                this.hpBonus = jconfig.HpBonus;
-                this.attackBonus = jconfig.AttackBonus;
-                //这句从下面移到if里来了，因为还要写装备的逻辑，但是没仔细看不知道会不会出问题，所以写个注释标记一下
-                this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
-            }
-            else if(_type == PropsType.Equip)
-            {
-                jconfig = config.EquipConfig.get(_id);
-                this.effect = jconfig.Effect;
-                this.hpBonus = jconfig.HpBonus;
-                this.attackBonus = jconfig.AttackBonus;
-                this.vaule=jconfig.value;
-                //差一个载入图标的逻辑，因为还不清楚装备区域
-                //this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
-            }
+
+            
+            this.propType = this.checkPropType(this.propId);
+            //let jconfig = null;
+            // if (_type == PropsType.Food) 
+            // {
+            //     jconfig = config.FoodConfig.get(_id);
+            //     this.effect = jconfig.Effect;
+            //     this.hpBonus = jconfig.HpBonus;
+            //     this.attackBonus = jconfig.AttackBonus;
+            //     //这句从下面移到if里来了，因为还要写装备的逻辑，但是没仔细看不知道会不会出问题，所以写个注释标记一下
+            //     this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+            // }
+            // else if(_type == PropsType.Equip)
+            // {
+            //     jconfig = config.EquipConfig.get(_id);
+            //     this.effect = jconfig.Effect;
+            //     this.hpBonus = jconfig.HpBonus;
+            //     this.attackBonus = jconfig.AttackBonus;
+            //     this.vaule=jconfig.value;
+            //     //差一个载入图标的逻辑，因为还不清楚装备区域
+            //     //this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+            // }
+			this.LoadOnConfig();
 
             this.freezeLock = _freeze;
             this.freezeSprite.active = _freeze;
@@ -111,6 +123,34 @@ export class PropIcon extends Component
             console.error('PropIcon 下 Init 错误 err: ',error);
         }
         
+    }
+
+    private async LoadOnConfig()
+    {
+        let jconfig = null;
+        switch(this.propType)
+        {
+            case PropsType.Food:
+                {
+                    console.log("LoadOnConfig PropsType.Food this.propId:", this.propId);
+                    jconfig = config.FoodConfig.get(this.propId);
+                    this.effect = jconfig.Effect;
+                    this.hpBonus = jconfig.HpBonus;
+                    this.attackBonus = jconfig.AttackBonus;
+                    let img = await loadAssets.LoadImg(jconfig.AttackBonus.Res);
+                    if(img)
+                    {
+                        this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = img;
+                    }
+                    
+                }
+                break;
+            case PropsType.Equip:
+                {
+
+                }
+            
+        }
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/
@@ -127,8 +167,9 @@ export class PropIcon extends Component
                 this.node.on(Button.EventType.CLICK,()=>
                 {
                     singleton.netSingleton.ready.infoPanel.active=true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenSimple(this.propId,this.propType);
                 });
+                this.OffTirrger();
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
@@ -139,11 +180,7 @@ export class PropIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
                 //重新注册按钮事件
-                this.node.on(Button.EventType.CLICK,()=>
-                {
-                    singleton.netSingleton.ready.infoPanel.active=true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).Open(this.propId,this.propType);
-                });
+                this.RegBtn(true);
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
@@ -182,8 +219,7 @@ export class PropIcon extends Component
     //拖拽中
             this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
             {
-                //关闭按钮事件
-                this.node.off(Button.EventType.CLICK);
+                this.RegBtn(false);
                 //计算位移坐标
                 let node: Node = event.currentTarget;
                 let pos = new Vec2();
@@ -201,6 +237,7 @@ export class PropIcon extends Component
                 {
                     this.shopArea.ShowFreezeArea(true);
                 }
+                this.Ontirrger();
                 //触摸到的对象
                 let node: Node = event.currentTarget;
                 //设置ui坐标
@@ -219,53 +256,104 @@ export class PropIcon extends Component
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
 
+    private Adsorption() {
+        try {
+            this.tweenNode = tween(this.node).to(0.1, { position: this.originalPos })
+                .call(() => {
+                    this.tweenNode.stop();
+                })
+                .start();
+        }
+        catch (error) {
+            console.error('PropIcon 下 Adsorption 错误 err: ', error);
+        }
+    }
+
+    private RegBtn(flag:boolean)
+    {
+        if(flag)
+        {
+            //注册按钮事件
+            this.node.on(Button.EventType.CLICK,()=>
+            {
+                singleton.netSingleton.ready.infoPanel.active=true;
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenSimple(this.propId,this.propType);
+            });
+        }
+        else
+        {
+            //关闭按钮事件
+            this.node.off(Button.EventType.CLICK);
+        }
+    }
 
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------碰撞检测---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
-    start() 
+    private Ontirrger()
     {
+        try
+        {
     //出--------------------------------------------------------------------------出------------------------------------------------------------------------------出//
-        this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
-        {
-            //场上角色区域
-            if(null!=otherCollider && 1 == otherCollider.tag)
+            this.collider.on(Contact2DType.END_CONTACT,(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
             {
-                if(this.roleArea.GetTargetValue(otherCollider.node.name)==this.target)
+                try
                 {
-                    this.target=null;
-                    this.index=null;
+                    //场上角色区域
+                    if (null != otherCollider && 1 == otherCollider.tag) {
+                        if (this.roleArea.GetTargetValue(otherCollider.node.name) == this.target) {
+                            this.target = null;
+                            this.index = null;
+                        }
+                    }
+                    //冻结区域
+                    if (null != otherCollider && 3 == otherCollider.tag) {
+                        this.isFreeze = false;
+                    }
                 }
-            }
-            //冻结区域
-            if(null!=otherCollider && 3 == otherCollider.tag)
-            {
-                this.isFreeze=false;
-            }
-        },this);
+                catch(error)
+                {
+                    console.error('PropIcon 下Opentirrger 里的 END_CONTACT 事件错误 err: ',error);
+                }
+                
+            },this);
     //进--------------------------------------------------------------------------进------------------------------------------------------------------------------进//
-        this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
-        {
-            //冻结区域
-            if(null!=otherCollider && 3 == otherCollider.tag)
+            this.collider.on(Contact2DType.BEGIN_CONTACT, (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)=>
             {
-                if(!this.isBuy)
+                try
                 {
-                    this.isFreeze=true;
+                    //冻结区域
+                    if (null != otherCollider && 3 == otherCollider.tag) {
+                        if (!this.isBuy) {
+                            this.isFreeze = true;
+                        }
+                    }
+                    //场上角色区域
+                    if (null != otherCollider && 1 == otherCollider.tag) {
+                        if (null != this.roleArea.GetTargetValue(otherCollider.node.name)) {
+                            let num = otherCollider.node.name.slice(otherCollider.node.name.length - 1, otherCollider.node.name.length);
+                            this.index = Number(num);
+                            this.target = this.roleArea.GetTargetValue(otherCollider.node.name);
+                            console.log(this.target.name, this.index);
+                        }
+                    }
                 }
-            }
-            //场上角色区域
-            if(null!=otherCollider && 1 == otherCollider.tag)
-            {
-                if(null!=this.roleArea.GetTargetValue(otherCollider.node.name))
-                { 
-                    let num=otherCollider.node.name.slice(otherCollider.node.name.length-1,otherCollider.node.name.length);
-                    this.index=Number(num);
-                    this.target=this.roleArea.GetTargetValue(otherCollider.node.name);
-                    console.log(this.target.name,this.index);
+                catch(error)
+                {
+                    console.error('PropIcon 下Opentirrger 里的 BEGIN_CONTACT 事件错误 err: ',error);
                 }
-            }
-        }, this);
+            }, this);
+        }
+        catch(error)
+        {
+            console.error('PropIcon 下Opentirrger 错误 err: ',error);
+        }
+    }
+
+    private OffTirrger()
+    {
+        this.collider.off(Contact2DType.END_CONTACT);
+        this.collider.off(Contact2DType.BEGIN_CONTACT);
     }
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------碰撞检测---------------------------------------------------------*/
@@ -303,22 +391,6 @@ export class PropIcon extends Component
         
     }
 
-    Adsorption()
-    {
-        try
-        {
-            this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
-            .call(()=>
-             {
-                 this.tweenNode.stop();
-            })
-            .start();
-        }
-        catch(error)
-        {
-            console.error('PropIcon 下 Adsorption 错误 err: ',error);
-        }
-    }
 }
 
 

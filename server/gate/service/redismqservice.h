@@ -13,6 +13,7 @@
 #include <list>
 #include <unordered_map>
 
+#include <gc.h>
 #include <spdlog/spdlog.h>
 #include <hiredis/hiredis.h>
 #include <hircluster.h>
@@ -109,7 +110,7 @@ public:
 	void sendmsg(std::string channle_name, const char* data, size_t len) {
 		auto _ch_name_size = (uint32_t)main_channle_name.size();
 		auto _totle_len = 4 + _ch_name_size + (uint32_t)len;
-		auto _totle_buf = (char*)malloc(_totle_len);
+		auto _totle_buf = (char*)GC_malloc(_totle_len);
 		_totle_buf[0] = _ch_name_size & 0xff;
 		_totle_buf[1] = _ch_name_size >> 8 & 0xff;
 		_totle_buf[2] = _ch_name_size >> 16 & 0xff;
@@ -240,7 +241,7 @@ private:
 					auto _ch_name = std::string(&_buf[4], _ch_name_size);
 					auto _header_len = 4 + _ch_name_size;
 
-					auto tmp_buff = (unsigned char*)(&_buf[_header_len]);
+					auto tmp_buff = (unsigned char*)&_buf[_header_len];
 					uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
 					std::string err;
 					auto obj = msgpack11::MsgPack::parse((const char*)tmp_buff, len, err);
@@ -279,7 +280,6 @@ private:
 			redismqbuff buf;
 			while (send_data.pop(buf)) {
 				redis_cluster_send_data(buf.ch_name, buf.buf, buf.len);
-				free(static_cast<void*>(buf.buf));
 
 				is_idle = false;
 				sleep_time = 1;
@@ -368,7 +368,7 @@ private:
 					auto _ch_name = std::string(&_buf[4], _ch_name_size);
 					auto _header_len = 4 + _ch_name_size;
 
-					auto tmp_buff = (unsigned char*)(&_buf[_header_len]);
+					auto tmp_buff = (unsigned char*)&_buf[_header_len];
 					uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
 					std::string err;
 					auto obj = msgpack11::MsgPack::parse((const char*)&tmp_buff[4], len, err);
@@ -413,7 +413,6 @@ private:
 			redismqbuff buf;
 			while (send_data.pop(buf)) {
 				redis_mq_send_data(buf.ch_name, buf.buf, buf.len);
-				free(static_cast<void*>(buf.buf));
 
 				is_idle = false;
 				sleep_time = 1;

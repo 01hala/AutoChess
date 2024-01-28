@@ -11,7 +11,7 @@ namespace config
         public string Name;
         public int Price;
         public int Stage;
-        public int Effect;
+        public string Effect;
         public int AttackBonus;
         public int HpBonus;
         public string Value;
@@ -63,7 +63,7 @@ namespace config
                 equipc.Name = (string)o["Name"];
                 equipc.Price = (int)o["Price"];
                 equipc.Stage = (int)o["Stage"];
-                equipc.Effect = (int)o["Effect"];
+                equipc.Effect = (string)o["Effect"];
                 equipc.AttackBonus = (int)o["AttackBonus"];
                 equipc.HpBonus = (int)o["HpBonus"];
                 equipc.Value = (string)o["Value"];

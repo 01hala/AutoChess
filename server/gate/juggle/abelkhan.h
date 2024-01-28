@@ -85,10 +85,13 @@ public:
     modulemng();
 
     void reg_method(std::string method_name, std::tuple<std::shared_ptr<Imodule>, std::function<void(const msgpack11::MsgPack::array& doc)> > method);
-    void process_event(std::shared_ptr<Ichannel> _ch, const msgpack11::MsgPack::array& _event);
+    void enque_event(std::shared_ptr<Ichannel> _ch, const msgpack11::MsgPack::array& _event);
+    
+    int process_event();
 
 private:
     std::unordered_map<std::string, std::tuple<std::shared_ptr<Imodule>, std::function<void(const msgpack11::MsgPack::array& doc)> > > method_set;
+    concurrent::ringque<std::pair<std::shared_ptr<Ichannel>, msgpack11::MsgPack::array> > event_que;
 
 };
 
