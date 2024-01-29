@@ -55,17 +55,16 @@ export class MainInterface
         try
         {
             this.father=father;
-            let panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface") as Prefab;
-            this.mainNode=instantiate(panel);
+            let MainInterfacepanel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface") as Prefab;
+            let Informationpanel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "Information") as Prefab;
+            let StorePromptPanelpanel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePromptPanel") as Prefab;
+
+            this.mainNode=instantiate(MainInterfacepanel);
             this.father.addChild(this.mainNode);
-    
-            panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "Information") as Prefab;
-            this.infoPanel=instantiate(panel);
+            this.infoPanel=instantiate(Informationpanel);
             this.infoPanel.setParent(this.mainNode);
             this.infoPanel.active=false;
-
-            panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePromptPanel") as Prefab;
-            this.storePrompt=instantiate(panel);
+            this.storePrompt=instantiate(StorePromptPanelpanel);
             this.storePrompt.setParent(this.mainNode);
             this.storePrompt.active=false;
     
