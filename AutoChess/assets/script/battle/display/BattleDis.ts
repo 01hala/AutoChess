@@ -14,8 +14,10 @@ import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { Role } from '../../serverSDK/common';
+import { Role as rRole } from '../role';
 import { netSingleton } from '../../netDriver/netSingleton';
 import { battle_victory } from '../../serverSDK/ccallmatch';
+import { Team } from '../team';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -67,7 +69,7 @@ export class BattleDis
             this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
             this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
                 console.log("gm Button!");
-                let gmPrefab = await BundleManager.Instance.loadAssetsFromBundle("Battle", "gm") as Prefab;
+                let gmPrefab = await BundleManager.Instance.loadAssetsFromBundle("Panel", "gm") as Prefab;
                 let gmPanel = instantiate(gmPrefab);
                 this.panelNode.addChild(gmPanel);
             }, this);
@@ -290,11 +292,16 @@ export class BattleDis
                 }
 
                 //释放技能者所在阵营列表
-                let roleList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam().GetRoles() : this.battle.GetEnemyTeam().GetRoles();
-                
+                //let roleList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam().GetRoles() : this.battle.GetEnemyTeam().GetRoles();
+                let roleList:rRole[]=[];
                 ev.recipient.forEach(element=>{
-                    this.selfQueue.SummonRole(roleList,ev.spellcaster);
+                    let tmp:rRole;
+                    tmp=new rRole(element.index,element.id, 1,0, Camp.Self, element.properties,null);
+                    let targetTeam=Camp.Self==element.camp?this.battle.GetSelfTeam():this.battle.GetEnemyTeam();
+                    targetTeam.AddRole(tmp);
+                    roleList.push(tmp);    
                 });
+                allAwait.push(this.selfQueue.SummonRole(roleList,ev.spellcaster));
             }
             await Promise.all(allAwait);
         }

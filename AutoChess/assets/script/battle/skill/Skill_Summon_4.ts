@@ -37,7 +37,7 @@ export class Skill_Summon_4 extends SkillBase
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 UseSkill 错误");
+            console.warn(this.res+"下的 UseSkill 错误"+error);
         }
         
     }
@@ -53,33 +53,37 @@ export class Skill_Summon_4 extends SkillBase
             battleEvent.recipient = [];
             battleEvent.value = [];
 
-            let added:Role;
+            let addedIdx:number;
             if(Camp.Self==selfInfo.camp)
             {
-                added=new Role(-1,this.addedID,0, this.addedLevel, Camp.Self, this.addedProperties,null);
-                added.index = battle.GetSelfTeam().AddRole(added);
+                //addedIdx=new Role(-1,this.addedID,0, this.addedLevel, Camp.Self, this.addedProperties,null);
+                addedIdx = battle.GetSelfTeam().GetVacancies();
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                added=new Role(-1,this.addedID,0, this.addedLevel, Camp.Enemy, this.addedProperties, null);
-                added.index = battle.GetEnemyTeam().AddRole(added);
+                //addedIdx=new Role(-1,this.addedID,0, this.addedLevel, Camp.Enemy, this.addedProperties, null);
+                addedIdx = battle.GetEnemyTeam().GetVacancies();
             }
 
-            if(-1==added.index){
+            if(-1==addedIdx){
                 console.warn("召唤角色失败，场上没有空位");
                 return;
             }        
+
+            
             let roleInfo = new RoleInfo();
                 roleInfo.camp = selfInfo.camp;
-                roleInfo.index = 0;
-                roleInfo.hp=this.addedProperties[Property.HP];
-                roleInfo.attack=this.addedProperties[Property.Attack];
+                roleInfo.id=this.addedID;
+                roleInfo.index = addedIdx;
+                roleInfo.properties=this.addedProperties;
+                // roleInfo.hp=this.addedProperties[Property.HP];
+                // roleInfo.attack=this.addedProperties[Property.Attack];
                 battleEvent.recipient.push(roleInfo);
                 battle.AddBattleEvent(battleEvent);
         }
         catch (error) 
         {
-            console.warn(this.res+"下的 SkillEffect 错误");
+            console.warn(this.res+"下的 SkillEffect 错误"+error);
         }
     }
 }
@@ -134,7 +138,7 @@ export class Skill_SummonMecha extends SkillBase
             battleEvent.recipient = [];
             battleEvent.value = [];
 
-            let added:Role;
+            let addedIdx:number;
             //机甲修建值表现
             switch(this.addedBuildLevel){
                 case 4:break;
@@ -143,25 +147,26 @@ export class Skill_SummonMecha extends SkillBase
             }
             if(Camp.Self==selfInfo.camp)
             {
-                added=new Role(-1,this.addedID, this.addedLevel,0, Camp.Self, this.addedProperties,null);
-                added.index = battle.GetSelfTeam().AddRole(added);
+                //addedIdx=new Role(-1,this.addedID, this.addedLevel,0, Camp.Self, this.addedProperties,null);
+                addedIdx = battle.GetSelfTeam().GetVacancies();
             }
             if(Camp.Enemy==selfInfo.camp)
             {
-                added=new Role(-1,this.addedID, this.addedLevel,0, Camp.Enemy, this.addedProperties, null);
-                added.index = battle.GetEnemyTeam().AddRole(added);
+                //addedIdx=new Role(-1,this.addedID, this.addedLevel,0, Camp.Enemy, this.addedProperties, null);
+                addedIdx= battle.GetEnemyTeam().GetVacancies();
             }
 
-            if(-1==added.index){
+            if(-1==addedIdx){
                 console.warn("召唤机甲失败，场上没有空位");
                 
                 return;
             }        
             let roleInfo = new RoleInfo();
                 roleInfo.camp = selfInfo.camp;
-                roleInfo.index = 0;
-                roleInfo.hp=this.addedProperties[Property.HP];
-                roleInfo.attack=this.addedProperties[Property.Attack];
+                roleInfo.index = addedIdx;
+                roleInfo.properties=this.addedProperties;
+                // roleInfo.hp=this.addedProperties[Property.HP];
+                // roleInfo.attack=this.addedProperties[Property.Attack];
                 battleEvent.recipient.push(roleInfo);
                 battle.AddBattleEvent(battleEvent);
         }
