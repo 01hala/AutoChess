@@ -118,6 +118,7 @@ export class Battle {
 
                 let roleInfo = new skill.RoleInfo();
                 roleInfo.properties=role.GetProperties();
+                console.log("战斗事件中角色攻击力:")
                 // roleInfo.attack=role.GetProperty(enums.Property.Attack);
                 // roleInfo.hp=role.GetProperty(enums.Property.HP);
                 roleInfo.index =  role.index;
