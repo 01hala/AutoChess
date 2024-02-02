@@ -7,9 +7,11 @@ import * as enums from '../../other/enums'
 import * as battle from '../battle'
 
 export class RoleInfo {
-    public hp:number;
-    public attack:number;
+    // public hp:number;
+    // public attack:number;
+    public properties:Map<enums.Property, number>;
     public camp : enums.Camp;
+    public id:number;
     public index : number;
     public battleCount : number;
     public Fetters:number;

@@ -43,6 +43,7 @@ export class Battle {
     public StartBattle() {
         let ev = new skill.Event();
         ev.type = enums.EventType.BattleBegin;
+        console.log("推送战斗开始事件");
         this.AddBattleEvent(ev);
     }
 
@@ -116,8 +117,9 @@ export class Battle {
                 }
 
                 let roleInfo = new skill.RoleInfo();
-                roleInfo.attack=role.GetProperty(enums.Property.Attack);
-                roleInfo.hp=role.GetProperty(enums.Property.HP);
+                roleInfo.properties=role.GetProperties();
+                // roleInfo.attack=role.GetProperty(enums.Property.Attack);
+                // roleInfo.hp=role.GetProperty(enums.Property.HP);
                 roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Self;
                 let p = 0;
@@ -144,8 +146,9 @@ export class Battle {
                 }
 
                 let roleInfo = new skill.RoleInfo();
-                roleInfo.attack=role.GetProperty(enums.Property.Attack);
-                roleInfo.hp=role.GetProperty(enums.Property.HP);
+                roleInfo.properties=role.GetProperties();
+                // roleInfo.attack=role.GetProperty(enums.Property.Attack);
+                // roleInfo.hp=role.GetProperty(enums.Property.HP);
                 roleInfo.index =  role.index;
                 roleInfo.camp = enums.Camp.Enemy;
                 let p = 0;

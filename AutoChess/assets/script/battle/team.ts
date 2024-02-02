@@ -21,7 +21,7 @@ export class Team {
         let index = 0;
         for (let r of RoleList) 
         {
-            if(null!=r)
+            if(null!=r&&r.RoleID>100000)
             {
                 let properties = new Map<enums.Property, number>();
                 properties.set(enums.Property.HP, r.HP + r.TempHP);
@@ -104,21 +104,34 @@ export class Team {
     {
         return this.roleList;
     }
-
     /*
      * 添加
-     * 此函数向场上第一个空位置加入一个角色，如果满员则不加入。返回加入后的角色所在索引
+     * 向当前阵营队列添加一个角色
      * Editor: Guanliu
-     * 2023/9/27
+     * 2023/9/30
      */
-    public AddRole(role:role.Role):number{
-        for(let i=0;i<this.roleList.length;i++){
-            if(null==this.roleList[i]){
-                this.roleList[i]=role;
+    public AddRole(role:role.Role){
+        this.roleList.splice(role.index,0,role);
+    }
+    /*
+     * 添加
+     * 获取场上当前阵营第一个空位置的下标
+     * Editor: Guanliu
+     * 2024/1/30
+     */
+    public GetVacancies():number{
+        let flag:Number[]=[0,0,0,0,0,0];
+        for(let i=0;i<this.roleList.length;i++){  
+            flag[this.roleList[i].index]=1;          
+        }
+        for(let i=0;i<6;i++){            
+            if(flag[i]==0){
+                console.log("场上存在空位")
                 return i;
             }
         }
 
+        console.log("场上不存在空位")
         //返回-1说明加入失败
         return -1;
     }
