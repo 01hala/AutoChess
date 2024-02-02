@@ -16,6 +16,9 @@ import * as SkillTrigger_ChangeEnemyLocation_13 from './trigger/SkillTrigger_Cha
 import * as SkillTrigger_UsedSKill_14 from './trigger/SkillTrigger_UsedSKill_14'
 import { SkillTrigger_AllMechaniSyncope } from './trigger/SkillTrigger_AllMechaniSyncope'
 import { SkillTrigger_FriendlysideInjured_19 } from './trigger/SkillTrigger_FriendlysideInjured_19'
+import { SkillTrigger_Kill } from './trigger/SkillTrigger_Kill'
+import { SkillTrigger_CampSyncope } from './trigger/SkillTrigger_CampSyncope'
+import { SkillTrigger_FrontAtk } from './trigger/SkillTrigger_FrontAtk'
 
 export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
     let triggerObj: skill.SkillTriggerBase = null;
@@ -68,6 +71,19 @@ export function CreateTrigger(triggerID:number) : skill.SkillTriggerBase {
         break;
         case common.EMSkillEvent.front_be_hurt:{
             triggerObj=new SkillTrigger_FriendlysideInjured_19(common.Direction.Forward);
+        }
+        break;
+        case common.EMSkillEvent.kill:
+        {
+            triggerObj=new SkillTrigger_Kill();
+        }
+        break;
+        case common.EMSkillEvent.camp_syncope:{
+            triggerObj=new SkillTrigger_CampSyncope();
+        }
+        break;
+        case common.EMSkillEvent.front_attack:{
+            triggerObj=new SkillTrigger_FrontAtk();
         }
         break;
         case common.EMSkillEvent.all_mechanic_syncope:
