@@ -9,6 +9,7 @@ import { SkillBase,Event, RoleInfo, SkillTriggerBase } from './skill_base';
 import { Camp, EventType, SkillType } from '../../other/enums';
 import { Battle } from '../battle';
 import { Role } from '../role';
+import * as enums from '../../other/enums'
 import { random } from '../util';
 
 export class Skill_RemoteAtk_3_1 extends SkillBase  
@@ -39,8 +40,7 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
 
             if(6>=this.numberOfRole && !this.isAll)
             {
-                
-                this.SkillEffect_1(selfInfo,battle,this.attack*(1+selfInfo.attack));
+                this.SkillEffect_1(selfInfo,battle,this.attack*(1+selfInfo.properties.get(enums.Property.Attack)));
             }
             else
             {
@@ -66,7 +66,6 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
             let recipientRoles:Role[] = new Array();
             let self:Role = null;
             let enemyRoles:Role[] = null;
-
             attack=Math.round(attack);                                          //四舍五入
             if(attack<1)
             {
