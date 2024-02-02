@@ -83,3 +83,11 @@ export enum StoreCommodityType
     None=0,
     CardPacket=1
 }
+
+export enum GameDifficulty
+{
+    None=0,
+    Simple=1,
+    Ordinary=2,
+    Hard=3
+}

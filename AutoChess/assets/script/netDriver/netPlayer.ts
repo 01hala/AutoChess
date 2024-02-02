@@ -147,6 +147,7 @@ export class netPlayer {
         this.c_player_caller.get_hub(this.player_name).buy_card_packet().callBack((cardpacket,bag)=>
         {
             this.cb_buy_card_packet(cardpacket,bag);
+            this.get_user_data();
         },(err)=>
         {
             console.log("buy card packet error:" + err);

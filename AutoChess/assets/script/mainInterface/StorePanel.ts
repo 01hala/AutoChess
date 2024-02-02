@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, instantiate, Node, PageView, Prefab, primitives, Sprite, Toggle } from 'cc';
+import { _decorator, Button, Component, instantiate, Node, PageView, Prefab, primitives, RichText, Sprite, Toggle } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../config/config';
@@ -21,6 +21,8 @@ export class StorePanel extends Component
     private rechargePage:Node;
 
     public toggleGroup:Node;
+
+    private cards:Node[]=[];
 
     onLoad()
     {
@@ -137,6 +139,7 @@ export class StorePanel extends Component
             let cardPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard") as Prefab;
             let jconfig=null;
             let i=100001;
+            let j=0;
             do
             {
                 //console.log("id: "+i);
@@ -144,6 +147,26 @@ export class StorePanel extends Component
                 if(jconfig!=null)
                 {
                     let card=instantiate(cardPre);
+                    try
+                    {
+                        if(singleton.netSingleton.mainInterface.playerData.playerBag.ItemList[j].isTatter)
+                        {
+                            card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).grayscale=true;
+                            card.getChildByPath("NumberText").getComponent(RichText).string=
+                                "<color=#000000>"+singleton.netSingleton.mainInterface.playerData.playerBag.ItemList[j].Number
+                                +"</color>"+"<color=#000000> | 8</color>";
+                        }
+                        else
+                        {
+                            card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).grayscale=false;
+                            card.getChildByPath("NumberText").active=false;
+                        }
+                    }
+                    catch(error)
+                    {
+
+                    }
+                    //this.cards.push(card);
                     this.cardListPage.addChild(card);
                     //card.getComponent(RoleCard).storePanel=this.node;
                     card.getComponent(RoleCard).Init(i);
@@ -152,7 +175,7 @@ export class StorePanel extends Component
                         this.cardListPage=instantiate(this.cardListPre);
                         this.pageView.addPage(this.cardListPage);
                     }
-                    i++;
+                    i++;j++;
                 }
             }
             while(jconfig!=null)
