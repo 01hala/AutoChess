@@ -98,11 +98,64 @@ export class StartGamePanel extends Component
         {
             this.athleticsWindow.active=false;
             this.amusementWindow.active=true;
+            this.amusementWindow.getChildByPath("Custom/Custom_Btn").on(Button.EventType.CLICK,()=>
+            {
+                let custom=this.amusementWindow.getChildByPath("CustomBoard");
+                this.OpenCustomBoard(custom);
+            },this);
         }
         catch(error)
         {
             console.error('StartGamePanel 下 OpenAmusementWindow 错误 err: ',error);
         }
+    }
+    //自定义面板
+    OpenCustomBoard(_customBoard:Node)
+    {
+        _customBoard.active=true;
+        //返回
+        _customBoard.on(Button.EventType.CLICK,()=>
+        {
+            _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+            _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+            _customBoard.active=false;
+        },this);
+        //创建
+        _customBoard.getChildByPath("Board/Create_Btn").on(Button.EventType.CLICK,()=>
+        {
+            let create=this.amusementWindow.getChildByPath("CreateRoomBoard");
+            _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+            _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+            this.OpenCreateRoomBoard(create);
+        },this);
+        //加入
+        _customBoard.getChildByPath("Board/Join_Btn").on(Button.EventType.CLICK,()=>
+        {
+
+        },this);
+    }
+    //创建房间
+    OpenCreateRoomBoard(_createRoomBoard:Node)
+    {
+        //确认
+        _createRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
+        {
+            
+        },this);
+        //取消
+        _createRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
+        {
+            _createRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
+            _createRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
+            _createRoomBoard.active=false;
+        },this);
+
+
+    }
+
+    OpenRoomWindow()
+    {
+        
     }
 
     private ClosePanel()
