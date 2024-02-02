@@ -66,14 +66,29 @@ export class PropIcon extends Component
         this.collider=this.node.getComponent(Collider2D);
         this.RegBtn(true);
     }
+
+    private checkPropType(propId:number) : PropsType {
+        if (propId >= 1001 && propId <= 1999) {
+            return PropsType.Food;
+        }
+
+        if (propId >= 3001 && propId <= 3999) {
+            return PropsType.Equip;
+        }
+
+        return PropsType.None;
+    }
+
     //初始化
-    async Init(_id:number,_type:PropsType,_freeze:boolean)
+    async Init(_id:number, _freeze:boolean)
     {
         try
         {
             this.originalPos = this.node.getPosition();
             this.propId = _id;
-            this.propType = _type;
+
+            
+            this.propType = this.checkPropType(this.propId);
             //let jconfig = null;
             // if (_type == PropsType.Food) 
             // {
@@ -117,6 +132,7 @@ export class PropIcon extends Component
         {
             case PropsType.Food:
                 {
+                    console.log("LoadOnConfig PropsType.Food this.propId:", this.propId);
                     jconfig = config.FoodConfig.get(this.propId);
                     this.effect = jconfig.Effect;
                     this.hpBonus = jconfig.HpBonus;
@@ -131,9 +147,19 @@ export class PropIcon extends Component
                 break;
             case PropsType.Equip:
                 {
-
+                    console.log("LoadOnConfig PropsType.Equip this.propId:", this.propId);
+                    jconfig = config.EquipConfig.get(this.propId);
+                    this.effect = jconfig.Effect;
+                    this.hpBonus = jconfig.HpBonus;
+                    this.attackBonus = jconfig.AttackBonus;
+                    //this.vaule=jconfig.value;        
+                    let img = await loadAssets.LoadImg(jconfig.AttackBonus.Res);
+                    if(img)
+                    {
+                        //EquipSprite不确定
+                        this.iconMask.getChildByPath("EquipSprite").getComponent(Sprite).spriteFrame = img;
+                    }
                 }
-            
         }
     }
 

@@ -145,6 +145,15 @@ namespace Player
                 info.lastTickStrengthTime = Timerservice.Tick;
             }
 
+            if (data.Contains("currentRolrGroup"))
+            {
+                info.currentRolrGroup = data.GetValue("currentRolrGroup").AsInt32;
+            }
+            else
+            {
+                info.currentRolrGroup = info.info.roleGroup[0].CardDeck;
+            }
+
             return info;
         }
 
@@ -180,7 +189,8 @@ namespace Player
                 { "Strength", info.Strength },
                 { "RoleList", roleList },
                 { "RoleGroup",  roleGroup },
-                { "lastTickStrengthTime", lastTickStrengthTime }
+                { "lastTickStrengthTime", lastTickStrengthTime },
+                { "currentRolrGroup", currentRolrGroup }
             };
             return doc;
         }
@@ -192,7 +202,15 @@ namespace Player
 
         public List<int> BattleRoleGroup()
         {
-            return info.roleGroup[currentRolrGroup].RoleList;
+            foreach(var roleGroup in info.roleGroup)
+            {
+                if (roleGroup.CardDeck == currentRolrGroup)
+                {
+                    return roleGroup.RoleList;
+                }
+            }
+
+            return null;
         }
 
         private void AddCardItem(RoleCardInfo infoCard)

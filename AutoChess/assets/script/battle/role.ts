@@ -82,28 +82,29 @@ export class Role {
             this.properties.set(k, v);
         })
 
+        let roleConfig = config.config.RoleConfig.get(this.id);
+        this.skillid = roleConfig.SkillID;
+        let skill = createSkill(roleConfig.SkillID, this.level);
+        if (skill) {
+            this.skill.push(skill);
+        }
+        else {
+            let buffer = createBuffer(roleConfig.SkillID);
+            if (buffer) {
+                this.buffer.push(buffer);
+            }
+        }
 
         if(additionSkill)
         {
-            let roleConfig = config.config.RoleConfig.get(this.id);
-            this.skillid = roleConfig.SkillID;
-    
-            let skill = createSkill(roleConfig.SkillID, this.level);
             let additionSkills:SkillInfo[];
             if(additionSkill&&additionSkill.length>0){            
                 for(let t of additionSkill){
                     additionSkills.push(createSkill(t,this.level));
                 }
             }
-            if (skill||additionSkills.length>0) {
-                this.skill.push(skill);
+            if (additionSkills.length>0) {
                 for(let t of additionSkills) this.skill.push(t);
-            }
-            else {
-                let buffer = createBuffer(roleConfig.SkillID);
-                if (buffer) {
-                    this.buffer.push(buffer);
-                }
             }
     
             if (fetters && fetters.fetters_level > 0) {
@@ -389,8 +390,12 @@ export class Role {
         
         let list = this.getShareDamageArray(battle);
         let substituteTuple = this.getSubstituteDamage(battle);
-        let substitute=substituteTuple[0];
-        let value=substituteTuple[1];
+        let substitute = null;
+        let value = 0;
+        if (substituteTuple) {
+            substitute=substituteTuple[0];
+            value=substituteTuple[1];
+        }
         let damage = enemy.GetProperty(enums.Property.Attack) + enemy.getintensifierAtk() / list.length;
         console.log("role Attack list.length:", list.length + " camp:", this.selfCamp);
         for (let r of list) {

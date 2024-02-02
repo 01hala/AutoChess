@@ -85,6 +85,12 @@ export class Queue extends Component
  * 2023/10/31
  * 召唤角色
  */
+/*
+ * 修改
+ * author：Guanliu
+ * 2024/1/30
+ * 召唤角色
+ */
     async SummonRole(r:role.Role[],spellcaster:RoleInfo)
     {
         try
@@ -97,26 +103,23 @@ export class Queue extends Component
                     console.warn("Queue 下的 SummonRole 读取的 role 为空");
                     break;
                 }
-                let emptyIndex=-1;
-                for(let j=0;j<this.roleNodes.length;j++)
+                // let emptyIndex=-1;
+                // for(let j=0;j<this.roleNodes.length;j++)
+                // {
+                //     if(null==this.roleNodes[j])
+                //     {
+                //         emptyIndex=j;
+                //         break;
+                //     }
+                // }
+                if(-1!=r[i].index)
                 {
-                    if(null==this.roleNodes[j])
-                    {
-                        emptyIndex=j;
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-                if(-1!=emptyIndex)
-                {
-                    let roleNode = this.roleNodes[spellcaster.index];
+                    console.log("Summon a character with ID "+r[i].id+" at position "+r[i].index);
+                    let roleNode = this.roleNodes[r[i].index];
                     role.position = roleNode.position;
-                    await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[emptyIndex].position);
+                    await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].position);
                 }
-                else if(-1==emptyIndex)
+                else if(-1==r[i].index)
                 {
                     await role.getComponent(RoleDis.RoleDis).Exit();
                 }
