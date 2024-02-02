@@ -1,10 +1,11 @@
-import { _decorator, Animation, animation, Button, Component, instantiate, Node, Prefab, Toggle, tween } from 'cc';
+import { _decorator, Animation, animation, Button, Component, instantiate, Node, Prefab, RichText, Toggle, tween } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
 import { Bag, RoleCardInfo, UserData } from '../serverSDK/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from './StorePrompt';
+import { StartGamePanel } from './StartGamePanel';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -37,9 +38,7 @@ export class MainInterface
     //各区域按钮
     private startBtn:Node;
     private storeBtn:Node;
-
-    private startGameBtn:Node;
-    private BackMainBtn:Node;
+    private amusementBtn:Node;
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -49,6 +48,14 @@ export class MainInterface
     public storePrompt:Node;
     //玩家信息
     public playerData:PlyaerAccount;
+    private userMoney:Node;
+    private userDiamonds:Node;
+
+    constructor()
+    {
+        this.RegCallBack();
+        this.playerData=new PlyaerAccount();
+    }
 
     async start(father:Node)
     {
@@ -79,11 +86,12 @@ export class MainInterface
     
             this.startBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");
             this.storeBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");
-    
-            this.startGameBtn=this.mainNode.getChildByPath("StartGamePanel/StartGame_Btn");
-            this.BackMainBtn=this.mainNode.getChildByPath("StartGamePanel/Back_Btn");
-    
+            this.amusementBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");
+
             this.btnList=this.mainNode.getChildByPath("MainPanel/UiLayer/BtnList");
+
+            this.userMoney=this.mainNode.getChildByPath("MainPanel/UiLayer/UserMoney");
+            this.userDiamonds=this.mainNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
             
             this.Init();
         }
@@ -98,17 +106,21 @@ export class MainInterface
     {
         try
         {
-            this.RegCallBack();
-            this.playerData=new PlyaerAccount();
-
             this.startGamePanel.active=false;
             this.storePanel.active=false;
     
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
                 this.startGamePanel.active=true;
-                this.mainPanel.active=false;
+                this.startGamePanel.getComponent(StartGamePanel).OpenAthleticsWindow();
+                //this.mainPanel.active=false;
     
+            },this);
+
+            this.amusementBtn.on(Button.EventType.CLICK,()=>
+            {
+                this.startGamePanel.active=true;
+                this.startGamePanel.getComponent(StartGamePanel).OpenAmusementWindow();
             },this);
     
             this.storeBtn.on(Button.EventType.CLICK,()=>
@@ -118,22 +130,7 @@ export class MainInterface
                 this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
                 this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked=true;
             },this);
-    
-            this.startGameBtn.on(Button.EventType.CLICK,()=>
-            {
-                //开始准备阶段
-                this.startGamePanel.active=false;
-                this.mainPanel.active=false;
-                singleton.netSingleton.game.start_battle();
-    
-            },this);
-    
-            this.BackMainBtn.on(Button.EventType.CLICK,()=>
-            {
-                this.startGamePanel.active=false;
-                this.mainPanel.active=true;
-            },this);
-    
+
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
             {
                 this.btnListSwitch=!this.btnListSwitch;
@@ -180,6 +177,12 @@ export class MainInterface
         singleton.netSingleton.player.cb_edit_role_group=(_userInfo:UserData)=>
         {
             //回调编辑卡组
+        }
+        singleton.netSingleton.player.cb_get_user_data=(_playerInfo:UserData)=>
+        {
+            this.playerData.money=_playerInfo.gold;
+            this.playerData.playerBag=_playerInfo.bag;
+            this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_playerInfo.gold;
         }
     }
 

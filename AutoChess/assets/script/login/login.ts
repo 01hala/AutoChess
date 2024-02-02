@@ -139,6 +139,7 @@ export class login extends Component {
             this._setProgress(this._progress);
             //进入主界面
             singleton.netSingleton.mainInterface=new MainInterface();
+            singleton.netSingleton.player.get_user_data();
             await singleton.netSingleton.mainInterface.start(this.bk.node);
             this._setProgress(1.0);
             this._loading.done();
