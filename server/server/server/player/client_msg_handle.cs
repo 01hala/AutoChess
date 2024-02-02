@@ -37,7 +37,7 @@ namespace Player
         {
             Log.Log.trace("on_get_user_data begin!");
 
-            var rsp = player_shop_Module.rsp as player_shop_edit_role_group_rsp;
+            var rsp = player_shop_Module.rsp as player_shop_get_user_data_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
 
             try
