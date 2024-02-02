@@ -67,8 +67,8 @@ export class StartGamePanel extends Component
             console.error('StartGamePanel 下 start 错误 err: ',error);
         }
     }
-    //竞技
-    OpenAthleticsWindow()
+    //竞技模式窗口
+    public OpenAthleticsWindow()
     {
         try
         {
@@ -91,8 +91,8 @@ export class StartGamePanel extends Component
             console.error('StartGamePanel 下 OpenAthleticsWindow 错误 err: ',error);
         }
     }
-    //娱乐
-    OpenAmusementWindow()
+    //娱乐模式窗口
+    public OpenAmusementWindow()
     {
         try
         {
@@ -101,7 +101,7 @@ export class StartGamePanel extends Component
             this.amusementWindow.getChildByPath("Custom/Custom_Btn").on(Button.EventType.CLICK,()=>
             {
                 let custom=this.amusementWindow.getChildByPath("CustomBoard");
-                this.OpenCustomBoard(custom);
+                this.ShowCustomBoard(custom);
             },this);
         }
         catch(error)
@@ -109,53 +109,102 @@ export class StartGamePanel extends Component
             console.error('StartGamePanel 下 OpenAmusementWindow 错误 err: ',error);
         }
     }
-    //自定义面板
-    OpenCustomBoard(_customBoard:Node)
+    //自定义游戏面板
+    private ShowCustomBoard(_customBoard:Node)
     {
-        _customBoard.active=true;
-        //返回
-        _customBoard.on(Button.EventType.CLICK,()=>
+        try
         {
-            _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
-            _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-            _customBoard.active=false;
-        },this);
-        //创建
-        _customBoard.getChildByPath("Board/Create_Btn").on(Button.EventType.CLICK,()=>
+            _customBoard.active=true;
+            //返回
+            _customBoard.on(Button.EventType.CLICK,()=>
+            {
+                _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+                _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+                _customBoard.active=false;
+            },this);
+            //创建
+            _customBoard.getChildByPath("Board/Create_Btn").on(Button.EventType.CLICK,()=>
+            {
+                let create=this.amusementWindow.getChildByPath("CreateRoomBoard");
+                _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+                _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+                _customBoard.active=false;
+                this.ShowCreateRoomBoard(create);
+            },this);
+            //加入
+            _customBoard.getChildByPath("Board/Join_Btn").on(Button.EventType.CLICK,()=>
+            {
+                let join=this.amusementWindow.getChildByPath("JoinRoomBoard");
+                _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+                _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+                _customBoard.active=false;
+                this.ShowJoinRoomeBoard(join);
+            },this);
+        }
+        catch(error)
         {
-            let create=this.amusementWindow.getChildByPath("CreateRoomBoard");
-            _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
-            _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-            this.OpenCreateRoomBoard(create);
-        },this);
-        //加入
-        _customBoard.getChildByPath("Board/Join_Btn").on(Button.EventType.CLICK,()=>
-        {
-
-        },this);
+            console.error('StartGamePanel 下 OpenCustomBoard 错误 err: ',error);
+        }
     }
-    //创建房间
-    OpenCreateRoomBoard(_createRoomBoard:Node)
+    //创建房间面板
+    private ShowCreateRoomBoard(_createRoomBoard:Node)
     {
-        //确认
-        _createRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
+        try
         {
-            
-        },this);
-        //取消
-        _createRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
+            _createRoomBoard.active=true;
+            //确认
+            _createRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
+            {
+                
+            },this);
+            //取消
+            _createRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
+            {
+                _createRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
+                _createRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
+                _createRoomBoard.active=false;
+            },this);
+        }
+        catch(error)
         {
-            _createRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
-            _createRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
-            _createRoomBoard.active=false;
-        },this);
-
-
+            console.error('StartGamePanel 下 ShowCreateRoomBoard 错误 err: ',error);
+        }
+    }
+    //加入房间面板
+    private ShowJoinRoomeBoard(_joinRoomBoard:Node)
+    {
+        try
+        {
+            _joinRoomBoard.active=true;
+            //确认
+            _joinRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
+            {
+    
+            },this);
+            //取消
+            _joinRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
+            {
+                _joinRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
+                _joinRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
+                _joinRoomBoard.active=false;
+            },this);
+        }
+        catch(error)
+        {
+            console.error('StartGamePanel 下 ShowJoinRoomeBoard 错误 err: ',error);
+        }
     }
 
     OpenRoomWindow()
     {
-        
+        try
+        {
+
+        }
+        catch(error)
+        {
+
+        }
     }
 
     private ClosePanel()
