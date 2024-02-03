@@ -81,6 +81,7 @@ namespace Player
                     },
                     Strength = 100,
                     gold = 100,
+                    diamond = 10,
                     bag = new Abelkhan.Bag(),
                     RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,
@@ -100,7 +101,10 @@ namespace Player
                         UserName = string.Empty,
                         UserGuid = 0,
                     },
+                    bag = new Abelkhan.Bag(),
                     Strength = 0,
+                    gold = 0,
+                    diamond = 0,
                     RoleList = new (),
                     roleGroup = new(),
                 }
@@ -134,6 +138,39 @@ namespace Player
                 }
 
                 info.info.roleGroup.Add(roleGroup);
+            }
+
+            var itemList = new List<RoleCardInfo>();
+            foreach (var item in data.GetValue("bag").AsBsonArray)
+            {
+                var roleID = item.AsBsonDocument.GetValue("roleID").AsInt32;
+                var Number = item.AsBsonDocument.GetValue("Number").AsInt32;
+                var isTatter = item.AsBsonDocument.GetValue("isTatter").AsBoolean;
+
+                itemList.Add(new RoleCardInfo() { 
+                    roleID= roleID,
+                    Number = Number,
+                    isTatter = isTatter
+                });
+            }
+            info.info.bag.ItemList = itemList;
+
+            if (data.Contains("gold"))
+            {
+                info.info.gold = data.GetValue("gold").AsInt32;
+            }
+            else
+            {
+                info.info.gold = 100;
+            }
+
+            if (data.Contains("diamond"))
+            {
+                info.info.diamond = data.GetValue("diamond").AsInt32;
+            }
+            else
+            {
+                info.info.diamond = 10;
             }
 
             if (data.Contains("lastTickStrengthTime"))
@@ -183,12 +220,22 @@ namespace Player
                 roleGroup.Add(_RoleGroup);
             }
 
+            var itemList = new BsonArray();
+            foreach (var item in info.bag.ItemList)
+            {
+                var i = new BsonDocument { { "roleID", item.roleID }, { "Number", item.Number }, { "isTatter", item.isTatter } };
+                itemList.Add(i);
+            }
+
             var doc = new BsonDocument
             {
                 { "User", new BsonDocument { {"UserName", info.User.UserName}, { "UserUid", info.User.UserGuid} } },
                 { "Strength", info.Strength },
+                { "gold", info.gold },
+                { "diamond", info.diamond },
                 { "RoleList", roleList },
                 { "RoleGroup",  roleGroup },
+                { "bag", itemList },
                 { "lastTickStrengthTime", lastTickStrengthTime },
                 { "currentRolrGroup", currentRolrGroup }
             };

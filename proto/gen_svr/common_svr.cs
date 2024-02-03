@@ -234,6 +234,7 @@ namespace Abelkhan
         public UserInformation User;
         public Int32 Strength;
         public Int32 gold;
+        public Int32 diamond;
         public Bag bag;
         public List<Int32> RoleList;
         public List<RoleGroup> roleGroup;
@@ -246,6 +247,7 @@ namespace Abelkhan
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("Strength", _struct.Strength);
             _protocol.Add("gold", _struct.gold);
+            _protocol.Add("diamond", _struct.diamond);
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
@@ -278,6 +280,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "gold"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.gold = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "diamond"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.diamond = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());

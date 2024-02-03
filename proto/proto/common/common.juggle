@@ -25,6 +25,7 @@ struct UserData
 	UserInformation User;	// 用户信息
 	int32 Strength;			// 体力
 	int32 gold;				// 金币
+	int32 diamond;			// 钻石
 	Bag bag;				// 背包
 	int32[] RoleList; 		// 已有角色列表
 	RoleGroup[] roleGroup;	// 卡组 玩家自行编辑
