@@ -15,6 +15,7 @@ export class StorePanel extends Component
     private storePagePre:Prefab;
     private cardListPre:Prefab;
     private rechargePre:Prefab;
+    private roleCardPre:Prefab;
 
     private storePage:Node;
     private cardListPage:Node;
@@ -41,6 +42,22 @@ export class StorePanel extends Component
 
         },this);
 
+        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage");
+        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage");
+        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage");
+        let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard")
+        
+        let awaitResult=await Promise.all(
+            [
+                storePagePrePromise,
+                cardListPrePromise,
+                rechargePrePromise,
+                roleCardPrePromise
+        ]);
+        this.storePagePre=awaitResult[0] as Prefab;
+        this.cardListPre=awaitResult[1] as Prefab;
+        this.rechargePre=awaitResult[2] as Prefab;
+        this.roleCardPre=awaitResult[3] as Prefab;
         //this.CheckStoreToggle();
 
     }
@@ -136,7 +153,7 @@ export class StorePanel extends Component
         try
         {
             console.log("LoadCard!!!");
-            let cardPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard") as Prefab;
+            //let cardPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard") as Prefab;
             let jconfig=null;
             let i=100001;
             let j=0;
@@ -146,7 +163,7 @@ export class StorePanel extends Component
                 jconfig=config.RoleConfig.get(i);
                 if(jconfig!=null)
                 {
-                    let card=instantiate(cardPre);
+                    let card=instantiate(this.roleCardPre);
                     try
                     {
                         if(singleton.netSingleton.mainInterface.playerData.playerBag.ItemList[j].isTatter)
@@ -164,7 +181,7 @@ export class StorePanel extends Component
                     }
                     catch(error)
                     {
-
+                        console.error('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
                     }
                     //this.cards.push(card);
                     this.cardListPage.addChild(card);
