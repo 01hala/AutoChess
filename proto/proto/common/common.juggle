@@ -136,6 +136,7 @@ struct UserBattleData
 	UserInformation User; // 用户信息
 	int32 coin;
 	int32 round;
+	int32 stage;
 	int32 victory;
 	int32 faild;
 	int32 buildValue;

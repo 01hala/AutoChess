@@ -73,6 +73,7 @@ namespace Match
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
                 _player.BattleData.round++;
+                _player.BattleData.stage = (_player.BattleData.round + 1) / 2;
                 Match._redis_handle.PushList($"AutoChess:battle:{_player.BattleData.round}", _player.BattleData);
 
                 if (is_victory == battle_victory.victory)

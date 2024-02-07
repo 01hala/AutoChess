@@ -450,6 +450,7 @@ namespace Abelkhan
         public UserInformation User;
         public Int32 coin;
         public Int32 round;
+        public Int32 stage;
         public Int32 victory;
         public Int32 faild;
         public Int32 buildValue;
@@ -464,6 +465,7 @@ namespace Abelkhan
             _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("coin", _struct.coin);
             _protocol.Add("round", _struct.round);
+            _protocol.Add("stage", _struct.stage);
             _protocol.Add("victory", _struct.victory);
             _protocol.Add("faild", _struct.faild);
             _protocol.Add("buildValue", _struct.buildValue);
@@ -498,6 +500,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "round"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.round = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "stage"){
+                    _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.stage = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "victory"){
                     _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f.victory = ((MsgPack.MessagePackObject)i.Value).AsInt32();

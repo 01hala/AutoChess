@@ -15,9 +15,9 @@ export class Loading {
             }
 
             let progressBar = this._load.getChildByName("Progress").getComponent(ProgressBar);
-            progressBar.progress = 1.0;
+            progressBar.progress = 0;
             
-            return (progress:number) => { progressBar.progress = 1 - progress; }
+            return (progress:number) => { progressBar.progress = 0 + progress; }
         }
         catch(err) {
             console.log(err);

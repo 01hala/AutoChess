@@ -364,6 +364,7 @@ export class UserBattleData
     public User : UserInformation | null = null;
     public coin : number = 0;
     public round : number = 0;
+    public stage : number = 0;
     public victory : number = 0;
     public faild : number = 0;
     public buildValue : number = 0;
@@ -391,6 +392,9 @@ export function protcol_to_UserBattleData(_protocol:any){
         }
         else if (key === "round"){
             _struct.round = val as number;
+        }
+        else if (key === "stage"){
+            _struct.stage = val as number;
         }
         else if (key === "victory"){
             _struct.victory = val as number;
