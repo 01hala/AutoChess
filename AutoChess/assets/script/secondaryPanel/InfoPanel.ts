@@ -2,18 +2,13 @@ import { _decorator, BlockInputEvents, Button, Component, Label, Node, RichText,
 import { PropsType } from '../other/enums';
 import { Team } from '../battle/team';
 import { RoleDis } from '../battle/display/RoleDis';
+import { RoleInfo } from '../battle/skill/skill_base';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
 export class InfoPanel extends Component 
 {
     private exitBtn:Button;
-    //private infoLabel:Label;
-    //private nameText:RichText;
-    private levelText:RichText;
-    // private atkText:RichText;
-    // private hpText:RichText;
-    // private sculpture:Sprite;
 
     private simpleBoard:Node;
     private detailedBoard:Node;
@@ -22,14 +17,7 @@ export class InfoPanel extends Component
     {
         this.node.getComponent(BlockInputEvents).enabled=false;
         this.exitBtn=this.node.getChildByPath("Detailed/Exit_Btn").getComponent(Button);
-        
-        //this.infoLabel=this.node.getChildByPath("Detailed/RoleIntroduce").getComponent(Label);
-        //this.nameText=this.node.getChildByPath("Detailed/RoleName").getComponent(RichText);
-        this.levelText=this.node.getChildByPath("Detailed/RoleLevel").getComponent(RichText);
-        // this.atkText=this.node.getChildByPath("Detailed/AtkNum").getComponent(RichText);
-        // this.hpText=this.node.getChildByPath("Detailed/HpNum").getComponent(RichText);
-        //this.sculpture=this.node.getChildByPath("Detailed/Sculpture/Sprite").getComponent(Sprite);
-
+    
         this.simpleBoard=this.node.getChildByPath("Simple");
         this.detailedBoard=this.node.getChildByPath("Detailed");
     }
@@ -49,7 +37,7 @@ export class InfoPanel extends Component
         },this);
     }
     
-    OpenInfoBoard(id:number,role?:RoleDis,propType?:PropsType)
+    OpenInfoBoard(id:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
     {
         try
         {
@@ -68,24 +56,24 @@ export class InfoPanel extends Component
             }
             else
             {
-                if(null==role){
+                if(null==role||!isBuy){
                     this.simpleBoard.active=true;
                     this.detailedBoard.active=false;
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
+                    this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
                 } 
                 else{
                     this.simpleBoard.active=false;
                     this.detailedBoard.active=true;
                     this.node.setSiblingIndex(99);
-                    this.node.getComponent(BlockInputEvents).enabled=true;
-                    //"<color=0>1</color>"
-                    
+                    this.node.getComponent(BlockInputEvents).enabled=true;  
                     this.detailedBoard.getChildByPath("RoleData/RoleName").getComponent(RichText).string="<color=0>"+role.RoleId+"</color>";
                     this.detailedBoard.getChildByPath("RoleData/RoleLevel").getComponent(RichText).string="<color=0>"+role.Level+"</color>";
                     this.detailedBoard.getChildByPath("RoleData/AtkNum").getComponent(RichText).string="<color=0>"+role.AtkNum+"</color>";
                     this.detailedBoard.getChildByPath("RoleData/HpNum").getComponent(RichText).string="<color=0>"+role.Hp+"</color>";
+                    this.detailedBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
                 }   
             }
         }

@@ -133,7 +133,7 @@ export class RoleIcon extends Component
                     singleton.netSingleton.ready.infoPanel.active = true;
                     let roleInfo :RoleDis=null;
                     if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo);
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
                 });
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
@@ -326,7 +326,8 @@ export class RoleIcon extends Component
                 singleton.netSingleton.ready.infoPanel.active=true;
                 let roleInfo :RoleDis=null;
                 if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo);
+                
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
             });
         }
         else

@@ -37,6 +37,8 @@ export class RoleDis extends Component
     //等级和经验
     public Level: number;
     public Exp:number;
+    //角色立绘
+    public roleSprite:SpriteFrame;
     //角色信息
     private roleInfo: Role = null;
     //生命和攻击文本
@@ -111,7 +113,8 @@ export class RoleDis extends Component
             let sf:SpriteFrame=await this.LoadImg("RolesImg",str);
             if(sf)
             {
-                this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;
+                this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;   
+                this.roleSprite=sf;             
             }
         }
         await this.changeAtt();
@@ -411,7 +414,7 @@ export class RoleDis extends Component
             let texture=new Texture2D();
             texture.image=temp;
             let sp=new SpriteFrame();
-            sp.texture=texture;
+            sp.texture=texture;  
             resolve(sp);
         });
     }
