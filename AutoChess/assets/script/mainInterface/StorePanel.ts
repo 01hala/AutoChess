@@ -15,6 +15,7 @@ export class StorePanel extends Component
     private storePagePre:Prefab;
     private cardListPre:Prefab;
     private rechargePre:Prefab;
+    private roleCardPre:Prefab;
 
     private storePage:Node;
     private cardListPage:Node;
@@ -41,7 +42,22 @@ export class StorePanel extends Component
 
         },this);
 
-        //this.CheckStoreToggle();
+        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage");
+        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage");
+        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage");
+        let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard")
+        
+        let awaitResult=await Promise.all(
+            [
+                storePagePrePromise,
+                cardListPrePromise,
+                rechargePrePromise,
+                roleCardPrePromise
+        ]);
+        this.storePagePre=awaitResult[0] as Prefab;
+        this.cardListPre=awaitResult[1] as Prefab;
+        this.rechargePre=awaitResult[2] as Prefab;
+        this.roleCardPre=awaitResult[3] as Prefab;
 
     }
 
@@ -63,7 +79,6 @@ export class StorePanel extends Component
                 this.pageView.addPage(this.storePage);
 
                 this.InitStore();
-                //this.pageViewContent.addChild(this.storePage);
             }
             
         }
@@ -88,7 +103,6 @@ export class StorePanel extends Component
                 }
                 this.cardListPage = instantiate(this.cardListPre);
                 this.pageView.addPage(this.cardListPage);
-                //this.pageViewContent.addChild(this.cardListPage);
                 this.LoadCard();
             }
            
@@ -113,7 +127,6 @@ export class StorePanel extends Component
                 }
                 this.rechargePage = instantiate(this.rechargePre);
                 this.pageView.addPage(this.rechargePage);
-                //this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).addPage(this.cardListPage);
             }
             
         }
@@ -136,7 +149,6 @@ export class StorePanel extends Component
         try
         {
             console.log("LoadCard!!!");
-            let cardPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard") as Prefab;
             let jconfig=null;
             let i=100001;
             let j=0;
@@ -146,30 +158,31 @@ export class StorePanel extends Component
                 jconfig=config.RoleConfig.get(i);
                 if(jconfig!=null)
                 {
-                    let card=instantiate(cardPre);
+                    let card=instantiate(this.roleCardPre);
+                    card.getComponent(RoleCard).Init(i);
                     try
                     {
-                        if(singleton.netSingleton.mainInterface.playerData.playerBag.ItemList[j].isTatter)
+                        if(singleton.netSingleton.mainInterface.userData.playerBag.ItemList[j].isTatter)
                         {
-                            card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).grayscale=true;
-                            card.getChildByPath("NumberText").getComponent(RichText).string=
-                                "<color=#000000>"+singleton.netSingleton.mainInterface.playerData.playerBag.ItemList[j].Number
-                                +"</color>"+"<color=#000000> | 8</color>";
+                            card.getComponent(RoleCard).Lock=true;
+                            card.getComponent(RoleCard).SetNumberText
+                            (
+                                singleton.netSingleton.mainInterface.userData.playerBag.ItemList[j].Number,8
+                            );
                         }
                         else
                         {
-                            card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).grayscale=false;
+                            card.getComponent(RoleCard).Lock=false;
                             card.getChildByPath("NumberText").active=false;
                         }
                     }
                     catch(error)
                     {
-
+                        console.error('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
                     }
                     //this.cards.push(card);
                     this.cardListPage.addChild(card);
                     //card.getComponent(RoleCard).storePanel=this.node;
-                    card.getComponent(RoleCard).Init(i);
                     if(i%8==0)
                     {
                         this.cardListPage=instantiate(this.cardListPre);

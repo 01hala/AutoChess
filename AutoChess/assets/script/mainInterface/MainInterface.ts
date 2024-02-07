@@ -9,7 +9,7 @@ import { StartGamePanel } from './StartGamePanel';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
-export class PlyaerAccount
+export class UserAccount
 {
     public money:number;//金币
     public diamond:number;//钻石
@@ -47,14 +47,14 @@ export class MainInterface
     public infoPanel:Node;
     public storePrompt:Node;
     //玩家信息
-    public playerData:PlyaerAccount;
+    public userData:UserAccount;
     private userMoney:Node;
     private userDiamonds:Node;
 
     constructor()
     {
         this.RegCallBack();
-        this.playerData=new PlyaerAccount();
+        this.userData=new UserAccount();
     }
 
     async start(father:Node)
@@ -167,7 +167,7 @@ export class MainInterface
             //回调打开弹窗显示获得的卡牌或者碎片
             if(_bagInfo && _cardPacketInfo)
             {
-                this.playerData.playerBag=_bagInfo;
+                this.userData.playerBag=_bagInfo;
                 this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
             }
         };
@@ -179,11 +179,13 @@ export class MainInterface
         {
             //回调编辑卡组
         }
-        singleton.netSingleton.player.cb_get_user_data=(_playerInfo:UserData)=>
+        singleton.netSingleton.player.cb_get_user_data=(_userInfo:UserData)=>
         {
-            this.playerData.money=_playerInfo.gold;
-            this.playerData.playerBag=_playerInfo.bag;
-            //this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_playerInfo.gold;
+            this.userData.money=_userInfo.gold;
+            this.userData.playerBag=_userInfo.bag;
+            this.userData.diamond=_userInfo.diamond;
+            this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.gold;
+            this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.diamond;
         }
     }
 

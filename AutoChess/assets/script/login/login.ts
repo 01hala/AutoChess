@@ -15,6 +15,7 @@ import { BundleManager } from '../bundle/BundleManager';
 import { Ready } from '../ready/Ready';
 import { ReadyDis } from '../ready/display/ReadyDis';
 import { MainInterface } from '../mainInterface/MainInterface';
+import { sleep } from '../other/sleep';
 
 @ccclass('login')
 export class login extends Component {
@@ -135,12 +136,12 @@ export class login extends Component {
         };
 
         singleton.netSingleton.player.cb_player_login_sucess = async () => {
-            this._progress += 0.1;
+            this._progress += 0.5;
             this._setProgress(this._progress);
             //进入主界面
             singleton.netSingleton.mainInterface=new MainInterface();
-            singleton.netSingleton.player.get_user_data();
             await singleton.netSingleton.mainInterface.start(this.bk.node);
+            singleton.netSingleton.player.get_user_data();
             this._setProgress(1.0);
             this._loading.done();
             //开始准备阶段
@@ -151,6 +152,14 @@ export class login extends Component {
         //准备阶段
         singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData , fetters_info:common.Fetters[]) => {
             //singleton.netSingleton.game.battle();
+            this._progress=0.1;
+            this._setProgress = this._loading.load(this.bk.node);
+
+            setInterval(()=>{
+                this._progress += 0.01;
+                this._setProgress(this._progress);
+            }, 800);
+
             if(null==singleton.netSingleton.ready)
             {
                 if (singleton.netSingleton.battle) {

@@ -1,7 +1,8 @@
-import { _decorator, Button, Component, debug, log, Node, Sprite } from 'cc';
+import { _decorator, Button, Component, debug, log, Node, RichText, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
+import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleCard')
@@ -10,6 +11,7 @@ export class RoleCard extends Component
     private spr:Sprite;
 
     private lock:boolean=false;
+    private numberText:RichText;
 
     public roleId:number = 0;
 
@@ -27,6 +29,7 @@ export class RoleCard extends Component
     protected onLoad(): void 
     {
         this.spr=this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite);
+        this.numberText=this.node.getChildByPath("NumberText").getComponent(RichText);
     }
 
 
@@ -47,16 +50,30 @@ export class RoleCard extends Component
         try
         {
             this.roleId=_id;
-            let path="Avatar/Role_"+this.roleId;
-            let img=await loadAssets.LoadImg(path);
-            if(img)
-            {
-                this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
-            }
+            
+            await this.LoadOnConfig();
         }
         catch(error)
         {
             console.error('RoleCard 下 Init 错误 err: ',error);
+        }
+    }
+
+    public SetNumberText(_molecule:number,_denominator:number)
+    {
+        this.numberText.string=
+        "<color=#000000>"+ _molecule + "</color>" +
+        "<color=#000000> | "+ _denominator +"</color>";
+    }
+
+    private async LoadOnConfig()
+    {
+        let jconfig = null;
+        jconfig = config.RoleConfig.get(this.roleId);
+        let img = await loadAssets.LoadImg(jconfig.Avatar);
+        if(img)
+        {
+            this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
         }
     }
 

@@ -407,7 +407,7 @@ export class RoleDis extends Component
             let temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
             if(null==temp)
             {
-                 console.warn('propIcon 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
+                 console.warn('RoleDis 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
                  resolve(null);
                  //imgRes=""+_address+1001;
                  //temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
