@@ -28,7 +28,8 @@ export class ShopArea extends Component
     public propIcon:Node;
     //物体位置
     public rolesSquare:Node[]=[];
-    public PropsSquare:Node[]=[];
+    public FoodSquare:Node[]=[];
+    public EquipSquare:Node;
     @property(Node)
     public panel:Node;
     public cam:Node;
@@ -47,10 +48,11 @@ export class ShopArea extends Component
         {
             this.rolesSquare.push(t);
         }
-        for(let t of this.node.getChildByPath("TopArea/Prop").children)
+        for(let t of this.node.getChildByPath("TopArea/Food").children)
         {
-            this.PropsSquare.push(t);
+            this.FoodSquare.push(t);
         }
+        this.EquipSquare=this.node.getChildByPath("TopArea/EquipSquare");
         this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
         this.freezeArea=this.node.getChildByPath("FreezeArea");
         this.cam=this.panel.parent.getChildByPath("Camera");
@@ -119,7 +121,7 @@ export class ShopArea extends Component
                     let newNode=instantiate(this.propIcon);
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
-                    newNode.setWorldPosition(this.PropsSquare[i].worldPosition);
+                    newNode.setWorldPosition(this.FoodSquare[i].worldPosition);
                     console.log("props id:"+props[i].PropID)
                     newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
                     this.shopProps.push(newNode);

@@ -8,9 +8,16 @@ import * as role from './role'
 import * as battle from './battle'
 import * as enums from '../other/enums'
 
+export class RoleBattleInfo {
+    public roundAtkCount:number;
+    public roundRemoteAtkCount : number;
+    public roundBeAtkCount : number;
+}
+
 export class Team {
     private roleList : role.Role[];
     private battleData : common.UserBattleData;
+    private roleBattleInfo : Map<number,RoleBattleInfo>;//根据站位查找角色在当前回合的战斗相关数据
 
     public constructor(selfCamp: enums.Camp, battleData:common.UserBattleData, RoleList : common.Role[] ) {
         this.roleList = [];

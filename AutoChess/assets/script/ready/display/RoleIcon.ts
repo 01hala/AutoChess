@@ -130,7 +130,9 @@ export class RoleIcon extends Component
                 //重新注册按钮事件
                 this.node.on(Button.EventType.CLICK, () => {
                     singleton.netSingleton.ready.infoPanel.active = true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenDetailed(this.roleId);
+                    let roleInfo :role.Role=null;
+                    if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis).GetRoleInfo();
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo);
                 });
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
@@ -310,7 +312,9 @@ export class RoleIcon extends Component
             this.node.on(Button.EventType.CLICK,()=>
             {
                 singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenDetailed(this.roleId);
+                let roleInfo :role.Role=null;
+                if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis).GetRoleInfo();
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo);
             });
         }
         else
