@@ -166,11 +166,11 @@ export class StorePanel extends Component
                     let card=instantiate(this.roleCardPre);
                     try
                     {
-                        if(singleton.netSingleton.mainInterface.playerData.playerBag.ItemList[j].isTatter)
+                        if(singleton.netSingleton.mainInterface.userData.playerBag.ItemList[j].isTatter)
                         {
                             card.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).grayscale=true;
                             card.getChildByPath("NumberText").getComponent(RichText).string=
-                                "<color=#000000>"+singleton.netSingleton.mainInterface.playerData.playerBag.ItemList[j].Number
+                                "<color=#000000>"+singleton.netSingleton.mainInterface.userData.playerBag.ItemList[j].Number
                                 +"</color>"+"<color=#000000> | 8</color>";
                         }
                         else
