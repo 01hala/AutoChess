@@ -111,6 +111,7 @@ export class MainInterface
     
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
+                console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePanel.active=true;
                 this.startGamePanel.getComponent(StartGamePanel).OpenAthleticsWindow();
                 //this.mainPanel.active=false;
@@ -182,7 +183,7 @@ export class MainInterface
         {
             this.playerData.money=_playerInfo.gold;
             this.playerData.playerBag=_playerInfo.bag;
-            this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_playerInfo.gold;
+            //this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_playerInfo.gold;
         }
     }
 

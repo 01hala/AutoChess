@@ -82,6 +82,7 @@ export class StartGamePanel extends Component
             //匹配
             this.athleticsWindow.getChildByPath("Normal/Normal_Btn").on(Button.EventType.CLICK,()=>
             {
+                console.log("Normal_Btn start_battle!");
                 this.node.parent.active=false;
                 singleton.netSingleton.game.start_battle();
             },this);
