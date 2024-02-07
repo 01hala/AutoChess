@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, debug, log, Node, Sprite } from 'cc';
+import { _decorator, Button, Component, debug, log, Node, RichText, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -10,6 +10,7 @@ export class RoleCard extends Component
     private spr:Sprite;
 
     private lock:boolean=false;
+    private numberText:RichText;
 
     public roleId:number = 0;
 
@@ -27,6 +28,7 @@ export class RoleCard extends Component
     protected onLoad(): void 
     {
         this.spr=this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite);
+        this.numberText=this.node.getChildByPath("NumberText").getComponent(RichText);
     }
 
 
@@ -58,6 +60,13 @@ export class RoleCard extends Component
         {
             console.error('RoleCard 下 Init 错误 err: ',error);
         }
+    }
+
+    public SetNumberText(_molecule:number,_denominator:number)
+    {
+        this.numberText.string=
+        "<color=#000000>"+ _molecule + "</color>" +
+        "<color=#000000> | "+ _denominator +"</color>";
     }
 
     update(deltaTime: number) {
