@@ -64,6 +64,7 @@ namespace Match
             battleData.RoleList = new List<Role>() { null, null, null, null, null, null };
             battleData.coin = 10;
             battleData.round = 1;
+            battleData.stage = 1;
             battleData.victory = 0;
             battleData.faild = 5;
 
