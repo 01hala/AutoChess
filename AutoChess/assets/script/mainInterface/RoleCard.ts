@@ -36,7 +36,7 @@ export class RoleCard extends Component
         {
             console.log(singleton.netSingleton.mainInterface.infoPanel.parent.active);
             singleton.netSingleton.mainInterface.infoPanel.active = true;
-            singleton.netSingleton.mainInterface.infoPanel.getComponent(InfoPanel).OpenSimple(this.roleId);
+            singleton.netSingleton.mainInterface.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId);
 
         },this);
 
