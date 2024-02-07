@@ -204,6 +204,7 @@ export class UserData
     public User : UserInformation | null = null;
     public Strength : number = 0;
     public gold : number = 0;
+    public diamond : number = 0;
     public bag : Bag | null = null;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
@@ -229,6 +230,9 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "gold"){
             _struct.gold = val as number;
+        }
+        else if (key === "diamond"){
+            _struct.diamond = val as number;
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);
