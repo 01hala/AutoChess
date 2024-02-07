@@ -9,7 +9,7 @@ import { StartGamePanel } from './StartGamePanel';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
-export class PlyaerAccount
+export class UserAccount
 {
     public money:number;//金币
     public diamond:number;//钻石
@@ -47,14 +47,14 @@ export class MainInterface
     public infoPanel:Node;
     public storePrompt:Node;
     //玩家信息
-    public userData:PlyaerAccount;
+    public userData:UserAccount;
     private userMoney:Node;
     private userDiamonds:Node;
 
     constructor()
     {
         this.RegCallBack();
-        this.userData=new PlyaerAccount();
+        this.userData=new UserAccount();
     }
 
     async start(father:Node)
@@ -182,7 +182,9 @@ export class MainInterface
         {
             this.userData.money=_userInfo.gold;
             this.userData.playerBag=_userInfo.bag;
+            this.userData.diamond=_userInfo.diamond;
             this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.gold;
+            this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.diamond;
         }
     }
 

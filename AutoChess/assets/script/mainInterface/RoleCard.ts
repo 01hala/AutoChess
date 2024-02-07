@@ -2,6 +2,7 @@ import { _decorator, Button, Component, debug, log, Node, RichText, Sprite } fro
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
+import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleCard')
@@ -49,12 +50,8 @@ export class RoleCard extends Component
         try
         {
             this.roleId=_id;
-            let path="Avatar/Role_"+this.roleId;
-            let img=await loadAssets.LoadImg(path);
-            if(img)
-            {
-                this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
-            }
+            
+            await this.LoadOnConfig();
         }
         catch(error)
         {
@@ -67,6 +64,17 @@ export class RoleCard extends Component
         this.numberText.string=
         "<color=#000000>"+ _molecule + "</color>" +
         "<color=#000000> | "+ _denominator +"</color>";
+    }
+
+    private async LoadOnConfig()
+    {
+        let jconfig = null;
+        jconfig = config.RoleConfig.get(this.roleId);
+        let img = await loadAssets.LoadImg(jconfig.Avatar);
+        if(img)
+        {
+            this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
+        }
     }
 
     update(deltaTime: number) {

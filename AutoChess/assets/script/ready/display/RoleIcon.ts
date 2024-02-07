@@ -18,6 +18,7 @@ import { ShopArea } from './ShopArea';
 import { Camp, Property } from '../../other/enums';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
 import { config } from '../../config/config';
+import { loadAssets } from '../../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -99,8 +100,8 @@ export class RoleIcon extends Component
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
             this.roleId=_Id;
-            
-            this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame= await this.LoadImg("Role_",_Id);
+            //通过配置文件加载资源
+            await this.LoadOnConfig();
             this.freezeLock=_freeze;
             this.freezeSprite.active=_freeze;
             this.DragEvent();
@@ -297,6 +298,17 @@ export class RoleIcon extends Component
             sp.texture=texture;
             resolve(sp);
         });
+    }
+
+    private async LoadOnConfig()
+    {
+        let jconfig = null;
+        jconfig = config.RoleConfig.get(this.roleId);
+        let img = await loadAssets.LoadImg(jconfig.Avatar);
+        if(img)
+        {
+            this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame=img;
+        }
     }
 /*----------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/

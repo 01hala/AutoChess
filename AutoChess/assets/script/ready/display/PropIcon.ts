@@ -109,7 +109,7 @@ export class PropIcon extends Component
             //     //差一个载入图标的逻辑，因为还不清楚装备区域
             //     //this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
             // }
-			this.LoadOnConfig();
+			await this.LoadOnConfig();
 
             this.freezeLock = _freeze;
             this.freezeSprite.active = _freeze;
@@ -137,7 +137,7 @@ export class PropIcon extends Component
                     this.effect = jconfig.Effect;
                     this.hpBonus = jconfig.HpBonus;
                     this.attackBonus = jconfig.AttackBonus;
-                    let img = await loadAssets.LoadImg(jconfig.AttackBonus.Res);
+                    let img = await loadAssets.LoadImg(jconfig.Res);
                     if(img)
                     {
                         this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = img;
@@ -153,7 +153,7 @@ export class PropIcon extends Component
                     this.hpBonus = jconfig.HpBonus;
                     this.attackBonus = jconfig.AttackBonus;
                     //this.vaule=jconfig.value;        
-                    let img = await loadAssets.LoadImg(jconfig.AttackBonus.Res);
+                    let img = await loadAssets.LoadImg(jconfig.Res);
                     if(img)
                     {
                         //EquipSprite不确定
