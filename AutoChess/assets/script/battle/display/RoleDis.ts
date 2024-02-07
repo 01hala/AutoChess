@@ -127,10 +127,6 @@ export class RoleDis extends Component
         });
     }
 
-    GetRoleInfo():Role{
-        return this.roleInfo;
-    }
-    
     AttackInit() 
     {
         this.originalPos = new Vec3(this.node.position);

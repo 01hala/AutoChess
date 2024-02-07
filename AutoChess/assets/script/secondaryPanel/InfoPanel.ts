@@ -1,7 +1,7 @@
 import { _decorator, BlockInputEvents, Button, Component, Label, Node, RichText, Sprite } from 'cc';
 import { PropsType } from '../other/enums';
 import { Team } from '../battle/team';
-import * as role from '../battle/role'
+import { RoleDis } from '../battle/display/RoleDis';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -49,7 +49,7 @@ export class InfoPanel extends Component
         },this);
     }
     
-    OpenInfoBoard(id:number,role?:role.Role,propType?:PropsType)
+    OpenInfoBoard(id:number,role?:RoleDis,propType?:PropsType)
     {
         try
         {
@@ -82,7 +82,10 @@ export class InfoPanel extends Component
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     //"<color=0>1</color>"
                     
-                    this.detailedBoard.getChildByPath("RoleData/RoleName").getComponent(Label).string="<color=0>"+role.id+"</color>";
+                    this.detailedBoard.getChildByPath("RoleData/RoleName").getComponent(RichText).string="<color=0>"+role.RoleId+"</color>";
+                    this.detailedBoard.getChildByPath("RoleData/RoleLevel").getComponent(RichText).string="<color=0>"+role.Level+"</color>";
+                    this.detailedBoard.getChildByPath("RoleData/AtkNum").getComponent(RichText).string="<color=0>"+role.AtkNum+"</color>";
+                    this.detailedBoard.getChildByPath("RoleData/HpNum").getComponent(RichText).string="<color=0>"+role.Hp+"</color>";
                 }   
             }
         }
