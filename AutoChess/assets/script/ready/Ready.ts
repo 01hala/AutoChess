@@ -15,6 +15,7 @@ const { ccclass, property } = _decorator;
 @ccclass('Ready')
 export class Ready
 {
+    private stage:number;
     private props:ShopProp[];
     private shopRoles:ShopRole[];
 
@@ -33,6 +34,8 @@ export class Ready
     {
         this.coin = battle_info.coin;
 
+        console.log("Current player stage:"+battle_info.stage);
+        this.stage=battle_info.stage;
         this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
         this.fetters_info=fetters_info;
@@ -46,7 +49,17 @@ export class Ready
     {
         if(this.shopRoles)
         {
-            return this.shopRoles;
+            let tmpRole:ShopRole[]=[];
+            let tmpCnt:number;
+            switch(this.stage){
+                case 1:case 2:tmpCnt=3;break;
+                case 3:case 4:tmpCnt=4;break;
+                case 5:case 6:tmpCnt=5;break;
+            }
+            for(let i=0;i<tmpCnt&&i<this.shopRoles.length;i++){
+                tmpRole.push(this.shopRoles[i]);
+            }
+            return tmpRole;
         }
     }
 
@@ -54,7 +67,16 @@ export class Ready
     {
         if(this.props)
         {
-            return this.props;
+            let tmpProp:ShopProp[]=[];
+            let tmpCnt:number;
+            switch(this.stage){
+                case 1:case 2:case 3:case 4:tmpCnt=2;break;
+                case 5:case 6:tmpCnt=3;break;
+            }
+            for(let i=0;i<tmpCnt&&i<this.props.length;i++){
+                tmpProp.push(this.props[i]);
+            }
+            return tmpProp;
         }
     }
 
