@@ -139,9 +139,9 @@ export class Ready
         await singleton.netSingleton.game.refresh();
     }
 
-    public StartBattle()
+    public async StartBattle()
     {
-        singleton.netSingleton.game.battle1();
+        await singleton.netSingleton.game.battle1();
     }
 
     public async Buy(shop_index: common.ShopIndex,index:number,role_index:number)

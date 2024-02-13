@@ -191,13 +191,16 @@ export class netGame {
     }
     //战斗阶段
     public battle1() {
-        this.c_match.get_hub(this.match_name).start_round1().callBack((self, target)=>{
-            this.cb_battle.call(null, self, target);
-        }, (err)=>{
-            console.log("battle1 err:", err);
-        }).timeout(3000, ()=>{
-            console.log("battle1 timeout!");
-        })
+        return new Promise<void>((relolve, reject) => {
+            this.c_match.get_hub(this.match_name).start_round1().callBack((self, target)=>{
+                this.cb_battle.call(null, self, target);
+                relolve();
+            }, (err)=>{
+                console.log("battle1 err:", err);
+            }).timeout(3000, ()=>{
+                console.log("battle1 timeout!");
+            })
+        });
     }
 
     public confirm_round_victory(is_victory:match.battle_victory) {

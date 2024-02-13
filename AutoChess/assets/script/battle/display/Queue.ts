@@ -141,9 +141,15 @@ export class Queue extends Component
     {
         try
         {
+            let waits = [];
             for(let i = 0; i<r.length; i++)
             {
-                let role=await this.SpawnRole(r[i]) as Node;
+                waits.push(this.SpawnRole(r[i]));
+            }
+
+            let result = await Promise.all(waits);
+            for(let i = 0; i<r.length; i++) {
+                let role= result[i];
                 if(null==role)
                 {
                     console.warn("Queue 下的 InitRole 读取的 role 为空");
@@ -151,6 +157,7 @@ export class Queue extends Component
                 }
                 role.position=new Vec3(this.locationTemp[r[i].index].position);
             }
+           
         }
         catch(error)
         {

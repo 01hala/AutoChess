@@ -103,12 +103,12 @@ export class ReadyDis
         },this);
         //开始按钮
         this.startBtn=this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
-        this.startBtn.node.on(Button.EventType.CLICK,()=>
+        this.startBtn.node.on(Button.EventType.CLICK, async ()=>
         {
             if(this.roleArea.rolesNode.length>0)
             {
+                await this.ready.StartBattle();
                 this.panelNode.active=false;
-                this.ready.StartBattle();
             }
         });
     }
