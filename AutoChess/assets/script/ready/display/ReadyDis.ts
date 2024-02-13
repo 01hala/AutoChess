@@ -149,7 +149,7 @@ export class ReadyDis
             this.roleArea.rolesNode[source_role_index].destroy();
             //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
             //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
-            this.roleArea.targets.set(str, null);
+            //this.roleArea.targets.set(str, null);
             this.roleArea.rolesNode[source_role_index]=null;
             console.log('cb_role_merge,target_role:', target_role_index);
 

@@ -17,7 +17,7 @@ export class RoleArea extends Component
     {
         for(let t of this.node.getChildByName("Node").children)
         {
-            this.targets.set(t.name,null);
+            this.targets.set(t.name, t);
         }
     }
 
@@ -113,7 +113,7 @@ export class RoleArea extends Component
                     obj.getComponent(RoleIcon).isBuy=true;
                     //obj.getComponent(RoleIcon).roleNode.active=true;
                     obj.getComponent(RoleIcon).index=i;
-                    obj.getComponent(RoleIcon).target=this.targets[i];
+                    obj.getComponent(RoleIcon).target=this.targets.get("Location_" + i);
                     await obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
                     //obj.getComponent(RoleIcon).iconMask.active=false;
                     this.rolesNode[i]=obj;
@@ -136,7 +136,7 @@ export class RoleArea extends Component
         obj.setWorldPosition(this.node.getChildByPath("Node").children[_index].worldPosition);
         obj.getComponent(RoleIcon).isBuy=true;
         obj.getComponent(RoleIcon).index=_index;
-        obj.getComponent(RoleIcon).target=this.targets[_index];
+        obj.getComponent(RoleIcon).target=this.targets.get("Location_" + _index);
 
         await obj.getComponent(RoleIcon).Init(_role.RoleID,_role.HP,_role.Attack,_role.Level,_role.Number,false,_role.FettersSkillID,_index);
         this.rolesNode[_index]=obj;
