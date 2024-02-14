@@ -140,7 +140,7 @@ export class BattleDis
                 this.victory.getComponent(Label).string = "战斗平局!";
             }
 
-            await sleep(4000);
+            await sleep(2000);
 
             netSingleton.game.confirm_round_victory(is_victory);
         }
