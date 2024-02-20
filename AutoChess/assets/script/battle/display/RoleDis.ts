@@ -15,6 +15,7 @@ import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { BundleManager } from '../../bundle/BundleManager';
 import { Bullet } from './Bullet';
 import * as singleton from '../../netDriver/netSingleton';
+import { Fetters } from '../../serverSDK/common';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -128,6 +129,11 @@ export class RoleDis extends Component
                 release();
             }, ms);
         });
+    }
+
+    GetRoleFetter():Fetters
+    {
+        if(this.roleInfo) return this.roleInfo.fetter;
     }
 
     AttackInit() 
