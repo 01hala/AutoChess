@@ -525,6 +525,30 @@ export class RoleIcon extends Component
         }
         
     }
+    //玩家吃食物
+    async EatFood(t:common.Role,food_id:number){
+        try
+        {
+            console.log("role"+t.RoleID+"eat food"+food_id);
+            let foodInfo=config.FoodConfig[food_id];
+            for(let effect of foodInfo.Effect){
+                switch(effect){
+                    case 1:case 2:{
+                        let value =[foodInfo.HpBonus,foodInfo.AttackBonus];
+                        await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
+                    }break;
+                    case 3:break;
+                    case 4:break;
+                    case 5:break;
+                    case 6:break;
+                }
+            }
+        }
+        catch(error)
+        {
+            console.error('RoleIcon 下 Equipping 错误 err: ',error);
+        }
+    }
     //玩家装备上购买的装备
     async Equipping(t:common.Role,equip_id:number){
         try

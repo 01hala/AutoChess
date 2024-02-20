@@ -174,7 +174,7 @@ export class ReadyDis
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).EatFood(target_role, food_id);
         };
         singleton.netSingleton.game.cb_role_equip=(equip_id:number,target_role_index:number, target_role:common.Role)=>{
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).Equipping(target_role,equip_id);
