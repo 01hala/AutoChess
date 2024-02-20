@@ -464,7 +464,6 @@ export class ShopProp
 {
     public PropID : number = 0;
     public IsFreeze : boolean = false;
-
 }
 
 export function ShopProp_to_protcol(_struct:ShopProp){
