@@ -337,7 +337,7 @@ export class RoleDis extends Component
         
     }
 
-    ShiftPos(vec:Vec3)
+    ShiftPos(vec:Vec3,atkInit?:boolean)
     {
         console.log(`shiftPos begin!`);
         //开始缓动
@@ -350,6 +350,7 @@ export class RoleDis extends Component
                 this.tShiftpos = null;
                 console.log("shiftPos end!");
             }
+            if(atkInit) this.AttackInit();
         });
     }
 

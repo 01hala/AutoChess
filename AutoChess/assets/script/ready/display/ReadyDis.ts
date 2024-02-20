@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, UITransform, Vec3, view } from 'cc';
+import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { Ready } from '../Ready';
 import { BundleManager } from '../../bundle/BundleManager';
@@ -34,6 +34,8 @@ export class ReadyDis
     private coinText:RichText;
     private trophyText:RichText;
     private roundText:RichText;
+
+    private fetters:Node[]=[];
 
     private waitingPanel:Node;
     public infoPanel:Node;
@@ -95,6 +97,13 @@ export class ReadyDis
         this.heathText=this.panelNode.getChildByPath("TopArea/HpInfo/RichText").getComponent(RichText);
         this.roundText=this.panelNode.getChildByPath("TopArea/RoundInfo/RichText").getComponent(RichText);
         this.trophyText=this.panelNode.getChildByPath("TopArea/TrophyInfo/RichText").getComponent(RichText);
+        //羁绊信息框
+        let tNode=this.panelNode.getChildByPath("TopArea/FetterArea");
+        for(let i=1;i<=6;i++){
+            let t=tNode.getChildByName("FetterInfo_"+i);
+            t.active=false;
+            this.fetters.push(t);
+        }
         //刷新按钮
         this.refreshBtn=this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
         this.refreshBtn.node.on(Button.EventType.CLICK,()=>
@@ -226,12 +235,48 @@ export class ReadyDis
         this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
     }
     //更新玩家信息
-    private UpdatePlayerInfo(_battle_info:common.UserBattleData)
+    private async UpdatePlayerInfo(_battle_info:common.UserBattleData)
     {
         this.coinText.string=""+_battle_info.coin;
         this.heathText.string=""+_battle_info.faild;
         this.roundText.string=""+_battle_info.round;
         this.trophyText.string=""+_battle_info.victory;
+        console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
+        for(let i=0;i<6;i++){
+            if(i<_battle_info.FettersList.length){
+                this.fetters[i].active=true;
+                let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
+                let sf:SpriteFrame=await this.LoadFetterImg("FetterImg",str);
+                if(sf)
+                {
+                    this.fetters[i].getChildByName("icon").getComponent(Sprite).spriteFrame=sf;             
+                }
+                this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
+                continue;
+            }
+            this.fetters[i].active=false;
+        }       
+    }
+
+    private LoadFetterImg(_bundle:string,_address:string):Promise<SpriteFrame>
+    {
+        return new Promise(async (resolve)=>
+        {
+            let imgRes=""+_address;
+            let temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
+            if(null==temp)
+            {
+                 console.warn('ReadyDis 里的 LoadFetterImg 异常 : bundle中没有此羁绊图标,替换为默认羁绊图标');
+                 resolve(null);
+                 //imgRes=""+_address+1001;
+                 //temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
+            }
+            let texture=new Texture2D();
+            texture.image=temp;
+            let sp=new SpriteFrame();
+            sp.texture=texture;  
+            resolve(sp);
+        });
     }
 
     onEvent()
