@@ -103,12 +103,12 @@ export class ReadyDis
         },this);
         //开始按钮
         this.startBtn=this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
-        this.startBtn.node.on(Button.EventType.CLICK,()=>
+        this.startBtn.node.on(Button.EventType.CLICK, async ()=>
         {
             if(this.roleArea.rolesNode.length>0)
             {
+                await this.ready.StartBattle();
                 this.panelNode.active=false;
-                this.ready.StartBattle();
             }
         });
     }
@@ -149,7 +149,7 @@ export class ReadyDis
             this.roleArea.rolesNode[source_role_index].destroy();
             //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
             //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
-            this.roleArea.targets.set(str, null);
+            //this.roleArea.targets.set(str, null);
             this.roleArea.rolesNode[source_role_index]=null;
             console.log('cb_role_merge,target_role:', target_role_index);
 

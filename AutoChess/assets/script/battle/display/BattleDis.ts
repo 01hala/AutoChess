@@ -140,7 +140,7 @@ export class BattleDis
                 this.victory.getComponent(Label).string = "战斗平局!";
             }
 
-            await sleep(4000);
+            await sleep(2000);
 
             netSingleton.game.confirm_round_victory(is_victory);
         }
@@ -162,11 +162,15 @@ export class BattleDis
     {
         try
         {
+            let waits = [];
+
             let roles=this.battle.GetSelfTeam().GetRoles();
-            await this.selfQueue.InitRole(roles);
+            waits.push(this.selfQueue.InitRole(roles));
     
             roles=this.battle.GetEnemyTeam().GetRoles();
-            await this.enemyQueue.InitRole(roles);
+            waits.push(this.enemyQueue.InitRole(roles));
+
+            await Promise.all(waits);
         }
         catch(error)
         {
