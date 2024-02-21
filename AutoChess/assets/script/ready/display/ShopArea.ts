@@ -146,7 +146,6 @@ export class ShopArea extends Component
                 this.shopRoles[i] = null;
             }
         }
-        
     }
 
     async BuyProp(_index:number,_obj:Node)

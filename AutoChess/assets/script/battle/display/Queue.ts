@@ -117,7 +117,8 @@ export class Queue extends Component
                     console.log("Summon a character with ID "+r[i].id+" at position "+r[i].index);
                     let roleNode = this.roleNodes[r[i].index];
                     role.position = roleNode.position;
-                    await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].position);
+                    await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].position,true);
+                    //role.getComponent(RoleDis.RoleDis).AttackInit();
                 }
                 else if(-1==r[i].index)
                 {

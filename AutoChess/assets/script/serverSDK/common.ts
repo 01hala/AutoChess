@@ -428,7 +428,6 @@ export class ShopRole
     public HP : number = 0;
     public Attack : number = 0;
     public IsFreeze : boolean = false;
-
 }
 
 export function ShopRole_to_protcol(_struct:ShopRole){
@@ -465,7 +464,6 @@ export class ShopProp
 {
     public PropID : number = 0;
     public IsFreeze : boolean = false;
-
 }
 
 export function ShopProp_to_protcol(_struct:ShopProp){

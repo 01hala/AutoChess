@@ -189,12 +189,15 @@ export class RoleIcon extends Component
                         this.freezeSprite.active = false;
                         if(null != this.target || this.isMerge)
                         {
-                            this.isBuy = true;
-                            // if(!this.isMerge)
-                            // {
-                            //     this.roleArea.targets.set(this.target.name,this.node);
-                            // }
-                            await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
+                            if(null == this.roleArea.rolesNode[this.tempIndex]){
+                                this.isBuy = true;
+                                // if(!this.isMerge)
+                                // {
+                                //     this.roleArea.targets.set(this.target.name,this.node);
+                                // }
+                                await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
+                            }
+                            else console.log("purchase failed, there is already a character at the purchase location");
                         }
 
                         if (this.isMerge) {
@@ -524,6 +527,30 @@ export class RoleIcon extends Component
             console.error('RoleIcon 下 GetUpgrade 错误 err: ',error);
         }
         
+    }
+    //玩家吃食物
+    async EatFood(t:common.Role,food_id:number){
+        try
+        {
+            console.log("role"+t.RoleID+"eat food"+food_id);
+            let foodInfo=config.FoodConfig[food_id];
+            for(let effect of foodInfo.Effect){
+                switch(effect){
+                    case 1:case 2:{
+                        let value =[foodInfo.HpBonus,foodInfo.AttackBonus];
+                        await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
+                    }break;
+                    case 3:break;
+                    case 4:break;
+                    case 5:break;
+                    case 6:break;
+                }
+            }
+        }
+        catch(error)
+        {
+            console.error('RoleIcon 下 EatFood 错误 err: ',error);
+        }
     }
     //玩家装备上购买的装备
     async Equipping(t:common.Role,equip_id:number){
