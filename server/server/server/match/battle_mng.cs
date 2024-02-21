@@ -111,41 +111,54 @@ namespace Match
             return null;
         }
 
-        public ShopProp randomShopProp(int stage)
+        private ShopProp randomFood(int stage)
+        {
+            if (config.Config.FoodStageConfigs.TryGetValue(stage, out var basePool))
+            {
+                var foodConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
+                if (foodConfig != null)
+                {
+                    var p = new ShopProp();
+                    p.PropID = foodConfig.Id;
+                    p.IsFreeze = false;
+
+                    return p;
+                }
+            }
+
+            return null;
+        }
+
+        private ShopProp randomEquip(int stage)
+        {
+            if (config.Config.EquipStageConfigs.TryGetValue(stage, out var basePool))
+            {
+                var equipConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
+                if (equipConfig != null)
+                {
+                    var p = new ShopProp();
+                    p.PropID = equipConfig.Id;
+                    p.IsFreeze = false;
+
+                    return p;
+                }
+            }
+
+            return null;
+        }
+
+        private ShopProp randomShopProp(int stage)
         {
             Log.Log.trace("randomShopProp stage:{0}", stage);
             var r = RandomHelper.RandomInt(2);
             if (r < 1)
             {
-                if (config.Config.FoodStageConfigs.TryGetValue(stage, out var basePool))
-                {
-                    var foodConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
-                    if (foodConfig != null)
-                    {
-                        var p = new ShopProp();
-                        p.PropID = foodConfig.Id;
-                        p.IsFreeze = false;
-
-                        return p;
-                    }
-                }
+                return randomFood(stage);
             }
             else
             {
-                if (config.Config.EquipStageConfigs.TryGetValue(stage, out var basePool))
-                {
-                    var equipConfig = basePool[RandomHelper.RandomInt(basePool.Count)];
-                    if (equipConfig != null)
-                    {
-                        var p = new ShopProp();
-                        p.PropID = equipConfig.Id;
-                        p.IsFreeze = false;
-
-                        return p;
-                    }
-                }
+                return randomEquip(stage);
             }
-            return null;
         }
 
         public void do_skill()
@@ -229,7 +242,8 @@ namespace Match
         {
             Log.Log.trace("_refresh begin!");
 
-            for (var i = 0; i < 3/*shopData.SaleRoleList.Count*/; i++)
+            var i = 0;
+            for ( ; i < 3/*shopData.SaleRoleList.Count*/; i++)
             {
                 if (i < shopData.SaleRoleList.Count)
                 {
@@ -249,7 +263,43 @@ namespace Match
                 }
             }
 
-            for (var i = 0; i < 3/*shopData.SalePropList.Count*/; i++)
+            i = 0;
+            if (i < shopData.SalePropList.Count)
+            {
+                var p = shopData.SalePropList[i];
+                if (p == null || !p.IsFreeze)
+                {
+                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                    p = randomFood(stage);
+                    shopData.SalePropList[i] = p;
+                }
+            }
+            else
+            {
+                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                var p = randomFood(stage);
+                shopData.SalePropList.Add(p);
+            }
+
+            i++;
+            if (i < shopData.SalePropList.Count)
+            {
+                var p = shopData.SalePropList[i];
+                if (p == null || !p.IsFreeze)
+                {
+                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                    p = randomEquip(stage);
+                    shopData.SalePropList[i] = p;
+                }
+            }
+            else
+            {
+                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                var p = randomEquip(stage);
+                shopData.SalePropList.Add(p);
+            }
+
+            for ( ; i < 3/*shopData.SalePropList.Count*/; i++)
             {
                 if (i < shopData.SalePropList.Count)
                 {
@@ -575,11 +625,17 @@ namespace Match
                     var exclude = new List<int>();
                     for (int i = 0; i < foodcfg.Count && rs.Count < battleData.RoleList.Count;)
                     {
+                        if (exclude.Count >= battleData.RoleList.Count)
+                        {
+                            break;
+                        }
+
                         var tmp_index = RandomHelper.RandomInt(battleData.RoleList.Count);
                         if (exclude.Contains(tmp_index))
                         {
                             continue;
                         }
+
                         var tmpRole = battleData.RoleList[tmp_index];
                         if (tmpRole != null)
                         {
