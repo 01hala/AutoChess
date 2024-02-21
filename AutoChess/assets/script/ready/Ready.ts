@@ -65,16 +65,25 @@ export class Ready
 
     public GetShopProps():ShopProp[]
     {
+        console.log("传入的初始商店道具列表长度"+this.props.length);
         if(this.props)
         {
             let tmpProp:ShopProp[]=[];
-            let tmpCnt:number;
+            let tmpFoodCnt:number;
+            let tmpEquipCnt:number=1;
             switch(this.stage){
-                case 1:case 2:case 3:case 4:tmpCnt=2;break;
-                case 5:case 6:tmpCnt=3;break;
+                case 1:case 2:case 3:case 4:tmpFoodCnt=2;break;
+                case 5:case 6:tmpFoodCnt=3;break;
             }
-            for(let i=0;i<tmpCnt&&i<this.props.length;i++){
-                tmpProp.push(this.props[i]);
+            for(let i=0;i<this.props.length;i++){
+                if(tmpFoodCnt>0&&this.props[i].PropID>=1001&&this.props[i].PropID<=1999){
+                    tmpProp.push(this.props[i]);
+                    tmpFoodCnt--;
+                }
+                else if(tmpEquipCnt>0&&this.props[i].PropID>=3001&&this.props[i].PropID<=3999){
+                    tmpProp.push(this.props[i]);
+                    tmpEquipCnt--;
+                }
             }
             return tmpProp;
         }

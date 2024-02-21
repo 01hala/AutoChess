@@ -534,6 +534,10 @@ export class RoleIcon extends Component
         {
             console.log("role"+t.RoleID+"eat food"+food_id);
             let foodInfo=config.FoodConfig[food_id];
+            if(!foodInfo){
+                console.log("can not find config of food:"+food_id);
+                return;
+            }
             for(let effect of foodInfo.Effect){
                 switch(effect){
                     case 1:case 2:{
@@ -557,6 +561,10 @@ export class RoleIcon extends Component
         try
         {
             let equipInfo=config.EquipConfig[equip_id];
+            if(!equipInfo){
+                console.log("can not find config of food:"+equip_id);
+                return;
+            }
             for(let effect of equipInfo.Effect){
                 switch(effect){
                     case 1:case 2:{
