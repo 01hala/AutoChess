@@ -176,6 +176,7 @@ export class PropIcon extends Component
                 //重新注册按钮事件
                 this.node.on(Button.EventType.CLICK,()=>
                 {
+                    console.log("点击查看道具详细信息"+this.propType);
                     singleton.netSingleton.ready.infoPanel.active=true;
                     singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
                 });
@@ -198,21 +199,27 @@ export class PropIcon extends Component
                 //使用道具
                 if(null != this.index || null != this.target && singleton.netSingleton.ready.ready.GetCoins()>=3)
                 {
-                    if(!this.target.getComponent(RoleIcon).upgradeLock)
-                    {
-                        this.freezeSprite.active=false;
-                        //console.log('buy food');
-                        let value=[this.hpBonus,this.attackBonus];
-                        //this.target.getComponent(RoleIcon).upgradeLock=true;
-                        if(this.effect.includes(1) || this.effect.includes(2))
+                    try{
+                        if(!this.target.getComponent(RoleIcon).upgradeLock)
                         {
-                            //this.target.getComponent(RoleIcon).GetIntensifier(value);
+                            this.freezeSprite.active=false;
+                            //console.log('buy food');
+                            let value=[this.hpBonus,this.attackBonus];
+                            //this.target.getComponent(RoleIcon).upgradeLock=true;
+                            if(this.effect.includes(1) || this.effect.includes(2))
+                            {
+                                //this.target.getComponent(RoleIcon).GetIntensifier(value);
+                            }
+                            await this.shopArea.BuyProp(this.index,this.node);
+                            console.log('道具使用成功！');
+                            this.node.destroy();
+                            return;
                         }
-                        await this.shopArea.BuyProp(this.index,this.node);
-                        console.log('道具使用成功！');
-                        this.node.destroy();
-                        return;
                     }
+                    catch(error){
+                        console.error("PropIcon 下的 使用道具 错误",error);
+                    }
+                    
                 }
                 //冻结道具
                 if(this.isFreeze && !this.isBuy)
@@ -286,6 +293,7 @@ export class PropIcon extends Component
             //注册按钮事件
             this.node.on(Button.EventType.CLICK,()=>
             {
+                console.log("点击食物查看详细信息"+this.propType);
                 singleton.netSingleton.ready.infoPanel.active=true;
                 singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
             });
@@ -311,7 +319,7 @@ export class PropIcon extends Component
                 {
                     //场上角色区域
                     if (null != otherCollider && 1 == otherCollider.tag) {
-                        if (this.roleArea.GetTargetValue(otherCollider.node.name) == this.target) {
+                        if (this.roleArea.GetTargetRole(this.index) == this.target) {
                             this.target = null;
                             this.index = null;
                         }
@@ -343,8 +351,9 @@ export class PropIcon extends Component
                         if (null != this.roleArea.GetTargetValue(otherCollider.node.name)) {
                             let num = otherCollider.node.name.slice(otherCollider.node.name.length - 1, otherCollider.node.name.length);
                             this.index = Number(num);
-                            this.target = this.roleArea.GetTargetValue(otherCollider.node.name);
-                            console.log(this.target.name, this.index);
+                            this.target=this.roleArea.GetTargetRole(this.index);
+                            //this.target = this.roleArea.GetTargetValue(otherCollider.node.name);
+                            console.log("道具碰撞时检索到的碰撞对象信息"+this.target, this.index);
                         }
                     }
                 }

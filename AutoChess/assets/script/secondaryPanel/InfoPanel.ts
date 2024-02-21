@@ -12,6 +12,7 @@ export class InfoPanel extends Component
 
     private simpleBoard:Node;
     private detailedBoard:Node;
+    private simplePropBoard:Node;
 
     onLoad()
     {
@@ -20,6 +21,7 @@ export class InfoPanel extends Component
     
         this.simpleBoard=this.node.getChildByPath("Simple");
         this.detailedBoard=this.node.getChildByPath("Detailed");
+        this.simplePropBoard=this.node.getChildByPath("SimpleProps");
     }
 
     start() 
@@ -35,6 +37,14 @@ export class InfoPanel extends Component
         {
             this.Exit();
         },this);
+        this.detailedBoard.on(Button.EventType.CLICK,()=>
+        {
+            this.Exit();
+        },this);
+        this.simplePropBoard.on(Button.EventType.CLICK,()=>
+        {
+            this.Exit();
+        },this);
     }
     
     OpenInfoBoard(id:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
@@ -45,27 +55,35 @@ export class InfoPanel extends Component
             // {
             //     this.detailedBoard.active=false;
             // }
+            this.simpleBoard.active=false;
+            this.detailedBoard.active=false;
+            this.simplePropBoard.active=false;
     
             if(null!=propType)
             {
-                switch(propType)
-                {
-                    case PropsType.Food:break;
-                    case PropsType.Equip:break;
-                }
+                this.simplePropBoard.active=true;
+                this.node.setSiblingIndex(99);
+                this.node.getComponent(BlockInputEvents).enabled=true;
+                this.simplePropBoard.getChildByName("PropName").getComponent(Label).string="道具ID:"+id;
+                if(role) this.simplePropBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
+                // switch(propType)
+                // {
+                //     case PropsType.Food:break;
+                //     case PropsType.Equip:break;
+                // }
             }
             else
             {
                 if(null==role||!isBuy){
                     this.simpleBoard.active=true;
-                    this.detailedBoard.active=false;
+                    //this.detailedBoard.active=false;
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
                     this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
                 } 
                 else{
-                    this.simpleBoard.active=false;
+                    //this.simpleBoard.active=false;
                     this.detailedBoard.active=true;
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;  
@@ -79,7 +97,7 @@ export class InfoPanel extends Component
         }
         catch(error)
         {
-            console.error('InfoPanel 下 OpenDetailed 错误 err: ',error);
+            console.error('InfoPanel 下 OpenInfoBoard 错误 err: ',error);
         }
         
     }

@@ -114,6 +114,8 @@ export class ShopArea extends Component
         }
         if(props)
         {
+            let equipIdx:number=0;
+            let foodIdx:number=0;
             for(let i=0;i<props.length;i++)
             {
                 if(props[i]) 
@@ -121,7 +123,8 @@ export class ShopArea extends Component
                     let newNode=instantiate(this.propIcon);
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
-                    newNode.setWorldPosition(this.FoodSquare[i].worldPosition);
+                    if(props[i].PropID>=1001&&props[i].PropID<=1999) newNode.setWorldPosition(this.FoodSquare[foodIdx++].worldPosition);
+                    else newNode.setWorldPosition(this.EquipSquare.worldPosition);
                     console.log("props id:"+props[i].PropID)
                     newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
                     this.shopProps.push(newNode);

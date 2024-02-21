@@ -31,6 +31,10 @@ export class RoleArea extends Component
         
     }
 
+    GetTargetRole(index:number){
+        return this.rolesNode[index];
+    }
+
     GetTargetValue(name:string)
     {
         if(this.targets.has(name))
