@@ -580,7 +580,11 @@ namespace Match
                         {
                             continue;
                         }
-                        rs.Add(battleData.RoleList[tmp_index]);
+                        var tmpRole = battleData.RoleList[tmp_index];
+                        if (tmpRole != null)
+                        {
+                            rs.Add(tmpRole);
+                        }
                         exclude.Add(tmp_index);
                         i++;
                     }
