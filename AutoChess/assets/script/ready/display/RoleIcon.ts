@@ -189,12 +189,15 @@ export class RoleIcon extends Component
                         this.freezeSprite.active = false;
                         if(null != this.target || this.isMerge)
                         {
-                            this.isBuy = true;
-                            // if(!this.isMerge)
-                            // {
-                            //     this.roleArea.targets.set(this.target.name,this.node);
-                            // }
-                            await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
+                            if(null == this.roleArea.rolesNode[this.tempIndex]){
+                                this.isBuy = true;
+                                // if(!this.isMerge)
+                                // {
+                                //     this.roleArea.targets.set(this.target.name,this.node);
+                                // }
+                                await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
+                            }
+                            else console.log("purchase failed, there is already a character at the purchase location");
                         }
 
                         if (this.isMerge) {
@@ -546,7 +549,7 @@ export class RoleIcon extends Component
         }
         catch(error)
         {
-            console.error('RoleIcon 下 Equipping 错误 err: ',error);
+            console.error('RoleIcon 下 EatFood 错误 err: ',error);
         }
     }
     //玩家装备上购买的装备
