@@ -189,7 +189,7 @@ export class RoleIcon extends Component
                         this.freezeSprite.active = false;
                         if(null != this.target || this.isMerge)
                         {
-                            if(null == this.roleArea.rolesNode[this.tempIndex]){
+                            if(null == this.roleArea.rolesNode[this.tempIndex]||this.isMerge){
                                 this.isBuy = true;
                                 // if(!this.isMerge)
                                 // {
@@ -533,7 +533,7 @@ export class RoleIcon extends Component
         try
         {
             console.log("role"+t.RoleID+"eat food"+food_id);
-            let foodInfo=config.FoodConfig[food_id];
+            let foodInfo=config.FoodConfig.get(food_id);
             if(!foodInfo){
                 console.log("can not find config of food:"+food_id);
                 return;
@@ -560,7 +560,7 @@ export class RoleIcon extends Component
     async Equipping(t:common.Role,equip_id:number){
         try
         {
-            let equipInfo=config.EquipConfig[equip_id];
+            let equipInfo=config.EquipConfig.get(equip_id);
             if(!equipInfo){
                 console.log("can not find config of food:"+equip_id);
                 return;
@@ -573,7 +573,7 @@ export class RoleIcon extends Component
                     }break;
                     case 3:{
                         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-                        for(let temp of equipInfo.Value){
+                        for(let temp of equipInfo.Vaule){
                             t.additionBuffer.push(temp);
                         }
                         let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
@@ -586,7 +586,7 @@ export class RoleIcon extends Component
                         //如果召唤的效果等同于id为x的召唤技能，特殊效果值是召唤技能的id，则使用下面的代码
                         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
                         var additionSkill = [];
-                        for(let temp of equipInfo.Value){
+                        for(let temp of equipInfo.Vaule){
                             additionSkill.push(temp);
                         }
                         let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer,additionSkill);
