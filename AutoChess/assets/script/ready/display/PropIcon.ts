@@ -323,8 +323,8 @@ export class PropIcon extends Component
                     //场上角色区域
                     if (null != otherCollider && 1 == otherCollider.tag) {
                         if (this.roleArea.GetTargetRole(this.index) == this.target) {
-                            // this.target = null;
-                            // this.index = null;
+                            this.target = null;
+                            this.index = null;
                         }
                     }
                     //冻结区域
