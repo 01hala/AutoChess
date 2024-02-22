@@ -151,25 +151,19 @@ export class ReadyDis
                 console.error("cb_role_buy_merge 错误: ",(error));
            }
         };
-        /*
-        * 修改cb_role_merge函数
-        * author: Guanliu
-        * 2024/2/21
-        * 将函数体中除了console.log中输出以外的所有source_role_index和target_role_index互换
-        */
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
             let str = "Location_" + target_role_index;
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).roleNode.destroy();
-            this.roleArea.rolesNode[target_role_index].destroy();
+            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
+            this.roleArea.rolesNode[source_role_index].destroy();
             //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
             //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
             //this.roleArea.targets.set(str, null);
-            this.roleArea.rolesNode[target_role_index]=null;
+            this.roleArea.rolesNode[source_role_index]=null;
             console.log('cb_role_merge,target_role:', target_role_index);
 
-            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
 
             //str = "Location_" + target_role_index;                                                                      
             //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;                
