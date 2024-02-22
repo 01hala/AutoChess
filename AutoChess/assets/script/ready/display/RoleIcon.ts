@@ -196,6 +196,7 @@ export class RoleIcon extends Component
                                 //     this.roleArea.targets.set(this.target.name,this.node);
                                 // }
                                 await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
+                                console.log("购买时，欲购买位置角色信息："+this.roleArea.rolesNode[this.tempIndex].name+"是否合并"+this.isMerge);
                             }
                             else console.log("purchase failed, there is already a character at the purchase location");
                         }
@@ -550,6 +551,7 @@ export class RoleIcon extends Component
                     case 6:break;
                 }
             }
+            this.upgradeLock=false;
         }
         catch(error)
         {
@@ -594,6 +596,7 @@ export class RoleIcon extends Component
                     }break;
                 }
             }
+            this.upgradeLock=false;
         }
         catch(error)
         {

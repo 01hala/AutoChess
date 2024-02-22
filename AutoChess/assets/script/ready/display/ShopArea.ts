@@ -52,7 +52,7 @@ export class ShopArea extends Component
         {
             this.FoodSquare.push(t);
         }
-        this.EquipSquare=this.node.getChildByPath("TopArea/EquipSquare");
+        this.EquipSquare=this.node.getChildByPath("TopArea/Equip/EquipSquare");
         this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
         this.freezeArea=this.node.getChildByPath("FreezeArea");
         this.cam=this.panel.parent.getChildByPath("Camera");

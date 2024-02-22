@@ -196,12 +196,15 @@ export class PropIcon extends Component
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
                 this.touchStartPoint = new Vec2(0, 0);
+                console.log("结束道具拖拽，结束拖拽时道具的目标人物："+this.target+"，对应位置下标："+this.index);
                 //使用道具
-                if(null != this.index || null != this.target && singleton.netSingleton.ready.ready.GetCoins()>=3)
+                if(null != this.index && null != this.target && singleton.netSingleton.ready.ready.GetCoins()>=3)
                 {
                     try{
+                        console.log("成功通过购买道具时的人物、下标和金币检测");
                         if(!this.target.getComponent(RoleIcon).upgradeLock)
                         {
+                            console.log("人物不存在锁，购买成功");
                             this.freezeSprite.active=false;
                             //console.log('buy food');
                             let value=[this.hpBonus,this.attackBonus];
@@ -320,8 +323,8 @@ export class PropIcon extends Component
                     //场上角色区域
                     if (null != otherCollider && 1 == otherCollider.tag) {
                         if (this.roleArea.GetTargetRole(this.index) == this.target) {
-                            this.target = null;
-                            this.index = null;
+                            // this.target = null;
+                            // this.index = null;
                         }
                     }
                     //冻结区域
@@ -351,8 +354,8 @@ export class PropIcon extends Component
                         if (null != this.roleArea.GetTargetValue(otherCollider.node.name)) {
                             let num = otherCollider.node.name.slice(otherCollider.node.name.length - 1, otherCollider.node.name.length);
                             this.index = Number(num);
-                            this.target=this.roleArea.GetTargetRole(this.index);
-                            //this.target = this.roleArea.GetTargetValue(otherCollider.node.name);
+                            //this.target=this.roleArea.GetTargetRole(this.index);
+                            this.target = this.roleArea.GetTargetRole(this.index);
                             console.log("道具碰撞时检索到的碰撞对象信息"+this.target, this.index);
                         }
                     }
