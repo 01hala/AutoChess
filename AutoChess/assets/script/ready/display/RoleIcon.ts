@@ -185,7 +185,9 @@ export class RoleIcon extends Component
                 }
                 //购买、合并角色
                 if (null != this.index) {
+                    console.log("欲购买或者移动角色");
                     if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) {
+                        console.log("角色未购买并且金币数量大于等于3");
                         this.freezeSprite.active = false;
                         if(null != this.target || this.isMerge)
                         {
@@ -217,7 +219,7 @@ export class RoleIcon extends Component
                     this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
                 }
                 //吸附缓动
-                if(!this.isMerge)
+                if(!this.isMerge||!this.isBuy)
                 {
                     this.Adsorption();
                 }
