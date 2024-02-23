@@ -124,7 +124,7 @@ export class RoleIcon extends Component
     {
         try
         {
-            //俩临时变量，用于记录拖拽前的位置信息
+            //俩临时变量，用来记录拖拽前的位置信息
             let beforeIndex;
             let berforeTarget;
     //拖拽取消
@@ -132,7 +132,12 @@ export class RoleIcon extends Component
             {
                 this.OffTirrger();
                 //重新注册按钮事件
-                this.RegBtn(true);
+                this.node.on(Button.EventType.CLICK, () => {
+                    singleton.netSingleton.ready.infoPanel.active = true;
+                    let roleInfo :RoleDis=null;
+                    if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
+                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
+                });
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //重置值
@@ -149,7 +154,6 @@ export class RoleIcon extends Component
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
                 this.touchStartPoint = new Vec2(0, 0);
-                
                 //移动角色且判断是否出售
                 if (!this.isSale) 
                 {
@@ -158,6 +162,7 @@ export class RoleIcon extends Component
                         console.log(this.index,this.tempIndex);
                         await this.roleArea.MovePos(this.index, this.tempIndex);
                     }
+                   
                     //换位
                     if (this.isSwitch && !this.isSale)//是否交换位置
                     {
@@ -182,16 +187,22 @@ export class RoleIcon extends Component
                 }
                 //购买、合并角色
                 if (null != this.index) {
+                    console.log("欲购买或者移动角色");
                     if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) {
+                        console.log("角色未购买并且金币数量大于等于3");
                         this.freezeSprite.active = false;
                         if(null != this.target || this.isMerge)
                         {
-                            this.isBuy = true;
-                            // if(!this.isMerge)
-                            // {
-                            //     this.roleArea.targets.set(this.target.name,this.node);
-                            // }
-                            await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
+                            if(null == this.roleArea.rolesNode[this.tempIndex]||this.isMerge){
+                                this.isBuy = true;
+                                // if(!this.isMerge)
+                                // {
+                                //     this.roleArea.targets.set(this.target.name,this.node);
+                                // }
+                                await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
+                                console.log("购买时，欲购买位置角色信息："+this.roleArea.rolesNode[this.tempIndex].name+"是否合并"+this.isMerge);
+                            }
+                            else console.log("purchase failed, there is already a character at the purchase location");
                         }
 
                         if (this.isMerge) {
@@ -210,7 +221,7 @@ export class RoleIcon extends Component
                     this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
                 }
                 //吸附缓动
-                if(!this.isMerge)
+                if(!this.isMerge||!this.isBuy)
                 {
                     this.Adsorption();
                 }
@@ -250,7 +261,7 @@ export class RoleIcon extends Component
                 let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;
                 let y = this.touchStartPoint.y - view.getVisibleSize().height / 2 - node.getPosition().y;
                 this.touchStartPoint = new Vec2(x, y);
-                //拖拽前的位置信息
+                //记录拖拽前的位置信息
                 beforeIndex=this.index;
                 berforeTarget=this.target;
             }, this);
@@ -324,10 +335,10 @@ export class RoleIcon extends Component
             this.node.on(Button.EventType.CLICK,()=>
             {
                 singleton.netSingleton.ready.infoPanel.active=true;
-                /*
-                类被改了暂时注释掉
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenSimple(this.roleId);
-                */
+                let roleInfo :RoleDis=null;
+                if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
+                
+                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
             });
         }
         else
@@ -525,11 +536,44 @@ export class RoleIcon extends Component
         }
         
     }
+    //玩家吃食物
+    async EatFood(t:common.Role,food_id:number){
+        try
+        {
+            console.log("role"+t.RoleID+"eat food"+food_id);
+            let foodInfo=config.FoodConfig.get(food_id);
+            if(!foodInfo){
+                console.log("can not find config of food:"+food_id);
+                return;
+            }
+            for(let effect of foodInfo.Effect){
+                switch(effect){
+                    case 1:case 2:{
+                        let value =[foodInfo.HpBonus,foodInfo.AttackBonus];
+                        await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
+                    }break;
+                    case 3:break;
+                    case 4:break;
+                    case 5:break;
+                    case 6:break;
+                }
+            }
+            this.upgradeLock=false;
+        }
+        catch(error)
+        {
+            console.error('RoleIcon 下 EatFood 错误 err: ',error);
+        }
+    }
     //玩家装备上购买的装备
     async Equipping(t:common.Role,equip_id:number){
         try
         {
-            let equipInfo=config.EquipConfig[equip_id];
+            let equipInfo=config.EquipConfig.get(equip_id);
+            if(!equipInfo){
+                console.log("can not find config of food:"+equip_id);
+                return;
+            }
             for(let effect of equipInfo.Effect){
                 switch(effect){
                     case 1:case 2:{
@@ -538,7 +582,7 @@ export class RoleIcon extends Component
                     }break;
                     case 3:{
                         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-                        for(let temp of equipInfo.Value){
+                        for(let temp of equipInfo.Vaule){
                             t.additionBuffer.push(temp);
                         }
                         let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
@@ -551,7 +595,7 @@ export class RoleIcon extends Component
                         //如果召唤的效果等同于id为x的召唤技能，特殊效果值是召唤技能的id，则使用下面的代码
                         let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
                         var additionSkill = [];
-                        for(let temp of equipInfo.Value){
+                        for(let temp of equipInfo.Vaule){
                             additionSkill.push(temp);
                         }
                         let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer,additionSkill);
@@ -559,6 +603,7 @@ export class RoleIcon extends Component
                     }break;
                 }
             }
+            this.upgradeLock=false;
         }
         catch(error)
         {
