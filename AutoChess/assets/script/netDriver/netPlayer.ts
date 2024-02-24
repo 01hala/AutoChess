@@ -7,7 +7,7 @@ import * as player_login from "../serverSDK/ccallplayer"
 
 import * as player_client from "../serverSDK/playercallc"
 
-
+import * as singleton from '../netDriver/netSingleton';
 
 export class netPlayer {
     private c_login_caller : login.login_caller;
@@ -171,4 +171,6 @@ export class netPlayer {
             console.log("edit role group timeout");
         })
     }
+
+    
 }

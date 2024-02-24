@@ -29,6 +29,7 @@ export class ReadyDis
 
     private refreshBtn:Button;
     private startBtn:Button;
+    private exitBtn:Button;
 
     private heathText:RichText;
     private coinText:RichText;
@@ -120,6 +121,11 @@ export class ReadyDis
                 this.panelNode.active=false;
             }
         });
+        this.exitBtn=this.panelNode.getChildByPath("TopArea/Exit_Btn").getComponent(Button);
+        this.exitBtn.node.on(Button.EventType.CLICK,()=>
+        {
+            father.getComponent(login).BackMainInterface();
+        },this);
     }
 
     private RegCallBack()

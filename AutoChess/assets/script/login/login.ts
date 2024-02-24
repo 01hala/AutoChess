@@ -182,7 +182,7 @@ export class login extends Component {
                 await singleton.netSingleton.battle.SetGameVictory(is_victory);
             }
 
-            singleton.netSingleton.game.start_battle();
+            this.BackMainInterface();
         }
 
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
@@ -217,5 +217,28 @@ export class login extends Component {
     }
 
     update(deltaTime: number) {
+    }
+
+    public async BackMainInterface()
+    {
+        this._progress=0.1;
+        this._setProgress = this._loading.load(this.bk.node);
+        setInterval(()=>{
+            this._progress += 0.01;
+            this._setProgress(this._progress);
+        }, 800);
+
+        if(singleton.netSingleton.battle)
+        {
+            singleton.netSingleton.battle.destory();
+        }
+        if(singleton.netSingleton.ready)
+        {
+            singleton.netSingleton.ready.destory();
+        }
+        await singleton.netSingleton.mainInterface.start(this.bk.node);
+        singleton.netSingleton.player.get_user_data()
+        this._setProgress(1.0);
+        this._loading.done();
     }
 }

@@ -137,7 +137,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1000,
-      "height": 1040
+      "height": 2000
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -287,7 +287,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 165.51999999999998,
+      "y": 645.52,
       "z": 0
     },
     "_lrot": {
@@ -2078,7 +2078,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Button",
+    "_name": "Exit_Btn",
     "_objFlags": 0,
     "_parent": {
       "__id__": 10
@@ -5016,7 +5016,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -310,
+      "y": 170,
       "z": 0
     },
     "_lrot": {
@@ -6755,7 +6755,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -320,
+      "y": -800,
       "z": 0
     },
     "_lrot": {
@@ -9797,8 +9797,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 960,
-      "height": 640
+      "width": 900,
+      "height": 1600
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
