@@ -55,7 +55,7 @@ export class ReadyDis
             //准备开始
             this.ready.StartReady();
             //this.coinText.string=""+this.ready.coin;
-            //await this.RefreshShop();
+            //await this.RefreshShop()
             if(battle_info.round>1)
             {
                 await this.Restore(battle_info);

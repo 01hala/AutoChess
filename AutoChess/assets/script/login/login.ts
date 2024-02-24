@@ -231,10 +231,12 @@ export class login extends Component {
         if(singleton.netSingleton.battle)
         {
             singleton.netSingleton.battle.destory();
+            singleton.netSingleton.battle=null;
         }
         if(singleton.netSingleton.ready)
         {
             singleton.netSingleton.ready.destory();
+            singleton.netSingleton.ready=null;
         }
         await singleton.netSingleton.mainInterface.start(this.bk.node);
         singleton.netSingleton.player.get_user_data()
