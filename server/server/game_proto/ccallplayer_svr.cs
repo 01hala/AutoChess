@@ -97,11 +97,38 @@ namespace Abelkhan
 
     }
 
+    public class player_login_reconnect_rsp : Common.Response {
+        private string _client_uuid_4d537d38_2de1_3d0c_9909_5db2dcf1671f;
+        private UInt64 uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc;
+        public player_login_reconnect_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_4d537d38_2de1_3d0c_9909_5db2dcf1671f = client_uuid;
+            uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc = _uuid;
+        }
+
+        public void rsp(UserData info_391fd3d4_2d55_3f5e_9223_7f450a814a15, string match_name_d50a466e_055b_3a8a_ac90_a255638bcd50){
+            var _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f = new ArrayList();
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc);
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(UserData.UserData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(match_name_d50a466e_055b_3a8a_ac90_a255638bcd50);
+            Hub.Hub._gates.call_client(_client_uuid_4d537d38_2de1_3d0c_9909_5db2dcf1671f, "player_login_rsp_cb_reconnect_rsp", _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f = new ArrayList();
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc);
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_4d537d38_2de1_3d0c_9909_5db2dcf1671f, "player_login_rsp_cb_reconnect_err", _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+        }
+
+    }
+
     public class player_login_module : Common.IModule {
         public player_login_module()
         {
             Hub.Hub._modules.add_mothed("player_login_player_login", player_login);
             Hub.Hub._modules.add_mothed("player_login_create_role", create_role);
+            Hub.Hub._modules.add_mothed("player_login_reconnect", reconnect);
         }
 
         public event Action<string, string> on_player_login;
@@ -124,6 +151,17 @@ namespace Abelkhan
             rsp = new player_login_create_role_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_create_role != null){
                 on_create_role(_name, _nick_name);
+            }
+            rsp = null;
+        }
+
+        public event Action<Int64> on_reconnect;
+        public void reconnect(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _guid = ((MsgPack.MessagePackObject)inArray[1]).AsInt64();
+            rsp = new player_login_reconnect_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_reconnect != null){
+                on_reconnect(_guid);
             }
             rsp = null;
         }

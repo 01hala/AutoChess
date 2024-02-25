@@ -159,10 +159,67 @@ namespace Abelkhan
 
     }
 
+    public class player_login_reconnect_cb
+    {
+        private UInt64 cb_uuid;
+        private player_login_rsp_cb module_rsp_cb;
+
+        public player_login_reconnect_cb(UInt64 _cb_uuid, player_login_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action<UserData, string> on_reconnect_cb;
+        public event Action<Int32> on_reconnect_err;
+        public event Action on_reconnect_timeout;
+
+        public player_login_reconnect_cb callBack(Action<UserData, string> cb, Action<Int32> err)
+        {
+            on_reconnect_cb += cb;
+            on_reconnect_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.reconnect_timeout(cb_uuid);
+            });
+            on_reconnect_timeout += timeout_cb;
+        }
+
+        public void call_cb(UserData info, string match_name)
+        {
+            if (on_reconnect_cb != null)
+            {
+                on_reconnect_cb(info, match_name);
+            }
+        }
+
+        public void call_err(Int32 err)
+        {
+            if (on_reconnect_err != null)
+            {
+                on_reconnect_err(err);
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_reconnect_timeout != null)
+            {
+                on_reconnect_timeout();
+            }
+        }
+
+    }
+
 /*this cb code is codegen by abelkhan for c#*/
     public class player_login_rsp_cb : Common.IModule {
         public Dictionary<UInt64, player_login_player_login_cb> map_player_login;
         public Dictionary<UInt64, player_login_create_role_cb> map_create_role;
+        public Dictionary<UInt64, player_login_reconnect_cb> map_reconnect;
         public player_login_rsp_cb(Common.ModuleManager modules)
         {
             map_player_login = new Dictionary<UInt64, player_login_player_login_cb>();
@@ -171,6 +228,9 @@ namespace Abelkhan
             map_create_role = new Dictionary<UInt64, player_login_create_role_cb>();
             modules.add_mothed("player_login_rsp_cb_create_role_rsp", create_role_rsp);
             modules.add_mothed("player_login_rsp_cb_create_role_err", create_role_err);
+            map_reconnect = new Dictionary<UInt64, player_login_reconnect_cb>();
+            modules.add_mothed("player_login_rsp_cb_reconnect_rsp", reconnect_rsp);
+            modules.add_mothed("player_login_rsp_cb_reconnect_err", reconnect_err);
         }
 
         public void player_login_rsp(IList<MsgPack.MessagePackObject> inArray){
@@ -249,6 +309,45 @@ namespace Abelkhan
             }
         }
 
+        public void reconnect_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _info = UserData.protcol_to_UserData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _match_name = ((MsgPack.MessagePackObject)inArray[2]).AsString();
+            var rsp = try_get_and_del_reconnect_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb(_info, _match_name);
+            }
+        }
+
+        public void reconnect_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _err = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var rsp = try_get_and_del_reconnect_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err(_err);
+            }
+        }
+
+        public void reconnect_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_reconnect_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private player_login_reconnect_cb try_get_and_del_reconnect_cb(UInt64 uuid){
+            lock(map_reconnect)
+            {
+                if (map_reconnect.TryGetValue(uuid, out player_login_reconnect_cb rsp))
+                {
+                    map_reconnect.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
     }
 
     public class player_login_caller {
@@ -319,6 +418,20 @@ namespace Abelkhan
             lock(rsp_cb_player_login_handle.map_create_role)
             {                rsp_cb_player_login_handle.map_create_role.Add(uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21, cb_create_role_obj);
             }            return cb_create_role_obj;
+        }
+
+        public player_login_reconnect_cb reconnect(Int64 guid){
+            var uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc = (UInt64)Interlocked.Increment(ref uuid_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b);
+
+            var _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f = new ArrayList();
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc);
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(guid);
+            _client_handle.call_hub(hub_name_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b, "player_login_reconnect", _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+
+            var cb_reconnect_obj = new player_login_reconnect_cb(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc, rsp_cb_player_login_handle);
+            lock(rsp_cb_player_login_handle.map_reconnect)
+            {                rsp_cb_player_login_handle.map_reconnect.Add(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc, cb_reconnect_obj);
+            }            return cb_reconnect_obj;
         }
 
     }

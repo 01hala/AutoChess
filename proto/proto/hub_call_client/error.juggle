@@ -13,6 +13,7 @@ enum em_error{
 	no_exist_role_group = 9;
 	no_enough_card = 10;
 	no_exist_role_card = 11;
+	player_offline = 12;
 }
 
 module error_code_ntf{

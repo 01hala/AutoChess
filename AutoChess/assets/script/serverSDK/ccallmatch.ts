@@ -404,6 +404,36 @@ export class plan_confirm_round_victory_cb{
 
 }
 
+export class plan_get_battle_data_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : plan_rsp_cb;
+
+    public event_get_battle_data_handle_cb : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[])=>void | null;
+    public event_get_battle_data_handle_err : ()=>void | null;
+    public event_get_battle_data_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : plan_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_get_battle_data_handle_cb = null;
+        this.event_get_battle_data_handle_err = null;
+        this.event_get_battle_data_handle_timeout = null;
+    }
+
+    callBack(_cb:(battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[])=>void, _err:()=>void)
+    {
+        this.event_get_battle_data_handle_cb = _cb;
+        this.event_get_battle_data_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.get_battle_data_timeout(this.cb_uuid); }, tick);
+        this.event_get_battle_data_handle_timeout = timeout_cb;
+    }
+
+}
+
 /*this cb code is codegen by abelkhan for ts*/
 export class plan_rsp_cb extends client_handle.imodule {
     public map_buy:Map<number, plan_buy_cb>;
@@ -414,6 +444,7 @@ export class plan_rsp_cb extends client_handle.imodule {
     public map_start_round:Map<number, plan_start_round_cb>;
     public map_start_round1:Map<number, plan_start_round1_cb>;
     public map_confirm_round_victory:Map<number, plan_confirm_round_victory_cb>;
+    public map_get_battle_data:Map<number, plan_get_battle_data_cb>;
     constructor(modules:client_handle.modulemng){
         super();
         this.map_buy = new Map<number, plan_buy_cb>();
@@ -440,6 +471,9 @@ export class plan_rsp_cb extends client_handle.imodule {
         this.map_confirm_round_victory = new Map<number, plan_confirm_round_victory_cb>();
         modules.add_method("plan_rsp_cb_confirm_round_victory_rsp", this.confirm_round_victory_rsp.bind(this));
         modules.add_method("plan_rsp_cb_confirm_round_victory_err", this.confirm_round_victory_err.bind(this));
+        this.map_get_battle_data = new Map<number, plan_get_battle_data_cb>();
+        modules.add_method("plan_rsp_cb_get_battle_data_rsp", this.get_battle_data_rsp.bind(this));
+        modules.add_method("plan_rsp_cb_get_battle_data_err", this.get_battle_data_err.bind(this));
     }
     public buy_rsp(inArray:any[]){
         let uuid = inArray[0];
@@ -722,6 +756,45 @@ export class plan_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public get_battle_data_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2:any[] = [];
+        _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.push(common.protcol_to_UserBattleData(inArray[1]));
+        _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.push(common.protcol_to_ShopData(inArray[2]));
+        let _array_096776fa_67e9_5066_90ca_647b76dcad2e:any[] = [];        for(let v_9035a021_03cb_5bd0_bc76_03261181b452 of inArray[3]){
+            _array_096776fa_67e9_5066_90ca_647b76dcad2e.push(common.protcol_to_Fetters(v_9035a021_03cb_5bd0_bc76_03261181b452));
+        }
+        _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.push(_array_096776fa_67e9_5066_90ca_647b76dcad2e);
+        var rsp = this.try_get_and_del_get_battle_data_cb(uuid);
+        if (rsp && rsp.event_get_battle_data_handle_cb) {
+            rsp.event_get_battle_data_handle_cb.apply(null, _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2);
+        }
+    }
+
+    public get_battle_data_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2:any[] = [];
+        var rsp = this.try_get_and_del_get_battle_data_cb(uuid);
+        if (rsp && rsp.event_get_battle_data_handle_err) {
+            rsp.event_get_battle_data_handle_err.apply(null, _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2);
+        }
+    }
+
+    public get_battle_data_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_get_battle_data_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_get_battle_data_handle_timeout) {
+                rsp.event_get_battle_data_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_get_battle_data_cb(uuid : number){
+        var rsp = this.map_get_battle_data.get(uuid);
+        this.map_get_battle_data.delete(uuid);
+        return rsp;
+    }
+
 }
 
 let rsp_cb_plan_handle : plan_rsp_cb | null = null;
@@ -858,6 +931,18 @@ export class plan_hubproxy
             rsp_cb_plan_handle.map_confirm_round_victory.set(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f, cb_confirm_round_victory_obj);
         }
         return cb_confirm_round_victory_obj;
+    }
+
+    public get_battle_data(){
+        let uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310 = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
+
+        let _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2:any[] = [uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310];
+        this._client_handle.call_hub(this.hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_get_battle_data", _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2);
+        let cb_get_battle_data_obj = new plan_get_battle_data_cb(uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310, rsp_cb_plan_handle);
+        if (rsp_cb_plan_handle){
+            rsp_cb_plan_handle.map_get_battle_data.set(uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310, cb_get_battle_data_obj);
+        }
+        return cb_get_battle_data_obj;
     }
 
 }

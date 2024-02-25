@@ -91,10 +91,41 @@ export class player_login_create_role_cb{
 
 }
 
+export class player_login_reconnect_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : player_login_rsp_cb;
+
+    public event_reconnect_handle_cb : (info:common.UserData, match_name:string)=>void | null;
+    public event_reconnect_handle_err : (err:number)=>void | null;
+    public event_reconnect_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : player_login_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_reconnect_handle_cb = null;
+        this.event_reconnect_handle_err = null;
+        this.event_reconnect_handle_timeout = null;
+    }
+
+    callBack(_cb:(info:common.UserData, match_name:string)=>void, _err:(err:number)=>void)
+    {
+        this.event_reconnect_handle_cb = _cb;
+        this.event_reconnect_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.reconnect_timeout(this.cb_uuid); }, tick);
+        this.event_reconnect_handle_timeout = timeout_cb;
+    }
+
+}
+
 /*this cb code is codegen by abelkhan for ts*/
 export class player_login_rsp_cb extends client_handle.imodule {
     public map_player_login:Map<number, player_login_player_login_cb>;
     public map_create_role:Map<number, player_login_create_role_cb>;
+    public map_reconnect:Map<number, player_login_reconnect_cb>;
     constructor(modules:client_handle.modulemng){
         super();
         this.map_player_login = new Map<number, player_login_player_login_cb>();
@@ -103,6 +134,9 @@ export class player_login_rsp_cb extends client_handle.imodule {
         this.map_create_role = new Map<number, player_login_create_role_cb>();
         modules.add_method("player_login_rsp_cb_create_role_rsp", this.create_role_rsp.bind(this));
         modules.add_method("player_login_rsp_cb_create_role_err", this.create_role_err.bind(this));
+        this.map_reconnect = new Map<number, player_login_reconnect_cb>();
+        modules.add_method("player_login_rsp_cb_reconnect_rsp", this.reconnect_rsp.bind(this));
+        modules.add_method("player_login_rsp_cb_reconnect_err", this.reconnect_err.bind(this));
     }
     public player_login_rsp(inArray:any[]){
         let uuid = inArray[0];
@@ -174,6 +208,42 @@ export class player_login_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public reconnect_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f:any[] = [];
+        _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.push(common.protcol_to_UserData(inArray[1]));
+        _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.push(inArray[2]);
+        var rsp = this.try_get_and_del_reconnect_cb(uuid);
+        if (rsp && rsp.event_reconnect_handle_cb) {
+            rsp.event_reconnect_handle_cb.apply(null, _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+        }
+    }
+
+    public reconnect_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f:any[] = [];
+        _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.push(inArray[1]);
+        var rsp = this.try_get_and_del_reconnect_cb(uuid);
+        if (rsp && rsp.event_reconnect_handle_err) {
+            rsp.event_reconnect_handle_err.apply(null, _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+        }
+    }
+
+    public reconnect_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_reconnect_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_reconnect_handle_timeout) {
+                rsp.event_reconnect_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_reconnect_cb(uuid : number){
+        var rsp = this.map_reconnect.get(uuid);
+        this.map_reconnect.delete(uuid);
+        return rsp;
+    }
+
 }
 
 let rsp_cb_player_login_handle : player_login_rsp_cb | null = null;
@@ -232,6 +302,19 @@ export class player_login_hubproxy
             rsp_cb_player_login_handle.map_create_role.set(uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21, cb_create_role_obj);
         }
         return cb_create_role_obj;
+    }
+
+    public reconnect(guid:number){
+        let uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc = Math.round(this.uuid_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b++);
+
+        let _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f:any[] = [uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc];
+        _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.push(guid);
+        this._client_handle.call_hub(this.hub_name_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b, "player_login_reconnect", _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+        let cb_reconnect_obj = new player_login_reconnect_cb(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc, rsp_cb_player_login_handle);
+        if (rsp_cb_player_login_handle){
+            rsp_cb_player_login_handle.map_reconnect.set(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc, cb_reconnect_obj);
+        }
+        return cb_reconnect_obj;
     }
 
 }

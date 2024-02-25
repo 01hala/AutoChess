@@ -33,6 +33,13 @@ namespace Abelkhan
             return $"Player:PlayerGuidCache:{guid}";
         }
 
+        static public string BuildPlayerMatchSvrCache(long guid)
+        {
+            return $"Player:PlayerMatchCache:{guid}";
+        }
+
         static public int PlayerSvrInfoCacheTimeout = 1000 * 60 * 30;
+
+        static public int PlayerMatchSvrCacheTimeout = 1000 * 60 * 30;
     }
 }

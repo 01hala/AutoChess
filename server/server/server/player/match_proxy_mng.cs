@@ -27,6 +27,11 @@ namespace Player
         {
             return player_Match_Caller.get_hub(name).start_battle(client_uuid, role_list);
         }
+
+        public player_match_reconnect_cb reconnect(string old_client_uuid, string new_client_uuid)
+        {
+            return player_Match_Caller.get_hub(name).reconnect(old_client_uuid, new_client_uuid);
+        }
     }
 
     class match_proxy_mng
@@ -47,6 +52,12 @@ namespace Player
         {
             var proxy = match_proxys.ToList()[RandomHelper.RandomInt(match_proxys.Count)];
             return proxy.Value;
+        }
+
+        public match_proxy get_match_proxy(string name)
+        {
+            match_proxys.TryGetValue(name, out var proxy);
+            return proxy;
         }
     }
 }

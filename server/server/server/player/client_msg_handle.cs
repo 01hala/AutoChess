@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using StackExchange.Redis;
 
 namespace Player
 {
@@ -22,6 +23,7 @@ namespace Player
             player_login_Module = new();
             player_login_Module.on_player_login += Login_Player_Module_on_player_login;
             player_login_Module.on_create_role += Player_login_Module_on_create_role;
+            player_login_Module.on_reconnect += Player_login_Module_on_reconnect;
 
             player_battle_Module = new();
             player_battle_Module.on_start_battle += Player_battle_Module_on_start_battle;
@@ -151,9 +153,13 @@ namespace Player
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _match = Player.match_Proxy_Mng.get_match_proxy();
-                _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup()).callBack((battle, shop) =>
+                _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup()).callBack( async (battle, shop) =>
                 {
                     rsp.rsp(_match.name, battle, shop);
+
+                    var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
+                    await Player._redis_handle.SetStrData(match_key, _match.name, RedisHelp.PlayerMatchSvrCacheTimeout);
+
                 }, rsp.err);
             }
             catch (System.Exception ex)
@@ -183,6 +189,62 @@ namespace Player
             catch (System.Exception ex)
             {
                 Log.Log.err($"Player_login_Module_on_create_role err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
+        }
+
+        private async void Player_login_Module_on_reconnect(long guid)
+        {
+            Log.Log.trace("on_reconnect begin!");
+
+            var rsp = player_login_Module.rsp as player_login_reconnect_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
+                if (_avatar == null)
+                {
+                    rsp.err((int)em_error.player_offline);
+                }
+                else
+                {
+                    var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
+                    string match_name = await Player._redis_handle.GetStrData(match_key);
+
+                    var _match = Player.match_Proxy_Mng.get_match_proxy(match_name);
+                    if (_match != null)
+                    {
+                        _match.reconnect(_avatar.ClientUUID, uuid).callBack((is_online) =>
+                        {
+                            if (is_online)
+                            {
+                                rsp.rsp(_avatar.PlayerInfo().Info(), match_name);
+                            }
+                            else
+                            {
+                                rsp.rsp(_avatar.PlayerInfo().Info(), "");
+                            }
+                        }, () =>
+                        {
+                            Log.Log.err("match reconnect error!");
+                        }).timeout(3000, () =>
+                        {
+                            Log.Log.err("match reconnect timeout!");
+                        });
+                    }
+                    else
+                    {
+                        rsp.rsp(_avatar.PlayerInfo().Info(), "");
+                    }
+                    _avatar.ClientUUID = uuid;
+
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"{ex}");
+
                 rsp.err((int)em_error.db_error);
             }
         }

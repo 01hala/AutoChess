@@ -299,6 +299,36 @@ namespace Abelkhan
 
     }
 
+    public class plan_get_battle_data_rsp : Common.Response {
+        private string _client_uuid_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2;
+        private UInt64 uuid_56d4d0ed_9f6b_3849_9251_bc4c53704cbd;
+        public plan_get_battle_data_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2 = client_uuid;
+            uuid_56d4d0ed_9f6b_3849_9251_bc4c53704cbd = _uuid;
+        }
+
+        public void rsp(UserBattleData battle_info_504125a2_a75d_3fa2_9a35_a9fdc5331928, ShopData shop_info_6355a923_2126_3fd5_b568_e5edf6bd36d0, List<Fetters> fetters_info_2465681a_a205_3e91_8b5b_a53cd2e8b9dc){
+            var _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2 = new ArrayList();
+            _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.Add(uuid_56d4d0ed_9f6b_3849_9251_bc4c53704cbd);
+            _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.Add(UserBattleData.UserBattleData_to_protcol(battle_info_504125a2_a75d_3fa2_9a35_a9fdc5331928));
+            _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.Add(ShopData.ShopData_to_protcol(shop_info_6355a923_2126_3fd5_b568_e5edf6bd36d0));
+            var _array_2465681a_a205_3e91_8b5b_a53cd2e8b9dc = new ArrayList();
+            foreach(var v_096776fa_67e9_5066_90ca_647b76dcad2e in fetters_info_2465681a_a205_3e91_8b5b_a53cd2e8b9dc){
+                _array_2465681a_a205_3e91_8b5b_a53cd2e8b9dc.Add(Fetters.Fetters_to_protcol(v_096776fa_67e9_5066_90ca_647b76dcad2e));
+            }
+            _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.Add(_array_2465681a_a205_3e91_8b5b_a53cd2e8b9dc);
+            Hub.Hub._gates.call_client(_client_uuid_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2, "plan_rsp_cb_get_battle_data_rsp", _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2);
+        }
+
+        public void err(){
+            var _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2 = new ArrayList();
+            _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.Add(uuid_56d4d0ed_9f6b_3849_9251_bc4c53704cbd);
+            Hub.Hub._gates.call_client(_client_uuid_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2, "plan_rsp_cb_get_battle_data_err", _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2);
+        }
+
+    }
+
     public class plan_module : Common.IModule {
         public plan_module()
         {
@@ -310,6 +340,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("plan_start_round", start_round);
             Hub.Hub._modules.add_mothed("plan_start_round1", start_round1);
             Hub.Hub._modules.add_mothed("plan_confirm_round_victory", confirm_round_victory);
+            Hub.Hub._modules.add_mothed("plan_get_battle_data", get_battle_data);
         }
 
         public event Action<ShopIndex, Int32, Int32> on_buy;
@@ -398,6 +429,16 @@ namespace Abelkhan
             rsp = new plan_confirm_round_victory_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_confirm_round_victory != null){
                 on_confirm_round_victory(_is_victory);
+            }
+            rsp = null;
+        }
+
+        public event Action on_get_battle_data;
+        public void get_battle_data(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            rsp = new plan_get_battle_data_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_get_battle_data != null){
+                on_get_battle_data();
             }
             rsp = null;
         }

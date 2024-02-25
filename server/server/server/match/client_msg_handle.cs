@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using Amazon.SecurityToken.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +23,27 @@ namespace Match
 
             plan_Module.on_start_round += Plan_Module_on_start_round;
 
+            plan_Module.on_get_battle_data += Plan_Module_on_get_battle_data;
+
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
+        }
+
+        private void Plan_Module_on_get_battle_data()
+        {
+            var rsp = plan_Module.rsp as plan_get_battle_data_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _player = Match.battle_Mng.get_battle_player(uuid);
+
+                rsp.rsp(_player.BattleData, _player.ShopData, _player.check_fetters());
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_confirm_round_victory error:{0}", ex);
+                rsp.err();
+            }
         }
 
         private void Plan_Module_on_freeze(ShopIndex shop_index, int index, bool is_freeze)

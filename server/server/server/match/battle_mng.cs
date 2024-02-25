@@ -1,6 +1,7 @@
 ﻿using Abelkhan;
 using Amazon.Util.Internal;
 using config;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Match
 {
     public class battle_player
     {
+        public long LastActiveTime = Timerservice.Tick;
+
         private battle_client_caller caller;
         public battle_client_caller BattleClientCaller
         {
@@ -42,6 +45,10 @@ namespace Match
         private string clientUUID;
         public string ClientUUID
         {
+            set
+            {
+                clientUUID = value;
+            }
             get
             {
                 return clientUUID;
@@ -894,6 +901,26 @@ namespace Match
         public battle_mng()
         {
             _caller = new battle_client_caller();
+
+            Hub.Hub._timer.addticktime(5 * 60 * 1000, tick_clear_timeout_player);
+        }
+
+        private void tick_clear_timeout_player(long tick_time)
+        {
+            List<battle_player> timeout_battle_player = new();
+            foreach (var it in battles)
+            {
+                if ((it.Value.LastActiveTime + 30 * 60 * 1000) < Timerservice.Tick)
+                {
+                    timeout_battle_player.Add(it.Value);
+                }
+            }
+            foreach (var _player in timeout_battle_player)
+            {
+                battles.Remove(_player.ClientUUID);
+            }
+
+            Hub.Hub._timer.addticktime(5 * 60 * 1000, tick_clear_timeout_player);
         }
 
         public battle_player add_player_to_battle(string clientUUID, List<int> roleList)
@@ -903,9 +930,23 @@ namespace Match
             return _player;
         }
 
+        public bool change_player_uuid(string old_client_uuid, string new_client_uuid)
+        {
+            if (battles.Remove(old_client_uuid, out var _player))
+            {
+                _player.ClientUUID = new_client_uuid;
+                battles[new_client_uuid] = _player;
+
+                return true;
+            }
+
+            return false;
+        }
+
         public battle_player get_battle_player(string clientUUID)
         {
             battles.TryGetValue(clientUUID, out var _player);
+            _player.LastActiveTime = Timerservice.Tick;
             return _player;
         }
     }

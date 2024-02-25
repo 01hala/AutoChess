@@ -664,6 +664,62 @@ namespace Abelkhan
 
     }
 
+    public class plan_get_battle_data_cb
+    {
+        private UInt64 cb_uuid;
+        private plan_rsp_cb module_rsp_cb;
+
+        public plan_get_battle_data_cb(UInt64 _cb_uuid, plan_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action<UserBattleData, ShopData, List<Fetters>> on_get_battle_data_cb;
+        public event Action on_get_battle_data_err;
+        public event Action on_get_battle_data_timeout;
+
+        public plan_get_battle_data_cb callBack(Action<UserBattleData, ShopData, List<Fetters>> cb, Action err)
+        {
+            on_get_battle_data_cb += cb;
+            on_get_battle_data_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.get_battle_data_timeout(cb_uuid);
+            });
+            on_get_battle_data_timeout += timeout_cb;
+        }
+
+        public void call_cb(UserBattleData battle_info, ShopData shop_info, List<Fetters> fetters_info)
+        {
+            if (on_get_battle_data_cb != null)
+            {
+                on_get_battle_data_cb(battle_info, shop_info, fetters_info);
+            }
+        }
+
+        public void call_err()
+        {
+            if (on_get_battle_data_err != null)
+            {
+                on_get_battle_data_err();
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_get_battle_data_timeout != null)
+            {
+                on_get_battle_data_timeout();
+            }
+        }
+
+    }
+
 /*this cb code is codegen by abelkhan for c#*/
     public class plan_rsp_cb : Common.IModule {
         public Dictionary<UInt64, plan_buy_cb> map_buy;
@@ -674,6 +730,7 @@ namespace Abelkhan
         public Dictionary<UInt64, plan_start_round_cb> map_start_round;
         public Dictionary<UInt64, plan_start_round1_cb> map_start_round1;
         public Dictionary<UInt64, plan_confirm_round_victory_cb> map_confirm_round_victory;
+        public Dictionary<UInt64, plan_get_battle_data_cb> map_get_battle_data;
         public plan_rsp_cb(Common.ModuleManager modules)
         {
             map_buy = new Dictionary<UInt64, plan_buy_cb>();
@@ -700,6 +757,9 @@ namespace Abelkhan
             map_confirm_round_victory = new Dictionary<UInt64, plan_confirm_round_victory_cb>();
             modules.add_mothed("plan_rsp_cb_confirm_round_victory_rsp", confirm_round_victory_rsp);
             modules.add_mothed("plan_rsp_cb_confirm_round_victory_err", confirm_round_victory_err);
+            map_get_battle_data = new Dictionary<UInt64, plan_get_battle_data_cb>();
+            modules.add_mothed("plan_rsp_cb_get_battle_data_rsp", get_battle_data_rsp);
+            modules.add_mothed("plan_rsp_cb_get_battle_data_err", get_battle_data_err);
         }
 
         public void buy_rsp(IList<MsgPack.MessagePackObject> inArray){
@@ -1007,6 +1067,49 @@ namespace Abelkhan
             }
         }
 
+        public void get_battle_data_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _battle_info = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _shop_info = ShopData.protcol_to_ShopData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _fetters_info = new List<Fetters>();
+            var _protocol_arrayfetters_info = ((MsgPack.MessagePackObject)inArray[3]).AsList();
+            foreach (var v_096776fa_67e9_5066_90ca_647b76dcad2e in _protocol_arrayfetters_info){
+                _fetters_info.Add(Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)v_096776fa_67e9_5066_90ca_647b76dcad2e).AsDictionary()));
+            }
+            var rsp = try_get_and_del_get_battle_data_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb(_battle_info, _shop_info, _fetters_info);
+            }
+        }
+
+        public void get_battle_data_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var rsp = try_get_and_del_get_battle_data_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err();
+            }
+        }
+
+        public void get_battle_data_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_get_battle_data_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private plan_get_battle_data_cb try_get_and_del_get_battle_data_cb(UInt64 uuid){
+            lock(map_get_battle_data)
+            {
+                if (map_get_battle_data.TryGetValue(uuid, out plan_get_battle_data_cb rsp))
+                {
+                    map_get_battle_data.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
     }
 
     public class plan_caller {
@@ -1161,6 +1264,19 @@ namespace Abelkhan
             lock(rsp_cb_plan_handle.map_confirm_round_victory)
             {                rsp_cb_plan_handle.map_confirm_round_victory.Add(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f, cb_confirm_round_victory_obj);
             }            return cb_confirm_round_victory_obj;
+        }
+
+        public plan_get_battle_data_cb get_battle_data(){
+            var uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310 = (UInt64)Interlocked.Increment(ref uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324);
+
+            var _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2 = new ArrayList();
+            _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2.Add(uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310);
+            _client_handle.call_hub(hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_get_battle_data", _argv_3d073eb1_819d_3da0_99ac_ac4f24f7d6a2);
+
+            var cb_get_battle_data_obj = new plan_get_battle_data_cb(uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310, rsp_cb_plan_handle);
+            lock(rsp_cb_plan_handle.map_get_battle_data)
+            {                rsp_cb_plan_handle.map_get_battle_data.Add(uuid_3d22d853_f4c2_57b9_a90a_3a542d96b310, cb_get_battle_data_obj);
+            }            return cb_get_battle_data_obj;
         }
 
     }

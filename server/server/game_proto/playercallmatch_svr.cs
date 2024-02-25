@@ -66,14 +66,74 @@ namespace Abelkhan
 
     }
 
+    public class player_match_reconnect_cb
+    {
+        private UInt64 cb_uuid;
+        private player_match_rsp_cb module_rsp_cb;
+
+        public player_match_reconnect_cb(UInt64 _cb_uuid, player_match_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action<bool> on_reconnect_cb;
+        public event Action on_reconnect_err;
+        public event Action on_reconnect_timeout;
+
+        public player_match_reconnect_cb callBack(Action<bool> cb, Action err)
+        {
+            on_reconnect_cb += cb;
+            on_reconnect_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.reconnect_timeout(cb_uuid);
+            });
+            on_reconnect_timeout += timeout_cb;
+        }
+
+        public void call_cb(bool is_online)
+        {
+            if (on_reconnect_cb != null)
+            {
+                on_reconnect_cb(is_online);
+            }
+        }
+
+        public void call_err()
+        {
+            if (on_reconnect_err != null)
+            {
+                on_reconnect_err();
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_reconnect_timeout != null)
+            {
+                on_reconnect_timeout();
+            }
+        }
+
+    }
+
 /*this cb code is codegen by abelkhan for c#*/
     public class player_match_rsp_cb : Common.IModule {
         public Dictionary<UInt64, player_match_start_battle_cb> map_start_battle;
+        public Dictionary<UInt64, player_match_reconnect_cb> map_reconnect;
         public player_match_rsp_cb()
         {
             map_start_battle = new Dictionary<UInt64, player_match_start_battle_cb>();
             Hub.Hub._modules.add_mothed("player_match_rsp_cb_start_battle_rsp", start_battle_rsp);
             Hub.Hub._modules.add_mothed("player_match_rsp_cb_start_battle_err", start_battle_err);
+            map_reconnect = new Dictionary<UInt64, player_match_reconnect_cb>();
+            Hub.Hub._modules.add_mothed("player_match_rsp_cb_reconnect_rsp", reconnect_rsp);
+            Hub.Hub._modules.add_mothed("player_match_rsp_cb_reconnect_err", reconnect_err);
         }
 
         public void start_battle_rsp(IList<MsgPack.MessagePackObject> inArray){
@@ -110,6 +170,43 @@ namespace Abelkhan
                 if (map_start_battle.TryGetValue(uuid, out player_match_start_battle_cb rsp))
                 {
                     map_start_battle.Remove(uuid);
+                }
+                return rsp;
+            }
+        }
+
+        public void reconnect_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _is_online = ((MsgPack.MessagePackObject)inArray[1]).AsBoolean();
+            var rsp = try_get_and_del_reconnect_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb(_is_online);
+            }
+        }
+
+        public void reconnect_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var rsp = try_get_and_del_reconnect_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err();
+            }
+        }
+
+        public void reconnect_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_reconnect_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private player_match_reconnect_cb try_get_and_del_reconnect_cb(UInt64 uuid){
+            lock(map_reconnect)
+            {
+                if (map_reconnect.TryGetValue(uuid, out player_match_reconnect_cb rsp))
+                {
+                    map_reconnect.Remove(uuid);
                 }
                 return rsp;
             }
@@ -170,6 +267,23 @@ namespace Abelkhan
                 rsp_cb_player_match_handle.map_start_battle.Add(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba, cb_start_battle_obj);
             }
             return cb_start_battle_obj;
+        }
+
+        public player_match_reconnect_cb reconnect(string old_client_uuid, string new_client_uuid){
+            var uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc = (UInt64)Interlocked.Increment(ref uuid_f08f93cd_bfea_3bf2_ae83_42be38c1f420);
+
+            var _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f = new ArrayList();
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc);
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(old_client_uuid);
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(new_client_uuid);
+            Hub.Hub._hubs.call_hub(hub_name_f08f93cd_bfea_3bf2_ae83_42be38c1f420, "player_match_reconnect", _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+
+            var cb_reconnect_obj = new player_match_reconnect_cb(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc, rsp_cb_player_match_handle);
+            lock(rsp_cb_player_match_handle.map_reconnect)
+            {
+                rsp_cb_player_match_handle.map_reconnect.Add(uuid_7dd9d95e_c232_57eb_ae66_b5c28dd467bc, cb_reconnect_obj);
+            }
+            return cb_reconnect_obj;
         }
 
     }
@@ -249,10 +363,35 @@ namespace Abelkhan
 
     }
 
+    public class player_match_reconnect_rsp : Common.Response {
+        private string _hub_name_4d537d38_2de1_3d0c_9909_5db2dcf1671f;
+        private UInt64 uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc;
+        public player_match_reconnect_rsp(string hub_name, UInt64 _uuid) 
+        {
+            _hub_name_4d537d38_2de1_3d0c_9909_5db2dcf1671f = hub_name;
+            uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc = _uuid;
+        }
+
+        public void rsp(bool is_online_5acf7858_144c_3574_88c6_55932a9e2c73){
+            var _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f = new ArrayList();
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc);
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(is_online_5acf7858_144c_3574_88c6_55932a9e2c73);
+            Hub.Hub._hubs.call_hub(_hub_name_4d537d38_2de1_3d0c_9909_5db2dcf1671f, "player_match_rsp_cb_reconnect_rsp", _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+        }
+
+        public void err(){
+            var _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f = new ArrayList();
+            _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f.Add(uuid_a79a6246_6113_35d3_9f8b_f4f2d51db9cc);
+            Hub.Hub._hubs.call_hub(_hub_name_4d537d38_2de1_3d0c_9909_5db2dcf1671f, "player_match_rsp_cb_reconnect_err", _argv_4d537d38_2de1_3d0c_9909_5db2dcf1671f);
+        }
+
+    }
+
     public class player_match_module : Common.IModule {
         public player_match_module() 
         {
             Hub.Hub._modules.add_mothed("player_match_start_battle", start_battle);
+            Hub.Hub._modules.add_mothed("player_match_reconnect", reconnect);
         }
 
         public event Action<string, List<Int32>> on_start_battle;
@@ -267,6 +406,18 @@ namespace Abelkhan
             rsp = new player_match_start_battle_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_start_battle != null){
                 on_start_battle(_client_uuid, _role_list);
+            }
+            rsp = null;
+        }
+
+        public event Action<string, string> on_reconnect;
+        public void reconnect(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _old_client_uuid = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var _new_client_uuid = ((MsgPack.MessagePackObject)inArray[2]).AsString();
+            rsp = new player_match_reconnect_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
+            if (on_reconnect != null){
+                on_reconnect(_old_client_uuid, _new_client_uuid);
             }
             rsp = null;
         }
