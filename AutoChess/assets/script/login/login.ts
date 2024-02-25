@@ -216,6 +216,15 @@ export class login extends Component {
                 singleton.netSingleton.player.UserData = info;
                 if (match_name != "") {
                     singleton.netSingleton.game.match_name = match_name;
+                    if (singleton.netSingleton.ready) {
+                        singleton.netSingleton.game.get_battle_data().callBack((battle_info, shop_info, fetters_info) => {
+                            singleton.netSingleton.ready.Restore(battle_info);
+                        }, () => {
+                            console.log("on net reconnect get_battle_data error!");
+                        }).timeout(2000, () => {
+                            console.log("on net reconnect get_battle_data timeout!");
+                        })
+                    }
                 }
                 else{
                     this.BackMainInterface();

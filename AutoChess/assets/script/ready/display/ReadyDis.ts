@@ -119,6 +119,7 @@ export class ReadyDis
             {
                 await this.ready.StartBattle();
                 this.panelNode.active=false;
+                this.destory();
             }
         });
         this.exitBtn=this.panelNode.getChildByPath("TopArea/Exit_Btn").getComponent(Button);
