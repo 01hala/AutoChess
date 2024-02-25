@@ -218,8 +218,18 @@ export class login extends Component {
                     singleton.netSingleton.game.match_name = match_name;
                 }
                 else{
+                    this.BackMainInterface();
                 }
             }, (err) => {
+                if (singleton.netSingleton.ready) {
+                    singleton.netSingleton.ready.destory();
+                    singleton.netSingleton.ready = null;
+                }
+                if(singleton.netSingleton.battle) {
+                    singleton.netSingleton.battle.destory();
+                    singleton.netSingleton.battle = null;
+                }
+
                 this._loading = new load.Loading();
                 this._setProgress = this._loading.load(this.bk.node);
 
