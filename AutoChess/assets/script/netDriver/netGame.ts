@@ -105,18 +105,27 @@ export class netGame {
         return this.c_match_gm.get_hub(this.match_name).set_formation(self, target);
     }
 
-    private match_name:string = "";
+    public match_name:string = "";
     //准备阶段
     public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
     public start_battle() {
-        this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info)=>{
-            this.match_name = match_name;
-            this.cb_start_battle.call(null, battle_info, shop_info, null);
-        }, (err)=>{
-            console.log("start_battle err:", err);
-        }).timeout(3000, ()=>{
-            console.log("start_battle timeout!");
+        return new Promise<void>((relolve, reject) => {
+            this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info)=>{
+                this.match_name = match_name;
+                this.cb_start_battle.call(null, battle_info, shop_info, null);
+                relolve();
+            }, (err)=>{
+                console.log("start_battle err:", err);
+                reject();
+            }).timeout(3000, ()=>{
+                console.log("start_battle timeout!");
+                reject();
+            });
         });
+    }
+
+    public get_battle_data() {
+        return this.c_match.get_hub(this.match_name).get_battle_data();
     }
 
     public freeze(shop_index:common.ShopIndex, index:number, is_freeze:boolean) {

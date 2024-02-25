@@ -80,11 +80,11 @@ export class StartGamePanel extends Component
     
             },this);
             //匹配
-            this.athleticsWindow.getChildByPath("Normal/Normal_Btn").on(Button.EventType.CLICK,()=>
+            this.athleticsWindow.getChildByPath("Normal/Normal_Btn").on(Button.EventType.CLICK, async ()=>
             {
                 console.log("Normal_Btn start_battle!");
+                await singleton.netSingleton.game.start_battle();
                 this.node.parent.active=false;
-                singleton.netSingleton.game.start_battle();
             },this);
         }
         catch(error)

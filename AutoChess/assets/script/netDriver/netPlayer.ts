@@ -109,6 +109,11 @@ export class netPlayer {
         });;
     }
 
+    public reconnect(guid:number) {
+        console.log("begin reconnect!");
+        return this.c_player_login_caller.get_hub(this.player_name).reconnect(guid);
+    }
+
     //更新玩家账户信息
     public cb_get_user_data:(_userInfo:common.UserData)=>void;
     public get_user_data()

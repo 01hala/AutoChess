@@ -45,6 +45,13 @@ import { netSingleton } from "./netSingleton"
          console.log("conn_gate_svr complete!");
          this.node.emit("connect", 1);
          netSingleton.is_conn_gate = true;
+
+         cli.cli_handle.onGateDisConnect = async () => {
+            await this.conn_gate_svr("wss://zzq.ucat.games:3001");
+
+            this.node.emit("reconnect", 1);
+            netSingleton.is_conn_gate = true;
+         };
      }
  
      update (deltaTime: number) {

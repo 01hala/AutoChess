@@ -209,6 +209,29 @@ export class login extends Component {
             this.wxLogin();
         });
 
+        this.netNode.on("reconnect", () => {
+            console.log("on net reconnect!");
+
+            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack((info, match_name)=>{
+                singleton.netSingleton.player.UserData = info;
+                if (match_name != "") {
+                    singleton.netSingleton.game.match_name = match_name;
+                }
+                else{
+                }
+            }, (err) => {
+                this._loading = new load.Loading();
+                this._setProgress = this._loading.load(this.bk.node);
+
+                setInterval(()=>{
+                    this._progress += 0.01;
+                    this._setProgress(this._progress);
+                }, 800);
+
+                this.wxLogin();
+            });
+        });
+
         if (singleton.netSingleton.is_conn_gate) {
             this._progress += 0.1;
             this._setProgress(this._progress);
