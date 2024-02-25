@@ -34,6 +34,19 @@ import { netSingleton } from "./netSingleton"
              cli.cli_handle.connect_gate(url);
          });
      }
+
+     private async reconnect() {
+        if (netSingleton.is_conn_gate) {
+            return;
+        }
+
+        await this.conn_gate_svr("wss://zzq.ucat.games:3001");
+
+        this.node.emit("reconnect", 1);
+        netSingleton.is_conn_gate = true;
+
+        setTimeout(this.reconnect.bind(this), 3000)
+     }
  
      async start () {
          // [3]
@@ -47,10 +60,7 @@ import { netSingleton } from "./netSingleton"
          netSingleton.is_conn_gate = true;
 
          cli.cli_handle.onGateDisConnect = async () => {
-            await this.conn_gate_svr("wss://zzq.ucat.games:3001");
-
-            this.node.emit("reconnect", 1);
-            netSingleton.is_conn_gate = true;
+            this.reconnect();
          };
      }
  
