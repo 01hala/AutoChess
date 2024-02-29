@@ -245,6 +245,12 @@ namespace Match
             }
         }
 
+        private int baseStage()
+        {
+            var _base = (battleData.round + 1) / 2;
+            return _base < 6 ? _base : 6;
+        }
+
         private void _refresh()
         {
             Log.Log.trace("_refresh begin!");
@@ -257,15 +263,25 @@ namespace Match
                     var r = shopData.SaleRoleList[i];
                     if (r == null || !r.IsFreeze)
                     {
-                        var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                        var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
                         r = randomShopRole(stage);
+                        while(r == null)
+                        {
+                            stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                            r = randomShopRole(stage);
+                        }
                         shopData.SaleRoleList[i] = r;
                     }
                 }
                 else
                 {
-                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                    var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
                     var r = randomShopRole(stage);
+                    while (r == null)
+                    {
+                        stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                        r = randomShopRole(stage);
+                    }
                     shopData.SaleRoleList.Add(r);
                 }
             }
@@ -276,15 +292,25 @@ namespace Match
                 var p = shopData.SalePropList[i];
                 if (p == null || !p.IsFreeze)
                 {
-                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                    var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
                     p = randomFood(stage);
+                    while(p == null)
+                    {
+                        stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                        p = randomFood(stage);
+                    }
                     shopData.SalePropList[i] = p;
                 }
             }
             else
             {
-                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
                 var p = randomFood(stage);
+                while(p == null)
+                {
+                    stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                    p = randomFood(stage);
+                }
                 shopData.SalePropList.Add(p);
             }
 
@@ -294,34 +320,55 @@ namespace Match
                 var p = shopData.SalePropList[i];
                 if (p == null || !p.IsFreeze)
                 {
-                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                    var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
                     p = randomEquip(stage);
+                    while(p == null)
+                    {
+                        stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                        p = randomEquip(stage);
+                    }
                     shopData.SalePropList[i] = p;
                 }
             }
             else
             {
-                var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
+                var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
                 var p = randomEquip(stage);
+                while(p == null)
+                {
+                    stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                    p = randomEquip(stage);
+                }
                 shopData.SalePropList.Add(p);
             }
 
-            for ( ; i < 3/*shopData.SalePropList.Count*/; i++)
+            if (baseStage() >= 5)
             {
+                i++;
                 if (i < shopData.SalePropList.Count)
                 {
                     var p = shopData.SalePropList[i];
                     if (p == null || !p.IsFreeze)
                     {
-                        var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                        p = randomShopProp(stage);
+                        var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                        p = randomFood(stage);
+                        while (p == null)
+                        {
+                            stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                            p = randomFood(stage);
+                        }
                         shopData.SalePropList[i] = p;
                     }
                 }
                 else
                 {
-                    var stage = config.ShopProbabilityConfig.RandomStage((battleData.round + 1) / 2, config.Config.ShopProbabilityConfigs);
-                    var p = randomShopProp(stage);
+                    var stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                    var p = randomFood(stage);
+                    while (p == null)
+                    {
+                        stage = config.ShopProbabilityConfig.RandomStage(baseStage(), config.Config.ShopProbabilityConfigs);
+                        p = randomFood(stage);
+                    }
                     shopData.SalePropList.Add(p);
                 }
             }
@@ -539,6 +586,34 @@ namespace Match
             return false;
         }
 
+        private int roleCount()
+        {
+            int i = 0;
+            foreach(var r in battleData.RoleList)
+            {
+                if (r != null)
+                {
+                    i++;
+                }
+            }
+            return i;
+        }
+
+        private int maxRoleCount()
+        {
+            var stage = baseStage();
+            if (stage < 3)
+            {
+                return 4;
+            }
+            else if (stage < 5)
+            {
+                return 5;
+            }
+
+            return 6;
+        }
+
         public em_error buy_role(int index, int role_index)
         {
             var r = battleData.RoleList[role_index];
@@ -551,6 +626,11 @@ namespace Match
 
             if (r == null)
             {
+                if (roleCount() >= maxRoleCount())
+                {
+                    return em_error.exceeds_maximum_limit_role;
+                }
+
                 if (!add_role(role_index, s.RoleID, 1))
                 {
                     return em_error.db_error;

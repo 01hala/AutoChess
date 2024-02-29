@@ -52,7 +52,6 @@ export function protcol_to_ShopSkillEffect(_protocol:any){
 /*this module code is codegen by abelkhan codegen for typescript*/
 export class battle_client_module extends client_handle.imodule {
     public _client_handle:client_handle.client;
-    cb_role_equip: (equip_id: number, target_role_index: number, target_role: common.Role) => void;
     constructor(_client_handle_:client_handle.client){
         super();
         this._client_handle = _client_handle_;

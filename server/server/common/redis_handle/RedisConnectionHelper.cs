@@ -44,8 +44,8 @@ namespace Abelkhan
             }
             catch (StackExchange.Redis.RedisConnectionException conex)
             {
-                Log.Log.err("Can NOT connect to Redis! connectRetry={0}, connectTimeout={1}ms", connectRetry, connectTimeout);
-                throw conex;
+                Log.Log.err("Can NOT connect to Redis! connectRetry={0}, connectTimeout={1}ms, {2}", connectRetry, connectTimeout, conex);
+                throw;
             }
         }
 
