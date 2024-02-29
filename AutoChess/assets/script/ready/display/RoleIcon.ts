@@ -37,6 +37,8 @@ export class RoleIcon extends Component
     private collider:Collider2D;
     //拖拽起始位置
     private touchStartPoint: Vec2 = new Vec2(0, 0);
+    //拖拽时间点（做点击事件）
+    private lastClickTime:number;
     //角色实体
     public roleNode:Node;
     //各操作区域
@@ -74,7 +76,7 @@ export class RoleIcon extends Component
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
-            this.RegBtn(true);
+            //this.RegBtn(true);
 
        }
        catch(error)
@@ -147,9 +149,14 @@ export class RoleIcon extends Component
     //拖拽结束
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
+                //手机上按钮事件无法正常工作，此处采用检测拖拽开始和取消的时间间隔，小于0.5s视为点击事件
+                if(Date.now()-this.lastClickTime<500){
+                    console.log("Players click on role icon");
+                    this.ClickBtn();
+                }
                 this.OffTirrger();
                 //重新注册按钮事件
-                this.RegBtn(true);
+                //this.RegBtn(true);
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
@@ -232,7 +239,7 @@ export class RoleIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
             {
                 //关闭按钮事件
-                this.RegBtn(false);
+                //this.RegBtn(false);
                 //显示冻结栏
                 if (!this.isBuy) 
                 {
@@ -253,6 +260,7 @@ export class RoleIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
+                this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象
                 let node: Node = event.currentTarget;
@@ -346,6 +354,13 @@ export class RoleIcon extends Component
             //关闭按钮事件
             this.node.off(Button.EventType.CLICK);
         }
+    }
+    private ClickBtn(){
+        singleton.netSingleton.ready.infoPanel.active=true;
+        let roleInfo :RoleDis=null;
+        if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
+        
+        singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/

@@ -41,6 +41,8 @@ export class PropIcon extends Component
     private collider:Collider2D;
     //拖拽起始位置
     private touchStartPoint: Vec2 = new Vec2(0, 0);
+    //拖拽时间点（做点击事件）
+    private lastClickTime:number;
     //各操作区域
     private roleArea:RoleArea;
     private shopArea:ShopArea;
@@ -64,7 +66,7 @@ export class PropIcon extends Component
         this.iconMask=this.node.getChildByName("IconMask");
         //this.iconMask.active=false;
         this.collider=this.node.getComponent(Collider2D);
-        this.RegBtn(true);
+        //this.RegBtn(true);
     }
 
     private checkPropType(propId:number) : PropsType {
@@ -174,12 +176,12 @@ export class PropIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
                 //重新注册按钮事件
-                this.node.on(Button.EventType.CLICK,()=>
-                {
-                    console.log("点击查看道具详细信息"+this.propType);
-                    singleton.netSingleton.ready.infoPanel.active=true;
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
-                });
+                // this.node.on(Button.EventType.CLICK,()=>
+                // {
+                //     console.log("点击查看道具详细信息"+this.propType);
+                //     singleton.netSingleton.ready.infoPanel.active=true;
+                //     singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
+                // });
                 this.OffTirrger();
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
@@ -190,8 +192,12 @@ export class PropIcon extends Component
     //拖拽结束
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
+                if(Date.now()-this.lastClickTime<500){
+                    console.log("Players click on prop icon");
+                    this.ClickBtn();
+                }
                 //重新注册按钮事件
-                this.RegBtn(true);
+                //this.RegBtn(true);
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
@@ -239,7 +245,7 @@ export class PropIcon extends Component
     //拖拽中
             this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
             {
-                this.RegBtn(false);
+                //this.RegBtn(false);
                 //计算位移坐标
                 let node: Node = event.currentTarget;
                 let pos = new Vec2();
@@ -252,6 +258,7 @@ export class PropIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
+                this.lastClickTime=Date.now();
                 //显示冻结栏
                 if(!this.isBuy)
                 {
@@ -306,6 +313,10 @@ export class PropIcon extends Component
             //关闭按钮事件
             this.node.off(Button.EventType.CLICK);
         }
+    }
+    private ClickBtn(){
+        singleton.netSingleton.ready.infoPanel.active=true;
+        singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/

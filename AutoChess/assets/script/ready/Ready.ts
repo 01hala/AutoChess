@@ -52,9 +52,9 @@ export class Ready
             let tmpRole:ShopRole[]=[];
             let tmpCnt:number;
             switch(this.stage){
-                case 1:case 2:tmpCnt=3;break;
-                case 3:case 4:tmpCnt=4;break;
-                case 5:case 6:tmpCnt=5;break;
+                case 1:case 2:tmpCnt=4;break;
+                case 3:case 4:tmpCnt=5;break;
+                case 5:case 6:tmpCnt=6;break;
             }
             for(let i=0;i<tmpCnt&&i<this.shopRoles.length;i++){
                 tmpRole.push(this.shopRoles[i]);
@@ -72,8 +72,8 @@ export class Ready
             let tmpFoodCnt:number;
             let tmpEquipCnt:number=1;
             switch(this.stage){
-                case 1:case 2:case 3:case 4:tmpFoodCnt=2;break;
-                case 5:case 6:tmpFoodCnt=3;break;
+                case 1:case 2:case 3:case 4:tmpFoodCnt=1;break;
+                case 5:case 6:tmpFoodCnt=2;break;
             }
             for(let i=0;i<this.props.length;i++){
                 if(tmpFoodCnt>0&&this.props[i].PropID>=1001&&this.props[i].PropID<=1999){
