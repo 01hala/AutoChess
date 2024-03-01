@@ -3,6 +3,7 @@ using Amazon.SecurityToken.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Match
 {
@@ -134,6 +135,45 @@ namespace Match
             }
         }
 
+        private async Task<UserBattleData> getCacheBattleData(int round)
+        {
+            var _base = (round + 1) / 2;
+            _base = _base < 6 ? _base : 6;
+
+            int count;
+            if (_base <= 1)
+            {
+                count = 3;
+            }
+            else if (_base < 3)
+            {
+                count = 4;
+            }
+            else if (_base < 5)
+            {
+                count = 5;
+            }
+            else
+            {
+                count = 6;
+            }
+
+            var target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{round}");
+            if (target == null)
+            {
+                return null;
+            }
+
+            var i = 0;
+            while (target.RoleList.Count < count && i < 3)
+            {
+                target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{round}");
+                i++;
+            }
+
+            return target;
+        }
+
         private async void Plan_Module_on_start_round1()
         {
             var rsp = plan_Module.rsp as plan_start_round1_rsp;
@@ -146,7 +186,7 @@ namespace Match
                 _player.end_round();
                 _player.do_skill();
 
-                var target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{_player.BattleData.round}");
+                var target = await getCacheBattleData(_player.BattleData.round);
                 if (target == null)
                 {
                     target = getRandomBattleData(_player.BattleData.round, targetSetUp);

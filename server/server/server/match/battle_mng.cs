@@ -599,7 +599,7 @@ namespace Match
             return i;
         }
 
-        private int maxRoleCount()
+        public int maxRoleCount()
         {
             var stage = baseStage();
             if (stage < 3)
