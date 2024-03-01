@@ -150,7 +150,7 @@ export class RoleIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
                 //手机上按钮事件无法正常工作，此处采用检测拖拽开始和取消的时间间隔，小于0.5s视为点击事件
-                if(Date.now()-this.lastClickTime<500){
+                if(Date.now()-this.lastClickTime<100){
                     console.log("Players click on role icon");
                     this.ClickBtn();
                 }
@@ -244,6 +244,10 @@ export class RoleIcon extends Component
                 if (!this.isBuy) 
                 {
                     this.shopArea.ShowFreezeArea(true);
+                }
+                //前0.1s判断是不是点击事件，不进行拖拽行为
+                if(Date.now()-this.lastClickTime<100){
+                    return;
                 }
                 //计算位移坐标
                 let node: Node = event.currentTarget;

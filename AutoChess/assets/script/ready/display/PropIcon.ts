@@ -192,7 +192,7 @@ export class PropIcon extends Component
     //拖拽结束
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
-                if(Date.now()-this.lastClickTime<500){
+                if(Date.now()-this.lastClickTime<100){
                     console.log("Players click on prop icon");
                     this.ClickBtn();
                 }
