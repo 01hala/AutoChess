@@ -61,7 +61,7 @@ export class login extends Component {
             },
             success: (login_res) => {
                 console.log("login success:" + JSON.stringify(login_res));
-                wx.getSetting({
+                wx.getPrivacySetting({
                     complete: (res) => {
                         console.log("authSetting complete:", JSON.stringify(res));
                     },
@@ -74,13 +74,26 @@ export class login extends Component {
 
                         console.log("authSetting:", JSON.stringify(res));
 
-                        if (res.authSetting['scope.userInfo']) {
-                            this.get_user_info_login(login_res.code)
+                        if (!res.needAuthorization) {
+                            this.get_user_info_login(login_res.code);
                         }
                         else {
-                            console.log("authSetting createUserInfoButton:", JSON.stringify(res));
+                            console.log("authSetting RequirePrivacyAuthorize:", JSON.stringify(res));
 
-                            let wxSize = wx.getSystemInfoSync();
+                            wx.requirePrivacyAuthorize({
+                                complete: (result) => {
+                                    console.log("wx RequirePrivacyAuthorize complete Callback...{0}", result.errMsg);
+                                },
+                                fail: (result) => {
+                                    console.log("wx RequirePrivacyAuthorize fail Callback...{0}", result.errMsg);
+                                },
+                                success: (result) => {
+                                    console.log("wx RequirePrivacyAuthorize success Callback...{0}", result.errMsg);
+                                    this.get_user_info_login(login_res.code);
+                                },
+                            });
+
+                            /*let wxSize = wx.getSystemInfoSync();
                             let btn = wx.createUserInfoButton({
                                 type: 'text',
                                 text: '微信登录',
@@ -107,7 +120,7 @@ export class login extends Component {
                                 console.log("createUserInfoButton:" + JSON.stringify(res));
                                 this.get_user_info_login(login_res.code)
                                 btn.destroy();
-                            });
+                            });*/
                         }
                     }
                 });
