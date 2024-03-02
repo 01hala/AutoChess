@@ -120,6 +120,7 @@ export class RoleArea extends Component
                     obj.getComponent(RoleIcon).target=this.targets.get("Location_" + i);
                     await obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
                     //obj.getComponent(RoleIcon).iconMask.active=false;
+                    this.rolesNode[i].destroy();
                     this.rolesNode[i]=obj;
                 }
             }

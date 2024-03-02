@@ -80,7 +80,8 @@ export class login extends Component {
                         else {
                             console.log("authSetting RequirePrivacyAuthorize:", JSON.stringify(res));
 
-                            wx.requirePrivacyAuthorize({
+                            wx.authorize({
+                                scope: 'scope.userInfo',
                                 complete: (result) => {
                                     console.log("wx RequirePrivacyAuthorize complete Callback...{0}", result.errMsg);
                                 },
