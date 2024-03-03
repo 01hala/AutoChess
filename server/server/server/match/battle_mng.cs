@@ -836,6 +836,7 @@ namespace Match
             if (config.Config.EquipConfigs.TryGetValue(p.PropID, out var equipcfg))
             {
                 r.equipID = equipcfg.Id;
+                BattleClientCaller.get_client(ClientUUID).role_equip(p.PropID, role_index, r);
             }
             
             return em_error.success;

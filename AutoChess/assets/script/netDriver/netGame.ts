@@ -64,7 +64,7 @@ export class netGame {
                 this.cb_role_eat_food.call(null, food_id, target_role_index, target_role, is_update, is_syncope);
             }
         }
-        this.match_c.cb_role_equip=(equip_id:number,target_role_index:number, target_role:common.Role)=>{
+        this.match_c.cb_role_equip = (equip_id:number,target_role_index:number, target_role:common.Role)=>{
             if (this.cb_role_equip) {
                 this.cb_role_equip.call(null, equip_id, target_role_index,target_role);
             }

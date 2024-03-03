@@ -89,6 +89,7 @@ namespace Abelkhan
             _client_handle.modulemanager.add_mothed("battle_client_role_buy_merge", role_buy_merge);
             _client_handle.modulemanager.add_mothed("battle_client_role_merge", role_merge);
             _client_handle.modulemanager.add_mothed("battle_client_role_eat_food", role_eat_food);
+            _client_handle.modulemanager.add_mothed("battle_client_role_equip", role_equip);
             _client_handle.modulemanager.add_mothed("battle_client_role_update_refresh_shop", role_update_refresh_shop);
             _client_handle.modulemanager.add_mothed("battle_client_fetters_info", fetters_info);
             _client_handle.modulemanager.add_mothed("battle_client_role_skill_update", role_skill_update);
@@ -166,6 +167,16 @@ namespace Abelkhan
             var _is_syncope = ((MsgPack.MessagePackObject)inArray[4]).AsBoolean();
             if (on_role_eat_food != null){
                 on_role_eat_food(_food_id, _target_role_index, _target_role, _is_update, _is_syncope);
+            }
+        }
+
+        public event Action<Int32, Int32, Role> on_role_equip;
+        public void role_equip(IList<MsgPack.MessagePackObject> inArray){
+            var _quip_id = ((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var _target_role_index = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _target_role = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            if (on_role_equip != null){
+                on_role_equip(_quip_id, _target_role_index, _target_role);
             }
         }
 

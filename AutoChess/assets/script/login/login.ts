@@ -80,21 +80,7 @@ export class login extends Component {
                         else {
                             console.log("authSetting RequirePrivacyAuthorize:", JSON.stringify(res));
 
-                            wx.authorize({
-                                scope: 'scope.userInfo',
-                                complete: (result) => {
-                                    console.log("wx RequirePrivacyAuthorize complete Callback...{0}", result.errMsg);
-                                },
-                                fail: (result) => {
-                                    console.log("wx RequirePrivacyAuthorize fail Callback...{0}", result.errMsg);
-                                },
-                                success: (result) => {
-                                    console.log("wx RequirePrivacyAuthorize success Callback...{0}", result.errMsg);
-                                    this.get_user_info_login(login_res.code);
-                                },
-                            });
-
-                            /*let wxSize = wx.getSystemInfoSync();
+                            let wxSize = wx.getSystemInfoSync();
                             let btn = wx.createUserInfoButton({
                                 type: 'text',
                                 text: '微信登录',
@@ -121,7 +107,7 @@ export class login extends Component {
                                 console.log("createUserInfoButton:" + JSON.stringify(res));
                                 this.get_user_info_login(login_res.code)
                                 btn.destroy();
-                            });*/
+                            });
                         }
                     }
                 });
@@ -202,6 +188,13 @@ export class login extends Component {
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
             console.log("cb_battle start round!");
 
+            this._progress=0.1;
+            this._setProgress = this._loading.load(this.bk.node);
+            setInterval(()=>{
+                this._progress += 0.01;
+                this._setProgress(this._progress);
+            }, 800);
+            
             singleton.netSingleton.ready.destory();
             singleton.netSingleton.ready = null;
 

@@ -42,7 +42,7 @@ namespace Match
             }
             catch (System.Exception ex)
             {
-                Log.Log.err("Plan_Module_on_confirm_round_victory error:{0}", ex);
+                Log.Log.err("Plan_Module_on_get_battle_data error:{0}", ex);
                 rsp.err();
             }
         }
@@ -61,7 +61,7 @@ namespace Match
             }
             catch (System.Exception ex)
             {
-                Log.Log.err("Plan_Module_on_confirm_round_victory error:{0}", ex);
+                Log.Log.err("Plan_Module_on_freeze error:{0}", ex);
                 rsp.err((int)em_error.db_error);
             }
         }
@@ -80,7 +80,7 @@ namespace Match
             }
             catch (System.Exception ex)
             {
-                Log.Log.err("Plan_Module_on_confirm_round_victory error:{0}", ex);
+                Log.Log.err("Plan_Module_on_move error:{0}", ex);
                 rsp.err((int)em_error.db_error);
             }
         }

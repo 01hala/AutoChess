@@ -95,9 +95,15 @@ export class wschannel implements abelkhan.Ichannel {
 }
 
 export class wsconnectservice {
-    public connect(url, cb:(ch:abelkhan.Ichannel)=>void) {
-        let ws = new WebSocket(url);
-        let ch = new wschannel(ws, cb);
+    public connect(url, cb:(ch:abelkhan.Ichannel)=>void, faild:()=>void) {
+        try {
+            let ws = new WebSocket(url);
+            let ch = new wschannel(ws, cb);
+        }
+        catch (e) {
+            console.log("wsconnectservice faild:", e);
+            faild();
+        }
     }
 }
 
@@ -112,7 +118,7 @@ class gateproxy {
 
     public timetmp:number = new Date().getTime();
     public onGateTime : (tick:number)=>void = null;
-    public onGateDisconnect : (ch:abelkhan.Ichannel)=>void = null ;
+    //public onGateDisconnect : (ch:abelkhan.Ichannel)=>void = null ;
     public heartbeats() {
         let that = this;
         try {
@@ -122,16 +128,16 @@ class gateproxy {
                     this.timetmp = new Date().getTime();
                 }
             }, ()=> {}).timeout(5 * 1000, ()=> {
-                if (that.onGateDisconnect) {
-                    that.onGateDisconnect(that._ch);
-                }
+                //if (that.onGateDisconnect) {
+                //    that.onGateDisconnect(that._ch);
+                //}
             });
         }
         catch (e) {
             console.log(e);
-            if (that.onGateDisconnect) {
-                that.onGateDisconnect(that._ch);
-            }
+            //if (that.onGateDisconnect) {
+            //    that.onGateDisconnect(that._ch);
+            //}
         }
     }
 
@@ -140,7 +146,7 @@ class gateproxy {
         this._client_call_gate_caller.get_hub_info(hub_type).callBack((hub_info) => {
             cb(hub_info);
         }, () => { }).timeout(5 * 1000, ()=> {
-            that.onGateDisconnect(this._ch);
+            //that.onGateDisconnect(this._ch);
         });
     }
 
@@ -272,7 +278,7 @@ export class client
     private heartbeats()
     {
         let timetmp = new Date().getTime();
-        if (this.heartbeat_timetmp > (timetmp - 3000)) {
+        if (this.heartbeat_timetmp > (timetmp - 1000)) {
             return;
         }
 
@@ -289,6 +295,7 @@ export class client
             if (this.onGateDisConnect){
                 this.onGateDisConnect();
             }
+            this._gateproxy = null;
         }
 
         this.heartbeat_timetmp = timetmp;
@@ -316,7 +323,7 @@ export class client
 
     public onGateConnect:()=>void;
     public onGateConnectFaild:()=>void;
-    public connect_gate(url:string)
+    public connect_gate(url:string, fail:() => void)
     {
         let that = this;
         this._conn.connect(url, (ch)=>{
@@ -325,7 +332,7 @@ export class client
             this.add_chs.push(ch);
 
             that._gateproxy = new gateproxy(ch);
-            that._gateproxy.onGateDisconnect = (ch) =>
+            /*that._gateproxy.onGateDisconnect = (ch) =>
             {
                 that.remove_chs.push(ch);
                 that._gateproxy = null;
@@ -333,18 +340,20 @@ export class client
                 if (that.onGateDisConnect){
                     that.onGateDisConnect();
                 }
-            };
+            };*/
             that._gateproxy.onGateTime = (tick)=>{
                 if (that.onGateTime){
                     that.onGateTime(tick);
                 }
             }
+        }, () => {
+            fail();
         });
     }
 
     public onHubConnect:(hub_name:string)=>void;
     public onHubConnectFaild:(hub_name:string)=>void;
-    public connect_hub(hub_name:string, hub_type:string, url:string)
+    public connect_hub(hub_name:string, hub_type:string, url:string, fail:() => void)
     {
         let that = this;
         this._conn.connect(url, (ch)=>{
@@ -381,6 +390,8 @@ export class client
             if (that.onHubConnect){
                 that.onHubConnect(hub_name);
             }
+        }, () => {
+            fail();
         });
     }
 

@@ -27,25 +27,30 @@ import { netSingleton } from "./netSingleton"
      // serializableDummy = 0;
  
      private conn_gate_svr(url:string) {
-         return new Promise<void>(resolve => {
+        return new Promise<void>((resolve, reject) => {
             cli.cli_handle.onGateConnect = () => {
                 resolve();
             }
-             cli.cli_handle.connect_gate(url);
-         });
+            cli.cli_handle.connect_gate(url, () => {
+                reject();
+            });
+        });
      }
 
      private async reconnect() {
         if (netSingleton.is_conn_gate) {
             return;
         }
+        setTimeout(this.reconnect.bind(this), 3000);
 
-        await this.conn_gate_svr("wss://zzq.ucat.games:3001");
+        try {
+            await this.conn_gate_svr("wss://zzq.ucat.games:3001");
 
-        this.node.emit("reconnect", 1);
-        netSingleton.is_conn_gate = true;
-
-        setTimeout(this.reconnect.bind(this), 3000)
+            this.node.emit("reconnect", 1);
+            netSingleton.is_conn_gate = true;
+        }
+        finally {
+        }
      }
  
      async start () {
@@ -57,11 +62,14 @@ import { netSingleton } from "./netSingleton"
 
          console.log("conn_gate_svr complete!");
          this.node.emit("connect", 1);
-         
+         netSingleton.is_conn_gate = true;
 
          cli.cli_handle.onGateDisConnect = async () => {
-            netSingleton.is_conn_gate = false;
-            this.reconnect();
+            console.log("onGateDisConnect!");
+            if (netSingleton.is_conn_gate) {
+                netSingleton.is_conn_gate = false;
+                await this.reconnect();
+            }
          };
      }
  

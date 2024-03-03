@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "fairygui-cc": "^1.1.1",
-    "minigame-api-typings": "^3.8.2",
+    "minigame-api-typings": "^3.8.4",
     "miniprogram-api-typings": "^3.12.2"
   }
 }
