@@ -142,6 +142,7 @@ export class login extends Component {
             singleton.netSingleton.mainInterface=new MainInterface();
             await singleton.netSingleton.mainInterface.start(this.bk.node);
             singleton.netSingleton.player.get_user_data();
+            await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
             this._setProgress(1.0);
             this._loading.done();
             //开始准备阶段

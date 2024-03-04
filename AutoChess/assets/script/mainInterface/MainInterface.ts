@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Button, Component, instantiate, Node, Prefab, RichText, Toggle, tween } from 'cc';
+import { _decorator, Animation, animation, assetManager, Button, Component, ImageAsset, instantiate, Node, Prefab, RichText, Sprite, SpriteFrame, Texture2D, Toggle, tween } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
@@ -187,6 +187,28 @@ export class MainInterface
             this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.gold;
             this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.diamond;
         }
+    }
+
+    public async ShowAvatar(_url:string)
+    {
+        try
+        {
+            console.log("尝试加载头像：",_url);
+            let sprite=this.mainPanel.getChildByPath("UiLayer/UserAvatar/Mask/Sprite").getComponent(Sprite);
+            await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
+            {
+                let sp = new SpriteFrame();
+                let texture = new Texture2D();
+                texture.image = image;
+                sp.texture = texture
+                sprite.spriteFrame = sp;
+            });
+        }
+        catch(error)
+        {
+            console.error('MainInterface 下 ShowAvatar 错误 err: ',error);
+        }
+        
     }
 
 }
