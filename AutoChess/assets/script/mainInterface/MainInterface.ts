@@ -102,6 +102,10 @@ export class MainInterface
         
     }
 
+    public destory() {
+        this.mainNode.destroy();
+    }
+
     Init() 
     {
         try

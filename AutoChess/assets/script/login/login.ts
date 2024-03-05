@@ -160,7 +160,7 @@ export class login extends Component {
                 this._progress += 0.01;
                 this._setProgress(this._progress);
             }, 800);
-
+            singleton.netSingleton.mainInterface.destory();
             if(null==singleton.netSingleton.ready)
             {
                 if (singleton.netSingleton.battle) {
@@ -290,6 +290,7 @@ export class login extends Component {
         }
         await singleton.netSingleton.mainInterface.start(this.bk.node);
         singleton.netSingleton.player.get_user_data()
+        await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
         this._setProgress(1.0);
         this._loading.done();
     }
