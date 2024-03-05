@@ -256,7 +256,7 @@ namespace Match
             Log.Log.trace("_refresh begin!");
 
             var i = 0;
-            for ( ; i < 3/*shopData.SaleRoleList.Count*/; i++)
+            for ( ; i < maxSaleRoleCount(); i++)
             {
                 if (i < shopData.SaleRoleList.Count)
                 {
@@ -599,7 +599,7 @@ namespace Match
             return i;
         }
 
-        public int maxRoleCount()
+        public int maxSaleRoleCount()
         {
             var stage = baseStage();
             if (stage < 3)
@@ -626,11 +626,6 @@ namespace Match
 
             if (r == null)
             {
-                if (roleCount() >= maxRoleCount())
-                {
-                    return em_error.exceeds_maximum_limit_role;
-                }
-
                 if (!add_role(role_index, s.RoleID, 1))
                 {
                     return em_error.db_error;
