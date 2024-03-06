@@ -7,7 +7,7 @@
 import { _decorator, Component, instantiate, Node, Prefab, resources, tween, Vec2, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
-import * as RoleDis from './RoleDis'
+import * as RoleDis from '../display/RoleDis'
 import { BundleManager } from '../../bundle/BundleManager';
 import * as role from '../role'
 import { Battle } from '../battle';

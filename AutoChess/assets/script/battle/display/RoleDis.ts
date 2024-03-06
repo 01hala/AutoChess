@@ -431,7 +431,12 @@ export class RoleDis extends Component
             resolve(sp);
         });
     }
-
+/*
+ * 添加
+ * author：Hotaru
+ * 2024/03/06
+ * 从配置文件加载
+ */
     private async LoadOnConfig()
     {
         let jconfig = null;
@@ -440,8 +445,8 @@ export class RoleDis extends Component
         if(skdata)
         {
             this.roleSprite.skeletonData=skdata;
+            this.roleSprite.animation="animation";
         }
-        this.roleSprite.animation="animation";
     }
 }
 
