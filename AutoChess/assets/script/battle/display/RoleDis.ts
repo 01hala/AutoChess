@@ -431,7 +431,12 @@ export class RoleDis extends Component
             resolve(sp);
         });
     }
-
+/*
+ * 添加
+ * author：Hotaru
+ * 2024/03/06
+ * 从配置文件加载
+ */
     private async LoadOnConfig()
     {
         let jconfig = null;
