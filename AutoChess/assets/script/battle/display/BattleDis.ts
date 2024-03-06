@@ -90,7 +90,9 @@ export class BattleDis
             this.victory = this.panelNode.getChildByName("victory");
             this.victory.active = false;
     
+            console.log("PutRole start");
             await this.PutRole();
+            console.log("PutRole end");
             this.father=father;
             father.addChild(this.panelNode);
             this.battle.StartBattle();
