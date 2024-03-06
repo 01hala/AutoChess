@@ -24,6 +24,8 @@ export class login extends Component {
     @property(Canvas)
     bk:Canvas = null;
 
+    private interval;
+
     private _loading:load.Loading = null;
     private _setProgress:(progress:number) => void = null;
     private _progress = 0.1;
@@ -122,7 +124,7 @@ export class login extends Component {
         this._loading = new load.Loading();
         this._setProgress = this._loading.load(this.bk.node);
 
-        setInterval(()=>{
+        this.interval=setInterval(()=>{
             this._progress += 0.01;
             this._setProgress(this._progress);
         }, 800);
@@ -140,24 +142,28 @@ export class login extends Component {
             this._setProgress(this._progress);
             //进入主界面
             singleton.netSingleton.mainInterface=new MainInterface();
-            await singleton.netSingleton.mainInterface.start(this.bk.node);
-            singleton.netSingleton.player.get_user_data();
-            await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
-            this._setProgress(1.0);
-            this._loading.done();
-            //开始准备阶段
-            //singleton.netSingleton.game.start_battle();
+            await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
+            {
+                this._setProgress(1.0);
+                this._loading.done();
+                await sleep(100);
+                singleton.netSingleton.player.get_user_data();
+                await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
+                this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
-            console.log("login sucess!");
+                console.log("login sucess!");
+                clearInterval(this.interval);
+            });
+            
         }
         //准备阶段
-        singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData , fetters_info:common.Fetters[]) => {
-            //singleton.netSingleton.game.battle();
+        singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData , fetters_info:common.Fetters[]) => 
+        {
             this._progress=0.1;
             this._setProgress = this._loading.load(this.bk.node);
 
-            setInterval(()=>{
-                this._progress += 0.01;
+            this.interval=setInterval(()=>{
+                this._progress += 0.40;
                 this._setProgress(this._progress);
             }, 800);
             singleton.netSingleton.mainInterface.destory();
@@ -171,10 +177,18 @@ export class login extends Component {
                 //新的一局游戏
                 let _ready = new Ready(battle_info, shop_info ,fetters_info);
                 singleton.netSingleton.ready=new ReadyDis(_ready);
-                await singleton.netSingleton.ready.start(this.bk.node,battle_info);
-                this._setProgress(1.0);
-                this._loading.done();
-                console.log("Start Ready sucess!");
+                await singleton.netSingleton.ready.start(this.bk.node , battle_info , async (event)=>
+                {
+                    await sleep(2000);
+                    this._setProgress(1.0);
+                    this._loading.done();
+                    this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
+                    await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
+                    event();
+                    
+                    console.log("Start Ready sucess!");
+                    clearInterval(this.interval);
+                });
             }
         }
 
@@ -185,14 +199,14 @@ export class login extends Component {
 
             this.BackMainInterface();
         }
-
+        //战斗阶段
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
             console.log("cb_battle start round!");
 
             this._progress=0.1;
             this._setProgress = this._loading.load(this.bk.node);
-            setInterval(()=>{
-                this._progress += 0.01;
+            this.interval=setInterval(()=>{
+                this._progress += 0.30;
                 this._setProgress(this._progress);
             }, 800);
             
@@ -201,12 +215,19 @@ export class login extends Component {
 
             let _battle = new Battle(self, target);
             singleton.netSingleton.battle = new BattleDis(_battle);
-            await singleton.netSingleton.battle.Start(this.bk.node);
+            await singleton.netSingleton.battle.Start(this.bk.node,async (event)=>
+            { 
+                await sleep(3000);
+                this._setProgress(1.0);
+                this._loading.done();
+                this.bk.node.addChild(singleton.netSingleton.battle.panelNode);
+                singleton.netSingleton.battle.battle.StartBattle();
+                event();
 
-            this._setProgress(1.0);
-            this._loading.done();
+                console.log("start_round sucess!");
+                clearInterval(this.interval);
+            });
 
-            console.log("start_round sucess!");
         }
 
         this.netNode.on("connect", (e)=>{
@@ -273,8 +294,8 @@ export class login extends Component {
     {
         this._progress=0.1;
         this._setProgress = this._loading.load(this.bk.node);
-        setInterval(()=>{
-            this._progress += 0.01;
+        this.interval=setInterval(()=>{
+            this._progress += 0.15;
             this._setProgress(this._progress);
         }, 800);
 
@@ -288,10 +309,17 @@ export class login extends Component {
             singleton.netSingleton.ready.destory();
             singleton.netSingleton.ready=null;
         }
-        await singleton.netSingleton.mainInterface.start(this.bk.node);
-        singleton.netSingleton.player.get_user_data()
-        await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
-        this._setProgress(1.0);
-        this._loading.done();
+        await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
+        {
+            await sleep(5000);
+            this._setProgress(1.0);
+            this._loading.done();
+            singleton.netSingleton.player.get_user_data()
+            await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
+            this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
+
+            console.log("Back Main Interface!");
+            clearInterval(this.interval);
+        });
     }
 }

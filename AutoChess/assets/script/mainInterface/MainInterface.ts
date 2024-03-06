@@ -28,7 +28,7 @@ export class MainInterface
     //父节点
     public father:Node;
     //主体
-    public mainNode:Node;
+    public panelNode:Node;
     //主界面
     public mainPanel:Node
     //开始界面
@@ -56,8 +56,13 @@ export class MainInterface
         this.RegCallBack();
         this.userData=new UserAccount();
     }
-
-    async start(father:Node)
+/*
+ * 修改start
+ * author：Hotaru
+ * 2024/03/07
+ * 让加载更平顺
+ */
+    async start(father:Node,_callBack:(e?:()=>void)=>void)
     {
         try
         {
@@ -71,29 +76,30 @@ export class MainInterface
             let Informationpanel = awaitResult[1] as Prefab;
             let StorePromptPanelpanel = awaitResult[2] as Prefab;
 
-            this.mainNode=instantiate(MainInterfacepanel);
-            this.father.addChild(this.mainNode);
+            this.panelNode=instantiate(MainInterfacepanel);
+            //this.father.addChild(this.mainNode);
             this.infoPanel=instantiate(Informationpanel);
-            this.infoPanel.setParent(this.mainNode);
+            this.infoPanel.setParent(this.panelNode);
             this.infoPanel.active=false;
             this.storePrompt=instantiate(StorePromptPanelpanel);
-            this.storePrompt.setParent(this.mainNode);
+            this.storePrompt.setParent(this.panelNode);
             this.storePrompt.active=false;
     
-            this.mainPanel=this.mainNode.getChildByPath("MainPanel")
-            this.startGamePanel=this.mainNode.getChildByPath("StartGamePanel");
-            this.storePanel=this.mainNode.getChildByPath("StorePanel");
+            this.mainPanel=this.panelNode.getChildByPath("MainPanel")
+            this.startGamePanel=this.panelNode.getChildByPath("StartGamePanel");
+            this.storePanel=this.panelNode.getChildByPath("StorePanel");
     
-            this.startBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");
-            this.storeBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");
-            this.amusementBtn=this.mainNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");
+            this.startBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");
+            this.storeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");
+            this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");
 
-            this.btnList=this.mainNode.getChildByPath("MainPanel/UiLayer/BtnList");
+            this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList");
 
-            this.userMoney=this.mainNode.getChildByPath("MainPanel/UiLayer/UserMoney");
-            this.userDiamonds=this.mainNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
+            this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/UserMoney");
+            this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
             
             this.Init();
+            _callBack();
         }
         catch(error)
         {
@@ -103,7 +109,7 @@ export class MainInterface
     }
 
     public destory() {
-        this.mainNode.destroy();
+        this.panelNode.destroy();
     }
 
     Init() 

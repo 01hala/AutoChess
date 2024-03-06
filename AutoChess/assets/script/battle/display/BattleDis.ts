@@ -25,7 +25,7 @@ export class BattleDis
     //父级对象
     public father:Node;
     //顶级面板
-    private panelNode:Node;
+    public panelNode:Node;
     //战斗效果
     private battleEffectImg:Node;
     //敌我队列
@@ -51,8 +51,13 @@ export class BattleDis
     public destory() {
         this.panelNode.destroy();
     }
-
-    public async Start(father:Node) 
+/*
+ * 修改start
+ * author：Hotaru
+ * 2024/03/07
+ * 让加载更平顺
+ */
+    public async Start(father:Node,_callBack:(e?:()=>void)=>void) 
     {
         try
         {
@@ -94,9 +99,14 @@ export class BattleDis
             await this.PutRole();
             console.log("PutRole end");
             this.father=father;
-            father.addChild(this.panelNode);
-            this.battle.StartBattle();
-            setTimeout(this.TickBattle.bind(this), 500);
+            
+            
+            //father.addChild(this.panelNode);
+            //this.battle.StartBattle();
+            _callBack(()=>
+            {
+                setTimeout(this.TickBattle.bind(this), 500);
+            });
         }
         catch(error)
         {

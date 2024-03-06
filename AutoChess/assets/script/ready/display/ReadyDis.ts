@@ -20,7 +20,7 @@ export class ReadyDis
     //父节点
     public father:Node;
     //界面
-    private panelNode:Node;
+    public panelNode:Node;
     //操作界面
     public roleArea:RoleArea;
     public shopArea:ShopArea;
@@ -46,24 +46,56 @@ export class ReadyDis
         this.ready = ready;
         this.onEvent();
     }
-
-    async start(father:Node,battle_info:common.UserBattleData) 
+/*
+ * 修改start
+ * author：Hotaru
+ * 2024/03/07
+ * 让加载更平顺
+ */
+    async start(father:Node,battle_info:common.UserBattleData,_callBack:(event?:()=>void)=>void) 
     {
         try
         {
-            await this.Init(father);
-            //准备开始
-            this.ready.StartReady();
-            //this.coinText.string=""+this.ready.coin;
-            //await this.RefreshShop()
-            if(battle_info.round>1)
+            this.father=father;
+            //主要界面
+            let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
+            this.panelNode = instantiate(panel);
+            //father.addChild(this.panelNode);
+            //等待界面
+            panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting") as Prefab;
+            this.waitingPanel=instantiate(panel);
+            this.waitingPanel.setParent(this.panelNode);
+            this.waitingPanel.setSiblingIndex(100);
+            //信息二级界面
+            panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "Information") as Prefab;
+            this.infoPanel=instantiate(panel);
+            this.infoPanel.setParent(this.panelNode);
+            this.infoPanel.active=false;
+            //操作区域
+            this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
+            this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
+            //文本
+            this.coinText=this.panelNode.getChildByPath("TopArea/CoinInfo/RichText").getComponent(RichText);
+            this.heathText=this.panelNode.getChildByPath("TopArea/HpInfo/RichText").getComponent(RichText);
+            this.roundText=this.panelNode.getChildByPath("TopArea/RoundInfo/RichText").getComponent(RichText);
+            this.trophyText=this.panelNode.getChildByPath("TopArea/TrophyInfo/RichText").getComponent(RichText);
+
+            _callBack(async ()=>
             {
-                await this.Restore(battle_info);
-            }
-            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
-            //隐藏等待界面
-            this.waitingPanel.getComponent(BlockInputEvents).enabled=false;
-            this.waitingPanel.active=false;
+                await this.Init(father);
+                //准备开始
+                this.ready.StartReady();
+                //this.coinText.string=""+this.ready.coin;
+                //await this.RefreshShop()
+                if (battle_info.round > 1) {
+                    await this.Restore(battle_info);
+                }
+                this.shopArea.Init(this.ready.GetShopRoles(), this.ready.GetShopProps());
+                //隐藏等待界面
+                this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
+                this.waitingPanel.active = false;
+            });
+            
         }
         catch(error)
         {
@@ -73,60 +105,39 @@ export class ReadyDis
 
     async Init(father:Node)
     {
-        this.RegCallBack();
-        
-        this.father=father;
-        //主要界面
-        let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
-        this.panelNode = instantiate(panel);
-        father.addChild(this.panelNode);
-        //等待界面
-        panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting") as Prefab;
-        this.waitingPanel=instantiate(panel);
-        this.waitingPanel.setParent(this.panelNode);
-        this.waitingPanel.setSiblingIndex(100);
-        //信息二级界面
-        panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "Information") as Prefab;
-        this.infoPanel=instantiate(panel);
-        this.infoPanel.setParent(this.panelNode);
-        this.infoPanel.active=false;
-        //操作区域
-        this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
-        this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
-        //文本
-        this.coinText=this.panelNode.getChildByPath("TopArea/CoinInfo/RichText").getComponent(RichText);
-        this.heathText=this.panelNode.getChildByPath("TopArea/HpInfo/RichText").getComponent(RichText);
-        this.roundText=this.panelNode.getChildByPath("TopArea/RoundInfo/RichText").getComponent(RichText);
-        this.trophyText=this.panelNode.getChildByPath("TopArea/TrophyInfo/RichText").getComponent(RichText);
-        //羁绊信息框
-        let tNode=this.panelNode.getChildByPath("TopArea/FetterArea");
-        for(let i=1;i<=6;i++){
-            let t=tNode.getChildByName("FetterInfo_"+i);
-            t.active=false;
-            this.fetters.push(t);
-        }
-        //刷新按钮
-        this.refreshBtn=this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
-        this.refreshBtn.node.on(Button.EventType.CLICK,()=>
+        try
         {
-            this.RefreshShop();
-        },this);
-        //开始按钮
-        this.startBtn=this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
-        this.startBtn.node.on(Button.EventType.CLICK, async ()=>
-        {
-            if(this.roleArea.rolesNode.length>0)
-            {
-                await this.ready.StartBattle();
-                this.panelNode.active=false;
-                this.destory();
+            this.RegCallBack();
+            //羁绊信息框
+            let tNode = this.panelNode.getChildByPath("TopArea/FetterArea");
+            for (let i = 1; i <= 6; i++) {
+                let t = tNode.getChildByName("FetterInfo_" + i);
+                t.active = false;
+                this.fetters.push(t);
             }
-        });
-        this.exitBtn=this.panelNode.getChildByPath("TopArea/Exit_Btn").getComponent(Button);
-        this.exitBtn.node.on(Button.EventType.CLICK,()=>
+            //刷新按钮
+            this.refreshBtn = this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
+            this.refreshBtn.node.on(Button.EventType.CLICK, () => {
+                this.RefreshShop();
+            }, this);
+            //开始按钮
+            this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
+            this.startBtn.node.on(Button.EventType.CLICK, async () => {
+                if (this.roleArea.rolesNode.length > 0) {
+                    await this.ready.StartBattle();
+                    this.panelNode.active = false;
+                    this.destory();
+                }
+            });
+            this.exitBtn = this.panelNode.getChildByPath("TopArea/Exit_Btn").getComponent(Button);
+            this.exitBtn.node.on(Button.EventType.CLICK, () => {
+                father.getComponent(login).BackMainInterface();
+            }, this);
+        }
+        catch(error)
         {
-            father.getComponent(login).BackMainInterface();
-        },this);
+            console.error("ReadyDis 里的 Init 错误 err:",error);
+        }
     }
 
     private RegCallBack()

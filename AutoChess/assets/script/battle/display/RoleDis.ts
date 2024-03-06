@@ -71,7 +71,6 @@ export class RoleDis extends Component
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
             this.behurtedText=this.node.getChildByName("BeHurtedText");
-            this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
 
             this.bandage.active = false;
             this.intensifierText.active = false;
@@ -441,6 +440,7 @@ export class RoleDis extends Component
     {
         let jconfig = config.RoleConfig.get(this.RoleId);
         let skdata = await loadAssets.LoadSkeletonData(jconfig.Skel);
+        this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
         if(skdata)
         {
             this.roleSprite.skeletonData=skdata;
