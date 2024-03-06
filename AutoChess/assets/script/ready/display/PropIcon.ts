@@ -154,13 +154,16 @@ export class PropIcon extends Component
                     this.effect = jconfig.Effect;
                     this.hpBonus = jconfig.HpBonus;
                     this.attackBonus = jconfig.AttackBonus;
-                    //this.vaule=jconfig.value;        
-                    let img = await loadAssets.LoadImg(jconfig.Res);
-                    if(img)
-                    {
-                        //EquipSprite不确定
-                        this.iconMask.getChildByPath("EquipSprite").getComponent(Sprite).spriteFrame = img;
-                    }
+                    //this.vaule=jconfig.value;   
+                    
+                    //=========================这里不知道什么原因导致加载图片的过程中出现问题，但是又没有抛出错误，搞得后面的逻辑都没法执行
+                    //=========================暂时注释掉了！！！有时间记得修好然后去掉注释！！！！！！！！！！！！！！
+                    // let img = await loadAssets.LoadImg(jconfig.Res);
+                    // if(img)
+                    // {
+                    //     //共用同一个prefab了，名字一样的
+                    //     this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = img;
+                    // }
                 }
         }
     }

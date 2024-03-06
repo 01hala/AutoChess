@@ -45,51 +45,55 @@ export class Ready
         //console.log("battle_info.RoleList:", battle_info.RoleList);
     }
 
+    public GetStage():number{
+        return this.stage;
+    }
     public GetShopRoles():ShopRole[]
     {
-        if(this.shopRoles)
-        {    console.log("服务器传来的商店角色数量"+this.shopRoles.length);
-            let tmpRole:ShopRole[]=[];
-            let tmpCnt:number;
-            switch(this.stage){
-                case 1:case 2:tmpCnt=4;break;
-                case 3:case 4:tmpCnt=5;break;
-                case 5:case 6:tmpCnt=6;break;
-                default:tmpCnt=6;
-            }
-            console.log("目前战阶："+this.stage+",可刷新商店角色数量"+tmpCnt);
-            for(let i=0;i<tmpCnt&&i<this.shopRoles.length;i++){
-                tmpRole.push(this.shopRoles[i]);
-            }
-            return tmpRole;
-        }
+        return this.shopRoles;
+
+        // if(this.shopRoles)
+        // {
+        //     let tmpRole:ShopRole[]=[];
+        //     let tmpCnt:number;
+        //     switch(this.stage){
+        //         case 1:case 2:tmpCnt=4;break;
+        //         case 3:case 4:tmpCnt=5;break;
+        //         case 5:case 6:tmpCnt=6;break;
+        //         default:tmpCnt=6;
+        //     }
+        //     for(let i=0;i<tmpCnt&&i<this.shopRoles.length;i++){
+        //         tmpRole.push(this.shopRoles[i]);
+        //     }
+        //     return tmpRole;
+        // }
     }
 
     public GetShopProps():ShopProp[]
     {
-        console.log("传入的初始商店道具列表长度"+this.props.length);
-        if(this.props)
-        {
-            let tmpProp:ShopProp[]=[];
-            let tmpFoodCnt:number;
-            let tmpEquipCnt:number=1;
-            switch(this.stage){
-                case 1:case 2:case 3:case 4:tmpFoodCnt=1;break;
-                case 5:case 6:tmpFoodCnt=2;break;
-                default:tmpFoodCnt=2;
-            }
-            for(let i=0;i<this.props.length;i++){
-                if(tmpFoodCnt>0&&this.props[i].PropID>=1001&&this.props[i].PropID<=1999){
-                    tmpProp.push(this.props[i]);
-                    tmpFoodCnt--;
-                }
-                else if(tmpEquipCnt>0&&this.props[i].PropID>=3001&&this.props[i].PropID<=3999){
-                    tmpProp.push(this.props[i]);
-                    tmpEquipCnt--;
-                }
-            }
-            return tmpProp;
-        }
+        return this.props;
+        // if(this.props)
+        // {
+        //     let tmpProp:ShopProp[]=[];
+        //     let tmpFoodCnt:number;
+        //     let tmpEquipCnt:number=1;
+        //     switch(this.stage){
+        //         case 1:case 2:case 3:case 4:tmpFoodCnt=1;break;
+        //         case 5:case 6:tmpFoodCnt=2;break;
+        //         default:tmpFoodCnt=2;
+        //     }
+        //     for(let i=0;i<this.props.length;i++){
+        //         if(tmpFoodCnt>0&&this.props[i].PropID>=1001&&this.props[i].PropID<=1999){
+        //             tmpProp.push(this.props[i]);
+        //             tmpFoodCnt--;
+        //         }
+        //         else if(tmpEquipCnt>0&&this.props[i].PropID>=3001&&this.props[i].PropID<=3999){
+        //             tmpProp.push(this.props[i]);
+        //             tmpEquipCnt--;
+        //         }
+        //     }
+        //     return tmpProp;
+        // }
     }
 
     public GetFetters():common.Fetters[]
