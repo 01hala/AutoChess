@@ -47,7 +47,7 @@ export class loadAssets
                 if(_address)
                 {
                     ads=_address.split('/');
-                    let temp=await BundleManager.Instance.loadAssetsFromBundle(ads[0], ads[1]) as sp.SkeletonData;
+                    let temp=await BundleManager.Instance.loadAssetsFromBundle(ads[0], `${ads[1]}/${ads[2]}`) as sp.SkeletonData;
                     if(null==temp)
                     {
                         console.warn(`loadAssets 里的 LoadSkeletonData 异常 : 路径${_address}下没有相对应资源,替换为默认`);

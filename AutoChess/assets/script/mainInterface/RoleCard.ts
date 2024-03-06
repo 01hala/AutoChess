@@ -68,8 +68,7 @@ export class RoleCard extends Component
 
     private async LoadOnConfig()
     {
-        let jconfig = null;
-        jconfig = config.RoleConfig.get(this.roleId);
+        let jconfig = config.RoleConfig.get(this.roleId);
         let img = await loadAssets.LoadImg(jconfig.Avatar);
         if(img)
         {

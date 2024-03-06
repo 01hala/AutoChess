@@ -439,9 +439,8 @@ export class RoleDis extends Component
  */
     private async LoadOnConfig()
     {
-        let jconfig = null;
-        jconfig = config.RoleConfig.get(this.RoleId);
-        let skdata = await loadAssets.LoadSkeletonData(jconfig.SkeletonData);
+        let jconfig = config.RoleConfig.get(this.RoleId);
+        let skdata = await loadAssets.LoadSkeletonData(jconfig.Skel);
         if(skdata)
         {
             this.roleSprite.skeletonData=skdata;

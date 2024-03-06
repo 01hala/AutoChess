@@ -129,13 +129,12 @@ export class PropIcon extends Component
 
     private async LoadOnConfig()
     {
-        let jconfig = null;
         switch(this.propType)
         {
             case PropsType.Food:
                 {
                     console.log("LoadOnConfig PropsType.Food this.propId:", this.propId);
-                    jconfig = config.FoodConfig.get(this.propId);
+                    let jconfig = config.FoodConfig.get(this.propId);
                     this.effect = jconfig.Effect;
                     this.hpBonus = jconfig.HpBonus;
                     this.attackBonus = jconfig.AttackBonus;
@@ -150,17 +149,17 @@ export class PropIcon extends Component
             case PropsType.Equip:
                 {
                     console.log("LoadOnConfig PropsType.Equip this.propId:", this.propId);
-                    jconfig = config.EquipConfig.get(this.propId);
+                    let jconfig = config.EquipConfig.get(this.propId);
                     this.effect = jconfig.Effect;
                     this.hpBonus = jconfig.HpBonus;
                     this.attackBonus = jconfig.AttackBonus;
                     //this.vaule=jconfig.value;        
-                    let img = await loadAssets.LoadImg(jconfig.Res);
+                    /*let img = await loadAssets.LoadImg(jconfig.Res);
                     if(img)
                     {
                         //EquipSprite不确定
                         this.iconMask.getChildByPath("EquipSprite").getComponent(Sprite).spriteFrame = img;
-                    }
+                    }*/
                 }
         }
     }
