@@ -1,4 +1,4 @@
-import { SpriteFrame, Texture2D } from "cc";
+import { SkelAnimDataHub, Skeleton, SpriteFrame, Texture2D, sp } from "cc";
 import { BundleManager } from "./BundleManager";
 
 export class loadAssets 
@@ -33,6 +33,39 @@ export class loadAssets
                 resolve(null);
             }
             
+        });
+    }
+
+    
+    public static LoadSkeletonData(_address:string):Promise<sp.SkeletonData>
+    {
+        return new Promise(async (resolve)=>
+        {
+            try
+            {
+                let ads:string[]=null;
+                if(_address)
+                {
+                    ads=_address.split('/');
+                    let temp=await BundleManager.Instance.loadAssetsFromBundle(ads[0], ads[1]) as sp.SkeletonData;
+                    if(null==temp)
+                    {
+                        console.warn(`loadAssets 里的 LoadSkeletonData 异常 : 路径${_address}下没有相对应资源,替换为默认`);
+                        temp=await BundleManager.Instance.loadAssetsFromBundle(ads[0], "Role_100004/kuangfeng_moshushi.skel") as sp.SkeletonData;
+                        resolve(temp);
+                    }
+                    else
+                    {
+                        resolve(temp);
+                    }
+                }
+
+            }
+            catch(error)
+            {
+                console.error('loadAssets 下 LoadImg 错误 err: ',error);
+                resolve(null);
+            }
         });
     }
 }

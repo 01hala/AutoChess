@@ -16,7 +16,7 @@ export class BundleManager
         return this._instance;
     }
     
-    private loadBundle(bundleRes:string) : Promise<AssetManager.Bundle> {
+    public loadBundle(bundleRes:string) : Promise<AssetManager.Bundle> {
         return new Promise((resolve) => {
             try {
                 assetManager.loadBundle(bundleRes,(error,bundle) => {

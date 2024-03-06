@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp, EventType, Property } from '../../other/enums';
 import { Battle } from '../../battle/battle';
@@ -16,6 +16,8 @@ import { BundleManager } from '../../bundle/BundleManager';
 import { Bullet } from './Bullet';
 import * as singleton from '../../netDriver/netSingleton';
 import { Fetters } from '../../serverSDK/common';
+import { config } from '../../config/config';
+import { loadAssets } from '../../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -38,8 +40,8 @@ export class RoleDis extends Component
     //等级和经验
     public Level: number;
     public Exp:number;
-    //角色立绘
-    public roleSprite:SpriteFrame;
+    //角色立绘(骨骼动画)
+    private roleSprite:sp.Skeleton;
     //角色信息
     private roleInfo: Role = null;
     //生命和攻击文本
@@ -69,12 +71,14 @@ export class RoleDis extends Component
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
             this.behurtedText=this.node.getChildByName("BeHurtedText");
+            this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
+
             this.bandage.active = false;
             this.intensifierText.active = false;
             this.behurtedText.active=false;
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
-
+            
             this.idText=this.node.getChildByPath("ID").getComponent(RichText);
             //this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
             //this.hpText.font = this.atkText.font = this.typeface;
@@ -111,12 +115,14 @@ export class RoleDis extends Component
                 this.idText=this.node.getChildByPath("ID").getComponent(RichText);
             }
             this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
-            let sf:SpriteFrame=await this.LoadImg("RolesImg",str);
-            if(sf)
-            {
-                this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;   
-                this.roleSprite=sf;             
-            }
+            // let sf:sp.SkeletonData=await this.LoadImg("RolesImg",str);
+            // if(sf)
+            // {
+            //     this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;   
+            //     this.roleSprite=sf;             
+            // }
+            await this.LoadOnConfig();
+
         }
         await this.changeAtt();
     }
@@ -424,6 +430,18 @@ export class RoleDis extends Component
             sp.texture=texture;  
             resolve(sp);
         });
+    }
+
+    private async LoadOnConfig()
+    {
+        let jconfig = null;
+        jconfig = config.RoleConfig.get(this.RoleId);
+        let skdata = await loadAssets.LoadSkeletonData(jconfig.SkeletonData);
+        if(skdata)
+        {
+            this.roleSprite.skeletonData=skdata;
+            this.roleSprite.animation="animation";
+        }
     }
 }
 
