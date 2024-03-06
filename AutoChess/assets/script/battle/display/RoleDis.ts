@@ -440,8 +440,8 @@ export class RoleDis extends Component
         if(skdata)
         {
             this.roleSprite.skeletonData=skdata;
-            this.roleSprite.animation="animation";
         }
+        this.roleSprite.animation="animation";
     }
 }
 
