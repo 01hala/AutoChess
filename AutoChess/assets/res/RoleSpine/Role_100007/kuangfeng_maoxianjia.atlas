@@ -1,0 +1,181 @@
+
+kuangfeng_maoxianjia.png
+size: 965,965
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+maoxianjia_0
+  rotate: true
+  xy: 600, 151
+  size: 228, 176
+  orig: 228, 176
+  offset: 0, 0
+  index: -1
+maoxianjia_1
+  rotate: true
+  xy: 600, 107
+  size: 42, 92
+  orig: 46, 92
+  offset: 0, 0
+  index: -1
+maoxianjia_10
+  rotate: true
+  xy: 787, 337
+  size: 81, 75
+  orig: 85, 75
+  offset: 4, 0
+  index: -1
+maoxianjia_11
+  rotate: false
+  xy: 587, 16
+  size: 109, 61
+  orig: 109, 61
+  offset: 0, 0
+  index: -1
+maoxianjia_12
+  rotate: true
+  xy: 551, 645
+  size: 318, 373
+  orig: 318, 373
+  offset: 0, 0
+  index: -1
+maoxianjia_13
+  rotate: true
+  xy: 694, 98
+  size: 51, 47
+  orig: 51, 47
+  offset: 0, 0
+  index: -1
+maoxianjia_14
+  rotate: false
+  xy: 698, 48
+  size: 42, 48
+  orig: 42, 48
+  offset: 0, 0
+  index: -1
+maoxianjia_15
+  rotate: false
+  xy: 2, 32
+  size: 225, 85
+  orig: 225, 85
+  offset: 0, 0
+  index: -1
+maoxianjia_16
+  rotate: false
+  xy: 867, 331
+  size: 96, 143
+  orig: 108, 143
+  offset: 12, 0
+  index: -1
+maoxianjia_17
+  rotate: false
+  xy: 868, 476
+  size: 90, 167
+  orig: 99, 167
+  offset: 9, 0
+  index: -1
+maoxianjia_18
+  rotate: true
+  xy: 778, 160
+  size: 169, 170
+  orig: 169, 170
+  offset: 0, 0
+  index: -1
+maoxianjia_19
+  rotate: true
+  xy: 334, 5
+  size: 72, 135
+  orig: 72, 135
+  offset: 0, 0
+  index: -1
+maoxianjia_2
+  rotate: true
+  xy: 550, 381
+  size: 126, 235
+  orig: 126, 235
+  offset: 0, 0
+  index: -1
+maoxianjia_20
+  rotate: false
+  xy: 550, 509
+  size: 316, 134
+  orig: 316, 134
+  offset: 0, 0
+  index: -1
+maoxianjia_21
+  rotate: false
+  xy: 344, 79
+  size: 254, 286
+  orig: 254, 286
+  offset: 0, 0
+  index: -1
+maoxianjia_22
+  rotate: false
+  xy: 787, 420
+  size: 78, 87
+  orig: 78, 87
+  offset: 0, 0
+  index: -1
+maoxianjia_23
+  rotate: false
+  xy: 2, 271
+  size: 340, 217
+  orig: 370, 217
+  offset: 30, 0
+  index: -1
+maoxianjia_24
+  rotate: false
+  xy: 2, 708
+  size: 547, 255
+  orig: 547, 255
+  offset: 0, 0
+  index: -1
+maoxianjia_3
+  rotate: false
+  xy: 369, 367
+  size: 179, 339
+  orig: 179, 339
+  offset: 0, 0
+  index: -1
+maoxianjia_4
+  rotate: true
+  xy: 229, 25
+  size: 92, 103
+  orig: 92, 103
+  offset: 0, 0
+  index: -1
+maoxianjia_5
+  rotate: true
+  xy: 2, 119
+  size: 150, 336
+  orig: 150, 336
+  offset: 0, 0
+  index: -1
+maoxianjia_6
+  rotate: true
+  xy: 2, 490
+  size: 216, 365
+  orig: 216, 365
+  offset: 0, 0
+  index: -1
+maoxianjia_7
+  rotate: true
+  xy: 926, 890
+  size: 73, 25
+  orig: 73, 25
+  offset: 0, 0
+  index: -1
+maoxianjia_8
+  rotate: true
+  xy: 926, 839
+  size: 49, 28
+  orig: 49, 28
+  offset: 0, 0
+  index: -1
+maoxianjia_9
+  rotate: false
+  xy: 471, 9
+  size: 114, 68
+  orig: 114, 68
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GifRender - Demo</title>
+  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="full-screen" content="yes"/>
+  <meta name="x5-fullscreen" content="true"/>
+  <meta name="360-fullscreen" content="true"/>
+  <meta name="x5-page-mode" content="app">
+  <link rel="stylesheet" type="text/css" href="<%= cssUrl %>"/>
+</head>
+<body>
+  <h1 class="header">gifRender</h1>
+  <div id="GameDiv" cc_exact_fit_screen="false" style="width: 640px; height: 640px;">
+    <div id="Cocos3dGameContainer">
+      <canvas id="GameCanvas" width="640" height="640" tabindex="99"></canvas>
+    </div>
+  </div>
+  <%- (include(cocosTemplate, {}))
+    .replace(/[\r\n]{2,}/g, "\n")
+    .replace(/(?:^[\s\r\n]*|[\s\r\n]*$)/g, "")
+    .replace(/\n/g, "\n  ")
+  %>
+</body>
+</html>

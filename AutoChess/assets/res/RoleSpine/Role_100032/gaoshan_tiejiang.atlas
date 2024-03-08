@@ -1,0 +1,202 @@
+
+gaoshan_tiejiang.png
+size: 970,970
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+tj_0
+  rotate: false
+  xy: 2, 563
+  size: 433, 405
+  orig: 433, 405
+  offset: 0, 0
+  index: -1
+tj_1
+  rotate: true
+  xy: 437, 473
+  size: 186, 298
+  orig: 186, 298
+  offset: 0, 0
+  index: -1
+tj_10
+  rotate: true
+  xy: 688, 212
+  size: 259, 141
+  orig: 259, 141
+  offset: 0, 0
+  index: -1
+tj_11
+  rotate: false
+  xy: 437, 661
+  size: 314, 307
+  orig: 314, 307
+  offset: 0, 0
+  index: -1
+tj_12
+  rotate: false
+  xy: 860, 131
+  size: 91, 77
+  orig: 91, 77
+  offset: 0, 0
+  index: -1
+tj_13
+  rotate: true
+  xy: 2, 7
+  size: 102, 212
+  orig: 102, 212
+  offset: 0, 0
+  index: -1
+tj_14
+  rotate: true
+  xy: 874, 210
+  size: 42, 94
+  orig: 42, 94
+  offset: 0, 0
+  index: -1
+tj_15
+  rotate: true
+  xy: 636, 17
+  size: 59, 75
+  orig: 59, 75
+  offset: 0, 0
+  index: -1
+tj_16
+  rotate: false
+  xy: 424, 220
+  size: 262, 251
+  orig: 262, 251
+  offset: 0, 0
+  index: -1
+tj_17
+  rotate: false
+  xy: 831, 389
+  size: 115, 283
+  orig: 115, 283
+  offset: 0, 0
+  index: -1
+tj_18
+  rotate: false
+  xy: 254, 236
+  size: 168, 325
+  orig: 168, 325
+  offset: 0, 0
+  index: -1
+tj_19
+  rotate: false
+  xy: 737, 514
+  size: 85, 95
+  orig: 85, 95
+  offset: 0, 0
+  index: -1
+tj_2
+  rotate: false
+  xy: 860, 84
+  size: 88, 45
+  orig: 88, 45
+  offset: 0, 0
+  index: -1
+tj_20
+  rotate: true
+  xy: 411, 80
+  size: 138, 270
+  orig: 138, 270
+  offset: 0, 0
+  index: -1
+tj_21
+  rotate: false
+  xy: 2, 111
+  size: 250, 450
+  orig: 250, 450
+  offset: 0, 0
+  index: -1
+tj_22
+  rotate: false
+  xy: 683, 78
+  size: 175, 132
+  orig: 175, 147
+  offset: 0, 0
+  index: -1
+tj_23
+  rotate: false
+  xy: 753, 674
+  size: 197, 294
+  orig: 197, 294
+  offset: 0, 0
+  index: -1
+tj_24
+  rotate: false
+  xy: 254, 40
+  size: 155, 194
+  orig: 155, 194
+  offset: 0, 0
+  index: -1
+tj_25
+  rotate: true
+  xy: 831, 212
+  size: 40, 41
+  orig: 40, 41
+  offset: 0, 0
+  index: -1
+tj_26
+  rotate: false
+  xy: 216, 79
+  size: 32, 30
+  orig: 32, 30
+  offset: 0, 0
+  index: -1
+tj_27
+  rotate: false
+  xy: 953, 188
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: -1
+tj_3
+  rotate: false
+  xy: 713, 18
+  size: 69, 58
+  orig: 69, 58
+  offset: 0, 0
+  index: -1
+tj_4
+  rotate: false
+  xy: 860, 34
+  size: 82, 48
+  orig: 82, 48
+  offset: 0, 0
+  index: -1
+tj_5
+  rotate: false
+  xy: 545, 19
+  size: 89, 59
+  orig: 89, 59
+  offset: 0, 0
+  index: -1
+tj_6
+  rotate: false
+  xy: 411, 10
+  size: 132, 68
+  orig: 132, 68
+  offset: 0, 0
+  index: -1
+tj_7
+  rotate: false
+  xy: 737, 611
+  size: 92, 48
+  orig: 92, 48
+  offset: 0, 0
+  index: -1
+tj_8
+  rotate: true
+  xy: 831, 254
+  size: 133, 74
+  orig: 140, 74
+  offset: 0, 0
+  index: -1
+tj_9
+  rotate: true
+  xy: 907, 274
+  size: 113, 39
+  orig: 113, 39
+  offset: 0, 0
+  index: -1

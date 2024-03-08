@@ -16,7 +16,7 @@ export class BundleManager
         return this._instance;
     }
     
-    private loadBundle(bundleRes:string) : Promise<AssetManager.Bundle> {
+    public loadBundle(bundleRes:string) : Promise<AssetManager.Bundle> {
         return new Promise((resolve) => {
             try {
                 assetManager.loadBundle(bundleRes,(error,bundle) => {
@@ -36,7 +36,7 @@ export class BundleManager
         });
     }
 
-    loadAssetsFromBundle(bundleRes:string, assetsRes:string) : Promise<Asset> {   
+    loadAssetsFromBundle<T extends Asset>(bundleRes:string, assetsRes:string) : Promise<Asset> {   
         return new Promise(async (resolve) => {
             try {
                 let bundle : AssetManager.Bundle = null;

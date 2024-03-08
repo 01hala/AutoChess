@@ -84,7 +84,7 @@ export class StartGamePanel extends Component
             {
                 console.log("Normal_Btn start_battle!");
                 await singleton.netSingleton.game.start_battle();
-                this.node.parent.active=false;
+                //this.node.parent.active=false;
             },this);
         }
         catch(error)

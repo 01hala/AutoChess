@@ -71,6 +71,7 @@ export class Ready
 
     public GetShopProps():ShopProp[]
     {
+        console.log("商店传来的道具列表长度："+this.props.length);
         return this.props;
         // if(this.props)
         // {

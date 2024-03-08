@@ -63,10 +63,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.06666666666666667,
-      0.13333333333333333,
-      0.2,
-      0.26666666666666666
+      0.06666667014360428,
+      0.13333334028720856,
+      0.20000000298023224,
+      0.2666666805744171
     ],
     "_values": [
       {
@@ -143,17 +143,17 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.06666666666666667,
-      0.13333333333333333,
-      0.2,
-      0.26666666666666666
+      0.06666667014360428,
+      0.13333334028720856,
+      0.20000000298023224,
+      0.2666666805744171
     ],
     "_values": [
       {
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 0,
+        "value": -100,
         "rightTangent": 0,
         "rightTangentWeight": 1,
         "leftTangent": 0,
@@ -165,7 +165,7 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 1,
+        "value": -99,
         "rightTangent": 0,
         "rightTangentWeight": 1,
         "leftTangent": 0,
@@ -177,7 +177,7 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 0,
+        "value": -100,
         "rightTangent": 0,
         "rightTangentWeight": 1,
         "leftTangent": 0,
@@ -189,7 +189,7 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 1,
+        "value": -99,
         "rightTangent": 0,
         "rightTangentWeight": 1,
         "leftTangent": 0,
@@ -201,7 +201,7 @@
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
         "tangentWeightMode": 0,
-        "value": 0,
+        "value": -100,
         "rightTangent": 0,
         "rightTangentWeight": 1,
         "leftTangent": 0,
@@ -223,10 +223,10 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.06666666666666667,
-      0.13333333333333333,
-      0.2,
-      0.26666666666666666
+      0.06666667014360428,
+      0.13333334028720856,
+      0.20000000298023224,
+      0.2666666805744171
     ],
     "_values": [
       {
