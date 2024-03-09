@@ -570,18 +570,27 @@ export class RoleIcon extends Component
                 console.log("can not find config of food:"+food_id);
                 return;
             }
+            let value =[];
             for(let effect of foodInfo.Effect){
                 switch(effect){
-                    case 1:case 2:{
-                        let value =[foodInfo.HpBonus,foodInfo.AttackBonus];
-                        await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
-                    }break;
+                    case 1:{
+                        value.push(foodInfo.HpBonus);
+                    }
+                    break;
+                    case 2:{
+                        value.push(foodInfo.AttackBonus);    
+                    } 
+                    break;
                     case 3:break;
                     case 4:break;
                     case 5:break;
                     case 6:break;
                 }
             }
+            let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
+            let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+            this.roleNode.getComponent(RoleDis).Refresh(r);
+            await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
             this.upgradeLock=false;
         }
         catch(error)

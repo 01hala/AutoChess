@@ -1,4 +1,5 @@
-import { _decorator, Animation, animation, Component, instantiate, Node, Prefab, resources, RichText } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText } from 'cc';
+import { BundleManager } from '../bundle/BundleManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('TipsManager')
@@ -14,12 +15,14 @@ export class TipsManager extends Component
     @property(Prefab)
     public textTipNodePre:Prefab;
 
+    private typeface: TTFFont;
+
     protected onLoad(): void 
     {
         TipsManager._instance=this.node.getComponent(TipsManager);
     }
 
-    start() 
+    async start() 
     {
         try
         {
@@ -36,6 +39,8 @@ export class TipsManager extends Component
                         this.textTipNodePre=prefab;
                     }
                 });
+                    
+                this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
             }
         }
         catch(error)
@@ -56,6 +61,7 @@ export class TipsManager extends Component
             let tip=instantiate(this.textTipNodePre);
             console.log("获取richtext");
             tip.getChildByPath("RichText").getComponent(RichText).string=_msg;
+            tip.getChildByPath("RichText").getComponent(RichText).font = this.typeface;
             tip.setParent(this.node);
             console.log("获取anim");
             let anim=tip.getComponent(Animation);
