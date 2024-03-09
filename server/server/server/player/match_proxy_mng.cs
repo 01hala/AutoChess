@@ -28,6 +28,11 @@ namespace Player
             return player_Match_Caller.get_hub(name).start_battle(client_uuid, role_list);
         }
 
+        public player_match_start_peak_strength_cb start_peak_strength(string client_uuid, string guid)
+        {
+            return player_Match_Caller.get_hub(name).start_peak_strength(client_uuid, guid);
+        }
+
         public player_match_reconnect_cb reconnect(string old_client_uuid, string new_client_uuid)
         {
             return player_Match_Caller.get_hub(name).reconnect(old_client_uuid, new_client_uuid);

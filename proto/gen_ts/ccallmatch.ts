@@ -1066,12 +1066,43 @@ export class peak_strength_start_peak_strength_cb{
 
 }
 
+export class peak_strength_confirm_peak_strength_victory_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : peak_strength_rsp_cb;
+
+    public event_confirm_peak_strength_victory_handle_cb : ()=>void | null;
+    public event_confirm_peak_strength_victory_handle_err : ()=>void | null;
+    public event_confirm_peak_strength_victory_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : peak_strength_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_confirm_peak_strength_victory_handle_cb = null;
+        this.event_confirm_peak_strength_victory_handle_err = null;
+        this.event_confirm_peak_strength_victory_handle_timeout = null;
+    }
+
+    callBack(_cb:()=>void, _err:()=>void)
+    {
+        this.event_confirm_peak_strength_victory_handle_cb = _cb;
+        this.event_confirm_peak_strength_victory_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.confirm_peak_strength_victory_timeout(this.cb_uuid); }, tick);
+        this.event_confirm_peak_strength_victory_handle_timeout = timeout_cb;
+    }
+
+}
+
 /*this cb code is codegen by abelkhan for ts*/
 export class peak_strength_rsp_cb extends client_handle.imodule {
     public map_get_peak_strength_formation:Map<number, peak_strength_get_peak_strength_formation_cb>;
     public map_del_peak_strength_formation:Map<number, peak_strength_del_peak_strength_formation_cb>;
     public map_choose_peak_strength:Map<number, peak_strength_choose_peak_strength_cb>;
     public map_start_peak_strength:Map<number, peak_strength_start_peak_strength_cb>;
+    public map_confirm_peak_strength_victory:Map<number, peak_strength_confirm_peak_strength_victory_cb>;
     constructor(modules:client_handle.modulemng){
         super();
         this.map_get_peak_strength_formation = new Map<number, peak_strength_get_peak_strength_formation_cb>();
@@ -1086,6 +1117,9 @@ export class peak_strength_rsp_cb extends client_handle.imodule {
         this.map_start_peak_strength = new Map<number, peak_strength_start_peak_strength_cb>();
         modules.add_method("peak_strength_rsp_cb_start_peak_strength_rsp", this.start_peak_strength_rsp.bind(this));
         modules.add_method("peak_strength_rsp_cb_start_peak_strength_err", this.start_peak_strength_err.bind(this));
+        this.map_confirm_peak_strength_victory = new Map<number, peak_strength_confirm_peak_strength_victory_cb>();
+        modules.add_method("peak_strength_rsp_cb_confirm_peak_strength_victory_rsp", this.confirm_peak_strength_victory_rsp.bind(this));
+        modules.add_method("peak_strength_rsp_cb_confirm_peak_strength_victory_err", this.confirm_peak_strength_victory_err.bind(this));
     }
     public get_peak_strength_formation_rsp(inArray:any[]){
         let uuid = inArray[0];
@@ -1234,6 +1268,39 @@ export class peak_strength_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public confirm_peak_strength_victory_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9:any[] = [];
+        var rsp = this.try_get_and_del_confirm_peak_strength_victory_cb(uuid);
+        if (rsp && rsp.event_confirm_peak_strength_victory_handle_cb) {
+            rsp.event_confirm_peak_strength_victory_handle_cb.apply(null, _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9);
+        }
+    }
+
+    public confirm_peak_strength_victory_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9:any[] = [];
+        var rsp = this.try_get_and_del_confirm_peak_strength_victory_cb(uuid);
+        if (rsp && rsp.event_confirm_peak_strength_victory_handle_err) {
+            rsp.event_confirm_peak_strength_victory_handle_err.apply(null, _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9);
+        }
+    }
+
+    public confirm_peak_strength_victory_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_confirm_peak_strength_victory_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_confirm_peak_strength_victory_handle_timeout) {
+                rsp.event_confirm_peak_strength_victory_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_confirm_peak_strength_victory_cb(uuid : number){
+        var rsp = this.map_confirm_peak_strength_victory.get(uuid);
+        this.map_confirm_peak_strength_victory.delete(uuid);
+        return rsp;
+    }
+
 }
 
 let rsp_cb_peak_strength_handle : peak_strength_rsp_cb | null = null;
@@ -1314,6 +1381,19 @@ export class peak_strength_hubproxy
             rsp_cb_peak_strength_handle.map_start_peak_strength.set(uuid_b25d20bd_c716_573b_a301_3462f94ac7ec, cb_start_peak_strength_obj);
         }
         return cb_start_peak_strength_obj;
+    }
+
+    public confirm_peak_strength_victory(is_victory:battle_victory){
+        let uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8 = Math.round(this.uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b++);
+
+        let _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9:any[] = [uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8];
+        _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9.push(is_victory);
+        this._client_handle.call_hub(this.hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b, "peak_strength_confirm_peak_strength_victory", _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9);
+        let cb_confirm_peak_strength_victory_obj = new peak_strength_confirm_peak_strength_victory_cb(uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8, rsp_cb_peak_strength_handle);
+        if (rsp_cb_peak_strength_handle){
+            rsp_cb_peak_strength_handle.map_confirm_peak_strength_victory.set(uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8, cb_confirm_peak_strength_victory_obj);
+        }
+        return cb_confirm_peak_strength_victory_obj;
     }
 
 }

@@ -553,6 +553,29 @@ namespace Abelkhan
 
     }
 
+    public class peak_strength_confirm_peak_strength_victory_rsp : Common.Response {
+        private string _client_uuid_cd0e12ec_961a_34c5_9b39_4941f3e29bc9;
+        private UInt64 uuid_f2057b5c_43cc_334e_80e3_ff7330dbbe77;
+        public peak_strength_confirm_peak_strength_victory_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_cd0e12ec_961a_34c5_9b39_4941f3e29bc9 = client_uuid;
+            uuid_f2057b5c_43cc_334e_80e3_ff7330dbbe77 = _uuid;
+        }
+
+        public void rsp(){
+            var _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9 = new ArrayList();
+            _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9.Add(uuid_f2057b5c_43cc_334e_80e3_ff7330dbbe77);
+            Hub.Hub._gates.call_client(_client_uuid_cd0e12ec_961a_34c5_9b39_4941f3e29bc9, "peak_strength_rsp_cb_confirm_peak_strength_victory_rsp", _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9);
+        }
+
+        public void err(){
+            var _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9 = new ArrayList();
+            _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9.Add(uuid_f2057b5c_43cc_334e_80e3_ff7330dbbe77);
+            Hub.Hub._gates.call_client(_client_uuid_cd0e12ec_961a_34c5_9b39_4941f3e29bc9, "peak_strength_rsp_cb_confirm_peak_strength_victory_err", _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9);
+        }
+
+    }
+
     public class peak_strength_module : Common.IModule {
         public peak_strength_module()
         {
@@ -560,6 +583,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("peak_strength_del_peak_strength_formation", del_peak_strength_formation);
             Hub.Hub._modules.add_mothed("peak_strength_choose_peak_strength", choose_peak_strength);
             Hub.Hub._modules.add_mothed("peak_strength_start_peak_strength", start_peak_strength);
+            Hub.Hub._modules.add_mothed("peak_strength_confirm_peak_strength_victory", confirm_peak_strength_victory);
         }
 
         public event Action on_get_peak_strength_formation;
@@ -600,6 +624,17 @@ namespace Abelkhan
             rsp = new peak_strength_start_peak_strength_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_start_peak_strength != null){
                 on_start_peak_strength();
+            }
+            rsp = null;
+        }
+
+        public event Action<battle_victory> on_confirm_peak_strength_victory;
+        public void confirm_peak_strength_victory(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _is_victory = (battle_victory)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            rsp = new peak_strength_confirm_peak_strength_victory_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_confirm_peak_strength_victory != null){
+                on_confirm_peak_strength_victory(_is_victory);
             }
             rsp = null;
         }

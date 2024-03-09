@@ -10,6 +10,7 @@ namespace Match
     class client_msg_handle
     {
         private plan_module plan_Module = new plan_module();
+        private peak_strength_module peak_Strength_Module = new peak_strength_module();
         private gm_module gm_Module = new gm_module();
 
         public client_msg_handle()
@@ -21,12 +22,51 @@ namespace Match
             plan_Module.on_start_round1 += Plan_Module_on_start_round1;
             plan_Module.on_confirm_round_victory += Plan_Module_on_confirm_round_victory;
             plan_Module.on_freeze += Plan_Module_on_freeze;
-
             plan_Module.on_start_round += Plan_Module_on_start_round;
-
             plan_Module.on_get_battle_data += Plan_Module_on_get_battle_data;
 
+            peak_Strength_Module.on_get_peak_strength_formation += Peak_Strength_Module_on_get_peak_strength_formation;
+            peak_Strength_Module.on_del_peak_strength_formation += Peak_Strength_Module_on_del_peak_strength_formation;
+            peak_Strength_Module.on_choose_peak_strength += Peak_Strength_Module_on_choose_peak_strength;
+            peak_Strength_Module.on_start_peak_strength += Peak_Strength_Module_on_start_peak_strength;
+            peak_Strength_Module.on_confirm_peak_strength_victory += Peak_Strength_Module_on_confirm_peak_strength_victory;
+
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
+        }
+
+        private void Peak_Strength_Module_on_confirm_peak_strength_victory(battle_victory is_victory)
+        {
+            var rsp = peak_Strength_Module.rsp as peak_strength_confirm_peak_strength_victory_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+            // to do
+        }
+
+        private void Peak_Strength_Module_on_start_peak_strength()
+        {
+            var rsp = peak_Strength_Module.rsp as peak_strength_start_peak_strength_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+            // to do
+        }
+
+        private void Peak_Strength_Module_on_choose_peak_strength(int index)
+        {
+            var rsp = peak_Strength_Module.rsp as peak_strength_choose_peak_strength_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+            // to do
+        }
+
+        private void Peak_Strength_Module_on_del_peak_strength_formation(int index)
+        {
+            var rsp = peak_Strength_Module.rsp as peak_strength_del_peak_strength_formation_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+            // to do
+        }
+
+        private void Peak_Strength_Module_on_get_peak_strength_formation()
+        {
+            var rsp = peak_Strength_Module.rsp as peak_strength_get_peak_strength_formation_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+            // to do
         }
 
         private void Plan_Module_on_get_battle_data()

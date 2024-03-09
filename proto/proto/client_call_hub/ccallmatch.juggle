@@ -36,5 +36,6 @@ module peak_strength {
     del_peak_strength_formation req(int32 index) rsp(UserBattleData[] self) err(int32 err);
     choose_peak_strength req(int32 index) rsp(UserBattleData self) err(int32 err);
     start_peak_strength req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
-
+    confirm_peak_strength_victory req(battle_victory is_victory) rsp() err();
+    
 }

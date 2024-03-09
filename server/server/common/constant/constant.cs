@@ -4,7 +4,7 @@ namespace Constant
 {
     public class Constant
     {
-        public static readonly string player_db_name = "tsxs";
+        public static readonly string player_db_name = "zzq";
 
         public static readonly string player_db_collection = "player";
 

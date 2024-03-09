@@ -10,7 +10,15 @@ namespace Match
         public player_msg_handle()
         {
             player_match_Module.on_start_battle += Player_match_Module_on_start_battle;
+            player_match_Module.on_start_peak_strength += Player_match_Module_on_start_peak_strength;
             player_match_Module.on_reconnect += Player_match_Module_on_reconnect;
+        }
+
+        private void Player_match_Module_on_start_peak_strength(string clientUUID, string guid)
+        {
+            var rsp = player_match_Module.rsp as player_match_start_peak_strength_rsp;
+
+            // to do
         }
 
         private void Player_match_Module_on_reconnect(string old_client_uuid, string new_client_uuid)
