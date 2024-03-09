@@ -65,7 +65,11 @@ export class InfoPanel extends Component
                 this.node.setSiblingIndex(99);
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 this.simplePropBoard.getChildByName("PropName").getComponent(Label).string="道具ID:"+id;
-                if(role) this.simplePropBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
+                if(role) 
+                {
+                    //this.simplePropBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
+                }
+
                 // switch(propType)
                 // {
                 //     case PropsType.Food:break;

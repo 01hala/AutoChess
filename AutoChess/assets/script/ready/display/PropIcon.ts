@@ -9,6 +9,7 @@ import { config } from '../../config/config';
 import { BundleManager } from '../../bundle/BundleManager';
 import * as common from '../../serverSDK/common';
 import { loadAssets } from '../../bundle/LoadAsset';
+import { TipsManager } from '../../tips/TipsManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -228,6 +229,10 @@ export class PropIcon extends Component
                         console.error("PropIcon 下的 使用道具 错误",error);
                     }
                     
+                }
+                else if(null != this.index && null != this.target && singleton.netSingleton.ready.ready.GetCoins()<3)
+                {
+                    TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                 }
                 //冻结道具
                 if(this.isFreeze && !this.isBuy)
