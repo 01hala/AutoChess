@@ -191,7 +191,7 @@ export class login extends Component {
                 });
             }
         }
-
+        //游戏结束
         singleton.netSingleton.game.cb_battle_victory = async (is_victory:boolean) => {
             if (singleton.netSingleton.battle) {
                 await singleton.netSingleton.battle.SetGameVictory(is_victory);
