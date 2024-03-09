@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\config\config.csproj" />
+    <ProjectReference Include="..\..\expand\rank\rank.csproj" />
     <ProjectReference Include="..\..\game_proto\game_proto.csproj" />
   </ItemGroup>
 
