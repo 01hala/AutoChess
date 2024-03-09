@@ -19,6 +19,7 @@ import { Camp, Property } from '../../other/enums';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
+import { TipsManager } from '../../tips/TipsManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -195,7 +196,8 @@ export class RoleIcon extends Component
                 //购买、合并角色
                 if (null != this.index) {
                     console.log("欲购买或者移动角色");
-                    if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) {
+                    if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) 
+                    {
                         console.log("角色未购买并且金币数量大于等于3");
                         this.freezeSprite.active = false;
                         if(null != this.target || this.isMerge)
@@ -217,6 +219,10 @@ export class RoleIcon extends Component
                             this.node.destroy();
                             return;
                         }
+                    }
+                    else if(!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() < 3)
+                    {
+                        TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                     }
                 }
                 //console.log(this.isMerge);
