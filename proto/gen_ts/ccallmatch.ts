@@ -946,3 +946,374 @@ export class plan_hubproxy
     }
 
 }
+export class peak_strength_get_peak_strength_formation_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : peak_strength_rsp_cb;
+
+    public event_get_peak_strength_formation_handle_cb : (self:common.UserBattleData[])=>void | null;
+    public event_get_peak_strength_formation_handle_err : (err:number)=>void | null;
+    public event_get_peak_strength_formation_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : peak_strength_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_get_peak_strength_formation_handle_cb = null;
+        this.event_get_peak_strength_formation_handle_err = null;
+        this.event_get_peak_strength_formation_handle_timeout = null;
+    }
+
+    callBack(_cb:(self:common.UserBattleData[])=>void, _err:(err:number)=>void)
+    {
+        this.event_get_peak_strength_formation_handle_cb = _cb;
+        this.event_get_peak_strength_formation_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.get_peak_strength_formation_timeout(this.cb_uuid); }, tick);
+        this.event_get_peak_strength_formation_handle_timeout = timeout_cb;
+    }
+
+}
+
+export class peak_strength_del_peak_strength_formation_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : peak_strength_rsp_cb;
+
+    public event_del_peak_strength_formation_handle_cb : (self:common.UserBattleData[])=>void | null;
+    public event_del_peak_strength_formation_handle_err : (err:number)=>void | null;
+    public event_del_peak_strength_formation_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : peak_strength_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_del_peak_strength_formation_handle_cb = null;
+        this.event_del_peak_strength_formation_handle_err = null;
+        this.event_del_peak_strength_formation_handle_timeout = null;
+    }
+
+    callBack(_cb:(self:common.UserBattleData[])=>void, _err:(err:number)=>void)
+    {
+        this.event_del_peak_strength_formation_handle_cb = _cb;
+        this.event_del_peak_strength_formation_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.del_peak_strength_formation_timeout(this.cb_uuid); }, tick);
+        this.event_del_peak_strength_formation_handle_timeout = timeout_cb;
+    }
+
+}
+
+export class peak_strength_choose_peak_strength_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : peak_strength_rsp_cb;
+
+    public event_choose_peak_strength_handle_cb : (self:common.UserBattleData)=>void | null;
+    public event_choose_peak_strength_handle_err : (err:number)=>void | null;
+    public event_choose_peak_strength_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : peak_strength_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_choose_peak_strength_handle_cb = null;
+        this.event_choose_peak_strength_handle_err = null;
+        this.event_choose_peak_strength_handle_timeout = null;
+    }
+
+    callBack(_cb:(self:common.UserBattleData)=>void, _err:(err:number)=>void)
+    {
+        this.event_choose_peak_strength_handle_cb = _cb;
+        this.event_choose_peak_strength_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.choose_peak_strength_timeout(this.cb_uuid); }, tick);
+        this.event_choose_peak_strength_handle_timeout = timeout_cb;
+    }
+
+}
+
+export class peak_strength_start_peak_strength_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : peak_strength_rsp_cb;
+
+    public event_start_peak_strength_handle_cb : (self:common.UserBattleData, target:common.UserBattleData)=>void | null;
+    public event_start_peak_strength_handle_err : (err:number)=>void | null;
+    public event_start_peak_strength_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : peak_strength_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_start_peak_strength_handle_cb = null;
+        this.event_start_peak_strength_handle_err = null;
+        this.event_start_peak_strength_handle_timeout = null;
+    }
+
+    callBack(_cb:(self:common.UserBattleData, target:common.UserBattleData)=>void, _err:(err:number)=>void)
+    {
+        this.event_start_peak_strength_handle_cb = _cb;
+        this.event_start_peak_strength_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.start_peak_strength_timeout(this.cb_uuid); }, tick);
+        this.event_start_peak_strength_handle_timeout = timeout_cb;
+    }
+
+}
+
+/*this cb code is codegen by abelkhan for ts*/
+export class peak_strength_rsp_cb extends client_handle.imodule {
+    public map_get_peak_strength_formation:Map<number, peak_strength_get_peak_strength_formation_cb>;
+    public map_del_peak_strength_formation:Map<number, peak_strength_del_peak_strength_formation_cb>;
+    public map_choose_peak_strength:Map<number, peak_strength_choose_peak_strength_cb>;
+    public map_start_peak_strength:Map<number, peak_strength_start_peak_strength_cb>;
+    constructor(modules:client_handle.modulemng){
+        super();
+        this.map_get_peak_strength_formation = new Map<number, peak_strength_get_peak_strength_formation_cb>();
+        modules.add_method("peak_strength_rsp_cb_get_peak_strength_formation_rsp", this.get_peak_strength_formation_rsp.bind(this));
+        modules.add_method("peak_strength_rsp_cb_get_peak_strength_formation_err", this.get_peak_strength_formation_err.bind(this));
+        this.map_del_peak_strength_formation = new Map<number, peak_strength_del_peak_strength_formation_cb>();
+        modules.add_method("peak_strength_rsp_cb_del_peak_strength_formation_rsp", this.del_peak_strength_formation_rsp.bind(this));
+        modules.add_method("peak_strength_rsp_cb_del_peak_strength_formation_err", this.del_peak_strength_formation_err.bind(this));
+        this.map_choose_peak_strength = new Map<number, peak_strength_choose_peak_strength_cb>();
+        modules.add_method("peak_strength_rsp_cb_choose_peak_strength_rsp", this.choose_peak_strength_rsp.bind(this));
+        modules.add_method("peak_strength_rsp_cb_choose_peak_strength_err", this.choose_peak_strength_err.bind(this));
+        this.map_start_peak_strength = new Map<number, peak_strength_start_peak_strength_cb>();
+        modules.add_method("peak_strength_rsp_cb_start_peak_strength_rsp", this.start_peak_strength_rsp.bind(this));
+        modules.add_method("peak_strength_rsp_cb_start_peak_strength_err", this.start_peak_strength_err.bind(this));
+    }
+    public get_peak_strength_formation_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_22f0b194_9ed2_3829_99ae_268b286a1a05:any[] = [];
+        let _array_9d043920_d936_5a24_bb36_334fe3c35b20:any[] = [];        for(let v_f28d998e_a4db_5715_ae88_a209524e50aa of inArray[1]){
+            _array_9d043920_d936_5a24_bb36_334fe3c35b20.push(common.protcol_to_UserBattleData(v_f28d998e_a4db_5715_ae88_a209524e50aa));
+        }
+        _argv_22f0b194_9ed2_3829_99ae_268b286a1a05.push(_array_9d043920_d936_5a24_bb36_334fe3c35b20);
+        var rsp = this.try_get_and_del_get_peak_strength_formation_cb(uuid);
+        if (rsp && rsp.event_get_peak_strength_formation_handle_cb) {
+            rsp.event_get_peak_strength_formation_handle_cb.apply(null, _argv_22f0b194_9ed2_3829_99ae_268b286a1a05);
+        }
+    }
+
+    public get_peak_strength_formation_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_22f0b194_9ed2_3829_99ae_268b286a1a05:any[] = [];
+        _argv_22f0b194_9ed2_3829_99ae_268b286a1a05.push(inArray[1]);
+        var rsp = this.try_get_and_del_get_peak_strength_formation_cb(uuid);
+        if (rsp && rsp.event_get_peak_strength_formation_handle_err) {
+            rsp.event_get_peak_strength_formation_handle_err.apply(null, _argv_22f0b194_9ed2_3829_99ae_268b286a1a05);
+        }
+    }
+
+    public get_peak_strength_formation_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_get_peak_strength_formation_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_get_peak_strength_formation_handle_timeout) {
+                rsp.event_get_peak_strength_formation_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_get_peak_strength_formation_cb(uuid : number){
+        var rsp = this.map_get_peak_strength_formation.get(uuid);
+        this.map_get_peak_strength_formation.delete(uuid);
+        return rsp;
+    }
+
+    public del_peak_strength_formation_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867:any[] = [];
+        let _array_9d043920_d936_5a24_bb36_334fe3c35b20:any[] = [];        for(let v_f28d998e_a4db_5715_ae88_a209524e50aa of inArray[1]){
+            _array_9d043920_d936_5a24_bb36_334fe3c35b20.push(common.protcol_to_UserBattleData(v_f28d998e_a4db_5715_ae88_a209524e50aa));
+        }
+        _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867.push(_array_9d043920_d936_5a24_bb36_334fe3c35b20);
+        var rsp = this.try_get_and_del_del_peak_strength_formation_cb(uuid);
+        if (rsp && rsp.event_del_peak_strength_formation_handle_cb) {
+            rsp.event_del_peak_strength_formation_handle_cb.apply(null, _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867);
+        }
+    }
+
+    public del_peak_strength_formation_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867:any[] = [];
+        _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867.push(inArray[1]);
+        var rsp = this.try_get_and_del_del_peak_strength_formation_cb(uuid);
+        if (rsp && rsp.event_del_peak_strength_formation_handle_err) {
+            rsp.event_del_peak_strength_formation_handle_err.apply(null, _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867);
+        }
+    }
+
+    public del_peak_strength_formation_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_del_peak_strength_formation_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_del_peak_strength_formation_handle_timeout) {
+                rsp.event_del_peak_strength_formation_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_del_peak_strength_formation_cb(uuid : number){
+        var rsp = this.map_del_peak_strength_formation.get(uuid);
+        this.map_del_peak_strength_formation.delete(uuid);
+        return rsp;
+    }
+
+    public choose_peak_strength_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_47129469_d92d_37f1_8cdf_803a9920b5c6:any[] = [];
+        _argv_47129469_d92d_37f1_8cdf_803a9920b5c6.push(common.protcol_to_UserBattleData(inArray[1]));
+        var rsp = this.try_get_and_del_choose_peak_strength_cb(uuid);
+        if (rsp && rsp.event_choose_peak_strength_handle_cb) {
+            rsp.event_choose_peak_strength_handle_cb.apply(null, _argv_47129469_d92d_37f1_8cdf_803a9920b5c6);
+        }
+    }
+
+    public choose_peak_strength_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_47129469_d92d_37f1_8cdf_803a9920b5c6:any[] = [];
+        _argv_47129469_d92d_37f1_8cdf_803a9920b5c6.push(inArray[1]);
+        var rsp = this.try_get_and_del_choose_peak_strength_cb(uuid);
+        if (rsp && rsp.event_choose_peak_strength_handle_err) {
+            rsp.event_choose_peak_strength_handle_err.apply(null, _argv_47129469_d92d_37f1_8cdf_803a9920b5c6);
+        }
+    }
+
+    public choose_peak_strength_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_choose_peak_strength_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_choose_peak_strength_handle_timeout) {
+                rsp.event_choose_peak_strength_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_choose_peak_strength_cb(uuid : number){
+        var rsp = this.map_choose_peak_strength.get(uuid);
+        this.map_choose_peak_strength.delete(uuid);
+        return rsp;
+    }
+
+    public start_peak_strength_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_604bcc66_d0b2_3376_8454_39a206b26543:any[] = [];
+        _argv_604bcc66_d0b2_3376_8454_39a206b26543.push(common.protcol_to_UserBattleData(inArray[1]));
+        _argv_604bcc66_d0b2_3376_8454_39a206b26543.push(common.protcol_to_UserBattleData(inArray[2]));
+        var rsp = this.try_get_and_del_start_peak_strength_cb(uuid);
+        if (rsp && rsp.event_start_peak_strength_handle_cb) {
+            rsp.event_start_peak_strength_handle_cb.apply(null, _argv_604bcc66_d0b2_3376_8454_39a206b26543);
+        }
+    }
+
+    public start_peak_strength_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_604bcc66_d0b2_3376_8454_39a206b26543:any[] = [];
+        _argv_604bcc66_d0b2_3376_8454_39a206b26543.push(inArray[1]);
+        var rsp = this.try_get_and_del_start_peak_strength_cb(uuid);
+        if (rsp && rsp.event_start_peak_strength_handle_err) {
+            rsp.event_start_peak_strength_handle_err.apply(null, _argv_604bcc66_d0b2_3376_8454_39a206b26543);
+        }
+    }
+
+    public start_peak_strength_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_start_peak_strength_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_start_peak_strength_handle_timeout) {
+                rsp.event_start_peak_strength_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_start_peak_strength_cb(uuid : number){
+        var rsp = this.map_start_peak_strength.get(uuid);
+        this.map_start_peak_strength.delete(uuid);
+        return rsp;
+    }
+
+}
+
+let rsp_cb_peak_strength_handle : peak_strength_rsp_cb | null = null;
+export class peak_strength_caller {
+    private _hubproxy:peak_strength_hubproxy;
+    constructor(_client:client_handle.client){
+        if (rsp_cb_peak_strength_handle == null){
+            rsp_cb_peak_strength_handle = new peak_strength_rsp_cb(_client._modulemng);
+        }
+        this._hubproxy = new peak_strength_hubproxy(_client);
+    }
+
+    public get_hub(hub_name:string)
+    {
+        this._hubproxy.hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b = hub_name;
+        return this._hubproxy;
+    }
+
+}
+
+export class peak_strength_hubproxy
+{
+    private uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b : number = Math.round(Math.random() * 1000);
+
+    public hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b:string;
+    private _client_handle:client_handle.client;
+
+    constructor(client_handle_:client_handle.client)
+    {
+        this._client_handle = client_handle_;
+    }
+
+    public get_peak_strength_formation(){
+        let uuid_48534f57_f89c_550e_8882_e435a0a73744 = Math.round(this.uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b++);
+
+        let _argv_22f0b194_9ed2_3829_99ae_268b286a1a05:any[] = [uuid_48534f57_f89c_550e_8882_e435a0a73744];
+        this._client_handle.call_hub(this.hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b, "peak_strength_get_peak_strength_formation", _argv_22f0b194_9ed2_3829_99ae_268b286a1a05);
+        let cb_get_peak_strength_formation_obj = new peak_strength_get_peak_strength_formation_cb(uuid_48534f57_f89c_550e_8882_e435a0a73744, rsp_cb_peak_strength_handle);
+        if (rsp_cb_peak_strength_handle){
+            rsp_cb_peak_strength_handle.map_get_peak_strength_formation.set(uuid_48534f57_f89c_550e_8882_e435a0a73744, cb_get_peak_strength_formation_obj);
+        }
+        return cb_get_peak_strength_formation_obj;
+    }
+
+    public del_peak_strength_formation(index:number){
+        let uuid_5a38c249_663d_5f6e_bc8b_b36eb0f6a6bf = Math.round(this.uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b++);
+
+        let _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867:any[] = [uuid_5a38c249_663d_5f6e_bc8b_b36eb0f6a6bf];
+        _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867.push(index);
+        this._client_handle.call_hub(this.hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b, "peak_strength_del_peak_strength_formation", _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867);
+        let cb_del_peak_strength_formation_obj = new peak_strength_del_peak_strength_formation_cb(uuid_5a38c249_663d_5f6e_bc8b_b36eb0f6a6bf, rsp_cb_peak_strength_handle);
+        if (rsp_cb_peak_strength_handle){
+            rsp_cb_peak_strength_handle.map_del_peak_strength_formation.set(uuid_5a38c249_663d_5f6e_bc8b_b36eb0f6a6bf, cb_del_peak_strength_formation_obj);
+        }
+        return cb_del_peak_strength_formation_obj;
+    }
+
+    public choose_peak_strength(index:number){
+        let uuid_a55befca_d09f_5b2f_b892_9ce05d28d685 = Math.round(this.uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b++);
+
+        let _argv_47129469_d92d_37f1_8cdf_803a9920b5c6:any[] = [uuid_a55befca_d09f_5b2f_b892_9ce05d28d685];
+        _argv_47129469_d92d_37f1_8cdf_803a9920b5c6.push(index);
+        this._client_handle.call_hub(this.hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b, "peak_strength_choose_peak_strength", _argv_47129469_d92d_37f1_8cdf_803a9920b5c6);
+        let cb_choose_peak_strength_obj = new peak_strength_choose_peak_strength_cb(uuid_a55befca_d09f_5b2f_b892_9ce05d28d685, rsp_cb_peak_strength_handle);
+        if (rsp_cb_peak_strength_handle){
+            rsp_cb_peak_strength_handle.map_choose_peak_strength.set(uuid_a55befca_d09f_5b2f_b892_9ce05d28d685, cb_choose_peak_strength_obj);
+        }
+        return cb_choose_peak_strength_obj;
+    }
+
+    public start_peak_strength(){
+        let uuid_b25d20bd_c716_573b_a301_3462f94ac7ec = Math.round(this.uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b++);
+
+        let _argv_604bcc66_d0b2_3376_8454_39a206b26543:any[] = [uuid_b25d20bd_c716_573b_a301_3462f94ac7ec];
+        this._client_handle.call_hub(this.hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b, "peak_strength_start_peak_strength", _argv_604bcc66_d0b2_3376_8454_39a206b26543);
+        let cb_start_peak_strength_obj = new peak_strength_start_peak_strength_cb(uuid_b25d20bd_c716_573b_a301_3462f94ac7ec, rsp_cb_peak_strength_handle);
+        if (rsp_cb_peak_strength_handle){
+            rsp_cb_peak_strength_handle.map_start_peak_strength.set(uuid_b25d20bd_c716_573b_a301_3462f94ac7ec, cb_start_peak_strength_obj);
+        }
+        return cb_start_peak_strength_obj;
+    }
+
+}
