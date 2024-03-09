@@ -1,4 +1,4 @@
-import { _decorator, BlockInputEvents, Button, Component, Label, Node, RichText, Sprite } from 'cc';
+import { _decorator, BlockInputEvents, Button, Component, Label, Node, RichText, sp, Sprite } from 'cc';
 import { PropsType } from '../other/enums';
 import { Team } from '../battle/team';
 import { RoleDis } from '../battle/display/RoleDis';
@@ -65,7 +65,10 @@ export class InfoPanel extends Component
                 this.node.setSiblingIndex(99);
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 this.simplePropBoard.getChildByName("PropName").getComponent(Label).string="道具ID:"+id;
-                if(role) this.simplePropBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
+                //食物加载图片的部分暂时注释掉
+                // if(role){
+                //     this.simplePropBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;                
+                // }
                 // switch(propType)
                 // {
                 //     case PropsType.Food:break;
@@ -80,7 +83,9 @@ export class InfoPanel extends Component
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
-                    this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
+                    let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
+                    tSp.skeletonData=role.roleSprite.skeletonData;
+                    tSp.animation=role.roleSprite.animation;
                 } 
                 else{
                     //this.simpleBoard.active=false;
@@ -91,7 +96,9 @@ export class InfoPanel extends Component
                     this.detailedBoard.getChildByPath("RoleData/RoleLevel").getComponent(RichText).string="<color=0>"+role.Level+"</color>";
                     this.detailedBoard.getChildByPath("RoleData/AtkNum").getComponent(RichText).string="<color=0>"+role.AtkNum+"</color>";
                     this.detailedBoard.getChildByPath("RoleData/HpNum").getComponent(RichText).string="<color=0>"+role.Hp+"</color>";
-                    this.detailedBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=role.roleSprite;
+                    let tSp =this.detailedBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
+                    tSp.skeletonData=role.roleSprite.skeletonData;
+                    tSp.animation=role.roleSprite.animation;
                 }   
             }
         }

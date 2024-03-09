@@ -90,7 +90,7 @@ export class ReadyDis
                 if (battle_info.round > 1) {
                     await this.Restore(battle_info);
                 }
-                this.shopArea.Init(this.ready.GetShopRoles(), this.ready.GetShopProps());
+                this.shopArea.Init(this.ready.GetShopRoles(), this.ready.GetShopProps(),this.ready.GetStage());
                 //隐藏等待界面
                 this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
                 this.waitingPanel.active = false;
@@ -199,7 +199,7 @@ export class ReadyDis
         }
         singleton.netSingleton.game.cb_role_update_refresh_shop=(shop_info: common.ShopData)=> {
             this.ready.SetShopData(shop_info);
-            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
+            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps(),this.ready.GetStage());
         };
         singleton.netSingleton.game.cb_add_coin=(coin:number)=>
         {
@@ -250,7 +250,7 @@ export class ReadyDis
     {
         await this.ready.Refresh();
         console.log('refresh');
-        this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps());
+        this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps(),this.ready.GetStage());
     }
     //更新玩家信息
     private async UpdatePlayerInfo(_battle_info:common.UserBattleData)
@@ -304,9 +304,6 @@ export class ReadyDis
             
         }
     }
-
-
-
 }
 
 

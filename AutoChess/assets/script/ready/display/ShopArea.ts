@@ -75,7 +75,7 @@ export class ShopArea extends Component
         
     }
 
-    Init(roles?:ShopRole[],props?:ShopProp[])
+    Init(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
     {
         for(let t of this.shopRoles)
         {
@@ -96,7 +96,14 @@ export class ShopArea extends Component
         this.shopProps=[];
         if(roles)
         {
-            for(let i=0;i<roles.length;i++)
+            let tmpCnt:number;
+            switch(stage){
+                case 1:case 2:tmpCnt=4;break;
+                case 3:case 4:tmpCnt=5;break;
+                case 5:case 6:tmpCnt=6;break;
+                default:tmpCnt=6;
+            }
+            for(let i=0;i<roles.length&&tmpCnt>0;i++,tmpCnt--)
             {
                 if(roles[i])
                 {
@@ -115,18 +122,34 @@ export class ShopArea extends Component
         {
             let equipIdx:number=0;
             let foodIdx:number=0;
+            let tmpFoodCnt:number;
+            let tmpEquipCnt:number=1;
+            switch(stage){
+                case 1:case 2:case 3:case 4:tmpFoodCnt=1;break;
+                case 5:case 6:tmpFoodCnt=2;break;
+                default:tmpFoodCnt=2;
+            }
             for(let i=0;i<props.length;i++)
-            {
+            {                
                 if(props[i]) 
-                {
+                {       
                     let newNode=instantiate(this.propIcon);
                     newNode.setParent(this.panel);
                     //console.log(newNode.parent.name);
-                    if(props[i].PropID>=1001&&props[i].PropID<=1999) newNode.setWorldPosition(this.FoodSquare[foodIdx++].worldPosition);
-                    else newNode.setWorldPosition(this.EquipSquare.worldPosition);
-                    console.log("props id:"+props[i].PropID)
+                    if(props[i].PropID>=1001&&props[i].PropID<=1999&&tmpFoodCnt>0){            
+                        newNode.setWorldPosition(this.FoodSquare[foodIdx++].worldPosition);
+                        tmpFoodCnt--;
+                    }
+                    else if(props[i].PropID>=3001&&props[i].PropID<=3999&&tmpEquipCnt>0){
+                        newNode.setWorldPosition(this.EquipSquare.worldPosition);
+                        tmpEquipCnt--;
+                    }
+                    else{
+                        newNode.active=false;
+                    }
                     newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
-                    this.shopProps.push(newNode);
+                    this.shopProps.push(newNode);                        
+                    newNode.setParent(this.panel);               
                 }
             }
             

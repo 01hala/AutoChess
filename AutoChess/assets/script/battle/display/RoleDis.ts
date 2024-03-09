@@ -41,7 +41,7 @@ export class RoleDis extends Component
     public Level: number;
     public Exp:number;
     //角色立绘(骨骼动画)
-    private roleSprite:sp.Skeleton;
+    public roleSprite:sp.Skeleton;
     //角色信息
     private roleInfo: Role = null;
     //生命和攻击文本
