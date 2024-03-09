@@ -336,7 +336,10 @@ export class PropIcon extends Component
                 {
                     //场上角色区域
                     if (null != otherCollider && 1 == otherCollider.tag) {
-                        if (this.roleArea.GetTargetRole(this.index) == this.target) {
+                        let num = otherCollider.node.name.slice(otherCollider.node.name.length - 1, otherCollider.node.name.length);
+                        let tIndex = Number(num);
+                        //let tempTarget=this.roleArea.GetTargetRole(this.index);
+                        if (tIndex==this.index) {
                             this.target = null;
                             this.index = null;
                         }
