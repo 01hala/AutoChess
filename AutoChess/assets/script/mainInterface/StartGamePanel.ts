@@ -74,7 +74,7 @@ export class StartGamePanel extends Component
         {
             this.amusementWindow.active=false;
             this.athleticsWindow.active=true;
-            this.athleticsWindow.getComponent(Animation).play();
+            this.athleticsWindow.getComponent(Animation).play("PanelAppear");
             //排位
             this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").on(Button.EventType.CLICK,()=>
             {
@@ -100,7 +100,7 @@ export class StartGamePanel extends Component
         {
             this.athleticsWindow.active=false;
             this.amusementWindow.active=true;
-            this.amusementWindow.getComponent(Animation).play();
+            this.amusementWindow.getComponent(Animation).play("PanelAppear");
             this.amusementWindow.getChildByPath("Custom/Custom_Btn").on(Button.EventType.CLICK,()=>
             {
                 let custom=this.amusementWindow.getChildByPath("CustomBoard");
@@ -248,7 +248,24 @@ export class StartGamePanel extends Component
         {
             this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").off(Button.EventType.CLICK);
             this.athleticsWindow.getChildByPath("Normal/Normal_Btn").off(Button.EventType.CLICK);
-            this.node.active=false;
+            if(this.athleticsWindow.active)
+            {
+                this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    this.node.active=false;
+                    this.athleticsWindow.getComponent(Animation).off(Animation.EventType.FINISHED);
+                });
+                this.athleticsWindow.getComponent(Animation).play("PanelDisappear");
+            }
+            if(this.amusementWindow.active)
+            {
+                this.amusementWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    this.node.active=false;
+                    this.amusementWindow.getComponent(Animation).off(Animation.EventType.FINISHED);
+                });
+                this.amusementWindow.getComponent(Animation).play("PanelDisappear");
+            }
         }
         catch(error)
         {

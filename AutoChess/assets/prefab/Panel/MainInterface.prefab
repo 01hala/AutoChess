@@ -8768,7 +8768,7 @@
         "__id__": 443
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 474
@@ -10183,6 +10183,10 @@
       {
         "__uuid__": "7b0d903d-f862-4af3-9120-bdf10bf9706f",
         "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "b45d64db-c27c-41ad-afba-b5f44635fbce",
+        "__expectedType__": "cc.AnimationClip"
       }
     ],
     "_defaultClip": {
@@ -10244,7 +10248,7 @@
         "__id__": 724
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 790
@@ -17409,6 +17413,10 @@
     "_clips": [
       {
         "__uuid__": "7b0d903d-f862-4af3-9120-bdf10bf9706f",
+        "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "b45d64db-c27c-41ad-afba-b5f44635fbce",
         "__expectedType__": "cc.AnimationClip"
       }
     ],
