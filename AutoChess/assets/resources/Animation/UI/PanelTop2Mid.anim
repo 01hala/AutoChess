@@ -278,7 +278,7 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.016666666666666666
+      0.05
     ],
     "_values": [
       {
@@ -291,9 +291,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       },
       {
         "__type__": "cc.RealKeyframeValue",
@@ -305,9 +303,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       }
     ],
     "preExtrapolation": 1,
@@ -323,7 +319,7 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.016666666666666666
+      0.05
     ],
     "_values": [
       {
@@ -336,9 +332,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       },
       {
         "__type__": "cc.RealKeyframeValue",
@@ -350,9 +344,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       }
     ],
     "preExtrapolation": 1,
@@ -368,7 +360,7 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.016666666666666666
+      0.05
     ],
     "_values": [
       {
@@ -381,9 +373,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       },
       {
         "__type__": "cc.RealKeyframeValue",
@@ -395,9 +385,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       }
     ],
     "preExtrapolation": 1,
@@ -413,7 +401,7 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
-      0.016666666666666666
+      0.05
     ],
     "_values": [
       {
@@ -426,9 +414,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       },
       {
         "__type__": "cc.RealKeyframeValue",
@@ -440,9 +426,7 @@
         "leftTangent": 0,
         "leftTangentWeight": 1,
         "easingMethod": 0,
-        "__editorExtras__": {
-          "tangentMode": 0
-        }
+        "__editorExtras__": null
       }
     ],
     "preExtrapolation": 1,

@@ -11,6 +11,9 @@ export class StartGamePanel extends Component
     private athleticsWindow:Node;
     //娱乐模式
     private amusementWindow:Node;
+    private customBoard:Node;
+    private createRoomBoard:Node;
+    private joinRoomBoard:Node
     //娱乐模式游戏难度
     private difficulty:GameDifficulty=GameDifficulty.Simple;
 
@@ -26,6 +29,15 @@ export class StartGamePanel extends Component
             this.athleticsWindow=this.node.getChildByPath("AthleticsWindow");
             this.amusementWindow=this.node.getChildByPath("AmusementWindow");
             this.difficultyBtn=this.amusementWindow.getChildByPath("Difficulty_Btn");
+
+            this.customBoard=this.amusementWindow.getChildByPath("CustomBoard");
+            this.createRoomBoard=this.amusementWindow.getChildByPath("CreateRoomBoard");
+            this.joinRoomBoard=this.amusementWindow.getChildByPath("JoinRoomBoard");;
+
+            this.customBoard.active=false;
+            this.createRoomBoard.active=false;
+            this.joinRoomBoard.active=false;
+
         }
         catch(error)
         {
@@ -61,6 +73,7 @@ export class StartGamePanel extends Component
                         break;
                 }
             },this);
+
         }
         catch(error)
         {
@@ -103,8 +116,7 @@ export class StartGamePanel extends Component
             this.amusementWindow.getComponent(Animation).play("PanelAppear");
             this.amusementWindow.getChildByPath("Custom/Custom_Btn").on(Button.EventType.CLICK,()=>
             {
-                let custom=this.amusementWindow.getChildByPath("CustomBoard");
-                this.ShowCustomBoard(custom);
+                this.ShowCustomBoard();
             },this);
         }
         catch(error)
@@ -113,52 +125,53 @@ export class StartGamePanel extends Component
         }
     }
     //自定义游戏面板
-    private ShowCustomBoard(_customBoard:Node)
+    private ShowCustomBoard()
     {
         try
         {
-            _customBoard.active=true;
-            _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
+            this.customBoard.active=true;
+            this.customBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
             //返回
-            _customBoard.on(Button.EventType.CLICK,()=>
+            this.customBoard.on(Button.EventType.CLICK,()=>
             {
-                _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
-                _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-                _customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                this.customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+                this.customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+                this.customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    _customBoard.active=false;
-                    _customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                    this.customBoard.active=false;
+                    this.customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
                 });
-                _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                this.customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
                 
             },this);
             //创建
-            _customBoard.getChildByPath("Board/Create_Btn").on(Button.EventType.CLICK,()=>
+            this.customBoard.getChildByPath("Board/Create_Btn").on(Button.EventType.CLICK,()=>
             {
-                let create=this.amusementWindow.getChildByPath("CreateRoomBoard");
-                _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
-                _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-                _customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                this.customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+                this.customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+
+                this.customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    _customBoard.active=false;
-                    this.ShowCreateRoomBoard(create);
-                    _customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                    this.customBoard.active=false;
+                    this.ShowCreateRoomBoard();
+                    this.customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
                 });
-                _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                this.customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                
             },this);
             //加入
-            _customBoard.getChildByPath("Board/Join_Btn").on(Button.EventType.CLICK,()=>
+            this.customBoard.getChildByPath("Board/Join_Btn").on(Button.EventType.CLICK,()=>
             {
-                let join=this.amusementWindow.getChildByPath("JoinRoomBoard");
-                _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
-                _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-                _customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                this.customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
+                this.customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
+
+                this.customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    _customBoard.active=false;
-                    this.ShowJoinRoomeBoard(join);
-                    _customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                    this.customBoard.active=false;
+                    this.ShowJoinRoomeBoard();
+                    this.customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
                 });
-                _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                this.customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
             },this);
         }
         catch(error)
@@ -167,27 +180,27 @@ export class StartGamePanel extends Component
         }
     }
     //创建房间面板
-    private ShowCreateRoomBoard(_createRoomBoard:Node)
+    private ShowCreateRoomBoard()
     {
         try
         {
-            _createRoomBoard.active=true;
-            _createRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
+            this.createRoomBoard.active=true;
+            this.createRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
             //确认
-            _createRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
+            this.createRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
             {
                 
             },this);
             //取消
-            _createRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
+            this.createRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
             {
-                _createRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
-                _createRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
-                _createRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
-                _createRoomBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                this.createRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
+                this.createRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
+                this.createRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                this.createRoomBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    _createRoomBoard.active=false;
-                    _createRoomBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                    this.createRoomBoard.active=false;
+                    this.createRoomBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
                 });
 
                 
@@ -199,27 +212,27 @@ export class StartGamePanel extends Component
         }
     }
     //加入房间面板
-    private ShowJoinRoomeBoard(_joinRoomBoard:Node)
+    private ShowJoinRoomeBoard()
     {
         try
         {
-            _joinRoomBoard.active=true;
-            _joinRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
+            this.joinRoomBoard.active=true;
+            this.joinRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
             //确认
-            _joinRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
+            this.joinRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
             {
     
             },this);
             //取消
-            _joinRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
+            this.joinRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
             {
-                _joinRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
-                _joinRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
-                _joinRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
-                _joinRoomBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                this.joinRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
+                this.joinRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
+                this.joinRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                this.joinRoomBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    _joinRoomBoard.active=false;
-                    _joinRoomBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                    this.joinRoomBoard.active=false;
+                    this.joinRoomBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
                 });
                 
             },this);
