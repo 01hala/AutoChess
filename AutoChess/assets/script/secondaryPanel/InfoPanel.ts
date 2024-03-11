@@ -3,6 +3,7 @@ import { PropsType } from '../other/enums';
 import { Team } from '../battle/team';
 import { RoleDis } from '../battle/display/RoleDis';
 import { RoleInfo } from '../battle/skill/skill_base';
+import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -87,6 +88,9 @@ export class InfoPanel extends Component
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
+                    let str=config.SkillIntroduceConfig.get(id);
+
+                    this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string=str.Leve1Text;
                     let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
