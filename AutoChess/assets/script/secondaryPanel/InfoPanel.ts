@@ -1,4 +1,4 @@
-import { _decorator, BlockInputEvents, Button, Component, Label, Node, RichText, sp, Sprite } from 'cc';
+import { _decorator, animation, Animation, BlockInputEvents, Button, Component, Label, Node, RichText, sp, Sprite } from 'cc';
 import { PropsType } from '../other/enums';
 import { Team } from '../battle/team';
 import { RoleDis } from '../battle/display/RoleDis';
@@ -17,7 +17,7 @@ export class InfoPanel extends Component
     onLoad()
     {
         this.node.getComponent(BlockInputEvents).enabled=false;
-        this.exitBtn=this.node.getChildByPath("Detailed/Exit_Btn").getComponent(Button);
+        this.exitBtn=this.node.getChildByPath("BG").getComponent(Button);
     
         this.simpleBoard=this.node.getChildByPath("Simple");
         this.detailedBoard=this.node.getChildByPath("Detailed");
@@ -31,20 +31,21 @@ export class InfoPanel extends Component
 
         this.exitBtn.node.on(Button.EventType.CLICK,()=>
         {
+            console.log("exitboard!");
             this.Exit();
         });
-        this.simpleBoard.on(Button.EventType.CLICK,()=>
-        {
-            this.Exit();
-        },this);
-        this.detailedBoard.on(Button.EventType.CLICK,()=>
-        {
-            this.Exit();
-        },this);
-        this.simplePropBoard.on(Button.EventType.CLICK,()=>
-        {
-            this.Exit();
-        },this);
+        // this.simpleBoard.on(Button.EventType.CLICK,()=>
+        // {
+        //     this.Exit();
+        // },this);
+        // this.detailedBoard.on(Button.EventType.CLICK,()=>
+        // {
+        //     this.Exit();
+        // },this);
+        // this.simplePropBoard.on(Button.EventType.CLICK,()=>
+        // {
+        //     this.Exit();
+        // },this);
     }
     
     OpenInfoBoard(id:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
@@ -62,6 +63,7 @@ export class InfoPanel extends Component
             if(null!=propType)
             {
                 this.simplePropBoard.active=true;
+                this.simplePropBoard.getComponent(Animation).play("PanelAppear");
                 this.node.setSiblingIndex(99);
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 this.simplePropBoard.getChildByName("PropName").getComponent(Label).string="道具ID:"+id;
@@ -80,6 +82,7 @@ export class InfoPanel extends Component
             {
                 if(null==role||!isBuy){
                     this.simpleBoard.active=true;
+                    this.simpleBoard.getComponent(Animation).play("PanelAppear");
                     //this.detailedBoard.active=false;
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;
@@ -91,6 +94,7 @@ export class InfoPanel extends Component
                 else{
                     //this.simpleBoard.active=false;
                     this.detailedBoard.active=true;
+                    this.detailedBoard.getComponent(Animation).play("PanelAppear");
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;  
                     this.detailedBoard.getChildByPath("RoleData/RoleName").getComponent(RichText).string="<color=0>"+role.RoleId+"</color>";
@@ -115,7 +119,35 @@ export class InfoPanel extends Component
         //this.simpleBoard.active=false;
         //this.detailedBoard.active=false;
         this.node.getComponent(BlockInputEvents).enabled=false;
-        this.node.active=false;
+        if(this.simpleBoard.active)
+        {
+            this.simpleBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                this.node.active=false;
+                this.simpleBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+            });
+            this.simpleBoard.getComponent(Animation).play("PanelDisappear");
+        }
+        if(this.simplePropBoard.active)
+        {
+            this.simplePropBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                this.node.active=false;
+                this.simplePropBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+            });
+            this.simplePropBoard.getComponent(Animation).play("PanelDisappear");
+        }
+        if(this.detailedBoard.active)
+        {
+            this.detailedBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                this.node.active=false;
+                this.detailedBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+            });
+            this.detailedBoard.getComponent(Animation).play("PanelDisappear");
+        }
+
+        
     }
 
     update(deltaTime: number) {

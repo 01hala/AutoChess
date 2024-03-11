@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, Node, Sprite, SpriteFrame } from 'cc';
+import { _decorator, animation, Animation, Button, Component, Node, Sprite, SpriteFrame } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { GameDifficulty } from '../other/enums';
 import { Image } from 'fairygui-cc';
@@ -74,6 +74,7 @@ export class StartGamePanel extends Component
         {
             this.amusementWindow.active=false;
             this.athleticsWindow.active=true;
+            this.athleticsWindow.getComponent(Animation).play();
             //排位
             this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").on(Button.EventType.CLICK,()=>
             {
@@ -99,6 +100,7 @@ export class StartGamePanel extends Component
         {
             this.athleticsWindow.active=false;
             this.amusementWindow.active=true;
+            this.amusementWindow.getComponent(Animation).play();
             this.amusementWindow.getChildByPath("Custom/Custom_Btn").on(Button.EventType.CLICK,()=>
             {
                 let custom=this.amusementWindow.getChildByPath("CustomBoard");
@@ -116,12 +118,19 @@ export class StartGamePanel extends Component
         try
         {
             _customBoard.active=true;
+            _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
             //返回
             _customBoard.on(Button.EventType.CLICK,()=>
             {
                 _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
                 _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-                _customBoard.active=false;
+                _customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    _customBoard.active=false;
+                    _customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                });
+                _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                
             },this);
             //创建
             _customBoard.getChildByPath("Board/Create_Btn").on(Button.EventType.CLICK,()=>
@@ -129,8 +138,13 @@ export class StartGamePanel extends Component
                 let create=this.amusementWindow.getChildByPath("CreateRoomBoard");
                 _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
                 _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-                _customBoard.active=false;
-                this.ShowCreateRoomBoard(create);
+                _customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    _customBoard.active=false;
+                    this.ShowCreateRoomBoard(create);
+                    _customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                });
+                _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
             },this);
             //加入
             _customBoard.getChildByPath("Board/Join_Btn").on(Button.EventType.CLICK,()=>
@@ -138,8 +152,13 @@ export class StartGamePanel extends Component
                 let join=this.amusementWindow.getChildByPath("JoinRoomBoard");
                 _customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
                 _customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
-                _customBoard.active=false;
-                this.ShowJoinRoomeBoard(join);
+                _customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    _customBoard.active=false;
+                    this.ShowJoinRoomeBoard(join);
+                    _customBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                });
+                _customBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
             },this);
         }
         catch(error)
@@ -153,6 +172,7 @@ export class StartGamePanel extends Component
         try
         {
             _createRoomBoard.active=true;
+            _createRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
             //确认
             _createRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
             {
@@ -163,7 +183,14 @@ export class StartGamePanel extends Component
             {
                 _createRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
                 _createRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
-                _createRoomBoard.active=false;
+                _createRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                _createRoomBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    _createRoomBoard.active=false;
+                    _createRoomBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                });
+
+                
             },this);
         }
         catch(error)
@@ -177,6 +204,7 @@ export class StartGamePanel extends Component
         try
         {
             _joinRoomBoard.active=true;
+            _joinRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
             //确认
             _joinRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
             {
@@ -187,7 +215,13 @@ export class StartGamePanel extends Component
             {
                 _joinRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
                 _joinRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
-                _joinRoomBoard.active=false;
+                _joinRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+                _joinRoomBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    _joinRoomBoard.active=false;
+                    _joinRoomBoard.getChildByPath("Board").getComponent(Animation).off(Animation.EventType.FINISHED);
+                });
+                
             },this);
         }
         catch(error)

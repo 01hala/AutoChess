@@ -254,6 +254,15 @@ export class PropIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
             {
                 //this.RegBtn(false);
+                //显示冻结栏
+                if(!this.isBuy)
+                {
+                    this.shopArea.ShowFreezeArea(true);
+                }
+                //前0.1s判断是不是点击事件，不进行拖拽行为
+                if(Date.now()-this.lastClickTime<100){
+                    return;
+                }
                 //计算位移坐标
                 let node: Node = event.currentTarget;
                 let pos = new Vec2();
@@ -267,11 +276,7 @@ export class PropIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
                 this.lastClickTime=Date.now();
-                //显示冻结栏
-                if(!this.isBuy)
-                {
-                    this.shopArea.ShowFreezeArea(true);
-                }
+                
                 this.Ontirrger();
                 //触摸到的对象
                 let node: Node = event.currentTarget;
