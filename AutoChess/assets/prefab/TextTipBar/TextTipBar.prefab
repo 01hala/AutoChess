@@ -298,15 +298,9 @@
     "_fontSize": 60,
     "_maxWidth": 0,
     "_fontFamily": "Arial",
-    "_font": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
-      "__expectedType__": "cc.TTFFont"
-    },
+    "_font": null,
     "_isSystemFontUsed": false,
-    "_userDefinedFont": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
-      "__expectedType__": "cc.TTFFont"
-    },
+    "_userDefinedFont": null,
     "_cacheMode": 0,
     "_imageAtlas": null,
     "_handleTouchEvent": true,

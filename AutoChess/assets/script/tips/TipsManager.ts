@@ -28,19 +28,8 @@ export class TipsManager extends Component
         {
             if(null==this.textTipNodePre)
             {
-                resources.load("prefab/TextTipBar",Prefab,(error,prefab)=>
-                {
-                    if(error)
-                    {
-                        console.warn("没有读取到TextTipBar");
-                    }
-                    else
-                    {
-                        this.textTipNodePre=prefab;
-                    }
-                });
-                    
-                //this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
+                this.textTipNodePre = await BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar") as Prefab;
+                this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
             }
         }
         catch(error)
@@ -61,7 +50,7 @@ export class TipsManager extends Component
             let tip=instantiate(this.textTipNodePre);
             console.log("获取richtext");
             tip.getChildByPath("RichText").getComponent(RichText).string=_msg;
-           // tip.getChildByPath("RichText").getComponent(RichText).font = this.typeface;
+            tip.getChildByPath("RichText").getComponent(RichText).font = this.typeface;
             tip.setParent(this.node);
             console.log("获取anim");
             let anim=tip.getComponent(Animation);

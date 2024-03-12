@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton } from 'cc';
+import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp, EventType, Property } from '../../other/enums';
 import { Battle } from '../../battle/battle';
@@ -55,8 +55,6 @@ export class RoleDis extends Component
     //受伤效果
     private bandage: Node;
     private hurtedSpine:Node;
-    //字体
-    private typeface: any;
     //攻击缓动
     private tAttack: Tween<Node> = null;
     //位移缓动
@@ -66,8 +64,12 @@ export class RoleDis extends Component
 
     private idText:RichText;
 
+    private typeface: TTFFont;
+
     protected async onLoad(): Promise<void> {
         try {
+            this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
+
             this.levelSprite = this.node.getChildByName("LevelSprite");
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
@@ -240,6 +242,7 @@ export class RoleDis extends Component
                 hurtedTextAnim.resume();
                 hitAnim.resume();
                 this.behurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + _value + "</outline></color>";
+                this.behurtedText.getComponent(RichText).font = this.typeface;
                 this.behurtedText.active=true;
                 this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
                 this.hurtedSpine.active=true;
@@ -283,6 +286,7 @@ export class RoleDis extends Component
                 {
                     anim.resume();
                     this.intensifierText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[0] + "</outline></color>";
+                    this.intensifierText.getComponent(RichText).font = this.typeface
                     this.intensifierText.active = true;
                     anim.play();
                     console.log("生命值增加");
@@ -293,6 +297,7 @@ export class RoleDis extends Component
                 {
                     anim.resume();
                     this.intensifierText.getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[1] + "</outline></color>";
+                    this.intensifierText.getComponent(RichText).font = this.typeface
                     this.intensifierText.active = true;
                     anim.play();
                     console.log("攻击力增加");
