@@ -1,0 +1,138 @@
+
+shouji2.png
+size: 2045,2045
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0
+  rotate: true
+  xy: 2, 79
+  size: 190, 125
+  orig: 192, 127
+  offset: 1, 1
+  index: -1
+1
+  rotate: true
+  xy: 129, 82
+  size: 187, 135
+  orig: 189, 137
+  offset: 1, 1
+  index: -1
+10
+  rotate: false
+  xy: 2, 271
+  size: 584, 586
+  orig: 586, 588
+  offset: 1, 1
+  index: -1
+11
+  rotate: false
+  xy: 2, 859
+  size: 587, 590
+  orig: 589, 592
+  offset: 1, 1
+  index: -1
+12
+  rotate: false
+  xy: 2, 1451
+  size: 589, 592
+  orig: 591, 594
+  offset: 1, 1
+  index: -1
+2
+  rotate: true
+  xy: 1170, 2
+  size: 318, 322
+  orig: 320, 324
+  offset: 1, 1
+  index: -1
+4
+  rotate: true
+  xy: 1170, 322
+  size: 542, 540
+  orig: 544, 542
+  offset: 1, 1
+  index: -1
+5
+  rotate: true
+  xy: 1173, 924
+  size: 542, 540
+  orig: 544, 542
+  offset: 1, 1
+  index: -1
+6
+  rotate: false
+  xy: 1168, 1468
+  size: 568, 575
+  orig: 570, 577
+  offset: 1, 1
+  index: -1
+7
+  rotate: false
+  xy: 593, 1464
+  size: 573, 579
+  orig: 575, 581
+  offset: 1, 1
+  index: -1
+8
+  rotate: false
+  xy: 591, 866
+  size: 580, 583
+  orig: 582, 585
+  offset: 1, 1
+  index: -1
+9
+  rotate: false
+  xy: 588, 271
+  size: 580, 586
+  orig: 582, 588
+  offset: 1, 1
+  index: -1
+
+shouji22.png
+size: 1197,1197
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+13
+  rotate: false
+  xy: 380, 408
+  size: 379, 375
+  orig: 381, 377
+  offset: 1, 1
+  index: -1
+14
+  rotate: true
+  xy: 2, 408
+  size: 379, 376
+  orig: 381, 378
+  offset: 1, 1
+  index: -1
+15
+  rotate: true
+  xy: 829, 816
+  size: 379, 366
+  orig: 382, 368
+  offset: 2, 1
+  index: -1
+16
+  rotate: true
+  xy: 761, 406
+  size: 377, 367
+  orig: 379, 369
+  offset: 1, 1
+  index: -1
+3
+  rotate: false
+  xy: 2, 789
+  size: 416, 406
+  orig: 418, 408
+  offset: 1, 1
+  index: -1
+xingxing
+  rotate: false
+  xy: 420, 785
+  size: 407, 410
+  orig: 470, 480
+  offset: 28, 35
+  index: -1

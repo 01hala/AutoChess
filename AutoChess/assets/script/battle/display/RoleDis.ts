@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp } from 'cc';
+import { _decorator, animation, CCInteger, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp, EventType, Property } from '../../other/enums';
 import { Battle } from '../../battle/battle';
@@ -54,6 +54,7 @@ export class RoleDis extends Component
     private behurtedText:Node;
     //受伤效果
     private bandage: Node;
+    private hurtedSpine:Node;
     //字体
     private typeface: any;
     //攻击缓动
@@ -71,10 +72,12 @@ export class RoleDis extends Component
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
             this.behurtedText=this.node.getChildByName("BeHurtedText");
+            this.hurtedSpine=this.node.getChildByPath("BeHurtedSpine");
 
             this.bandage.active = false;
             this.intensifierText.active = false;
             this.behurtedText.active=false;
+            this.hurtedSpine.active=false;
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
             
@@ -104,26 +107,33 @@ export class RoleDis extends Component
 
     async Refresh(roleInfo: Role,isnew?:boolean) 
     {
-        this.roleInfo = roleInfo;
-        if(isnew)
+        try
         {
-            this.RoleId=roleInfo.id;
-            let str="Role_"+this.RoleId;
-            if(null==this.idText)
+            this.roleInfo = roleInfo;
+            if(isnew)
             {
-                this.idText=this.node.getChildByPath("ID").getComponent(RichText);
+                this.RoleId=roleInfo.id;
+                let str="Role_"+this.RoleId;
+                if(null==this.idText)
+                {
+                    this.idText=this.node.getChildByPath("ID").getComponent(RichText);
+                }
+                this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
+                // let sf:sp.SkeletonData=await this.LoadImg("RolesImg",str);
+                // if(sf)
+                // {
+                //     this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;   
+                //     this.roleSprite=sf;             
+                // }
+                await this.LoadOnConfig();
+    
             }
-            this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
-            // let sf:sp.SkeletonData=await this.LoadImg("RolesImg",str);
-            // if(sf)
-            // {
-            //     this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;   
-            //     this.roleSprite=sf;             
-            // }
-            await this.LoadOnConfig();
-
+            await this.changeAtt();
         }
-        await this.changeAtt();
+        catch(error)
+        {
+            console.error("RoleDis 下的 Refresh 错误 err:" + error);
+        }
     }
 
     delay(ms: number, release: () => void): Promise<void> 
@@ -159,7 +169,7 @@ export class RoleDis extends Component
                         singleton.netSingleton.battle.showBattleEffect(true);
                     }
                 })
-                .delay(0.1).call(() => {
+                .delay(0.3).call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
@@ -167,7 +177,7 @@ export class RoleDis extends Component
                 .to(0.2, { position: this.originalPos })
                 .start();
 
-            return this.delay(1200, () => 
+            return this.delay(1400, () => 
             {
                 if (this.tAttack) {
                     this.tAttack.stop();
@@ -178,7 +188,7 @@ export class RoleDis extends Component
 
         catch (err) 
         {
-            console.warn("RoleDis 下的 Attack 错误 err:" + err);
+            console.error("RoleDis 下的 Attack 错误 err:" + err);
         }
     }
 
@@ -200,12 +210,13 @@ export class RoleDis extends Component
             let lvlsf:SpriteFrame=await this.LoadImg("LvRing",str);
             if(lvlsf)
             {   
+                this.levelSprite=this.node.getChildByPath("LevelSprite");
                 this.levelSprite.getComponent(Sprite).spriteFrame=lvlsf;
             }
         }
         catch (err) 
         {
-            console.warn("RoleDis 下的 changeAtt 错误 err:" + err);
+            console.error("RoleDis 下的 changeAtt 错误 err:" + err);
         }
 
         return this.delay(300, () => { });
@@ -215,23 +226,28 @@ export class RoleDis extends Component
     {
         try
         {
-            let hurtedAnim: Animation=this.behurtedText.getComponent(Animation);
-            hurtedAnim.on(Animation.EventType.FINISHED, () => 
+            let hurtedTextAnim: Animation=this.behurtedText.getComponent(Animation);
+            hurtedTextAnim.on(Animation.EventType.FINISHED, () => 
             {
-                hurtedAnim.stop();
+                hurtedTextAnim.stop();
                 this.behurtedText.active = false;
-                hurtedAnim.resume();
+                hurtedTextAnim.resume();
             }, this);
             let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
 
             tween(this.node).to(0,{}).call(()=>
             {
-                hurtedAnim.resume();
+                hurtedTextAnim.resume();
                 hitAnim.resume();
                 this.behurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + _value + "</outline></color>";
                 this.behurtedText.active=true;
-                hurtedAnim.play();
+                this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
+                this.hurtedSpine.active=true;
+                hurtedTextAnim.play();
                 hitAnim.play();
+            }).delay(0.2).call(()=>
+            {
+                this.hurtedSpine.active=false;
             }).start();
 
             return this.delay(700,()=>
@@ -359,10 +375,11 @@ export class RoleDis extends Component
         });
     }
 
-    RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node) 
+    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: Camp) 
     {
         try 
         {
+            await singleton.netSingleton.battle.showLaunchSkillEffect();
             let bulletNode = instantiate(this.remoteNode);
             bulletNode.setPosition(spellcasterLocation);
             //let tempRole=find("Canvas/EnemyQueue").children[role.index];

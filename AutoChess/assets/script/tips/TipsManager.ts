@@ -40,7 +40,7 @@ export class TipsManager extends Component
                     }
                 });
                     
-                this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
+                //this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
             }
         }
         catch(error)
@@ -61,7 +61,7 @@ export class TipsManager extends Component
             let tip=instantiate(this.textTipNodePre);
             console.log("获取richtext");
             tip.getChildByPath("RichText").getComponent(RichText).string=_msg;
-            tip.getChildByPath("RichText").getComponent(RichText).font = this.typeface;
+           // tip.getChildByPath("RichText").getComponent(RichText).font = this.typeface;
             tip.setParent(this.node);
             console.log("获取anim");
             let anim=tip.getComponent(Animation);

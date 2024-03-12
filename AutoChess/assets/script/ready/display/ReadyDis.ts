@@ -123,7 +123,7 @@ export class ReadyDis
             //开始按钮
             this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () => {
-                if (this.roleArea.rolesNode.length > 0) {
+                if (this.roleArea.GetRolesNumber() > 0) {
                     await this.ready.StartBattle();
                     this.panelNode.active = false;
                     this.destory();
@@ -171,21 +171,15 @@ export class ReadyDis
         };
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
-            let str = "Location_" + target_role_index;
-            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
-            this.roleArea.rolesNode[source_role_index].destroy();
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
-            //this.roleArea.targets.set(str, null);
-            this.roleArea.rolesNode[source_role_index]=null;
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).roleNode.destroy();
+            this.roleArea.rolesNode[target_role_index].destroy();
+
+            this.roleArea.rolesNode[target_role_index]=null;
             console.log('cb_role_merge,target_role:', target_role_index);
 
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).upgradeLock = true;
+            this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
 
-            //str = "Location_" + target_role_index;                                                                      
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;                
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
         };
         singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             // let str = "Location_" + target_role_index;

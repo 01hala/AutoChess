@@ -1,0 +1,13 @@
+
+dingceng.png
+size: 33,33
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guangdian1
+  rotate: false
+  xy: 2, 2
+  size: 28, 29
+  orig: 34, 34
+  offset: 3, 3
+  index: -1
