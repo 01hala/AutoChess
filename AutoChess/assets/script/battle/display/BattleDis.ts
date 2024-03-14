@@ -372,15 +372,15 @@ export class BattleDis
 
                 //释放技能者所在阵营列表
                 //let roleList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam().GetRoles() : this.battle.GetEnemyTeam().GetRoles();
-                let roleList:rRole[]=[];
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
                     tmp=new rRole(element.index,element.id, 1,0, Camp.Self, element.properties,null);
-                    let targetTeam=Camp.Self==element.camp?this.battle.GetSelfTeam():this.battle.GetEnemyTeam();
+                    let targetTeam = Camp.Self==element.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
-                    roleList.push(tmp);    
+                    let queue = Camp.Self==element.camp ? this.selfQueue : this.enemyQueue;
+                    allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
                 });
-                allAwait.push(this.selfQueue.SummonRole(roleList,ev.spellcaster));
+                
             }
             await Promise.all(allAwait);
         }
