@@ -93,3 +93,13 @@ export enum GameDifficulty
     Ordinary=2,
     Hard=3
 }
+
+export enum Fetters
+{
+    Sea=1,
+    Mountain=2,
+    Grassland=3,
+    Wind=4,
+    Jungle=5,
+    Cave=6
+}

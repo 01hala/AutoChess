@@ -203,11 +203,16 @@ export class RoleDis extends Component
             this.Hp = Math.round(this.roleInfo.GetProperty(Property.HP));
             this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));
             this.Level=this.roleInfo.level;
-            if (this.hpText && this.atkText) 
+
+            if(null==this.hpText && null==this.atkText)
             {
-                this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
-                this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+                this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
+                this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
             }
+           
+            this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
+            this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+            
             let str="lvl_"+this.Level;
             let lvlsf:SpriteFrame=await this.LoadImg("LvRing",str);
             if(lvlsf)
@@ -384,7 +389,7 @@ export class RoleDis extends Component
     {
         try 
         {
-            await singleton.netSingleton.battle.showLaunchSkillEffect();
+            //await singleton.netSingleton.battle.showLaunchSkillEffect();
             let bulletNode = instantiate(this.remoteNode);
             bulletNode.setPosition(spellcasterLocation);
             //let tempRole=find("Canvas/EnemyQueue").children[role.index];

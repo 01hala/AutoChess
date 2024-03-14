@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view } from 'cc';
+import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { Ready } from '../Ready';
 import { BundleManager } from '../../bundle/BundleManager';
@@ -26,6 +26,8 @@ export class ReadyDis
     public shopArea:ShopArea;
     //主控
     public ready:Ready;
+    //动效
+    private launchSkillEffect:Node;
 
     private refreshBtn:Button;
     private startBtn:Button;
@@ -79,6 +81,10 @@ export class ReadyDis
             this.heathText=this.panelNode.getChildByPath("TopArea/HpInfo/RichText").getComponent(RichText);
             this.roundText=this.panelNode.getChildByPath("TopArea/RoundInfo/RichText").getComponent(RichText);
             this.trophyText=this.panelNode.getChildByPath("TopArea/TrophyInfo/RichText").getComponent(RichText);
+            //技能发动效果
+            this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
+            this.launchSkillEffect.setSiblingIndex(99);
+            this.launchSkillEffect.active=false;
 
             _callBack(async ()=>
             {
@@ -138,6 +144,34 @@ export class ReadyDis
         {
             console.error("ReadyDis 里的 Init 错误 err:",error);
         }
+    }
+
+    private delay(ms: number, release: () => void): Promise<void> 
+    {
+        return new Promise(async (resolve) => {
+            await setTimeout(() => {
+                resolve();
+                release();
+            }, ms);
+        });
+    }
+    //技能发动效果
+    private showLaunchSkillEffect()
+    {
+        this.launchSkillEffect.active=true;
+        this.launchSkillEffect.setSiblingIndex(99);
+
+        this.launchSkillEffect.getChildByPath("BottomImg").getComponent(sp.Skeleton).animation="a2";
+        this.launchSkillEffect.getChildByPath("RoleImg").getComponent(sp.Skeleton).animation="a";
+        this.launchSkillEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
+
+        //await sleep(2000);
+
+        return this.delay(2000,()=>
+        {
+            this.launchSkillEffect.active=false;
+        });
+
     }
 
     private RegCallBack()
@@ -200,12 +234,14 @@ export class ReadyDis
             this.ready.SetCoins(coin);
             this.coinText.string=""+coin;
         };
-        singleton.netSingleton.game.cb_role_skill_update=(role_index:number,_role:common.Role)=>
+        singleton.netSingleton.game.cb_role_skill_update=async (role_index:number,_role:common.Role)=>
         {
+            await this.showLaunchSkillEffect();
             this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role,false);
         };
-        singleton.netSingleton.game.cb_role_add_property=(battle_info:common.UserBattleData)=>
+        singleton.netSingleton.game.cb_role_add_property=async (battle_info:common.UserBattleData)=>
         {
+            await this.showLaunchSkillEffect();
             for(let i=0;i<this.roleArea.rolesNode.length;i++)
             {
                 if(null != this.roleArea.rolesNode[i])
