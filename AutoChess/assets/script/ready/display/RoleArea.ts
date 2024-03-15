@@ -66,15 +66,18 @@ export class RoleArea extends Component
         //this.targets.set(_selfPosTarget.name,_switchNode);
     }
 
-    async MovePos(_indexBefor:number,_indexAfter:number)
+    async MovePos(_indexBefor:number,_indexAfter:number,_isMerge:boolean)
     {
         //this.LogShowRoles();
         console.log('-------------');
         await singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
-        //console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
-        let t=this.rolesNode[_indexAfter];
-        this.rolesNode[_indexAfter]=this.rolesNode[_indexBefor];
-        this.rolesNode[_indexBefor]=t;
+        if(!_isMerge)
+        {
+            //console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
+            let t=this.rolesNode[_indexAfter];
+            this.rolesNode[_indexAfter]=this.rolesNode[_indexBefor];
+            this.rolesNode[_indexBefor]=t;
+        }
         this.LogShowRoles();
     }
 

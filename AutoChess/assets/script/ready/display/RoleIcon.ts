@@ -168,7 +168,7 @@ export class RoleIcon extends Component
                     if (!this.isSale) {
                         if (this.isBuy) {
                             console.log(this.index, this.tempIndex);
-                            await this.roleArea.MovePos(this.index, this.tempIndex);
+                            await this.roleArea.MovePos(this.index, this.tempIndex ,this.isMerge);
                         }
 
                         //换位
