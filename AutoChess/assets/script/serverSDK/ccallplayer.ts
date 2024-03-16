@@ -276,12 +276,13 @@ export class player_login_hubproxy
         this._client_handle = client_handle_;
     }
 
-    public player_login(token:string, nick_name:string){
+    public player_login(token:string, nick_name:string, avatar:string){
         let uuid_ab86d08e_f3b3_5b3e_a2b9_8a2b5c189a51 = Math.round(this.uuid_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b++);
 
         let _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b:any[] = [uuid_ab86d08e_f3b3_5b3e_a2b9_8a2b5c189a51];
         _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.push(token);
         _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.push(nick_name);
+        _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.push(avatar);
         this._client_handle.call_hub(this.hub_name_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b, "player_login_player_login", _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b);
         let cb_player_login_obj = new player_login_player_login_cb(uuid_ab86d08e_f3b3_5b3e_a2b9_8a2b5c189a51, rsp_cb_player_login_handle);
         if (rsp_cb_player_login_handle){
@@ -290,12 +291,13 @@ export class player_login_hubproxy
         return cb_player_login_obj;
     }
 
-    public create_role(name:string, nick_name:string){
+    public create_role(name:string, nick_name:string, avatar:string){
         let uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21 = Math.round(this.uuid_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b++);
 
         let _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d:any[] = [uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21];
         _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d.push(name);
         _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d.push(nick_name);
+        _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d.push(avatar);
         this._client_handle.call_hub(this.hub_name_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b, "player_login_create_role", _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d);
         let cb_create_role_obj = new player_login_create_role_cb(uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21, rsp_cb_player_login_handle);
         if (rsp_cb_player_login_handle){

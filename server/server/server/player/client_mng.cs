@@ -82,6 +82,7 @@ namespace Player
                     Strength = 100,
                     gold = 100,
                     diamond = 10,
+                    score = 0,
                     bag = new Abelkhan.Bag() { ItemList = new() },
                     RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,
@@ -547,12 +548,13 @@ namespace Player
             return _avatar;
         }
 
-        public avatar.Avatar create_player(string uuid, string name, string nick_name)
+        public avatar.Avatar create_player(string uuid, string name, string nick_name, string avatar)
         {
             var _avatar = avatarMgr.get_avatar(uuid);
             var info = _avatar.get_real_hosting_data<PlayerInfo>();
             info.Data.Info().User.UserName = nick_name;
             info.Data.Info().User.UserGuid = _avatar.Guid;
+            info.Data.Info().User.Avatar = avatar;
 
             return _avatar;
         }

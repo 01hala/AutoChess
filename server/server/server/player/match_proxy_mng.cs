@@ -23,12 +23,12 @@ namespace Player
             _proxy = proxy;
         }
 
-        public player_match_start_battle_cb start_battle(string client_uuid, List<int> role_list)
+        public player_match_start_battle_cb start_battle(string client_uuid, List<int> role_list, UserInformation user_info)
         {
-            return player_Match_Caller.get_hub(name).start_battle(client_uuid, role_list);
+            return player_Match_Caller.get_hub(name).start_battle(client_uuid, role_list, user_info);
         }
 
-        public player_match_start_peak_strength_cb start_peak_strength(string client_uuid, string guid)
+        public player_match_start_peak_strength_cb start_peak_strength(string client_uuid, long guid)
         {
             return player_Match_Caller.get_hub(name).start_peak_strength(client_uuid, guid);
         }
