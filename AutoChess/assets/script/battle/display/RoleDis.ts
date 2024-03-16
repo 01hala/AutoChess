@@ -389,7 +389,7 @@ export class RoleDis extends Component
     {
         try 
         {
-            //await singleton.netSingleton.battle.showLaunchSkillEffect();
+            await singleton.netSingleton.battle.showLaunchSkillEffect();
             let bulletNode = instantiate(this.remoteNode);
             bulletNode.setPosition(spellcasterLocation);
             //let tempRole=find("Canvas/EnemyQueue").children[role.index];

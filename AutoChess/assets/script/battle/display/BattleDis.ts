@@ -218,7 +218,7 @@ export class BattleDis
         this.battleEffectImg.active=_bool;
     }
 
-    private showLaunchSkillEffect()
+    public showLaunchSkillEffect()
     {
         this.launchSkillEffect.active=true;
 
@@ -226,7 +226,6 @@ export class BattleDis
         this.launchSkillEffect.getChildByPath("RoleImg").getComponent(sp.Skeleton).animation="a";
         this.launchSkillEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
 
-        //await sleep(2000);
 
         return this.delay(2000,()=>
         {
@@ -235,7 +234,13 @@ export class BattleDis
 
     }
 
-    private showLaunchFettersEffect()
+    private async LaunchSkill(_func:()=>void)
+    {
+        await this.showLaunchSkillEffect();
+        await _func();
+    }
+
+    public showLaunchFettersEffect()
     {
 
         return this.delay(2000,()=>
@@ -320,7 +325,7 @@ export class BattleDis
                 }
                 else
                 {
-                    await this.showLaunchSkillEffect();
+                    //allAwait.push(this.showLaunchSkillEffect());
                 }
 
                 //console.log("checkRemoteInjured RemoteInjured");
@@ -338,8 +343,11 @@ export class BattleDis
                     {                
                         let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
-                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(
-                            selfpos, targetpos,this.father));
+                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                        // allAwait.push(this.LaunchSkill(async ()=>
+                        // {
+                        //     await self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father);
+                        // }));
                     }
                 });
             }
@@ -367,7 +375,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    //this.showLaunchSkillEffect();
                 }
 
                 //释放技能者所在阵营列表
@@ -405,7 +413,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    //this.showLaunchSkillEffect();
                 }
                 console.log("检测到加属性事件");
                 
