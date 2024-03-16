@@ -27,7 +27,8 @@ namespace Match
 
             try
             {
-                rsp.rsp(Match.battle_Mng.change_player_uuid(old_client_uuid, new_client_uuid));
+                rsp.rsp(Match.battle_Mng.change_player_uuid(old_client_uuid, new_client_uuid) &&
+                        Match.peak_strength_mng.change_player_uuid(old_client_uuid, new_client_uuid));
             }
             catch (Exception e)
             {

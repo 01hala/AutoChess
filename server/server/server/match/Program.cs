@@ -8,6 +8,7 @@ namespace Match
         public static player_proxy_mng _player_proxy_mng = new ();
         public static rank_proxy _rank_proxy;
         public static battle_mng battle_Mng = new ();
+        public static peak_strength_mng peak_strength_mng = new ();
 
         static void Main(string[] args)
 		{
