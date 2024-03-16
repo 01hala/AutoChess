@@ -1,6 +1,8 @@
 ﻿using Abelkhan;
 using Amazon.Runtime.Internal.Util;
 using Amazon.SecurityToken.Model;
+using MsgPack.Serialization;
+using MsgPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +46,32 @@ namespace Match
             try
             {
                 var _player = Match.peak_strength_mng.get_battle_player(uuid);
+                var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
+                player_proxy.peak_strength_victory(_player.GUID).callBack(async (userRankInfo) =>
+                {
+                    userRankInfo.battle_data = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
+                    using var st = MemoryStreamPool.mstMgr.GetStream();
+                    var _serializer = MessagePackSerializer.Get<MessagePackObjectDictionary>();
+                    _serializer.Pack(st, UserRankInfo.UserRankInfo_to_protcol(userRankInfo));
 
+                    var r = new rank_item
+                    {
+                        guid = _player.GUID,
+                        score = userRankInfo.score,
+                        item = st.ToArray()
+                    };
+                    Match._rank_proxy.update_rank_item(r);
+                }, (err) =>
+                {
+                    Log.Log.err("peak_strength_victory err:{0}", err);
+                    rsp.err();
+                }).timeout(1500, () =>
+                {
+                    Log.Log.err("peak_strength_victory timeout!");
+                    rsp.err();
+                });
+
+                rsp.rsp();
             }
             catch (System.Exception ex)
             {

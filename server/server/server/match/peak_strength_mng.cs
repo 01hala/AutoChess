@@ -36,8 +36,18 @@ namespace Match
             }
         }
 
-        public peak_strength_player(string _clientUUID, long _guid) 
+        private string player_hub_name;
+        public string PlayerHubName
         {
+            get
+            {
+                return player_hub_name;
+            }
+        }
+
+        public peak_strength_player(string _player_hub_name, string _clientUUID, long _guid) 
+        {
+            player_hub_name = _player_hub_name;
             clientUUID = _clientUUID;
             guid = _guid;
         }
@@ -70,9 +80,9 @@ namespace Match
             Hub.Hub._timer.addticktime(5 * 60 * 1000, tick_clear_timeout_player);
         }
 
-        public peak_strength_player add_player_to_battle(string clientUUID, long guid)
+        public peak_strength_player add_player_to_battle(string player_hub_name, string clientUUID, long guid)
         {
-            var _player = new peak_strength_player(clientUUID, guid);
+            var _player = new peak_strength_player(player_hub_name, clientUUID, guid);
             peak_strength_battles[clientUUID] = _player;
             return _player;
         }

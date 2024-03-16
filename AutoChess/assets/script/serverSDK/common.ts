@@ -209,6 +209,7 @@ export class UserData
     public Strength : number = 0;
     public gold : number = 0;
     public diamond : number = 0;
+    public score : number = 0;
     public bag : Bag | null = null;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
@@ -237,6 +238,9 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "diamond"){
             _struct.diamond = val as number;
+        }
+        else if (key === "score"){
+            _struct.score = val as number;
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);
@@ -427,6 +431,7 @@ export function protcol_to_UserBattleData(_protocol:any){
 
 export class UserRankInfo
 {
+    public score : number = 0;
     public nick_name : string = "";
     public avatar : string = "";
     public battle_data : UserBattleData | null = null;
@@ -444,7 +449,10 @@ export function protcol_to_UserRankInfo(_protocol:any){
 
     let _struct = new UserRankInfo();
     for (const [key, val] of Object.entries(_protocol)) {
-        if (key === "nick_name"){
+        if (key === "score"){
+            _struct.score = val as number;
+        }
+        else if (key === "nick_name"){
             _struct.nick_name = val as string;
         }
         else if (key === "avatar"){

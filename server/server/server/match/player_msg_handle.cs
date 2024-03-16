@@ -21,7 +21,7 @@ namespace Match
             // to do
             try
             {
-                var _player = Match.peak_strength_mng.add_player_to_battle(clientUUID, guid);
+                var _player = Match.peak_strength_mng.add_player_to_battle(Hub.Hub._hubs.current_hubproxy.name, clientUUID, guid);
                 rsp.rsp(await Match._redis_handle.GetList<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID)));
             }
             catch (Exception e)

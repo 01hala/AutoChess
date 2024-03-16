@@ -82,6 +82,7 @@ namespace Player
                     Strength = 100,
                     gold = 100,
                     diamond = 10,
+                    score = 0,
                     bag = new Abelkhan.Bag() { ItemList = new() },
                     RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,

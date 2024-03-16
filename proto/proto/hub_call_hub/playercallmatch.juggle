@@ -9,4 +9,5 @@ module player_match {
 
 module match_player {
     battle_victory ntf(int64 guid);
+    peak_strength_victory req(int64 guid) rsp(UserRankInfo self) err(int32 err);
 }
