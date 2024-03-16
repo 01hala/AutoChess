@@ -624,6 +624,7 @@ namespace Match
                 return em_error.db_error;
             }
 
+            bool is_update_skip_level = false;
             if (r == null)
             {
                 if (!add_role(role_index, s.RoleID, 1))
@@ -648,7 +649,7 @@ namespace Match
                 {
                     BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, true);
 
-                    check_update_skip_level(role_index);
+                    is_update_skip_level = true;
                 }
                 else
                 {
@@ -657,6 +658,10 @@ namespace Match
             }
 
             shopData.SaleRoleList[index] = null;
+            if (is_update_skip_level)
+            {
+                check_update_skip_level(role_index);
+            }
 
             return em_error.success;
         }
