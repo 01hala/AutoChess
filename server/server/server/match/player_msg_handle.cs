@@ -47,13 +47,13 @@ namespace Match
             }
         }
 
-        private void Player_match_Module_on_start_battle(string clientUUID, List<int> roleList)
+        private void Player_match_Module_on_start_battle(string clientUUID, List<int> roleList, UserInformation user_info)
         {
             var rsp = player_match_Module.rsp as player_match_start_battle_rsp;
 
             try
             {
-                var _player = Match.battle_Mng.add_player_to_battle(clientUUID, roleList);
+                var _player = Match.battle_Mng.add_player_to_battle(clientUUID, roleList, user_info);
                 rsp.rsp(_player.BattleData, _player.ShopData);
             }
             catch (Exception e)

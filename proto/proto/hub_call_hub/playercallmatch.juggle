@@ -1,7 +1,7 @@
 import common
 
 module player_match {
-	start_battle req(string client_uuid, int32[] role_list) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
+	start_battle req(string client_uuid, int32[] role_list, UserInformation userInfo) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
     start_peak_strength req(string client_uuid, int64 guid) rsp(UserBattleData[] self) err(int32 err);
 
     reconnect req(string old_client_uuid, string new_client_uuid) rsp(bool is_online) err();

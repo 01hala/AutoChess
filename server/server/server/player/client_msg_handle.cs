@@ -153,7 +153,7 @@ namespace Player
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _match = Player.match_Proxy_Mng.get_match_proxy();
-                _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup()).callBack( async (battle, shop) =>
+                _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack( async (battle, shop) =>
                 {
                     rsp.rsp(_match.name, battle, shop);
 

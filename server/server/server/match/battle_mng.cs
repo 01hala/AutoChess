@@ -61,13 +61,13 @@ namespace Match
 
         private List<int> skip_level = new List<int>();
 
-        public battle_player(string _clientUUID, battle_client_caller _caller, List<int> roleList) 
+        public battle_player(string _clientUUID, battle_client_caller _caller, List<int> roleList, UserInformation info) 
         {
             clientUUID = _clientUUID;
             caller = _caller;
 
             battleData = new UserBattleData();
-            battleData.User = new UserInformation();
+            battleData.User = info;
             battleData.RoleList = new List<Role>() { null, null, null, null, null, null };
             battleData.coin = 10;
             battleData.round = 1;
@@ -999,9 +999,9 @@ namespace Match
             Hub.Hub._timer.addticktime(5 * 60 * 1000, tick_clear_timeout_player);
         }
 
-        public battle_player add_player_to_battle(string clientUUID, List<int> roleList)
+        public battle_player add_player_to_battle(string clientUUID, List<int> roleList, UserInformation user_info)
         {
-            var _player = new battle_player(clientUUID, _caller, roleList);
+            var _player = new battle_player(clientUUID, _caller, roleList, user_info);
             battles[clientUUID] = _player;
             return _player;
         }

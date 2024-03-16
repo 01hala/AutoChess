@@ -350,7 +350,7 @@ namespace Abelkhan
             rsp_cb_player_match_handle = rsp_cb_player_match_handle_;
         }
 
-        public player_match_start_battle_cb start_battle(string client_uuid, List<Int32> role_list){
+        public player_match_start_battle_cb start_battle(string client_uuid, List<Int32> role_list, UserInformation userInfo){
             var uuid_21a74a63_a13c_539e_b2bc_ef5069375dba = (UInt64)Interlocked.Increment(ref uuid_f08f93cd_bfea_3bf2_ae83_42be38c1f420);
 
             var _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873 = new ArrayList();
@@ -361,6 +361,7 @@ namespace Abelkhan
                 _array_03c6cb48_755d_38f0_a566_1b564ef0e78d.Add(v_9c7e0c91_5849_58a5_953e_3924ee9819a9);
             }
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(_array_03c6cb48_755d_38f0_a566_1b564ef0e78d);
+            _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(UserInformation.UserInformation_to_protcol(userInfo));
             Hub.Hub._hubs.call_hub(hub_name_f08f93cd_bfea_3bf2_ae83_42be38c1f420, "player_match_start_battle", _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873);
 
             var cb_start_battle_obj = new player_match_start_battle_cb(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba, rsp_cb_player_match_handle);
@@ -543,7 +544,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_match_reconnect", reconnect);
         }
 
-        public event Action<string, List<Int32>> on_start_battle;
+        public event Action<string, List<Int32>, UserInformation> on_start_battle;
         public void start_battle(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _client_uuid = ((MsgPack.MessagePackObject)inArray[1]).AsString();
@@ -552,9 +553,10 @@ namespace Abelkhan
             foreach (var v_9797f049_d836_5d18_abd6_91a05cfcd191 in _protocol_arrayrole_list){
                 _role_list.Add(((MsgPack.MessagePackObject)v_9797f049_d836_5d18_abd6_91a05cfcd191).AsInt32());
             }
+            var _userInfo = UserInformation.protcol_to_UserInformation(((MsgPack.MessagePackObject)inArray[3]).AsDictionary());
             rsp = new player_match_start_battle_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_start_battle != null){
-                on_start_battle(_client_uuid, _role_list);
+                on_start_battle(_client_uuid, _role_list, _userInfo);
             }
             rsp = null;
         }
