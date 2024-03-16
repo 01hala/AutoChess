@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using Amazon.Runtime.Internal.Util;
 using Amazon.SecurityToken.Model;
 using System;
 using System.Collections.Generic;
@@ -39,34 +40,94 @@ namespace Match
             var rsp = peak_Strength_Module.rsp as peak_strength_confirm_peak_strength_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
             // to do
+
+            try
+            {
+                var _player = Match.peak_strength_mng.get_battle_player(uuid);
+
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
+                rsp.err();
+            }
         }
 
-        private void Peak_Strength_Module_on_start_peak_strength()
+        private async void Peak_Strength_Module_on_start_peak_strength()
         {
             var rsp = peak_Strength_Module.rsp as peak_strength_start_peak_strength_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
             // to do
+
+            try
+            {
+                var _player = Match.peak_strength_mng.get_battle_player(uuid);
+                var formation = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
+                var target = await Match._redis_handle.RandomList<UserBattleData>(RedisHelp.BuildPeakStrengthCache());
+                rsp.rsp(formation, target);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
-        private void Peak_Strength_Module_on_choose_peak_strength(int index)
+        private async void Peak_Strength_Module_on_choose_peak_strength(int index)
         {
             var rsp = peak_Strength_Module.rsp as peak_strength_choose_peak_strength_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
             // to do
+
+            try
+            {
+                var _player = Match.peak_strength_mng.get_battle_player(uuid);
+                var formation = await Match._redis_handle.GetListElem<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID), index);
+                await Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID), formation);
+                rsp.rsp(formation);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
-        private void Peak_Strength_Module_on_del_peak_strength_formation(int index)
+        private async void Peak_Strength_Module_on_del_peak_strength_formation(int index)
         {
             var rsp = peak_Strength_Module.rsp as peak_strength_del_peak_strength_formation_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
             // to do
+
+            try
+            {
+                var _player = Match.peak_strength_mng.get_battle_player(uuid);
+                await Match._redis_handle.DeleteListElem(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID), index);
+                rsp.rsp(await Match._redis_handle.GetList<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID)));
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
-        private void Peak_Strength_Module_on_get_peak_strength_formation()
+        private async void Peak_Strength_Module_on_get_peak_strength_formation()
         {
             var rsp = peak_Strength_Module.rsp as peak_strength_get_peak_strength_formation_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
             // to do
+
+            try
+            {
+                var _player = Match.peak_strength_mng.get_battle_player(uuid);
+                rsp.rsp(await Match._redis_handle.GetList<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID)));
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Peak_Strength_Module_on_get_peak_strength_formation error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private void Plan_Module_on_get_battle_data()
@@ -136,7 +197,7 @@ namespace Match
 
                 _player.BattleData.round++;
                 _player.BattleData.stage = (_player.BattleData.round + 1) / 2;
-                Match._redis_handle.PushList($"AutoChess:battle:{_player.BattleData.round}", _player.BattleData);
+                Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), _player.BattleData);
 
                 if (is_victory == battle_victory.victory)
                 {
@@ -150,6 +211,12 @@ namespace Match
                 if (_player.BattleData.victory >= 10)
                 {
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
+
+                    if (_player.BattleData.round <= 15)
+                    {
+                        Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleData);
+                        Match._redis_handle.PushList(RedisHelp.BuildPlayerPeakStrengthCache(_player.BattleData.User.UserGuid), _player.BattleData);
+                    }
                 }
                 else
                 {
@@ -194,7 +261,8 @@ namespace Match
                 count = 6;
             }
 
-            var target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{round}");
+            var cache = RedisHelp.BuildAutoChessBattleCache(round);
+            var target = await Match._redis_handle.RandomList<UserBattleData>(cache);
             if (target == null)
             {
                 return null;
@@ -203,7 +271,7 @@ namespace Match
             var i = 0;
             while (target.RoleList.Count < count && i < 3)
             {
-                target = await Match._redis_handle.RandomList<UserBattleData>($"AutoChess:battle:{round}");
+                target = await Match._redis_handle.RandomList<UserBattleData>(cache);
                 i++;
             }
 

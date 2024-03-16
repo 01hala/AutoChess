@@ -1,7 +1,8 @@
 struct UserInformation
 {
 	string UserName; // 用户名
-	int64 UserGuid; // 用户uid
+	int64 UserGuid;  // 用户uid
+	string Avatar;   // 用户头像
 }
 
 struct RoleCardInfo {
@@ -142,6 +143,13 @@ struct UserBattleData
 	int32 buildValue;
 	Fetters[] FettersList;
 	Role[] RoleList; // 角色列表
+}
+
+struct UserRankInfo
+{
+	string nick_name;
+	string avatar;
+	UserBattleData battle_data;
 }
 
 enum ShopIndex {

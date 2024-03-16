@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using StackExchange.Redis;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -135,6 +137,68 @@ namespace Abelkhan
                         return default;
                     }
                     return JsonConvert.DeserializeObject<T>(json);
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
+        public async Task<T> GetListElem<T>(string key, int index)
+        {
+            while (true)
+            {
+                try
+                {
+                    var count = await database.ListLengthAsync(key);
+                    string json = await database.ListGetByIndexAsync(key, index);
+                    if (string.IsNullOrEmpty(json))
+                    {
+                        return default;
+                    }
+                    return JsonConvert.DeserializeObject<T>(json);
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
+        public async Task DeleteListElem(string key, int index)
+        {
+            while (true)
+            {
+                try
+                {
+                    var v = await database.ListGetByIndexAsync(key, index);
+                    await database.ListRemoveAsync(key, v);
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
+        public async Task<List<T> > GetList<T>(string key)
+        {
+            while (true)
+            {
+                try
+                {
+                    var data = await database.ListRangeAsync(key);
+                    if (data.Length <= 0)
+                    {
+                        return default;
+                    }
+                    var dataResult = new List<T>();
+                    foreach (var item in data)
+                    {
+                        dataResult.Add(JsonConvert.DeserializeObject<T>(item));
+                    }
+                    return dataResult;
                 }
                 catch (RedisTimeoutException e)
                 {

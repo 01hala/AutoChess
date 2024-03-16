@@ -28,7 +28,7 @@ namespace Player
             return player_Match_Caller.get_hub(name).start_battle(client_uuid, role_list);
         }
 
-        public player_match_start_peak_strength_cb start_peak_strength(string client_uuid, string guid)
+        public player_match_start_peak_strength_cb start_peak_strength(string client_uuid, long guid)
         {
             return player_Match_Caller.get_hub(name).start_peak_strength(client_uuid, guid);
         }

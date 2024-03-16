@@ -14,11 +14,21 @@ namespace Match
             player_match_Module.on_reconnect += Player_match_Module_on_reconnect;
         }
 
-        private void Player_match_Module_on_start_peak_strength(string clientUUID, string guid)
+        private async void Player_match_Module_on_start_peak_strength(string clientUUID, long guid)
         {
             var rsp = player_match_Module.rsp as player_match_start_peak_strength_rsp;
 
             // to do
+            try
+            {
+                var _player = Match.peak_strength_mng.add_player_to_battle(clientUUID, guid);
+                rsp.rsp(await Match._redis_handle.GetList<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID)));
+            }
+            catch (Exception e)
+            {
+                Log.Log.err("Player_match_Module_on_start_battle error:{0}", e);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private void Player_match_Module_on_reconnect(string old_client_uuid, string new_client_uuid)

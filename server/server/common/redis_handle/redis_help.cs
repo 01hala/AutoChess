@@ -38,6 +38,26 @@ namespace Abelkhan
             return $"Player:PlayerMatchCache:{guid}";
         }
 
+        static public string BuildAutoChessBattleCache(int round)
+        {
+            return $"AutoChess:battle:{round}";
+        }
+
+        static public string BuildPlayerPeakStrengthCache(long guid)
+        {
+            return $"AutoChess:Player:Peak:Strength:{guid}";
+        }
+
+        static public string BuildPlayerPeakStrengthFormationCache(long guid)
+        {
+            return $"AutoChess:Player:Peak:Strength:Formation:{guid}";
+        }
+
+        static public string BuildPeakStrengthCache()
+        {
+            return $"AutoChess:Peak:Strength";
+        }
+
         static public int PlayerSvrInfoCacheTimeout = 1000 * 60 * 30;
 
         static public int PlayerMatchSvrCacheTimeout = 1000 * 60 * 30;

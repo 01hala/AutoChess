@@ -14,12 +14,12 @@ namespace Match
     {
         public long LastActiveTime = Timerservice.Tick;
 
-        private UserBattleData battleData;
-        public UserBattleData BattleData
+        private long guid;
+        public long GUID
         {
             get
             {
-                return battleData;
+                return guid;
             }
         }
 
@@ -36,8 +36,10 @@ namespace Match
             }
         }
 
-        public peak_strength_player(string _clientUUID, string guid) 
+        public peak_strength_player(string _clientUUID, long _guid) 
         {
+            clientUUID = _clientUUID;
+            guid = _guid;
         }
     }
 
@@ -68,7 +70,7 @@ namespace Match
             Hub.Hub._timer.addticktime(5 * 60 * 1000, tick_clear_timeout_player);
         }
 
-        public peak_strength_player add_player_to_battle(string clientUUID, string guid)
+        public peak_strength_player add_player_to_battle(string clientUUID, long guid)
         {
             var _player = new peak_strength_player(clientUUID, guid);
             peak_strength_battles[clientUUID] = _player;
@@ -81,11 +83,9 @@ namespace Match
             {
                 _player.ClientUUID = new_client_uuid;
                 peak_strength_battles[new_client_uuid] = _player;
-
-                return true;
             }
 
-            return false;
+            return true;
         }
 
         public peak_strength_player get_battle_player(string clientUUID)

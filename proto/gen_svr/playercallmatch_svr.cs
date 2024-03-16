@@ -371,7 +371,7 @@ namespace Abelkhan
             return cb_start_battle_obj;
         }
 
-        public player_match_start_peak_strength_cb start_peak_strength(string client_uuid, string guid){
+        public player_match_start_peak_strength_cb start_peak_strength(string client_uuid, Int64 guid){
             var uuid_b25d20bd_c716_573b_a301_3462f94ac7ec = (UInt64)Interlocked.Increment(ref uuid_f08f93cd_bfea_3bf2_ae83_42be38c1f420);
 
             var _argv_604bcc66_d0b2_3376_8454_39a206b26543 = new ArrayList();
@@ -559,11 +559,11 @@ namespace Abelkhan
             rsp = null;
         }
 
-        public event Action<string, string> on_start_peak_strength;
+        public event Action<string, Int64> on_start_peak_strength;
         public void start_peak_strength(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _client_uuid = ((MsgPack.MessagePackObject)inArray[1]).AsString();
-            var _guid = ((MsgPack.MessagePackObject)inArray[2]).AsString();
+            var _guid = ((MsgPack.MessagePackObject)inArray[2]).AsInt64();
             rsp = new player_match_start_peak_strength_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_start_peak_strength != null){
                 on_start_peak_strength(_client_uuid, _guid);

@@ -1012,11 +1012,9 @@ namespace Match
             {
                 _player.ClientUUID = new_client_uuid;
                 battles[new_client_uuid] = _player;
-
-                return true;
             }
 
-            return false;
+            return true;
         }
 
         public battle_player get_battle_player(string clientUUID)

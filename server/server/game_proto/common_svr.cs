@@ -85,6 +85,7 @@ namespace Abelkhan
     {
         public string UserName;
         public Int64 UserGuid;
+        public string Avatar;
         public static MsgPack.MessagePackObjectDictionary UserInformation_to_protcol(UserInformation _struct){
         if (_struct == null) {
             return null;
@@ -93,6 +94,7 @@ namespace Abelkhan
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("UserName", _struct.UserName);
             _protocol.Add("UserGuid", _struct.UserGuid);
+            _protocol.Add("Avatar", _struct.Avatar);
             return _protocol;
         }
         public static UserInformation protcol_to_UserInformation(MsgPack.MessagePackObjectDictionary _protocol){
@@ -107,6 +109,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "UserGuid"){
                     _struct07924b8f_25bc_32a4_b436_da6af6116572.UserGuid = ((MsgPack.MessagePackObject)i.Value).AsInt64();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Avatar"){
+                    _struct07924b8f_25bc_32a4_b436_da6af6116572.Avatar = ((MsgPack.MessagePackObject)i.Value).AsString();
                 }
             }
             return _struct07924b8f_25bc_32a4_b436_da6af6116572;
@@ -529,6 +534,43 @@ namespace Abelkhan
                 }
             }
             return _struct9f9f5aff_ccb2_34db_90eb_25dd29e28c9f;
+        }
+    }
+
+    public class UserRankInfo
+    {
+        public string nick_name;
+        public string avatar;
+        public UserBattleData battle_data;
+        public static MsgPack.MessagePackObjectDictionary UserRankInfo_to_protcol(UserRankInfo _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("nick_name", _struct.nick_name);
+            _protocol.Add("avatar", _struct.avatar);
+            _protocol.Add("battle_data", new MsgPack.MessagePackObject(UserBattleData.UserBattleData_to_protcol(_struct.battle_data)));
+            return _protocol;
+        }
+        public static UserRankInfo protcol_to_UserRankInfo(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct5342f169_55fa_3f0d_ae72_aa40dab1348d = new UserRankInfo();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "nick_name"){
+                    _struct5342f169_55fa_3f0d_ae72_aa40dab1348d.nick_name = ((MsgPack.MessagePackObject)i.Value).AsString();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "avatar"){
+                    _struct5342f169_55fa_3f0d_ae72_aa40dab1348d.avatar = ((MsgPack.MessagePackObject)i.Value).AsString();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battle_data"){
+                    _struct5342f169_55fa_3f0d_ae72_aa40dab1348d.battle_data = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)i.Value).AsDictionary());
+                }
+            }
+            return _struct5342f169_55fa_3f0d_ae72_aa40dab1348d;
         }
     }
 

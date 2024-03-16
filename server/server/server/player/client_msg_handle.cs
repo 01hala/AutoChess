@@ -169,7 +169,7 @@ namespace Player
             }
         }
 
-        private void Player_login_Module_on_create_role(string name, string nick_name)
+        private void Player_login_Module_on_create_role(string name, string nick_name, string avatar)
         {
             Log.Log.trace("on_player_login begin!");
 
@@ -178,7 +178,7 @@ namespace Player
 
             try
             {
-                var _avatar = Player.client_Mng.create_player(uuid, name, nick_name);
+                var _avatar = Player.client_Mng.create_player(uuid, name, nick_name, avatar);
                 rsp.rsp(_avatar.PlayerInfo().Info());
             }
             catch (LoginException ex)
@@ -249,7 +249,7 @@ namespace Player
             }
         }
 
-        private async void Login_Player_Module_on_player_login(string token, string name)
+        private async void Login_Player_Module_on_player_login(string token, string name, string avatar)
         {
             Log.Log.trace("on_player_login begin!");
 
@@ -269,6 +269,7 @@ namespace Player
                     else
                     {
                         _data.Data.Info().User.UserName = name;
+                        _data.Data.Info().User.Avatar = avatar;
                         _data.write_back();
 
                         rsp.rsp(_avatar.PlayerInfo().Info());
