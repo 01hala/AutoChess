@@ -314,8 +314,6 @@ export class BattleDis
     {
         try 
         {
-            let evs_floating : skill.Event[] = [];
-            let allAwait = [];
             for(let ev of evs)
             {
                 
@@ -328,12 +326,10 @@ export class BattleDis
                     await this.showLaunchSkillEffect();
                 }
 
-                evs_floating.push(ev);
                 //console.log("checkRemoteInjured RemoteInjured");
 
                 let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
-                
-                ev.recipient.forEach(element=>{
+                for (let element of ev.recipient) {
 
                     let targetList = Camp.Enemy == element.camp ? this.enemyQueue : this.selfQueue;
 
@@ -344,14 +340,13 @@ export class BattleDis
                     {                
                         let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
-                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(
-                            selfpos, targetpos,this.father));
+                        await self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father);
                     }
-                });
+                };
+
+                await this.ChangeAttEvent([ev]);
             }
             //console.log("checkRemoteInjured allAwait:", allAwait);
-            await Promise.all(allAwait);
-            await this.ChangeAttEvent(evs_floating);
         }
         catch(error) 
         {
