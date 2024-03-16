@@ -42,7 +42,7 @@ export class login extends Component {
 
                 this.nick_name = result.userInfo.nickName.slice(0, 3);
                 this.avatar_url = result.userInfo.avatarUrl;
-                singleton.netSingleton.player.login_player("wx", code, this.nick_name);
+                singleton.netSingleton.player.login_player("wx", code, this.nick_name, this.avatar_url);
             },
             fail: (res) => {
                 console.log("fail:" + JSON.stringify(res));
