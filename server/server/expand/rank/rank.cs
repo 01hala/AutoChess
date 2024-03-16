@@ -94,7 +94,8 @@ namespace Rank
             var rank = new List<rank_item>();
 
             var r = start;
-            for (var i = rankList.Count - start; i >= rankList.Count - end && i >= 0; --i)
+            end = end < rankList.Count ? end : rankList.Count;
+            for (var i = start - 1; i < end; i++)
             {
                 var item = rankList.GetValueAtIndex(i);
                 item.rank = r++;
