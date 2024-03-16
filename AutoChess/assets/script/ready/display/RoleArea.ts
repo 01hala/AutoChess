@@ -35,6 +35,19 @@ export class RoleArea extends Component
         return this.rolesNode[index];
     }
 
+    GetRolesNumber():number
+    {
+        let num=0;
+        for(let t of this.rolesNode)
+        {
+            if(null!=t)
+            {
+                num++;
+            }
+        }
+        return num;
+    }
+
     GetTargetValue(name:string)
     {
         if(this.targets.has(name))
@@ -57,12 +70,12 @@ export class RoleArea extends Component
     {
         //this.LogShowRoles();
         console.log('-------------');
+        await singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
         //console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
         let t=this.rolesNode[_indexAfter];
         this.rolesNode[_indexAfter]=this.rolesNode[_indexBefor];
         this.rolesNode[_indexBefor]=t;
         this.LogShowRoles();
-        await singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
     }
 
     private LogShowRoles()

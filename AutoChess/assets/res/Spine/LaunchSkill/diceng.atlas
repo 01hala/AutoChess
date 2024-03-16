@@ -1,0 +1,27 @@
+
+diceng.png
+size: 472,472
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+db
+  rotate: false
+  xy: 2, 18
+  size: 255, 195
+  orig: 255, 195
+  offset: 0, 0
+  index: -1
+guangxian
+  rotate: true
+  xy: 259, 2
+  size: 468, 30
+  orig: 478, 34
+  offset: 5, 3
+  index: -1
+guangxian1
+  rotate: false
+  xy: 2, 215
+  size: 255, 255
+  orig: 295, 281
+  offset: 20, 7
+  index: -1

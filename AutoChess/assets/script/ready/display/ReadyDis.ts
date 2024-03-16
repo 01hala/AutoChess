@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view } from 'cc';
+import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { Ready } from '../Ready';
 import { BundleManager } from '../../bundle/BundleManager';
@@ -26,6 +26,8 @@ export class ReadyDis
     public shopArea:ShopArea;
     //主控
     public ready:Ready;
+    //动效
+    private launchSkillEffect:Node;
 
     private refreshBtn:Button;
     private startBtn:Button;
@@ -79,6 +81,10 @@ export class ReadyDis
             this.heathText=this.panelNode.getChildByPath("TopArea/HpInfo/RichText").getComponent(RichText);
             this.roundText=this.panelNode.getChildByPath("TopArea/RoundInfo/RichText").getComponent(RichText);
             this.trophyText=this.panelNode.getChildByPath("TopArea/TrophyInfo/RichText").getComponent(RichText);
+            //技能发动效果
+            this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
+            this.launchSkillEffect.setSiblingIndex(99);
+            this.launchSkillEffect.active=false;
 
             _callBack(async ()=>
             {
@@ -123,7 +129,7 @@ export class ReadyDis
             //开始按钮
             this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () => {
-                if (this.roleArea.rolesNode.length > 0) {
+                if (this.roleArea.GetRolesNumber() > 0) {
                     await this.ready.StartBattle();
                     this.panelNode.active = false;
                     this.destory();
@@ -138,6 +144,34 @@ export class ReadyDis
         {
             console.error("ReadyDis 里的 Init 错误 err:",error);
         }
+    }
+
+    private delay(ms: number, release: () => void): Promise<void> 
+    {
+        return new Promise(async (resolve) => {
+            await setTimeout(() => {
+                resolve();
+                release();
+            }, ms);
+        });
+    }
+    //技能发动效果
+    private showLaunchSkillEffect()
+    {
+        this.launchSkillEffect.active=true;
+        this.launchSkillEffect.setSiblingIndex(99);
+
+        this.launchSkillEffect.getChildByPath("BottomImg").getComponent(sp.Skeleton).animation="a2";
+        this.launchSkillEffect.getChildByPath("RoleImg").getComponent(sp.Skeleton).animation="a";
+        this.launchSkillEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
+
+        //await sleep(2000);
+
+        return this.delay(2000,()=>
+        {
+            this.launchSkillEffect.active=false;
+        });
+
     }
 
     private RegCallBack()
@@ -171,21 +205,15 @@ export class ReadyDis
         };
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
-            let str = "Location_" + target_role_index;
             this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
             this.roleArea.rolesNode[source_role_index].destroy();
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).roleNode.destroy();
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).destroy();
-            //this.roleArea.targets.set(str, null);
+
             this.roleArea.rolesNode[source_role_index]=null;
             console.log('cb_role_merge,target_role:', target_role_index);
 
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
 
-            //str = "Location_" + target_role_index;                                                                      
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;                
-            //this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
         };
         singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             // let str = "Location_" + target_role_index;
@@ -206,12 +234,14 @@ export class ReadyDis
             this.ready.SetCoins(coin);
             this.coinText.string=""+coin;
         };
-        singleton.netSingleton.game.cb_role_skill_update=(role_index:number,_role:common.Role)=>
+        singleton.netSingleton.game.cb_role_skill_update=async (role_index:number,_role:common.Role)=>
         {
+            await this.showLaunchSkillEffect();
             this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role,false);
         };
-        singleton.netSingleton.game.cb_role_add_property=(battle_info:common.UserBattleData)=>
+        singleton.netSingleton.game.cb_role_add_property=async (battle_info:common.UserBattleData)=>
         {
+            await this.showLaunchSkillEffect();
             for(let i=0;i<this.roleArea.rolesNode.length;i++)
             {
                 if(null != this.roleArea.rolesNode[i])

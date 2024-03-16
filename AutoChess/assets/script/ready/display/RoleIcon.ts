@@ -150,93 +150,92 @@ export class RoleIcon extends Component
     //拖拽结束
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
-                //手机上按钮事件无法正常工作，此处采用检测拖拽开始和取消的时间间隔，小于0.5s视为点击事件
-                if(Date.now()-this.lastClickTime<100){
-                    console.log("Players click on role icon");
-                    this.ClickBtn();
-                }
-                this.OffTirrger();
-                //重新注册按钮事件
-                //this.RegBtn(true);
-                //隐藏冻结栏
-                this.shopArea.ShowFreezeArea(false);
-                //还原起始值
-                this.touchStartPoint = new Vec2(0, 0);
-                //移动角色且判断是否出售
-                if (!this.isSale) 
+                try
                 {
-                    if (this.isBuy) 
-                    {
-                        console.log(this.index,this.tempIndex);
-                        await this.roleArea.MovePos(this.index, this.tempIndex);
+                    //手机上按钮事件无法正常工作，此处采用检测拖拽开始和取消的时间间隔，小于0.5s视为点击事件
+                    if (Date.now() - this.lastClickTime < 100) {
+                        console.log("Players click on role icon");
+                        this.ClickBtn();
                     }
-                   
-                    //换位
-                    if (this.isSwitch && !this.isSale)//是否交换位置
-                    {
-                        if (!this.isMerge) 
-                        {
-                            //console.log('switch : ',this.t.getComponent(RoleIcon).roleId);
-                            this.roleArea.SwitchPos(beforeIndex, berforeTarget, this.tempMergeRole);
-                            //this.roleArea.targets.set(this.target.name, this.node);
-                            this.isSwitch = false;
-                        }
-                    }
-                    this.index = this.tempIndex;
-                    this.target = this.tempTarget;
-                }
-                else 
-                {
-                    this.roleNode.active = false;
-                    await this.roleArea.SaleRole(beforeIndex);
-                    this.roleNode.destroy();
-                    this.node.destroy();
-                    return;
-                }
-                //购买、合并角色
-                if (null != this.index) {
-                    console.log("欲购买或者移动角色");
-                    if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) 
-                    {
-                        console.log("角色未购买并且金币数量大于等于3");
-                        this.freezeSprite.active = false;
-                        if(null != this.target || this.isMerge)
-                        {
-                            if(null == this.roleArea.rolesNode[this.tempIndex]||this.isMerge){
-                                this.isBuy = true;
-                                // if(!this.isMerge)
-                                // {
-                                //     this.roleArea.targets.set(this.target.name,this.node);
-                                // }
-                                await this.shopArea.BuyRole(this.index, this.node ,this.isMerge);
-                                console.log("购买时，欲购买位置角色信息："+this.roleArea.rolesNode[this.tempIndex].name+"是否合并"+this.isMerge);
-                            }
-                            else console.log("purchase failed, there is already a character at the purchase location");
+                    this.OffTirrger();
+                    //重新注册按钮事件
+                    //this.RegBtn(true);
+                    //隐藏冻结栏
+                    this.shopArea.ShowFreezeArea(false);
+                    //还原起始值
+                    this.touchStartPoint = new Vec2(0, 0);
+                    //移动角色且判断是否出售
+                    if (!this.isSale) {
+                        if (this.isBuy) {
+                            console.log(this.index, this.tempIndex);
+                            await this.roleArea.MovePos(this.index, this.tempIndex);
                         }
 
-                        if (this.isMerge) {
-                            this.roleNode.destroy();
-                            this.node.destroy();
-                            return;
+                        //换位
+                        if (this.isSwitch && !this.isSale)//是否交换位置
+                        {
+                            if (!this.isMerge) {
+                                //console.log('switch : ',this.t.getComponent(RoleIcon).roleId);
+                                this.roleArea.SwitchPos(beforeIndex, berforeTarget, this.tempMergeRole);
+                                //this.roleArea.targets.set(this.target.name, this.node);
+                                this.isSwitch = false;
+                            }
+                        }
+                        this.index = this.tempIndex;
+                        this.target = this.tempTarget;
+                    }
+                    else {
+                        this.roleNode.active = false;
+                        await this.roleArea.SaleRole(beforeIndex);
+                        this.roleNode.destroy();
+                        this.node.destroy();
+                        return;
+                    }
+                    //购买、合并角色
+                    if (null != this.index) {
+                        console.log("欲购买或者移动角色");
+                        if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) {
+                            console.log("角色未购买并且金币数量大于等于3");
+                            this.freezeSprite.active = false;
+                            if (null != this.target || this.isMerge) {
+                                if (null == this.roleArea.rolesNode[this.tempIndex] || this.isMerge) {
+                                    this.isBuy = true;
+                                    // if(!this.isMerge)
+                                    // {
+                                    //     this.roleArea.targets.set(this.target.name,this.node);
+                                    // }
+                                    await this.shopArea.BuyRole(this.index, this.node, this.isMerge);
+                                    console.log("购买时，欲购买位置角色信息：" + this.roleArea.rolesNode[this.tempIndex].name + "是否合并" + this.isMerge);
+                                }
+                                else console.log("purchase failed, there is already a character at the purchase location");
+                            }
+
+                            if (this.isMerge) {
+                                this.roleNode.destroy();
+                                this.node.destroy();
+                                return;
+                            }
+                        }
+                        else if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() < 3) {
+                            TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                         }
                     }
-                    else if(!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() < 3)
-                    {
-                        TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
+                    //console.log(this.isMerge);
+                    //冻结角色
+                    if (this.isFreeze && !this.isBuy) {
+                        console.log("RoleFreeze!!!");
+                        this.freezeLock = !this.freezeLock;
+                        this.freezeSprite.active = this.freezeLock;
+                        this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
+                    }
+                    //吸附缓动
+                    if (!this.isMerge || !this.isBuy) {
+                        this.Adsorption();
                     }
                 }
-                //console.log(this.isMerge);
-                //冻结角色
-                if (this.isFreeze && !this.isBuy) {
-                    console.log("RoleFreeze!!!");
-                    this.freezeLock = !this.freezeLock;
-                    this.freezeSprite.active = this.freezeLock;
-                    this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
-                }
-                //吸附缓动
-                if(!this.isMerge||!this.isBuy)
+                catch(error)
                 {
-                    this.Adsorption();
+                    console.error('RoleIcon 下 拖拽结束 错误 err: ',error);
                 }
                 
                

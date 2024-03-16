@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform } from 'cc';
+import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, sp } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
@@ -29,6 +29,7 @@ export class BattleDis
     public panelNode:Node;
     //战斗效果
     private battleEffectImg:Node;
+    private launchSkillEffect:Node;
     //敌我队列
     public selfQueue:Queue;
     public enemyQueue:Queue;
@@ -52,6 +53,16 @@ export class BattleDis
     public destory() {
         this.panelNode.destroy();
     }
+
+    private delay(ms: number, release: () => void): Promise<void> 
+    {
+        return new Promise(async (resolve) => {
+            await setTimeout(() => {
+                resolve();
+                release();
+            }, ms);
+        });
+    }
 /*
  * 修改start
  * author：Hotaru
@@ -71,6 +82,9 @@ export class BattleDis
 
             this.battleEffectImg=this.panelNode.getChildByName("BattleEffectImg");
             this.battleEffectImg.active=false;
+
+            this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
+            this.launchSkillEffect.active=false;
 
             this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
             this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
@@ -199,9 +213,35 @@ export class BattleDis
         
     }
 
-    showBattleEffect(bool:boolean)
+    showBattleEffect(_bool:boolean)
     {
-        this.battleEffectImg.active=bool;
+        this.battleEffectImg.active=_bool;
+    }
+
+    private showLaunchSkillEffect()
+    {
+        this.launchSkillEffect.active=true;
+
+        this.launchSkillEffect.getChildByPath("BottomImg").getComponent(sp.Skeleton).animation="a2";
+        this.launchSkillEffect.getChildByPath("RoleImg").getComponent(sp.Skeleton).animation="a";
+        this.launchSkillEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
+
+        //await sleep(2000);
+
+        return this.delay(2000,()=>
+        {
+            this.launchSkillEffect.active=false;
+        });
+
+    }
+
+    private showLaunchFettersEffect()
+    {
+
+        return this.delay(2000,()=>
+        {
+            this.launchSkillEffect.active=false;
+        })
     }
 
     /*
@@ -210,6 +250,7 @@ export class BattleDis
      * 
      */
 
+    //普通攻击
     private async CheckAttackEvent(evs:skill.Event[]) 
     {
         try 
@@ -268,6 +309,7 @@ export class BattleDis
         }
     }
 
+    //远程攻击技能
     private async CheckRemoteInjured(evs:skill.Event[]) 
     {
         try 
@@ -276,16 +318,23 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
+                
                 if(EventType.RemoteInjured != ev.type) 
                 {
                     continue;
+                }
+                else
+                {
+                    await this.showLaunchSkillEffect();
                 }
 
                 evs_floating.push(ev);
                 //console.log("checkRemoteInjured RemoteInjured");
 
                 let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+                
                 ev.recipient.forEach(element=>{
+
                     let targetList = Camp.Enemy == element.camp ? this.enemyQueue : this.selfQueue;
 
                     let self = spList.roleNodes[ev.spellcaster.index];
@@ -310,6 +359,7 @@ export class BattleDis
         }
     }
 
+    //召唤技能
     private async CheckSummonEvent(evs:skill.Event[]) 
     {
         try 
@@ -317,22 +367,27 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
+                
                 if(EventType.Summon != ev.type) 
                 {
                     continue;
                 }
+                else
+                {
+                    this.showLaunchSkillEffect();
+                }
 
                 //释放技能者所在阵营列表
                 //let roleList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam().GetRoles() : this.battle.GetEnemyTeam().GetRoles();
-                let roleList:rRole[]=[];
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
                     tmp=new rRole(element.index,element.id, 1,0, Camp.Self, element.properties,null);
-                    let targetTeam=Camp.Self==element.camp?this.battle.GetSelfTeam():this.battle.GetEnemyTeam();
+                    let targetTeam = Camp.Self==element.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
-                    roleList.push(tmp);    
+                    let queue = Camp.Self==element.camp ? this.selfQueue : this.enemyQueue;
+                    allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
                 });
-                allAwait.push(this.selfQueue.SummonRole(roleList,ev.spellcaster));
+                
             }
             await Promise.all(allAwait);
         }
@@ -342,6 +397,7 @@ export class BattleDis
         }
     }
 
+    //队伍增益技能
     private async CheckAttGainEvent(evs:skill.Event[]) 
     {
         try 
@@ -349,18 +405,35 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
+                
                 if(EventType.IntensifierProperties != ev.type) 
                 {
                     continue;
                 }
+                else
+                {
+                    this.showLaunchSkillEffect();
+                }
                 console.log("检测到加属性事件");
+                
                 //受到增益者            
                 ev.recipient.forEach(element=>{
-                    if(Camp.Self==element.camp){
-                        allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                    
+                    if(Camp.Self==element.camp)
+                    {
+                        if(this.selfQueue.roleNodes[element.index])
+                        {
+                            allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                        }
+                        
                     }
-                    else{
-                        allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                    else
+                    {
+                        if(this.enemyQueue.roleNodes[element.index])
+                        {
+                            allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                        }
+                        
                     }            
                 });
             }
@@ -372,6 +445,7 @@ export class BattleDis
         }
     }
 
+    //属性改变
     private async ChangeAttEvent(evs:skill.Event[])
     {
         try 
@@ -452,6 +526,7 @@ export class BattleDis
         }
     }
 
+    //离场
     async CheckExitEvent(evs:skill.Event[])
     {
         try 

@@ -28,18 +28,7 @@ export class TipsManager extends Component
         {
             if(null==this.textTipNodePre)
             {
-                resources.load("prefab/TextTipBar",Prefab,(error,prefab)=>
-                {
-                    if(error)
-                    {
-                        console.warn("没有读取到TextTipBar");
-                    }
-                    else
-                    {
-                        this.textTipNodePre=prefab;
-                    }
-                });
-                    
+                this.textTipNodePre = await BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar") as Prefab;
                 this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
             }
         }

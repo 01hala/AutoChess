@@ -88,9 +88,11 @@ export class InfoPanel extends Component
                     this.node.setSiblingIndex(99);
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
-                    let str=config.SkillIntroduceConfig.get(id);
 
+                    let str=config.SkillIntroduceConfig.get(id%100000);
+                    console.log(str.Id);
                     this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string=str.Leve1Text;
+
                     let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;

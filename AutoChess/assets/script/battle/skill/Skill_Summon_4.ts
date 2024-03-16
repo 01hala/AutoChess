@@ -72,14 +72,14 @@ export class Skill_Summon_4 extends SkillBase
 
             
             let roleInfo = new RoleInfo();
-                roleInfo.camp = selfInfo.camp;
-                roleInfo.id=this.addedID;
-                roleInfo.index = addedIdx;
-                roleInfo.properties=this.addedProperties;
-                // roleInfo.hp=this.addedProperties[Property.HP];
-                // roleInfo.attack=this.addedProperties[Property.Attack];
-                battleEvent.recipient.push(roleInfo);
-                battle.AddBattleEvent(battleEvent);
+            roleInfo.camp = selfInfo.camp;
+            roleInfo.id=this.addedID;
+            roleInfo.index = addedIdx;
+            roleInfo.properties=this.addedProperties;
+            // roleInfo.hp=this.addedProperties[Property.HP];
+            // roleInfo.attack=this.addedProperties[Property.Attack];
+            battleEvent.recipient.push(roleInfo);
+            battle.AddBattleEvent(battleEvent);
         }
         catch (error) 
         {

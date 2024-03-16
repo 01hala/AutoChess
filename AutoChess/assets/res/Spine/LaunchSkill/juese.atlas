@@ -1,0 +1,136 @@
+
+juese.png
+size: 1741,1741
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jiapu_11
+  rotate: true
+  xy: 2, 1034
+  size: 705, 868
+  orig: 725, 912
+  offset: 2, 24
+  index: -1
+jiapu_12
+  rotate: true
+  xy: 872, 1031
+  size: 708, 867
+  orig: 725, 912
+  offset: 2, 25
+  index: -1
+jiapu_13
+  rotate: true
+  xy: 2, 322
+  size: 710, 867
+  orig: 725, 912
+  offset: 2, 26
+  index: -1
+jiapu_14
+  rotate: true
+  xy: 871, 317
+  size: 712, 867
+  orig: 725, 912
+  offset: 2, 27
+  index: -1
+
+juese2.png
+size: 1745,1745
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jiapu_15
+  rotate: true
+  xy: 2, 1029
+  size: 714, 867
+  orig: 725, 912
+  offset: 2, 28
+  index: -1
+jiapu_16
+  rotate: true
+  xy: 871, 1027
+  size: 716, 868
+  orig: 725, 912
+  offset: 2, 28
+  index: -1
+jiapu_17
+  rotate: true
+  xy: 2, 307
+  size: 718, 869
+  orig: 725, 912
+  offset: 2, 28
+  index: -1
+jiapu_18
+  rotate: true
+  xy: 873, 306
+  size: 719, 870
+  orig: 725, 912
+  offset: 2, 28
+  index: -1
+
+juese3.png
+size: 1755,1755
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jiapu_19
+  rotate: true
+  xy: 2, 1033
+  size: 720, 870
+  orig: 725, 912
+  offset: 2, 28
+  index: -1
+jiapu_20
+  rotate: true
+  xy: 2, 310
+  size: 721, 872
+  orig: 725, 912
+  offset: 2, 27
+  index: -1
+jiapu_24
+  rotate: true
+  xy: 876, 310
+  size: 721, 877
+  orig: 725, 912
+  offset: 2, 21
+  index: -1
+jiapu_26
+  rotate: true
+  xy: 874, 1033
+  size: 720, 879
+  orig: 725, 912
+  offset: 2, 18
+  index: -1
+
+juese4.png
+size: 1606,1606
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jiapu_21
+  rotate: false
+  xy: 880, 7
+  size: 722, 873
+  orig: 725, 912
+  offset: 2, 26
+  index: -1
+jiapu_22
+  rotate: true
+  xy: 725, 882
+  size: 722, 875
+  orig: 725, 912
+  offset: 2, 24
+  index: -1
+jiapu_23
+  rotate: true
+  xy: 2, 2
+  size: 722, 876
+  orig: 725, 912
+  offset: 2, 23
+  index: -1
+jiapu_25
+  rotate: false
+  xy: 2, 726
+  size: 721, 878
+  orig: 725, 912
+  offset: 2, 20
+  index: -1
