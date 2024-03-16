@@ -85,6 +85,7 @@ export class UserInformation
 {
     public UserName : string = "";
     public UserGuid : number = 0;
+    public Avatar : string = "";
 
 }
 
@@ -104,6 +105,9 @@ export function protcol_to_UserInformation(_protocol:any){
         }
         else if (key === "UserGuid"){
             _struct.UserGuid = val as number;
+        }
+        else if (key === "Avatar"){
+            _struct.Avatar = val as string;
         }
     }
     return _struct;
@@ -205,6 +209,7 @@ export class UserData
     public Strength : number = 0;
     public gold : number = 0;
     public diamond : number = 0;
+    public score : number = 0;
     public bag : Bag | null = null;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
@@ -233,6 +238,9 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "diamond"){
             _struct.diamond = val as number;
+        }
+        else if (key === "score"){
+            _struct.score = val as number;
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);
@@ -416,6 +424,42 @@ export function protcol_to_UserBattleData(_protocol:any){
             for(let v_ of val as any) {
                 _struct.RoleList.push(protcol_to_Role(v_));
             }
+        }
+    }
+    return _struct;
+}
+
+export class UserRankInfo
+{
+    public score : number = 0;
+    public nick_name : string = "";
+    public avatar : string = "";
+    public battle_data : UserBattleData | null = null;
+
+}
+
+export function UserRankInfo_to_protcol(_struct:UserRankInfo){
+    return _struct;
+}
+
+export function protcol_to_UserRankInfo(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new UserRankInfo();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "score"){
+            _struct.score = val as number;
+        }
+        else if (key === "nick_name"){
+            _struct.nick_name = val as string;
+        }
+        else if (key === "avatar"){
+            _struct.avatar = val as string;
+        }
+        else if (key === "battle_data"){
+            _struct.battle_data = protcol_to_UserBattleData(val);
         }
     }
     return _struct;

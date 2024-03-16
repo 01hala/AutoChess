@@ -103,7 +103,8 @@ export class ShopArea extends Component
                 case 5:case 6:tmpCnt=6;break;
                 default:tmpCnt=6;
             }
-            for(let i=0;i<roles.length&&tmpCnt>0;i++,tmpCnt--)
+            console.log("roles:", JSON.stringify(roles));
+            for(let i=0;i<roles.length&&tmpCnt>0;i++)
             {
                 if(roles[i])
                 {
@@ -114,6 +115,11 @@ export class ShopArea extends Component
                     newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
                     newNode.getComponent(RoleIcon).Init(roles[i].RoleID , roles[i].HP , roles[i].Attack , 1 , 1 ,roles[i].IsFreeze);
                     this.shopRoles.push(newNode);
+
+                    tmpCnt--;
+                }
+                else {
+                    this.shopRoles.push(null);
                 }
             }
             
@@ -163,7 +169,7 @@ export class ShopArea extends Component
         {
             if(this.shopRoles[i] == _obj)
             {
-                await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role , i , _index);
+                await singleton.netSingleton.ready.ready.Buy(ShopIndex.Role, i, _index);
                 if(!_isMerge)
                 {
                     this.roleArea.rolesNode[_index]=_obj;

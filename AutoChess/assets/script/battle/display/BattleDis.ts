@@ -218,7 +218,7 @@ export class BattleDis
         this.battleEffectImg.active=_bool;
     }
 
-    public showLaunchSkillEffect()
+    private showLaunchSkillEffect()
     {
         this.launchSkillEffect.active=true;
 
@@ -226,6 +226,7 @@ export class BattleDis
         this.launchSkillEffect.getChildByPath("RoleImg").getComponent(sp.Skeleton).animation="a";
         this.launchSkillEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
 
+        //await sleep(2000);
 
         return this.delay(2000,()=>
         {
@@ -234,13 +235,7 @@ export class BattleDis
 
     }
 
-    private async LaunchSkill(_func:()=>void)
-    {
-        await this.showLaunchSkillEffect();
-        await _func();
-    }
-
-    public showLaunchFettersEffect()
+    private showLaunchFettersEffect()
     {
 
         return this.delay(2000,()=>
@@ -260,6 +255,7 @@ export class BattleDis
     {
         try 
         {
+            let evs_floating : skill.Event[] = [];
             let allAwait = [];
             let selfAttack = false;
             let enemyAttack = false;
@@ -270,6 +266,8 @@ export class BattleDis
                 {
                     continue;
                 }
+
+                evs_floating.push(ev);
 
                 if (Camp.Self == ev.spellcaster.camp)
                 {
@@ -303,6 +301,7 @@ export class BattleDis
             }
             //console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
             await Promise.all(allAwait);
+            await this.ChangeAttEvent(evs_floating);
         }
         catch(error) 
         {
@@ -315,7 +314,6 @@ export class BattleDis
     {
         try 
         {
-            let allAwait = [];
             for(let ev of evs)
             {
                 
@@ -325,14 +323,13 @@ export class BattleDis
                 }
                 else
                 {
-                    //allAwait.push(this.showLaunchSkillEffect());
+                    await this.showLaunchSkillEffect();
                 }
 
                 //console.log("checkRemoteInjured RemoteInjured");
 
                 let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
-                
-                ev.recipient.forEach(element=>{
+                for (let element of ev.recipient) {
 
                     let targetList = Camp.Enemy == element.camp ? this.enemyQueue : this.selfQueue;
 
@@ -343,16 +340,13 @@ export class BattleDis
                     {                
                         let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
-                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
-                        // allAwait.push(this.LaunchSkill(async ()=>
-                        // {
-                        //     await self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father);
-                        // }));
+                        await self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father);
                     }
-                });
+                };
+
+                await this.ChangeAttEvent([ev]);
             }
             //console.log("checkRemoteInjured allAwait:", allAwait);
-            await Promise.all(allAwait);
         }
         catch(error) 
         {
@@ -375,7 +369,7 @@ export class BattleDis
                 }
                 else
                 {
-                    //this.showLaunchSkillEffect();
+                    this.showLaunchSkillEffect();
                 }
 
                 //释放技能者所在阵营列表
@@ -413,7 +407,7 @@ export class BattleDis
                 }
                 else
                 {
-                    //this.showLaunchSkillEffect();
+                    this.showLaunchSkillEffect();
                 }
                 console.log("检测到加属性事件");
                 
@@ -457,6 +451,11 @@ export class BattleDis
             {
                 if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) 
                 {
+                    if (ev.is_trigger_floating) {
+                        continue;
+                    }
+                    ev.is_trigger_floating = true;
+
                     if(Camp.Self == ev.spellcaster.camp)
                     {
                         if(EventType.RemoteInjured==ev.type)

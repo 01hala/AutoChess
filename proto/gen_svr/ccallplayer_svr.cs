@@ -131,26 +131,28 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_login_reconnect", reconnect);
         }
 
-        public event Action<string, string> on_player_login;
+        public event Action<string, string, string> on_player_login;
         public void player_login(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _token = ((MsgPack.MessagePackObject)inArray[1]).AsString();
             var _nick_name = ((MsgPack.MessagePackObject)inArray[2]).AsString();
+            var _avatar = ((MsgPack.MessagePackObject)inArray[3]).AsString();
             rsp = new player_login_player_login_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_player_login != null){
-                on_player_login(_token, _nick_name);
+                on_player_login(_token, _nick_name, _avatar);
             }
             rsp = null;
         }
 
-        public event Action<string, string> on_create_role;
+        public event Action<string, string, string> on_create_role;
         public void create_role(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _name = ((MsgPack.MessagePackObject)inArray[1]).AsString();
             var _nick_name = ((MsgPack.MessagePackObject)inArray[2]).AsString();
+            var _avatar = ((MsgPack.MessagePackObject)inArray[3]).AsString();
             rsp = new player_login_create_role_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_create_role != null){
-                on_create_role(_name, _nick_name);
+                on_create_role(_name, _nick_name, _avatar);
             }
             rsp = null;
         }

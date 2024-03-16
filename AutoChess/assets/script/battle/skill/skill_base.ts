@@ -22,6 +22,7 @@ export class Event {
     public spellcaster : RoleInfo;
     public recipient : RoleInfo[];
     public value : number[];
+    public is_trigger_floating : boolean = false;
 }
 
 export abstract class SkillTriggerBase {

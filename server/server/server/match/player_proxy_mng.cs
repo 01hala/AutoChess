@@ -27,6 +27,11 @@ namespace Match
         {
             _match_player_caller.get_hub(_proxy.name).battle_victory(guid);
         }
+
+        public match_player_peak_strength_victory_cb peak_strength_victory(long guid)
+        {
+            return _match_player_caller.get_hub(_proxy.name).peak_strength_victory(guid);
+        }
     }
 
     public class player_proxy_mng
