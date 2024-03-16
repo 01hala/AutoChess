@@ -214,6 +214,7 @@ export class BattleDis
     {
         try 
         {
+            let evs_floating : skill.Event[] = [];
             let allAwait = [];
             let selfAttack = false;
             let enemyAttack = false;
@@ -224,6 +225,8 @@ export class BattleDis
                 {
                     continue;
                 }
+
+                evs_floating.push(ev);
 
                 if (Camp.Self == ev.spellcaster.camp)
                 {
@@ -257,6 +260,7 @@ export class BattleDis
             }
             //console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
             await Promise.all(allAwait);
+            await this.ChangeAttEvent(evs_floating);
         }
         catch(error) 
         {
@@ -268,6 +272,7 @@ export class BattleDis
     {
         try 
         {
+            let evs_floating : skill.Event[] = [];
             let allAwait = [];
             for(let ev of evs)
             {
@@ -276,6 +281,7 @@ export class BattleDis
                     continue;
                 }
 
+                evs_floating.push(ev);
                 //console.log("checkRemoteInjured RemoteInjured");
 
                 let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
@@ -296,6 +302,7 @@ export class BattleDis
             }
             //console.log("checkRemoteInjured allAwait:", allAwait);
             await Promise.all(allAwait);
+            await this.ChangeAttEvent(evs_floating);
         }
         catch(error) 
         {
@@ -375,6 +382,11 @@ export class BattleDis
             {
                 if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) 
                 {
+                    if (ev.is_trigger_floating) {
+                        continue;
+                    }
+                    ev.is_trigger_floating = true;
+
                     if(Camp.Self == ev.spellcaster.camp)
                     {
                         if(EventType.RemoteInjured==ev.type)
