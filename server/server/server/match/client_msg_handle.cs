@@ -185,13 +185,9 @@ namespace Match
             {
                 count = 3;
             }
-            else if (_base < 3)
+            else if (_base < 2)
             {
                 count = 4;
-            }
-            else if (_base < 5)
-            {
-                count = 5;
             }
             else
             {

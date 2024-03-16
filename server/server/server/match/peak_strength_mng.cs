@@ -36,8 +36,6 @@ namespace Match
             }
         }
 
-        private List<int> rolePool;
-
         public peak_strength_player(string _clientUUID, string guid) 
         {
         }
