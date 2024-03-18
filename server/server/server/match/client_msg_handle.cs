@@ -269,6 +269,19 @@ namespace Match
             }
         }
 
+        private int countRoleList(List<Role> roleList)
+        {
+            var count = 0;
+            foreach(var r in roleList)
+            {
+                if (r != null)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         private async Task<UserBattleData> getCacheBattleData(int round)
         {
             var _base = (round + 1) / 2;
@@ -296,7 +309,7 @@ namespace Match
             }
 
             var i = 0;
-            while (target.RoleList.Count < count && i < 3)
+            while (countRoleList(target.RoleList) < count && i < 3)
             {
                 target = await Match._redis_handle.RandomList<UserBattleData>(cache);
                 i++;
