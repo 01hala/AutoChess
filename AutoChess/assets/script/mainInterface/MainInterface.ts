@@ -50,6 +50,7 @@ export class MainInterface
     public userData:UserAccount;
     private userMoney:Node;
     private userDiamonds:Node;
+    private avatarUrl:string;
 
     constructor()
     {
@@ -62,32 +63,40 @@ export class MainInterface
  * 2024/03/07
  * 让加载更平顺
  */
-    async start(father:Node,_callBack:(e?:()=>void)=>void)
+    async start(_father:Node,_callBack:(e?:()=>void)=>void)
     {
         try
         {
-            this.father=father;
+            this.father=_father;
             let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface");
-            let InformationPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "Information");
-            let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePromptPanel");
+            let InformationPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "Information");
+            let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
+            let StorePanelmPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel");
 
-            let awaitResult = await Promise.all([MainInterfacePromise, InformationPromise, StorePromptPanelPromise]);
+            let awaitResult = await Promise.all([MainInterfacePromise, InformationPromise, StorePromptPanelPromise , StorePanelmPromise]);
             let MainInterfacepanel = awaitResult[0] as Prefab;
             let Informationpanel = awaitResult[1] as Prefab;
             let StorePromptPanelpanel = awaitResult[2] as Prefab;
+            let StorePanel=awaitResult[3] as Prefab;
 
+            //主界面
             this.panelNode=instantiate(MainInterfacepanel);
-            //this.father.addChild(this.mainNode);
+            //二级信息界面
             this.infoPanel=instantiate(Informationpanel);
-            this.infoPanel.setParent(this.panelNode);
+            this.infoPanel.setParent(_father);
             this.infoPanel.active=false;
+            //商店购买提示框
             this.storePrompt=instantiate(StorePromptPanelpanel);
-            this.storePrompt.setParent(this.panelNode);
+            this.storePrompt.setParent(_father);
             this.storePrompt.active=false;
+            //商店界面
+            this.storePanel=instantiate(StorePanel);
+            this.storePanel.setParent(_father);
+            this.storePanel.active=false;
     
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePanel=this.panelNode.getChildByPath("StartGamePanel");
-            this.storePanel=this.panelNode.getChildByPath("StorePanel");
+            //this.storePanel=this.panelNode.getChildByPath("StorePanel");
     
             this.startBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");
             this.storeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");
@@ -137,7 +146,7 @@ export class MainInterface
             this.storeBtn.on(Button.EventType.CLICK,()=>
             {
                 this.storePanel.active=true;
-                this.mainPanel.active=false;
+                this.panelNode.active=false;
                 this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
                 this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked=true;
             },this);
@@ -204,6 +213,7 @@ export class MainInterface
         try
         {
             console.log("尝试加载头像：",_url);
+            this.avatarUrl=_url;
             let sprite=this.mainPanel.getChildByPath("UiLayer/UserAvatar/Mask/Sprite").getComponent(Sprite);
             await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
             {

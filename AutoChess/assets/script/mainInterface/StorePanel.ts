@@ -25,26 +25,20 @@ export class StorePanel extends Component
 
     private cards:Node[]=[];
 
-    onLoad()
+    private Init()
     {
         this.backBtn=this.node.getChildByPath("Back_Btn");
         this.pageView=this.node.getChildByPath("StoreArea/PageView").getComponent(PageView);
         this.toggleGroup=this.node.getChildByPath("ToggleGroup");
     }
 
-    async start() 
+    async onLoad()
     {
-        this.backBtn.on(Button.EventType.CLICK,()=>
-        {
-            this.node.active=false;
-            singleton.netSingleton.mainInterface.mainPanel.active=true;
-            this.ClearPageView();
+        this.Init();
 
-        },this);
-
-        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage");
-        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage");
-        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage");
+        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "StorePage");
+        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
+        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage");
         let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard")
         
         let awaitResult=await Promise.all(
@@ -54,6 +48,7 @@ export class StorePanel extends Component
                 rechargePrePromise,
                 roleCardPrePromise
         ]);
+
         this.storePagePre=awaitResult[0] as Prefab;
         this.cardListPre=awaitResult[1] as Prefab;
         this.rechargePre=awaitResult[2] as Prefab;
@@ -61,11 +56,23 @@ export class StorePanel extends Component
 
     }
 
+    start() 
+    {
+        this.backBtn.on(Button.EventType.CLICK,()=>
+        {
+            this.node.active=false;
+            singleton.netSingleton.mainInterface.panelNode.active=true;
+            this.ClearPageView();
+
+        },this);
+
+    }
 
     async CheckStoreToggle(_fromBtn?:boolean)
     {
         try
         {
+            console.log(this.toggleGroup);
             if(!this.toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked || _fromBtn==true?true:false)
             {
                 console.log("CheckStoreToggle!!!");
@@ -73,7 +80,7 @@ export class StorePanel extends Component
                 this.ClearPageView();
                 if (!this.storePagePre) 
                 {
-                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage") as Prefab;
+                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Page", "StorePage") as Prefab;
                 }
                 this.storePage = instantiate(this.storePagePre);
                 this.pageView.addPage(this.storePage);
@@ -99,7 +106,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.cardListPre) {
-                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage") as Prefab;
+                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage") as Prefab;
                 }
                 this.cardListPage = instantiate(this.cardListPre);
                 this.pageView.addPage(this.cardListPage);
@@ -123,7 +130,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.rechargePre) {
-                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage") as Prefab;
+                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage") as Prefab;
                 }
                 this.rechargePage = instantiate(this.rechargePre);
                 this.pageView.addPage(this.rechargePage);
@@ -207,11 +214,6 @@ export class StorePanel extends Component
         {
             singleton.netSingleton.player.buy_card_packet();
         },this);
-    }
-
-    update(deltaTime: number) 
-    {
-        
     }
 }
 
