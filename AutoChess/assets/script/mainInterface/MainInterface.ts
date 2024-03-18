@@ -43,9 +43,7 @@ export class MainInterface
     private btnList:Node;
     //伸缩按钮区切换开关
     private btnListSwitch:boolean=false;
-    //二级界面
-    public infoPanel:Node;
-    public storePrompt:Node;
+    
     //玩家信息
     public userData:UserAccount;
     private userMoney:Node;
@@ -69,26 +67,16 @@ export class MainInterface
         {
             this.father=_father;
             let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface");
-            let InformationPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "Information");
-            let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
+            
+            
             let StorePanelmPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel");
 
-            let awaitResult = await Promise.all([MainInterfacePromise, InformationPromise, StorePromptPanelPromise , StorePanelmPromise]);
+            let awaitResult = await Promise.all([MainInterfacePromise, StorePanelmPromise]);
             let MainInterfacepanel = awaitResult[0] as Prefab;
-            let Informationpanel = awaitResult[1] as Prefab;
-            let StorePromptPanelpanel = awaitResult[2] as Prefab;
-            let StorePanel=awaitResult[3] as Prefab;
+            let StorePanel=awaitResult[1] as Prefab;
 
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
-            //二级信息界面
-            this.infoPanel=instantiate(Informationpanel);
-            this.infoPanel.setParent(_father);
-            this.infoPanel.active=false;
-            //商店购买提示框
-            this.storePrompt=instantiate(StorePromptPanelpanel);
-            this.storePrompt.setParent(_father);
-            this.storePrompt.active=false;
             //商店界面
             this.storePanel=instantiate(StorePanel);
             this.storePanel.setParent(_father);
@@ -187,6 +175,7 @@ export class MainInterface
             if(_bagInfo && _cardPacketInfo)
             {
                 this.userData.playerBag=_bagInfo;
+                this.storePanel.getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
                 this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
             }
         };

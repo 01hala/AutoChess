@@ -3,6 +3,7 @@ import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
 import { config } from '../config/config';
+import { CustomEvent } from '../other/CustomEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleCard')
@@ -37,9 +38,11 @@ export class RoleCard extends Component
     {
         this.node.on(Button.EventType.CLICK,()=>
         {
-            console.log(singleton.netSingleton.mainInterface.infoPanel.parent.active);
-            singleton.netSingleton.mainInterface.infoPanel.active = true;
-            singleton.netSingleton.mainInterface.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId);
+            console.log("OpenInfoBoard");
+            
+            //singleton.netSingleton.mainInterface.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId);
+
+            this.node.dispatchEvent(new CustomEvent('OpenInfoBoard',true,this.roleId));
 
         },this);
 

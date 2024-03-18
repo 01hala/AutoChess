@@ -1,9 +1,19 @@
+/*
+ * 修改 StorePanel
+ * author：Hotaru
+ * 2024/03/18
+ * 商店界面
+ */
 import { _decorator, Button, Component, instantiate, Node, PageView, Prefab, primitives, RichText, Sprite, Toggle } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 import { RoleCard } from './RoleCard';
+import { CardPacket } from '../serverSDK/ccallplayer';
+import { StorePrompt } from './StorePrompt';
+import { InfoPanel } from '../secondaryPanel/InfoPanel';
+import { CustomEvent } from '../other/CustomEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('StorePanel')
@@ -11,18 +21,21 @@ export class StorePanel extends Component
 {
     private backBtn:Node;
     private pageView:PageView;
-
+    //界面组件预制体
     private storePagePre:Prefab;
     private cardListPre:Prefab;
     private rechargePre:Prefab;
     private roleCardPre:Prefab;
-
+    //分页组件
     private storePage:Node;
     private cardListPage:Node;
     private rechargePage:Node;
-
+    //页签组
     public toggleGroup:Node;
-
+    //二级界面
+    public infoPanel:Node;
+    public storePrompt:Node;
+    //卡牌列表
     private cards:Node[]=[];
 
     private Init()
@@ -39,20 +52,36 @@ export class StorePanel extends Component
         let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "StorePage");
         let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
         let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage");
-        let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard")
+        let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
+        let InformationPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "Information");
+        let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
         
         let awaitResult=await Promise.all(
             [
                 storePagePrePromise,
                 cardListPrePromise,
                 rechargePrePromise,
-                roleCardPrePromise
+                roleCardPrePromise,
+                InformationPromise, 
+                StorePromptPanelPromise
         ]);
 
         this.storePagePre=awaitResult[0] as Prefab;
         this.cardListPre=awaitResult[1] as Prefab;
         this.rechargePre=awaitResult[2] as Prefab;
         this.roleCardPre=awaitResult[3] as Prefab;
+
+        let Informationpanel = awaitResult[4] as Prefab;
+        let StorePromptPanelpanel = awaitResult[5] as Prefab;
+
+        //二级信息界面
+        this.infoPanel=instantiate(Informationpanel);
+        this.infoPanel.setParent(this.node);
+        this.infoPanel.active=false;
+        //商店购买提示框
+        this.storePrompt=instantiate(StorePromptPanelpanel);
+        this.storePrompt.setParent(this.node);
+        this.storePrompt.active=false;
 
     }
 
@@ -66,6 +95,13 @@ export class StorePanel extends Component
 
         },this);
 
+        this.node.on('OpenInfoBoard',(event:CustomEvent)=>
+        {
+            event.propagationStopped=true;
+            this.infoPanel.active=true;
+            this.infoPanel.getComponent(InfoPanel).OpenCardInfo(event.detail);
+        },this);
+        
     }
 
     async CheckStoreToggle(_fromBtn?:boolean)
@@ -207,13 +243,18 @@ export class StorePanel extends Component
         }
     }
 
-    InitStore()
+    private InitStore()
     {
         //购买卡包
         this.storePage.getChildByPath("Commodity").on(Button.EventType.CLICK,()=>
         {
             singleton.netSingleton.player.buy_card_packet();
         },this);
+    }
+
+    public ShowCardPacketContent(_cardPacketInfo:CardPacket)
+    {
+        this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
     }
 }
 

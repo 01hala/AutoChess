@@ -65,7 +65,7 @@ export class InfoPanel extends Component
             {
                 this.simplePropBoard.active=true;
                 this.simplePropBoard.getComponent(Animation).play("PanelAppear");
-                this.node.setSiblingIndex(99);
+                this.node.setSiblingIndex(98);
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 this.simplePropBoard.getChildByName("PropName").getComponent(Label).string="道具ID:"+id;
                 if(role) 
@@ -81,11 +81,12 @@ export class InfoPanel extends Component
             }
             else
             {
-                if(null==role||!isBuy){
+                if(null==role||!isBuy)
+                {
                     this.simpleBoard.active=true;
                     this.simpleBoard.getComponent(Animation).play("PanelAppear");
                     //this.detailedBoard.active=false;
-                    this.node.setSiblingIndex(99);
+                    this.node.setSiblingIndex(98);
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
 
@@ -97,11 +98,12 @@ export class InfoPanel extends Component
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
                 } 
-                else{
+                else
+                {
                     //this.simpleBoard.active=false;
                     this.detailedBoard.active=true;
                     this.detailedBoard.getComponent(Animation).play("PanelAppear");
-                    this.node.setSiblingIndex(99);
+                    this.node.setSiblingIndex(98);
                     this.node.getComponent(BlockInputEvents).enabled=true;  
                     this.detailedBoard.getChildByPath("RoleData/RoleName").getComponent(RichText).string="<color=0>"+role.RoleId+"</color>";
                     this.detailedBoard.getChildByPath("RoleData/RoleLevel").getComponent(RichText).string="<color=0>"+role.Level+"</color>";
@@ -118,6 +120,15 @@ export class InfoPanel extends Component
             console.error('InfoPanel 下 OpenInfoBoard 错误 err: ',error);
         }
         
+    }
+
+    OpenCardInfo(_id:number)
+    {
+        this.simpleBoard.active=true;
+        this.detailedBoard.active=false;
+        this.simplePropBoard.active=false;
+
+        this.simpleBoard.getComponent(Animation).play("PanelAppear");
     }
 
     Exit()
