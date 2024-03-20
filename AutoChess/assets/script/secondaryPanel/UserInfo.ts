@@ -64,7 +64,7 @@ export class UserInfo extends Component
         try
         {
             console.log("尝试加载头像：",_url);
-            let sprite=this.node.getChildByPath("UserAvatar/Mask/Sprite").getComponent(Sprite);
+            let sprite=this.node.getChildByPath("PanelNode/UserAvatar/Mask/Sprite").getComponent(Sprite);
             await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
             {
                 let sp = new SpriteFrame();
