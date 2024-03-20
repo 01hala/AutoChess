@@ -11,7 +11,7 @@ import { config } from '../config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 import { RoleCard } from './RoleCard';
 import { CardPacket } from '../serverSDK/ccallplayer';
-import { StorePrompt } from './StorePrompt';
+import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { CustomEvent } from '../other/CustomEvent';
 const { ccclass, property } = _decorator;

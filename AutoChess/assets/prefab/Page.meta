@@ -8,7 +8,8 @@
   "userData": {
     "compressionType": {},
     "isRemoteBundle": {
-      "wechatgame": true
+      "wechatgame": true,
+      "web-desktop": true
     },
     "isBundle": true
   }

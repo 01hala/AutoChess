@@ -94,7 +94,7 @@ export enum GameDifficulty
     Hard=3
 }
 
-export enum Fetters
+export enum Biomes
 {
     Sea=1,
     Mountain=2,

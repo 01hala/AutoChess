@@ -9,6 +9,7 @@ import { Direction, Priority } from '../serverSDK/common';
 
 export class SkillIntroduceConfig {
     public Id: number;
+    public Timeing_Text:string;
     public Leve1Text:string
     public Leve2Text:string
     public Leve3Text:string
@@ -37,7 +38,7 @@ export async function LoadSkillIntroduceConfig() : Promise<Map<number, SkillIntr
                     skillc.Leve1Text = v["Leve1_Text"];
                     skillc.Leve2Text = v["Leve2_Text"];
                     skillc.Leve3Text = v["Leve3_Text"];
-                
+                    skillc.Timeing_Text=v["Timeing_Text"];
 
                     map.set(parseInt(k), skillc);
             });
