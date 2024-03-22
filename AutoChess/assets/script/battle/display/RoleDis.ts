@@ -68,7 +68,7 @@ export class RoleDis extends Component
 
     protected async onLoad(): Promise<void> {
         try {
-            this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
+            this.typeface = (await BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
 
             this.levelSprite = this.node.getChildByName("LevelSprite");
             this.intensifierText = this.node.getChildByName("IntensifierText");
