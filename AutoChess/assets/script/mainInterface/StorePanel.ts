@@ -1,9 +1,19 @@
+/*
+ * 修改 StorePanel
+ * author：Hotaru
+ * 2024/03/18
+ * 商店界面
+ */
 import { _decorator, Button, Component, instantiate, Node, PageView, Prefab, primitives, RichText, Sprite, Toggle } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 import { RoleCard } from './RoleCard';
+import { CardPacket } from '../serverSDK/ccallplayer';
+import { StorePrompt } from '../secondaryPanel/StorePrompt';
+import { InfoPanel } from '../secondaryPanel/InfoPanel';
+import { CustomEvent } from '../other/CustomEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('StorePanel')
@@ -11,61 +21,94 @@ export class StorePanel extends Component
 {
     private backBtn:Node;
     private pageView:PageView;
-
+    //界面组件预制体
     private storePagePre:Prefab;
     private cardListPre:Prefab;
     private rechargePre:Prefab;
     private roleCardPre:Prefab;
-
+    //分页组件
     private storePage:Node;
     private cardListPage:Node;
     private rechargePage:Node;
-
+    //页签组
     public toggleGroup:Node;
-
+    //二级界面
+    public infoPanel:Node;
+    public storePrompt:Node;
+    //卡牌列表
     private cards:Node[]=[];
 
-    onLoad()
+    private Init()
     {
         this.backBtn=this.node.getChildByPath("Back_Btn");
         this.pageView=this.node.getChildByPath("StoreArea/PageView").getComponent(PageView);
         this.toggleGroup=this.node.getChildByPath("ToggleGroup");
     }
 
-    async start() 
+    async onLoad()
     {
-        this.backBtn.on(Button.EventType.CLICK,()=>
-        {
-            this.node.active=false;
-            singleton.netSingleton.mainInterface.mainPanel.active=true;
-            this.ClearPageView();
+        this.Init();
 
-        },this);
-
-        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage");
-        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage");
-        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage");
-        let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard")
+        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "StorePage");
+        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
+        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage");
+        let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
+        let InformationPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "Information");
+        let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
         
         let awaitResult=await Promise.all(
             [
                 storePagePrePromise,
                 cardListPrePromise,
                 rechargePrePromise,
-                roleCardPrePromise
+                roleCardPrePromise,
+                InformationPromise, 
+                StorePromptPanelPromise
         ]);
+
         this.storePagePre=awaitResult[0] as Prefab;
         this.cardListPre=awaitResult[1] as Prefab;
         this.rechargePre=awaitResult[2] as Prefab;
         this.roleCardPre=awaitResult[3] as Prefab;
 
+        let Informationpanel = awaitResult[4] as Prefab;
+        let StorePromptPanelpanel = awaitResult[5] as Prefab;
+
+        //二级信息界面
+        this.infoPanel=instantiate(Informationpanel);
+        this.infoPanel.setParent(this.node);
+        this.infoPanel.active=false;
+        //商店购买提示框
+        this.storePrompt=instantiate(StorePromptPanelpanel);
+        this.storePrompt.setParent(this.node);
+        this.storePrompt.active=false;
+
     }
 
+    start() 
+    {
+        this.backBtn.on(Button.EventType.CLICK,()=>
+        {
+            this.node.active=false;
+            singleton.netSingleton.mainInterface.panelNode.active=true;
+            this.ClearPageView();
+
+        },this);
+
+        this.node.on('OpenInfoBoard',(event:CustomEvent)=>
+        {
+            event.propagationStopped=true;
+            this.infoPanel.active=true;
+            this.infoPanel.getComponent(InfoPanel).OpenCardInfo(event.detail);
+        },this);
+        
+    }
 
     async CheckStoreToggle(_fromBtn?:boolean)
     {
         try
         {
+            console.log(this.toggleGroup);
             if(!this.toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked || _fromBtn==true?true:false)
             {
                 console.log("CheckStoreToggle!!!");
@@ -73,7 +116,7 @@ export class StorePanel extends Component
                 this.ClearPageView();
                 if (!this.storePagePre) 
                 {
-                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePage") as Prefab;
+                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Page", "StorePage") as Prefab;
                 }
                 this.storePage = instantiate(this.storePagePre);
                 this.pageView.addPage(this.storePage);
@@ -99,7 +142,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.cardListPre) {
-                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage") as Prefab;
+                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage") as Prefab;
                 }
                 this.cardListPage = instantiate(this.cardListPre);
                 this.pageView.addPage(this.cardListPage);
@@ -123,7 +166,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.rechargePre) {
-                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Panel", "RechargePage") as Prefab;
+                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage") as Prefab;
                 }
                 this.rechargePage = instantiate(this.rechargePre);
                 this.pageView.addPage(this.rechargePage);
@@ -200,7 +243,7 @@ export class StorePanel extends Component
         }
     }
 
-    InitStore()
+    private InitStore()
     {
         //购买卡包
         this.storePage.getChildByPath("Commodity").on(Button.EventType.CLICK,()=>
@@ -209,9 +252,9 @@ export class StorePanel extends Component
         },this);
     }
 
-    update(deltaTime: number) 
+    public ShowCardPacketContent(_cardPacketInfo:CardPacket)
     {
-        
+        this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
     }
 }
 

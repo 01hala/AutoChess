@@ -35,18 +35,6 @@ export class InfoPanel extends Component
             console.log("exitboard!");
             this.Exit();
         });
-        // this.simpleBoard.on(Button.EventType.CLICK,()=>
-        // {
-        //     this.Exit();
-        // },this);
-        // this.detailedBoard.on(Button.EventType.CLICK,()=>
-        // {
-        //     this.Exit();
-        // },this);
-        // this.simplePropBoard.on(Button.EventType.CLICK,()=>
-        // {
-        //     this.Exit();
-        // },this);
     }
     
     OpenInfoBoard(id:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
@@ -65,7 +53,7 @@ export class InfoPanel extends Component
             {
                 this.simplePropBoard.active=true;
                 this.simplePropBoard.getComponent(Animation).play("PanelAppear");
-                this.node.setSiblingIndex(99);
+                this.node.setSiblingIndex(98);
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 this.simplePropBoard.getChildByName("PropName").getComponent(Label).string="道具ID:"+id;
                 if(role) 
@@ -81,11 +69,12 @@ export class InfoPanel extends Component
             }
             else
             {
-                if(null==role||!isBuy){
+                if(null==role||!isBuy)
+                {
                     this.simpleBoard.active=true;
                     this.simpleBoard.getComponent(Animation).play("PanelAppear");
                     //this.detailedBoard.active=false;
-                    this.node.setSiblingIndex(99);
+                    this.node.setSiblingIndex(98);
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
 
@@ -97,19 +86,16 @@ export class InfoPanel extends Component
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
                 } 
-                else{
-                    //this.simpleBoard.active=false;
+                else
+                {
                     this.detailedBoard.active=true;
                     this.detailedBoard.getComponent(Animation).play("PanelAppear");
-                    this.node.setSiblingIndex(99);
+                    this.node.setSiblingIndex(98);
                     this.node.getComponent(BlockInputEvents).enabled=true;  
-                    this.detailedBoard.getChildByPath("RoleData/RoleName").getComponent(RichText).string="<color=0>"+role.RoleId+"</color>";
-                    this.detailedBoard.getChildByPath("RoleData/RoleLevel").getComponent(RichText).string="<color=0>"+role.Level+"</color>";
-                    this.detailedBoard.getChildByPath("RoleData/AtkNum").getComponent(RichText).string="<color=0>"+role.AtkNum+"</color>";
-                    this.detailedBoard.getChildByPath("RoleData/HpNum").getComponent(RichText).string="<color=0>"+role.Hp+"</color>";
                     let tSp =this.detailedBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
+                    this.ShowDetailed(role);
                 }   
             }
         }
@@ -117,6 +103,40 @@ export class InfoPanel extends Component
         {
             console.error('InfoPanel 下 OpenInfoBoard 错误 err: ',error);
         }
+        
+    }
+
+    OpenCardInfo(_id:number)
+    {
+        this.simpleBoard.active=true;
+        this.detailedBoard.active=false;
+        this.simplePropBoard.active=false;
+
+        this.simpleBoard.getComponent(Animation).play("PanelAppear");
+    }
+
+    private ShowDetailed(_role:RoleDis)
+    {
+        this.detailedBoard.getChildByPath("RoleArea/Atk/RichText").getComponent(RichText).string="<color=0>"+_role.AtkNum+"</color>";
+        this.detailedBoard.getChildByPath("RoleArea/HP/RichText").getComponent(RichText).string="<color=0>"+_role.Hp+"</color>";
+        this.detailedBoard.getChildByPath("RoleArea/Lv/RichText").getComponent(RichText).string="<color=0>"+_role.Level+"</color>";
+
+        let ro=config.RoleConfig.get(_role.RoleId);
+        this.detailedBoard.getChildByPath("RoleArea/Lv/RichText").getComponent(RichText).string="<color=0>"+ro.Name+"</color>";
+
+        let sk=config.SkillIntroduceConfig.get(_role.RoleId%100000);
+        this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/TimeingText").getComponent(RichText).string="<color=0>"+sk.Timeing_Text+"</color>";
+        let str="";
+        switch(_role.Level)
+        {
+            case 1:str=sk.Leve1Text;break;
+            case 2:str=sk.Leve2Text;break;
+            case 3:str=sk.Leve3Text;break;
+        }
+        this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/Label").getComponent(RichText).string="<color=0>"+str+"</color>";
+        
+        let ft=config.FettersConfig.get(ro.Fetters);
+        this.detailedBoard.getChildByPath("DetailsArea/Fetters/RichText").getComponent(RichText).string="<color=0>"+ft.Name+"</color>";
         
     }
 

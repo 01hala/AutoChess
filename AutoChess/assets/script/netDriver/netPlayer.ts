@@ -4,17 +4,21 @@ import * as error from "../serverSDK/error"
 
 import * as login from "../serverSDK/ccalllogin"
 import * as player_login from "../serverSDK/ccallplayer"
+import * as rank_cli from "../serverSDK/rank_cli"
 
 import * as player_client from "../serverSDK/playercallc"
 
 import * as singleton from '../netDriver/netSingleton';
+import { rank_item } from "../serverSDK/rank_comm"
 
 export class netPlayer {
     private c_login_caller : login.login_caller;
     public player_name = "";
     private c_player_login_caller : player_login.player_login_caller;
 
-    private c_player_caller:player_login.player_shop_caller;
+    private c_player_shop_caller:player_login.player_shop_caller;
+
+    private c_rank_cli_service_caller:rank_cli.rank_cli_service_caller;
 
     public cb_archive_sync : () => void;
     public cb_battle_victory : () => void;
@@ -27,7 +31,7 @@ export class netPlayer {
         this.c_player_login_caller = new player_login.player_login_caller(cli.cli_handle);
 
         this.player_client_module = new player_client.player_client_module(cli.cli_handle);
-        this.c_player_caller=new player_login.player_shop_caller(cli.cli_handle);
+        this.c_player_shop_caller=new player_login.player_shop_caller(cli.cli_handle);
 
         this.player_client_module.cb_archive_sync = (info) => {
             this.UserData = info;
@@ -118,7 +122,7 @@ export class netPlayer {
     public cb_get_user_data:(_userInfo:common.UserData)=>void;
     public get_user_data()
     {
-        this.c_player_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
+        this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
         {
             this.cb_get_user_data(_userInfo);
         },(err)=>
@@ -134,7 +138,7 @@ export class netPlayer {
     public cb_buy_card_merge:(_roleId:number,_playerInfo:common.UserData) => void;
     public buy_card_merge(_id:number)
     {
-        this.c_player_caller.get_hub(this.player_name).buy_card_merge(_id).callBack((roleId,info)=>
+        this.c_player_shop_caller.get_hub(this.player_name).buy_card_merge(_id).callBack((roleId,info)=>
         {
             this.cb_buy_card_merge(roleId,info);
         },(err)=>
@@ -149,7 +153,7 @@ export class netPlayer {
     public cb_buy_card_packet:(_cardPacketInfo:player_login.CardPacket,_bagInfo:common.Bag)=>void;
     public buy_card_packet()
     {
-        this.c_player_caller.get_hub(this.player_name).buy_card_packet().callBack((cardpacket,bag)=>
+        this.c_player_shop_caller.get_hub(this.player_name).buy_card_packet().callBack((cardpacket,bag)=>
         {
             this.cb_buy_card_packet(cardpacket,bag);
             this.get_user_data();
@@ -162,10 +166,11 @@ export class netPlayer {
         })
     }
 
+    //编辑牌组
     public cb_edit_role_group:(_userInfo:common.UserData)=>void;
     public edit_role_group(_roleGroup:common.RoleGroup)
     {
-        this.c_player_caller.get_hub(this.player_name).edit_role_group(_roleGroup).callBack((info:common.UserData)=>
+        this.c_player_shop_caller.get_hub(this.player_name).edit_role_group(_roleGroup).callBack((info:common.UserData)=>
         {
             this.cb_edit_role_group(info);
         },(err)=>
@@ -177,5 +182,35 @@ export class netPlayer {
         })
     }
 
-    
+    //获取个人排名
+    public cb_get_rank_guid:(_rank:number)=>void;
+    public get_rank_guid(_rank_name:string,_guid:number)
+    {
+        this.c_rank_cli_service_caller.get_hub(this.player_name).get_rank_guid(_rank_name,_guid).callBack((_rank:number)=>
+        {
+            this.cb_get_rank_guid(_rank);
+        },()=>
+        {
+            console.log("get rank guid err");
+        }).timeout(3000,()=>
+        {
+            console.log("get rank guid timeout");
+        })
+    }
+    //获取排行榜区间
+    public cb_get_rank_range:(_rank_list:rank_item[])=>void;
+    public get_rank_range(_rank_name:string, _start:number, _end:number)
+    {
+        this.c_rank_cli_service_caller.get_hub(this.player_name).get_rank_range(_rank_name,_start,_end).callBack((_rank_list:rank_item[])=>
+        {
+            this.cb_get_rank_range(_rank_list);
+        },()=>
+        {
+            console.log("get rank range err");
+        }).timeout(3000,()=>
+        {
+            console.log("get rank range timeout");
+        })
+    }
+
 }

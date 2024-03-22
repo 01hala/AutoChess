@@ -1,19 +1,19 @@
 /*
- * CardPanel.ts
+ * CardLibPanel.ts
  * author: Hotaru
  * 2024/03/14
  * 牌库
  */
 import { _decorator, Button, Component, EventHandler, instantiate, Node, PageView, Prefab, Toggle, ToggleContainer } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
-import { Fetters } from '../other/enums';
+import { Biomes } from '../other/enums';
 import { config } from '../config/config';
 import { RoleCard } from './RoleCard';
 import * as singleton from '../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
-@ccclass('CardPanel')
-export class CardPanel extends Component 
+@ccclass('CardLibPanel')
+export class CardLibPanel extends Component 
 {
     private backBtn:Node;
 
@@ -25,33 +25,11 @@ export class CardPanel extends Component
 
     public toggleGroup:Node;
 
-    protected onLoad(): void 
+    protected async onLoad(): Promise<void> 
     {
         try
         {
-            this.backBtn=this.node.getChildByPath("Back_Btn");
-            this.pageView=this.node.getChildByPath("PageView").getComponent(PageView);
-            this.toggleGroup=this.node.getChildByPath("ToggleGroup");
-        }
-        catch(error)
-        {
-            console.error("CardPanel 下的 onLoad 错误：",error);
-        }
-    }
-
-    async start() 
-    {
-        try
-        {
-            this.backBtn.on(Button.EventType.CLICK,()=>
-            {
-                this.node.active=false;
-                singleton.netSingleton.mainInterface.mainPanel.active=true;
-                this.ClearPageView();
-
-            },this);
-
-            let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Panel", "CardPage");
+            let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
             let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
 
             let awaitResult=await Promise.all(
@@ -63,28 +41,63 @@ export class CardPanel extends Component
             this.cardListPre=awaitResult[0] as Prefab;
             this.roleCardPre=awaitResult[1] as Prefab;
 
+            this.backBtn=this.node.getChildByPath("Back_Btn");
+            this.pageView=this.node.getChildByPath("CardArea/PageView").getComponent(PageView);
+            this.toggleGroup=this.node.getChildByPath("ToggleGroup");
+        }
+        catch(error)
+        {
+            console.error("CardPanel 下的 onLoad 错误：",error);
+        }
+    }
+
+    start() 
+    {
+        try
+        {
+            this.Init();
+        }
+        catch(error)
+        {
+            console.error("CardLibPanel 下的 start 错误：",error);
+        }
+    }
+
+    private Init()
+    {
+        try
+        {
+            this.backBtn.on(Button.EventType.CLICK,()=>
+            {
+                this.node.active=false;
+                singleton.netSingleton.mainInterface.panelNode.active=true;
+                this.pageView.removeAllPages();
+
+            },this);
+
             const containerEventHandler = new EventHandler();
             containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
-            containerEventHandler.component = 'CardPanel';// 这个是脚本类名
+            containerEventHandler.component = 'CardLibPanel';// 这个是脚本类名
             containerEventHandler.handler = 'OnCheckToggleEvent';
 
             this.toggleGroup.getComponent(ToggleContainer).checkEvents.push(containerEventHandler);
         }
         catch(error)
         {
-            console.error("CardPanel 下的 start 错误：",error);
+            console.error("CardLibPanel 下的 Init 错误：",error);
         }
     }
 
-    update(deltaTime: number) 
+    public Open()
     {
-
-    }
-
-    private ClearPageView()
-    {
-        for (let node of this.pageView.node.getChildByPath("view/content").children) {
-            node.destroy();
+        try
+        {
+            this.LoadCard(Biomes.Mountain);
+            this.toggleGroup.getChildByPath("Mountain").getComponent(Toggle).isChecked=true;
+        }
+        catch(error)
+        {
+            console.error("CardLibPanel 下的 Open 错误：",error);
         }
     }
 
@@ -93,42 +106,44 @@ export class CardPanel extends Component
         try
         {
             console.log("check");
-            this.ClearPageView();
+            this.pageView.removeAllPages();
             if(this.toggleGroup.getChildByPath("Sea").getComponent(Toggle).isChecked)
             {
-                this.LoadCard(Fetters.Sea);
+                this.LoadCard(Biomes.Sea);
             }
             if(this.toggleGroup.getChildByPath("Mountain").getComponent(Toggle).isChecked)
             {
-                this.LoadCard(Fetters.Mountain);
+                this.LoadCard(Biomes.Mountain);
             }
             if(this.toggleGroup.getChildByPath("Grassland").getComponent(Toggle).isChecked)
             {
-                this.LoadCard(Fetters.Grassland);
+                this.LoadCard(Biomes.Grassland);
             }
             if(this.toggleGroup.getChildByPath("Wind").getComponent(Toggle).isChecked)
             {
-                this.LoadCard(Fetters.Wind);
+                this.LoadCard(Biomes.Wind);
             }
             if(this.toggleGroup.getChildByPath("Jungle").getComponent(Toggle).isChecked)
             {
-                this.LoadCard(Fetters.Jungle);
+                this.LoadCard(Biomes.Jungle);
             }
             if(this.toggleGroup.getChildByPath("Cave").getComponent(Toggle).isChecked)
             {
-                this.LoadCard(Fetters.Cave);
+                this.LoadCard(Biomes.Cave);
             }
         }
         catch(error)
         {
-            console.error("CardPanel 下的 OnCheckToggleEvent 错误：",error);
+            console.error("CardLibPanel 下的 OnCheckToggleEvent 错误：",error);
         }
     }
 
-    private LoadCard(_fetters:Fetters)
+    private LoadCard(_biomes:Biomes)
     {
         try
         {
+            this.cardListPage=instantiate(this.cardListPre);
+            this.pageView.addPage(this.cardListPage);
             console.log("LoadCard!!!");
             let jconfig=null;
             let i=100001;   //角色id
@@ -141,7 +156,7 @@ export class CardPanel extends Component
                 jconfig=config.RoleConfig.get(i);
                 if(jconfig!=null)
                 {
-                    if(_fetters == jconfig.Fetters)
+                    if(_biomes == jconfig.Biomes)
                     {
                         let card=instantiate(this.roleCardPre);
                         card.getComponent(RoleCard).Init(i);
@@ -163,7 +178,7 @@ export class CardPanel extends Component
                         }
                         catch(error)
                         {
-                            console.error('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
+                            console.warn('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
                         }
                         //this.cards.push(card);
                         this.cardListPage.addChild(card);
@@ -184,7 +199,7 @@ export class CardPanel extends Component
         }
         catch(error)
         {
-            console.error("CardPanel 下的 CheckFetters 错误：",error);
+            console.error("CardLibPanel 下的 LoadCard 错误：",error);
         }
     }
 }

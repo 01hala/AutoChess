@@ -36,7 +36,7 @@ export class BundleManager
         });
     }
 
-    loadAssetsFromBundle<T extends Asset>(bundleRes:string, assetsRes:string) : Promise<Asset> {   
+    loadAssetsFromBundle(bundleRes:string, assetsRes:string) : Promise<Asset> {   
         return new Promise(async (resolve) => {
             try {
                 let bundle : AssetManager.Bundle = null;

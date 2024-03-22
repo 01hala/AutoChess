@@ -1,3 +1,9 @@
+/*
+ * 修改 StorePrompt
+ * author：Hotaru
+ * 2024/03/18
+ * 商店购买卡包提示面板
+ */
 import { _decorator, Button, Component, instantiate, Label, labelAssembler, Node, Prefab, ScrollView, Sprite } from 'cc';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { BundleManager } from '../bundle/BundleManager';

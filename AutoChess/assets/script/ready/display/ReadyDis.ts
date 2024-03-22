@@ -69,7 +69,7 @@ export class ReadyDis
             this.waitingPanel.setParent(this.panelNode);
             this.waitingPanel.setSiblingIndex(100);
             //信息二级界面
-            panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "Information") as Prefab;
+            panel=await BundleManager.Instance.loadAssetsFromBundle("Board", "Information") as Prefab;
             this.infoPanel=instantiate(panel);
             this.infoPanel.setParent(this.panelNode);
             this.infoPanel.active=false;
