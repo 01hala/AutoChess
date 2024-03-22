@@ -237,7 +237,6 @@ export class BattleDis
 
     private showLaunchFettersEffect()
     {
-
         return this.delay(2000,()=>
         {
             this.launchSkillEffect.active=false;

@@ -176,7 +176,7 @@ export class RoleDis extends Component
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
                 })
-                .to(0.2, { position: this.originalPos })
+                .to(0.2, { position: readyLocation })
                 .start();
 
             return this.delay(1400, () => 
