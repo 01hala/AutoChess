@@ -296,6 +296,7 @@ export function protcol_to_Fetters(_protocol:any){
 export class Role
 {
     public RoleID : number = 0;
+    public BuyRound : number = 0;
     public Level : number = 0;
     public SkillID : number = 0;
     public FettersSkillID : Fetters | null = null;
@@ -323,6 +324,9 @@ export function protcol_to_Role(_protocol:any){
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "RoleID"){
             _struct.RoleID = val as number;
+        }
+        else if (key === "BuyRound"){
+            _struct.BuyRound = val as number;
         }
         else if (key === "Level"){
             _struct.Level = val as number;

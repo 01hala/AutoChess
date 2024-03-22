@@ -356,6 +356,7 @@ namespace Abelkhan
     public class Role
     {
         public Int32 RoleID;
+        public Int32 BuyRound;
         public Int32 Level;
         public Int32 SkillID;
         public Fetters FettersSkillID;
@@ -374,6 +375,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
+            _protocol.Add("BuyRound", _struct.BuyRound);
             _protocol.Add("Level", _struct.Level);
             _protocol.Add("SkillID", _struct.SkillID);
             _protocol.Add("FettersSkillID", new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(_struct.FettersSkillID)));
@@ -408,6 +410,9 @@ namespace Abelkhan
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "BuyRound"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.BuyRound = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
