@@ -165,13 +165,15 @@ export class RoleDis extends Component
             this.tAttack = tween(this.node)
                 .to(0.4, { position: readyLocation })
                 .delay(0.1)
-                .to(0.08, { position: battleLocation }).call(() => {
+                //.by(0.5,{position: battleLocation},{easing: 'quintIn'})
+                .to(0.25, { position: battleLocation })
+                .call(() => {
                     this.changeAtt();
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
                     }
                 })
-                .delay(0.3).call(() => {
+                .delay(0.2).call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
@@ -267,6 +269,10 @@ export class RoleDis extends Component
         {
             console.error("RoleDis 下的 BeHurted 错误 err:" + err);
         }
+    }
+
+    async IntensifierExp(value: number[]){
+        console.log("Assign temporary experience points to characters");
     }
 
     async Intensifier(value: number[],stack?:number) 
@@ -421,13 +427,32 @@ export class RoleDis extends Component
                 singleton.netSingleton.battle.showBattleEffect(false);
                 this.node.active = false;
             });
-            this.bandage.active = true;
-            this.bandage.getComponent(Animation).play();
-            return this.delay(200, () => 
+            // this.bandage.active = true;
+            // this.bandage.getComponent(Animation).play();
+            let offset=-1000;
+            if(Camp.Self!=this.roleInfo.selfCamp) offset=1000;
+            let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
+            tween(this.node).call(()=>
             {
+                hitAnim.resume();
+                this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
+                this.hurtedSpine.active=true;
+                hitAnim.play();
+            }).delay(0.2).call(()=>
+            {
+                this.hurtedSpine.active=false;
+            })         
+            //.by(0.05, { position: new Vec3(this.node.position.x+offset,this.node.position.y+5) }, {easing: 'quintOut'})// [变动属性]+[缓动效果]
+            .by(1,{position: new Vec3(this.node.position.x+offset,this.node.position.y)},{easing: 'quintIn'})
+            .delay(0.2).call(() => {
                 this.roleInfo = null;
                 console.log("销毁角色");
                 this.node.destroy();
+            })
+            .start();
+            return this.delay(200, () => 
+            {
+                
             });
         }
         catch (err) 

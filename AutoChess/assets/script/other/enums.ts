@@ -33,6 +33,7 @@ export enum EventType {
     FriendlysideInjured=20,
     Kill=21,
     FrontAtk=22,
+    IntensifierExp = 23,
 }
 
 export enum ChangePositionType {

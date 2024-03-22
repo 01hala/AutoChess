@@ -72,7 +72,10 @@ export enum SkillEffectEM{
     SummonShop = 13,
     AddBuffer = 14,
     AddBuildValue = 15,
-    AttackAll = 16
+    AttackAll = 16,
+    AddTmpExp = 17,
+    ReductionPrice = 18,
+    AddPropertyByCoin=19,
 }
 
 export enum ShopIndex{
