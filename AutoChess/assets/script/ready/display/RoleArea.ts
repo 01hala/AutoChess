@@ -70,7 +70,7 @@ export class RoleArea extends Component
     {
         //this.LogShowRoles();
         console.log('-------------');
-        await singleton.netSingleton.ready.ready.Move(_indexBefor,_indexAfter);
+        await singleton.netSingleton.ready.readyData.Move(_indexBefor,_indexAfter);
         if(!_isMerge)
         {
             //console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);
@@ -100,7 +100,7 @@ export class RoleArea extends Component
     async SaleRole(index:number)
     {
         console.log("SaleRole index:" + index);
-        singleton.netSingleton.ready.ready.Sale(index);
+        singleton.netSingleton.ready.readyData.Sale(index);
         this.rolesNode[index]=null;
         // for(let i:number=0;i<this.rolesNode.length;i++)
         // {
