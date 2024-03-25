@@ -237,7 +237,6 @@ export class BattleDis
 
     private showLaunchFettersEffect()
     {
-
         return this.delay(2000,()=>
         {
             this.launchSkillEffect.active=false;
@@ -392,6 +391,52 @@ export class BattleDis
         }
     }
 
+    //增加临时经验值技能
+    private async CheckAttExpEvent(evs:skill.Event[]){
+        try 
+        {
+            let allAwait = [];
+            for(let ev of evs)
+            {
+                
+                if(EventType.IntensifierExp != ev.type) 
+                {
+                    continue;
+                }
+                else
+                {
+                    this.showLaunchSkillEffect();
+                }
+                console.log("检测到加临时经验值事件");
+                
+                //受到增益者            
+                ev.recipient.forEach(element=>{
+                    
+                    if(Camp.Self==element.camp)
+                    {
+                        if(this.selfQueue.roleNodes[element.index])
+                        {
+                            allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value));
+                        }
+                        
+                    }
+                    else
+                    {
+                        if(this.enemyQueue.roleNodes[element.index])
+                        {
+                            allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value));
+                        }
+                        
+                    }            
+                });
+            }
+            await Promise.all(allAwait);
+        }
+        catch(error) 
+        {
+            console.error("BattleDis 下的 CheckAttExpEvent 错误 err:", error);
+        }
+    }
     //队伍增益技能
     private async CheckAttGainEvent(evs:skill.Event[]) 
     {
@@ -562,6 +607,7 @@ export class BattleDis
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
                 await this.ChangeAttEvent(evs);
+                await this.CheckAttExpEvent(evs);
                 await this.CheckExitEvent(evs);
             }
             catch(error) 

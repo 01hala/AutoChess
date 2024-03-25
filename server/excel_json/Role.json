@@ -7,11 +7,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
+        "Biomes": 1,
         "Fetters": 1,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100001",
-        "Avatar": "Avatar/Role_100001"
+        "Avatar": "Avatar/Role_100001",
+        "Skel": "RoleSpine/Role_100001"
     },
     "100002": {
         "Id": 100002,
@@ -21,11 +23,13 @@
         "Price": 4,
         "Attack": 4,
         "Hp": 3,
+        "Biomes": 1,
         "Fetters": 2,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100002",
-        "Avatar": "Avatar/Role_100002"
+        "Avatar": "Avatar/Role_100002",
+        "Skel": "RoleSpine/Role_100002"
     },
     "100003": {
         "Id": 100003,
@@ -35,11 +39,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
+        "Biomes": 1,
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100003",
-        "Avatar": "Avatar/Role_100003"
+        "Avatar": "Avatar/Role_100003",
+        "Skel": "RoleSpine/Role_100003"
     },
     "100004": {
         "Id": 100004,
@@ -49,11 +55,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 4,
+        "Biomes": 1,
         "Fetters": 4,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100004",
-        "Avatar": "Avatar/Role_100004"
+        "Avatar": "Avatar/Role_100004",
+        "Skel": "RoleSpine/Role_100004/kuangfeng_moshushi"
     },
     "100005": {
         "Id": 100005,
@@ -63,11 +71,13 @@
         "Price": 4,
         "Attack": 8,
         "Hp": 4,
+        "Biomes": 1,
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100005",
-        "Avatar": "Avatar/Role_100005"
+        "Avatar": "Avatar/Role_100005",
+        "Skel": "RoleSpine/Role_100005/kuangfeng_wushi"
     },
     "100006": {
         "Id": 100006,
@@ -77,11 +87,13 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 6,
+        "Biomes": 1,
         "Fetters": 5,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100006",
-        "Avatar": "Avatar/Role_100006"
+        "Avatar": "Avatar/Role_100006",
+        "Skel": "RoleSpine/Role_100006"
     },
     "100007": {
         "Id": 100007,
@@ -91,11 +103,13 @@
         "Price": 4,
         "Attack": 1,
         "Hp": 1,
+        "Biomes": 1,
         "Fetters": 5,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100007",
-        "Avatar": "Avatar/Role_100007"
+        "Avatar": "Avatar/Role_100007",
+        "Skel": "RoleSpine/Role_100007/kuangfeng_maoxianjia"
     },
     "100008": {
         "Id": 100008,
@@ -105,11 +119,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 2,
+        "Biomes": 1,
         "Fetters": 6,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100008",
-        "Avatar": "Avatar/Role_100008"
+        "Avatar": "Avatar/Role_100008",
+        "Skel": "RoleSpine/Role_100008"
     },
     "100009": {
         "Id": 100009,
@@ -119,11 +135,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
+        "Biomes": 1,
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100009",
-        "Avatar": "Avatar/Role_100009"
+        "Avatar": "Avatar/Role_100009",
+        "Skel": "RoleSpine/Role_100009"
     },
     "100010": {
         "Id": 100010,
@@ -133,11 +151,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 3,
+        "Biomes": 2,
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100010",
-        "Avatar": "Avatar/Role_100010"
+        "Avatar": "Avatar/Role_100010",
+        "Skel": "RoleSpine/Role_100010"
     },
     "100011": {
         "Id": 100011,
@@ -147,11 +167,13 @@
         "Price": 4,
         "Attack": 2,
         "Hp": 5,
+        "Biomes": 2,
         "Fetters": 6,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100011",
-        "Avatar": "Avatar/Role_100011"
+        "Avatar": "Avatar/Role_100011",
+        "Skel": "RoleSpine/Role_100011/yuanyang_jiapu.skel"
     },
     "100012": {
         "Id": 100012,
@@ -161,11 +183,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
+        "Biomes": 2,
         "Fetters": 8,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100012",
-        "Avatar": "Avatar/Role_100012"
+        "Avatar": "Avatar/Role_100012",
+        "Skel": "RoleSpine/Role_100012/yuanyang_kuangzhanshi"
     },
     "100013": {
         "Id": 100013,
@@ -175,11 +199,13 @@
         "Price": 4,
         "Attack": 7,
         "Hp": 10,
+        "Biomes": 2,
         "Fetters": 9,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100013",
-        "Avatar": "Avatar/Role_100013"
+        "Avatar": "Avatar/Role_100013",
+        "Skel": "RoleSpine/Role_100013/yuanyang_hushi"
     },
     "100014": {
         "Id": 100014,
@@ -189,11 +215,13 @@
         "Price": 5,
         "Attack": 3,
         "Hp": 5,
+        "Biomes": 2,
         "Fetters": 8,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100014",
-        "Avatar": "Avatar/Role_100014"
+        "Avatar": "Avatar/Role_100014",
+        "Skel": "RoleSpine/Role_100014/caoyuan_jixieshi"
     },
     "100015": {
         "Id": 100015,
@@ -203,11 +231,13 @@
         "Price": 4,
         "Attack": 1,
         "Hp": 7,
+        "Biomes": 2,
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100015",
-        "Avatar": "Avatar/Role_100015"
+        "Avatar": "Avatar/Role_100015",
+        "Skel": "RoleSpine/Role_100015"
     },
     "100016": {
         "Id": 100016,
@@ -217,11 +247,13 @@
         "Price": 5,
         "Attack": 2,
         "Hp": 4,
+        "Biomes": 2,
         "Fetters": 5,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100016",
-        "Avatar": "Avatar/Role_100016"
+        "Avatar": "Avatar/Role_100016",
+        "Skel": "RoleSpine/Role_100016"
     },
     "100017": {
         "Id": 100017,
@@ -231,11 +263,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
+        "Biomes": 2,
         "Fetters": 10,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100017",
-        "Avatar": "Avatar/Role_100017"
+        "Avatar": "Avatar/Role_100017",
+        "Skel": "RoleSpine/Role_100017"
     },
     "100018": {
         "Id": 100018,
@@ -245,11 +279,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 1,
+        "Biomes": 2,
         "Fetters": 11,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100018",
-        "Avatar": "Avatar/Role_100018"
+        "Avatar": "Avatar/Role_100018",
+        "Skel": "RoleSpine/Role_100018"
     },
     "100019": {
         "Id": 100019,
@@ -259,11 +295,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 1,
+        "Biomes": 3,
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100019",
-        "Avatar": "Avatar/Role_100019"
+        "Avatar": "Avatar/Role_100019",
+        "Skel": "RoleSpine/Role_100019"
     },
     "100020": {
         "Id": 100020,
@@ -273,11 +311,13 @@
         "Price": 4,
         "Attack": 6,
         "Hp": 3,
+        "Biomes": 3,
         "Fetters": 2,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100020",
-        "Avatar": "Avatar/Role_100020"
+        "Avatar": "Avatar/Role_100020",
+        "Skel": "RoleSpine/Role_100020"
     },
     "100021": {
         "Id": 100021,
@@ -287,11 +327,13 @@
         "Price": 5,
         "Attack": 1,
         "Hp": 1,
+        "Biomes": 3,
         "Fetters": 6,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100021",
-        "Avatar": "Avatar/Role_100021"
+        "Avatar": "Avatar/Role_100021",
+        "Skel": "RoleSpine/Role_100021/caoyuan_hushi"
     },
     "100022": {
         "Id": 100022,
@@ -301,11 +343,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 4,
+        "Biomes": 3,
         "Fetters": 4,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100022",
-        "Avatar": "Avatar/Role_100022"
+        "Avatar": "Avatar/Role_100022",
+        "Skel": "RoleSpine/Role_100022/conlin_kaungzhanshi"
     },
     "100023": {
         "Id": 100023,
@@ -315,11 +359,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
+        "Biomes": 3,
         "Fetters": 10,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100023",
-        "Avatar": "Avatar/Role_100023"
+        "Avatar": "Avatar/Role_100023",
+        "Skel": "RoleSpine/Role_100023"
     },
     "100024": {
         "Id": 100024,
@@ -329,11 +375,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 1,
+        "Biomes": 3,
         "Fetters": 12,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100024",
-        "Avatar": "Avatar/Role_100024"
+        "Avatar": "Avatar/Role_100024",
+        "Skel": "RoleSpine/Role_100024/conlin_moshushi"
     },
     "100025": {
         "Id": 100025,
@@ -343,11 +391,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 8,
+        "Biomes": 3,
         "Fetters": 10,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100025",
-        "Avatar": "Avatar/Role_100025"
+        "Avatar": "Avatar/Role_100025",
+        "Skel": "RoleSpine/Role_100025"
     },
     "100026": {
         "Id": 100026,
@@ -357,11 +407,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
+        "Biomes": 3,
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100026",
-        "Avatar": "Avatar/Role_100026"
+        "Avatar": "Avatar/Role_100026",
+        "Skel": "RoleSpine/Role_100026"
     },
     "100027": {
         "Id": 100027,
@@ -371,11 +423,13 @@
         "Price": 5,
         "Attack": 4,
         "Hp": 2,
+        "Biomes": 3,
         "Fetters": 9,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100027",
-        "Avatar": "Avatar/Role_100027"
+        "Avatar": "Avatar/Role_100027",
+        "Skel": "RoleSpine/Role_100027"
     },
     "100028": {
         "Id": 100028,
@@ -385,11 +439,13 @@
         "Price": 4,
         "Attack": 3,
         "Hp": 5,
+        "Biomes": 4,
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100028",
-        "Avatar": "Avatar/Role_100028"
+        "Avatar": "Avatar/Role_100028",
+        "Skel": "RoleSpine/Role_100028"
     },
     "100029": {
         "Id": 100029,
@@ -399,11 +455,13 @@
         "Price": 4,
         "Attack": 1,
         "Hp": 6,
+        "Biomes": 4,
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100029",
-        "Avatar": "Avatar/Role_100029"
+        "Avatar": "Avatar/Role_100029",
+        "Skel": "RoleSpine/Role_100029"
     },
     "100030": {
         "Id": 100030,
@@ -413,11 +471,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 2,
+        "Biomes": 4,
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100030",
-        "Avatar": "Avatar/Role_100030"
+        "Avatar": "Avatar/Role_100030",
+        "Skel": "RoleSpine/Role_100030"
     },
     "100031": {
         "Id": 100031,
@@ -427,11 +487,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 4,
+        "Biomes": 4,
         "Fetters": 12,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100031",
-        "Avatar": "Avatar/Role_100031"
+        "Avatar": "Avatar/Role_100031",
+        "Skel": "RoleSpine/Role_100031/gaoshan_jixieshi"
     },
     "100032": {
         "Id": 100032,
@@ -441,11 +503,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 5,
+        "Biomes": 4,
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100032",
-        "Avatar": "Avatar/Role_100032"
+        "Avatar": "Avatar/Role_100032",
+        "Skel": "RoleSpine/Role_100032/gaoshan_tiejiang"
     },
     "100033": {
         "Id": 100033,
@@ -455,11 +519,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
+        "Biomes": 4,
         "Fetters": 9,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100033",
-        "Avatar": "Avatar/Role_100033"
+        "Avatar": "Avatar/Role_100033",
+        "Skel": "RoleSpine/Role_100033"
     },
     "100034": {
         "Id": 100034,
@@ -469,11 +535,13 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 3,
+        "Biomes": 4,
         "Fetters": 1,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100034",
-        "Avatar": "Avatar/Role_100034"
+        "Avatar": "Avatar/Role_100034",
+        "Skel": "RoleSpine/Role_100034"
     },
     "100035": {
         "Id": 100035,
@@ -483,11 +551,13 @@
         "Price": 4,
         "Attack": 2,
         "Hp": 4,
+        "Biomes": 4,
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100035",
-        "Avatar": "Avatar/Role_100035"
+        "Avatar": "Avatar/Role_100035",
+        "Skel": "RoleSpine/Role_100035"
     },
     "100036": {
         "Id": 100036,
@@ -497,11 +567,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
+        "Biomes": 4,
         "Fetters": 3,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100036",
-        "Avatar": "Avatar/Role_100036"
+        "Avatar": "Avatar/Role_100036",
+        "Skel": "RoleSpine/Role_100036"
     },
     "100037": {
         "Id": 100037,
@@ -511,11 +583,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 3,
+        "Biomes": 5,
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100037",
-        "Avatar": "Avatar/Role_100037"
+        "Avatar": "Avatar/Role_100037",
+        "Skel": "RoleSpine/Role_100037"
     },
     "100038": {
         "Id": 100038,
@@ -525,11 +599,13 @@
         "Price": 4,
         "Attack": 2,
         "Hp": 3,
+        "Biomes": 5,
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100038",
-        "Avatar": "Avatar/Role_100038"
+        "Avatar": "Avatar/Role_100038",
+        "Skel": "RoleSpine/Role_100038"
     },
     "100039": {
         "Id": 100039,
@@ -539,11 +615,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
+        "Biomes": 5,
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100039",
-        "Avatar": "Avatar/Role_100039"
+        "Avatar": "Avatar/Role_100039",
+        "Skel": "RoleSpine/Role_100039"
     },
     "100040": {
         "Id": 100040,
@@ -553,11 +631,13 @@
         "Price": 4,
         "Attack": 4,
         "Hp": 7,
+        "Biomes": 5,
         "Fetters": 4,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100040",
-        "Avatar": "Avatar/Role_100040"
+        "Avatar": "Avatar/Role_100040",
+        "Skel": "RoleSpine/Role_100040"
     },
     "100041": {
         "Id": 100041,
@@ -567,11 +647,13 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 2,
+        "Biomes": 5,
         "Fetters": 10,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100041",
-        "Avatar": "Avatar/Role_100041"
+        "Avatar": "Avatar/Role_100041",
+        "Skel": "RoleSpine/Role_100041"
     },
     "100042": {
         "Id": 100042,
@@ -581,11 +663,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 6,
+        "Biomes": 5,
         "Fetters": 2,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100042",
-        "Avatar": "Avatar/Role_100042"
+        "Avatar": "Avatar/Role_100042",
+        "Skel": "RoleSpine/Role_100042"
     },
     "100043": {
         "Id": 100043,
@@ -595,11 +679,13 @@
         "Price": 5,
         "Attack": 2,
         "Hp": 4,
+        "Biomes": 5,
         "Fetters": 14,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100043",
-        "Avatar": "Avatar/Role_100043"
+        "Avatar": "Avatar/Role_100043",
+        "Skel": "RoleSpine/Role_100043"
     },
     "100044": {
         "Id": 100044,
@@ -609,11 +695,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 2,
+        "Biomes": 5,
         "Fetters": 9,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100044",
-        "Avatar": "Avatar/Role_100044"
+        "Avatar": "Avatar/Role_100044",
+        "Skel": "RoleSpine/Role_100044"
     },
     "100045": {
         "Id": 100045,
@@ -623,11 +711,13 @@
         "Price": 3,
         "Attack": 4,
         "Hp": 2,
+        "Biomes": 5,
         "Fetters": 2,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100045",
-        "Avatar": "Avatar/Role_100045"
+        "Avatar": "Avatar/Role_100045",
+        "Skel": "RoleSpine/Role_100045"
     },
     "100046": {
         "Id": 100046,
@@ -637,11 +727,13 @@
         "Price": 4,
         "Attack": 4,
         "Hp": 4,
+        "Biomes": 6,
         "Fetters": 12,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100046",
-        "Avatar": "Avatar/Role_100046"
+        "Avatar": "Avatar/Role_100046",
+        "Skel": "RoleSpine/Role_100046"
     },
     "100047": {
         "Id": 100047,
@@ -651,11 +743,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 2,
+        "Biomes": 6,
         "Fetters": 12,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100047",
-        "Avatar": "Avatar/Role_100047"
+        "Avatar": "Avatar/Role_100047",
+        "Skel": "RoleSpine/Role_100047"
     },
     "100048": {
         "Id": 100048,
@@ -665,11 +759,13 @@
         "Price": 3,
         "Attack": 2,
         "Hp": 5,
+        "Biomes": 6,
         "Fetters": 1,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100048",
-        "Avatar": "Avatar/Role_100048"
+        "Avatar": "Avatar/Role_100048",
+        "Skel": "RoleSpine/Role_100048"
     },
     "100049": {
         "Id": 100049,
@@ -679,11 +775,13 @@
         "Price": 3,
         "Attack": 3,
         "Hp": 2,
+        "Biomes": 6,
         "Fetters": 1,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100049",
-        "Avatar": "Avatar/Role_100049"
+        "Avatar": "Avatar/Role_100049",
+        "Skel": "RoleSpine/Role_100049"
     },
     "100050": {
         "Id": 100050,
@@ -693,11 +791,13 @@
         "Price": 4,
         "Attack": 3,
         "Hp": 4,
+        "Biomes": 6,
         "Fetters": 5,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100050",
-        "Avatar": "Avatar/Role_100050"
+        "Avatar": "Avatar/Role_100050",
+        "Skel": "RoleSpine/Role_100050"
     },
     "100051": {
         "Id": 100051,
@@ -707,11 +807,13 @@
         "Price": 3,
         "Attack": 6,
         "Hp": 4,
+        "Biomes": 6,
         "Fetters": 11,
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100051",
-        "Avatar": "Avatar/Role_100051"
+        "Avatar": "Avatar/Role_100051",
+        "Skel": "RoleSpine/Role_100051"
     },
     "100052": {
         "Id": 100052,
@@ -721,11 +823,13 @@
         "Price": 3,
         "Attack": 1,
         "Hp": 1,
+        "Biomes": 6,
         "Fetters": 6,
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100052",
-        "Avatar": "Avatar/Role_100052"
+        "Avatar": "Avatar/Role_100052",
+        "Skel": "RoleSpine/Role_100052"
     },
     "100053": {
         "Id": 100053,
@@ -735,11 +839,13 @@
         "Price": 5,
         "Attack": 5,
         "Hp": 5,
+        "Biomes": 6,
         "Fetters": 14,
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100053",
-        "Avatar": "Avatar/Role_100053"
+        "Avatar": "Avatar/Role_100053",
+        "Skel": "RoleSpine/Role_100053"
     },
     "100054": {
         "Id": 100054,
@@ -749,10 +855,12 @@
         "Price": 4,
         "Attack": 3,
         "Hp": 3,
+        "Biomes": 6,
         "Fetters": 14,
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100054",
-        "Avatar": "Avatar/Role_100054"
+        "Avatar": "Avatar/Role_100054",
+        "Skel": "RoleSpine/Role_100054"
     }
 }

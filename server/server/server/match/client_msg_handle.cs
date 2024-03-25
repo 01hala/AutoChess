@@ -222,7 +222,7 @@ namespace Match
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
-                if (baseCount(_player.BattleData.round) <= _player.BattleData.RoleList.Count)
+                if (baseCount(_player.BattleData.round) <= countRoleList(_player.BattleData.RoleList))
                 {
                     Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), _player.BattleData);
                 }
@@ -273,6 +273,19 @@ namespace Match
             }
         }
 
+        private int countRoleList(List<Role> roleList)
+        {
+            var count = 0;
+            foreach(var r in roleList)
+            {
+                if (r != null)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         private int baseCount(int round)
         {
             var _base = (round + 1) / 2;
@@ -306,7 +319,7 @@ namespace Match
                 return null;
             }
 
-            while (target.RoleList.Count < count)
+            while (countRoleList(target.RoleList) < count)
             {
                 target = await Match._redis_handle.RandomList<UserBattleData>(cache);
             }

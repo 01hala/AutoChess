@@ -33,6 +33,7 @@ export enum EventType {
     FriendlysideInjured=20,
     Kill=21,
     FrontAtk=22,
+    IntensifierExp = 23,
 }
 
 export enum ChangePositionType {
@@ -94,7 +95,7 @@ export enum GameDifficulty
     Hard=3
 }
 
-export enum Fetters
+export enum Biomes
 {
     Sea=1,
     Mountain=2,

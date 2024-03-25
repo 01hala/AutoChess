@@ -41,6 +41,7 @@ struct Fetters {
 
 struct Role {
 	int32 RoleID;
+	int32 BuyRound;
 	int32 Level;
 	int32 SkillID;
 	Fetters FettersSkillID;

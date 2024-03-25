@@ -150,7 +150,7 @@ export class Skill_AttGain_1 extends SkillBase
                 recipientRole.ChangeProperties(Property.Attack,recipientRole.GetProperty(Property.Attack) + this.attack);
 
                 event.recipient.push(roleInfo);
-                event.value = [this.health, this.health, this.attack];
+                event.value = [this.health, this.attack];
                 battle.AddBattleEvent(event);
             }
         }
@@ -202,7 +202,7 @@ export class Skill_AttGain_1 extends SkillBase
                 role.ChangeProperties(Property.TotalHP, role.GetProperty(Property.TotalHP) + this.health);
                 role.ChangeProperties(Property.Attack,role.GetProperty(Property.Attack) + this.attack);
             });
-            event.value = [this.health, this.health, this.attack];
+            event.value = [this.health,this.attack];
             battle.AddBattleEvent(event);
         }
         catch (error) 
@@ -268,7 +268,7 @@ export class Skill_AttGain_1 extends SkillBase
                     event.recipient.push(roleInfo);
                 }
             }
-            event.value = [this.health, this.health, this.attack];
+            event.value = [this.health, this.attack];
             battle.AddBattleEvent(event);
         }
         catch(error)

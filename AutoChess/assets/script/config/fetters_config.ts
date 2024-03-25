@@ -29,6 +29,7 @@ export class FettersConfig {
     public RefreshItemID: number;
     public RefreshItemNum: number;
     public AddBufferID: number;
+    public Res:string;
 }
 
 export async function LoadFettersConfig() : Promise<Map<number, FettersConfig>> {
@@ -73,6 +74,7 @@ export async function LoadFettersConfig() : Promise<Map<number, FettersConfig>> 
                 fettersc.RefreshItemID =  v["RefreshItemID"];
                 fettersc.RefreshItemNum =  v["RefreshItemNum"];
                 fettersc.AddBufferID =  v["AddBufferID"];
+                fettersc.Res=v["Res"];
 
                 map.set(parseInt(k), fettersc);
             });

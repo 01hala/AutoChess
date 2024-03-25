@@ -194,7 +194,7 @@ export class RoleIcon extends Component
                     //购买、合并角色
                     if (null != this.index) {
                         console.log("欲购买或者移动角色");
-                        if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() >= 3) {
+                        if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() >= 3) {
                             console.log("角色未购买并且金币数量大于等于3");
                             this.freezeSprite.active = false;
                             if (null != this.target || this.isMerge) {
@@ -205,7 +205,7 @@ export class RoleIcon extends Component
                                     //     this.roleArea.targets.set(this.target.name,this.node);
                                     // }
                                     await this.shopArea.BuyRole(this.index, this.node, this.isMerge);
-                                    console.log("购买时，欲购买位置角色信息：" + this.roleArea.rolesNode[this.tempIndex].name + "是否合并" + this.isMerge);
+                                    console.log(`购买时，欲在 ${this.index} 购买位置角色信息：` + this.roleArea.rolesNode[this.tempIndex].name + "是否合并" + this.isMerge);
                                 }
                                 else console.log("purchase failed, there is already a character at the purchase location");
                             }
@@ -216,7 +216,7 @@ export class RoleIcon extends Component
                                 return;
                             }
                         }
-                        else if (!this.isBuy && singleton.netSingleton.ready.ready.GetCoins() < 3) {
+                        else if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() < 3) {
                             TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                         }
                     }

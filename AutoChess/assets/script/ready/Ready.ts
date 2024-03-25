@@ -135,6 +135,18 @@ export class Ready
         }
     }
 
+    public GetRole(_id:number)
+    {
+        for(let r of this.roles)
+        {
+            if(r.RoleID==_id)
+            {
+                return r;
+            }
+        }
+        return null;
+    }
+
     public SetShopData(data:common.ShopData)
     {
         if(data)

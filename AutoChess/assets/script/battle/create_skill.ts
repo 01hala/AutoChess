@@ -105,6 +105,15 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
             skillObj = new Skill_SubstituteDamage_11.Skill_SubstituteDamage_11(skillConfig.Priority, skillConfig.ChangePositionType, value0, value1);
         }
         break;
+        case common.SkillEffectEM.AddTmpExp:{
+            
+        }break;
+        case common.SkillEffectEM.ReductionPrice:{
+
+        }break;
+        case common.SkillEffectEM.AddPropertyByCoin:{
+
+        }break;
     }
 
     return skillObj;

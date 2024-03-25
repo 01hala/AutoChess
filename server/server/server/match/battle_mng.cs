@@ -560,6 +560,7 @@ namespace Match
                 var r = new Role();
 
                 r.RoleID = role_id;
+                r.BuyRound = battleData.round;
                 r.Level = role_Level;
                 r.SkillID = rcfg.SkillID;
                 r.Number = (r.Level - 1) * 3 + 1;

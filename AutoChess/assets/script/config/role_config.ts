@@ -18,6 +18,7 @@ export class RoleConfig {
     public Res : string;
     public Avatar:string;
     public Skel:string;
+    public Biomes:number;
 }
 
 export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
@@ -47,6 +48,7 @@ export async function LoadRoleConfig() : Promise<Map<number, RoleConfig>> {
                 rolec.Res = v["Res"];
                 rolec.Avatar=v["Avatar"];
                 rolec.Skel=v["Skel"];
+                rolec.Biomes=v["Biomes"];
 
                 map.set(parseInt(k), rolec);
             });
