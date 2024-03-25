@@ -24,8 +24,8 @@ export class ReadyDis
     //操作界面
     public roleArea:RoleArea;
     public shopArea:ShopArea;
-    //主控
-    public ready:Ready;
+    //主要数据
+    public readyData:Ready;
     //动效
     private launchSkillEffect:Node;
 
@@ -45,7 +45,7 @@ export class ReadyDis
 
     public constructor(ready:Ready) 
     {
-        this.ready = ready;
+        this.readyData = ready;
         this.onEvent();
     }
 /*
@@ -90,13 +90,13 @@ export class ReadyDis
             {
                 await this.Init(father);
                 //准备开始
-                this.ready.StartReady();
+                this.readyData.StartReady();
                 //this.coinText.string=""+this.ready.coin;
                 //await this.RefreshShop()
                 if (battle_info.round > 1) {
                     await this.Restore(battle_info);
                 }
-                this.shopArea.Init(this.ready.GetShopRoles(), this.ready.GetShopProps(),this.ready.GetStage());
+                this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(),this.readyData.GetStage());
                 //隐藏等待界面
                 this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
                 this.waitingPanel.active = false;
@@ -130,7 +130,7 @@ export class ReadyDis
             this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () => {
                 if (this.roleArea.GetRolesNumber() > 0) {
-                    await this.ready.StartBattle();
+                    await this.readyData.StartBattle();
                     this.panelNode.active = false;
                     this.destory();
                 }
@@ -178,14 +178,14 @@ export class ReadyDis
     {
         //注册回调
         singleton.netSingleton.game.cb_battle_info = (battle_info: common.UserBattleData) => {
-            this.ready.SetCoins(battle_info.coin);
-            this.ready.SetRoles(battle_info.RoleList);
+            this.readyData.SetCoins(battle_info.coin);
+            this.readyData.SetRoles(battle_info.RoleList);
             //console.log('player coin: ',battle_info.coin);
             this.UpdatePlayerInfo(battle_info);
         };
         singleton.netSingleton.game.cb_shop_info = (shop_info: common.ShopData) => {
             console.log("shop_info:", shop_info);
-            this.ready.SetShopData(shop_info);
+            this.readyData.SetShopData(shop_info);
         };
         singleton.netSingleton.game.cb_role_buy_merge = (target_role_index: number, target_role: common.Role, is_update: boolean) => 
         {
@@ -226,12 +226,12 @@ export class ReadyDis
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).Equipping(target_role,equip_id);
         }
         singleton.netSingleton.game.cb_role_update_refresh_shop=(shop_info: common.ShopData)=> {
-            this.ready.SetShopData(shop_info);
-            this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps(),this.ready.GetStage());
+            this.readyData.SetShopData(shop_info);
+            this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
         };
         singleton.netSingleton.game.cb_add_coin=(coin:number)=>
         {
-            this.ready.SetCoins(coin);
+            this.readyData.SetCoins(coin);
             this.coinText.string=""+coin;
         };
         singleton.netSingleton.game.cb_role_skill_update=async (role_index:number,_role:common.Role)=>
@@ -278,9 +278,9 @@ export class ReadyDis
     //刷新商店
     private async RefreshShop()
     {
-        await this.ready.Refresh();
+        await this.readyData.Refresh();
         console.log('refresh');
-        this.shopArea.Init(this.ready.GetShopRoles(),this.ready.GetShopProps(),this.ready.GetStage());
+        this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
     }
     //更新玩家信息
     private async UpdatePlayerInfo(_battle_info:common.UserBattleData)
@@ -329,7 +329,7 @@ export class ReadyDis
 
     onEvent()
     {
-        this.ready.on_event = async (evs) =>
+        this.readyData.on_event = async (evs) =>
         {
             
         }

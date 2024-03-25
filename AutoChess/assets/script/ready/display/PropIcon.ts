@@ -208,7 +208,7 @@ export class PropIcon extends Component
                 this.touchStartPoint = new Vec2(0, 0);
                 console.log("结束道具拖拽，结束拖拽时道具的目标人物："+this.target+"，对应位置下标："+this.index);
                 //使用道具
-                if(null != this.index && null != this.target && singleton.netSingleton.ready.ready.GetCoins()>=3)
+                if(null != this.index && null != this.target && singleton.netSingleton.ready.readyData.GetCoins()>=3)
                 {
                     try{
                         console.log("成功通过购买道具时的人物、下标和金币检测");
@@ -234,7 +234,7 @@ export class PropIcon extends Component
                     }
                     
                 }
-                else if(null != this.index && null != this.target && singleton.netSingleton.ready.ready.GetCoins()<3)
+                else if(null != this.index && null != this.target && singleton.netSingleton.ready.readyData.GetCoins()<3)
                 {
                     TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                 }

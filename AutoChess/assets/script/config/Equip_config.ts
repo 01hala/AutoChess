@@ -15,6 +15,7 @@ export class EquipConfig {
     public AttackBonus:number;
     public HpBonus:number;
     public Vaule:number[];
+    public Res:string;
 }
 
 export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
@@ -59,6 +60,7 @@ export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
                     v1.push(parseInt(s));
                 }
                 equipc.Vaule=v1;
+                equipc.Res=v["Res"];
 
                 map.set(parseInt(k), equipc);
                 console.log("Load Equips Config End!");
