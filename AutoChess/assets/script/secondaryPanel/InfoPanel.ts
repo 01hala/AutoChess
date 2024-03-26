@@ -156,7 +156,7 @@ export class InfoPanel extends Component
         //装备图片
         this.detailedBoard.getChildByPath("DetailsArea/Equip/Sprite").getComponent(Sprite).spriteFrame=imgs[0];
         //羁绊图标
-        this.detailedBoard.getChildByPath("DetailsArea/Fetters/Sprite").getComponent(Sprite).spriteFrame=imgs[1];
+        this.detailedBoard.getChildByPath("DetailsArea/Fetters/Sprite/Icon").getComponent(Sprite).spriteFrame=imgs[1];
         
     }
 

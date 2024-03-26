@@ -9,6 +9,8 @@
     "compressionType": {},
     "isRemoteBundle": {
       "wechatgame": true
-    }
+    },
+    "isBundle": true,
+    "bundleName": "IconTexture"
   }
 }

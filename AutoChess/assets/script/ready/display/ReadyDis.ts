@@ -13,6 +13,8 @@ import * as singleton from '../../netDriver/netSingleton';
 import * as common from '../../serverSDK/common';
 import { login } from '../../login/login';
 import { RoleIcon } from './RoleIcon';
+import { config } from '../../config/config';
+import { loadAssets } from '../../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -117,7 +119,7 @@ export class ReadyDis
             //羁绊信息框
             let tNode = this.panelNode.getChildByPath("TopArea/FetterArea");
             for (let i = 1; i <= 6; i++) {
-                let t = tNode.getChildByName("FetterInfo_" + i);
+                let t = tNode.getChildByName("FettersIcon_" + i);
                 t.active = false;
                 this.fetters.push(t);
             }
@@ -290,40 +292,40 @@ export class ReadyDis
         this.roundText.string=""+_battle_info.round;
         this.trophyText.string=""+_battle_info.victory;
         console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
-        for(let i=0;i<6;i++){
-            if(i<_battle_info.FettersList.length){
+        for(let i=0;i<6;i++)
+        {
+            if(i<_battle_info.FettersList.length)
+            {
                 this.fetters[i].active=true;
-                let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
-                let sf:SpriteFrame=await this.LoadFetterImg("FetterImg",str);
+                //let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
+                let str=config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Res;
+                let sf:SpriteFrame=await this.LoadFetterImg(str);
                 if(sf)
                 {
-                    this.fetters[i].getChildByName("icon").getComponent(Sprite).spriteFrame=sf;             
+                    this.fetters[i].getChildByName("IconImage").getComponent(Sprite).spriteFrame=sf;             
                 }
-                this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
+                str="Icons/Fetters/lv_"+_battle_info.FettersList[i].fetters_level;
+                sf=await loadAssets.LoadImg(str);
+                //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
+                this.fetters[i].getComponent(Sprite).spriteFrame=sf;
                 continue;
             }
             this.fetters[i].active=false;
         }       
     }
 
-    private LoadFetterImg(_bundle:string,_address:string):Promise<SpriteFrame>
+    private LoadFetterImg(_address:string):Promise<SpriteFrame>
     {
         return new Promise(async (resolve)=>
         {
             let imgRes=""+_address;
-            let temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
+            let temp=await loadAssets.LoadImg(_address);
             if(null==temp)
             {
                  console.warn('ReadyDis 里的 LoadFetterImg 异常 : bundle中没有此羁绊图标,替换为默认羁绊图标');
                  resolve(null);
-                 //imgRes=""+_address+1001;
-                 //temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
             }
-            let texture=new Texture2D();
-            texture.image=temp;
-            let sp=new SpriteFrame();
-            sp.texture=texture;  
-            resolve(sp);
+            resolve(temp);
         });
     }
 
