@@ -304,7 +304,7 @@ export class ReadyDis
                 {
                     this.fetters[i].getChildByName("IconImage").getComponent(Sprite).spriteFrame=sf;             
                 }
-                str="Icons/Fetters/lv_"+_battle_info.FettersList[i].fetters_level;
+                str="IconTexture/Fetters/lv_"+_battle_info.FettersList[i].fetters_level;
                 sf=await loadAssets.LoadImg(str);
                 //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
                 this.fetters[i].getComponent(Sprite).spriteFrame=sf;
