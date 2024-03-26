@@ -43,7 +43,6 @@ export class ReadyDis
     private fetters:Node[]=[];
 
     private waitingPanel:Node;
-    public infoPanel:Node;
 
     public constructor(ready:Ready) 
     {
@@ -70,11 +69,6 @@ export class ReadyDis
             this.waitingPanel=instantiate(panel);
             this.waitingPanel.setParent(this.panelNode);
             this.waitingPanel.setSiblingIndex(100);
-            //信息二级界面
-            panel=await BundleManager.Instance.loadAssetsFromBundle("Board", "Information") as Prefab;
-            this.infoPanel=instantiate(panel);
-            this.infoPanel.setParent(this.panelNode);
-            this.infoPanel.active=false;
             //操作区域
             this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
             this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
@@ -287,31 +281,38 @@ export class ReadyDis
     //更新玩家信息
     private async UpdatePlayerInfo(_battle_info:common.UserBattleData)
     {
-        this.coinText.string=""+_battle_info.coin;
-        this.heathText.string=""+_battle_info.faild;
-        this.roundText.string=""+_battle_info.round;
-        this.trophyText.string=""+_battle_info.victory;
-        console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
-        for(let i=0;i<6;i++)
+        try
         {
-            if(i<_battle_info.FettersList.length)
+            this.coinText.string=""+_battle_info.coin;
+            this.heathText.string=""+_battle_info.faild;
+            this.roundText.string=""+_battle_info.round;
+            this.trophyText.string=""+_battle_info.victory;
+            console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
+            for(let i=0;i<6;i++)
             {
-                this.fetters[i].active=true;
-                //let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
-                let str=config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Res;
-                let sf:SpriteFrame=await this.LoadFetterImg(str);
-                if(sf)
+                if(i<_battle_info.FettersList.length)
                 {
-                    this.fetters[i].getChildByName("IconImage").getComponent(Sprite).spriteFrame=sf;             
+                    this.fetters[i].active=true;
+                    //let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
+                    let str=config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Res;
+                    let sf:SpriteFrame=await this.LoadFetterImg(str);
+                    if(sf)
+                    {
+                        this.fetters[i].getChildByName("IconImage").getComponent(Sprite).spriteFrame=sf;             
+                    }
+                    str="IconTexture/Fetters/lv_"+_battle_info.FettersList[i].fetters_level;
+                    sf=await loadAssets.LoadImg(str);
+                    //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
+                    this.fetters[i].getComponent(Sprite).spriteFrame=sf;
+                    continue;
                 }
-                str="IconTexture/Fetters/lv_"+_battle_info.FettersList[i].fetters_level;
-                sf=await loadAssets.LoadImg(str);
-                //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
-                this.fetters[i].getComponent(Sprite).spriteFrame=sf;
-                continue;
-            }
-            this.fetters[i].active=false;
-        }       
+                this.fetters[i].active=false;
+            }       
+        }
+       catch(error)
+        {
+            console.error("ReadyDis 里的 UpdatePlayerInfo 错误 err:",error);
+        }
     }
 
     private LoadFetterImg(_address:string):Promise<SpriteFrame>

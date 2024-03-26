@@ -18,7 +18,8 @@ import { Role as rRole } from '../role';
 import { netSingleton } from '../../netDriver/netSingleton';
 import { battle_victory } from '../../serverSDK/ccallmatch';
 import { Team } from '../team';
-import { TipsManager } from '../../tips/TipsManager';
+import { GameManager } from '../../other/GameManager';
+import { SendMessage } from '../../other/MessageEvent';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -163,13 +164,13 @@ export class BattleDis
             if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
                 (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
             {
-                //this.victory.getComponent(Label).string = (is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
                 let msg=(is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
-                TipsManager.Instance.ShowTip(msg);
+                let text="<outline color=black width=4>"+msg+"</outline>";
+                this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,text));
             }
-            else if (is_victory == battle_victory.tie) {
-                //this.victory.getComponent(Label).string = "战斗平局!";
-                TipsManager.Instance.ShowTip("战斗平局!");
+            else if (is_victory == battle_victory.tie) 
+            {
+                this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>战斗平局!</outline>"));
             }
 
             await sleep(4000);
@@ -183,11 +184,11 @@ export class BattleDis
         
     }
 
-    async SetGameVictory(is_victory:boolean) {
-        //this.victory.active = true;
-        //this.victory.getComponent(Label).string = is_victory ? "游戏胜利!" : "游戏失败!";
+    async SetGameVictory(is_victory:boolean) 
+    {
         let msg=is_victory ? "游戏胜利!" : "游戏失败!";
-        TipsManager.Instance.ShowTip(msg);
+        let text="<outline color=black width=4>"+msg+"</outline>";
+        this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,text));
 
         await sleep(4000);
     }

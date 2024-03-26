@@ -139,7 +139,7 @@ export class Ready
     {
         for(let r of this.roles)
         {
-            if(r.RoleID==_id)
+            if(null!=r && r.RoleID==_id)
             {
                 return r;
             }

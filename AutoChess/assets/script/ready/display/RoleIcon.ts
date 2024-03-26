@@ -19,7 +19,8 @@ import { Camp, Property } from '../../other/enums';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
-import { TipsManager } from '../../tips/TipsManager';
+import { GameManager } from '../../other/GameManager';
+import { SendMessage } from '../../other/MessageEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -134,13 +135,6 @@ export class RoleIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
                 this.OffTirrger();
-                //重新注册按钮事件
-                this.node.on(Button.EventType.CLICK, () => {
-                    singleton.netSingleton.ready.infoPanel.active = true;
-                    let roleInfo :RoleDis=null;
-                    if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
-                    singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
-                });
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //重置值
@@ -216,8 +210,10 @@ export class RoleIcon extends Component
                                 return;
                             }
                         }
-                        else if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() < 3) {
-                            TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
+                        else if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() < 3) 
+                        {
+                            this.node.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>金 币 不 足</outline>"));
+                            //GameManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                         }
                     }
                     //console.log(this.isMerge);
@@ -329,7 +325,7 @@ export class RoleIcon extends Component
             resolve(sp);
         });
     }
-
+    //从配置文件加载
     private async LoadOnConfig()
     {
         let jconfig = config.RoleConfig.get(this.roleId);
@@ -339,36 +335,14 @@ export class RoleIcon extends Component
             this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame=img;
         }
     }
-/*----------------------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------拖拽事件---------------------------------------------------------*/
-/*----------------------------------------------------------------------------------------------------------------*/
-
-    private RegBtn(flag:boolean)
+    //点击事件
+    private ClickBtn()
     {
-        if(flag)
-        {
-            //注册按钮事件
-            this.node.on(Button.EventType.CLICK,()=>
-            {
-                singleton.netSingleton.ready.infoPanel.active=true;
-                let roleInfo :RoleDis=null;
-                if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
-                
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
-            });
-        }
-        else
-        {
-            //关闭按钮事件
-            this.node.off(Button.EventType.CLICK);
-        }
-    }
-    private ClickBtn(){
-        singleton.netSingleton.ready.infoPanel.active=true;
         let roleInfo :RoleDis=null;
         if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
         
-        singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
+        //singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
+        this.node.dispatchEvent(new SendMessage('OpenInfoBoard',true,{id:this.roleId , role:roleInfo , isBuy:this.isBuy}));
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/

@@ -9,7 +9,8 @@ import { config } from '../../config/config';
 import { BundleManager } from '../../bundle/BundleManager';
 import * as common from '../../serverSDK/common';
 import { loadAssets } from '../../bundle/LoadAsset';
-import { TipsManager } from '../../tips/TipsManager';
+import { GameManager } from '../../other/GameManager';
+import { SendMessage } from '../../other/MessageEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -236,7 +237,8 @@ export class PropIcon extends Component
                 }
                 else if(null != this.index && null != this.target && singleton.netSingleton.ready.readyData.GetCoins()<3)
                 {
-                    TipsManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
+                    //GameManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
+                    this.node.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>金 币 不 足</outline>"));
                 }
                 //冻结道具
                 if(this.isFreeze && !this.isBuy)
@@ -309,27 +311,10 @@ export class PropIcon extends Component
         }
     }
 
-    private RegBtn(flag:boolean)
+    private ClickBtn()
     {
-        if(flag)
-        {
-            //注册按钮事件
-            this.node.on(Button.EventType.CLICK,()=>
-            {
-                console.log("点击食物查看详细信息"+this.propType);
-                singleton.netSingleton.ready.infoPanel.active=true;
-                singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
-            });
-        }
-        else
-        {
-            //关闭按钮事件
-            this.node.off(Button.EventType.CLICK);
-        }
-    }
-    private ClickBtn(){
-        singleton.netSingleton.ready.infoPanel.active=true;
-        singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
+        this.node.dispatchEvent(new SendMessage('OpenInfoBoard',true,{id:this.propId , role:null , isBuy:false , propType:this.propType}));
+        //singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/
