@@ -222,9 +222,13 @@ namespace Match
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
+                if (baseCount(_player.BattleData.round) <= countRoleList(_player.BattleData.RoleList))
+                {
+                    Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), _player.BattleData);
+                }
+
                 _player.BattleData.round++;
                 _player.BattleData.stage = (_player.BattleData.round + 1) / 2;
-                Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), _player.BattleData);
 
                 if (is_victory == battle_victory.victory)
                 {
@@ -282,7 +286,7 @@ namespace Match
             return count;
         }
 
-        private async Task<UserBattleData> getCacheBattleData(int round)
+        private int baseCount(int round)
         {
             var _base = (round + 1) / 2;
             _base = _base < 6 ? _base : 6;
@@ -301,6 +305,13 @@ namespace Match
                 count = 6;
             }
 
+            return count;
+        }
+
+        private async Task<UserBattleData> getCacheBattleData(int round)
+        {
+            var count = baseCount(round);
+
             var cache = RedisHelp.BuildAutoChessBattleCache(round);
             var target = await Match._redis_handle.RandomList<UserBattleData>(cache);
             if (target == null)
@@ -308,11 +319,9 @@ namespace Match
                 return null;
             }
 
-            var i = 0;
-            while (countRoleList(target.RoleList) < count && i < 3)
+            while (countRoleList(target.RoleList) < count)
             {
                 target = await Match._redis_handle.RandomList<UserBattleData>(cache);
-                i++;
             }
 
             return target;
