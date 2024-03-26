@@ -602,13 +602,13 @@ export class BattleDis
         {
             try 
             {
-                await this.CheckAttackEvent(evs);
                 await this.CheckRemoteInjured(evs);
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
+                await this.CheckExitEvent(evs);
+                await this.CheckAttackEvent(evs);
                 await this.ChangeAttEvent(evs);
                 await this.CheckAttExpEvent(evs);
-                await this.CheckExitEvent(evs);
             }
             catch(error) 
             {

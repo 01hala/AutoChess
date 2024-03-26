@@ -23,6 +23,7 @@ export class Event {
     public recipient : RoleInfo[];
     public value : number[];
     public is_trigger_floating : boolean = false;
+    public priority:number=1;
 }
 
 export abstract class SkillTriggerBase {

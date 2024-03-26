@@ -164,6 +164,7 @@ export class Role {
         ev.recipient.push(recipient);
         ev.value = [];
         ev.value.push(damage);
+        ev.priority=0;
         battle.AddBattleEvent(ev);
         
         if (this.CheckDead()) {
