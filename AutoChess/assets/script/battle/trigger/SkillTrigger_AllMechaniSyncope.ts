@@ -22,7 +22,7 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
         this.targetFetterID = config.config.MechanicFetters;
     }
 
-    override CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,battle?: Battle): boolean 
+    override CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,battle?: Battle): number
     {
         try
         {
@@ -33,7 +33,7 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
         
-        return false;
+        return 0;
     }
 
     private checkHasMechaniFetter(selfInfo: RoleInfo, battle: Battle) {
@@ -56,7 +56,7 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
         return true;
     }
 
-    private  CheckSkill(frameEvent: Event[], selfInfo: RoleInfo, battle: Battle): boolean
+    private  CheckSkill(frameEvent: Event[], selfInfo: RoleInfo, battle: Battle): number
     {
         try
         {

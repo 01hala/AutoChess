@@ -24,10 +24,12 @@ export class Event {
     public value : number[];
     public is_trigger_floating : boolean = false;
     public priority:number=1;
+    //是否是并行发动的
+    public isParallel:boolean=false;
 }
 
 export abstract class SkillTriggerBase {
-    abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean;
+    abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number;
 }
 
 export abstract class SkillBase {
