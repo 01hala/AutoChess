@@ -32,13 +32,13 @@ export class Skill_RemoteAtk_3 extends SkillBase
     }
 
     event:Event=new Event();
-    UseSkill(selfInfo: RoleInfo, battle: Battle): void 
+    UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
     {
         try 
         {
             if(6>=this.numberOfRole && !this.isAll)
             {
-                this.SkillEffect_1(selfInfo,battle);
+                this.SkillEffect_1(selfInfo,battle,isParallel);
             }
             else
             {
@@ -47,7 +47,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
 
             if(this.isAll)
             {
-                this.SkillEffect_2(selfInfo,battle);
+                this.SkillEffect_2(selfInfo,battle,isParallel);
             }
             
         } 
@@ -57,7 +57,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
         }   
     }
 
-    private SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void          //随机对象生效
+    private SkillEffect_1(selfInfo: RoleInfo, battle: Battle,isPar:boolean):void          //随机对象生效
     {
         try
         {
@@ -66,6 +66,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
             let recipientRoles:Role[] = new Array();
             let self:Role = null;
             let enemyRoles:Role[] = null;
+            this.event.isParallel=isPar
 
             if(Camp.Self==selfInfo.camp)
             {
@@ -94,9 +95,10 @@ export class Skill_RemoteAtk_3 extends SkillBase
         }
     }
 
-    private SkillEffect_2(selfInfo: RoleInfo, battle: Battle)         //场上全部生效
+    private SkillEffect_2(selfInfo: RoleInfo, battle: Battle,isPar:boolean)         //场上全部生效
     {
         let self:Role=null;
+        this.event.isParallel=isPar;
 
         if(Camp.Self==selfInfo.camp)
         {

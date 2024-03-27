@@ -33,14 +33,14 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
     }
 
     event:Event=new Event();
-    UseSkill(selfInfo: RoleInfo, battle: Battle): void 
+    UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
     {
         try 
         {
 
             if(6>=this.numberOfRole && !this.isAll)
             {
-                this.SkillEffect_1(selfInfo,battle,this.attack*(1+selfInfo.properties.get(enums.Property.Attack)));
+                this.SkillEffect_1(selfInfo,battle,this.attack*(1+selfInfo.properties.get(enums.Property.Attack)),isParallel);
             }
             else
             {
@@ -59,13 +59,15 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
         }   
     }
 
-    SkillEffect_1(selfInfo: RoleInfo, battle: Battle,attack:number)               //随机对象生效
+    SkillEffect_1(selfInfo: RoleInfo, battle: Battle,attack:number,isPar:boolean)               //随机对象生效
     {
         try
         {
             let recipientRoles:Role[] = new Array();
             let self:Role = null;
             let enemyRoles:Role[] = null;
+            this.event.isParallel=isPar;
+
             attack=Math.round(attack);                                          //四舍五入
             if(attack<1)
             {
@@ -100,7 +102,7 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
         }
     }
 
-    SkillEffect_2(selfInfo: RoleInfo, battle: Battle)
+    SkillEffect_2(selfInfo: RoleInfo, battle: Battle,isPar:boolean)
     {
 
     }

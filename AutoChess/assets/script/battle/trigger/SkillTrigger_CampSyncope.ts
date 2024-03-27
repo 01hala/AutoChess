@@ -8,7 +8,7 @@ export class SkillTrigger_CampSyncope extends SkillTriggerBase {
     public res:string="battle/skill/SkillTrigger_CampSyncope";
     public EventType:EventType=EventType.Syncope;
 
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
+    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number
     {
         try
         {
@@ -19,10 +19,10 @@ export class SkillTrigger_CampSyncope extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
         
-        return false;
+        return 0;
     }
 
-    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
+    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): number
     {
         try
         {
@@ -31,7 +31,7 @@ export class SkillTrigger_CampSyncope extends SkillTriggerBase {
                     console.log("CheckSkill element:", element, " selfInfo:", selfInfo);
                     if(element.spellcaster.camp == selfInfo.camp) {
                         console.log("CheckSkill CampSyncope!");
-                        return true;
+                        return 1;
                     }
                 } 
             }
@@ -41,7 +41,7 @@ export class SkillTrigger_CampSyncope extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
 }
 

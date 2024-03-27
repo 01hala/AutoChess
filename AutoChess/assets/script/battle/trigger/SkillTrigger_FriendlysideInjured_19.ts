@@ -22,7 +22,7 @@ export class SkillTrigger_FriendlysideInjured_19 extends SkillTriggerBase
         this.dir=dir;
     }
 
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,): boolean {
+    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,): number {
         try
         {
             return this.CheckSkill(frameEvent,selfInfo);          
@@ -32,10 +32,10 @@ export class SkillTrigger_FriendlysideInjured_19 extends SkillTriggerBase
             console.warn(this.res+"下的 CheckSkillTrigger 错误");            
         }
 
-        return false;
+        return 0;
     }
 
-    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
+    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): number
     {
         try
         {
@@ -45,20 +45,20 @@ export class SkillTrigger_FriendlysideInjured_19 extends SkillTriggerBase
                         if(_recipient.camp == selfInfo.camp && _recipient.index != selfInfo.index) {
                             switch(this.dir){
                                 case Direction.Forward:
-                                    if(_recipient.index+3==selfInfo.index) return true; 
+                                    if(_recipient.index+3==selfInfo.index) return 1; 
                                     break;
                                 case Direction.Back:
-                                    if(_recipient.index-3==selfInfo.index) return true;
+                                    if(_recipient.index-3==selfInfo.index) return 1;
                                     break;
                                 case Direction.Left:
                                     if(((1==selfInfo.index||4==selfInfo.index)&&_recipient.index-1==selfInfo.index)
-                                    ||(3==selfInfo.index||6==selfInfo.index)&&_recipient.index+2==selfInfo.index) return true;
+                                    ||(3==selfInfo.index||6==selfInfo.index)&&_recipient.index+2==selfInfo.index) return 1;
                                     break;
                                 case Direction.Rigiht:
                                     if(((2==selfInfo.index||5==selfInfo.index)&&_recipient.index+1==selfInfo.index)
-                                    ||(1==selfInfo.index||4==selfInfo.index)&&_recipient.index-2==selfInfo.index) return true;
+                                    ||(1==selfInfo.index||4==selfInfo.index)&&_recipient.index-2==selfInfo.index) return 1;
                                     break;
-                                default:return true;
+                                default:return 1;
                             }
                         }
                     }
@@ -70,7 +70,7 @@ export class SkillTrigger_FriendlysideInjured_19 extends SkillTriggerBase
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
 }
 

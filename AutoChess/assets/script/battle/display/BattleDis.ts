@@ -218,8 +218,9 @@ export class BattleDis
         this.battleEffectImg.active=_bool;
     }
 
-    private showLaunchSkillEffect()
+    private showLaunchSkillEffect(isParallel:boolean=false)
     {
+        if(isParallel) return this.delay(0,()=>{});
         this.launchSkillEffect.active=true;
 
         this.launchSkillEffect.getChildByPath("BottomImg").getComponent(sp.Skeleton).animation="a2";
@@ -322,7 +323,7 @@ export class BattleDis
                 }
                 else
                 {
-                    await this.showLaunchSkillEffect();
+                    await this.showLaunchSkillEffect(ev.isParallel);
                 }
 
                 //console.log("checkRemoteInjured RemoteInjured");
@@ -368,7 +369,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    this.showLaunchSkillEffect(ev.isParallel);
                 }
 
                 //释放技能者所在阵营列表
@@ -405,7 +406,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    this.showLaunchSkillEffect(ev.isParallel);
                 }
                 console.log("检测到加临时经验值事件");
                 
@@ -452,7 +453,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    this.showLaunchSkillEffect(ev.isParallel);
                 }
                 console.log("检测到加属性事件");
                 

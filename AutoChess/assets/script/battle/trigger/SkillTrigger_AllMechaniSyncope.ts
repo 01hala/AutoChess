@@ -61,11 +61,11 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
         try
         {
             if (!this.checkHasMechaniFetter(selfInfo, battle)) {
-                return false;
+                return 1;
             }
 
             if (this.checkAllMechaniSyncope(selfInfo, battle)) {
-                return true;
+                return 1;
             }
         }
         catch (error) 
@@ -73,7 +73,7 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
 }
 

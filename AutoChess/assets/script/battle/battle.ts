@@ -285,8 +285,11 @@ export class Battle {
                 roleInfo.camp = enums.Camp.Self;
                 let p = 0;
                 let skillImpl: skill.SkillBase = null;
+                let isPar=false;
                 for(let skill of role.skill) {
-                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
+                    let flag=skill.trigger.CheckSkillTrigger(evs, roleInfo)
+                    if (flag) {
+                        if(2==flag) isPar=true;
                         if (skill.skill.Priority > p) {
                             skillImpl = skill.skill;
                             p = skill.skill.Priority;
@@ -295,7 +298,7 @@ export class Battle {
                 }
                 if (skillImpl) {
                     role.LockSkill();
-                    skillImpl.UseSkill(roleInfo, this);
+                    skillImpl.UseSkill(roleInfo, this,isPar);
                 }
             }
 
@@ -314,8 +317,11 @@ export class Battle {
                 roleInfo.camp = enums.Camp.Enemy;
                 let p = 0;
                 let skillImpl: skill.SkillBase = null;
+                let isPar=false;
                 for(let skill of role.skill) {
-                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
+                    let flag=skill.trigger.CheckSkillTrigger(evs, roleInfo)
+                    if (flag) {
+                        if(2==flag) isPar=true;
                         if (skill.skill.Priority > p) {
                             skillImpl = skill.skill;
                             p = skill.skill.Priority;
@@ -324,7 +330,7 @@ export class Battle {
                 }
                 if (skillImpl) {
                     role.LockSkill();
-                    skillImpl.UseSkill(roleInfo, this);
+                    skillImpl.UseSkill(roleInfo, this,isPar);
                 }
             }
 

@@ -41,17 +41,17 @@ export class Skill_AttGain_1 extends SkillBase
         
     }
 
-    public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
+    public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
     {
         try
         {
             if(!this.numberOfRole || 0==this.numberOfRole)
             {
-                this.SkillEffect_1(selfInfo,battle);    
+                this.SkillEffect_1(selfInfo,battle,isParallel);    
             }
             else if(!this.dir)
             {
-                this.SkillEffect_2(selfInfo,battle);  
+                this.SkillEffect_2(selfInfo,battle,isParallel);  
             }
                   
         }
@@ -62,7 +62,7 @@ export class Skill_AttGain_1 extends SkillBase
         
     }
 
-    SkillEffect_1(selfInfo: RoleInfo, battle: Battle):void          //指定某一对象生效
+    SkillEffect_1(selfInfo: RoleInfo, battle: Battle,isPar:boolean):void          //指定某一对象生效
     {
         console.log("Skill_AttGain_1 SkillEffect_1! selfInfo:", selfInfo, " dir:", this.dir);
         try
@@ -71,6 +71,7 @@ export class Skill_AttGain_1 extends SkillBase
             event.type = EventType.IntensifierProperties;
             event.spellcaster = selfInfo;
             event.recipient = [];
+            event.isParallel=isPar;
 
             let teamTemp:Team=null;
             let recipientRole:Role=null;
@@ -160,7 +161,7 @@ export class Skill_AttGain_1 extends SkillBase
         }
     }
 
-    SkillEffect_2(selfInfo: RoleInfo, battle: Battle):void          //随机一对象生效
+    SkillEffect_2(selfInfo: RoleInfo, battle: Battle,isPar:boolean):void          //随机一对象生效
     {
         console.log("Skill_AttGain_1 SkillEffect_2!");
         try
@@ -169,6 +170,7 @@ export class Skill_AttGain_1 extends SkillBase
             event.type = EventType.IntensifierProperties;
             event.spellcaster = selfInfo;
             event.recipient = [];
+            event.isParallel=isPar;
 
             let recipientRoles:Role[]=new Array();
             let rolesTemp:Role[]=null;

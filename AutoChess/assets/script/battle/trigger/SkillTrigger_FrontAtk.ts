@@ -22,7 +22,7 @@ export class SkillTrigger_FrontAtk extends SkillTriggerBase
         this.dir=Direction.Forward;
     }
 
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,): boolean {
+    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,): number {
         try
         {
             return this.CheckSkill(frameEvent,selfInfo);          
@@ -32,10 +32,10 @@ export class SkillTrigger_FrontAtk extends SkillTriggerBase
             console.warn(this.res+"下的 CheckSkillTrigger 错误");            
         }
 
-        return false;
+        return 0;
     }
 
-    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
+    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): number
     {
         try
         {
@@ -43,7 +43,7 @@ export class SkillTrigger_FrontAtk extends SkillTriggerBase
                 if(EventType.AfterAttack==element.type){
                     if(element.spellcaster.camp==selfInfo.camp&&element.spellcaster.index+3==selfInfo.index){
                         console.log("Check FrontATK!");
-                        return true;
+                        return 1;
                     }
                 }
             } 
@@ -53,7 +53,7 @@ export class SkillTrigger_FrontAtk extends SkillTriggerBase
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
 }
 
