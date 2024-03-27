@@ -218,9 +218,11 @@ export class BattleDis
         this.battleEffectImg.active=_bool;
     }
 
-    private showLaunchSkillEffect(isParallel:boolean=false)
+    private showLaunchSkillEffect(isShow:boolean=false)
     {
-        if(isParallel) return this.delay(0,()=>{});
+        if(!isShow){
+            return this.delay(0,()=>{});
+        }
         this.launchSkillEffect.active=true;
 
         this.launchSkillEffect.getChildByPath("BottomImg").getComponent(sp.Skeleton).animation="a2";
@@ -314,6 +316,8 @@ export class BattleDis
     {
         try 
         {
+            let allAwait = [];
+
             for(let ev of evs)
             {
                 
@@ -323,7 +327,7 @@ export class BattleDis
                 }
                 else
                 {
-                    await this.showLaunchSkillEffect(ev.isParallel);
+                    await this.showLaunchSkillEffect();
                 }
 
                 //console.log("checkRemoteInjured RemoteInjured");
@@ -340,11 +344,17 @@ export class BattleDis
                     {                
                         let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
-                        await self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father);
+                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));                       
                     }
                 };
 
-                await this.ChangeAttEvent([ev]);
+                if(!ev.isParallel){
+                    await Promise.all(allAwait);
+                    await this.ChangeAttEvent([ev]);
+                }
+                else{
+                    Promise.all(allAwait);
+                }
             }
             //console.log("checkRemoteInjured allAwait:", allAwait);
         }
@@ -369,7 +379,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect(ev.isParallel);
+                    this.showLaunchSkillEffect();
                 }
 
                 //释放技能者所在阵营列表
@@ -406,7 +416,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect(ev.isParallel);
+                    this.showLaunchSkillEffect();
                 }
                 console.log("检测到加临时经验值事件");
                 
@@ -453,7 +463,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect(ev.isParallel);
+                    this.showLaunchSkillEffect();
                 }
                 console.log("检测到加属性事件");
                 

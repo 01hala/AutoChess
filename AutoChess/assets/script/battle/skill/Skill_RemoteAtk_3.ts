@@ -84,7 +84,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
                 enemyRoles.splice(index, 1);
             }
             recipientRoles.forEach((role)=>{
-                role.BeHurted(this.attack, self, battle);
+                role.BeHurted(this.attack, self, battle,EventType.RemoteInjured,isPar);
                 console.log("Skill_RemoteAtk_3 远程攻击角色受伤 :",this.attack);
             });
         }
@@ -119,7 +119,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
 
         for(let role of recipientRoles)
         {
-            role.BeHurted(this.attack, self, battle)
+            role.BeHurted(this.attack, self, battle,EventType.RemoteInjured,isPar)
         }
     }
 }

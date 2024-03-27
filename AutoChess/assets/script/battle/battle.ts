@@ -289,7 +289,10 @@ export class Battle {
                 for(let skill of role.skill) {
                     let flag=skill.trigger.CheckSkillTrigger(evs, roleInfo)
                     if (flag) {
-                        if(2==flag) isPar=true;
+                        if(2==flag){
+                            isPar=true;
+                            console.log("Parallel skill detected");
+                        }
                         if (skill.skill.Priority > p) {
                             skillImpl = skill.skill;
                             p = skill.skill.Priority;
@@ -298,6 +301,7 @@ export class Battle {
                 }
                 if (skillImpl) {
                     role.LockSkill();
+                    console.log("Are skills parallel:"+isPar);
                     skillImpl.UseSkill(roleInfo, this,isPar);
                 }
             }
