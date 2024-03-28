@@ -693,7 +693,7 @@ export class BattleDis
                 }
                 this.selfParallelList=[];
                 this.enemyParallelList=[];
-                await this.ChangeAttEvent(evs);               
+                //await this.ChangeAttEvent(evs);               
             }
             catch(error) 
             {

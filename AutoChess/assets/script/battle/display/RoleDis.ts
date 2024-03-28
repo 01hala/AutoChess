@@ -18,6 +18,7 @@ import * as singleton from '../../netDriver/netSingleton';
 import { Fetters } from '../../serverSDK/common';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
+import { sleep } from '../../other/sleep';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -391,7 +392,7 @@ export class RoleDis extends Component
         });
     }
 
-    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: Camp) 
+    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: Camp,callBack?:()=>{}) 
     {
         try 
         {
