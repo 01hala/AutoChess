@@ -41,6 +41,10 @@ export class BattleDis
     private pauseBtn:Button;
     private puase:boolean = false;
 
+    //所有需要并行执行的事件队列,分己方和敌人方，己方先执行
+    // private selfParallelList:any[]=[]
+    // private enemyParallelList:any[]=[]
+
     //战斗系统类
     public battle:Battle = null;
     
@@ -316,8 +320,7 @@ export class BattleDis
     {
         try 
         {
-            let allAwait = [];
-
+            let allAwait=[]
             for(let ev of evs)
             {
                 
@@ -343,19 +346,19 @@ export class BattleDis
                     if (self && target) 
                     {                
                         let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
-                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
-                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));                       
+                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());                      
+                        allAwait.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                        
                     }
                 };
-
                 if(!ev.isParallel){
                     await Promise.all(allAwait);
                     await this.ChangeAttEvent([ev]);
-                }
-                else{
-                    Promise.all(allAwait);
+                    allAwait=[];
                 }
             }
+
+            await Promise.all(allAwait);
             //console.log("checkRemoteInjured allAwait:", allAwait);
         }
         catch(error) 
@@ -523,7 +526,7 @@ export class BattleDis
                                 if(r)
                                 {
                                     
-                                    //console.warn("敌方角色远程受伤表现");
+                                    console.warn("敌方角色远程受伤表现");
                                     allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                     allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
@@ -549,7 +552,7 @@ export class BattleDis
                                 //console.warn("我方role",r.index);
                                 if(r)
                                 {
-                                    //console.warn("我方角色远程受伤表现");
+                                    console.warn("我方角色远程受伤表现");
                                     allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
                                     allAwait.push(r.getComponent(RoleDis).changeAtt());
                                 }
@@ -616,10 +619,17 @@ export class BattleDis
                 await this.CheckRemoteInjured(evs);
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
+                await this.CheckAttExpEvent(evs);
                 await this.CheckExitEvent(evs);
                 await this.CheckAttackEvent(evs);
-                await this.ChangeAttEvent(evs);
-                await this.CheckAttExpEvent(evs);
+                // if(this.selfParallelList.length>0||this.enemyParallelList.length>0){
+                //     console.log("Execute all parallel events");
+                //     await Promise.all(this.selfParallelList);
+                //     await Promise.all(this.enemyParallelList);                 
+                // }
+                // this.selfParallelList=[];
+                // this.enemyParallelList=[];
+                await this.ChangeAttEvent(evs);               
             }
             catch(error) 
             {
