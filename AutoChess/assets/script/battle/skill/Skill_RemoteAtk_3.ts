@@ -20,12 +20,13 @@ export class Skill_RemoteAtk_3 extends SkillBase
     private attack : number;
     private isAll:boolean;
 
-    public constructor(priority:number, numberOfRole:number, attack:number,isAll:boolean) {
+    public constructor(priority:number, numberOfRole:number, attack:number) {
         super(priority);
 
         this.numberOfRole = numberOfRole;
         this.attack = attack;
-        this.isAll=isAll;
+        if(numberOfRole>=12) this.isAll=true;
+        else this.isAll=false;
 
         //this.event.type=EventType.RemoteInjured;
         console.log("create Skill_RemoteAtk_3 attack:", this.attack);
@@ -36,16 +37,12 @@ export class Skill_RemoteAtk_3 extends SkillBase
     {
         try 
         {
-            if(6>=this.numberOfRole && !this.isAll)
+            if(!this.isAll)
             {
                 this.SkillEffect_1(selfInfo,battle,isParallel);
             }
-            else
-            {
-                console.warn("生效人数不能大于6人");
-            }
 
-            if(this.isAll)
+            else
             {
                 this.SkillEffect_2(selfInfo,battle,isParallel);
             }
@@ -98,7 +95,7 @@ export class Skill_RemoteAtk_3 extends SkillBase
     private SkillEffect_2(selfInfo: RoleInfo, battle: Battle,isPar:boolean)         //场上全部生效
     {
         let self:Role=null;
-        this.event.isParallel=isPar;
+        //this.event.isParallel=isPar;
 
         if(Camp.Self==selfInfo.camp)
         {
@@ -117,9 +114,10 @@ export class Skill_RemoteAtk_3 extends SkillBase
             recipientRoles.push(t);
         }
 
+        //同时发射子弹,同时受伤
         for(let role of recipientRoles)
         {
-            role.BeHurted(this.attack, self, battle,EventType.RemoteInjured,isPar)
+            role.BeHurted(this.attack, self, battle,EventType.RemoteInjured,true)
         }
     }
 }

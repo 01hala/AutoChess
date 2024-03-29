@@ -58,7 +58,7 @@ export function CreateSkill(level:number, skillID:number) : skill.SkillBase {
         {
             if(value0 >= 1)
             {
-                skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, Math.floor(value0), false);
+                skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(skillConfig.Priority, skillConfig.ObjCount, Math.floor(value0));
             }
             else
             {

@@ -189,6 +189,7 @@ export class Role {
         ev.spellcaster.index = this.index;
         ev.recipient = [];
         ev.value = [];
+        ev.priority=3;
         battle.AddBattleEvent(ev);
     }
 

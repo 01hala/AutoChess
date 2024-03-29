@@ -36,6 +36,7 @@ export class SkillTrigger_Injured_10 extends SkillTriggerBase
                 if(EventType.AttackInjured==element.type || EventType.RemoteInjured==element.type){
                     for (let _recipient of element.recipient) {
                         if(_recipient.camp == selfInfo.camp && _recipient.index == selfInfo.index) {
+                            console.log("受伤技能触发器已触发");
                             return 1;
                         }
                     }
