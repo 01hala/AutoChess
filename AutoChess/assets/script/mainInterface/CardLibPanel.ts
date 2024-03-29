@@ -149,7 +149,7 @@ export class CardLibPanel extends Component
             let i=100001;   //角色id
             let j=0;        //背包里物品下标
 
-            let num=1;      //页面里的card数量
+            let num=0;      //页面里的card数量
             do
             {
                 //console.log("id: "+i);
@@ -183,14 +183,15 @@ export class CardLibPanel extends Component
                         //this.cards.push(card);
                         this.cardListPage.addChild(card);
                         num++;
+                        if(num%8 == 0)
+                        {
+                            this.cardListPage=instantiate(this.cardListPre);
+                            this.pageView.addPage(this.cardListPage);
+                        }
                     }
                     
                     //card.getComponent(RoleCard).storePanel=this.node;
-                    if(num%8==0)
-                    {
-                        this.cardListPage=instantiate(this.cardListPre);
-                        this.pageView.addPage(this.cardListPage);
-                    }
+                    
                     i++;j++;
                 }
             }

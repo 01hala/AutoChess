@@ -1,6 +1,6 @@
 import {Event} from 'cc';
 
-export class CustomEvent extends Event
+export class SendMessage extends Event
 {
     constructor(name: string, bubbles?: boolean, detail?: any) {
         super(name, bubbles);

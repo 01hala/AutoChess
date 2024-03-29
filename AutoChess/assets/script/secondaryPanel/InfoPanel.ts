@@ -95,11 +95,11 @@ export class InfoPanel extends Component
                     this.detailedBoard.getComponent(Animation).play("PanelAppear");
                     this.node.setSiblingIndex(98);
                     this.node.getComponent(BlockInputEvents).enabled=true;  
-                    let tSp =this.detailedBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
+                    let tSp =this.detailedBoard.getChildByPath("RoleArea/Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
                     
-                    this.ShowDetailed(role);
+                    this.ShowDetailed(id);
                 }   
             }
         }
@@ -115,48 +115,56 @@ export class InfoPanel extends Component
         this.simpleBoard.active=true;
         this.detailedBoard.active=false;
         this.simplePropBoard.active=false;
+        this.node.setSiblingIndex(98);
 
         this.simpleBoard.getComponent(Animation).play("PanelAppear");
     }
 
-    private ShowDetailed(_role:RoleDis)
+    private ShowDetailed(_id:number)
     {
-        let r = singleton.netSingleton.ready.readyData.GetRole(_role.RoleId);
-        let imgs = this.LoadImage(r);
-        //工具生命等级
-        this.detailedBoard.getChildByPath("RoleArea/Atk/RichText").getComponent(RichText).string="<color=0>"+_role.AtkNum+"</color>";
-        this.detailedBoard.getChildByPath("RoleArea/HP/RichText").getComponent(RichText).string="<color=0>"+_role.Hp+"</color>";
-        this.detailedBoard.getChildByPath("RoleArea/Lv/RichText").getComponent(RichText).string="<color=0>"+_role.Level+"</color>";
-        //名字
-        let ro=config.RoleConfig.get(_role.RoleId);
-        this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=0>"+ro.Name+"</color>";
-        //技能信息
-        let sk=config.SkillIntroduceConfig.get(_role.RoleId%100000);
-        this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/TimeingText").getComponent(RichText).string="<color=0>"+sk.Timeing_Text+"</color>";
-        let str="";
-        switch(_role.Level)
+        try
         {
-            case 1:str=sk.Leve1Text;break;
-            case 2:str=sk.Leve2Text;break;
-            case 3:str=sk.Leve3Text;break;
+            let r = singleton.netSingleton.ready.readyData.GetRole(_id);
+            let imgs = this.LoadImage(r);
+            //工具生命等级
+            this.detailedBoard.getChildByPath("RoleArea/Atk/RichText").getComponent(RichText).string="<color=0>"+r.Attack+"</color>";
+            this.detailedBoard.getChildByPath("RoleArea/HP/RichText").getComponent(RichText).string="<color=0>"+r.HP+"</color>";
+            this.detailedBoard.getChildByPath("RoleArea/Lv/RichText").getComponent(RichText).string="<color=0>"+r.Level+"</color>";
+            //名字
+            let ro=config.RoleConfig.get(_id);
+            this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=0>"+ro.Name+"</color>";
+            //技能信息
+            let sk=config.SkillIntroduceConfig.get(_id%100000);
+            this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/TimeingText").getComponent(RichText).string="<color=0>"+sk.Timeing_Text+"</color>";
+            let str="";
+            switch(r.Level)
+            {
+                case 1:str=sk.Leve1Text;break;
+                case 2:str=sk.Leve2Text;break;
+                case 3:str=sk.Leve3Text;break;
+            }
+            this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/Label").getComponent(RichText).string="<color=0>"+str+"</color>";
+            //羁绊
+            let ft=config.FettersConfig.get(ro.Fetters);
+            this.detailedBoard.getChildByPath("DetailsArea/Fetters/RichText").getComponent(RichText).string="<color=0>"+ft.Name+"</color>";
+            //buff
+            let bustr:string="";
+            for(let i of r.additionBuffer)
+            {
+                bustr+=config.BufferConfig.get(i).Name+"\n";
+            }
+            this.detailedBoard.getChildByPath("DetailsArea/Buff/Label").getComponent(Label).string=bustr;
+            //购买时的回合
+            this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`在第${r.BuyRound}回合购买`;
+            //装备图片
+            this.detailedBoard.getChildByPath("DetailsArea/Equip/Sprite").getComponent(Sprite).spriteFrame=imgs[0];
+            //羁绊图标
+            this.detailedBoard.getChildByPath("DetailsArea/Fetters/Sprite/Icon").getComponent(Sprite).spriteFrame=imgs[1];
         }
-        this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/Label").getComponent(RichText).string="<color=0>"+str+"</color>";
-        //羁绊
-        let ft=config.FettersConfig.get(ro.Fetters);
-        this.detailedBoard.getChildByPath("DetailsArea/Fetters/RichText").getComponent(RichText).string="<color=0>"+ft.Name+"</color>";
-        //buff
-        let bustr:string="";
-        for(let i of r.additionBuffer)
+        catch(error)
         {
-            bustr+=config.BufferConfig.get(i).Name+"\n";
+            console.error('InfoPanel 下 ShowDetailed 错误 err: ',error);
         }
-        this.detailedBoard.getChildByPath("DetailsArea/Buff/Label").getComponent(Label).string=bustr;
-        //购买时的回合
-        this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`在第${r.BuyRound}回合购买`;
-        //装备图片
-        this.detailedBoard.getChildByPath("DetailsArea/Equip/Sprite").getComponent(Sprite).spriteFrame=imgs[0];
-        //羁绊图标
-        this.detailedBoard.getChildByPath("DetailsArea/Fetters/Sprite").getComponent(Sprite).spriteFrame=imgs[1];
         
     }
 
