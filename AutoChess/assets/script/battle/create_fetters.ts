@@ -62,7 +62,7 @@ export function CreateFetters(level:number, fettersID:number) : skill.SkillBase 
             let count = fettersConfig.ObjCount[count_index];
             if(value0 >= 1)
             {
-                skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(fettersConfig.Priority, count, Math.floor(value0), false);
+                skillObj = new Skill_RemoteAtk_3.Skill_RemoteAtk_3(fettersConfig.Priority, count, Math.floor(value0));
             }
             else
             {

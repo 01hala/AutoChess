@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 export class SkillTrigger_ChangeSelfLocation_12 extends SkillTriggerBase {
     public res:string="battle/skill/SkillTrigger_ChangeSelfLocation_12";
     
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
+    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number 
     {
         try
         {
@@ -18,10 +18,10 @@ export class SkillTrigger_ChangeSelfLocation_12 extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
         
-        return false;
+        return 0;
     }
 
-    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
+    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): number
     {
         try
         {
@@ -29,7 +29,7 @@ export class SkillTrigger_ChangeSelfLocation_12 extends SkillTriggerBase {
                 if(EventType.ChangeLocation == element.type){
                     for (let _recipient of element.recipient) {
                         if(_recipient.camp == selfInfo.camp && _recipient.index == selfInfo.index) {
-                            return true;
+                            return 1;
                         }
                     }
                 } 
@@ -40,7 +40,7 @@ export class SkillTrigger_ChangeSelfLocation_12 extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
 }
 

@@ -148,7 +148,7 @@ export class Role {
         this.skill_is_lock = false;
     }
 
-    private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {
+    private sendHurtedEvent(enemy: Role, damage: number, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured,isParallel:boolean=false) {
         let selfIndex = this.index;
         let enemyIndex = enemy.index;
 
@@ -164,6 +164,8 @@ export class Role {
         ev.recipient.push(recipient);
         ev.value = [];
         ev.value.push(damage);
+        ev.priority=0;
+        ev.isParallel=isParallel;
         battle.AddBattleEvent(ev);
         
         if (this.CheckDead()) {
@@ -187,6 +189,7 @@ export class Role {
         ev.spellcaster.index = this.index;
         ev.recipient = [];
         ev.value = [];
+        ev.priority=3;
         battle.AddBattleEvent(ev);
     }
 
@@ -319,7 +322,7 @@ export class Role {
         return null;
     }
 
-    public BeHurted(damage:number, enemy: Role, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured) {
+    public BeHurted(damage:number, enemy: Role, battle: battle.Battle, Injured: enums.EventType = enums.EventType.RemoteInjured,isParallel:boolean=false) {
 
         let hp = this.GetProperty(enums.Property.HP);
         let reduction = this.getReductionDamage();
@@ -344,7 +347,7 @@ export class Role {
         }
         hp -= damage;
         this.ChangeProperties(enums.Property.HP, hp);
-        this.sendHurtedEvent(enemy, damage, battle, Injured);
+        this.sendHurtedEvent(enemy, damage, battle, Injured,isParallel);
     }
 
     public BeInevitableKill(enemy: Role, battle: battle.Battle) {

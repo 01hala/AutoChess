@@ -18,6 +18,7 @@ import * as singleton from '../../netDriver/netSingleton';
 import { Fetters } from '../../serverSDK/common';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
+import { sleep } from '../../other/sleep';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -391,7 +392,7 @@ export class RoleDis extends Component
         });
     }
 
-    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: Camp) 
+    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: Camp,callBack?:()=>{}) 
     {
         try 
         {
@@ -401,7 +402,8 @@ export class RoleDis extends Component
             console.log(bulletNode);
             bulletNode.getComponent(Bullet).Init(targetLocation);
             father.addChild(bulletNode);
-            //this.delay(700, () => { });
+
+            this.delay(700, () => {});
             return this.delay(700, () => 
             {
                 // if (this.tAttack) {
@@ -442,7 +444,7 @@ export class RoleDis extends Component
                 this.hurtedSpine.active=false;
             })         
             //.by(0.05, { position: new Vec3(this.node.position.x+offset,this.node.position.y+5) }, {easing: 'quintOut'})// [变动属性]+[缓动效果]
-            .by(1,{position: new Vec3(this.node.position.x+offset,this.node.position.y)},{easing: 'quintIn'})
+            .by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y)},{easing: 'quintIn'})
             .delay(0.2).call(() => {
                 this.roleInfo = null;
                 console.log("销毁角色");

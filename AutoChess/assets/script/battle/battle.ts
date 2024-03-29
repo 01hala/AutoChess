@@ -9,6 +9,139 @@ import * as role from './role'
 import * as team from './team'
 import * as enums from '../other/enums'
 
+export class linkEvent{
+    public front:linkEvent;
+    public event:skill.Event;
+    public next:linkEvent;
+}
+
+export class EventList{
+    private count:number;
+    //头指针的front指向链表尾部
+    public head:linkEvent;
+    
+    constructor(evl:EventList=null) {
+        if(!evl){
+            this.count = 0
+            this.head=new linkEvent();
+            this.head.event=this.head.front=this.head.next=null;
+        }
+        else{
+            this.count=evl.Length();
+            this.head=evl.head;
+        }
+    }
+
+    [Symbol.iterator]() {
+        let current = this.head.next
+        return {
+          next() {
+            if (current) {
+              let res = current
+              current = current.next
+              return { done: false, value: res.event }
+            } else {
+              return { done: true, value: null }
+            }
+          },
+        }
+      }
+
+    /** 按照事件的优先级将事件推送至链表*/
+    public push(ev:skill.Event){
+        try{
+            let t=new linkEvent();
+            t.event=ev;
+            //如果链表是空的
+            if(!this.head.next){
+                t.front=this.head;
+                t.next=null;
+                this.head.next=this.head.front=t;
+                console.log("list is empty,insert the ev at the head");
+            }
+            else{
+                let current=this.head.next;
+                while(null != current){
+                    if(current.event.priority>ev.priority){
+                        t.front=current.front;
+                        t.next=current;
+                        current.front.next=t;
+                        current.front=t;                        
+                    }
+                    else if(null==current.next){
+                        current.next=t;
+                        t.front=current;
+                        t.next=null;
+                        this.head.front=t;
+                    }
+                    current=current.next;
+                }
+                console.log("try to push event into the list");
+            }
+            this.count++;
+        }catch{
+            console.log("push event of event list failed");
+        }
+    }
+
+    /** 直接将事件推送至链表末尾*/
+    public push_back(ev:skill.Event){
+        try{
+            if(!this.head.next) this.push(ev);
+            else{
+                let t=new linkEvent();
+                t.event=ev;
+                t.next=null;
+                this.head.front.next=t;
+                t.front=this.head.front;
+                this.head.front=t;
+                this.count++;
+            }
+        }
+        catch{
+            console.log("push_back event of event list failed");
+        }
+    }
+
+    /** 事件插入到指定位置*/
+    public insert(ev:skill.Event){
+        //========to do========//
+        //想不到这个函数的用处所以暂时不写
+    }
+
+    /** 移除指定事件,返回是否移除成功*/
+    public remove(ev:skill.Event):boolean{
+        try{
+            if(!this.head.next) return false;
+            let current=this.head.next;
+            while(current){
+                if(current.event==ev){
+                    current.front.next=current.next;
+                    current.next.front=current.front;
+                    this.count--;
+                    return true;
+                }
+                current=current.next;
+            }
+            return false;
+        }
+        catch{
+            console.log("remove event of event list failed");
+        }
+    }
+
+    /** 清空链表*/
+    public Clear(){
+        this.head.next=this.head.front=null;
+        this.count=0;
+    }
+
+    /** 获取事件列表长度*/
+    public Length():number{
+        return this.count;
+    }
+}
+
 export class Battle {
     private selfTeam : team.Team;
     private enemyTeam : team.Team;
@@ -95,6 +228,31 @@ export class Battle {
         return this.evs.length <= 0 && (this.selfTeam.CheckDefeated() || this.enemyTeam.CheckDefeated());
     }
 
+    private  SortEvs(evs:skill.Event[]){
+        // if(left>right) return;
+        
+        // let x=evs[left].priority,i=left,j=right;
+        // while(i<j){
+        //     while(evs[i].priority<x) i++;
+        //     while(evs[j].priority>x) j--; 
+        //     if(i<j){
+        //         let t=evs[i];
+        //         evs[i]=evs[j];
+        //         evs[j]=t;
+        //     }
+        // }
+        // this.SortEvs(evs,left,i-1);
+        // this.SortEvs(evs,j+1,right);
+        for(let i=1;i<evs.length;i++){
+            let j=i;
+            while(j>0&&evs[j-1].priority>evs[j].priority){
+                let t=evs[j-1];
+                evs[j-1]=evs[j];
+                evs[j]=t;
+            }
+        }
+    }
+
     public CheckRemoveDeadRole() {
         return this.selfTeam.CheckRemoveDeadRole(this) || this.enemyTeam.CheckRemoveDeadRole(this);
     }
@@ -102,8 +260,10 @@ export class Battle {
     private triggerBeforeAttack : boolean = true;
     public async TickBattle() : Promise<boolean> {
         let evs = this.evs.slice();
+        this.SortEvs(evs);        
+        
         await this.on_event.call(null, evs);
-
+        
         if (this.evs.length > 0) {
             this.evs = [];
 
@@ -125,8 +285,14 @@ export class Battle {
                 roleInfo.camp = enums.Camp.Self;
                 let p = 0;
                 let skillImpl: skill.SkillBase = null;
+                let isPar=false;
                 for(let skill of role.skill) {
-                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
+                    let flag=skill.trigger.CheckSkillTrigger(evs, roleInfo)
+                    if (flag) {
+                        if(2==flag){
+                            isPar=true;
+                            console.log("Parallel skill detected");
+                        }
                         if (skill.skill.Priority > p) {
                             skillImpl = skill.skill;
                             p = skill.skill.Priority;
@@ -135,7 +301,8 @@ export class Battle {
                 }
                 if (skillImpl) {
                     role.LockSkill();
-                    skillImpl.UseSkill(roleInfo, this);
+                    console.log("Are skills parallel:"+isPar);
+                    skillImpl.UseSkill(roleInfo, this,isPar);
                 }
             }
 
@@ -154,8 +321,11 @@ export class Battle {
                 roleInfo.camp = enums.Camp.Enemy;
                 let p = 0;
                 let skillImpl: skill.SkillBase = null;
+                let isPar=false;
                 for(let skill of role.skill) {
-                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
+                    let flag=skill.trigger.CheckSkillTrigger(evs, roleInfo)
+                    if (flag) {
+                        if(2==flag) isPar=true;
                         if (skill.skill.Priority > p) {
                             skillImpl = skill.skill;
                             p = skill.skill.Priority;
@@ -164,7 +334,7 @@ export class Battle {
                 }
                 if (skillImpl) {
                     role.LockSkill();
-                    skillImpl.UseSkill(roleInfo, this);
+                    skillImpl.UseSkill(roleInfo, this,isPar);
                 }
             }
 

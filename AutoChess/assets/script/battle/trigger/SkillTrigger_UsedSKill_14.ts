@@ -11,7 +11,7 @@ export class SkillTrigger_UsedSKill_14 extends SkillTriggerBase
 {
     public res:string="battle/skill/SkillTrigger_UsedSKill_14";
 
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
+    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number 
     {
         try 
         {
@@ -22,10 +22,10 @@ export class SkillTrigger_UsedSKill_14 extends SkillTriggerBase
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
 
-        return false;
+        return 0;
     }
 
-    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo):boolean
+    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo):number
     {
         try 
         {
@@ -33,17 +33,17 @@ export class SkillTrigger_UsedSKill_14 extends SkillTriggerBase
             {
                 if(EventType.UsedSkill==b.type && 4==selfInfo.Fetters)
                 {
-                    return true;
+                    return 1;
                 }
             }
-            return false;
+            return 0;
         } 
         catch (error) 
         {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
     
 }

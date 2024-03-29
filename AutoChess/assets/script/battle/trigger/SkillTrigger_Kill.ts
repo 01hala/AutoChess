@@ -8,7 +8,7 @@ export class SkillTrigger_Kill extends SkillTriggerBase {
     public res:string="battle/skill/SkillTrigger_Kill";
     public EventType:EventType=EventType.Kill;
 
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
+    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number 
     {
         try
         {
@@ -19,10 +19,10 @@ export class SkillTrigger_Kill extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
         
-        return false;
+        return 0;
     }
 
-    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): boolean
+    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo): number
     {
         try
         {
@@ -33,7 +33,7 @@ export class SkillTrigger_Kill extends SkillTriggerBase {
                         for(let _r of element.recipient){
                             if(_r.camp!=selfInfo.camp){
                                 console.log("CheckSkill Kill!");
-                                return true;
+                                return 1;
                             }
                         }
                     }
@@ -45,7 +45,7 @@ export class SkillTrigger_Kill extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
 }
 
