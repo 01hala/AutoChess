@@ -326,8 +326,6 @@ export class BattleDis
                 {
                     if (!selfAttack)
                     {
-                        //console.log("checkAttackEvent: selfcamp " + ev.spellcaster.index);
-                        //let r = this.battle.GetSelfTeam().GetRole(ev.spellcaster.index);
                         let roleNode = this.selfQueue.roleNodes[ev.spellcaster.index];
                         if(null != roleNode)
                         {
@@ -352,7 +350,7 @@ export class BattleDis
                     }
                 }
             }
-            //console.log("checkAttackEvent allAwait:", allAwait, " evs:", evs);
+            
             await Promise.all(allAwait);
             await this.ChangeAttEvent(evs_floating);
         }
@@ -393,27 +391,22 @@ export class BattleDis
                     if (self && target) 
                     {                
                         let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
-                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());                      
-                        //allAwait.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());   
                         if(!ev.isParallel){
                             await self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father);
                             await this.ChangeAttEvent([ev]);
                         }
                         else{
-                            if(Camp.Self==ev.spellcaster.camp) this.selfParallelList.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
-                            else this.enemyParallelList.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                            if(Camp.Self==ev.spellcaster.camp) {
+                                this.selfParallelList.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                            }
+                            else {
+                                this.enemyParallelList.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                            }
                         }
                     }
                 };
-                // if(!ev.isParallel){
-                //     await Promise.all(allAwait);
-                //     await this.ChangeAttEvent([ev]);
-                //     allAwait=[];
-                // }
             }
-
-            //await Promise.all(allAwait);
-            //console.log("checkRemoteInjured allAwait:", allAwait);
         }
         catch(error) 
         {
