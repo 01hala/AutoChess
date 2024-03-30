@@ -115,15 +115,43 @@ export class Battle {
         return this.selfTeam.CheckRemoveDeadRole(this) || this.enemyTeam.CheckRemoveDeadRole(this);
     }
 
-    private async tickInjuredEvent(evs:skill.Event[]) {
+    private async tickInjuredEventChain(evs:skill.Event[]) {
         if (evs == null || evs.length <= 0) {
             return;
         }
 
         await this.on_event.call(null, evs);
-
         this.tickSkill(evs);
 
+        let _evs = this.evs.slice();
+        let [injuredEvs, normalEvs] = splitEvs(_evs);
+
+        await this.tickInjuredEvent(injuredEvs);
+        await this.tickInjuredEventChain(normalEvs);
+    }
+
+    private async tickInjuredEvent(evs:skill.Event[]) {
+        if (evs == null || evs.length <= 0) {
+            return;
+        }
+
+        let tmpEvs:skill.Event[] = [];
+        for (let ev of evs) {
+            this.tickSkill(evs);
+            if (this.evs.length <= 0) {
+                tmpEvs.push(ev);
+            }
+            else {
+                let _evs = this.evs.slice();
+                let [injuredEvs, normalEvs] = splitEvs(_evs);
+                await this.tickInjuredEvent(injuredEvs);
+                await this.tickInjuredEventChain(normalEvs);
+            }
+        }
+
+        await this.on_event.call(null, tmpEvs);
+
+        this.tickSkill(tmpEvs);
         let _evs = this.evs.slice();
         let [injuredEvs, normalEvs] = splitEvs(_evs);
         
