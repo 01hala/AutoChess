@@ -112,6 +112,7 @@ export class InfoPanel extends Component
 
     OpenCardInfo(_id:number)
     {
+        this.node.getComponent(BlockInputEvents).enabled=true;
         this.simpleBoard.active=true;
         this.detailedBoard.active=false;
         this.simplePropBoard.active=false;

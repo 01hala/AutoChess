@@ -1,0 +1,293 @@
+
+kuangfeng_shenqishilong.png
+size: 1054,1054
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sqsl_0
+  rotate: false
+  xy: 2, 556
+  size: 207, 496
+  orig: 207, 496
+  offset: 0, 0
+  index: -1
+sqsl_1
+  rotate: true
+  xy: 189, 19
+  size: 58, 69
+  orig: 58, 69
+  offset: 0, 0
+  index: -1
+sqsl_10
+  rotate: false
+  xy: 85, 60
+  size: 102, 56
+  orig: 102, 56
+  offset: 0, 0
+  index: -1
+sqsl_11
+  rotate: false
+  xy: 984, 629
+  size: 51, 39
+  orig: 51, 39
+  offset: 0, 0
+  index: -1
+sqsl_12
+  rotate: false
+  xy: 211, 557
+  size: 77, 36
+  orig: 77, 36
+  offset: 0, 0
+  index: -1
+sqsl_13
+  rotate: true
+  xy: 681, 5
+  size: 47, 72
+  orig: 47, 72
+  offset: 0, 0
+  index: -1
+sqsl_14
+  rotate: false
+  xy: 620, 256
+  size: 23, 49
+  orig: 23, 51
+  offset: 0, 2
+  index: -1
+sqsl_15
+  rotate: false
+  xy: 980, 532
+  size: 63, 85
+  orig: 63, 85
+  offset: 0, 0
+  index: -1
+sqsl_16
+  rotate: false
+  xy: 314, 162
+  size: 36, 71
+  orig: 36, 71
+  offset: 0, 0
+  index: -1
+sqsl_17
+  rotate: true
+  xy: 900, 772
+  size: 118, 131
+  orig: 118, 131
+  offset: 0, 0
+  index: -1
+sqsl_18
+  rotate: true
+  xy: 290, 558
+  size: 35, 100
+  orig: 35, 100
+  offset: 0, 0
+  index: -1
+sqsl_19
+  rotate: false
+  xy: 260, 35
+  size: 87, 42
+  orig: 87, 42
+  offset: 0, 0
+  index: -1
+sqsl_2
+  rotate: true
+  xy: 769, 402
+  size: 210, 209
+  orig: 210, 209
+  offset: 0, 0
+  index: -1
+sqsl_20
+  rotate: true
+  xy: 495, 8
+  size: 178, 184
+  orig: 178, 184
+  offset: 0, 0
+  index: -1
+sqsl_21
+  rotate: true
+  xy: 495, 191
+  size: 114, 123
+  orig: 114, 123
+  offset: 0, 0
+  index: -1
+sqsl_22
+  rotate: true
+  xy: 393, 367
+  size: 226, 374
+  orig: 226, 374
+  offset: 0, 0
+  index: -1
+sqsl_23
+  rotate: false
+  xy: 879, 169
+  size: 172, 231
+  orig: 172, 231
+  offset: 0, 0
+  index: -1
+sqsl_24
+  rotate: true
+  xy: 2, 235
+  size: 319, 389
+  orig: 319, 389
+  offset: 0, 0
+  index: -1
+sqsl_25
+  rotate: true
+  xy: 980, 408
+  size: 122, 56
+  orig: 122, 56
+  offset: 0, 0
+  index: -1
+sqsl_26
+  rotate: false
+  xy: 681, 54
+  size: 84, 132
+  orig: 84, 132
+  offset: 0, 0
+  index: -1
+sqsl_27
+  rotate: false
+  xy: 767, 32
+  size: 107, 60
+  orig: 107, 60
+  offset: 0, 0
+  index: -1
+sqsl_28
+  rotate: false
+  xy: 205, 79
+  size: 107, 154
+  orig: 107, 154
+  offset: 0, 0
+  index: -1
+sqsl_29
+  rotate: true
+  xy: 393, 307
+  size: 58, 251
+  orig: 58, 251
+  offset: 0, 0
+  index: -1
+sqsl_3
+  rotate: true
+  xy: 568, 614
+  size: 140, 248
+  orig: 140, 248
+  offset: 0, 0
+  index: -1
+sqsl_30
+  rotate: true
+  xy: 818, 670
+  size: 86, 226
+  orig: 86, 226
+  offset: 0, 0
+  index: -1
+sqsl_31
+  rotate: false
+  xy: 646, 188
+  size: 116, 177
+  orig: 116, 177
+  offset: 0, 0
+  index: -1
+sqsl_32
+  rotate: false
+  xy: 430, 21
+  size: 43, 34
+  orig: 43, 34
+  offset: 0, 0
+  index: -1
+sqsl_33
+  rotate: false
+  xy: 260, 2
+  size: 43, 31
+  orig: 43, 31
+  offset: 0, 0
+  index: -1
+sqsl_34
+  rotate: false
+  xy: 588, 758
+  size: 310, 294
+  orig: 310, 294
+  offset: 0, 0
+  index: -1
+sqsl_35
+  rotate: true
+  xy: 2, 118
+  size: 115, 201
+  orig: 123, 201
+  offset: 0, 0
+  index: -1
+sqsl_36
+  rotate: true
+  xy: 818, 619
+  size: 49, 164
+  orig: 49, 164
+  offset: 0, 0
+  index: -1
+sqsl_37
+  rotate: true
+  xy: 211, 595
+  size: 159, 355
+  orig: 159, 355
+  offset: 0, 0
+  index: -1
+sqsl_38
+  rotate: false
+  xy: 769, 94
+  size: 108, 306
+  orig: 108, 306
+  offset: 0, 0
+  index: -1
+sqsl_39
+  rotate: false
+  xy: 393, 57
+  size: 100, 248
+  orig: 100, 248
+  offset: 0, 0
+  index: -1
+sqsl_4
+  rotate: false
+  xy: 2, 36
+  size: 81, 80
+  orig: 81, 80
+  offset: 0, 0
+  index: -1
+sqsl_40
+  rotate: false
+  xy: 211, 756
+  size: 375, 296
+  orig: 375, 296
+  offset: 0, 0
+  index: -1
+sqsl_5
+  rotate: false
+  xy: 879, 24
+  size: 166, 143
+  orig: 166, 143
+  offset: 0, 0
+  index: -1
+sqsl_6
+  rotate: true
+  xy: 900, 892
+  size: 160, 149
+  orig: 160, 149
+  offset: 0, 0
+  index: -1
+sqsl_7
+  rotate: false
+  xy: 2, 2
+  size: 55, 32
+  orig: 55, 32
+  offset: 0, 0
+  index: -1
+sqsl_8
+  rotate: false
+  xy: 349, 16
+  size: 79, 39
+  orig: 79, 39
+  offset: 0, 0
+  index: -1
+sqsl_9
+  rotate: false
+  xy: 85, 7
+  size: 70, 51
+  orig: 70, 51
+  offset: 0, 0
+  index: -1

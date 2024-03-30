@@ -16,6 +16,7 @@ import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { Role } from '../../serverSDK/common';
 import { Role as rRole } from '../role';
 import { netSingleton } from '../../netDriver/netSingleton';
+import * as singleton from '../../netDriver/netSingleton';
 import { battle_victory } from '../../serverSDK/ccallmatch';
 import { Team } from '../team';
 import { GameManager } from '../../other/GameManager';
@@ -177,18 +178,21 @@ export class BattleDis
             if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
                 (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
             {
-                let msg=(is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
-                let text="<outline color=black width=4>"+msg+"</outline>";
-                this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,text));
+                //let msg=(is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
+                //let text="<outline color=black width=4>"+msg+"</outline>";
+                //this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,text));
+                let heath=(is_victory == battle_victory.victory) ? this.battle.faild : this.battle.faild-1;
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath}));
             }
             else if (is_victory == battle_victory.tie) 
             {
-                this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>战斗平局!</outline>"));
+                //this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>战斗平局!</outline>"));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battle.faild}));
             }
 
             await sleep(4000);
 
-            netSingleton.game.confirm_round_victory(is_victory);
+            //netSingleton.game.confirm_round_victory(is_victory);
         }
         catch(error)
         {
