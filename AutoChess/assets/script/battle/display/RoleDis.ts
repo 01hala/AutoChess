@@ -498,13 +498,16 @@ export class RoleDis extends Component
             this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
             if(skdata)
             {
+                let anims=skdata.getAnimsEnum();
                 this.roleSprite.skeletonData=skdata;
-                this.roleSprite.animation="animation";
+                //this.roleSprite.animation="animation";
+                this.roleSprite.setAnimation(0,String(anims[1]),true);
+                
             }
         }
         catch(error)
         {
-            console.warn("RoleDis 下的 LoadOnConfig 错误 err:" + error);
+            console.error("RoleDis 下的 LoadOnConfig 错误 err:" + error);
         }
     }
 }

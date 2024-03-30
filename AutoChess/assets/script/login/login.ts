@@ -212,7 +212,7 @@ export class login extends Component {
             
             singleton.netSingleton.ready.destory();
             singleton.netSingleton.ready = null;
-
+        
             let _battle = new Battle(self, target);
             singleton.netSingleton.battle = new BattleDis(_battle);
             await singleton.netSingleton.battle.Start(this.bk.node,async (event)=>
@@ -227,7 +227,7 @@ export class login extends Component {
                 console.log("start_round sucess!");
                 clearInterval(this.interval);
             });
-
+            
         }
 
         this.netNode.on("connect", (e)=>{

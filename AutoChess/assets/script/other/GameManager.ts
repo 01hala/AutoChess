@@ -2,6 +2,7 @@ import { _decorator, Animation, animation, Asset, Component, instantiate, Node, 
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { SendMessage } from './MessageEvent';
+import { Settlement } from '../secondaryPanel/Settlement';
 const { ccclass, property } = _decorator;
 
 @ccclass('TipsManager')
@@ -16,18 +17,19 @@ export class GameManager extends Component
 
     @property(Prefab)
     private textTipNodePre:Prefab;
-
     private typeface: TTFFont;
 
     @property(Prefab)
     private infoPanelpre:Prefab;
-
     private infoPanel:Node;
+
+    private settlementBoardPre:Prefab;
+    private settlementBoard:Node;
 
     protected onLoad()
     {
         GameManager._instance=this.node.getComponent(GameManager);
-        this.Init()
+        this.Init();
     }
 
     async start() 
@@ -44,18 +46,24 @@ export class GameManager extends Component
 
     private async Init()
     {
-        let tt=BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar");
+        let tt = BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar");
         let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
-        let ip=BundleManager.Instance.loadAssetsFromBundle("Board","Information");
+        let ip = BundleManager.Instance.loadAssetsFromBundle("Board","Information");
+        let sl = BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard");
 
-        let awaitResult=await Promise.all([tt,tf,ip]);
-        this.textTipNodePre= awaitResult[0] as Prefab;
-        this.typeface=awaitResult[1] as TTFFont;
-        this.infoPanelpre= awaitResult[2] as Prefab;
+        let awaitResult = await Promise.all([tt,tf,ip,sl]);
+        this.textTipNodePre = awaitResult[0] as Prefab;
+        this.typeface = awaitResult[1] as TTFFont;
+        this.infoPanelpre = awaitResult[2] as Prefab;
+        this.settlementBoardPre=awaitResult[3] as Prefab;
 
         this.infoPanel=instantiate(this.infoPanelpre);
         this.infoPanel.setParent(this.node);
         this.infoPanel.active=false;
+
+        this.settlementBoard=instantiate(this.settlementBoardPre);
+        this.settlementBoard.setParent(this.node);
+        this.settlementBoard.active=false;
     }
 
     private InitEvent()
@@ -76,8 +84,16 @@ export class GameManager extends Component
 
         this.node.on('ShowTip',(event:SendMessage)=>
         {
+            event.propagationStopped=true;
             this.ShowTip(event.detail);
         });
+
+        this.node.on('OpenSettlement',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.settlementBoard.active=true;
+            this.settlementBoard.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome , event.detail.hpNum);
+        })
     }
 
     private ShowTip(_msg:string)

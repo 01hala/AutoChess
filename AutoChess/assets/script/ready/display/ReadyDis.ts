@@ -176,6 +176,8 @@ export class ReadyDis
         singleton.netSingleton.game.cb_battle_info = (battle_info: common.UserBattleData) => {
             this.readyData.SetCoins(battle_info.coin);
             this.readyData.SetRoles(battle_info.RoleList);
+            this.readyData.SetHeath(battle_info.faild);
+            this.readyData.SetStage(battle_info.stage);
             //console.log('player coin: ',battle_info.coin);
             this.UpdatePlayerInfo(battle_info);
         };
