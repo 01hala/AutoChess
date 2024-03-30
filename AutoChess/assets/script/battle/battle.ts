@@ -14,7 +14,7 @@ function splitEvs(evs:skill.Event[]) {
     let normalEvs:skill.Event[] = [];
 
     for (let ev of evs) {
-        if (enums.EventType.RemoteInjured == ev.type || enums.EventType.AttackInjured == ev.type) {
+        if (enums.EventType.RemoteInjured == ev.type || enums.EventType.AttackInjured == ev.type || enums.EventType.Exit == ev.type) {
             injuredEvs.push(ev);
         }
         else {
