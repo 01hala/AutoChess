@@ -33,11 +33,11 @@ export class Skill_Shields_6 extends SkillBase
         this.dir=dir;
     }
 
-    public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
+    public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
     {
         try
         {
-            this.SkillEffect(selfInfo,battle);          
+            this.SkillEffect(selfInfo,battle,isParallel);          
         }
         catch (error) 
         {
@@ -46,12 +46,13 @@ export class Skill_Shields_6 extends SkillBase
         
     }
 
-    SkillEffect(selfInfo: RoleInfo, battle: Battle):void
+    SkillEffect(selfInfo: RoleInfo, battle: Battle,isPar:boolean):void
     {
         try 
         {
             let teamTemp:Role[]=null;
             let recipientRole:Role=null;
+            this.event.isParallel=isPar;
 
             if(Camp.Self==selfInfo.camp)
             {

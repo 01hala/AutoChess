@@ -25,7 +25,7 @@ export class Skill_ChangePosition_7 extends SkillBase {
     }
 
 
-    UseSkill(selfInfo: RoleInfo, battle: Battle): void
+    UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void
     {
         try
         {
@@ -34,6 +34,7 @@ export class Skill_ChangePosition_7 extends SkillBase {
             battleEvent.spellcaster = selfInfo;
             battleEvent.recipient = [];
             battleEvent.value = [];
+            battleEvent.isParallel=isParallel;
 
             let originalRoleList:Role[] = null;
             if(Camp.Self==selfInfo.camp)

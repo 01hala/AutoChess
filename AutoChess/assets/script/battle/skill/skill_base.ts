@@ -23,10 +23,13 @@ export class Event {
     public recipient : RoleInfo[];
     public value : number[];
     public is_trigger_floating : boolean = false;
+    public priority:number=1;
+    //是否是并行发动的
+    public isParallel:boolean=false;
 }
 
 export abstract class SkillTriggerBase {
-    abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean;
+    abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number;
 }
 
 export abstract class SkillBase {
@@ -35,5 +38,5 @@ export abstract class SkillBase {
         this.Priority = priority
     }
 
-    abstract UseSkill(selfInfo: RoleInfo, battle: battle.Battle): void;
+    abstract UseSkill(selfInfo: RoleInfo, battle: battle.Battle,isParallel:boolean): void;
 }

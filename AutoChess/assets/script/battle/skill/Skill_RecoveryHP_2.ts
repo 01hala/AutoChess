@@ -18,7 +18,7 @@ export class Skill_RecoveryHP_2 extends SkillBase {
         this.effectiveValue = effectiveValue;
     }
 
-    UseSkill(selfInfo: RoleInfo, battle: Battle): void
+    UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void
     {
         try
         {

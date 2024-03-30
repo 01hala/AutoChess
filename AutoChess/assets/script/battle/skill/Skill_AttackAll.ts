@@ -22,11 +22,12 @@ export class Skill_AttackAll extends SkillBase {
         this.effectiveValue = effectiveValue;
     }
 
-    UseSkill(selfInfo: RoleInfo, battle: Battle): void
+    UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void
     {
         try
         {
             let effectiveRole : Role[] = null;
+
             effectiveRole = battle.GetEnemyTeam().GetRoles().slice();
             for(const r of effectiveRole){
                 r.BeHurted(this.effectiveValue,null,battle,EventType.AttackInjured);

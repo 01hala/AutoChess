@@ -9,6 +9,22 @@ import * as role from './role'
 import * as team from './team'
 import * as enums from '../other/enums'
 
+function splitEvs(evs:skill.Event[]) {
+    let injuredEvs:skill.Event[] = [];
+    let normalEvs:skill.Event[] = [];
+
+    for (let ev of evs) {
+        if (enums.EventType.RemoteInjured == ev.type || enums.EventType.AttackInjured == ev.type) {
+            injuredEvs.push(ev);
+        }
+        else {
+            normalEvs.push(ev);
+        }
+    }
+    
+    return [injuredEvs, normalEvs]
+}
+
 export class Battle {
     private selfTeam : team.Team;
     private enemyTeam : team.Team;
@@ -99,76 +115,134 @@ export class Battle {
         return this.selfTeam.CheckRemoveDeadRole(this) || this.enemyTeam.CheckRemoveDeadRole(this);
     }
 
+    private async tickInjuredEventChain(evs:skill.Event[]) {
+        if (evs == null || evs.length <= 0) {
+            return;
+        }
+
+        await this.on_event.call(null, evs);
+        this.tickSkill(evs);
+
+        let _evs = this.evs.slice();
+        let [injuredEvs, normalEvs] = splitEvs(_evs);
+
+        await this.tickInjuredEvent(injuredEvs);
+        await this.tickInjuredEventChain(normalEvs);
+    }
+
+    private async tickInjuredEvent(evs:skill.Event[]) {
+        if (evs == null || evs.length <= 0) {
+            return;
+        }
+
+        let tmpEvs:skill.Event[] = [];
+        for (let ev of evs) {
+            this.tickSkill(evs);
+            if (this.evs.length <= 0) {
+                tmpEvs.push(ev);
+            }
+            else {
+                let _evs = this.evs.slice();
+                let [injuredEvs, normalEvs] = splitEvs(_evs);
+                await this.tickInjuredEvent(injuredEvs);
+                await this.tickInjuredEventChain(normalEvs);
+            }
+        }
+
+        await this.on_event.call(null, tmpEvs);
+
+        this.tickSkill(tmpEvs);
+        let _evs = this.evs.slice();
+        let [injuredEvs, normalEvs] = splitEvs(_evs);
+        
+        await this.tickInjuredEvent(injuredEvs);
+        await this.on_event.call(null, normalEvs);
+    }
+
+    private tickSkill(evs:skill.Event[]) {
+        this.evs = [];
+
+        console.log("TickBattle evs:", evs);
+
+        let selfTeam = this.selfTeam.GetRoles();
+        for(let index in selfTeam) {
+            let role = selfTeam[index];
+            if (role.CheckSkillIsLock()) {
+                continue;
+            }
+
+            let roleInfo = new skill.RoleInfo();
+            roleInfo.properties=role.GetProperties();
+            console.log("战斗事件中角色攻击力:")
+            
+            roleInfo.index =  role.index;
+            roleInfo.camp = enums.Camp.Self;
+            let p = 0;
+            let skillImpl: skill.SkillBase = null;
+            let isPar=false;
+            for(let skill of role.skill) {
+                let flag=skill.trigger.CheckSkillTrigger(evs, roleInfo)
+                if (flag) {
+                    if(2==flag){
+                        isPar=true;
+                        console.log("Parallel skill detected");
+                    }
+                    if (skill.skill.Priority > p) {
+                        skillImpl = skill.skill;
+                        p = skill.skill.Priority;
+                    }
+                }
+            }
+            if (skillImpl) {
+                role.LockSkill();
+                console.log("Are skills parallel:"+isPar);
+                skillImpl.UseSkill(roleInfo, this,isPar);
+            }
+        }
+
+        let enemyTeam = this.enemyTeam.GetRoles();
+        for(let index in enemyTeam) {
+            let role = enemyTeam[index];
+            if (role.CheckSkillIsLock()) {
+                continue;
+            }
+
+            let roleInfo = new skill.RoleInfo();
+            roleInfo.properties=role.GetProperties();
+            
+            roleInfo.index =  role.index;
+            roleInfo.camp = enums.Camp.Enemy;
+            let p = 0;
+            let skillImpl: skill.SkillBase = null;
+            let isPar=false;
+            for(let skill of role.skill) {
+                let flag=skill.trigger.CheckSkillTrigger(evs, roleInfo)
+                if (flag) {
+                    if(2==flag) isPar=true;
+                    if (skill.skill.Priority > p) {
+                        skillImpl = skill.skill;
+                        p = skill.skill.Priority;
+                    }
+                }
+            }
+            if (skillImpl) {
+                role.LockSkill();
+                skillImpl.UseSkill(roleInfo, this,isPar);
+            }
+        }
+    }
+
     private triggerBeforeAttack : boolean = true;
     public async TickBattle() : Promise<boolean> {
         let evs = this.evs.slice();
-        await this.on_event.call(null, evs);
-
+        let [injuredEvs, normalEvs] = splitEvs(evs);
+        
+        await this.tickInjuredEvent(injuredEvs);
+        await this.on_event.call(null, normalEvs);
+        
         if (this.evs.length > 0) {
-            this.evs = [];
+            this.tickSkill(evs);
 
-            console.log("TickBattle evs:", evs);
-
-            let selfTeam = this.selfTeam.GetRoles();
-            for(let index in selfTeam) {
-                let role = selfTeam[index];
-                if (role.CheckSkillIsLock()) {
-                    continue;
-                }
-
-                let roleInfo = new skill.RoleInfo();
-                roleInfo.properties=role.GetProperties();
-                console.log("战斗事件中角色攻击力:")
-                // roleInfo.attack=role.GetProperty(enums.Property.Attack);
-                // roleInfo.hp=role.GetProperty(enums.Property.HP);
-                roleInfo.index =  role.index;
-                roleInfo.camp = enums.Camp.Self;
-                let p = 0;
-                let skillImpl: skill.SkillBase = null;
-                for(let skill of role.skill) {
-                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
-                        if (skill.skill.Priority > p) {
-                            skillImpl = skill.skill;
-                            p = skill.skill.Priority;
-                        }
-                    }
-                }
-                if (skillImpl) {
-                    role.LockSkill();
-                    skillImpl.UseSkill(roleInfo, this);
-                }
-            }
-
-            let enemyTeam = this.enemyTeam.GetRoles();
-            for(let index in enemyTeam) {
-                let role = enemyTeam[index];
-                if (role.CheckSkillIsLock()) {
-                    continue;
-                }
-
-                let roleInfo = new skill.RoleInfo();
-                roleInfo.properties=role.GetProperties();
-                // roleInfo.attack=role.GetProperty(enums.Property.Attack);
-                // roleInfo.hp=role.GetProperty(enums.Property.HP);
-                roleInfo.index =  role.index;
-                roleInfo.camp = enums.Camp.Enemy;
-                let p = 0;
-                let skillImpl: skill.SkillBase = null;
-                for(let skill of role.skill) {
-                    if (skill.trigger.CheckSkillTrigger(evs, roleInfo)) {
-                        if (skill.skill.Priority > p) {
-                            skillImpl = skill.skill;
-                            p = skill.skill.Priority;
-                        }
-                    }
-                }
-                if (skillImpl) {
-                    role.LockSkill();
-                    skillImpl.UseSkill(roleInfo, this);
-                }
-            }
-
-            //console.log("tick events");
             return false;
         }
 

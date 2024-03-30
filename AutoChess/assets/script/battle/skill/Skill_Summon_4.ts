@@ -29,11 +29,11 @@ export class Skill_Summon_4 extends SkillBase
         this.addedProperties=roleProperties;
     }
 
-    public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
+    public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
     {
         try
         {
-            this.SkillEffect(selfInfo,battle);          
+            this.SkillEffect(selfInfo,battle,isParallel);          
         }
         catch (error) 
         {
@@ -42,7 +42,7 @@ export class Skill_Summon_4 extends SkillBase
         
     }
 
-    private SkillEffect(selfInfo: RoleInfo, battle: Battle):void
+    private SkillEffect(selfInfo: RoleInfo, battle: Battle,isPar:boolean):void
     {    
         try
         {
@@ -52,6 +52,7 @@ export class Skill_Summon_4 extends SkillBase
             battleEvent.spellcaster = selfInfo;
             battleEvent.recipient = [];
             battleEvent.value = [];
+            battleEvent.isParallel=isPar
 
             let addedIdx:number;
             if(Camp.Self==selfInfo.camp)
@@ -114,11 +115,11 @@ export class Skill_SummonMecha extends SkillBase
         this.addedProperties=roleProperties;
     }
 
-    public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
+    public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
     {
         try
         {
-            this.SkillEffect(selfInfo,battle);          
+            this.SkillEffect(selfInfo,battle,isParallel);          
         }
         catch (error) 
         {
@@ -127,7 +128,7 @@ export class Skill_SummonMecha extends SkillBase
         
     }
 
-    private SkillEffect(selfInfo: RoleInfo, battle: Battle):void
+    private SkillEffect(selfInfo: RoleInfo, battle: Battle,isPar:boolean):void
     {    
         try
         {
@@ -137,6 +138,7 @@ export class Skill_SummonMecha extends SkillBase
             battleEvent.spellcaster = selfInfo;
             battleEvent.recipient = [];
             battleEvent.value = [];
+            battleEvent.isParallel=isPar;
 
             let addedIdx:number;
             //机甲修建值表现
