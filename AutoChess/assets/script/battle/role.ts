@@ -383,6 +383,7 @@ export class Role {
 
     public CheckDead() {
         let hp = this.properties.get(enums.Property.HP);
+        console.log(`CheckDead selfCamp:${this.selfCamp} id:${this.id} hp:${hp}`);
         return hp <= 0;
     }
 

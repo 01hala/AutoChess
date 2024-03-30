@@ -216,11 +216,11 @@ export class BattleDis
         {
             let waits = [];
 
-            let roles=this.battle.GetSelfTeam().GetRoles();
-            waits.push(this.selfQueue.InitRole(roles));
+            let selfRoles = this.battle.GetSelfTeam().GetRoles();
+            waits.push(this.selfQueue.InitRole(selfRoles));
     
-            roles=this.battle.GetEnemyTeam().GetRoles();
-            waits.push(this.enemyQueue.InitRole(roles));
+            let enemyRoles = this.battle.GetEnemyTeam().GetRoles();
+            waits.push(this.enemyQueue.InitRole(enemyRoles));
 
             await Promise.all(waits);
         }
@@ -435,19 +435,23 @@ export class BattleDis
                 {
                     this.showLaunchSkillEffect();
                 }
-
-                //释放技能者所在阵营列表
-                //let roleList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam().GetRoles() : this.battle.GetEnemyTeam().GetRoles();
+                
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
-                    tmp=new rRole(element.index,element.id, 1,0, Camp.Self, element.properties,null);
-                    let targetTeam = Camp.Self==element.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
+                    tmp = new rRole(element.index,element.id, 1,0, element.camp, element.properties,null);
+                    let targetTeam = Camp.Self == element.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
-                    let queue = Camp.Self==element.camp ? this.selfQueue : this.enemyQueue;
-                    if(!ev.isParallel) allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
+                    let queue = Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
+                    if(!ev.isParallel) {
+                        allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
+                    }
                     else{
-                        if(Camp.Self == ev.spellcaster.camp) this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
-                        else this.enemyParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                        if(Camp.Self == ev.spellcaster.camp) {
+                            this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                        }
+                        else {
+                            this.enemyParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                        }
                     }
                 });
                 await Promise.all(allAwait);
