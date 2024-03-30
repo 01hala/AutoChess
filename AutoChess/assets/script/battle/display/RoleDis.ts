@@ -489,13 +489,20 @@ export class RoleDis extends Component
  */
     private async LoadOnConfig()
     {
-        let jconfig = config.RoleConfig.get(this.RoleId);
-        let skdata = await loadAssets.LoadSkeletonData(jconfig.Skel);
-        this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
-        if(skdata)
+        try
         {
-            this.roleSprite.skeletonData=skdata;
-            this.roleSprite.animation="animation";
+            let jconfig = config.RoleConfig.get(this.RoleId);
+            let skdata = await loadAssets.LoadSkeletonData(jconfig.Skel);
+            this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
+            if(skdata)
+            {
+                this.roleSprite.skeletonData=skdata;
+                this.roleSprite.animation="animation";
+            }
+        }
+        catch(error)
+        {
+            console.warn("RoleDis 下的 LoadOnConfig 错误 err:" + error);
         }
     }
 }
