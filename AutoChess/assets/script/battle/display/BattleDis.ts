@@ -678,8 +678,6 @@ export class BattleDis
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
                 await this.CheckAttExpEvent(evs);
-                await this.CheckExitEvent(evs);
-                await this.CheckAttackEvent(evs);
                 if(this.selfParallelList.length>0||this.enemyParallelList.length>0){
                     console.log("Execute all parallel events");
                     await Promise.all(this.selfParallelList);
@@ -687,6 +685,8 @@ export class BattleDis
                 }
                 this.selfParallelList=[];
                 this.enemyParallelList=[];
+                await this.CheckExitEvent(evs);
+                await this.CheckAttackEvent(evs);
                 await this.ChangeAttEvent(evs);               
             }
             catch(error) 
