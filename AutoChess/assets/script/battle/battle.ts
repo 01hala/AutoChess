@@ -116,27 +116,20 @@ export class Battle {
         return this.selfTeam.CheckRemoveDeadRole(this) || this.enemyTeam.CheckRemoveDeadRole(this);
     }
 
-    private async checkDeadExit() {
-        this.CheckRemoveDeadRole();
-        let _evs = this.evs.slice();
-        await this.on_event.call(null, _evs);
-    }
-
     private async tickInjuredEventChain(evs:skill.Event[]) {
         if (evs == null || evs.length <= 0) {
             return;
         }
 
         await this.on_event.call(null, evs);
-        await this.checkDeadExit();
 
         this.tickSkill(evs);
+        this.CheckRemoveDeadRole();
         let _evs = this.evs.slice();
+        this.evs = [];
         let [injuredEvs, normalEvs] = splitEvs(_evs);
         await this.tickInjuredEvent(injuredEvs);
         await this.tickInjuredEventChain(normalEvs);
-
-        await this.checkDeadExit();
     }
 
     private async tickInjuredEvent(evs:skill.Event[]) {
@@ -151,24 +144,21 @@ export class Battle {
                 tmpEvs.push(ev);
             }
             else {
-                let _evs = this.evs.slice();
-                let [injuredEvs, normalEvs] = splitEvs(_evs);
+                await this.on_event.call(null, [ev]);
 
-                await this.checkDeadExit();
+                this.CheckRemoveDeadRole();
+                let _evs = this.evs.slice();
+                this.evs = [];
+                let [injuredEvs, normalEvs] = splitEvs(_evs);
 
                 await this.tickInjuredEvent(injuredEvs);
                 await this.tickInjuredEventChain(normalEvs);
-
-                await this.checkDeadExit();
             }
         }
         await this.on_event.call(null, tmpEvs);
-        await this.checkDeadExit();
     }
 
     private tickSkill(evs:skill.Event[]) {
-        this.evs = [];
-
         console.log("TickBattle evs:", evs);
 
         let selfTeam = this.selfTeam.GetRoles();
@@ -242,8 +232,8 @@ export class Battle {
     private triggerBeforeAttack : boolean = true;
     public async TickBattle() : Promise<boolean> {
         let evs = this.evs.slice();
+        this.evs = [];
         let [injuredEvs, normalEvs] = splitEvs(evs);
-        
         await this.tickInjuredEvent(injuredEvs);
         await this.on_event.call(null, normalEvs);
         
@@ -254,7 +244,6 @@ export class Battle {
 
         if (this.evs.length <= 0) {
             if (this.CheckRemoveDeadRole()) {
-                await this.checkDeadExit();
                 return false;
             }
         }
