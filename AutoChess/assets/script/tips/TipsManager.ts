@@ -29,7 +29,7 @@ export class TipsManager extends Component
             if(null==this.textTipNodePre)
             {
                 this.textTipNodePre = await BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar") as Prefab;
-                this.typeface = (await BundleManager.Instance.loadAssetsFromBundle<TTFFont>("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
+                this.typeface = (await BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
             }
         }
         catch(error)

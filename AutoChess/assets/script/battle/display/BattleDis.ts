@@ -34,9 +34,6 @@ export class BattleDis
     public selfQueue:Queue;
     public enemyQueue:Queue;
 
-    //胜利或者失败
-    //private victory:Node;
-
     private gmBtn:Button;
     private pauseBtn:Button;
     private puase:boolean = false;
@@ -117,9 +114,6 @@ export class BattleDis
             console.log("PutRole end");
             this.father=father;
             
-            
-            //father.addChild(this.panelNode);
-            //this.battle.StartBattle();
             _callBack(()=>
             {
                 setTimeout(this.TickBattle.bind(this), 500);
@@ -151,7 +145,6 @@ export class BattleDis
                 await this.battle.TickBattle();
             }
 
-            //this.victory.active = true;
             let is_victory = battle_victory.tie;
             if (this.battle.GetWinCamp() == Camp.Self) {
                 is_victory = battle_victory.victory;
@@ -163,12 +156,10 @@ export class BattleDis
             if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
                 (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
             {
-                //this.victory.getComponent(Label).string = (is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
                 let msg=(is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
                 TipsManager.Instance.ShowTip(msg);
             }
             else if (is_victory == battle_victory.tie) {
-                //this.victory.getComponent(Label).string = "战斗平局!";
                 TipsManager.Instance.ShowTip("战斗平局!");
             }
 
@@ -184,8 +175,6 @@ export class BattleDis
     }
 
     async SetGameVictory(is_victory:boolean) {
-        //this.victory.active = true;
-        //this.victory.getComponent(Label).string = is_victory ? "游戏胜利!" : "游戏失败!";
         let msg=is_victory ? "游戏胜利!" : "游戏失败!";
         TipsManager.Instance.ShowTip(msg);
 
