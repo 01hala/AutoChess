@@ -166,7 +166,6 @@ export class RoleDis extends Component
             this.tAttack = tween(this.node)
                 .to(0.4, { position: readyLocation })
                 .delay(0.1)
-                //.by(0.5,{position: battleLocation},{easing: 'quintIn'})
                 .to(0.25, { position: battleLocation })
                 .call(() => {
                     this.changeAtt();
@@ -201,8 +200,6 @@ export class RoleDis extends Component
     {
         try 
         {
-            //this.roleInfo=roleInfo;
-            
             this.Hp = Math.round(this.roleInfo.GetProperty(Property.HP));
             this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));
             this.Level=this.roleInfo.level;
@@ -398,20 +395,11 @@ export class RoleDis extends Component
         {
             let bulletNode = instantiate(this.remoteNode);
             bulletNode.setPosition(spellcasterLocation);
-            //let tempRole=find("Canvas/EnemyQueue").children[role.index];
             console.log(bulletNode);
             bulletNode.getComponent(Bullet).Init(targetLocation);
             father.addChild(bulletNode);
 
-            this.delay(700, () => {});
-            return this.delay(700, () => 
-            {
-                // if (this.tAttack) {
-                //     this.tAttack.stop();
-                //     this.tAttack = null;
-                //     console.log("RemoteAttack end!");
-                // }
-            });
+            return this.delay(700, () => {});
         }
         catch (err) 
         {
@@ -428,8 +416,7 @@ export class RoleDis extends Component
                 singleton.netSingleton.battle.showBattleEffect(false);
                 this.node.active = false;
             });
-            // this.bandage.active = true;
-            // this.bandage.getComponent(Animation).play();
+            
             let offset=-1000;
             if(Camp.Self!=this.roleInfo.selfCamp) offset=1000;
             let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
@@ -443,7 +430,7 @@ export class RoleDis extends Component
             {
                 this.hurtedSpine.active=false;
             })         
-            //.by(0.05, { position: new Vec3(this.node.position.x+offset,this.node.position.y+5) }, {easing: 'quintOut'})// [变动属性]+[缓动效果]
+            
             .by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y)},{easing: 'quintIn'})
             .delay(0.2).call(() => {
                 this.roleInfo = null;
@@ -451,10 +438,7 @@ export class RoleDis extends Component
                 this.node.destroy();
             })
             .start();
-            return this.delay(200, () => 
-            {
-                
-            });
+            return this.delay(200, () => {});
         }
         catch (err) 
         {

@@ -106,10 +106,15 @@ export class Skill_RemoteAtk_3 extends SkillBase
             self=battle.GetEnemyTeam().GetRole(selfInfo.index);
         }
 
-        let recipientRoles:Role[] = battle.GetSelfTeam().GetRoles();
+        let recipientRoles:Role[] = [];
+        let selfRoles:Role[] = battle.GetSelfTeam().GetRoles();
         let enemyRoles:Role[] = battle.GetEnemyTeam().GetRoles();
 
-        for(let t of enemyRoles)
+        for (let t of selfRoles) 
+        {
+            recipientRoles.push(t);
+        }
+        for (let t of enemyRoles)
         {
             recipientRoles.push(t);
         }

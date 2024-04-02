@@ -118,7 +118,7 @@ export class Settlement extends Component
             this.node.active=false;
             this.midArea.getComponent(Animation).off(Animation.EventType.FINISHED);
             //返回准备界面代码写这
-            netSingleton.game.confirm_round_victory(this.isVictory);
+            //netSingleton.game.confirm_round_victory(this.isVictory);
         });
         this.midArea.getComponent(Animation).play("PanelDisappear");
         for(let t of this.hpGroup.children)

@@ -39,16 +39,13 @@ export class BattleDis
     public selfQueue:Queue;
     public enemyQueue:Queue;
 
-    //胜利或者失败
-    //private victory:Node;
-
     private gmBtn:Button;
     private pauseBtn:Button;
     private puase:boolean = false;
 
     //所有需要并行执行的事件队列,分己方和敌人方，己方先执行
-    private selfParallelList:any[]=[]
-    private enemyParallelList:any[]=[]
+    private selfParallelList:Promise<void>[]=[]
+    private enemyParallelList:Promise<void>[]=[]
 
     //战斗系统类
     public battle:Battle = null;
@@ -132,9 +129,6 @@ export class BattleDis
             console.log("PutRole end");
             this.father=father;
             
-            
-            //father.addChild(this.panelNode);
-            //this.battle.StartBattle();
             _callBack(()=>
             {
                 setTimeout(this.TickBattle.bind(this), 500);
@@ -166,7 +160,6 @@ export class BattleDis
                 await this.battle.TickBattle();
             }
 
-            //this.victory.active = true;
             let is_victory = battle_victory.tie;
             if (this.battle.GetWinCamp() == Camp.Self) {
                 is_victory = battle_victory.victory;
@@ -178,21 +171,17 @@ export class BattleDis
             if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
                 (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
             {
-                //let msg=(is_victory == battle_victory.victory) ? "战斗胜利!" : "战斗失败!";
-                //let text="<outline color=black width=4>"+msg+"</outline>";
-                //this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,text));
                 let heath=(is_victory == battle_victory.victory) ? this.battle.faild : this.battle.faild-1;
-                await sleep(1000);
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath}));
             }
             else if (is_victory == battle_victory.tie) 
             {
-                //this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>战斗平局!</outline>"));
-                await sleep(1000);
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battle.faild}));
             }
 
-            //netSingleton.game.confirm_round_victory(is_victory);
+            await sleep(4000);
+
+            netSingleton.game.confirm_round_victory(is_victory);
         }
         catch(error)
         {
@@ -216,11 +205,11 @@ export class BattleDis
         {
             let waits = [];
 
-            let roles=this.battle.GetSelfTeam().GetRoles();
-            waits.push(this.selfQueue.InitRole(roles));
+            let selfRoles = this.battle.GetSelfTeam().GetRoles();
+            waits.push(this.selfQueue.InitRole(selfRoles));
     
-            roles=this.battle.GetEnemyTeam().GetRoles();
-            waits.push(this.enemyQueue.InitRole(roles));
+            let enemyRoles = this.battle.GetEnemyTeam().GetRoles();
+            waits.push(this.enemyQueue.InitRole(enemyRoles));
 
             await Promise.all(waits);
         }
@@ -246,8 +235,6 @@ export class BattleDis
         this.launchSkillEffect.getChildByPath("BottomImg").getComponent(sp.Skeleton).animation="a2";
         this.launchSkillEffect.getChildByPath("RoleImg").getComponent(sp.Skeleton).animation="a";
         this.launchSkillEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
-
-        //await sleep(2000);
 
         return this.delay(2000,()=>
         {
@@ -291,8 +278,6 @@ export class BattleDis
                 this.enemyBeginEffect.getChildByPath("UserName").getComponent(Label).string="敌方队伍";
                 this.enemyBeginEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
 
-                //await sleep(2000);
-
                 return this.delay(1000,()=>
                 {
                     this.selfBeginEffect.active=false;
@@ -312,13 +297,13 @@ export class BattleDis
     {
         try 
         {
-            let evs_floating : skill.Event[] = [];
-            let allAwait = [];
+            let evs_floating:skill.Event[] = [];
             let selfAttack = false;
             let enemyAttack = false;
+            let selfRoleNodeRoleDis:RoleDis = null;
+            let enemyRoleNodeRoleDis:RoleDis = null;
             for(let ev of evs)
             {
-                //console.log("checkAttackEvent ev:", ev)
                 if (EventType.AttackInjured != ev.type)
                 {
                     continue;
@@ -331,11 +316,12 @@ export class BattleDis
                     if (!selfAttack)
                     {
                         let roleNode = this.selfQueue.roleNodes[ev.spellcaster.index];
-                        if(null != roleNode)
+                        if(roleNode)
                         {
-                            allAwait.push(roleNode.getComponent(RoleDis).Attack(
-                                this.selfQueue.readyLocation.position, this.selfQueue.battleLocation.position, ev.spellcaster.camp));
-                            selfAttack = true;
+                            selfRoleNodeRoleDis = roleNode.getComponent(RoleDis);
+                            if (selfRoleNodeRoleDis) {
+                                selfAttack = true;
+                            }
                         }
                     }
                 }
@@ -343,20 +329,39 @@ export class BattleDis
                 {
                     if (!enemyAttack)
                     {
-                        //let r = this.battle.GetEnemyTeam().GetRole(ev.spellcaster.index);
                         let roleNode = this.enemyQueue.roleNodes[ev.spellcaster.index];
-                        if(null != roleNode)
+                        if(roleNode)
                         {
-                            allAwait.push(roleNode.getComponent(RoleDis).Attack(
-                                this.enemyQueue.readyLocation.position, this.enemyQueue.battleLocation.position, ev.spellcaster.camp));
-                            enemyAttack = true;
+                            enemyRoleNodeRoleDis = roleNode.getComponent(RoleDis);
+                            if (enemyRoleNodeRoleDis) {
+                                enemyAttack = true;
+                            }
                         }
                     }
                 }
             }
             
-            await Promise.all(allAwait);
-            await this.ChangeAttEvent(evs_floating);
+            if (selfAttack && enemyAttack) {
+                console.log("CheckAttackEvent begin!");
+                console.log("CheckAttackEvent selfRoleNodeRoleDis:", selfRoleNodeRoleDis);
+                console.log("CheckAttackEvent enemyRoleNodeRoleDis:", enemyRoleNodeRoleDis);
+                
+                let allAwait:Promise<void>[] = [];
+
+                allAwait.push(selfRoleNodeRoleDis.Attack(
+                    this.selfQueue.readyLocation.position, 
+                    this.selfQueue.battleLocation.position, 
+                    Camp.Self));
+                allAwait.push(enemyRoleNodeRoleDis.Attack(
+                    this.enemyQueue.readyLocation.position, 
+                    this.enemyQueue.battleLocation.position, 
+                    Camp.Enemy));
+
+                await Promise.all(allAwait);
+                await this.ChangeAttEvent(evs_floating);
+
+                console.log("CheckAttackEvent end!");
+            }
         }
         catch(error) 
         {
@@ -369,7 +374,6 @@ export class BattleDis
     {
         try 
         {
-            let allAwait=[]
             for(let ev of evs)
             {
                 
@@ -382,8 +386,6 @@ export class BattleDis
                     await this.showLaunchSkillEffect();
                 }
 
-                //console.log("checkRemoteInjured RemoteInjured");
-
                 let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                 for (let element of ev.recipient) {
 
@@ -394,18 +396,27 @@ export class BattleDis
 
                     if (self && target) 
                     {                
-                        let selfpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
-                        let targetpos=this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());   
+                        let selfpos = this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
+                        let targetpos = this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());   
                         if(!ev.isParallel){
-                            await self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father);
-                            await this.ChangeAttEvent([ev]);
+                            let selfRoleDis = self.getComponent(RoleDis);
+                            if (selfRoleDis) {
+                                await selfRoleDis.RemoteAttack(selfpos, targetpos,this.father);
+                                await this.ChangeAttEvent([ev]);
+                            }
                         }
                         else{
                             if(Camp.Self==ev.spellcaster.camp) {
-                                this.selfParallelList.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                                let selfRoleDis = self.getComponent(RoleDis);
+                                if (selfRoleDis) {
+                                    this.selfParallelList.push(selfRoleDis.RemoteAttack(selfpos, targetpos,this.father));
+                                }
                             }
                             else {
-                                this.enemyParallelList.push(self.getComponent(RoleDis).RemoteAttack(selfpos, targetpos,this.father));
+                                let selfRoleDis = self.getComponent(RoleDis); 
+                                if (selfRoleDis) {
+                                    this.enemyParallelList.push(selfRoleDis.RemoteAttack(selfpos, targetpos, this.father));
+                                }
                             }
                         }
                     }
@@ -435,19 +446,23 @@ export class BattleDis
                 {
                     this.showLaunchSkillEffect();
                 }
-
-                //释放技能者所在阵营列表
-                //let roleList = Camp.Self == ev.spellcaster.camp ? this.battle.GetSelfTeam().GetRoles() : this.battle.GetEnemyTeam().GetRoles();
+                
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
-                    tmp=new rRole(element.index,element.id, 1,0, Camp.Self, element.properties,null);
-                    let targetTeam = Camp.Self==element.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
+                    tmp = new rRole(element.index,element.id, 1,0, element.camp, element.properties,null);
+                    let targetTeam = Camp.Self == element.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
-                    let queue = Camp.Self==element.camp ? this.selfQueue : this.enemyQueue;
-                    if(!ev.isParallel) allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
+                    let queue = Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
+                    if(!ev.isParallel) {
+                        allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
+                    }
                     else{
-                        if(Camp.Self == ev.spellcaster.camp) this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
-                        else this.enemyParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                        if(Camp.Self == ev.spellcaster.camp) {
+                            this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                        }
+                        else {
+                            this.enemyParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                        }
                     }
                 });
                 await Promise.all(allAwait);
@@ -610,7 +625,6 @@ export class BattleDis
                             for(let t of ev.recipient)
                             {
                                 r=this.selfQueue.roleNodes[t.index];
-                                //console.warn("我方role",r.index);
                                 if(r)
                                 {
                                     console.warn("我方角色远程受伤表现");
@@ -682,16 +696,15 @@ export class BattleDis
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
                 await this.CheckAttExpEvent(evs);
-                if(this.selfParallelList.length>0||this.enemyParallelList.length>0){
-                    console.log("Execute all parallel events");
+                if(this.selfParallelList.length > 0 || this.enemyParallelList.length > 0){
                     await Promise.all(this.selfParallelList);
-                    await Promise.all(this.enemyParallelList);                 
+                    await Promise.all(this.enemyParallelList);
                 }
                 this.selfParallelList=[];
                 this.enemyParallelList=[];
-                await this.CheckExitEvent(evs);
                 await this.CheckAttackEvent(evs);
-                await this.ChangeAttEvent(evs);               
+                await this.ChangeAttEvent(evs);    
+                await this.CheckExitEvent(evs);           
             }
             catch(error) 
             {
