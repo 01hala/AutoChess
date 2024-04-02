@@ -76,15 +76,18 @@ export class InfoPanel extends Component
                 {
                     this.simpleBoard.active=true;
                     this.simpleBoard.getComponent(Animation).play("PanelAppear");
-                    //this.detailedBoard.active=false;
                     this.node.setSiblingIndex(98);
                     this.node.getComponent(BlockInputEvents).enabled=true;
-                    this.simpleBoard.getChildByName("RoleName").getComponent(Label).string="角色ID:"+id;
-
+                    //角色名
+                    this.simpleBoard.getChildByPath("ID").getComponent(Label).string="id: "+id;
+                    let rn=config.RoleConfig.get(id);
+                    this.simpleBoard.getChildByName("RoleName").getComponent(Label).string=rn.Name;
+                    //技能介绍
                     let str=config.SkillIntroduceConfig.get(id%100000);
                     console.log(str.Id);
                     this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string=str.Leve1Text;
-
+                    this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string="<color=#00ff00>"+str.Timeing_Text+":</color>";
+                    //立绘
                     let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
@@ -136,7 +139,7 @@ export class InfoPanel extends Component
             this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=0>"+ro.Name+"</color>";
             //技能信息
             let sk=config.SkillIntroduceConfig.get(_id%100000);
-            this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/TimeingText").getComponent(RichText).string="<color=0>"+sk.Timeing_Text+"</color>";
+            this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#00ff00>"+sk.Timeing_Text+"</color>";
             let str="";
             switch(r.Level)
             {
@@ -144,19 +147,23 @@ export class InfoPanel extends Component
                 case 2:str=sk.Leve2Text;break;
                 case 3:str=sk.Leve3Text;break;
             }
-            this.detailedBoard.getChildByPath("RoleArea/IntroduceArea/Label").getComponent(RichText).string="<color=0>"+str+"</color>";
+            this.detailedBoard.getChildByPath("IntroduceArea/Label").getComponent(Label).string=str;
             //羁绊
             let ft=config.FettersConfig.get(ro.Fetters);
             this.detailedBoard.getChildByPath("DetailsArea/Fetters/RichText").getComponent(RichText).string="<color=0>"+ft.Name+"</color>";
             //buff
             let bustr:string="";
-            for(let i of r.additionBuffer)
+            if(r.additionBuffer)
             {
-                bustr+=config.BufferConfig.get(i).Name+"\n";
+                for(let i of r.additionBuffer)
+                {
+                    bustr+=config.BufferConfig.get(i).Name+"\n";
+                }
             }
             this.detailedBoard.getChildByPath("DetailsArea/Buff/Label").getComponent(Label).string=bustr;
             //购买时的回合
-            this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`在第${r.BuyRound}回合购买`;
+            this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`<color=0>在第${r.BuyRound}回合购买</color>`;
+            //this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string="在第"+r.BuyRound+"回合购买";
             //装备图片
             this.detailedBoard.getChildByPath("DetailsArea/Equip/Sprite").getComponent(Sprite).spriteFrame=imgs[0];
             //羁绊图标
@@ -207,14 +214,22 @@ export class InfoPanel extends Component
 
     private async LoadImage(_role:Role)
     {
-        let eq=config.EquipConfig.get(_role.equipID);
-        let equipimg=loadAssets.LoadImg(eq.Res);
-
-        let fe=config.FettersConfig.get(_role.equipID);
-        let fettersImg=loadAssets.LoadImg(fe.Res);
-
-        let awaitResult= await Promise.all([equipimg , fettersImg]);
-        return awaitResult;
+        try
+        {
+            let eq=config.EquipConfig.get(_role.equipID);
+            let equipimg=loadAssets.LoadImg(eq.Res);
+    
+            let fe=config.FettersConfig.get(_role.equipID);
+            let fettersImg=loadAssets.LoadImg(fe.Res);
+    
+            let awaitResult= await Promise.all([equipimg , fettersImg]);
+            return awaitResult;
+        }
+        catch(error)
+        {
+            console.error('InfoPanel 下 LoadImage 错误 err: ',error);
+            return null;
+        }
     }
 }
 

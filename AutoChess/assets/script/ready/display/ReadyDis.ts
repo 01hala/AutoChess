@@ -5,7 +5,7 @@
  */
 import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
-import { Ready } from '../Ready';
+import { ReadyData } from '../ReadyData';
 import { BundleManager } from '../../bundle/BundleManager';
 import { ShopArea } from './ShopArea';
 import * as skill from '../../battle/skill/skill_base'
@@ -27,7 +27,7 @@ export class ReadyDis
     public roleArea:RoleArea;
     public shopArea:ShopArea;
     //主要数据
-    public readyData:Ready;
+    public readyData:ReadyData;
     //动效
     private launchSkillEffect:Node;
 
@@ -44,14 +44,14 @@ export class ReadyDis
 
     private waitingPanel:Node;
 
-    public constructor(ready:Ready) 
+    public constructor(ready:ReadyData) 
     {
         this.readyData = ready;
         this.onEvent();
     }
 /*
  * 修改start
- * author：Hotaru
+ * Editor：Hotaru
  * 2024/03/07
  * 让加载更平顺
  */
@@ -86,7 +86,6 @@ export class ReadyDis
             {
                 await this.Init(father);
                 //准备开始
-                this.readyData.StartReady();
                 //this.coinText.string=""+this.ready.coin;
                 //await this.RefreshShop()
                 if (battle_info.round > 1) {
@@ -125,7 +124,7 @@ export class ReadyDis
             //开始按钮
             this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () => {
-                if (this.roleArea.GetRolesNumber() > 0) {
+                if (this.readyData.GetRolesNumber() > 0) {
                     await this.readyData.StartBattle();
                     this.panelNode.active = false;
                     this.destory();
@@ -175,6 +174,7 @@ export class ReadyDis
         //注册回调
         singleton.netSingleton.game.cb_battle_info = (battle_info: common.UserBattleData) => {
             this.readyData.SetCoins(battle_info.coin);
+            console.log(`roleList: ${battle_info.RoleList}`);
             this.readyData.SetRoles(battle_info.RoleList);
             this.readyData.SetHeath(battle_info.faild);
             this.readyData.SetStage(battle_info.stage);
@@ -254,14 +254,19 @@ export class ReadyDis
         };
 
     }
-
+/*
+ * 修改方法 每次返回更新角色列表
+ * Editor: Hotaru
+ * 2024/04/02
+ */
     async Restore(_battle_info:common.UserBattleData)
     {
         await this.roleArea.ResetTeam(_battle_info.RoleList);
-        this.UpdatePlayerInfo(_battle_info);
         //---------------------------//
         //此处更新玩家生命、阶段、奖杯数//
         //---------------------------//
+        this.UpdatePlayerInfo(_battle_info);
+        this.readyData.SetRoles(_battle_info.RoleList);
     }
 
     public destory() {

@@ -12,15 +12,20 @@ import { sleep } from '../other/sleep';
 import { EventType } from '../other/enums';
 const { ccclass, property } = _decorator;
 
-@ccclass('Ready')
-export class Ready
+/*
+ * 修改类名
+ * Editor: Hotaru
+ * 2024/04/02
+ */
+@ccclass('ReadyData')
+export class ReadyData
 {
     private heath:number;
     private stage:number;
     private props:ShopProp[];
     private shopRoles:ShopRole[];
 
-    private roles:common.Role[];
+    private static roles:common.Role[];
     private fetters_info:common.Fetters[];
 
     private coin:number=0;
@@ -122,11 +127,6 @@ export class Ready
         }
     }
 
-    public AddReadyEvent(ev:skill.Event)
-    {
-        this.evs.push(ev);
-    }
-
     public SetCoins(count:number)
     {
         //console.log(`SetCoins coin:${count}`);
@@ -146,22 +146,51 @@ export class Ready
 
     public SetRoles(data:common.Role[])
     {
+        console.log("设置角色信息 SetRoles",data);
         if(data)
         {
-            this.roles=data;
+            ReadyData.roles=data;
+        }
+    }
+/*
+ * 修改for函数参数
+ * Editor: Hotaru
+ * 2024/04/02
+ */
+    public GetRole(_id:number)
+    {
+        try
+        {
+            console.log("获取角色信息 GetRole",ReadyData.roles);
+            for(let i=0;i<ReadyData.roles.length;i++)
+            {
+                if(null!=ReadyData.roles[i] && ReadyData.roles[i].RoleID==_id)
+                {
+                    return ReadyData.roles[i];
+                }
+            }
+        }
+        catch(error)
+        {
+            console.error("ReadyData 下的 GetRole 错误：",error);
+            return null;
         }
     }
 
-    public GetRole(_id:number)
+    public GetRolesNumber()
     {
-        for(let r of this.roles)
+        let num=0;
+        if(ReadyData.roles)
         {
-            if(null!=r && r.RoleID==_id)
+            for(let i=0;i<ReadyData.roles.length;i++)
             {
-                return r;
+                if(null!=ReadyData.roles[i])
+                {
+                    num++;
+                }
             }
         }
-        return null;
+        return num;
     }
 
     public SetShopData(data:common.ShopData)
@@ -171,13 +200,6 @@ export class Ready
             this.shopRoles=data.SaleRoleList;
             this.props=data.SalePropList;
         }
-    }
-
-    public StartReady()
-    {
-        let ev=new skill.Event();
-        ev.type=EventType.RoundStarts;
-        this.AddReadyEvent(ev);
     }
 
     public async Refresh()
@@ -200,7 +222,6 @@ export class Ready
         ev.type=EventType.Purchase;
         ev.value=[];
         ev.value.push(this.coin);
-        this.AddReadyEvent(ev);
     }
 
     public async Sale(role_index:number)
@@ -211,7 +232,6 @@ export class Ready
         ev.type=EventType.Sold;
         ev.value=[];
         ev.value.push(this.coin);
-        this.AddReadyEvent(ev);
     }
 
     public async Move(index_befor:number,index_after:number)

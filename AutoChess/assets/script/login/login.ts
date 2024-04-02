@@ -12,7 +12,7 @@ import { Battle } from '../battle/battle'
 import { BattleDis }  from '../battle/display/BattleDis'
 import * as config from '../config/config';
 import { BundleManager } from '../bundle/BundleManager';
-import { Ready } from '../ready/Ready';
+import { ReadyData } from '../ready/ReadyData';
 import { ReadyDis } from '../ready/display/ReadyDis';
 import { MainInterface } from '../mainInterface/MainInterface';
 import { sleep } from '../other/sleep';
@@ -175,7 +175,7 @@ export class login extends Component {
                 }
 
                 //新的一局游戏
-                let _ready = new Ready(battle_info, shop_info ,fetters_info);
+                let _ready = new ReadyData(battle_info, shop_info ,fetters_info);
                 singleton.netSingleton.ready=new ReadyDis(_ready);
                 await singleton.netSingleton.ready.start(this.bk.node , battle_info , async (event)=>
                 {
