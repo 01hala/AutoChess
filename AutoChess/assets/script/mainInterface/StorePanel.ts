@@ -13,7 +13,7 @@ import { RoleCard } from './RoleCard';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
-import { CustomEvent } from '../other/CustomEvent';
+import { SendMessage } from '../other/MessageEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('StorePanel')
@@ -33,7 +33,6 @@ export class StorePanel extends Component
     //页签组
     public toggleGroup:Node;
     //二级界面
-    public infoPanel:Node;
     public storePrompt:Node;
     //卡牌列表
     private cards:Node[]=[];
@@ -53,7 +52,6 @@ export class StorePanel extends Component
         let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
         let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage");
         let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
-        let InformationPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "Information");
         let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
         
         let awaitResult=await Promise.all(
@@ -61,8 +59,7 @@ export class StorePanel extends Component
                 storePagePrePromise,
                 cardListPrePromise,
                 rechargePrePromise,
-                roleCardPrePromise,
-                InformationPromise, 
+                roleCardPrePromise, 
                 StorePromptPanelPromise
         ]);
 
@@ -70,14 +67,12 @@ export class StorePanel extends Component
         this.cardListPre=awaitResult[1] as Prefab;
         this.rechargePre=awaitResult[2] as Prefab;
         this.roleCardPre=awaitResult[3] as Prefab;
-
-        let Informationpanel = awaitResult[4] as Prefab;
-        let StorePromptPanelpanel = awaitResult[5] as Prefab;
+        let StorePromptPanelpanel = awaitResult[4] as Prefab;
 
         //二级信息界面
-        this.infoPanel=instantiate(Informationpanel);
-        this.infoPanel.setParent(this.node);
-        this.infoPanel.active=false;
+        // this.infoPanel=instantiate(Informationpanel);
+        // this.infoPanel.setParent(this.node);
+        // this.infoPanel.active=false;
         //商店购买提示框
         this.storePrompt=instantiate(StorePromptPanelpanel);
         this.storePrompt.setParent(this.node);
@@ -93,15 +88,7 @@ export class StorePanel extends Component
             singleton.netSingleton.mainInterface.panelNode.active=true;
             this.ClearPageView();
 
-        },this);
-
-        this.node.on('OpenInfoBoard',(event:CustomEvent)=>
-        {
-            event.propagationStopped=true;
-            this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoPanel).OpenCardInfo(event.detail);
-        },this);
-        
+        },this);     
     }
 
     async CheckStoreToggle(_fromBtn?:boolean)
@@ -146,7 +133,7 @@ export class StorePanel extends Component
                 }
                 this.cardListPage = instantiate(this.cardListPre);
                 this.pageView.addPage(this.cardListPage);
-                this.LoadCard();
+                //this.LoadCard();
             }
            
         }

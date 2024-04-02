@@ -38,6 +38,8 @@ export class Team {
             }
             index++;
         }
+
+        console.log("Team constructor this.roleList:", JSON.stringify(this.roleList));
     }
 
     public GetBattleData() {
@@ -62,8 +64,10 @@ export class Team {
     }
 
     private removeRole(role: role.Role) {
+        console.log(`removeRole id:${role.id} selfCamp:${role.selfCamp}`);
         let index = this.roleList.indexOf(role);
         if (index != -1) {
+            console.log(`removeRole index:${index} id:${role.id} selfCamp:${role.selfCamp}`);
             this.roleList.splice(index, 1);
         }
     }
@@ -74,7 +78,6 @@ export class Team {
             try {
                 if (r.CheckDead()) {
                     removeRoles.push(r);
-
                     r.SendExitEvent(battle);
                 }
             }
@@ -82,12 +85,12 @@ export class Team {
                 console.log("CheckRemoveDeadRole CheckDead:", error);
 
                 removeRoles.push(r);
-
                 r.SendExitEvent(battle);
             }   
         }
 
         if (removeRoles.length > 0) {
+            console.log("CheckRemoveDeadRole this.roleList:", JSON.stringify(this.roleList));
             for (let r of removeRoles) {
                 this.removeRole(r);
             }
@@ -109,7 +112,7 @@ export class Team {
      */
     public GetRoles():role.Role[]
     {
-        return this.roleList;
+        return this.roleList.slice();
     }
     /*
      * 添加

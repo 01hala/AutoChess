@@ -11,7 +11,7 @@ export class SkillTrigger_RoundEnd_6 extends SkillTriggerBase
 {
     public res:string="battle/skill/SkillTrigger_RoundEnd_6";
 
-    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): boolean 
+    CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number 
     {
         try 
         {
@@ -22,10 +22,10 @@ export class SkillTrigger_RoundEnd_6 extends SkillTriggerBase
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
 
-        return false;
+        return 0;
     }
 
-    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo):boolean
+    private CheckSkill(frameEvent: Event[], selfInfo: RoleInfo):number
     {
         try 
         {
@@ -33,17 +33,17 @@ export class SkillTrigger_RoundEnd_6 extends SkillTriggerBase
             {
                 if(EventType.RoundEnd==b.type)
                 {
-                    return true;
+                    return 1;
                 }
             }
-            return false;
+            return 0;
         } 
         catch (error) 
         {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
     
 }

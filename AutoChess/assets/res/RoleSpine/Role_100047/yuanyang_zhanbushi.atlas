@@ -1,0 +1,279 @@
+
+yuanyang_zhanbushi.png
+size: 936,936
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+zps_0
+  rotate: true
+  xy: 871, 31
+  size: 65, 63
+  orig: 65, 63
+  offset: 0, 0
+  index: -1
+zps_1
+  rotate: false
+  xy: 903, 703
+  size: 28, 27
+  orig: 28, 27
+  offset: 0, 0
+  index: -1
+zps_10
+  rotate: true
+  xy: 903, 732
+  size: 55, 16
+  orig: 55, 16
+  offset: 0, 0
+  index: -1
+zps_11
+  rotate: true
+  xy: 903, 789
+  size: 42, 30
+  orig: 42, 30
+  offset: 0, 0
+  index: -1
+zps_12
+  rotate: false
+  xy: 794, 247
+  size: 129, 172
+  orig: 129, 172
+  offset: 0, 0
+  index: -1
+zps_13
+  rotate: true
+  xy: 2, 26
+  size: 140, 281
+  orig: 140, 281
+  offset: 0, 0
+  index: -1
+zps_14
+  rotate: false
+  xy: 707, 293
+  size: 85, 228
+  orig: 85, 228
+  offset: 0, 0
+  index: -1
+zps_15
+  rotate: true
+  xy: 379, 9
+  size: 86, 79
+  orig: 86, 79
+  offset: 0, 0
+  index: -1
+zps_16
+  rotate: true
+  xy: 871, 98
+  size: 72, 59
+  orig: 72, 59
+  offset: 0, 0
+  index: -1
+zps_17
+  rotate: false
+  xy: 903, 833
+  size: 29, 51
+  orig: 30, 51
+  offset: 0, 0
+  index: -1
+zps_18
+  rotate: false
+  xy: 502, 277
+  size: 37, 35
+  orig: 37, 35
+  offset: 0, 0
+  index: -1
+zps_19
+  rotate: false
+  xy: 502, 242
+  size: 35, 33
+  orig: 35, 33
+  offset: 0, 0
+  index: -1
+zps_2
+  rotate: true
+  xy: 785, 172
+  size: 73, 93
+  orig: 73, 93
+  offset: 0, 0
+  index: -1
+zps_20
+  rotate: false
+  xy: 2, 339
+  size: 298, 262
+  orig: 298, 262
+  offset: 0, 0
+  index: -1
+zps_21
+  rotate: true
+  xy: 539, 599
+  size: 335, 362
+  orig: 335, 362
+  offset: 0, 0
+  index: -1
+zps_22
+  rotate: false
+  xy: 2, 168
+  size: 273, 169
+  orig: 273, 169
+  offset: 0, 0
+  index: -1
+zps_23
+  rotate: true
+  xy: 277, 169
+  size: 138, 223
+  orig: 138, 223
+  offset: 0, 0
+  index: -1
+zps_24
+  rotate: true
+  xy: 785, 93
+  size: 77, 84
+  orig: 77, 101
+  offset: 0, 0
+  index: -1
+zps_25
+  rotate: false
+  xy: 488, 511
+  size: 39, 90
+  orig: 39, 90
+  offset: 0, 0
+  index: -1
+zps_26
+  rotate: false
+  xy: 488, 314
+  size: 51, 33
+  orig: 51, 33
+  offset: 0, 0
+  index: -1
+zps_27
+  rotate: false
+  xy: 2, 603
+  size: 535, 331
+  orig: 535, 331
+  offset: 0, 0
+  index: -1
+zps_28
+  rotate: false
+  xy: 903, 886
+  size: 31, 48
+  orig: 31, 48
+  offset: 0, 0
+  index: -1
+zps_29
+  rotate: false
+  xy: 602, 62
+  size: 89, 116
+  orig: 103, 116
+  offset: 14, 0
+  index: -1
+zps_3
+  rotate: false
+  xy: 903, 640
+  size: 18, 17
+  orig: 18, 17
+  offset: 0, 0
+  index: -1
+zps_30
+  rotate: false
+  xy: 785, 27
+  size: 76, 64
+  orig: 83, 64
+  offset: 7, 0
+  index: -1
+zps_31
+  rotate: true
+  xy: 285, 56
+  size: 111, 92
+  orig: 111, 92
+  offset: 0, 0
+  index: -1
+zps_32
+  rotate: true
+  xy: 541, 180
+  size: 167, 163
+  orig: 167, 163
+  offset: 0, 0
+  index: -1
+zps_33
+  rotate: true
+  xy: 379, 97
+  size: 70, 109
+  orig: 70, 109
+  offset: 0, 0
+  index: -1
+zps_34
+  rotate: false
+  xy: 806, 421
+  size: 122, 176
+  orig: 124, 178
+  offset: 2, 2
+  index: -1
+zps_35
+  rotate: false
+  xy: 502, 60
+  size: 98, 118
+  orig: 98, 118
+  offset: 0, 0
+  index: -1
+zps_36
+  rotate: true
+  xy: 529, 523
+  size: 74, 275
+  orig: 77, 291
+  offset: 3, 0
+  index: -1
+zps_37
+  rotate: false
+  xy: 706, 41
+  size: 77, 250
+  orig: 77, 250
+  offset: 0, 0
+  index: -1
+zps_38
+  rotate: true
+  xy: 302, 309
+  size: 292, 184
+  orig: 292, 184
+  offset: 0, 0
+  index: -1
+zps_4
+  rotate: true
+  xy: 903, 659
+  size: 20, 21
+  orig: 20, 21
+  offset: 0, 0
+  index: -1
+zps_5
+  rotate: false
+  xy: 602, 12
+  size: 44, 48
+  orig: 44, 48
+  offset: 0, 0
+  index: -1
+zps_6
+  rotate: true
+  xy: 903, 681
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: -1
+zps_7
+  rotate: true
+  xy: 903, 624
+  size: 14, 15
+  orig: 14, 15
+  offset: 0, 0
+  index: -1
+zps_8
+  rotate: false
+  xy: 648, 15
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+zps_9
+  rotate: true
+  xy: 488, 349
+  size: 160, 217
+  orig: 160, 217
+  offset: 0, 0
+  index: -1

@@ -30,11 +30,11 @@ export class Skill_SwapProperties_5 extends SkillBase
         this.index2=swapper2;
     }
 
-    public UseSkill(selfInfo: RoleInfo, battle: Battle): void 
+    public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
     {
         try
         {
-            this.SkillEffect(selfInfo,battle);          
+            this.SkillEffect(selfInfo,battle,isParallel);          
         }
         catch (error) 
         {
@@ -43,7 +43,7 @@ export class Skill_SwapProperties_5 extends SkillBase
         
     }
 
-    private SkillEffect(selfInfo: RoleInfo, battle: Battle):void
+    private SkillEffect(selfInfo: RoleInfo, battle: Battle,isPar:boolean):void
     {
         try
         {
@@ -51,6 +51,7 @@ export class Skill_SwapProperties_5 extends SkillBase
             event.type = EventType.ChangeLocation;
             event.spellcaster = selfInfo;
             event.recipient = [];
+            event.isParallel=isPar;
 
             if (SwapPropertiesType.SelfSwap == this.type) {
                 let swapRole:Role = null;

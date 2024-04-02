@@ -22,7 +22,7 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
         this.targetFetterID = config.config.MechanicFetters;
     }
 
-    override CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,battle?: Battle): boolean 
+    override CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo,battle?: Battle): number
     {
         try
         {
@@ -33,7 +33,7 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkillTrigger 错误");
         }
         
-        return false;
+        return 0;
     }
 
     private checkHasMechaniFetter(selfInfo: RoleInfo, battle: Battle) {
@@ -56,16 +56,16 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
         return true;
     }
 
-    private  CheckSkill(frameEvent: Event[], selfInfo: RoleInfo, battle: Battle): boolean
+    private  CheckSkill(frameEvent: Event[], selfInfo: RoleInfo, battle: Battle): number
     {
         try
         {
             if (!this.checkHasMechaniFetter(selfInfo, battle)) {
-                return false;
+                return 1;
             }
 
             if (this.checkAllMechaniSyncope(selfInfo, battle)) {
-                return true;
+                return 1;
             }
         }
         catch (error) 
@@ -73,7 +73,7 @@ export class SkillTrigger_AllMechaniSyncope extends SkillTriggerBase {
             console.warn(this.res+"下的 CheckSkill 错误");
         }
 
-        return false;
+        return 0;
     }
 }
 

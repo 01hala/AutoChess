@@ -296,7 +296,7 @@ namespace Match
             {
                 count = 3;
             }
-            else if (_base < 2)
+            else if (_base <= 2)
             {
                 count = 4;
             }

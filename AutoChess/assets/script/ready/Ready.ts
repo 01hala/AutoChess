@@ -15,6 +15,7 @@ const { ccclass, property } = _decorator;
 @ccclass('Ready')
 export class Ready
 {
+    private heath:number;
     private stage:number;
     private props:ShopProp[];
     private shopRoles:ShopRole[];
@@ -45,9 +46,25 @@ export class Ready
         //console.log("battle_info.RoleList:", battle_info.RoleList);
     }
 
+    public SetStage(_stage:number)
+    {
+        this.stage=_stage;
+    }
+
     public GetStage():number{
         return this.stage;
     }
+
+    public SetHeath(_heath:number)
+    {   
+        this.heath=_heath;
+    }
+
+    public GetHeath()
+    {
+        return this.heath;
+    }
+
     public GetShopRoles():ShopRole[]
     {
         return this.shopRoles;
@@ -139,7 +156,7 @@ export class Ready
     {
         for(let r of this.roles)
         {
-            if(r.RoleID==_id)
+            if(null!=r && r.RoleID==_id)
             {
                 return r;
             }
