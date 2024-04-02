@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, sp } from 'cc';
+import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, Vec3, sp } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../battle';
 import * as skill from '../skill/skill_base'
@@ -369,6 +369,11 @@ export class BattleDis
         }
     }
 
+    private async showRemoteAttack(selfRoleDis: RoleDis, spellcasterLocation: Vec3, targetLocation: Vec3, father: Node, ev:skill.Event) {
+        await selfRoleDis.RemoteAttack(spellcasterLocation, targetLocation, this.father)
+        await this.ChangeAttEvent([ev]);
+    }
+
     //远程攻击技能
     private async CheckRemoteInjured(evs:skill.Event[]) 
     {
@@ -409,13 +414,13 @@ export class BattleDis
                             if(Camp.Self==ev.spellcaster.camp) {
                                 let selfRoleDis = self.getComponent(RoleDis);
                                 if (selfRoleDis) {
-                                    this.selfParallelList.push(selfRoleDis.RemoteAttack(selfpos, targetpos,this.father));
+                                    this.selfParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos,this.father, ev));
                                 }
                             }
                             else {
                                 let selfRoleDis = self.getComponent(RoleDis); 
                                 if (selfRoleDis) {
-                                    this.enemyParallelList.push(selfRoleDis.RemoteAttack(selfpos, targetpos, this.father));
+                                    this.enemyParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos,this.father, ev));
                                 }
                             }
                         }
@@ -702,8 +707,7 @@ export class BattleDis
                 }
                 this.selfParallelList=[];
                 this.enemyParallelList=[];
-                await this.CheckAttackEvent(evs);
-                await this.ChangeAttEvent(evs);    
+                await this.CheckAttackEvent(evs);  
                 await this.CheckExitEvent(evs);           
             }
             catch(error) 
