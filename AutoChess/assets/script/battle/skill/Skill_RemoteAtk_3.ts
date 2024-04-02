@@ -112,11 +112,11 @@ export class Skill_RemoteAtk_3 extends SkillBase
 
         for (let t of selfRoles) 
         {
-            recipientRoles.push(t);
+            if(t!=self) recipientRoles.push(t);
         }
         for (let t of enemyRoles)
         {
-            recipientRoles.push(t);
+            if(t!=self) recipientRoles.push(t);
         }
 
         //同时发射子弹,同时受伤
