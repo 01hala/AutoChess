@@ -1,6 +1,6 @@
 /*
  * 新建
- * Settlement.ts
+ * Settlement.ts 回合结算界面
  * author: hotaru
  * 2024/03/30
  */
@@ -54,6 +54,7 @@ export class Settlement extends Component
         this.cupNum=this.node.getChildByPath("MidArea/CupNum");
         this.outCome=this.node.getChildByPath("MidArea/Outcome");
         this.banners=this.node.getChildByPath("MidArea/Banners");
+        this.Init();
     }
 
     start() 
@@ -63,7 +64,6 @@ export class Settlement extends Component
             console.log("exitboard!");
             this.Exit();
         });
-        this.Init();
     }
     
     private Init()
@@ -80,11 +80,12 @@ export class Settlement extends Component
         this.node.getComponent(BlockInputEvents).enabled=true;
         this.node.setSiblingIndex(100);
         this.isVictory=_isVictory;
+        this.midArea.active=true;
+        console.log(_hpNum);
         for(let i=0;i<_hpNum;i++)
         {
             this.hpGroup.children[i].getComponent(Toggle).isChecked=true;
         }
-        this.midArea.active=true;
         this.midArea.getComponent(Animation).play("PanelAppear");
         switch(_isVictory)
         {
@@ -98,7 +99,7 @@ export class Settlement extends Component
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.drwaBanners;
                 this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
-                this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawImg;
+                this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
                 break;
             case battle_victory.victory:
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#f4b428 width=20>胜<size=30></size>利</color>";
@@ -116,8 +117,8 @@ export class Settlement extends Component
         {
             this.node.active=false;
             this.midArea.getComponent(Animation).off(Animation.EventType.FINISHED);
-            netSingleton.game.confirm_round_victory(this.isVictory);
             //返回准备界面代码写这
+            netSingleton.game.confirm_round_victory(this.isVictory);
         });
         this.midArea.getComponent(Animation).play("PanelDisappear");
         for(let t of this.hpGroup.children)

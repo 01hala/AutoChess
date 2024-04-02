@@ -182,15 +182,15 @@ export class BattleDis
                 //let text="<outline color=black width=4>"+msg+"</outline>";
                 //this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,text));
                 let heath=(is_victory == battle_victory.victory) ? this.battle.faild : this.battle.faild-1;
+                await sleep(1000);
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath}));
             }
             else if (is_victory == battle_victory.tie) 
             {
                 //this.panelNode.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>战斗平局!</outline>"));
+                await sleep(1000);
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battle.faild}));
             }
-
-            await sleep(4000);
 
             //netSingleton.game.confirm_round_victory(is_victory);
         }
