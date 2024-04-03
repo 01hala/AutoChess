@@ -167,8 +167,7 @@ export class RoleDis extends Component
                 .to(0.4, { position: readyLocation })
                 .delay(0.1)
                 .to(0.25, { position: battleLocation })
-                .call(async () => {
-                    await this.changeAtt();
+                .call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
                     }
@@ -179,6 +178,9 @@ export class RoleDis extends Component
                     }
                 })
                 .to(0.2, { position: readyLocation })
+                .call(async () => {
+                    await this.changeAtt();
+                })
                 .start();
 
             return this.delay(1400, () => 
