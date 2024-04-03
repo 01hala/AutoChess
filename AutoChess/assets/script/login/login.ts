@@ -53,6 +53,38 @@ export class login extends Component {
         });
     }
 
+    private wxUserInfo(login_res: WechatMinigame.LoginSuccessCallbackResult) {
+
+        let wxSize = wx.getSystemInfoSync();
+        let btn = wx.createUserInfoButton({
+            type: 'text',
+            text: '微信登录',
+            style: {
+                left: wxSize.screenWidth / 2 - 100,
+                top: wxSize.screenHeight / 2 - 40,
+                width: 200,
+                height: 40,
+                lineHeight: 40,
+                backgroundColor: '#ffffff',
+                borderColor: '#ffffff',
+                borderWidth: 1,
+                color: '#000000',
+                textAlign: 'center',
+                fontSize: 16,
+                borderRadius: 4
+            }
+        });
+
+        btn.onTap((res) => {
+            this._progress += 0.1;
+            this._setProgress(this._progress);
+
+            console.log("createUserInfoButton:" + JSON.stringify(res));
+            this.get_user_info_login(login_res.code)
+            btn.destroy();
+        });
+    }
+
     private wxLogin() {
         wx.login({
             complete: (res) => {
@@ -69,6 +101,7 @@ export class login extends Component {
                     },
                     fail: (res) => {
                         console.log("authSetting fail:", JSON.stringify(res));
+                        this.wxUserInfo(login_res);
                     },
                     success: (res) => {
                         this._progress += 0.1;
@@ -81,35 +114,7 @@ export class login extends Component {
                         }
                         else {
                             console.log("authSetting RequirePrivacyAuthorize:", JSON.stringify(res));
-
-                            let wxSize = wx.getSystemInfoSync();
-                            let btn = wx.createUserInfoButton({
-                                type: 'text',
-                                text: '微信登录',
-                                style: {
-                                    left: wxSize.screenWidth / 2 - 100,
-                                    top: wxSize.screenHeight / 2 - 40,
-                                    width: 200,
-                                    height: 40,
-                                    lineHeight: 40,
-                                    backgroundColor: '#ffffff',
-                                    borderColor: '#ffffff',
-                                    borderWidth: 1,
-                                    color: '#000000',
-                                    textAlign: 'center',
-                                    fontSize: 16,
-                                    borderRadius: 4
-                                }
-                            });
-
-                            btn.onTap((res) => {
-                                this._progress += 0.1;
-                                this._setProgress(this._progress);
-
-                                console.log("createUserInfoButton:" + JSON.stringify(res));
-                                this.get_user_info_login(login_res.code)
-                                btn.destroy();
-                            });
+                            this.wxUserInfo(login_res);
                         }
                     }
                 });
