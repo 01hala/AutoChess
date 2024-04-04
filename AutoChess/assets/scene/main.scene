@@ -476,10 +476,6 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "textTipNodePre": {
-      "__uuid__": "8710ff7a-998f-409e-82f6-8a2a0a8e7032",
-      "__expectedType__": "cc.Prefab"
-    },
     "_id": "eaO1/kErFEoZPsgiWBpKm6"
   },
   {

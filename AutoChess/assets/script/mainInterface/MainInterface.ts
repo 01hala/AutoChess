@@ -5,10 +5,10 @@ import { StorePanel } from './StorePanel';
 import { Bag, RoleCardInfo, UserData } from '../serverSDK/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
-import { StartGamePanel } from './StartGamePanel';
 import { UserInfo } from '../secondaryPanel/UserInfo';
-import { CardLibPanel } from './CardLibPanel';
+import { CardLib } from './CardLib';
 import { SendMessage } from '../other/MessageEvent';
+import { StartGame } from './StartGame';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -150,7 +150,7 @@ export class MainInterface
             {
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePanel.active=true;
-                this.startGamePanel.getComponent(StartGamePanel).OpenAthleticsWindow();
+                this.startGamePanel.getComponent(StartGame).OpenAthleticsWindow();
                 //this.mainPanel.active=false;
     
             },this);
@@ -158,7 +158,7 @@ export class MainInterface
             this.amusementBtn.on(Button.EventType.CLICK,()=>
             {
                 this.startGamePanel.active=true;
-                this.startGamePanel.getComponent(StartGamePanel).OpenAmusementWindow();
+                this.startGamePanel.getComponent(StartGame).OpenAmusementWindow();
             },this);
             //打开商店
             this.storeBtn.on(Button.EventType.CLICK,()=>
@@ -173,7 +173,7 @@ export class MainInterface
             {
                 this.cardLibPanel.active=true;
                 this.panelNode.active=false;
-                this.cardLibPanel.getComponent(CardLibPanel).Open();
+                this.cardLibPanel.getComponent(CardLib).Open();
             },this);
             //按钮条切换
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>

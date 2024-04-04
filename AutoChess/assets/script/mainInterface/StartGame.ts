@@ -1,11 +1,10 @@
 import { _decorator, animation, Animation, Button, Component, Node, Sprite, SpriteFrame } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { GameDifficulty } from '../other/enums';
-import { Image } from 'fairygui-cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('StartGamePanel')
-export class StartGamePanel extends Component 
+@ccclass('StartGame')
+export class StartGame extends Component 
 {
     //竞技模式
     private athleticsWindow:Node;

@@ -3257,7 +3257,7 @@
     "fileId": "9abzPa+EBOC4cjM/fsR2TB"
   },
   {
-    "__type__": "b1dabg2yplPHKNSx3o2561k",
+    "__type__": "dcdb9ZYmcZGELRNg2Mp5pby",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -3271,7 +3271,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "f4/0WS9gpMMKFUYO+JWlZq"
+    "fileId": "bfwp8NM5dCt7MdujT9Gt3c"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -3282,6 +3282,7 @@
       "__id__": 0
     },
     "fileId": "23Fdz9n75HnYtkm5r9ZmFj",
+    "instance": null,
     "targetOverrides": null
   }
 ]

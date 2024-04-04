@@ -32,6 +32,7 @@ export class UserInfo extends Component
     {
         try
         {
+            this.node.setSiblingIndex(98);
             this.node.active=true;
             this.ShowAvatar(_url);
             this.panelNode.getComponent(Animation).play("PanelAppear");

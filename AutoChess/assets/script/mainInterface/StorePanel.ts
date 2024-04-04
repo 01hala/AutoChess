@@ -33,7 +33,7 @@ export class StorePanel extends Component
     //页签组
     public toggleGroup:Node;
     //二级界面
-    public storePrompt:Node;
+    //public storePrompt:Node;
     //卡牌列表
     private cards:Node[]=[];
 
@@ -52,7 +52,7 @@ export class StorePanel extends Component
         let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
         let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage");
         let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
-        let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
+        //let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
         
         let awaitResult=await Promise.all(
             [
@@ -60,23 +60,23 @@ export class StorePanel extends Component
                 cardListPrePromise,
                 rechargePrePromise,
                 roleCardPrePromise, 
-                StorePromptPanelPromise
+                //StorePromptPanelPromise
         ]);
 
         this.storePagePre=awaitResult[0] as Prefab;
         this.cardListPre=awaitResult[1] as Prefab;
         this.rechargePre=awaitResult[2] as Prefab;
         this.roleCardPre=awaitResult[3] as Prefab;
-        let StorePromptPanelpanel = awaitResult[4] as Prefab;
+        //let StorePromptPanelpanel = awaitResult[4] as Prefab;
 
         //二级信息界面
         // this.infoPanel=instantiate(Informationpanel);
         // this.infoPanel.setParent(this.node);
         // this.infoPanel.active=false;
         //商店购买提示框
-        this.storePrompt=instantiate(StorePromptPanelpanel);
-        this.storePrompt.setParent(this.node);
-        this.storePrompt.active=false;
+        // this.storePrompt=instantiate(StorePromptPanelpanel);
+        // this.storePrompt.setParent(this.node);
+        // this.storePrompt.active=false;
 
     }
 
@@ -241,7 +241,7 @@ export class StorePanel extends Component
 
     public ShowCardPacketContent(_cardPacketInfo:CardPacket)
     {
-        this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
+        //this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
     }
 }
 

@@ -12,8 +12,8 @@ import { RoleCard } from './RoleCard';
 import * as singleton from '../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
-@ccclass('CardLibPanel')
-export class CardLibPanel extends Component 
+@ccclass('CardLib')
+export class CardLib extends Component 
 {
     private backBtn:Node;
 
@@ -77,7 +77,7 @@ export class CardLibPanel extends Component
 
             const containerEventHandler = new EventHandler();
             containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
-            containerEventHandler.component = 'CardLibPanel';// 这个是脚本类名
+            containerEventHandler.component = 'CardLib';// 这个是脚本类名
             containerEventHandler.handler = 'OnCheckToggleEvent';
 
             this.toggleGroup.getComponent(ToggleContainer).checkEvents.push(containerEventHandler);

@@ -53,7 +53,7 @@ export class GameManager extends Component
         {
             let tt = BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar");
             let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
-            let ip = BundleManager.Instance.loadAssetsFromBundle("Board","Information");
+            let ip = BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard");
             let sl = BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard");
             let us = BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard")
             let up = BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard");
