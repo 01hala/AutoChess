@@ -288,17 +288,18 @@ namespace Match
 
         private int baseCount(int round)
         {
-            var _base = (round + 1) / 2;
-            _base = _base < 6 ? _base : 6;
-
             int count;
-            if (_base <= 1)
+            if (round <= 1)
             {
                 count = 3;
             }
-            else if (_base <= 2)
+            else if (round <= 2)
             {
                 count = 4;
+            }
+            else if (round <= 3)
+            {
+                count = 5;
             }
             else
             {
