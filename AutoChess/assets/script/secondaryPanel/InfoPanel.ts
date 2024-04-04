@@ -80,8 +80,8 @@ export class InfoPanel extends Component
                     this.node.getComponent(BlockInputEvents).enabled=true;
                     //角色名
                     this.simpleBoard.getChildByPath("ID").getComponent(Label).string="id: "+id;
-                    let rn=config.RoleConfig.get(id);
-                    this.simpleBoard.getChildByName("RoleName").getComponent(Label).string=rn.Name;
+                    let ro=config.RoleConfig.get(id);
+                    this.simpleBoard.getChildByName("RoleName").getComponent(Label).string=ro.Name;
                     //技能介绍
                     let str=config.SkillIntroduceConfig.get(id%100000);
                     console.log(str.Id);
@@ -91,6 +91,9 @@ export class InfoPanel extends Component
                     let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
+                    //羁绊
+                    let ft=config.FettersConfig.get(ro.Fetters);
+                    this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string="<color=#00ff00>"+ ft.Name +"</color>";
                 } 
                 else
                 {
