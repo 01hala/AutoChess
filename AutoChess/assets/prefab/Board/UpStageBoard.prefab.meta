@@ -2,12 +2,12 @@
   "ver": "1.1.43",
   "importer": "prefab",
   "imported": true,
-  "uuid": "c320fb28-fc53-4c6f-a6bd-c0344463928b",
+  "uuid": "e9d7e629-7d15-4969-8a77-7e21b31a284a",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "Information"
+    "syncNodeName": "UpStageBoard"
   }
 }

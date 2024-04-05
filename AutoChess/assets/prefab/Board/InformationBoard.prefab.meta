@@ -2,12 +2,12 @@
   "ver": "1.1.43",
   "importer": "prefab",
   "imported": true,
-  "uuid": "229b413c-4503-4cc0-8e47-288060c1ab8d",
+  "uuid": "c320fb28-fc53-4c6f-a6bd-c0344463928b",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "UserInfo"
+    "syncNodeName": "InformationBoard"
   }
 }
