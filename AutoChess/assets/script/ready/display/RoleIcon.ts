@@ -433,7 +433,7 @@ export class RoleIcon extends Component
                 }
                 //商店区域
                 if (null != otherCollider && 2 == otherCollider.tag) {
-                    this.index = null;
+                    //this.index = null;
                     this.tempIndex = null;
                     if (this.isBuy) {
                         this.isSale = true;
