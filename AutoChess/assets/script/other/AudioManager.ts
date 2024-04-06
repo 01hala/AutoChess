@@ -12,7 +12,9 @@ export class AudioManager
 {
     private static _instance:AudioManager=null;
     //音频组件
-    private _audioSource: AudioSource;
+    private audioSource: AudioSource;
+    //音频寄存器 
+    private static audioClips:AudioClip[];
 
     constructor()
     {
@@ -23,7 +25,7 @@ export class AudioManager
         //标记为常驻节点，这样场景切换的时候就不会被销毁了
         director.addPersistRootNode(audioMgr);
         //添加 AudioSource 组件，用于播放音频。
-        this._audioSource = audioMgr.addComponent(AudioSource);
+        this.audioSource = audioMgr.addComponent(AudioSource);
     }
 
     public static get Instance()
@@ -37,7 +39,7 @@ export class AudioManager
 
     public get AudioSource()
     {
-        return this._audioSource;
+        return this.audioSource;
     }
 
     //播放长音频（BGM等）
@@ -47,20 +49,24 @@ export class AudioManager
         {
             if (sound instanceof AudioClip) 
             {
-    
-                this._audioSource.stop();
-                this._audioSource.clip = sound;
-                this._audioSource.play();
+                this.audioSource.stop();
+                this.audioSource.clip = sound;
+                this.audioSource.play();
                 this.AudioSource.volume = volume;
     
             }
             else 
             {
-                let clip = await loadAssets.LoadAudio(sound);
-    
-                this._audioSource.stop();
-                this._audioSource.clip = clip;
-                this._audioSource.play();
+                let clip = this.FoundClips(sound);
+                if(null == clip)
+                {
+                    await loadAssets.LoadAudio(sound);
+                    AudioManager.audioClips.push(clip);
+                }
+                
+                this.audioSource.stop();
+                this.audioSource.clip = clip;
+                this.audioSource.play();
                 this.AudioSource.volume = volume;
             }
         }
@@ -77,13 +83,18 @@ export class AudioManager
         {
             if (sound instanceof AudioClip) 
             {
-                this._audioSource.playOneShot(sound, volume);
+                this.audioSource.playOneShot(sound, volume);
             }
             else 
             {
-                let clip = await loadAssets.LoadAudio(sound);
-                
-                this._audioSource.playOneShot(clip,volume);
+                let clip = this.FoundClips(sound);
+                if(null == clip)
+                {
+                    await loadAssets.LoadAudio(sound);
+                    AudioManager.audioClips.push(clip);
+                }
+            
+                this.audioSource.playOneShot(clip,volume);
             }
                 
         }
@@ -96,21 +107,33 @@ export class AudioManager
     //暂停
     public Stop()
     {
-        this._audioSource.stop();
+        this.audioSource.stop();
     }
 
     //播放
     public Pause() 
     {
-        this._audioSource.pause();
+        this.audioSource.pause();
     }
 
     //恢复
     public Resume()
     {
-        this._audioSource.play();
+        this.audioSource.play();
     }
 
+    private FoundClips(_name:string) : AudioClip
+    {
+        let ads=_name.split('/');
+        for(let i=0 ; i<AudioManager.audioClips.length ; i++)
+        {
+            if(AudioManager.audioClips[i].name == ads[1])
+            {
+                return AudioManager.audioClips[i];
+            }
+        }
+        return null;
+    }
 }
 
 
