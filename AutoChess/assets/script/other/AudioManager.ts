@@ -14,7 +14,7 @@ export class AudioManager
     //音频组件
     private audioSource: AudioSource;
     //音频寄存器 
-    private static audioClips:AudioClip[];
+    private static audioClips:AudioClip[]=[];
 
     constructor()
     {
@@ -60,7 +60,7 @@ export class AudioManager
                 let clip = this.FoundClips(sound);
                 if(null == clip)
                 {
-                    await loadAssets.LoadAudio(sound);
+                    clip = await loadAssets.LoadAudio(sound) as AudioClip;
                     AudioManager.audioClips.push(clip);
                 }
                 
@@ -90,7 +90,7 @@ export class AudioManager
                 let clip = this.FoundClips(sound);
                 if(null == clip)
                 {
-                    await loadAssets.LoadAudio(sound);
+                    clip = await loadAssets.LoadAudio(sound) as AudioClip;
                     AudioManager.audioClips.push(clip);
                 }
             

@@ -168,20 +168,26 @@ export class BattleDis
                 is_victory = battle_victory.faild;
             }
 
+            let settlement:boolean=false;
             if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
                 (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
             {
                 let heath=(is_victory == battle_victory.victory) ? this.battle.faild : this.battle.faild-1;
+                settlement=true;
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath}));
             }
             else if (is_victory == battle_victory.tie) 
             {
+                settlement=true;
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battle.faild}));
             }
 
-            await sleep(4000);
-
-            netSingleton.game.confirm_round_victory(is_victory);
+            if(!settlement)
+            {
+                await sleep(4000);
+                netSingleton.game.confirm_round_victory(is_victory);
+            }
+            
         }
         catch(error)
         {

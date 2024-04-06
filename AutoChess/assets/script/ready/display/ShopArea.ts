@@ -11,6 +11,7 @@ import * as common from "../../serverSDK/common"
 import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -165,6 +166,7 @@ export class ShopArea extends Component
     async BuyRole(_index:number, _obj:Node ,_isMerge:boolean)
     {
         console.log('buy Role');
+        AudioManager.Instance.PlayerOnShot("Sound/battle_buy_01");
         for(let i=0;i<this.shopRoles.length;i++)
         {
             if(this.shopRoles[i] == _obj)
