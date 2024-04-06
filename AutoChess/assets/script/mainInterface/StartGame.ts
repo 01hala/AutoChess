@@ -1,6 +1,7 @@
 import { _decorator, animation, Animation, Button, Component, Node, Sprite, SpriteFrame } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { GameDifficulty } from '../other/enums';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('StartGame')
@@ -56,6 +57,7 @@ export class StartGame extends Component
             //难度切换
             this.difficultyBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 switch(this.difficulty)
                 {
                     case GameDifficulty.Simple:
@@ -90,11 +92,12 @@ export class StartGame extends Component
             //排位
             this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").on(Button.EventType.CLICK,()=>
             {
-    
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
             },this);
             //匹配
             this.athleticsWindow.getChildByPath("Normal/Normal_Btn").on(Button.EventType.CLICK, async ()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 console.log("Normal_Btn start_battle!");
                 await singleton.netSingleton.game.start_battle();
                 //this.node.parent.active=false;
@@ -115,6 +118,7 @@ export class StartGame extends Component
             this.amusementWindow.getComponent(Animation).play("PanelAppear");
             this.amusementWindow.getChildByPath("Custom/Custom_Btn").on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.ShowCustomBoard();
             },this);
         }
@@ -133,6 +137,7 @@ export class StartGame extends Component
             //返回
             this.customBoard.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
                 this.customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
                 this.customBoard.getChildByPath("Board").getComponent(Animation).on(Animation.EventType.FINISHED,()=>
@@ -146,6 +151,7 @@ export class StartGame extends Component
             //创建
             this.customBoard.getChildByPath("Board/Create_Btn").on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
                 this.customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
 
@@ -161,6 +167,7 @@ export class StartGame extends Component
             //加入
             this.customBoard.getChildByPath("Board/Join_Btn").on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.customBoard.getChildByPath("Board/Create_Btn").off(Button.EventType.CLICK);
                 this.customBoard.getChildByPath("Board/Join_Btn").off(Button.EventType.CLICK);
 
@@ -188,11 +195,12 @@ export class StartGame extends Component
             //确认
             this.createRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
             {
-                
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
             },this);
             //取消
             this.createRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.createRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
                 this.createRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
                 this.createRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
@@ -220,11 +228,12 @@ export class StartGame extends Component
             //确认
             this.joinRoomBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
             {
-    
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
             },this);
             //取消
             this.joinRoomBoard.getChildByPath("Board/Cancel_Btn").on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.joinRoomBoard.getChildByPath("Board/Cancel_Btn").off(Button.EventType.CLICK);
                 this.joinRoomBoard.getChildByPath("Board/Confirm_Btn").off(Button.EventType.CLICK);
                 this.joinRoomBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
