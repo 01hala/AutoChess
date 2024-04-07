@@ -9,6 +9,7 @@ import { UserInfo } from '../secondaryPanel/UserInfo';
 import { CardLib } from './CardLib';
 import { SendMessage } from '../other/MessageEvent';
 import { StartGame } from './StartGame';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -148,6 +149,7 @@ export class MainInterface
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePanel.active=true;
                 this.startGamePanel.getComponent(StartGame).OpenAthleticsWindow();
@@ -157,12 +159,14 @@ export class MainInterface
             //打开自定义模式
             this.amusementBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.startGamePanel.active=true;
                 this.startGamePanel.getComponent(StartGame).OpenAmusementWindow();
             },this);
             //打开商店
             this.storeBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.storePanel.active=true;
                 this.panelNode.active=false;
                 this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
@@ -171,6 +175,7 @@ export class MainInterface
             //打开牌库界面
             this.cardlibraryBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.cardLibPanel.active=true;
                 this.panelNode.active=false;
                 this.cardLibPanel.getComponent(CardLib).Open();
@@ -178,6 +183,7 @@ export class MainInterface
             //按钮条切换
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.btnListSwitch=!this.btnListSwitch;
                 tween(this.btnList).to(0,{}).call(()=>
                 {
@@ -200,6 +206,7 @@ export class MainInterface
             //打开用户信息界面
             this.userAvatar.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenUserInfoBoard',true,this.avatarUrl));
             },this);
         }

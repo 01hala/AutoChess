@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { SendMessage } from './MessageEvent';
@@ -7,7 +7,7 @@ import { UpStage } from '../secondaryPanel/UpStage';
 import { UserInfo } from '../secondaryPanel/UserInfo';
 const { ccclass, property } = _decorator;
 
-@ccclass('TipsManager')
+@ccclass('GameManager')
 export class GameManager extends Component 
 {
     private static _instance:GameManager=null;
@@ -208,6 +208,7 @@ export class GameManager extends Component
             console.error("GameManager 下的 ShowTip 错误 error: ",error);
         }
     }
+
 }
 
 

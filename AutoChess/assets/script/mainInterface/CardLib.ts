@@ -10,6 +10,7 @@ import { Biomes } from '../other/enums';
 import { config } from '../config/config';
 import { RoleCard } from './RoleCard';
 import * as singleton from '../netDriver/netSingleton';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('CardLib')
@@ -105,6 +106,7 @@ export class CardLib extends Component
     {
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
             console.log("check");
             this.pageView.removeAllPages();
             if(this.toggleGroup.getChildByPath("Sea").getComponent(Toggle).isChecked)

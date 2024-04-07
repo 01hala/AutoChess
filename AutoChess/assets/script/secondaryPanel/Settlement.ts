@@ -7,6 +7,7 @@
 import { _decorator, Animation, BlockInputEvents, Button, Component, Node, RichText, Sprite, spriteAssembler, SpriteFrame, Toggle } from 'cc';
 import { battle_victory } from '../serverSDK/ccallmatch';
 import { netSingleton } from '../netDriver/netSingleton';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('Settlement')
@@ -90,18 +91,21 @@ export class Settlement extends Component
         switch(_isVictory)
         {
             case battle_victory.faild:
+                AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#245998 width=20>失<size=30></size>败</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.loseBanners;
                 this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.loseImg;
                 this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.loseRing;
                 break;
             case battle_victory.tie:
+                AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.drwaBanners;
                 this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
                 this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
                 break;
             case battle_victory.victory:
+                AudioManager.Instance.PlayerOnShot("Sound/battle_win_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#f4b428 width=20>胜<size=30></size>利</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.winBanners;
                 this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.winImg;
@@ -118,7 +122,7 @@ export class Settlement extends Component
             this.node.active=false;
             this.midArea.getComponent(Animation).off(Animation.EventType.FINISHED);
             //返回准备界面代码写这
-            //netSingleton.game.confirm_round_victory(this.isVictory);
+            netSingleton.game.confirm_round_victory(this.isVictory);
         });
         this.midArea.getComponent(Animation).play("PanelDisappear");
         for(let t of this.hpGroup.children)
