@@ -10,6 +10,7 @@ import { ChangePositionType, SwapPropertiesType } from '../other/enums';
 export class FoodConfig {
     public Id: number;
     public Name: string;
+    public Introduce:string;
     public Price:number;
     public Stage:number;
     public Effect: number[];
@@ -40,6 +41,7 @@ export async function LoadFoodConfig() : Promise<Map<number, FoodConfig>> {
                 let foodc = new FoodConfig();
                 foodc.Id = v["Id"];
                 foodc.Name = v["Name"];
+                foodc.Introduce = v["Introduce"];
                 foodc.Price = v["Price"];
                 foodc.Stage = v["Price"];
 
