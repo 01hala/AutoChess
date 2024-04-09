@@ -7,6 +7,7 @@ import { config } from '../config/config';
 import * as singleton from '../netDriver/netSingleton';
 import { loadAssets } from '../bundle/LoadAsset';
 import { Role } from '../serverSDK/common';
+import { RoleConfig } from '../config/role_config';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -16,7 +17,7 @@ export class InfoPanel extends Component
 
     private simpleBoard:Node;
     private detailedBoard:Node;
-    private simplePropBoard:Node;
+    private propBoard:Node;
 
     onLoad()
     {
@@ -25,7 +26,7 @@ export class InfoPanel extends Component
     
         this.simpleBoard=this.node.getChildByPath("Simple");
         this.detailedBoard=this.node.getChildByPath("Detailed");
-        this.simplePropBoard=this.node.getChildByPath("SimpleProps");
+        this.propBoard=this.node.getChildByPath("SimpleProps");
     }
 
     start() 
@@ -50,23 +51,26 @@ export class InfoPanel extends Component
             // }
             this.simpleBoard.active=false;
             this.detailedBoard.active=false;
-            this.simplePropBoard.active=false;
+            this.propBoard.active=false;
     
             if(null!=propType)
             {
-                this.simplePropBoard.active=true;
-                this.simplePropBoard.getComponent(Animation).play("PanelAppear");
+                this.propBoard.active=true;
+                this.propBoard.getComponent(Animation).play("PanelAppear");
                 this.node.setSiblingIndex(98);
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 
                 //道具名
                 let pn=config.FoodConfig.get(id);
-                this.simplePropBoard.getChildByName("PropName").getComponent(Label).string=pn.Name;
+                this.propBoard.getChildByName("PropName").getComponent(Label).string=pn.Name;
                 //立绘
                 let img = await loadAssets.LoadImg(pn.Res);
-                this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame = img;
+                if(img)
+                {
+                    this.propBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame = img;
+                }
                 //简介
-                this.simplePropBoard.getChildByName("PropIntroduce").getComponent(Label).string=pn.Introduce;
+                this.propBoard.getChildByName("Introduce").getComponent(Label).string=pn.Introduce;
                
                 // switch(propType)
                 // {
@@ -116,13 +120,13 @@ export class InfoPanel extends Component
         this.node.getComponent(BlockInputEvents).enabled=true;
         this.simpleBoard.active=true;
         this.detailedBoard.active=false;
-        this.simplePropBoard.active=false;
+        this.propBoard.active=false;
         this.node.setSiblingIndex(98);
 
         this.simpleBoard.getComponent(Animation).play("PanelAppear");
     }
 
-    private ShowSimpel(_id:number)
+    private async ShowSimpel(_id:number)
     {
         //角色名
         this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _id;
@@ -136,24 +140,28 @@ export class InfoPanel extends Component
         //羁绊
         let ft = config.FettersConfig.get(ro.Fetters);
         this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#00ff00>" + ft.Name + "</color>";
+        //羁绊图标
+        let fe=config.FettersConfig.get(ro.Fetters);
+        let fettersImg = await loadAssets.LoadImg(fe.Res);
+        this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
     }
 
-    private ShowDetailed(_id:number)
+    private async ShowDetailed(_id:number)
     {
         try
         {
             let r = singleton.netSingleton.ready.readyData.GetRole(_id);
+            let ro=config.RoleConfig.get(_id);
             let imgs = this.LoadRoleImage(r);
             //工具生命等级
             this.detailedBoard.getChildByPath("RoleArea/Atk/RichText").getComponent(RichText).string="<color=0>"+r.Attack+"</color>";
             this.detailedBoard.getChildByPath("RoleArea/HP/RichText").getComponent(RichText).string="<color=0>"+r.HP+"</color>";
             this.detailedBoard.getChildByPath("RoleArea/Lv/RichText").getComponent(RichText).string="<color=0>"+r.Level+"</color>";
             //名字
-            let ro=config.RoleConfig.get(_id);
             this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=#b98b00><outline width=5>"+ro.Name+"</outline></color>";
             //技能信息
             let sk=config.SkillIntroduceConfig.get(_id%100000);
-            this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#785d00><outline width=5>"+sk.Timeing_Text+"</outline></color>";
+            this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#785d00><outline width=5>"+sk.Timeing_Text+": </outline></color>";
             let str="";
             switch(r.Level)
             {
@@ -178,9 +186,20 @@ export class InfoPanel extends Component
             //购买时的回合
             this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`<color=#ac8352>--在第${r.BuyRound}回合购买--</color>`;
             //装备图片
-            this.detailedBoard.getChildByPath("DetailsArea/Equip/Sprite").getComponent(Sprite).spriteFrame=imgs[0];
+            if(r.equipID)
+            {
+                let eq=config.EquipConfig.get(r.equipID);
+                let equipimg=await loadAssets.LoadImg(eq.Res);
+                this.detailedBoard.getChildByPath("DetailsArea/Equip/Mask/Sprite").getComponent(Sprite).spriteFrame=equipimg;
+            }
+            else
+            {
+                this.detailedBoard.getChildByPath("DetailsArea/Equip/Mask/Sprite").getComponent(Sprite).spriteFrame=null;
+            }
             //羁绊图标
-            this.detailedBoard.getChildByPath("DetailsArea/Fetters/Sprite/Icon").getComponent(Sprite).spriteFrame=imgs[1];
+            let fe=config.FettersConfig.get(r.FettersSkillID.fetters_id);
+            let fettersImg = await loadAssets.LoadImg(fe.Res);
+            this.detailedBoard.getChildByPath("DetailsArea/Fetters/Sprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
         }
         catch(error)
         {
@@ -203,14 +222,14 @@ export class InfoPanel extends Component
             });
             this.simpleBoard.getComponent(Animation).play("PanelDisappear");
         }
-        if(this.simplePropBoard.active)
+        if(this.propBoard.active)
         {
-            this.simplePropBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            this.propBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
                 this.node.active=false;
-                this.simplePropBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.propBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
             });
-            this.simplePropBoard.getComponent(Animation).play("PanelDisappear");
+            this.propBoard.getComponent(Animation).play("PanelDisappear");
         }
         if(this.detailedBoard.active)
         {
@@ -225,14 +244,19 @@ export class InfoPanel extends Component
         
     }
 
-    private async LoadRoleImage(_role:Role)
+    private async LoadRoleImage(_r:Role)
     {
         try
         {
-            let eq=config.EquipConfig.get(_role.equipID);
-            let equipimg=loadAssets.LoadImg(eq.Res);
-    
-            let fe=config.FettersConfig.get(_role.equipID);
+            let eq = null;
+            let equipimg = null;
+            if(_r.equipID)
+            {
+                eq=config.EquipConfig.get(_r.equipID);
+                equipimg=loadAssets.LoadImg(eq.Res);
+            }
+            
+            let fe=config.FettersConfig.get(_r.FettersSkillID.fetters_id);
             let fettersImg=loadAssets.LoadImg(fe.Res);
     
             let awaitResult= await Promise.all([equipimg , fettersImg]);

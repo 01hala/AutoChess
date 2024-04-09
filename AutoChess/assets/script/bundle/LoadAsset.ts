@@ -13,7 +13,16 @@ export class loadAssets
                 if(_address)
                 {
                     ads=_address.split('/');
-                    let temp=await BundleManager.Instance.LoadImgsFromBundle(ads[0], ads[1]);
+                    let temp=null;
+                    if(ads.length<3)
+                    {
+                        temp=await BundleManager.Instance.LoadImgsFromBundle(ads[0], ads[1]);
+                    }
+                    else
+                    {
+                        temp=await BundleManager.Instance.LoadImgsFromBundle(ads[0], `${ads[1]}/${ads[2]}`);
+                    }
+                    
                     if(null==temp)
                     {
                         console.warn(`loadAssets 里的 LoadImg 异常 : 路径${_address}下没有此图片,替换为默认图片`);

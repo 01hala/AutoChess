@@ -114,7 +114,7 @@ export class RoleIcon extends Component
             {
                 this.iconMask.active=true;
             }
-            
+            this.tempIndex=this.index;
         }
         catch (error)
         {
