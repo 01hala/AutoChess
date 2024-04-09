@@ -701,7 +701,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100044",
         "Avatar": "Avatar/Role_100044",
-        "Skel": "RoleSpine/Role_100044"
+        "Skel": "RoleSpine/Role_100044/yuanyang_dafu"
     },
     "100045": {
         "Id": 100045,
@@ -717,7 +717,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100045",
         "Avatar": "Avatar/Role_100045",
-        "Skel": "RoleSpine/Role_100045/yuanyang_dafu"
+        "Skel": "RoleSpine/Role_100045"
     },
     "100046": {
         "Id": 100046,
