@@ -42,13 +42,12 @@ namespace Abelkhan
                 connection_Multiplexer = ConnectionMultiplexer.Connect(_conf);
                 database = connection_Multiplexer.GetDatabase(_db);
             }
-            catch (StackExchange.Redis.RedisConnectionException conex)
+            catch (StackExchange.Redis.RedisConnectionException ex)
             {
-                Log.Log.err("Can NOT connect to Redis! connectRetry={0}, connectTimeout={1}ms, {2}", connectRetry, connectTimeout, conex);
+                Log.Log.err("Can NOT connect to Redis! connectRetry={0}, connectTimeout={1}ms, conex:{2}", connectRetry, connectTimeout, ex);
                 throw;
             }
         }
-
 
         public void Recover(ref ConnectionMultiplexer connection_Multiplexer, ref IDatabase database, System.Exception e, Action afterRecover = null)
         {
