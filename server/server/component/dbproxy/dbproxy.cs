@@ -105,7 +105,7 @@ namespace DBProxy
             _hubmanager = new HubManager();
 
             var redismq_url = _root_config.get_value_string("redis_for_mq");
-            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name);
+            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name, 100);
 
             var _center_ch = _redis_mq_service.connect(_center_config.get_value_string("name"));
             lock (add_chs)
