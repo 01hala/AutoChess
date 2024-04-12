@@ -27,23 +27,23 @@ namespace config
                 {
                     stage = 1;
                 }
-                else if (r < backCfg.level2Probability)
+                else if (r < (backCfg.level1Probability + backCfg.level2Probability))
                 {
                     stage = 2;
                 }
-                else if (r < backCfg.level3Probability)
+                else if (r < (backCfg.level1Probability + backCfg.level2Probability + backCfg.level3Probability))
                 {
                     stage = 3;
                 }
-                else if (r < backCfg.level4Probability)
+                else if (r < (backCfg.level1Probability + backCfg.level2Probability + backCfg.level3Probability + backCfg.level4Probability))
                 {
                     stage = 4;
                 }
-                else if (r < backCfg.level5Probability)
+                else if (r < (backCfg.level1Probability + backCfg.level2Probability + backCfg.level3Probability + backCfg.level4Probability + backCfg.level5Probability))
                 {
                     stage = 5;
                 }
-                else if (r < backCfg.level6Probability)
+                else if (r < (backCfg.level1Probability + backCfg.level2Probability + backCfg.level3Probability + backCfg.level4Probability + backCfg.level5Probability + backCfg.level6Probability))
                 {
                     stage = 6;
                 }

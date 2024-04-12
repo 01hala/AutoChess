@@ -21,6 +21,7 @@ import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { GameManager } from '../../other/GameManager';
 import { SendMessage } from '../../other/MessageEvent';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -113,7 +114,7 @@ export class RoleIcon extends Component
             {
                 this.iconMask.active=true;
             }
-            
+            this.tempIndex=this.index;
         }
         catch (error)
         {
@@ -265,6 +266,7 @@ export class RoleIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_move_01");
                 this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象
@@ -433,7 +435,7 @@ export class RoleIcon extends Component
                 }
                 //商店区域
                 if (null != otherCollider && 2 == otherCollider.tag) {
-                    this.index = null;
+                    //this.index = null;
                     this.tempIndex = null;
                     if (this.isBuy) {
                         this.isSale = true;

@@ -1,11 +1,13 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { SendMessage } from './MessageEvent';
 import { Settlement } from '../secondaryPanel/Settlement';
+import { UpStage } from '../secondaryPanel/UpStage';
+import { UserInfo } from '../secondaryPanel/UserInfo';
 const { ccclass, property } = _decorator;
 
-@ccclass('TipsManager')
+@ccclass('GameManager')
 export class GameManager extends Component 
 {
     private static _instance:GameManager=null;
@@ -14,17 +16,17 @@ export class GameManager extends Component
     {
         return this._instance;
     }
-
-    @property(Prefab)
-    private textTipNodePre:Prefab;
     private typeface: TTFFont;
 
-    @property(Prefab)
-    private infoPanelpre:Prefab;
+    private textTipNodePre:Prefab;
+    
     private infoPanel:Node;
 
-    private settlementBoardPre:Prefab;
     private settlementBoard:Node;
+    //升阶界面
+    private upStageBoard:Node;
+    //用户信息面板
+    private userInfoBoard:Node;
 
     protected onLoad()
     {
@@ -40,34 +42,64 @@ export class GameManager extends Component
         }
         catch(error)
         {
-            console.error("TipsManager 下的 start 错误 error: ",error);
+            console.error("GameManager 下的 start 错误 error: ",error);
         }
     }
 
+    //初始化
     private async Init()
     {
-        let tt = BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar");
-        let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
-        let ip = BundleManager.Instance.loadAssetsFromBundle("Board","Information");
-        let sl = BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard");
+        try
+        {
+            let tt = BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar");
+            let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
+            let ip = BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard");
+            let sl = BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard");
+            let us = BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard")
+            let up = BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard");
+            //加载
+            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up]);
+            this.textTipNodePre = awaitResult[0] as Prefab;
+            this.typeface = awaitResult[1] as TTFFont;
 
-        let awaitResult = await Promise.all([tt,tf,ip,sl]);
-        this.textTipNodePre = awaitResult[0] as Prefab;
-        this.typeface = awaitResult[1] as TTFFont;
-        this.infoPanelpre = awaitResult[2] as Prefab;
-        this.settlementBoardPre=awaitResult[3] as Prefab;
+            let t_infoPanel = awaitResult[2] as Prefab;
+            let t_settlementBoard = awaitResult[3] as Prefab;
+            let t_userinfo = awaitResult[4] as Prefab;
+            let t_UpStageBoard = awaitResult [5] as Prefab;
+    
+            this.infoPanel=instantiate(t_infoPanel);
+            this.infoPanel.setParent(this.node);
+            this.infoPanel.active=false;
+    
+            this.settlementBoard=instantiate(t_settlementBoard);
+            this.settlementBoard.setParent(this.node);
+            this.settlementBoard.active=false;
 
-        this.infoPanel=instantiate(this.infoPanelpre);
-        this.infoPanel.setParent(this.node);
-        this.infoPanel.active=false;
+            this.userInfoBoard=instantiate(t_userinfo);
+            this.userInfoBoard.setParent(this.node);
+            this.userInfoBoard.active=false;
 
-        this.settlementBoard=instantiate(this.settlementBoardPre);
-        this.settlementBoard.setParent(this.node);
-        this.settlementBoard.active=false;
+            this.upStageBoard=instantiate(t_UpStageBoard);
+            this.upStageBoard.setParent(this.node);
+            this.upStageBoard.active=false;
+        }
+        catch(error)
+        {
+            console.error("GameManager 下的 start 错误 error: ",error);
+        }
     }
 
+    //消息监听
     private InitEvent()
     {
+        /* 消息来源
+         * RoleCard.ts : 第 42 行 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
         this.node.on('OpenCardInfo',(event:SendMessage)=>
         {
             event.propagationStopped=true;
@@ -75,27 +107,82 @@ export class GameManager extends Component
             this.infoPanel.getComponent(InfoPanel).OpenCardInfo(event.detail);
         },this);
 
+        /* 消息来源
+         * RoleIcon.ts : 第 345 行 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
         this.node.on('OpenInfoBoard',(event:SendMessage)=>
         {
             event.propagationStopped=true;
             this.infoPanel.active=true;
             this.infoPanel.getComponent(InfoPanel).OpenInfoBoard(event.detail.id , event.detail.role , event.detail.isBuy , event.detail.propType);
-        });
+        },this);
 
+        /* 消息来源
+         * RoleIcon.ts : 第 215 行 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
         this.node.on('ShowTip',(event:SendMessage)=>
         {
             event.propagationStopped=true;
             this.ShowTip(event.detail);
-        });
+        },this);
 
+        /* 消息来源
+         * BattleDis.ts : 第 175、179 行 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
         this.node.on('OpenSettlement',(event:SendMessage)=>
         {
             event.propagationStopped=true;
             this.settlementBoard.active=true;
             this.settlementBoard.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome , event.detail.hpNum);
+        },this);
+
+        /* 消息来源
+         *  
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('OpenUpStageBoard',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.upStageBoard.active=true;
+            this.upStageBoard.getComponent(UpStage).OpenUpStageBoard(event.detail);
+
+        },this);
+        /* 消息来源
+         *  MainInterface.ts : 第 203 行
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('OpenUserInfoBoard',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.userInfoBoard.active=true;
+            this.userInfoBoard.getComponent(UserInfo).Open(event.detail);
         })
     }
 
+    //显示提示信息
     private ShowTip(_msg:string)
     {
         try
@@ -118,9 +205,10 @@ export class GameManager extends Component
         }
         catch(error)
         {
-            console.error("TipsManager 下的 ShowTip 错误 error: ",error);
+            console.error("GameManager 下的 ShowTip 错误 error: ",error);
         }
     }
+
 }
 
 

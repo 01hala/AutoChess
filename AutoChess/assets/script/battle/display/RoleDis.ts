@@ -165,20 +165,28 @@ export class RoleDis extends Component
         {
             this.tAttack = tween(this.node)
                 .to(0.4, { position: readyLocation })
-                .delay(0.1)
-                .to(0.25, { position: battleLocation })
-                .call(async () => {
-                    await this.changeAtt();
+                //这里做出蓄力效果
+                .delay(0.25)
+                .to(0.1,{position:new Vec3(readyLocation.x+15,readyLocation.y,readyLocation.z)})
+                .to(0.1,{position:new Vec3(readyLocation.x-15,readyLocation.y,readyLocation.z)})
+                .to(0.1,{position:new Vec3(readyLocation.x,readyLocation.y+15,readyLocation.z)})
+                .to(0.1,{position:new Vec3(readyLocation.x,readyLocation.y-15,readyLocation.z)}) 
+                //上面是蓄力效果
+                .to(0.1, { position: battleLocation })
+                .call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
                     }
                 })
-                .delay(0.2).call(() => {
+                .delay(0.15).call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
                 })
                 .to(0.2, { position: readyLocation })
+                .call(async () => {
+                    await this.changeAtt();
+                })
                 .start();
 
             return this.delay(1400, () => 

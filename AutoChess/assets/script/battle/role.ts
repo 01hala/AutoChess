@@ -166,6 +166,7 @@ export class Role {
         ev.value.push(damage);
         ev.priority=0;
         ev.isParallel=isParallel;
+        ev.roleParallel = enemy;
         battle.AddBattleEvent(ev);
         
         if (this.CheckDead()) {

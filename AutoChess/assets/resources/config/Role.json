@@ -29,7 +29,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100002",
         "Avatar": "Avatar/Role_100002",
-        "Skel": "RoleSpine/Role_100002"
+        "Skel": "RoleSpine/Role_100002/kuangfeng_shenqishitiane"
     },
     "100003": {
         "Id": 100003,
@@ -45,13 +45,13 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100003",
         "Avatar": "Avatar/Role_100003",
-        "Skel": "RoleSpine/Role_100003"
+        "Skel": "RoleSpine/Role_100003/kuangfeng_shenqishilong"
     },
     "100004": {
         "Id": 100004,
         "Name": "暂无",
         "Skill": 4,
-        "Stage": 1,
+        "Stage": 3,
         "Price": 3,
         "Attack": 2,
         "Hp": 4,
@@ -227,7 +227,7 @@
         "Id": 100015,
         "Name": "暂无",
         "Skill": 15,
-        "Stage": 1,
+        "Stage": 4,
         "Price": 4,
         "Attack": 1,
         "Hp": 7,
@@ -387,7 +387,7 @@
         "Id": 100025,
         "Name": "暂无",
         "Skill": 25,
-        "Stage": 1,
+        "Stage": 5,
         "Price": 3,
         "Attack": 2,
         "Hp": 8,
@@ -499,7 +499,7 @@
         "Id": 100032,
         "Name": "暂无",
         "Skill": 32,
-        "Stage": 1,
+        "Stage": 2,
         "Price": 3,
         "Attack": 2,
         "Hp": 5,
@@ -573,7 +573,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100036",
         "Avatar": "Avatar/Role_100036",
-        "Skel": "RoleSpine/Role_100036"
+        "Skel": "RoleSpine/Role_100036/gaoshan_chushi"
     },
     "100037": {
         "Id": 100037,
@@ -701,7 +701,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100044",
         "Avatar": "Avatar/Role_100044",
-        "Skel": "RoleSpine/Role_100044"
+        "Skel": "RoleSpine/Role_100044/yuanyang_dafu"
     },
     "100045": {
         "Id": 100045,
@@ -749,7 +749,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100047",
         "Avatar": "Avatar/Role_100047",
-        "Skel": "RoleSpine/Role_100047"
+        "Skel": "RoleSpine/Role_100047/yuanyang_zhanbushi"
     },
     "100048": {
         "Id": 100048,
@@ -781,7 +781,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100049",
         "Avatar": "Avatar/Role_100049",
-        "Skel": "RoleSpine/Role_100049"
+        "Skel": "RoleSpine/Role_100049/yuanyang_jianshendaren"
     },
     "100050": {
         "Id": 100050,
@@ -797,7 +797,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100050",
         "Avatar": "Avatar/Role_100050",
-        "Skel": "RoleSpine/Role_100050"
+        "Skel": "RoleSpine/Role_100050/dongxue_nvhuang"
     },
     "100051": {
         "Id": 100051,
@@ -813,7 +813,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100051",
         "Avatar": "Avatar/Role_100051",
-        "Skel": "RoleSpine/Role_100051"
+        "Skel": "RoleSpine/Role_100051/dongxue_qishi"
     },
     "100052": {
         "Id": 100052,

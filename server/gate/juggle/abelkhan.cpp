@@ -5,7 +5,7 @@
  */
 #include <chrono>
 #include <random>
-#include <format>
+#include <fmt/format.h>
 
 #include <concurrent/string_tools.h>
 
@@ -95,7 +95,7 @@ void modulemng::enque_event(std::shared_ptr<Ichannel> _ch, const msgpack11::MsgP
     }
     catch (std::exception e)
     {
-        throw Exception(std::format("System.Exception:{0}", e.what()));
+        throw Exception(fmt::format("System.Exception:{0}", e.what()));
     }
 }
 
@@ -117,13 +117,13 @@ int modulemng::process_event() {
                 Imodule::current_ch = nullptr;
             }
             else {
-                throw Exception(std::format("do not have a method named:{0}", method_name));
+                throw Exception(fmt::format("do not have a method named:{0}", method_name));
             }
         }
     }
     catch (std::exception e)
     {
-        throw Exception(std::format("System.Exception:{0}", e.what()));
+        throw Exception(fmt::format("System.Exception:{0}", e.what()));
     }
 
     return 0;

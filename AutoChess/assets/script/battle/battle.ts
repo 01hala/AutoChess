@@ -144,32 +144,40 @@ export class Battle {
             return;
         }
 
-        let tmpEvs:skill.Event[] = [];
+        let tmpPriorityEvs:skill.Event[] = [];
         for (let ev of evs) {
-            if (!this.checkTriggerSkill([ev])) {
-                tmpEvs.push(ev);
-            }
-            else {
-                await this.on_event.call(null, [ev]);
-
-                this.tickSkill([ev]);
-                let _evs = this.evs.slice();
-                this.evs = [];
-                let [injuredEvs, normalEvs] = splitEvs(_evs);
-
-                await this.tickInjuredEvent(injuredEvs);
-                await this.tickInjuredEventChain(normalEvs);
-
-                this.CheckRemoveDeadRole();
-                _evs = this.evs.slice();
-                this.evs = [];
-                [injuredEvs, normalEvs] = splitEvs(_evs);
-
-                await this.tickInjuredEvent(injuredEvs);
-                await this.tickInjuredEventChain(normalEvs);
+            if (this.checkTriggerSkill([ev]) && !tmpPriorityEvs.includes(ev)) {
+                tmpPriorityEvs.push(ev);
+                for (let _tmpev of evs) {
+                    if (_tmpev.roleParallel == ev.roleParallel && !tmpPriorityEvs.includes(_tmpev)) {
+                        tmpPriorityEvs.push(_tmpev);
+                    }
+                }
             }
         }
-        await this.on_event.call(null, tmpEvs);
+        let tmpEvs:skill.Event[] = evs.filter((element) => !tmpPriorityEvs.includes(element));;
+        if (tmpPriorityEvs.length > 0) {
+            await this.on_event.call(null, tmpPriorityEvs);
+
+            this.tickSkill(tmpPriorityEvs);
+            let _evs = this.evs.slice();
+            this.evs = [];
+            let [injuredEvs, normalEvs] = splitEvs(_evs);
+
+            await this.tickInjuredEvent(injuredEvs);
+            await this.tickInjuredEventChain(normalEvs);
+
+            this.CheckRemoveDeadRole();
+            _evs = this.evs.slice();
+            this.evs = [];
+            [injuredEvs, normalEvs] = splitEvs(_evs);
+
+            await this.tickInjuredEvent(injuredEvs);
+            await this.tickInjuredEventChain(normalEvs);
+        }
+        if (tmpEvs.length > 0) {
+            await this.on_event.call(null, tmpEvs);
+        }
     }
 
     private async tickBattleInjuredEvent(evs:skill.Event[]) {

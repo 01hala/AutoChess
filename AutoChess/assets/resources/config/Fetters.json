@@ -21,7 +21,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_1"
     },
     "2": {
         "Id": 2,
@@ -45,7 +45,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_2"
     },
     "3": {
         "Id": 3,
@@ -69,7 +69,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_3"
     },
     "4": {
         "Id": 4,
@@ -93,7 +93,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_4"
     },
     "5": {
         "Id": 5,
@@ -117,7 +117,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_5"
     },
     "6": {
         "Id": 6,
@@ -141,7 +141,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_6"
     },
     "7": {
         "Id": 7,
@@ -165,7 +165,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_7"
     },
     "8": {
         "Id": 8,
@@ -189,7 +189,7 @@
         "RefreshItemID": 1013,
         "RefreshItemNum": 2,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_8"
     },
     "9": {
         "Id": 9,
@@ -213,7 +213,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_9"
     },
     "10": {
         "Id": 10,
@@ -237,7 +237,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_10"
     },
     "11": {
         "Id": 11,
@@ -261,7 +261,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_11"
     },
     "12": {
         "Id": 12,
@@ -285,7 +285,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_12"
     },
     "13": {
         "Id": 13,
@@ -309,7 +309,7 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 4,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_13"
     },
     "14": {
         "Id": 14,
@@ -333,6 +333,6 @@
         "RefreshItemID": 0,
         "RefreshItemNum": 0,
         "AddBufferID": 0,
-        "Res": ""
+        "Res": "IconTexture/Fetters/Fetters_14"
     }
 }

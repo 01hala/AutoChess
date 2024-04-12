@@ -5,6 +5,7 @@
  */
 import * as enums from '../../other/enums'
 import * as battle from '../battle'
+import { Role } from '../role';
 
 export class RoleInfo {
     // public hp:number;
@@ -26,6 +27,7 @@ export class Event {
     public priority:number=1;
     //是否是并行发动的
     public isParallel:boolean=false;
+    public roleParallel:Role = null;
 }
 
 export abstract class SkillTriggerBase {

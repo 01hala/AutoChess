@@ -5,9 +5,11 @@ import { StorePanel } from './StorePanel';
 import { Bag, RoleCardInfo, UserData } from '../serverSDK/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
-import { StartGamePanel } from './StartGamePanel';
 import { UserInfo } from '../secondaryPanel/UserInfo';
-import { CardLibPanel } from './CardLibPanel';
+import { CardLib } from './CardLib';
+import { SendMessage } from '../other/MessageEvent';
+import { StartGame } from './StartGame';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -39,8 +41,6 @@ export class MainInterface
     private storePanel:Node;
     //牌库界面
     private cardLibPanel:Node;
-    //用户信息面板
-    private userInfoBoard:Node;
     //各区域按钮
     private startBtn:Node;
     private storeBtn:Node;
@@ -112,10 +112,6 @@ export class MainInterface
             this.cardLibPanel=instantiate(CardLib);
             this.cardLibPanel.setParent(_father);
             this.cardLibPanel.active=false;
-            //用户信息面板
-            this.userInfoBoard=instantiate(UserInfoBoard);
-            this.userInfoBoard.setParent(this.panelNode);
-            this.userInfoBoard.active=false;
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePanel=this.panelNode.getChildByPath("StartGamePanel");
@@ -153,21 +149,24 @@ export class MainInterface
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePanel.active=true;
-                this.startGamePanel.getComponent(StartGamePanel).OpenAthleticsWindow();
+                this.startGamePanel.getComponent(StartGame).OpenAthleticsWindow();
                 //this.mainPanel.active=false;
     
             },this);
             //打开自定义模式
             this.amusementBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.startGamePanel.active=true;
-                this.startGamePanel.getComponent(StartGamePanel).OpenAmusementWindow();
+                this.startGamePanel.getComponent(StartGame).OpenAmusementWindow();
             },this);
             //打开商店
             this.storeBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.storePanel.active=true;
                 this.panelNode.active=false;
                 this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
@@ -176,13 +175,15 @@ export class MainInterface
             //打开牌库界面
             this.cardlibraryBtn.on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.cardLibPanel.active=true;
                 this.panelNode.active=false;
-                this.cardLibPanel.getComponent(CardLibPanel).Open();
+                this.cardLibPanel.getComponent(CardLib).Open();
             },this);
             //按钮条切换
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.btnListSwitch=!this.btnListSwitch;
                 tween(this.btnList).to(0,{}).call(()=>
                 {
@@ -205,7 +206,8 @@ export class MainInterface
             //打开用户信息界面
             this.userAvatar.on(Button.EventType.CLICK,()=>
             {
-                this.OpenUserInfoBoard();
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                this.panelNode.dispatchEvent(new SendMessage('OpenUserInfoBoard',true,this.avatarUrl));
             },this);
         }
         catch(error)
@@ -265,12 +267,6 @@ export class MainInterface
         }
         
     }
-
-    private OpenUserInfoBoard()
-    {
-        this.userInfoBoard.getComponent(UserInfo).Open(this.avatarUrl);
-    }
-
 }
 
 
