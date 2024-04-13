@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton } from 'cc';
+import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp, EventType, Property } from '../../other/enums';
 import { Battle } from '../../battle/battle';
@@ -48,6 +48,7 @@ export class RoleDis extends Component
     //生命和攻击文本
     private hpText: RichText;
     private atkText: RichText;
+    private levelText:RichText;
     //等级光圈
     private levelSprite: Node;
     //增益提示
@@ -60,6 +61,8 @@ export class RoleDis extends Component
     private tAttack: Tween<Node> = null;
     //位移缓动
     private tShiftpos: Tween<Node> = null;
+
+    private isDead=false;
 
     private originalPos: Vec3;
 
@@ -83,6 +86,7 @@ export class RoleDis extends Component
             this.hurtedSpine.active=false;
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
+            this.levelText=this.node.getChildByPath("Level/LevelText").getComponent(RichText);
             
             this.idText=this.node.getChildByPath("ID").getComponent(RichText);
             //this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
@@ -102,6 +106,7 @@ export class RoleDis extends Component
             if (this.hpText && this.atkText) {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
+                this.levelText.string="<color=#f99b08><outline color=#fff457 width=4>" + this.Level + "</outline></color>";
 
                 this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
             }
@@ -216,11 +221,13 @@ export class RoleDis extends Component
             {
                 this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
                 this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
+                this.levelText=this.node.getChildByPath("Level/LevelText").getComponent(RichText);
             }
            
             this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
             this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-            
+            this.levelText.string="<color=#f99b08><outline color=#fff457 width=4>" + this.Level + "</outline></color>";
+
             let str="lvl_"+this.Level;
             let lvlsf:SpriteFrame=await this.LoadImg("LvRing",str);
             if(lvlsf)
@@ -437,10 +444,11 @@ export class RoleDis extends Component
             }).delay(0.2).call(()=>
             {
                 this.hurtedSpine.active=false;
+                this.RoleRotate();
             })         
-            
             .by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y)},{easing: 'quintIn'})
             .delay(0.2).call(() => {
+                this.isDead=true;
                 this.roleInfo = null;
                 console.log("销毁角色");
                 this.node.destroy();
@@ -453,6 +461,19 @@ export class RoleDis extends Component
             console.warn("RoleDis 下的 Exit 错误 err:" + err);
         }
 
+    }
+
+    private async RoleRotate(){
+        const rotationAxis = new Vec3(0, 1, 0);
+        let rotationSpeed=4.0;
+        while (!this.isDead) {
+            await this.Delay(0); // 让出控制权，以便游戏引擎处理其他事务
+            const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
+            this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
+        }
+    }
+    Delay(ms: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     private LoadImg(_bundle:string,_address:string):Promise<SpriteFrame>
