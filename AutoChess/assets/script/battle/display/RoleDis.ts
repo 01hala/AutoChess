@@ -48,6 +48,7 @@ export class RoleDis extends Component
     //生命和攻击文本
     private hpText: RichText;
     private atkText: RichText;
+    private levelText:RichText;
     //等级光圈
     private levelSprite: Node;
     //增益提示
@@ -437,8 +438,8 @@ export class RoleDis extends Component
             }).delay(0.2).call(()=>
             {
                 this.hurtedSpine.active=false;
+                
             })         
-            
             .by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y)},{easing: 'quintIn'})
             .delay(0.2).call(() => {
                 this.roleInfo = null;
