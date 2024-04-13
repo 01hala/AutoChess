@@ -116,9 +116,6 @@ namespace DBProxy
             _centerproxy.reg_dbproxy(() => {
                 heartbeath_center(Service.Timerservice.Tick);
             });
-
-            _hub_msg_handle = new hub_msg_handle(_hubmanager, _closeHandle);
-            _center_msg_handle = new center_msg_handle(_closeHandle, _centerproxy, _hubmanager);
         }
 
         public Action onCenterCrash;
@@ -171,12 +168,8 @@ namespace DBProxy
 
             try
             {
-                while (true)
+                while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
                 {
-                    if (!Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
-                    {
-                        break;
-                    }
                     Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
                 }
 
@@ -186,7 +179,10 @@ namespace DBProxy
                     {
                         foreach (var ch in remove_chs)
                         {
-                            add_chs.Remove(ch);
+                            lock (add_chs)
+                            {
+                                add_chs.Remove(ch);
+                            }
                         }
                         remove_chs.Clear();
                     }
@@ -225,6 +221,9 @@ namespace DBProxy
                 throw new Abelkhan.Exception("run mast at single thread!");
             }
 
+            var _hub_msg_handle = new hub_msg_handle(_hubmanager);
+            var _center_msg_handle = new center_msg_handle(_closeHandle, _centerproxy, _hubmanager);
+
             while (!_closeHandle.is_close())
             {
                 var tick = (uint)poll();
@@ -242,7 +241,7 @@ namespace DBProxy
             Monitor.Exit(_run_mu);
         }
 
-		public static String name;
+		public static string name;
 		public static bool is_busy;
         public static uint tick;
 		public static CloseHandle _closeHandle;
@@ -256,9 +255,6 @@ namespace DBProxy
 
         private readonly List<Abelkhan.Ichannel> add_chs;
         private readonly List<Abelkhan.Ichannel> remove_chs;
-
-        private readonly hub_msg_handle _hub_msg_handle;
-        private readonly center_msg_handle _center_msg_handle;
 
         private uint reconn_count = 0;
 

@@ -50,13 +50,12 @@ namespace Abelkhan
 
         private readonly Timerservice _timer;
         private readonly string main_channel_name;
-        private readonly Thread th_send;
-        private readonly Thread th_recv;
+        private readonly Task th_send;
+        private readonly Task th_recv;
+        private readonly long tick_time;
         private bool run_flag = true;
-        private long tick_time;
 
-        private readonly List<string> listen_channel_names;
-        private readonly List<string> wait_listen_channel_names;
+        private readonly ConcurrentQueue<string> listen_channel_names;
 
         private readonly ConcurrentDictionary<string, Redischannel> channels;
 
@@ -69,8 +68,8 @@ namespace Abelkhan
             main_channel_name = _listen_channel_name;
             tick_time = _tick_time;
 
-            listen_channel_names = new() { _listen_channel_name };
-            wait_listen_channel_names = new();
+            listen_channel_names = new();
+            listen_channel_names.Enqueue(_listen_channel_name);
             channels = new ConcurrentDictionary<string, Redischannel>();
 
             _connHelper = new RedisConnectionHelper(connUrl, "RedisForMQ");
@@ -79,20 +78,13 @@ namespace Abelkhan
             wait_send_data = new();
             send_data = new();
 
-            ThreadStart th_send_poll_start = new ThreadStart(th_send_poll);
-            th_send = new Thread(th_send_poll_start);
-            th_send.Start();
-            ThreadStart th_recv_poll_start = new ThreadStart(th_recv_poll);
-            th_recv = new Thread(th_recv_poll_start);
-            th_recv.Start();
+            th_send = Task.Factory.StartNew(th_send_poll, TaskCreationOptions.LongRunning); 
+            th_recv = Task.Factory.StartNew(th_recv_poll, TaskCreationOptions.LongRunning);
         }
 
         public void take_over_svr(string svr_name)
         {
-            lock (wait_listen_channel_names)
-            {
-                wait_listen_channel_names.Add(svr_name);
-            }
+            listen_channel_names.Enqueue(svr_name);
         }
 
         void Recover(System.Exception e)
@@ -103,8 +95,7 @@ namespace Abelkhan
         public void close()
         {
             run_flag = false;
-            th_send.Join();
-            th_recv.Join();
+            Task.WaitAll(th_send, th_recv);
         }
 
         public Redischannel connect(string ch_name)
@@ -126,31 +117,38 @@ namespace Abelkhan
         {
             Log.Log.trace("send msg to:{0}", ch_name);
 
-            var b_listen_ch_name = System.Text.Encoding.UTF8.GetBytes(main_channel_name);
-            var _listen_ch_name_size = b_listen_ch_name.Length;
-            var st = MemoryStreamPool.mstMgr.GetStream();
-            st.WriteByte((byte)(_listen_ch_name_size & 0xff));
-            st.WriteByte((byte)(_listen_ch_name_size >> 8 & 0xff));
-            st.WriteByte((byte)(_listen_ch_name_size >> 16 & 0xff));
-            st.WriteByte((byte)(_listen_ch_name_size >> 24 & 0xff));
-            st.Write(b_listen_ch_name, 0, _listen_ch_name_size);
-            st.Write(data, 0, data.Length);
-            st.Position = 0;
-
-            if (!send_data.TryGetValue(ch_name, out Queue<RedisValue> send_queue))
+            try
             {
-                lock (wait_send_data)
+                var b_listen_ch_name = System.Text.Encoding.UTF8.GetBytes(main_channel_name);
+                var _listen_ch_name_size = b_listen_ch_name.Length;
+                var st = MemoryStreamPool.mstMgr.GetStream();
+                st.WriteByte((byte)(_listen_ch_name_size & 0xff));
+                st.WriteByte((byte)(_listen_ch_name_size >> 8 & 0xff));
+                st.WriteByte((byte)(_listen_ch_name_size >> 16 & 0xff));
+                st.WriteByte((byte)(_listen_ch_name_size >> 24 & 0xff));
+                st.Write(b_listen_ch_name, 0, _listen_ch_name_size);
+                st.Write(data, 0, data.Length);
+                st.Position = 0;
+
+                if (!send_data.TryGetValue(ch_name, out Queue<RedisValue> send_queue))
                 {
-                    if (!wait_send_data.TryGetValue(ch_name, out send_queue))
+                    lock (wait_send_data)
                     {
-                        send_queue = new();
-                        wait_send_data.Add(ch_name, send_queue);
+                        if (!wait_send_data.TryGetValue(ch_name, out send_queue))
+                        {
+                            send_queue = new();
+                            wait_send_data.Add(ch_name, send_queue);
+                        }
                     }
                 }
+                lock (send_queue)
+                {
+                    send_queue.Enqueue(st.ToArray());
+                }
             }
-            lock (send_queue)
+            catch (System.Exception e)
             {
-                send_queue.Enqueue(st.ToArray());
+                Log.Log.err("sendmsg error:{0}", e.Message);
             }
         }
 
@@ -179,9 +177,13 @@ namespace Abelkhan
                         push_data_array = send_queue.ToArray();
                         send_queue.Clear();
                     }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
-                while (push_data_array != null)
+                while (true)
                 {
                     try
                     {
@@ -208,35 +210,12 @@ namespace Abelkhan
             return _timer.refresh() - tick_begin;
         }
 
-        private void list_channel_name()
-        {
-            try
-            {
-                if (wait_listen_channel_names.Count > 0)
-                {
-                    lock (wait_listen_channel_names)
-                    {
-                        foreach (var name in wait_listen_channel_names)
-                        {
-                            listen_channel_names.Add(name);
-                        }
-                        wait_listen_channel_names.Clear();
-                    }
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Log.Log.err("list_channel_name error:{0}", ex);
-            }
-        }
-
         private async Task recvmsg_mq_ch(string ch_name)
         {
             var batch_pop_data = await database.ListRightPopAsync(ch_name, 10);
             while (batch_pop_data != null)
             {
-                foreach (byte[] pop_data in batch_pop_data)
-                {
+                foreach (byte[] pop_data in batch_pop_data) {
                     var _ch_name_size = pop_data[0] | ((uint)pop_data[1] << 8) | ((uint)pop_data[2] << 16) | ((uint)pop_data[3] << 24);
                     var _ch_name = System.Text.Encoding.UTF8.GetString(pop_data, 4, (int)_ch_name_size);
                     var _header_len = 4 + _ch_name_size;
@@ -262,27 +241,26 @@ namespace Abelkhan
         {
             var tick_begin = _timer.refresh();
 
-            list_channel_name();
-            foreach (var listen_channel_name in listen_channel_names)
+            try
             {
-                try
+                foreach (var listen_channel_name in listen_channel_names)
                 {
                     await recvmsg_mq_ch(listen_channel_name);
                 }
-                catch (RedisTimeoutException ex)
-                {
-                    Log.Log.err("ListLeftPushAsync error:{0}", ex);
-                    Recover(ex);
-                }
-                catch (RedisConnectionException ex)
-                {
-                    Log.Log.err("ListLeftPushAsync error:{0}", ex);
-                    Recover(ex);
-                }
-                catch (System.Exception ex)
-                {
-                    Log.Log.err("recvmsg_mq error:{0}", ex);
-                }
+            }
+            catch (RedisTimeoutException ex)
+            {
+                Log.Log.err("ListLeftPushAsync error:{0}", ex);
+                Recover(ex);
+            }
+            catch (RedisConnectionException ex)
+            {
+                Log.Log.err("ListLeftPushAsync error:{0}", ex);
+                Recover(ex);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("recvmsg_mq error:{0}", ex);
             }
 
             return _timer.refresh() - tick_begin;
@@ -295,7 +273,7 @@ namespace Abelkhan
                 var tick = await sendmsg_mq();
                 if (tick < tick_time)
                 {
-                    Thread.Sleep((int)(tick_time - tick));
+                    await Task.Delay((int)(tick_time - tick));
                 }
             }
         }
@@ -307,7 +285,7 @@ namespace Abelkhan
                 var tick = await recvmsg_mq();
                 if (tick < tick_time)
                 {
-                    Thread.Sleep((int)(tick_time - tick));
+                    await Task.Delay((int)(tick_time - tick));
                 }
             }
         }
