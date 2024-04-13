@@ -50,7 +50,6 @@ namespace Abelkhan
 
         private readonly Timerservice _timer;
         private readonly string main_channel_name;
-        private readonly Task th_send;
         private readonly Task th_recv;
         private readonly long tick_time;
         private bool run_flag = true;
@@ -77,8 +76,6 @@ namespace Abelkhan
 
             wait_send_data = new();
             send_data = new();
-
-            th_send = Task.Factory.StartNew(th_send_poll, TaskCreationOptions.LongRunning); 
             th_recv = Task.Factory.StartNew(th_recv_poll, TaskCreationOptions.LongRunning);
         }
 
@@ -95,7 +92,7 @@ namespace Abelkhan
         public void close()
         {
             run_flag = false;
-            Task.WaitAll(th_send, th_recv);
+            Task.WaitAll(th_recv);
         }
 
         public Redischannel connect(string ch_name)
@@ -152,7 +149,7 @@ namespace Abelkhan
             }
         }
 
-        private async Task<long> sendmsg_mq()
+        public async Task<long> sendmsg_mq()
         {
             var tick_begin = _timer.refresh();
             if (wait_send_data.Count > 0)
@@ -264,18 +261,6 @@ namespace Abelkhan
             }
 
             return _timer.refresh() - tick_begin;
-        }
-
-        private async void th_send_poll()
-        {
-            while (run_flag)
-            {
-                var tick = await sendmsg_mq();
-                if (tick < tick_time)
-                {
-                    await Task.Delay((int)(tick_time - tick));
-                }
-            }
         }
 
         private async void th_recv_poll()

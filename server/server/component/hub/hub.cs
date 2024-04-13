@@ -350,8 +350,7 @@ namespace Hub
             _caller.reg_hub(name, type);
         }
 
-        private List<Task> wait_task = new ();
-        private long poll()
+        private async Task<long> poll()
         {
             
             long tick_begin = _timer.refresh();
@@ -381,6 +380,8 @@ namespace Hub
                     }
                 }
 
+                _ = await _redis_mq_service.sendmsg_mq();
+
                 Abelkhan.TinyTimer.poll();
             }
             catch (Abelkhan.Exception e)
@@ -404,7 +405,7 @@ namespace Hub
         }
 
         private readonly object _run_mu = new();
-        public void run()
+        public async Task run()
         {
             if (!Monitor.TryEnter(_run_mu))
             {
@@ -413,7 +414,7 @@ namespace Hub
 
             while (!_closeHandle.is_close)
             {
-                var ticktime = poll();
+                var ticktime = await poll();
 
                 if (ticktime < 33)
                 {

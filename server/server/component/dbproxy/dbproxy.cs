@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DBProxy
 {
@@ -162,7 +163,7 @@ namespace DBProxy
             _timer.addticktime(3000, heartbeath_center);
         }
 
-		private long poll()
+		private async Task<long> poll()
         {
             long tick_begin = _timer.refresh();
 
@@ -187,6 +188,8 @@ namespace DBProxy
                         remove_chs.Clear();
                     }
                 }
+
+                _ = await _redis_mq_service.sendmsg_mq();
 
                 _timer.poll();
                 Abelkhan.TinyTimer.poll();
@@ -214,7 +217,7 @@ namespace DBProxy
         }
 
         private object _run_mu = new object();
-        public void run()
+        public async Task run()
         {
             if (!Monitor.TryEnter(_run_mu))
             {
@@ -226,7 +229,7 @@ namespace DBProxy
 
             while (!_closeHandle.is_close())
             {
-                var tick = (uint)poll();
+                var tick = (uint)await poll();
 
                 if (tick < 33)
                 {

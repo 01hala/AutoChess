@@ -17,7 +17,7 @@ namespace center_svr
 
             Log.Log.trace("Center start ok");
 
-            _center.run();
+            _center.run().Wait();
         }
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Abelkhan
 {
@@ -104,7 +105,7 @@ namespace Abelkhan
             _accept_gm_service.start();
         }
 
-        private long poll()
+        private async Task<long> poll()
         {
             var tick_begin = _timer.refresh();
             try
@@ -131,6 +132,8 @@ namespace Abelkhan
                         remove_chs.Clear();
                     }
                 }
+
+                _ = await _redis_mq_service.sendmsg_mq();
 
                 if (_closeHandle.is_closing && _svrmanager.check_all_hub_closed())
                 {
@@ -159,7 +162,7 @@ namespace Abelkhan
         }
 
         private object _run_mu = new object();
-        public void run()
+        public async Task run()
         {
             if (!Monitor.TryEnter(_run_mu))
             {
@@ -170,7 +173,7 @@ namespace Abelkhan
             {
                 try
                 {
-                    var tick = poll();
+                    var tick = await poll();
                     if (tick < 333)
                     {
                         Thread.Sleep((int)(333 - tick));

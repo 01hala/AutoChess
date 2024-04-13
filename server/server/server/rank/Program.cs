@@ -22,7 +22,7 @@ namespace RankSvr
 
             Log.Log.trace("rank svr start ok");
 
-            _hub.run();
+            _hub.run().Wait();
         }
 
         private static void on_hubproxy(Hub.HubProxy _proxy)
