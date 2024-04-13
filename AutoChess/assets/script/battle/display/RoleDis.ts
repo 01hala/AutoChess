@@ -106,7 +106,7 @@ export class RoleDis extends Component
             if (this.hpText && this.atkText) {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-                this.levelText.string="<color=#f99b08><outline color=#fff457 width=4>" + this.Level + "</outline></color>";
+                this.levelText.string="<color=#7CFC0><outline color=#7FFF00 width=4>"+ this.Level + "</outline></color>";
 
                 this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
             }
@@ -226,7 +226,7 @@ export class RoleDis extends Component
            
             this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
             this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-            this.levelText.string="<color=#f99b08><outline color=#fff457 width=4>" + this.Level + "</outline></color>";
+            this.levelText.string="<color=#7CFC0><outline color=#7FFF00 width=4>"+ this.Level + "</outline></color>";
 
             let str="lvl_"+this.Level;
             let lvlsf:SpriteFrame=await this.LoadImg("LvRing",str);
