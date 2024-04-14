@@ -94,7 +94,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 3
@@ -286,13 +286,13 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 738.0001220703125,
-      "height": 848.0000610351562
+      "width": 710.61767578125,
+      "height": 868
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.46578541729762507,
-      "y": 0.002052091054945816
+      "x": 0.4146339012399122,
+      "y": 0.04844222530241935
     },
     "_id": ""
   },
@@ -358,12 +358,12 @@
     "_debugBones": false,
     "_debugSlots": false,
     "_skeletonData": {
-      "__uuid__": "b454c91b-04aa-4e88-80bf-5bce6af9005d",
+      "__uuid__": "26fc61ef-fd6f-4420-bb5d-26b6c0ab4a78",
       "__expectedType__": "sp.SkeletonData"
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "animation",
+    "defaultAnimation": "<None>",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,
@@ -618,7 +618,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -15,
+      "y": 4.628,
       "z": 0
     },
     "_lrot": {
@@ -889,8 +889,6 @@
       "__id__": 0
     },
     "fileId": "e3AZmIvTNPkptaCvZME2BG",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -1120,8 +1118,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -60,
-      "y": 70,
+      "x": -50,
+      "y": -70,
       "z": 0
     },
     "_lrot": {
@@ -1388,8 +1386,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -60,
-      "y": 20,
+      "x": 50,
+      "y": -70,
       "z": 0
     },
     "_lrot": {
@@ -1651,8 +1649,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": -90,
+      "x": -5.351,
+      "y": 124.726,
       "z": 0
     },
     "_lrot": {
@@ -1664,8 +1662,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
