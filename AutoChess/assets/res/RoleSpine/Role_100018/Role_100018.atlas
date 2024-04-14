@@ -1,0 +1,230 @@
+
+Role_100018.png
+size: 1227,1227
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+moshushi_0
+  rotate: false
+  xy: 542, 214
+  size: 77, 46
+  orig: 77, 46
+  offset: 0, 0
+  index: -1
+moshushi_1
+  rotate: false
+  xy: 779, 15
+  size: 62, 79
+  orig: 62, 79
+  offset: 0, 0
+  index: -1
+moshushi_10
+  rotate: false
+  xy: 1164, 1189
+  size: 61, 36
+  orig: 61, 36
+  offset: 0, 0
+  index: -1
+moshushi_10_1
+  rotate: true
+  xy: 621, 220
+  size: 40, 55
+  orig: 40, 55
+  offset: 0, 0
+  index: -1
+moshushi_11
+  rotate: true
+  xy: 2, 96
+  size: 511, 462
+  orig: 511, 462
+  offset: 0, 0
+  index: -1
+moshushi_12
+  rotate: true
+  xy: 1164, 1081
+  size: 106, 56
+  orig: 106, 56
+  offset: 0, 0
+  index: -1
+moshushi_13
+  rotate: true
+  xy: 1049, 184
+  size: 208, 157
+  orig: 223, 157
+  offset: 0, 0
+  index: -1
+moshushi_14
+  rotate: true
+  xy: 826, 187
+  size: 142, 214
+  orig: 142, 214
+  offset: 0, 0
+  index: -1
+moshushi_15
+  rotate: true
+  xy: 700, 942
+  size: 20, 32
+  orig: 20, 32
+  offset: 0, 0
+  index: -1
+moshushi_16
+  rotate: true
+  xy: 678, 237
+  size: 23, 28
+  orig: 23, 28
+  offset: 0, 0
+  index: -1
+moshushi_17
+  rotate: false
+  xy: 579, 949
+  size: 119, 276
+  orig: 119, 276
+  offset: 0, 0
+  index: -1
+moshushi_18
+  rotate: false
+  xy: 542, 262
+  size: 226, 345
+  orig: 226, 345
+  offset: 0, 0
+  index: -1
+moshushi_19
+  rotate: true
+  xy: 466, 96
+  size: 115, 242
+  orig: 115, 242
+  offset: 0, 0
+  index: -1
+moshushi_2
+  rotate: false
+  xy: 852, 834
+  size: 117, 95
+  orig: 117, 95
+  offset: 0, 0
+  index: -1
+moshushi_20
+  rotate: true
+  xy: 843, 27
+  size: 155, 274
+  orig: 155, 274
+  offset: 0, 0
+  index: -1
+moshushi_21
+  rotate: false
+  xy: 2, 609
+  size: 575, 616
+  orig: 575, 616
+  offset: 0, 0
+  index: -1
+moshushi_22
+  rotate: true
+  xy: 700, 1108
+  size: 117, 126
+  orig: 117, 126
+  offset: 0, 0
+  index: -1
+moshushi_23
+  rotate: false
+  xy: 1049, 745
+  size: 175, 184
+  orig: 175, 184
+  offset: 0, 0
+  index: -1
+moshushi_24
+  rotate: true
+  xy: 1119, 84
+  size: 98, 103
+  orig: 98, 103
+  offset: 0, 0
+  index: -1
+moshushi_25
+  rotate: false
+  xy: 1049, 394
+  size: 171, 179
+  orig: 171, 179
+  offset: 0, 0
+  index: -1
+moshushi_26
+  rotate: true
+  xy: 852, 738
+  size: 94, 100
+  orig: 94, 100
+  offset: 0, 0
+  index: -1
+moshushi_27
+  rotate: false
+  xy: 852, 636
+  size: 94, 100
+  orig: 94, 100
+  offset: 0, 0
+  index: -1
+moshushi_28
+  rotate: false
+  xy: 700, 964
+  size: 124, 142
+  orig: 124, 142
+  offset: 0, 0
+  index: -1
+moshushi_29
+  rotate: true
+  xy: 843, 931
+  size: 294, 319
+  orig: 294, 319
+  offset: 0, 0
+  index: -1
+moshushi_3
+  rotate: false
+  xy: 678, 13
+  size: 99, 81
+  orig: 99, 81
+  offset: 0, 0
+  index: -1
+moshushi_30
+  rotate: true
+  xy: 1049, 575
+  size: 168, 175
+  orig: 168, 175
+  offset: 0, 0
+  index: -1
+moshushi_4
+  rotate: false
+  xy: 710, 96
+  size: 114, 164
+  orig: 114, 164
+  offset: 0, 0
+  index: -1
+moshushi_5
+  rotate: true
+  xy: 2, 7
+  size: 87, 244
+  orig: 87, 244
+  offset: 0, 0
+  index: -1
+moshushi_6
+  rotate: true
+  xy: 770, 331
+  size: 294, 277
+  orig: 294, 277
+  offset: 0, 0
+  index: -1
+moshushi_7
+  rotate: true
+  xy: 579, 627
+  size: 302, 271
+  orig: 302, 271
+  offset: 0, 0
+  index: -1
+moshushi_8
+  rotate: false
+  xy: 466, 213
+  size: 74, 394
+  orig: 74, 394
+  offset: 0, 0
+  index: -1
+moshushi_9
+  rotate: true
+  xy: 248, 11
+  size: 83, 428
+  orig: 83, 428
+  offset: 0, 0
+  index: -1

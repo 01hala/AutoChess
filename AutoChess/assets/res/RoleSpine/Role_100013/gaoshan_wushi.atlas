@@ -1,0 +1,321 @@
+
+gaoshan_wushi.png
+size: 1319,1319
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+wushi_1
+  rotate: false
+  xy: 2, 709
+  size: 703, 608
+  orig: 703, 608
+  offset: 0, 0
+  index: -1
+wushi_10
+  rotate: false
+  xy: 313, 303
+  size: 393, 404
+  orig: 393, 404
+  offset: 0, 0
+  index: -1
+wushi_11
+  rotate: false
+  xy: 1146, 114
+  size: 103, 111
+  orig: 103, 111
+  offset: 0, 0
+  index: -1
+wushi_12
+  rotate: true
+  xy: 1175, 347
+  size: 143, 103
+  orig: 143, 103
+  offset: 0, 0
+  index: -1
+wushi_13
+  rotate: false
+  xy: 2, 156
+  size: 309, 551
+  orig: 309, 551
+  offset: 0, 0
+  index: -1
+wushi_14
+  rotate: true
+  xy: 313, 79
+  size: 222, 448
+  orig: 222, 448
+  offset: 0, 0
+  index: -1
+wushi_15
+  rotate: false
+  xy: 276, 6
+  size: 40, 49
+  orig: 40, 49
+  offset: 0, 0
+  index: -1
+wushi_16
+  rotate: false
+  xy: 1251, 183
+  size: 40, 42
+  orig: 40, 42
+  offset: 0, 0
+  index: -1
+wushi_17
+  rotate: true
+  xy: 276, 57
+  size: 97, 27
+  orig: 97, 27
+  offset: 0, 0
+  index: -1
+wushi_18
+  rotate: true
+  xy: 1259, 274
+  size: 71, 28
+  orig: 71, 28
+  offset: 0, 0
+  index: -1
+wushi_19
+  rotate: false
+  xy: 1125, 1010
+  size: 173, 307
+  orig: 173, 307
+  offset: 0, 0
+  index: -1
+wushi_2
+  rotate: true
+  xy: 1125, 848
+  size: 160, 170
+  orig: 160, 170
+  offset: 0, 0
+  index: -1
+wushi_20
+  rotate: false
+  xy: 707, 888
+  size: 416, 429
+  orig: 416, 429
+  offset: 0, 0
+  index: -1
+wushi_21
+  rotate: true
+  xy: 2, 5
+  size: 149, 272
+  orig: 149, 272
+  offset: 0, 0
+  index: -1
+wushi_22
+  rotate: true
+  xy: 707, 719
+  size: 167, 305
+  orig: 167, 305
+  offset: 0, 0
+  index: -1
+wushi_23
+  rotate: false
+  xy: 708, 454
+  size: 175, 263
+  orig: 175, 263
+  offset: 0, 0
+  index: -1
+wushi_24
+  rotate: true
+  xy: 871, 333
+  size: 99, 122
+  orig: 99, 122
+  offset: 0, 0
+  index: -1
+wushi_25
+  rotate: true
+  xy: 708, 304
+  size: 25, 35
+  orig: 25, 35
+  offset: 0, 0
+  index: -1
+wushi_26
+  rotate: false
+  xy: 1012, 636
+  size: 68, 41
+  orig: 71, 41
+  offset: 0, 0
+  index: -1
+wushi_27
+  rotate: true
+  xy: 1240, 501
+  size: 122, 51
+  orig: 122, 51
+  offset: 0, 0
+  index: -1
+wushi_28
+  rotate: false
+  xy: 1101, 859
+  size: 22, 27
+  orig: 22, 28
+  offset: 0, 0
+  index: -1
+wushi_29
+  rotate: false
+  xy: 1251, 148
+  size: 21, 33
+  orig: 22, 33
+  offset: 1, 0
+  index: -1
+wushi_2_1
+  rotate: true
+  xy: 973, 26
+  size: 46, 45
+  orig: 46, 45
+  offset: 0, 0
+  index: -1
+wushi_2_2
+  rotate: false
+  xy: 1212, 55
+  size: 30, 57
+  orig: 30, 57
+  offset: 0, 0
+  index: -1
+wushi_3
+  rotate: false
+  xy: 1125, 15
+  size: 85, 81
+  orig: 85, 81
+  offset: 0, 0
+  index: -1
+wushi_30
+  rotate: true
+  xy: 1259, 227
+  size: 45, 41
+  orig: 45, 41
+  offset: 0, 0
+  index: -1
+wushi_31
+  rotate: true
+  xy: 973, 2
+  size: 22, 23
+  orig: 22, 23
+  offset: 0, 0
+  index: -1
+wushi_32
+  rotate: true
+  xy: 763, 8
+  size: 83, 135
+  orig: 83, 135
+  offset: 0, 0
+  index: -1
+wushi_33
+  rotate: false
+  xy: 1147, 229
+  size: 110, 116
+  orig: 112, 116
+  offset: 0, 0
+  index: -1
+wushi_34
+  rotate: false
+  xy: 998, 2
+  size: 20, 22
+  orig: 20, 22
+  offset: 0, 0
+  index: -1
+wushi_35
+  rotate: false
+  xy: 708, 331
+  size: 161, 121
+  orig: 161, 121
+  offset: 0, 0
+  index: -1
+wushi_36
+  rotate: false
+  xy: 1012, 492
+  size: 226, 131
+  orig: 226, 131
+  offset: 0, 0
+  index: -1
+wushi_37
+  rotate: true
+  xy: 763, 93
+  size: 236, 139
+  orig: 236, 139
+  offset: 0, 0
+  index: -1
+wushi_38
+  rotate: true
+  xy: 1101, 625
+  size: 221, 210
+  orig: 221, 210
+  offset: 0, 0
+  index: -1
+wushi_39
+  rotate: false
+  xy: 885, 434
+  size: 125, 283
+  orig: 125, 283
+  offset: 0, 0
+  index: -1
+wushi_4
+  rotate: false
+  xy: 900, 15
+  size: 71, 57
+  orig: 71, 57
+  offset: 0, 0
+  index: -1
+wushi_40
+  rotate: false
+  xy: 1020, 98
+  size: 124, 127
+  orig: 124, 127
+  offset: 0, 0
+  index: -1
+wushi_41
+  rotate: false
+  xy: 1020, 15
+  size: 103, 81
+  orig: 103, 81
+  offset: 0, 0
+  index: -1
+wushi_5
+  rotate: true
+  xy: 904, 74
+  size: 112, 114
+  orig: 112, 114
+  offset: 0, 0
+  index: -1
+wushi_5_1
+  rotate: true
+  xy: 995, 333
+  size: 35, 22
+  orig: 35, 22
+  offset: 0, 0
+  index: -1
+wushi_5_2
+  rotate: false
+  xy: 1212, 17
+  size: 21, 36
+  orig: 21, 36
+  offset: 0, 0
+  index: -1
+wushi_6
+  rotate: true
+  xy: 904, 188
+  size: 143, 113
+  orig: 143, 113
+  offset: 0, 0
+  index: -1
+wushi_7
+  rotate: false
+  xy: 1019, 227
+  size: 126, 141
+  orig: 126, 143
+  offset: 0, 0
+  index: -1
+wushi_8
+  rotate: false
+  xy: 1012, 370
+  size: 161, 120
+  orig: 161, 120
+  offset: 0, 0
+  index: -1
+wushi_9
+  rotate: false
+  xy: 1014, 679
+  size: 85, 207
+  orig: 85, 207
+  offset: 0, 0
+  index: -1
