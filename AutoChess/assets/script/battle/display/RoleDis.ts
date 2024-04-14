@@ -466,10 +466,14 @@ export class RoleDis extends Component
     private async RoleRotate(){
         const rotationAxis = new Vec3(0, 1, 0);
         let rotationSpeed=4.0;
-        while (!this.isDead) {
-            await this.Delay(0); // 让出控制权，以便游戏引擎处理其他事务
-            const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
-            this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
+        try{
+            while (!this.isDead) {
+                await this.Delay(0); // 让出控制权，以便游戏引擎处理其他事务
+                const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
+                this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
+            }
+        }catch{
+            console.log("角色停止旋转，人物已被销毁");
         }
     }
     Delay(ms: number): Promise<void> {
