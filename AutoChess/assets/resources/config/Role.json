@@ -13,7 +13,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100001",
         "Avatar": "Avatar/Role_100001",
-        "Skel": "RoleSpine/Role_100001/yuanyang_jiapu.skel"
+        "Skel": "RoleSpine/Role_100001/yuanyang_jiapu"
     },
     "100002": {
         "Id": 100002,

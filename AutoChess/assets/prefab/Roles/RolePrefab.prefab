@@ -366,7 +366,7 @@
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "animation",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,
@@ -385,6 +385,8 @@
       "__id__": 0
     },
     "fileId": "33hQv5rBhIubHcvjW/if9z",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -2075,6 +2077,8 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "b8Uokixs5GEITdaffnV5lt"
+    "fileId": "b8Uokixs5GEITdaffnV5lt",
+    "instance": null,
+    "targetOverrides": null
   }
 ]
