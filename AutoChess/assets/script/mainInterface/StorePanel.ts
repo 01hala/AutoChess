@@ -14,6 +14,7 @@ import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { SendMessage } from '../other/MessageEvent';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('StorePanel')
@@ -48,9 +49,9 @@ export class StorePanel extends Component
     {
         this.Init();
 
-        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "StorePage");
-        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
-        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage");
+        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "StorePage");
+        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage");
+        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "RechargePage");
         let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
         //let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
         
@@ -84,6 +85,7 @@ export class StorePanel extends Component
     {
         this.backBtn.on(Button.EventType.CLICK,()=>
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
             this.node.active=false;
             singleton.netSingleton.mainInterface.panelNode.active=true;
             this.ClearPageView();
@@ -95,6 +97,7 @@ export class StorePanel extends Component
     {
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             console.log(this.toggleGroup);
             if(!this.toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked || _fromBtn==true?true:false)
             {
@@ -123,6 +126,7 @@ export class StorePanel extends Component
     {
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             if(!this.toggleGroup.getChildByPath("CardList").getComponent(Toggle).isChecked)
             {
                 console.log("CheckCardListToggle!!!");
@@ -147,6 +151,7 @@ export class StorePanel extends Component
     {
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             if(!this.toggleGroup.getChildByPath("Recharge").getComponent(Toggle).isChecked)
             {
                 console.log("CheckRechargeToggle!!!");

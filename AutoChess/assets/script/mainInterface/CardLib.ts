@@ -30,7 +30,7 @@ export class CardLib extends Component
     {
         try
         {
-            let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage");
+            let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage");
             let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
 
             let awaitResult=await Promise.all(
@@ -56,6 +56,15 @@ export class CardLib extends Component
     {
         try
         {
+            this.backBtn.on(Button.EventType.CLICK,()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
+                this.node.active=false;
+                singleton.netSingleton.mainInterface.panelNode.active=true;
+                this.pageView.removeAllPages();
+    
+            },this);
+
             this.Init();
         }
         catch(error)
@@ -68,14 +77,6 @@ export class CardLib extends Component
     {
         try
         {
-            this.backBtn.on(Button.EventType.CLICK,()=>
-            {
-                this.node.active=false;
-                singleton.netSingleton.mainInterface.panelNode.active=true;
-                this.pageView.removeAllPages();
-
-            },this);
-
             const containerEventHandler = new EventHandler();
             containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
             containerEventHandler.component = 'CardLib';// 这个是脚本类名
@@ -106,7 +107,7 @@ export class CardLib extends Component
     {
         try
         {
-            AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+            AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             console.log("check");
             this.pageView.removeAllPages();
             if(this.toggleGroup.getChildByPath("Sea").getComponent(Toggle).isChecked)

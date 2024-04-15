@@ -8,6 +8,7 @@ import * as singleton from '../netDriver/netSingleton';
 import { loadAssets } from '../bundle/LoadAsset';
 import { Role } from '../serverSDK/common';
 import { RoleConfig } from '../config/role_config';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -36,6 +37,7 @@ export class InfoPanel extends Component
 
         this.exitBtn.node.on(Button.EventType.CLICK,()=>
         {
+            AudioManager.Instance.PlayerOnShot("Sound/battle_return_feedback_01");
             console.log("exitboard!");
             this.Exit();
         });

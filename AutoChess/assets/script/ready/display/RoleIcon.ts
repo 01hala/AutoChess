@@ -266,7 +266,7 @@ export class RoleIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_move_01");
+                AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
                 this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象
@@ -340,6 +340,7 @@ export class RoleIcon extends Component
     //点击事件
     private ClickBtn()
     {
+        AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
         let roleInfo :RoleDis=null;
         if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
         
@@ -472,6 +473,7 @@ export class RoleIcon extends Component
     {
         if(null!=this.target && !this.isSale && null!=this.index && this.isBuy)
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_move_01");
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
              {

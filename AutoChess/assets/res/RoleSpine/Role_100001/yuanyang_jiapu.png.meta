@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "db55cf7e-1966-4366-a708-156d7aa35c59",
+  "uuid": "f7e41b90-f17f-441f-a2fc-c815f0504b29",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "db55cf7e-1966-4366-a708-156d7aa35c59@6c48a",
+      "uuid": "f7e41b90-f17f-441f-a2fc-c815f0504b29@6c48a",
       "displayName": "yuanyang_jiapu",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "db55cf7e-1966-4366-a708-156d7aa35c59",
+        "imageUuidOrDatabaseUri": "f7e41b90-f17f-441f-a2fc-c815f0504b29",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "db55cf7e-1966-4366-a708-156d7aa35c59@f9941",
+      "uuid": "f7e41b90-f17f-441f-a2fc-c815f0504b29@f9941",
       "displayName": "yuanyang_jiapu",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "db55cf7e-1966-4366-a708-156d7aa35c59@6c48a",
+        "imageUuidOrDatabaseUri": "f7e41b90-f17f-441f-a2fc-c815f0504b29@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "db55cf7e-1966-4366-a708-156d7aa35c59@f9941"
+    "redirect": "f7e41b90-f17f-441f-a2fc-c815f0504b29@f9941"
   }
 }
