@@ -1,5 +1,6 @@
 
 import { _decorator, Animation, assetManager, Button, Component, ImageAsset, Node, Sprite, SpriteFrame, Texture2D } from 'cc';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('UserInfo')
@@ -20,6 +21,7 @@ export class UserInfo extends Component
     {
         this.closeBtn.node.on(Button.EventType.CLICK,()=>
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
             this.Close();
         },this);
     }
@@ -28,10 +30,11 @@ export class UserInfo extends Component
         
     }
 
-    public Open(_url:string)
+    public OpenUserInfoBoard(_url:string)
     {
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_home_return_feedback_01");
             this.node.setSiblingIndex(98);
             this.node.active=true;
             this.ShowAvatar(_url);

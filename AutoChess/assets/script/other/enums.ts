@@ -104,3 +104,9 @@ export enum Biomes
     Jungle=5,
     Cave=6
 }
+
+export enum PageType
+{
+    Task=1,
+    Achieve=2
+}

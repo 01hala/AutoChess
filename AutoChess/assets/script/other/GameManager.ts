@@ -5,6 +5,7 @@ import { SendMessage } from './MessageEvent';
 import { Settlement } from '../secondaryPanel/Settlement';
 import { UpStage } from '../secondaryPanel/UpStage';
 import { UserInfo } from '../secondaryPanel/UserInfo';
+import { TaskAchieve } from '../secondaryPanel/TaskAchieve';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -17,16 +18,18 @@ export class GameManager extends Component
         return this._instance;
     }
     private typeface: TTFFont;
-
+    //提示飘字
     private textTipNodePre:Prefab;
-    
+    //角色、道具信息界面
     private infoPanel:Node;
-
+    //战斗结算界面
     private settlementBoard:Node;
     //升阶界面
     private upStageBoard:Node;
     //用户信息面板
     private userInfoBoard:Node;
+    //任务、成就界面
+    private taskAchieveBoard:Node;
 
     protected onLoad()
     {
@@ -57,8 +60,9 @@ export class GameManager extends Component
             let sl = BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard");
             let us = BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard")
             let up = BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard");
+            let ta = BundleManager.Instance.loadAssetsFromBundle("Board","Task&AchieveBoard");
             //加载
-            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up]);
+            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up,ta]);
             this.textTipNodePre = awaitResult[0] as Prefab;
             this.typeface = awaitResult[1] as TTFFont;
 
@@ -66,6 +70,7 @@ export class GameManager extends Component
             let t_settlementBoard = awaitResult[3] as Prefab;
             let t_userinfo = awaitResult[4] as Prefab;
             let t_UpStageBoard = awaitResult [5] as Prefab;
+            let t_taskBoard=awaitResult[6] as Prefab;
     
             this.infoPanel=instantiate(t_infoPanel);
             this.infoPanel.setParent(this.node);
@@ -82,6 +87,10 @@ export class GameManager extends Component
             this.upStageBoard=instantiate(t_UpStageBoard);
             this.upStageBoard.setParent(this.node);
             this.upStageBoard.active=false;
+
+            this.taskAchieveBoard=instantiate(t_taskBoard);
+            this.taskAchieveBoard.setParent(this.node);
+            this.taskAchieveBoard.active=false;
         }
         catch(error)
         {
@@ -178,7 +187,21 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.userInfoBoard.active=true;
-            this.userInfoBoard.getComponent(UserInfo).Open(event.detail);
+            this.userInfoBoard.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
+        })
+        /* 消息来源
+         * MainInterface.ts : 第 214 行
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('OpenTaskAchieveBoard',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.taskAchieveBoard.active=true;
+            this.taskAchieveBoard.getComponent(TaskAchieve).OpenTaskAchieveBoard();
         })
     }
 

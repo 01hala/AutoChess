@@ -46,6 +46,7 @@ export class MainInterface
     private storeBtn:Node;
     private amusementBtn:Node;
     private cardlibraryBtn:Node;
+    private taskAchieveBtn:Node;
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -121,6 +122,7 @@ export class MainInterface
             this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");
             this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList");
+            this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel//UiLayer/BtnList/BtnLayout/Task_Btn");
             //玩家信息
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/UserMoney");
             this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
@@ -149,7 +151,7 @@ export class MainInterface
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePanel.active=true;
                 this.startGamePanel.getComponent(StartGame).OpenAthleticsWindow();
@@ -159,14 +161,14 @@ export class MainInterface
             //打开自定义模式
             this.amusementBtn.on(Button.EventType.CLICK,()=>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 this.startGamePanel.active=true;
                 this.startGamePanel.getComponent(StartGame).OpenAmusementWindow();
             },this);
             //打开商店
             this.storeBtn.on(Button.EventType.CLICK,()=>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 this.storePanel.active=true;
                 this.panelNode.active=false;
                 this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
@@ -175,7 +177,7 @@ export class MainInterface
             //打开牌库界面
             this.cardlibraryBtn.on(Button.EventType.CLICK,()=>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 this.cardLibPanel.active=true;
                 this.panelNode.active=false;
                 this.cardLibPanel.getComponent(CardLib).Open();
@@ -206,9 +208,15 @@ export class MainInterface
             //打开用户信息界面
             this.userAvatar.on(Button.EventType.CLICK,()=>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenUserInfoBoard',true,this.avatarUrl));
             },this);
+            //打开任务、成就界面
+            this.taskAchieveBtn.on(Button.EventType.CLICK,()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true));
+            })
         }
         catch(error)
         {
