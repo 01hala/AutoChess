@@ -7,6 +7,7 @@
 import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandler, Node, Prefab, RichText, Toggle, ToggleContainer } from 'cc';
 import { PageType } from '../other/enums';
 import { BundleManager } from '../bundle/BundleManager';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('TaskAchieve')
@@ -23,12 +24,12 @@ export class TaskAchieve extends Component
 
     protected async onLoad(): Promise<void> 
     {
-        this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","TaskLabel")as Prefab;
-
         this.exitBtn=this.node.getChildByPath("Exit_Btn").getComponent(Button);
         this.board=this.node.getChildByPath("Board");
         this.toggleGroup=this.node.getChildByPath("Board/ToggleGroup");
-        this.scrollView=this.node.getChildByPath("ScrollView");
+        this.scrollView=this.node.getChildByPath("Board/ScrollView");
+
+        this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","TaskLabel")as Prefab;
     }
 
     start() 
@@ -83,6 +84,7 @@ export class TaskAchieve extends Component
     {
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             this.RemoveAllLables();
             if(this.toggleGroup.getChildByPath("TaskList").getComponent(Toggle).isChecked)
             {
@@ -106,24 +108,38 @@ export class TaskAchieve extends Component
 
     private RemoveAllLables()
     {
-        let lab=this.scrollView.getChildByPath("view/content").children;
-        for(let i=0;i<lab.length;i++)
+        try
         {
-            lab[i].destroy();
+            let lab=this.scrollView.getChildByPath("view/content").children;
+            for(let i=0;i<lab.length;i++)
+            {
+                lab[i].destroy();
+            }
+        }
+        catch(error)
+        {
+            console.error("TaskAchieve 下的 RemoveAllLables 错误：",error);
         }
     }
 
     private Exit()
     {
-        this.node.getComponent(BlockInputEvents).enabled=false;
-
-        this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+        try
         {
-            this.node.active=false;
-            this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
-        })
+            this.node.getComponent(BlockInputEvents).enabled=false;
 
-        this.board.getComponent(Animation).play("PanelDisappear");
+            this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                this.node.active=false;
+                this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
+            })
+    
+            this.board.getComponent(Animation).play("PanelDisappear");
+        }
+        catch(error)
+        {
+            console.error("TaskAchieve 下的 Exit 错误：",error);
+        }
     }
 }
 

@@ -251,7 +251,6 @@ export class RoleIcon extends Component
                 if(Date.now()-this.lastClickTime<100){
                     return;
                 }
-                AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
                 //计算位移坐标
                 let node: Node = event.currentTarget;
                 let pos = new Vec2();
@@ -267,6 +266,7 @@ export class RoleIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
                 this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象

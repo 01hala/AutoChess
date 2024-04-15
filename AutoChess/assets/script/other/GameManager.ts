@@ -60,7 +60,7 @@ export class GameManager extends Component
             let sl = BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard");
             let us = BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard")
             let up = BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard");
-            let ta = BundleManager.Instance.loadAssetsFromBundle("Board","Task&AchieveBoard");
+            let ta = BundleManager.Instance.loadAssetsFromBundle("Board","TaskAchieveBoard");
             //加载
             let awaitResult = await Promise.all([tt,tf,ip,sl,us,up,ta]);
             this.textTipNodePre = awaitResult[0] as Prefab;
