@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat } from 'cc';
+import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color } from 'cc';
 import { Role } from '../../battle/role';
 import { Camp, EventType, Property } from '../../other/enums';
 import { Battle } from '../../battle/battle';
@@ -441,12 +441,14 @@ export class RoleDis extends Component
                 this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
                 this.hurtedSpine.active=true;
                 hitAnim.play();
+                this.node.getChildByName("Sprite").getComponent(sp.Skeleton).color=color(110,110,110,255);
             }).delay(0.2).call(()=>
             {
                 this.hurtedSpine.active=false;
                 this.RoleRotate();
             })         
-            .by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y)},{easing: 'quintIn'})
+            //.by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y+500)},{easing: 'quintIn'})
+            .to(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y+500)})
             .delay(0.2).call(() => {
                 this.isDead=true;
                 this.roleInfo = null;

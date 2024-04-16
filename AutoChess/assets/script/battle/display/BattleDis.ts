@@ -362,8 +362,9 @@ export class BattleDis
                     this.enemyQueue.readyLocation.position, 
                     this.enemyQueue.battleLocation.position, 
                     Camp.Enemy));
-
+                
                 await Promise.all(allAwait);
+                this.shakeScreen(0.5,10);
                 await this.ChangeAttEvent(evs_floating);
 
                 console.log("CheckAttackEvent end!");
@@ -373,6 +374,40 @@ export class BattleDis
         {
             console.error("BattleDis 下的 CheckAttackEvent 错误 err:", error);
         }
+    }
+
+    private shakeScreen(duration: number, magnitude: number) {
+        // 获取摄像机组件
+        const cameraNode = this.panelNode.parent.getChildByName('Camera');
+        if (!cameraNode) {
+            console.error('Camera node not found,shake screen failed');
+            return;
+        }
+    
+        // 保存原始位置，以便震动后可以恢复
+        const originalPosition = cameraNode.position;
+    
+        // 震动效果
+        let elapsed = 0;
+        const shake = () => {
+            if (elapsed < duration) {
+                // 随机确定摄像机震动的新位置
+                const randomX = Math.random() * magnitude * 2 - magnitude;
+                const randomY = Math.random() * magnitude * 2 - magnitude;
+                cameraNode.setPosition(originalPosition.x + randomX, originalPosition.y + randomY);
+    
+                // 更新已经过去的时间
+                elapsed += 0.05;
+                // 请求下一帧继续执行震动
+                requestAnimationFrame(shake);
+            } else {
+                // 震动结束，恢复摄像机的原始位置
+                cameraNode.setPosition(originalPosition);
+            }
+        };
+    
+        // 开始震动
+        shake();
     }
 
     private async showRemoteAttack(selfRoleDis: RoleDis, spellcasterLocation: Vec3, targetLocation: Vec3, father: Node, ev:skill.Event) {
