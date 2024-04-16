@@ -74,13 +74,11 @@ export class MainInterface
     {
         let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface");
         let StorePanelmPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel");
-        let UserInfoBoardpromise=BundleManager.Instance.loadAssetsFromBundle("Board","UserInfo");
         let CardLibPromise=BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary");
 
         let awaitResult= await Promise.all([
             MainInterfacePromise, 
             StorePanelmPromise,
-            UserInfoBoardpromise,
             CardLibPromise
         ]);;
 
@@ -101,8 +99,7 @@ export class MainInterface
             let assets = await this.Load();
             let MainInterfacepanel = assets[0] as Prefab;
             let StorePanel=assets[1] as Prefab;
-            let UserInfoBoard=assets[2] as Prefab;
-            let CardLib=assets[3] as Prefab;
+            let CardLib=assets[2] as Prefab;
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
             //商店界面

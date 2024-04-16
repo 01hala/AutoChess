@@ -1,4 +1,4 @@
-import { _decorator, Asset, assetManager, AssetManager, Component, ImageAsset, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
+import { __private, _decorator, Asset, assetManager, AssetManager, Component, ImageAsset, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
 import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
@@ -115,11 +115,15 @@ export class BundleManager
     }
 
     //预加载
-    Preloading() : Promise<void> {
-        return new Promise(() => {
+    Preloading(_callBack:()=>void) : Promise<void> {
+        return new Promise((resolve) => 
+        {
             try {
-                for(let i:number=0;i<config.BundleConfig.size;i++) {
+                console.log("开始预加载资源")
+                for(let i:number=0;i<config.BundleConfig.size;i++) 
+                {
                     let bundleRes = config.BundleConfig.get(i).Path;
+                    console.log("正在加载：",bundleRes);
                     if (!this.bundles.has(bundleRes)) {
                         assetManager.loadBundle(bundleRes,(err,bundle) => {
                             if(err) {
@@ -127,14 +131,24 @@ export class BundleManager
                             }
                             else {
                                 this.bundles.set(bundleRes, bundle);
-                                bundle.preloadDir(config.BundleConfig.get(i).Path);
+                                bundle.preloadDir(bundleRes,(err,data)=>
+                                {
+                                    if(err)
+                                    {
+                                        console.warn(bundleRes+"下的资源加载失败 err:"+err);
+                                    }
+                                });
                             }
                         });
                     }
                 }
+                console.log("预加载资源完成");
+                _callBack();
+                resolve(null);
             }
             catch (error) {
                 console.warn(this.res+"下的 Preloading 错误:"+error);
+                resolve(null);
             }
         });
     }
