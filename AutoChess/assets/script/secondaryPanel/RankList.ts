@@ -74,6 +74,7 @@ export class RankList extends Component
         this.OnDragEvent();
     }
 
+    //列表采用动态加载，节省空间
     private OnDragEvent()
     {
         //100记得改成字典的长度
