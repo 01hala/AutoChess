@@ -26,8 +26,15 @@ namespace DBProxy
 
 		private void close_server()
 		{
-			_closehandle._is_closing = true;
-			check_close_server();
+			try
+			{
+				_closehandle._is_closing = true;
+				check_close_server();
+			}
+			catch (Exception e)
+			{
+				Log.Log.err("close_server:{0}", e);
+			}
         }
 
         private void close_server_impl(long tick)
@@ -37,43 +44,71 @@ namespace DBProxy
 
 		private void check_close_server()
 		{
-            if (_closehandle._is_closing && _hubs.all_hub_closed())
-            {
-				_centerproxy.closed();
-                DBProxy._timer.addticktime(3000, close_server_impl);
-            }
+			try
+			{
+				if (_closehandle._is_closing && _hubs.all_hub_closed())
+				{
+					_centerproxy.closed();
+					DBProxy._timer.addticktime(3000, close_server_impl);
+				}
+			}
+			catch (Exception e)
+			{
+				Log.Log.err("check_close_server:{0}", e);
+			}
         }
 
 		private void console_close_server(string svr_type, string svr_name)
         {
-			if (svr_type == "dbproxy" && svr_name == DBProxy.name)
-            {
-				DBProxy._timer.addticktime(3000, close_server_impl);
-			}
-            else
-            {
-				if (svr_type == "hub")
+			try
+			{
+				if (svr_type == "dbproxy" && svr_name == DBProxy.name)
 				{
-					_hubs.on_hub_closed(svr_name);
-                    check_close_server();
-                }
+					DBProxy._timer.addticktime(3000, close_server_impl);
+				}
+				else
+				{
+					if (svr_type == "hub")
+					{
+						_hubs.on_hub_closed(svr_name);
+						check_close_server();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Log.Log.err("console_close_server:{0}", e);
 			}
         }
 
 		private void svr_be_closed(string svr_type, string svr_name)
         {
-            Log.Log.trace("svr_be_closed");
-
-			if (svr_type == "hub")
+			try
 			{
-				_hubs.on_hub_closed(svr_name);
-                check_close_server();
-            }
-		}
+				Log.Log.trace("svr_be_closed");
+
+				if (svr_type == "hub")
+				{
+					_hubs.on_hub_closed(svr_name);
+					check_close_server();
+				}
+			}
+			catch (Exception e)
+			{
+				Log.Log.err("svr_be_closed:{0}", e);
+			}
+        }
 
 		private void take_over_svr(string svr_name)
 		{
-			DBProxy._redis_mq_service.take_over_svr(svr_name);
+            try
+            {
+                DBProxy._redis_mq_service.take_over_svr(svr_name);
+            }
+            catch (Exception e)
+            {
+                Log.Log.err("take_over_svr:{0}", e);
+            }
         }
     }
 }
