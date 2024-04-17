@@ -71,8 +71,6 @@ inline void dns_resolve(const char* host, IpList& ips)
 }
 
 inline std::string DNS(std::string host) {
-
-
     IpList ips;
     do {
         memset(&ips, 0, sizeof(ips));
