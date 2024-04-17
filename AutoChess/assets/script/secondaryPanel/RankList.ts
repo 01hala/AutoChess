@@ -182,7 +182,7 @@ export class RankList extends Component
         {
             if(i>24)
             {
-                this.pointer=i;
+                //this.pointer=i;
                 break;
             }
             let t=instantiate(this.rankFarmePre);
