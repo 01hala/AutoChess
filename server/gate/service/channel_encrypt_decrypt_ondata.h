@@ -1,6 +1,8 @@
 #ifndef _channel_encrypt_decrypt_ondata_h
 #define _channel_encrypt_decrypt_ondata_h
 
+#include <gc.h>
+
 #include <abelkhan.h>
 #include <log.h>
 #include <buffer.h>
@@ -67,7 +69,6 @@ public:
 	}
 
 	virtual ~channel_encrypt_decrypt_ondata(){
-		free(buff);
 	}
 
 	bool is_compress_and_encrypt;
@@ -126,12 +127,11 @@ public:
 			{
 				if (buff_offset > buff_size) {
 					buff_size = (buff_offset + 1023) / 1024 * 1024;
-					if (buff) {
-						free(buff);
-					}
-					buff = (char*)malloc(buff_size);
+					buff = (char*)GC_malloc(buff_size);
 				}
-				memcpy(buff, &tmp_buffer[tmp_buff_offset], buff_offset);
+				if (buff) {
+					memcpy(buff, &tmp_buffer[tmp_buff_offset], buff_offset);
+				}
 			}
 		}
 		catch (std::exception e) {
