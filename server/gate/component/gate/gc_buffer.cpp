@@ -4,7 +4,7 @@
  * gc_buffer.cpp
  */
 #include <gc.h>
-#include "buffer.h"
+#include "gc_buffer.h"
 
 namespace gate {
 

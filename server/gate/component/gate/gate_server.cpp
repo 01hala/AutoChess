@@ -243,7 +243,6 @@ void gate_service::run() {
 	while (!_closehandle->is_closed) {
 		try {
 			auto tick_time = logic_poll();
-
 			if (tick_time < 33) {
 				std::this_thread::sleep_for(std::chrono::milliseconds(33 - tick_time));
 			}
@@ -350,12 +349,12 @@ void gate_service::redis_mq_run() {
 uint32_t gate_service::logic_poll() {
 	auto begin = msec_time();
 	try {
-		_clientmanager->client_proxy_send();
-
 		abelkhan::TinyTimer::poll();
 		_timerservice->poll();
 
 		service::_modulemng->process_event();
+
+		_clientmanager->client_proxy_send();
 
 		_log::file_logger->flush();
 	}

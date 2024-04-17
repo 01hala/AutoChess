@@ -1,6 +1,8 @@
 #ifndef _channel_encrypt_decrypt_ondata_h
 #define _channel_encrypt_decrypt_ondata_h
 
+#include <gc.h>
+
 #include <abelkhan.h>
 #include <log.h>
 #include <buffer.h>
@@ -61,13 +63,20 @@ public:
 			xor_key[3] = base + base % 17;
 		}
 		
-		for (size_t i = 0; i < len; i++) {
+		size_t i = 0;
+		size_t len4 = (len / 4) * 4;
+		for ( ; i < len4; ) {
+			data[i++] ^= xor_key[0];
+			data[i++] ^= xor_key[1];
+			data[i++] ^= xor_key[2];
+			data[i++] ^= xor_key[3];
+		}
+		for (; i < len; i++) {
 			data[i] ^= xor_key[i % 4];
 		}
 	}
 
 	virtual ~channel_encrypt_decrypt_ondata(){
-		free(buff);
 	}
 
 	bool is_compress_and_encrypt;
@@ -126,12 +135,11 @@ public:
 			{
 				if (buff_offset > buff_size) {
 					buff_size = (buff_offset + 1023) / 1024 * 1024;
-					if (buff) {
-						free(buff);
-					}
-					buff = (char*)malloc(buff_size);
+					buff = (char*)GC_malloc(buff_size);
 				}
-				memcpy(buff, &tmp_buffer[tmp_buff_offset], buff_offset);
+				if (buff) {
+					memcpy(buff, &tmp_buffer[tmp_buff_offset], buff_offset);
+				}
 			}
 		}
 		catch (std::exception e) {
