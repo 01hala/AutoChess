@@ -6,20 +6,20 @@ const { ccclass, property } = _decorator;
 @ccclass('UserInfo')
 export class UserInfo extends Component 
 {
-    private closeBtn:Button;
+    private closeBtn:Node;
     private panelNode:Node;
 
 
     protected onLoad(): void 
     {
-        this.closeBtn=this.node.getChildByPath("PanelNode/Close_Btn").getComponent(Button);
+        this.closeBtn=this.node.getChildByPath("PanelNode/Close_Btn");
         this.panelNode=this.node.getChildByPath("PanelNode");
     }
 
 
     start() 
     {
-        this.closeBtn.node.on(Button.EventType.CLICK,()=>
+        this.closeBtn.on(Button.EventType.CLICK,()=>
         {
             AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
             this.Close();

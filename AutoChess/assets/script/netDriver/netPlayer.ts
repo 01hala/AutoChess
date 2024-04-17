@@ -10,6 +10,7 @@ import * as player_client from "../serverSDK/playercallc"
 
 import * as singleton from '../netDriver/netSingleton';
 import { rank_item } from "../serverSDK/rank_comm"
+import { decode } from "../serverSDK/@msgpack/msgpack"
 
 export class netPlayer {
     private c_login_caller : login.login_caller;
@@ -198,12 +199,19 @@ export class netPlayer {
         })
     }
     //获取排行榜区间
-    public cb_get_rank_range:(_rank_list:rank_item[])=>void;
+    public cb_get_rank_range:(_rank_list:rank_item[],_rank_Info:common.UserRankInfo[])=>void;
     public get_rank_range(_rank_name:string, _start:number, _end:number)
     {
         this.c_rank_cli_service_caller.get_hub(this.player_name).get_rank_range(_rank_name,_start,_end).callBack((_rank_list:rank_item[])=>
         {
-            this.cb_get_rank_range(_rank_list);
+            let rankinfo=[];
+            for(let i=0;i<_rank_list.length;i++)
+            {
+                let t=common.protcol_to_UserRankInfo(decode(_rank_list[i].item));
+                rankinfo.push(t);
+            }
+            this.cb_get_rank_range(_rank_list,rankinfo);
+            
         },()=>
         {
             console.log("get rank range err");
@@ -212,5 +220,6 @@ export class netPlayer {
             console.log("get rank range timeout");
         })
     }
+
 
 }
