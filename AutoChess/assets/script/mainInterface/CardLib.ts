@@ -165,12 +165,12 @@ export class CardLib extends Component
                         card.getComponent(RoleCard).Init(i);
                         try
                         {
-                            if(singleton.netSingleton.mainInterface.userData.playerBag.ItemList[j].isTatter)
+                            if(singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
                             {
                                 card.getComponent(RoleCard).Lock=true;
                                 card.getComponent(RoleCard).SetNumberText
                                 (
-                                    singleton.netSingleton.mainInterface.userData.playerBag.ItemList[j].Number,8
+                                    singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number,8
                                 );
                             }
                             else

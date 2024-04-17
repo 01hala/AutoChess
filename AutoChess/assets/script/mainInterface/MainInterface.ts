@@ -52,17 +52,18 @@ export class MainInterface
     //伸缩按钮区切换开关
     private btnListSwitch:boolean=false;
     //玩家信息
-    public userData:UserAccount;
+    public userAccount:UserAccount;
     private userMoney:Node;
     private userDiamonds:Node;
     private avatarUrl:string;
+    private userData:UserData;
     //玩家头像
     private userAvatar:Node;
 
     constructor()
     {
         this.RegCallBack();
-        this.userData=new UserAccount();
+        this.userAccount=new UserAccount();
     }
 /*
  * 添加Load
@@ -228,7 +229,7 @@ export class MainInterface
             //回调打开弹窗显示获得的卡牌或者碎片
             if(_bagInfo && _cardPacketInfo)
             {
-                this.userData.playerBag=_bagInfo;
+                this.userAccount.playerBag=_bagInfo;
                 this.storePanel.getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
             }
         };
@@ -240,13 +241,14 @@ export class MainInterface
         {
             //回调编辑卡组
         }
-        singleton.netSingleton.player.cb_get_user_data=(_userInfo:UserData)=>
+        singleton.netSingleton.player.cb_get_user_data=(_userData:UserData)=>
         {
-            this.userData.money=_userInfo.gold;
-            this.userData.playerBag=_userInfo.bag;
-            this.userData.diamond=_userInfo.diamond;
-            this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.gold;
-            this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userInfo.diamond;
+            this.userData=_userData;
+            this.userAccount.money=_userData.gold;
+            this.userAccount.playerBag=_userData.bag;
+            this.userAccount.diamond=_userData.diamond;
+            this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userData.gold;
+            this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
         }
     }
 

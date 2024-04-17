@@ -184,12 +184,13 @@ export class netPlayer {
     }
 
     //获取个人排名
-    public cb_get_rank_guid:(_rank:number)=>void;
+    public cb_get_rank_guid:(_rank:rank_item,_Info:common.UserRankInfo)=>void;
     public get_rank_guid(_rank_name:string,_guid:number)
     {
-        this.c_rank_cli_service_caller.get_hub(this.player_name).get_rank_guid(_rank_name,_guid).callBack((_rank:number)=>
+        this.c_rank_cli_service_caller.get_hub(this.player_name).get_rank_guid(_rank_name,_guid).callBack((_rank:rank_item)=>
         {
-            this.cb_get_rank_guid(_rank);
+            let info=common.protcol_to_UserRankInfo(decode(_rank.item));
+            this.cb_get_rank_guid(_rank,info);
         },()=>
         {
             console.log("get rank guid err");
@@ -199,19 +200,20 @@ export class netPlayer {
         })
     }
     //获取排行榜区间
-    public cb_get_rank_range:(_rank_list:rank_item[],_rank_Info:common.UserRankInfo[])=>void;
+    public cb_get_rank_range:(_rank_Info:Map<rank_item,common.UserRankInfo>)=>void;
     public get_rank_range(_rank_name:string, _start:number, _end:number)
     {
         this.c_rank_cli_service_caller.get_hub(this.player_name).get_rank_range(_rank_name,_start,_end).callBack((_rank_list:rank_item[])=>
         {
-            let rankinfo=[];
+            let rankinfo=new Map<rank_item,common.UserRankInfo>();
+
             for(let i=0;i<_rank_list.length;i++)
             {
                 let t=common.protcol_to_UserRankInfo(decode(_rank_list[i].item));
-                rankinfo.push(t);
+                rankinfo.set(_rank_list[i],t);
             }
-            this.cb_get_rank_range(_rank_list,rankinfo);
-            
+            this.cb_get_rank_range(rankinfo);
+
         },()=>
         {
             console.log("get rank range err");
