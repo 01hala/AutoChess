@@ -65,7 +65,7 @@ public:
 		
 		size_t i = 0;
 		size_t len4 = (len / 4) * 4;
-		for ( ; i < len4;) {
+		for ( ; i < len4; ) {
 			data[i++] ^= xor_key[0];
 			data[i++] ^= xor_key[1];
 			data[i++] ^= xor_key[2];
