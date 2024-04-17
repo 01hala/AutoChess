@@ -13,6 +13,7 @@
 
 #include <signals.h>
 #include <abelkhan.h>
+#include <gc.h>
 
 #include <log.h>
 
@@ -26,6 +27,9 @@ class channel : public abelkhan::Ichannel, public std::enable_shared_from_this<c
 public:
 	channel(std::shared_ptr<asio::ip::tcp::socket> _s)
 	{
+		read_buff = (char*)GC_malloc(2048);
+		memset(read_buff, 0, 2048);
+
 		s = _s;
 		is_close = false;
 	}
@@ -33,7 +37,7 @@ public:
 	void start()
 	{
 		ch_encrypt_decrypt_ondata = std::make_shared<channel_encrypt_decrypt_ondata>(shared_from_this());
-		s->async_read_some(asio::buffer(read_buff, 2 * 1024), std::bind(&channel::onRecv, shared_from_this(), std::placeholders::_1, std::placeholders::_2));
+		s->async_read_some(asio::buffer(read_buff, 2048), std::bind(&channel::onRecv, shared_from_this(), std::placeholders::_1, std::placeholders::_2));
 	}
 
 	void set_xor_key_crypt() {
@@ -73,7 +77,7 @@ private:
 		}
 
 		ch->ch_encrypt_decrypt_ondata->recv(ch->read_buff, bytes_transferred);
-		ch->s->async_read_some(asio::buffer(ch->read_buff, 2 * 1024), std::bind(&channel::onRecv, ch, std::placeholders::_1, std::placeholders::_2));
+		ch->s->async_read_some(asio::buffer(ch->read_buff, 2048), std::bind(&channel::onRecv, ch, std::placeholders::_1, std::placeholders::_2));
 	}
 
 public:
@@ -129,7 +133,7 @@ private:
 	std::mutex _mutex;
 
 	std::shared_ptr<channel_encrypt_decrypt_ondata> ch_encrypt_decrypt_ondata;
-	char read_buff[2 * 1024];
+	char* read_buff;
 
 	bool is_close;
 
