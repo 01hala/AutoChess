@@ -63,7 +63,15 @@ public:
 			xor_key[3] = base + base % 17;
 		}
 		
-		for (size_t i = 0; i < len; i++) {
+		size_t i = 0;
+		size_t len4 = (len / 4) * 4;
+		for ( ; i < len4;) {
+			data[i++] ^= xor_key[0];
+			data[i++] ^= xor_key[1];
+			data[i++] ^= xor_key[2];
+			data[i++] ^= xor_key[3];
+		}
+		for (; i < len; i++) {
 			data[i] ^= xor_key[i % 4];
 		}
 	}
