@@ -16,6 +16,8 @@ namespace Login
             var _hub = new Hub.Hub(args[0], args[1], "login");
             _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
 
+            HttpClientWrapper.Init();
+
             DyAppID = Hub.Hub._config.get_value_string("DyAppID");
             DyAppSecret = Hub.Hub._config.get_value_string("DyAppSecret");
             WxAppID = Hub.Hub._config.get_value_string("WxAppID");
