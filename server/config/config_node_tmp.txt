@@ -3,7 +3,7 @@
 		"name":"center_tsxs",
         "gm_ip":"127.0.0.1",
         "gm_port":1001,
-		"init_peak_strength_id": true;
+		"init_peak_strength_id": true,
 		"log_level":"trace",
 		"log_file":"center.txt",
 		"log_dir":"./log/"
