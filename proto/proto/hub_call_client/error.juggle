@@ -15,6 +15,7 @@ enum em_error{
 	no_exist_role_card = 11;
 	player_offline = 12;
 	exceeds_maximum_limit_role = 13;
+	peak_strength_no_data = 14;
 }
 
 module error_code_ntf{
