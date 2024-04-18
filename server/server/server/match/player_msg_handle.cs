@@ -23,7 +23,7 @@ namespace Match
             try
             {
                 var date = System.DateTime.Now;
-                int daysUntilSaturday = ((int)DayOfWeek.Saturday - (int)date.DayOfWeek + 7) % 7;
+                int daysUntilSaturday = ((int)DayOfWeek.Saturday - (int)(date.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)date.DayOfWeek));
                 DateTime nextSaturday = date.AddDays(daysUntilSaturday);
                 DateTime nextSaturday1730 = new DateTime(nextSaturday.Year, nextSaturday.Month, nextSaturday.Day, 17, 30, 0);
                 if (System.DateTime.Now > nextSaturday1730)
