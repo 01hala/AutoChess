@@ -7,6 +7,7 @@ import { UpStage } from '../secondaryPanel/UpStage';
 import { UserInfo } from '../secondaryPanel/UserInfo';
 import { TaskAchieve } from '../secondaryPanel/TaskAchieve';
 import { RankList } from '../secondaryPanel/RankList';
+import { AudioManager } from './AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -37,6 +38,7 @@ export class GameManager extends Component
     protected onLoad()
     {
         GameManager._instance=this.node.getComponent(GameManager);
+        AudioManager.Instance.Init();
         this.Init();
     }
 

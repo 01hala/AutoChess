@@ -141,8 +141,6 @@ export class login extends Component {
             this._setProgress(this._progress);
         });
 
-        AudioManager.Instance.Init();
-
         singleton.netSingleton.player.cb_player_login_non_account = () => {
             this._progress += 0.1;
             this._setProgress(this._progress);
