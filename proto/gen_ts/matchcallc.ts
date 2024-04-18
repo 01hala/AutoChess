@@ -50,6 +50,30 @@ export function protcol_to_ShopSkillEffect(_protocol:any){
 }
 
 /*this module code is codegen by abelkhan codegen for typescript*/
+export class battle_client_replace_peak_strength_rsp {
+    private uuid_33285abf_3f36_3f1c_8655_3d7896f0ebba : number;
+    private hub_name_b6124ca7_ba56_39b8_9566_45bca78f3a8d:string;
+    private _client_handle:client_handle.client ;
+
+    constructor(_client_handle_:client_handle.client, current_hub:string, _uuid:number){
+        this._client_handle = _client_handle_;
+        this.hub_name_b6124ca7_ba56_39b8_9566_45bca78f3a8d = current_hub;
+        this.uuid_33285abf_3f36_3f1c_8655_3d7896f0ebba = _uuid;
+    }
+
+    public rsp(confirm:boolean){
+        let _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d:any[] = [this.uuid_33285abf_3f36_3f1c_8655_3d7896f0ebba];
+        _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d.push(confirm);
+        this._client_handle.call_hub(this.hub_name_b6124ca7_ba56_39b8_9566_45bca78f3a8d, "battle_client_rsp_cb_replace_peak_strength_rsp", _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d);
+    }
+
+    public err(){
+        let _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d:any[] = [this.uuid_33285abf_3f36_3f1c_8655_3d7896f0ebba];
+        this._client_handle.call_hub(this.hub_name_b6124ca7_ba56_39b8_9566_45bca78f3a8d, "battle_client_rsp_cb_replace_peak_strength_err", _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d);
+    }
+
+}
+
 export class battle_client_module extends client_handle.imodule {
     public _client_handle:client_handle.client;
     constructor(_client_handle_:client_handle.client){
@@ -69,6 +93,7 @@ export class battle_client_module extends client_handle.imodule {
         this._client_handle._modulemng.add_method("battle_client_role_add_property", this.role_add_property.bind(this));
         this._client_handle._modulemng.add_method("battle_client_add_coin", this.add_coin.bind(this));
         this._client_handle._modulemng.add_method("battle_client_shop_summon", this.shop_summon.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_replace_peak_strength", this.replace_peak_strength.bind(this));
 
         this.cb_battle_victory = null;
         this.cb_battle_plan_refresh = null;
@@ -84,6 +109,8 @@ export class battle_client_module extends client_handle.imodule {
         this.cb_role_add_property = null;
         this.cb_add_coin = null;
         this.cb_shop_summon = null;
+        this.cb_replace_peak_strength = null;
+
     }
 
     public cb_battle_victory : (is_victory:boolean)=>void | null;
@@ -234,6 +261,17 @@ export class battle_client_module extends client_handle.imodule {
         if (this.cb_shop_summon){
             this.cb_shop_summon.apply(null, _argv_);
         }
+    }
+
+    public cb_replace_peak_strength : ()=>void | null;
+    replace_peak_strength(inArray:any[]){
+        let _cb_uuid = inArray[0];
+        let _argv_:any[] = [];
+        this.rsp = new battle_client_replace_peak_strength_rsp(this._client_handle, this._client_handle.current_hub, _cb_uuid);
+        if (this.cb_replace_peak_strength){
+            this.cb_replace_peak_strength.apply(null, _argv_);
+        }
+        this.rsp = null;
     }
 
 }

@@ -22,5 +22,5 @@ module player_shop {
 
 module player_battle {
 	start_battle req() rsp(string match_name, UserBattleData battle_info, ShopData shop_info) err(int32 err);
-	start_peak_strength req() rsp(string match_name, UserBattleData[] self) err(int32 err);
+	start_peak_strength req() rsp(string match_name, UserBattleData self) err(int32 err);
 }

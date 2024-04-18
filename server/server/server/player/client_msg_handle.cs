@@ -27,6 +27,7 @@ namespace Player
 
             player_battle_Module = new();
             player_battle_Module.on_start_battle += Player_battle_Module_on_start_battle;
+            player_battle_Module.on_start_peak_strength += Player_battle_Module_on_start_peak_strength;
 
             player_shop_Module = new();
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
@@ -138,6 +139,33 @@ namespace Player
             catch (System.Exception ex)
             {
                 Log.Log.err($"Player_shop_Module_on_buy_card_merge err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
+        }
+
+        private async void Player_battle_Module_on_start_peak_strength()
+        {
+            Log.Log.trace("on_start_battle begin!");
+
+            var rsp = player_battle_Module.rsp as player_battle_start_peak_strength_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _match = Player.match_Proxy_Mng.get_match_proxy();
+                _match.start_peak_strength(uuid, _avatar.Guid).callBack(async (battleData) =>
+                {
+                    rsp.rsp(_match.name, battleData);
+
+                    var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
+                    await Player._redis_handle.SetStrData(match_key, _match.name, RedisHelp.PlayerMatchSvrCacheTimeout);
+
+                }, rsp.err);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_battle_Module_on_start_battle: err{ex}");
                 rsp.err((int)em_error.db_error);
             }
         }

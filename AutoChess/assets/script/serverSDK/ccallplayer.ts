@@ -720,7 +720,7 @@ export class player_battle_start_peak_strength_cb{
     private cb_uuid : number;
     private module_rsp_cb : player_battle_rsp_cb;
 
-    public event_start_peak_strength_handle_cb : (match_name:string, self:common.UserBattleData[])=>void | null;
+    public event_start_peak_strength_handle_cb : (match_name:string, self:common.UserBattleData)=>void | null;
     public event_start_peak_strength_handle_err : (err:number)=>void | null;
     public event_start_peak_strength_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : player_battle_rsp_cb){
@@ -731,7 +731,7 @@ export class player_battle_start_peak_strength_cb{
         this.event_start_peak_strength_handle_timeout = null;
     }
 
-    callBack(_cb:(match_name:string, self:common.UserBattleData[])=>void, _err:(err:number)=>void)
+    callBack(_cb:(match_name:string, self:common.UserBattleData)=>void, _err:(err:number)=>void)
     {
         this.event_start_peak_strength_handle_cb = _cb;
         this.event_start_peak_strength_handle_err = _err;
@@ -800,10 +800,7 @@ export class player_battle_rsp_cb extends client_handle.imodule {
         let uuid = inArray[0];
         let _argv_604bcc66_d0b2_3376_8454_39a206b26543:any[] = [];
         _argv_604bcc66_d0b2_3376_8454_39a206b26543.push(inArray[1]);
-        let _array_9d043920_d936_5a24_bb36_334fe3c35b20:any[] = [];        for(let v_f28d998e_a4db_5715_ae88_a209524e50aa of inArray[2]){
-            _array_9d043920_d936_5a24_bb36_334fe3c35b20.push(common.protcol_to_UserBattleData(v_f28d998e_a4db_5715_ae88_a209524e50aa));
-        }
-        _argv_604bcc66_d0b2_3376_8454_39a206b26543.push(_array_9d043920_d936_5a24_bb36_334fe3c35b20);
+        _argv_604bcc66_d0b2_3376_8454_39a206b26543.push(common.protcol_to_UserBattleData(inArray[2]));
         var rsp = this.try_get_and_del_start_peak_strength_cb(uuid);
         if (rsp && rsp.event_start_peak_strength_handle_cb) {
             rsp.event_start_peak_strength_handle_cb.apply(null, _argv_604bcc66_d0b2_3376_8454_39a206b26543);

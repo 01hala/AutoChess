@@ -43,11 +43,6 @@ namespace Abelkhan
             return $"AutoChess:battle:{round}";
         }
 
-        static public string BuildPlayerPeakStrengthCache(long guid)
-        {
-            return $"AutoChess:Player:Peak:Strength:{guid}";
-        }
-
         static public string BuildPlayerPeakStrengthFormationCache(long guid)
         {
             return $"AutoChess:Player:Peak:Strength:Formation:{guid}";

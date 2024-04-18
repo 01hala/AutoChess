@@ -359,15 +359,11 @@ namespace Abelkhan
             uuid_469c67c5_686b_3b18_b93f_b1ae9f231dac = _uuid;
         }
 
-        public void rsp(string match_name_d50a466e_055b_3a8a_ac90_a255638bcd50, List<UserBattleData> self_809515b8_3e31_3feb_a08c_462fee09f6ef){
+        public void rsp(string match_name_d50a466e_055b_3a8a_ac90_a255638bcd50, UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef){
             var _argv_604bcc66_d0b2_3376_8454_39a206b26543 = new ArrayList();
             _argv_604bcc66_d0b2_3376_8454_39a206b26543.Add(uuid_469c67c5_686b_3b18_b93f_b1ae9f231dac);
             _argv_604bcc66_d0b2_3376_8454_39a206b26543.Add(match_name_d50a466e_055b_3a8a_ac90_a255638bcd50);
-            var _array_809515b8_3e31_3feb_a08c_462fee09f6ef = new ArrayList();
-            foreach(var v_9d043920_d936_5a24_bb36_334fe3c35b20 in self_809515b8_3e31_3feb_a08c_462fee09f6ef){
-                _array_809515b8_3e31_3feb_a08c_462fee09f6ef.Add(UserBattleData.UserBattleData_to_protcol(v_9d043920_d936_5a24_bb36_334fe3c35b20));
-            }
-            _argv_604bcc66_d0b2_3376_8454_39a206b26543.Add(_array_809515b8_3e31_3feb_a08c_462fee09f6ef);
+            _argv_604bcc66_d0b2_3376_8454_39a206b26543.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
             Hub.Hub._gates.call_client(_client_uuid_604bcc66_d0b2_3376_8454_39a206b26543, "player_battle_rsp_cb_start_peak_strength_rsp", _argv_604bcc66_d0b2_3376_8454_39a206b26543);
         }
 

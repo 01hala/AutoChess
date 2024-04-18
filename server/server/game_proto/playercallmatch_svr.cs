@@ -77,11 +77,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<List<UserBattleData>> on_start_peak_strength_cb;
+        public event Action<UserBattleData> on_start_peak_strength_cb;
         public event Action<Int32> on_start_peak_strength_err;
         public event Action on_start_peak_strength_timeout;
 
-        public player_match_start_peak_strength_cb callBack(Action<List<UserBattleData>> cb, Action<Int32> err)
+        public player_match_start_peak_strength_cb callBack(Action<UserBattleData> cb, Action<Int32> err)
         {
             on_start_peak_strength_cb += cb;
             on_start_peak_strength_err += err;
@@ -96,7 +96,7 @@ namespace Abelkhan
             on_start_peak_strength_timeout += timeout_cb;
         }
 
-        public void call_cb(List<UserBattleData> self)
+        public void call_cb(UserBattleData self)
         {
             if (on_start_peak_strength_cb != null)
             {
@@ -237,11 +237,7 @@ namespace Abelkhan
 
         public void start_peak_strength_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _self = new List<UserBattleData>();
-            var _protocol_arrayself = ((MsgPack.MessagePackObject)inArray[1]).AsList();
-            foreach (var v_9d043920_d936_5a24_bb36_334fe3c35b20 in _protocol_arrayself){
-                _self.Add(UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)v_9d043920_d936_5a24_bb36_334fe3c35b20).AsDictionary()));
-            }
+            var _self = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             var rsp = try_get_and_del_start_peak_strength_cb(uuid);
             if (rsp != null)
             {
@@ -606,14 +602,10 @@ namespace Abelkhan
             uuid_469c67c5_686b_3b18_b93f_b1ae9f231dac = _uuid;
         }
 
-        public void rsp(List<UserBattleData> self_809515b8_3e31_3feb_a08c_462fee09f6ef){
+        public void rsp(UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef){
             var _argv_604bcc66_d0b2_3376_8454_39a206b26543 = new ArrayList();
             _argv_604bcc66_d0b2_3376_8454_39a206b26543.Add(uuid_469c67c5_686b_3b18_b93f_b1ae9f231dac);
-            var _array_809515b8_3e31_3feb_a08c_462fee09f6ef = new ArrayList();
-            foreach(var v_9d043920_d936_5a24_bb36_334fe3c35b20 in self_809515b8_3e31_3feb_a08c_462fee09f6ef){
-                _array_809515b8_3e31_3feb_a08c_462fee09f6ef.Add(UserBattleData.UserBattleData_to_protcol(v_9d043920_d936_5a24_bb36_334fe3c35b20));
-            }
-            _argv_604bcc66_d0b2_3376_8454_39a206b26543.Add(_array_809515b8_3e31_3feb_a08c_462fee09f6ef);
+            _argv_604bcc66_d0b2_3376_8454_39a206b26543.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
             Hub.Hub._hubs.call_hub(_hub_name_604bcc66_d0b2_3376_8454_39a206b26543, "player_match_rsp_cb_start_peak_strength_rsp", _argv_604bcc66_d0b2_3376_8454_39a206b26543);
         }
 

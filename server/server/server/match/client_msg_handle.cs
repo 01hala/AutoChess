@@ -28,9 +28,6 @@ namespace Match
             plan_Module.on_start_round += Plan_Module_on_start_round;
             plan_Module.on_get_battle_data += Plan_Module_on_get_battle_data;
 
-            peak_Strength_Module.on_get_peak_strength_formation += Peak_Strength_Module_on_get_peak_strength_formation;
-            peak_Strength_Module.on_del_peak_strength_formation += Peak_Strength_Module_on_del_peak_strength_formation;
-            peak_Strength_Module.on_choose_peak_strength += Peak_Strength_Module_on_choose_peak_strength;
             peak_Strength_Module.on_start_peak_strength += Peak_Strength_Module_on_start_peak_strength;
             peak_Strength_Module.on_confirm_peak_strength_victory += Peak_Strength_Module_on_confirm_peak_strength_victory;
 
@@ -96,63 +93,6 @@ namespace Match
             catch (System.Exception ex)
             {
                 Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
-                rsp.err((int)em_error.db_error);
-            }
-        }
-
-        private async void Peak_Strength_Module_on_choose_peak_strength(int index)
-        {
-            var rsp = peak_Strength_Module.rsp as peak_strength_choose_peak_strength_rsp;
-            var uuid = Hub.Hub._gates.current_client_uuid;
-            // to do
-
-            try
-            {
-                var _player = Match.peak_strength_mng.get_battle_player(uuid);
-                var formation = await Match._redis_handle.GetListElem<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID), index);
-                await Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID), formation);
-                rsp.rsp(formation);
-            }
-            catch (System.Exception ex)
-            {
-                Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
-                rsp.err((int)em_error.db_error);
-            }
-        }
-
-        private async void Peak_Strength_Module_on_del_peak_strength_formation(int index)
-        {
-            var rsp = peak_Strength_Module.rsp as peak_strength_del_peak_strength_formation_rsp;
-            var uuid = Hub.Hub._gates.current_client_uuid;
-            // to do
-
-            try
-            {
-                var _player = Match.peak_strength_mng.get_battle_player(uuid);
-                await Match._redis_handle.DeleteListElem(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID), index);
-                rsp.rsp(await Match._redis_handle.GetList<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID)));
-            }
-            catch (System.Exception ex)
-            {
-                Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
-                rsp.err((int)em_error.db_error);
-            }
-        }
-
-        private async void Peak_Strength_Module_on_get_peak_strength_formation()
-        {
-            var rsp = peak_Strength_Module.rsp as peak_strength_get_peak_strength_formation_rsp;
-            var uuid = Hub.Hub._gates.current_client_uuid;
-            // to do
-
-            try
-            {
-                var _player = Match.peak_strength_mng.get_battle_player(uuid);
-                rsp.rsp(await Match._redis_handle.GetList<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthCache(_player.GUID)));
-            }
-            catch (System.Exception ex)
-            {
-                Log.Log.err("Peak_Strength_Module_on_get_peak_strength_formation error:{0}", ex);
                 rsp.err((int)em_error.db_error);
             }
         }
@@ -245,8 +185,20 @@ namespace Match
 
                     if (_player.BattleData.round <= 15)
                     {
-                        Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleData);
-                        Match._redis_handle.PushList(RedisHelp.BuildPlayerPeakStrengthCache(_player.BattleData.User.UserGuid), _player.BattleData);
+                        _player.BattleClientCaller.get_client(_player.ClientUUID).replace_peak_strength().callBack((isConfirm) =>
+                        {
+                            if (isConfirm)
+                            {
+                                Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleData);
+                                Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.BattleData.User.UserGuid), _player.BattleData);
+                            }
+                        }, () =>
+                        {
+                            Log.Log.err("replace_peak_strength error!");
+                        }).timeout(1000, () =>
+                        {
+                            Log.Log.err("replace_peak_strength timeout!");
+                        });
                     }
                 }
                 else
