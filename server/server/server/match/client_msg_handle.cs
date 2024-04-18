@@ -187,6 +187,9 @@ namespace Match
                 {
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
 
+                    var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
+                    player_proxy.battle_victory(_player.BattleData.User.UserGuid);
+
                     if (_player.BattleData.round <= 15)
                     {
                         _player.BattleClientCaller.get_client(_player.ClientUUID).replace_peak_strength().callBack(async (isConfirm) =>

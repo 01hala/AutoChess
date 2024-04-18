@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Http;
 using Service;
 using System;
@@ -19,6 +20,12 @@ namespace center_svr
             };
 
             _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"));
+
+            if (_center._root_cfg.get_value_bool("init_peak_strength_id"))
+            {
+                var peak_strength_id = RandomHelper.RandomInt(100);
+                _redis_handle.SetData(RedisHelp.BuildPeakStrengthID(), peak_strength_id);
+            }
 
             _center._timer.addloopweekdaytime(System.DayOfWeek.Monday, 0, 0, 0, reset_peak_strength);
 

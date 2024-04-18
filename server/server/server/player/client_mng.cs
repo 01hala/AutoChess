@@ -47,6 +47,8 @@ namespace Player
         private int currentRolrGroup = 101;
         private long lastTickStrengthTime;
 
+        public long PeakStrengthID = 0;
+
         public static string Type()
         {
             return "player_info";
@@ -192,6 +194,11 @@ namespace Player
                 info.currentRolrGroup = info.info.roleGroup[0].CardDeck;
             }
 
+            if (data.Contains("peakStrengthID"))
+            {
+                info.PeakStrengthID = data.GetValue("peakStrengthID").AsInt32;
+            }
+
             return info;
         }
 
@@ -238,7 +245,8 @@ namespace Player
                 { "RoleGroup",  roleGroup },
                 { "bag", itemList },
                 { "lastTickStrengthTime", lastTickStrengthTime },
-                { "currentRolrGroup", currentRolrGroup }
+                { "currentRolrGroup", currentRolrGroup },
+                { "peakStrengthID", PeakStrengthID }
             };
             return doc;
         }

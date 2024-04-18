@@ -153,6 +153,13 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var peakStrengthID = await Player._redis_handle.GetData<long>(RedisHelp.BuildPeakStrengthID());
+                if (peakStrengthID != _avatar.PlayerInfo().PeakStrengthID)
+                {
+                    _avatar.PlayerInfo().PeakStrengthID = peakStrengthID;
+                    Player._redis_handle.DelData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_avatar.Guid));
+                }
+
                 var _match = Player.match_Proxy_Mng.get_match_proxy();
                 _match.start_peak_strength(uuid, _avatar.Guid).callBack(async (battleData) =>
                 {
