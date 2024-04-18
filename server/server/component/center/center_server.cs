@@ -26,6 +26,7 @@ namespace Abelkhan
         public readonly CloseHandle _closeHandle;
         public readonly Service.Timerservice _timer; 
         public readonly Abelkhan.Config _root_cfg;
+        public readonly Config _center_config;
         
         public event Action<SvrProxy> on_svr_disconnect;
 
@@ -38,10 +39,10 @@ namespace Abelkhan
         public Center(string cfg_file, string cfg_name)
         {
             _root_cfg = new Config(cfg_file);
-            var _config = _root_cfg.get_value_dict(cfg_name);
-            var name = _config.get_value_string("name");
+            _center_config = _root_cfg.get_value_dict(cfg_name);
+            var name = _center_config.get_value_string("name");
 
-            var log_level = _config.get_value_string("log_level");
+            var log_level = _center_config.get_value_string("log_level");
             if (log_level == "trace")
             {
                 Log.Log.logMode = Log.Log.enLogMode.trace;
@@ -62,9 +63,9 @@ namespace Abelkhan
             {
                 Log.Log.logMode = Log.Log.enLogMode.err;
             }
-            var log_file = _config.get_value_string("log_file");
+            var log_file = _center_config.get_value_string("log_file");
             Log.Log.logFile = log_file;
-            var log_dir = _config.get_value_string("log_dir");
+            var log_dir = _center_config.get_value_string("log_dir");
             Log.Log.logPath = log_dir;
             {
                 if (!System.IO.Directory.Exists(log_dir))
@@ -93,8 +94,8 @@ namespace Abelkhan
 
             _gmmanager = new GMManager();
             _gm_msg_handle = new gm_msg_handle(_svrmanager, _gmmanager, _closeHandle);
-            var gm_host = _config.get_value_string("gm_host");
-            var gm_port = _config.get_value_int("gm_port");
+            var gm_host = _center_config.get_value_string("gm_host");
+            var gm_port = _center_config.get_value_int("gm_port");
             _accept_gm_service = new Acceptservice((ushort)gm_port);
             Acceptservice.on_connect += (Abelkhan.Ichannel ch) =>{
                 lock (add_chs)

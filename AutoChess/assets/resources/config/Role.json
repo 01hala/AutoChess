@@ -12,7 +12,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100001",
-        "Avatar": "Avatar/Role_100001",
+        "Avatar": "RoleAvatar/Role_100001",
         "Skel": "RoleSpine/Role_100001/yuanyang_jiapu"
     },
     "100002": {
@@ -28,7 +28,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100002",
-        "Avatar": "Avatar/Role_100002",
+        "Avatar": "RoleAvatar/Role_100002",
         "Skel": "RoleSpine/Role_100002/yuanyang_kuangzhanshi"
     },
     "100003": {
@@ -44,7 +44,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100003",
-        "Avatar": "Avatar/Role_100003",
+        "Avatar": "RoleAvatar/Role_100003",
         "Skel": "RoleSpine/Role_100003/yuanyang_dafu"
     },
     "100004": {
@@ -60,7 +60,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100004",
-        "Avatar": "Avatar/Role_100004",
+        "Avatar": "RoleAvatar/Role_100004",
         "Skel": "RoleSpine/Role_100004/yuanyang_hushi"
     },
     "100005": {
@@ -76,7 +76,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100005",
-        "Avatar": "Avatar/Role_100005",
+        "Avatar": "RoleAvatar/Role_100005",
         "Skel": "RoleSpine/Role_100005"
     },
     "100006": {
@@ -92,7 +92,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100006",
-        "Avatar": "Avatar/Role_100006",
+        "Avatar": "RoleAvatar/Role_100006",
         "Skel": "RoleSpine/Role_100006/yuanyang_zhanbushi"
     },
     "100007": {
@@ -108,7 +108,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100007",
-        "Avatar": "Avatar/Role_100007",
+        "Avatar": "RoleAvatar/Role_100007",
         "Skel": "RoleSpine/Role_100007"
     },
     "100008": {
@@ -124,7 +124,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100008",
-        "Avatar": "Avatar/Role_100008",
+        "Avatar": "RoleAvatar/Role_100008",
         "Skel": "RoleSpine/Role_100008"
     },
     "100009": {
@@ -140,7 +140,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100009",
-        "Avatar": "Avatar/Role_100009",
+        "Avatar": "RoleAvatar/Role_100009",
         "Skel": "RoleSpine/Role_100009/yuanyang_jianshendaren"
     },
     "100010": {
@@ -156,7 +156,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100010",
-        "Avatar": "Avatar/Role_100010",
+        "Avatar": "RoleAvatar/Role_100010",
         "Skel": "RoleSpine/Role_100010"
     },
     "100011": {
@@ -172,7 +172,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100011",
-        "Avatar": "Avatar/Role_100011",
+        "Avatar": "RoleAvatar/Role_100011",
         "Skel": "RoleSpine/Role_100011/gaoshan_jixieshi"
     },
     "100012": {
@@ -188,7 +188,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100012",
-        "Avatar": "Avatar/Role_100012",
+        "Avatar": "RoleAvatar/Role_100012",
         "Skel": "RoleSpine/Role_100012"
     },
     "100013": {
@@ -204,7 +204,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100013",
-        "Avatar": "Avatar/Role_100013",
+        "Avatar": "RoleAvatar/Role_100013",
         "Skel": "RoleSpine/Role_100013/gaoshan_wushi"
     },
     "100014": {
@@ -220,7 +220,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100014",
-        "Avatar": "Avatar/Role_100014",
+        "Avatar": "RoleAvatar/Role_100014",
         "Skel": "RoleSpine/Role_100014/gaoshan_chushi"
     },
     "100015": {
@@ -236,7 +236,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100015",
-        "Avatar": "Avatar/Role_100015",
+        "Avatar": "RoleAvatar/Role_100015",
         "Skel": "RoleSpine/Role_100015"
     },
     "100016": {
@@ -252,7 +252,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100016",
-        "Avatar": "Avatar/Role_100016",
+        "Avatar": "RoleAvatar/Role_100016",
         "Skel": "RoleSpine/Role_100016"
     },
     "100017": {
@@ -268,7 +268,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100017",
-        "Avatar": "Avatar/Role_100017",
+        "Avatar": "RoleAvatar/Role_100017",
         "Skel": "RoleSpine/Role_100017"
     },
     "100018": {
@@ -284,7 +284,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100018",
-        "Avatar": "Avatar/Role_100018",
+        "Avatar": "RoleAvatar/Role_100018",
         "Skel": "RoleSpine/Role_100018/Role_100018"
     },
     "100019": {
@@ -300,7 +300,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100019",
-        "Avatar": "Avatar/Role_100019",
+        "Avatar": "RoleAvatar/Role_100019",
         "Skel": "RoleSpine/Role_100019/Role_100019"
     },
     "100020": {
@@ -316,7 +316,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100020",
-        "Avatar": "Avatar/Role_100020",
+        "Avatar": "RoleAvatar/Role_100020",
         "Skel": "RoleSpine/Role_100019/Role_100020"
     },
     "100021": {
@@ -332,7 +332,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100021",
-        "Avatar": "Avatar/Role_100021",
+        "Avatar": "RoleAvatar/Role_100021",
         "Skel": "RoleSpine/Role_100021/caoyuan_jixieshi"
     },
     "100022": {
@@ -348,7 +348,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100022",
-        "Avatar": "Avatar/Role_100022",
+        "Avatar": "RoleAvatar/Role_100022",
         "Skel": "RoleSpine/Role_100022/caoyuan_hushi"
     },
     "100023": {
@@ -364,7 +364,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100023",
-        "Avatar": "Avatar/Role_100023",
+        "Avatar": "RoleAvatar/Role_100023",
         "Skel": "RoleSpine/Role_100023"
     },
     "100024": {
@@ -380,7 +380,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100024",
-        "Avatar": "Avatar/Role_100024",
+        "Avatar": "RoleAvatar/Role_100024",
         "Skel": "RoleSpine/Role_100024/conlin_moshushi"
     },
     "100025": {
@@ -396,7 +396,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100025",
-        "Avatar": "Avatar/Role_100025",
+        "Avatar": "RoleAvatar/Role_100025",
         "Skel": "RoleSpine/Role_100025/Role_100023"
     },
     "100026": {
@@ -412,7 +412,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100026",
-        "Avatar": "Avatar/Role_100026",
+        "Avatar": "RoleAvatar/Role_100026",
         "Skel": "RoleSpine/Role_100026"
     },
     "100027": {
@@ -428,7 +428,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100027",
-        "Avatar": "Avatar/Role_100027",
+        "Avatar": "RoleAvatar/Role_100027",
         "Skel": "RoleSpine/Role_100027"
     },
     "100028": {
@@ -444,7 +444,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100028",
-        "Avatar": "Avatar/Role_100028",
+        "Avatar": "RoleAvatar/Role_100028",
         "Skel": "RoleSpine/Role_100028"
     },
     "100029": {
@@ -460,7 +460,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100029",
-        "Avatar": "Avatar/Role_100029",
+        "Avatar": "RoleAvatar/Role_100029",
         "Skel": "RoleSpine/Role_100029/kuangfeng_shenqishilong"
     },
     "100030": {
@@ -476,7 +476,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100030",
-        "Avatar": "Avatar/Role_100030",
+        "Avatar": "RoleAvatar/Role_100030",
         "Skel": "RoleSpine/Role_100030/kuangfeng_shenqishitiane"
     },
     "100031": {
@@ -492,7 +492,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100031",
-        "Avatar": "Avatar/Role_100031",
+        "Avatar": "RoleAvatar/Role_100031",
         "Skel": "RoleSpine/Role_100031"
     },
     "100032": {
@@ -508,7 +508,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100032",
-        "Avatar": "Avatar/Role_100032",
+        "Avatar": "RoleAvatar/Role_100032",
         "Skel": "RoleSpine/Role_100032"
     },
     "100033": {
@@ -524,7 +524,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100033",
-        "Avatar": "Avatar/Role_100033",
+        "Avatar": "RoleAvatar/Role_100033",
         "Skel": "RoleSpine/Role_100033/kuangfeng_wushi"
     },
     "100034": {
@@ -540,7 +540,7 @@
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100034",
-        "Avatar": "Avatar/Role_100034",
+        "Avatar": "RoleAvatar/Role_100034",
         "Skel": "RoleSpine/Role_100034"
     },
     "100035": {
@@ -556,7 +556,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100035",
-        "Avatar": "Avatar/Role_100035",
+        "Avatar": "RoleAvatar/Role_100035",
         "Skel": "RoleSpine/Role_100035/kuangfeng_moshushi"
     },
     "100036": {
@@ -572,7 +572,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100036",
-        "Avatar": "Avatar/Role_100036",
+        "Avatar": "RoleAvatar/Role_100036",
         "Skel": "RoleSpine/Role_100036/kuangfeng_maoxianjia"
     },
     "100037": {
@@ -588,7 +588,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100037",
-        "Avatar": "Avatar/Role_100037",
+        "Avatar": "RoleAvatar/Role_100037",
         "Skel": "RoleSpine/Role_100037"
     },
     "100038": {
@@ -604,7 +604,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100038",
-        "Avatar": "Avatar/Role_100038",
+        "Avatar": "RoleAvatar/Role_100038",
         "Skel": "RoleSpine/Role_100038"
     },
     "100039": {
@@ -620,7 +620,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100039",
-        "Avatar": "Avatar/Role_100039",
+        "Avatar": "RoleAvatar/Role_100039",
         "Skel": "RoleSpine/Role_100039/conlin_moshushi"
     },
     "100040": {
@@ -636,7 +636,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100040",
-        "Avatar": "Avatar/Role_100040",
+        "Avatar": "RoleAvatar/Role_100040",
         "Skel": "RoleSpine/Role_100040"
     },
     "100041": {
@@ -652,7 +652,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100041",
-        "Avatar": "Avatar/Role_100041",
+        "Avatar": "RoleAvatar/Role_100041",
         "Skel": "RoleSpine/Role_100041"
     },
     "100042": {
@@ -668,7 +668,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100042",
-        "Avatar": "Avatar/Role_100042",
+        "Avatar": "RoleAvatar/Role_100042",
         "Skel": "RoleSpine/Role_100042"
     },
     "100043": {
@@ -684,7 +684,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100043",
-        "Avatar": "Avatar/Role_100043",
+        "Avatar": "RoleAvatar/Role_100043",
         "Skel": "RoleSpine/Role_100043/Role_100043"
     },
     "100044": {
@@ -700,7 +700,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100044",
-        "Avatar": "Avatar/Role_100044",
+        "Avatar": "RoleAvatar/Role_100044",
         "Skel": "RoleSpine/Role_100044"
     },
     "100045": {
@@ -716,7 +716,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100045",
-        "Avatar": "Avatar/Role_100045",
+        "Avatar": "RoleAvatar/Role_100045",
         "Skel": "RoleSpine/Role_100045/conlin_kaungzhanshi"
     },
     "100046": {
@@ -732,7 +732,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100046",
-        "Avatar": "Avatar/Role_100046",
+        "Avatar": "RoleAvatar/Role_100046",
         "Skel": "RoleSpine/Role_100046"
     },
     "100047": {
@@ -748,7 +748,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100047",
-        "Avatar": "Avatar/Role_100047",
+        "Avatar": "RoleAvatar/Role_100047",
         "Skel": "RoleSpine/Role_100047"
     },
     "100048": {
@@ -764,7 +764,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100048",
-        "Avatar": "Avatar/Role_100048",
+        "Avatar": "RoleAvatar/Role_100048",
         "Skel": "RoleSpine/Role_100048/dongxue_qishi"
     },
     "100049": {
@@ -780,7 +780,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100049",
-        "Avatar": "Avatar/Role_100049",
+        "Avatar": "RoleAvatar/Role_100049",
         "Skel": "RoleSpine/Role_100049/dongxue_nvhuang"
     },
     "100050": {
@@ -796,7 +796,7 @@
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100050",
-        "Avatar": "Avatar/Role_100050",
+        "Avatar": "RoleAvatar/Role_100050",
         "Skel": "RoleSpine/Role_100050"
     },
     "100051": {
@@ -812,7 +812,7 @@
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100051",
-        "Avatar": "Avatar/Role_100051",
+        "Avatar": "RoleAvatar/Role_100051",
         "Skel": "RoleSpine/Role_100051"
     },
     "100052": {
@@ -828,7 +828,7 @@
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100052",
-        "Avatar": "Avatar/Role_100052",
+        "Avatar": "RoleAvatar/Role_100052",
         "Skel": "RoleSpine/Role_100052/gaoshan_jixieshi"
     },
     "100053": {
@@ -844,7 +844,7 @@
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100053",
-        "Avatar": "Avatar/Role_100053",
+        "Avatar": "RoleAvatar/Role_100053",
         "Skel": "RoleSpine/Role_100053"
     },
     "100054": {
@@ -860,7 +860,7 @@
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100054",
-        "Avatar": "Avatar/Role_100054",
+        "Avatar": "RoleAvatar/Role_100054",
         "Skel": "RoleSpine/Role_100054/gaoshan_tiejiang"
     }
 }

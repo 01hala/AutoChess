@@ -196,7 +196,7 @@ namespace Player
 
             if (data.Contains("peakStrengthID"))
             {
-                info.PeakStrengthID = data.GetValue("peakStrengthID").AsInt32;
+                info.PeakStrengthID = data.GetValue("peakStrengthID").AsInt64;
             }
 
             return info;
