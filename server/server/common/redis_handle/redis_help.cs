@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection.Metadata;
+
 namespace Abelkhan
 {
     public class RedisHelp
@@ -51,6 +53,11 @@ namespace Abelkhan
         static public string BuildPeakStrengthCache()
         {
             return $"AutoChess:Peak:Strength";
+        }
+
+        static public string BuildPeakStrengthID()
+        {
+            return $"AutoChess:Peak:Strength:ID";
         }
 
         static public int PlayerSvrInfoCacheTimeout = 1000 * 60 * 30;
