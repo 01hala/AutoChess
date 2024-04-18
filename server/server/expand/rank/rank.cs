@@ -245,14 +245,21 @@ namespace Rank
         {
             var rsp = rank_svr_Service_Module.rsp as rank_svr_service_update_rank_item_rsp;
 
-            if (rankDict.TryGetValue(rankNmae, out var rankIns))
+            try
             {
-                var rank = rankIns.UpdateRankItem(item);
-                rsp.rsp(rank);
+                if (rankDict.TryGetValue(rankNmae, out var rankIns))
+                {
+                    var rank = rankIns.UpdateRankItem(item);
+                    rsp.rsp(rank);
+                }
+                else
+                {
+                    rsp.err();
+                }
             }
-            else
+            catch(System.Exception ex)
             {
-                rsp.err();
+                Log.Log.err("on_update_rank_item:{0}", ex);
             }
         }
 
@@ -260,14 +267,21 @@ namespace Rank
         {
             var rsp = rank_svr_Service_Module.rsp as rank_svr_service_get_rank_guid_rsp;
 
-            if (rankDict.TryGetValue(rankNmae, out var rankIns))
+            try
             {
-                var rank = rankIns.GetRankGuid(guid);
-                rsp.rsp(rank.rank);
+                if (rankDict.TryGetValue(rankNmae, out var rankIns))
+                {
+                    var rank = rankIns.GetRankGuid(guid);
+                    rsp.rsp(rank.rank);
+                }
+                else
+                {
+                    rsp.err();
+                }
             }
-            else
+            catch (System.Exception ex)
             {
-                rsp.err();
+                Log.Log.err("on_get_rank_guid:{0}", ex);
             }
         }
 
@@ -275,14 +289,21 @@ namespace Rank
         {
             var rsp = rank_Cli_Service_Module.rsp as rank_cli_service_get_rank_range_rsp;
 
-            if (rankDict.TryGetValue(rankNmae, out var rankIns))
+            try
             {
-                var rank = rankIns.GetRankRange(start, end);
-                rsp.rsp(rank);
+                if (rankDict.TryGetValue(rankNmae, out var rankIns))
+                {
+                    var rank = rankIns.GetRankRange(start, end);
+                    rsp.rsp(rank);
+                }
+                else
+                {
+                    rsp.err();
+                }
             }
-            else
+            catch (System.Exception ex)
             {
-                rsp.err();
+                Log.Log.err("on_get_rank_range:{0}", ex);
             }
         }
 
@@ -290,14 +311,21 @@ namespace Rank
         {
             var rsp = rank_Cli_Service_Module.rsp as rank_cli_service_get_rank_guid_rsp;
 
-            if (rankDict.TryGetValue(rankNmae, out var rankIns))
+            try
             {
-                var rank = rankIns.GetRankGuid(guid);
-                rsp.rsp(rank);
+                if (rankDict.TryGetValue(rankNmae, out var rankIns))
+                {
+                    var rank = rankIns.GetRankGuid(guid);
+                    rsp.rsp(rank);
+                }
+                else
+                {
+                    rsp.err();
+                }
             }
-            else
+            catch (System.Exception ex)
             {
-                rsp.err();
+                Log.Log.err("on_get_rank_guid:{0}", ex);
             }
         }
     }
