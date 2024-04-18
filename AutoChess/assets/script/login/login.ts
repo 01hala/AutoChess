@@ -232,7 +232,7 @@ export class login extends Component {
                 this._setProgress(1.0);
                 this._loading.done();
                 this.bk.node.addChild(singleton.netSingleton.battle.panelNode);
-                singleton.netSingleton.battle.battle.StartBattle();
+                singleton.netSingleton.battle.battleCentre.StartBattle();
                 event();
 
                 console.log("start_round sucess!");

@@ -1,27 +1,28 @@
 
-import { _decorator, Animation, assetManager, Button, Component, ImageAsset, Node, Sprite, SpriteFrame, Texture2D } from 'cc';
+import { _decorator, Animation, assetManager, BlockInputEvents, Button, Component, ImageAsset, Node, Sprite, SpriteFrame, Texture2D } from 'cc';
 import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('UserInfo')
 export class UserInfo extends Component 
 {
-    private closeBtn:Button;
+    private closeBtn:Node;
     private panelNode:Node;
 
 
     protected onLoad(): void 
     {
-        this.closeBtn=this.node.getChildByPath("PanelNode/Close_Btn").getComponent(Button);
+        this.closeBtn=this.node.getChildByPath("PanelNode/Close_Btn");
         this.panelNode=this.node.getChildByPath("PanelNode");
     }
 
 
     start() 
     {
-        this.closeBtn.node.on(Button.EventType.CLICK,()=>
+        this.closeBtn.on(Button.EventType.CLICK,()=>
         {
             AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
+            this.node.getComponent(BlockInputEvents).enabled=false;
             this.Close();
         },this);
     }
@@ -35,6 +36,7 @@ export class UserInfo extends Component
         try
         {
             AudioManager.Instance.PlayerOnShot("Sound/sound_home_return_feedback_01");
+            this.node.getComponent(BlockInputEvents).enabled=true;
             this.node.setSiblingIndex(98);
             this.node.active=true;
             this.ShowAvatar(_url);

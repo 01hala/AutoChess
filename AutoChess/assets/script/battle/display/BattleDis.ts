@@ -48,11 +48,11 @@ export class BattleDis
     private enemyParallelList:Promise<void>[]=[]
 
     //战斗系统类
-    public battle:Battle = null;
+    public battleCentre:Battle = null;
     
     public constructor(battle:Battle) 
     {
-        this.battle = battle;
+        this.battleCentre = battle;
         this.onEvent();
     }
 
@@ -145,41 +145,41 @@ export class BattleDis
     {
         try
         {
-            while (!this.battle.CheckEndBattle()) 
+            while (!this.battleCentre.CheckEndBattle()) 
             {
-                await this.battle.TickBattle();
+                await this.battleCentre.TickBattle();
 
                 while (this.puase) {
                     await sleep(200);
                 }
             }
 
-            await this.battle.TickBattle();
-            while (!this.battle.CheckEndBattle()) 
+            await this.battleCentre.TickBattle();
+            while (!this.battleCentre.CheckEndBattle()) 
             {
-                await this.battle.TickBattle();
+                await this.battleCentre.TickBattle();
             }
 
             let is_victory = battle_victory.tie;
-            if (this.battle.GetWinCamp() == Camp.Self) {
+            if (this.battleCentre.GetWinCamp() == Camp.Self) {
                 is_victory = battle_victory.victory;
             }
-            else if (this.battle.GetWinCamp() == Camp.Enemy) {
+            else if (this.battleCentre.GetWinCamp() == Camp.Enemy) {
                 is_victory = battle_victory.faild;
             }
 
             let settlement:boolean=false;
-            if ((is_victory == battle_victory.victory && (this.battle.victory + 1) < 10) ||
-                (is_victory == battle_victory.faild && (this.battle.faild - 1) > 0))
+            if ((is_victory == battle_victory.victory && (this.battleCentre.victory + 1) < 10) ||
+                (is_victory == battle_victory.faild && (this.battleCentre.faild - 1) > 0))
             {
-                let heath=(is_victory == battle_victory.victory) ? this.battle.faild : this.battle.faild-1;
+                let heath=(is_victory == battle_victory.victory) ? this.battleCentre.faild : this.battleCentre.faild-1;
                 settlement=true;
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath}));
             }
             else if (is_victory == battle_victory.tie) 
             {
                 settlement=true;
-                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battle.faild}));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild}));
             }
 
             if(!settlement)
@@ -211,10 +211,10 @@ export class BattleDis
         {
             let waits = [];
 
-            let selfRoles = this.battle.GetSelfTeam().GetRoles();
+            let selfRoles = this.battleCentre.GetSelfTeam().GetRoles();
             waits.push(this.selfQueue.InitRole(selfRoles));
     
-            let enemyRoles = this.battle.GetEnemyTeam().GetRoles();
+            let enemyRoles = this.battleCentre.GetEnemyTeam().GetRoles();
             waits.push(this.enemyQueue.InitRole(enemyRoles));
 
             await Promise.all(waits);
@@ -496,7 +496,7 @@ export class BattleDis
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
                     tmp = new rRole(element.index,element.id, 1,0, element.camp, element.properties,null);
-                    let targetTeam = Camp.Self == element.camp ? this.battle.GetSelfTeam() : this.battle.GetEnemyTeam();
+                    let targetTeam = Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
                     let queue = Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
                     if(!ev.isParallel) {
@@ -733,7 +733,7 @@ export class BattleDis
 
     onEvent()
     {
-        this.battle.on_event = async (evs) => 
+        this.battleCentre.on_event = async (evs) => 
         {
             try 
             {

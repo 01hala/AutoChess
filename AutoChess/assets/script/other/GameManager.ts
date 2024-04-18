@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { SendMessage } from './MessageEvent';
@@ -6,6 +6,7 @@ import { Settlement } from '../secondaryPanel/Settlement';
 import { UpStage } from '../secondaryPanel/UpStage';
 import { UserInfo } from '../secondaryPanel/UserInfo';
 import { TaskAchieve } from '../secondaryPanel/TaskAchieve';
+import { RankList } from '../secondaryPanel/RankList';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -30,6 +31,8 @@ export class GameManager extends Component
     private userInfoBoard:Node;
     //任务、成就界面
     private taskAchieveBoard:Node;
+    //排行榜
+    private rankListBoard:Node;
 
     protected onLoad()
     {
@@ -61,8 +64,9 @@ export class GameManager extends Component
             let us = BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard")
             let up = BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard");
             let ta = BundleManager.Instance.loadAssetsFromBundle("Board","TaskAchieveBoard");
+            let rk = BundleManager.Instance.loadAssetsFromBundle("Board","RankListBoard");
             //加载
-            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up,ta]);
+            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up,ta,rk]);
             this.textTipNodePre = awaitResult[0] as Prefab;
             this.typeface = awaitResult[1] as TTFFont;
 
@@ -71,6 +75,7 @@ export class GameManager extends Component
             let t_userinfo = awaitResult[4] as Prefab;
             let t_UpStageBoard = awaitResult [5] as Prefab;
             let t_taskBoard=awaitResult[6] as Prefab;
+            let t_rankListBoard=awaitResult[7] as Prefab;
     
             this.infoPanel=instantiate(t_infoPanel);
             this.infoPanel.setParent(this.node);
@@ -91,6 +96,10 @@ export class GameManager extends Component
             this.taskAchieveBoard=instantiate(t_taskBoard);
             this.taskAchieveBoard.setParent(this.node);
             this.taskAchieveBoard.active=false;
+
+            this.rankListBoard=instantiate(t_taskBoard);
+            this.rankListBoard.setParent(this.node);
+            this.rankListBoard.active=false;
         }
         catch(error)
         {
@@ -188,7 +197,7 @@ export class GameManager extends Component
             event.propagationStopped=true;
             this.userInfoBoard.active=true;
             this.userInfoBoard.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
-        })
+        },this);
         /* 消息来源
          * MainInterface.ts : 第 214 行
          * 
@@ -202,7 +211,21 @@ export class GameManager extends Component
             event.propagationStopped=true;
             this.taskAchieveBoard.active=true;
             this.taskAchieveBoard.getComponent(TaskAchieve).OpenTaskAchieveBoard();
-        })
+        },this);
+        /* 消息来源
+         * MainInterface.ts : 第 221 行
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('OpenRankListBoard',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.rankListBoard.active=true;
+            this.rankListBoard.getComponent(RankList).OpenRankListBoard(event.detail);
+        },this);
     }
 
     //显示提示信息
