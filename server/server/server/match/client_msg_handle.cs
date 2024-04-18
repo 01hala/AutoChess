@@ -153,7 +153,7 @@ namespace Match
             }
         }
 
-        private void Plan_Module_on_confirm_round_victory(battle_victory is_victory)
+        private async void Plan_Module_on_confirm_round_victory(battle_victory is_victory)
         {
             var rsp = plan_Module.rsp as plan_confirm_round_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -164,7 +164,11 @@ namespace Match
 
                 if (baseCount(_player.BattleData.round) <= countRoleList(_player.BattleData.RoleList))
                 {
-                    Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), _player.BattleData);
+                    var len = await Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), _player.BattleData);
+                    if (len > 1100)
+                    {
+                        Match._redis_handle.PopList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), 100);
+                    }
                 }
 
                 _player.BattleData.round++;
@@ -185,12 +189,12 @@ namespace Match
 
                     if (_player.BattleData.round <= 15)
                     {
-                        _player.BattleClientCaller.get_client(_player.ClientUUID).replace_peak_strength().callBack((isConfirm) =>
+                        _player.BattleClientCaller.get_client(_player.ClientUUID).replace_peak_strength().callBack(async (isConfirm) =>
                         {
                             if (isConfirm)
                             {
-                                Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleData);
-                                Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.BattleData.User.UserGuid), _player.BattleData);
+                                await Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleData);
+                                await Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.BattleData.User.UserGuid), _player.BattleData);
                             }
                         }, () =>
                         {
