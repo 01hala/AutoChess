@@ -48,7 +48,7 @@ export class gm extends Component {
     }
 
     init_gm() {
-        let selfTeam = singleton.netSingleton.battle.battle.GetSelfTeam();
+        let selfTeam = singleton.netSingleton.battle.battleCentre.GetSelfTeam();
         let role = selfTeam.GetRole(0);
         if (role) {
             this.self1ID.maxLength=20;
@@ -80,7 +80,7 @@ export class gm extends Component {
             this.self6ID.string = `${role.id}:${role.level}:${3}:${1}`;
         }
 
-        let enemyTeam = singleton.netSingleton.battle.battle.GetEnemyTeam();
+        let enemyTeam = singleton.netSingleton.battle.battleCentre.GetEnemyTeam();
         role = enemyTeam.GetRole(0);
         if (role) {
             this.target1ID.maxLength=20;

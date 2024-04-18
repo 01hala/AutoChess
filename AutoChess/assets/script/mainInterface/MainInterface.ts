@@ -47,6 +47,7 @@ export class MainInterface
     private amusementBtn:Node;
     private cardlibraryBtn:Node;
     private taskAchieveBtn:Node;
+    private rankListBtn:Node;
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -121,6 +122,7 @@ export class MainInterface
             this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList");
             this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel//UiLayer/BtnList/BtnLayout/Task_Btn");
+            this.rankListBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/RankList/Rank_Btn");
             //玩家信息
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/UserMoney");
             this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
@@ -178,7 +180,7 @@ export class MainInterface
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 this.cardLibPanel.active=true;
                 this.panelNode.active=false;
-                this.cardLibPanel.getComponent(CardLib).Open();
+                this.cardLibPanel.getComponent(CardLib).OpenCardLib();
             },this);
             //按钮条切换
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
@@ -214,7 +216,13 @@ export class MainInterface
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true));
-            })
+            },this);
+            //打开排行榜
+            this.rankListBtn.on(Button.EventType.CLICK,()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
+                this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,this.userData));
+            },this);
         }
         catch(error)
         {

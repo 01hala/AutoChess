@@ -6,6 +6,7 @@ import { Settlement } from '../secondaryPanel/Settlement';
 import { UpStage } from '../secondaryPanel/UpStage';
 import { UserInfo } from '../secondaryPanel/UserInfo';
 import { TaskAchieve } from '../secondaryPanel/TaskAchieve';
+import { RankList } from '../secondaryPanel/RankList';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -196,7 +197,7 @@ export class GameManager extends Component
             event.propagationStopped=true;
             this.userInfoBoard.active=true;
             this.userInfoBoard.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
-        })
+        },this);
         /* 消息来源
          * MainInterface.ts : 第 214 行
          * 
@@ -210,7 +211,21 @@ export class GameManager extends Component
             event.propagationStopped=true;
             this.taskAchieveBoard.active=true;
             this.taskAchieveBoard.getComponent(TaskAchieve).OpenTaskAchieveBoard();
-        })
+        },this);
+        /* 消息来源
+         * MainInterface.ts : 第 221 行
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('OpenRankListBoard',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.rankListBoard.active=true;
+            this.rankListBoard.getComponent(RankList).OpenRankListBoard(event.detail);
+        },this);
     }
 
     //显示提示信息

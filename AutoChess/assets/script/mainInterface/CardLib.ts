@@ -90,7 +90,7 @@ export class CardLib extends Component
         }
     }
 
-    public Open()
+    public OpenCardLib()
     {
         try
         {
