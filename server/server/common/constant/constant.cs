@@ -14,6 +14,8 @@ namespace Constant
 
         public static readonly string player_db_guid_rank = "rank";
 
+        public static readonly string player_rank_name_combat_power = "rank";
+
         public const long RedisMQTickTime = 33;
     }
 

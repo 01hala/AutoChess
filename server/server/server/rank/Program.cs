@@ -1,4 +1,5 @@
 ﻿using Abelkhan;
+using System.Collections.Generic;
 
 namespace RankSvr
 {
@@ -17,7 +18,7 @@ namespace RankSvr
 
             _hub.onDBProxyInit += () =>
             {
-                Rank.RankModule.Init(Constant.Constant.player_db_name, Constant.Constant.player_db_guid_rank);
+                Rank.RankModule.Init(Constant.Constant.player_db_name, Constant.Constant.player_db_guid_rank, new List<string>() { Constant.Constant.player_rank_name_combat_power });
             };
 
             Log.Log.trace("rank svr start ok");
