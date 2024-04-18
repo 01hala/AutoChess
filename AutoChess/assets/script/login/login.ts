@@ -16,6 +16,7 @@ import { ReadyData } from '../ready/ReadyData';
 import { ReadyDis } from '../ready/display/ReadyDis';
 import { MainInterface } from '../mainInterface/MainInterface';
 import { sleep } from '../other/sleep';
+import { AudioManager } from '../other/AudioManager';
 
 @ccclass('login')
 export class login extends Component {
@@ -140,6 +141,8 @@ export class login extends Component {
             this._setProgress(this._progress);
         });
 
+        AudioManager.Instance.Init();
+
         singleton.netSingleton.player.cb_player_login_non_account = () => {
             this._progress += 0.1;
             this._setProgress(this._progress);
@@ -149,7 +152,7 @@ export class login extends Component {
         };
 
         singleton.netSingleton.player.cb_player_login_sucess = async () => {
-            this._progress += 0.5;
+            this._progress += 0.3;
             this._setProgress(this._progress);
             //进入主界面
             singleton.netSingleton.mainInterface=new MainInterface();
