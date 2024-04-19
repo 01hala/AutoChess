@@ -42,6 +42,11 @@ export class AudioManager
         return this.audioSource;
     }
 
+    public Init()
+    {
+        
+    }
+
     //播放长音频（BGM等）
     public async PlaySound(sound: AudioClip | string, volume: number = 1.0)
     {

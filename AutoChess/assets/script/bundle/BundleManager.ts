@@ -142,8 +142,8 @@ export class BundleManager
                         });
                     }
                 }
-                console.log("预加载资源完成");
                 _callBack();
+                console.log("预加载资源完成");
                 resolve(null);
             }
             catch (error) {
