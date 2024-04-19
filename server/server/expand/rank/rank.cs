@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using MongoDB.Bson;
+using Service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace Rank
                 rankList.Remove(oldScore);
             }
 
-            var score = item.score << 32 | (int.MaxValue - item.guid);
+            var score = item.score << 32 | (int.MaxValue - Timerservice.Tick / 1000);
             if (score < base_score)
             {
                 return -1;
