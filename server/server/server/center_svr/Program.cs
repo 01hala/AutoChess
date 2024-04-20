@@ -36,9 +36,16 @@ namespace center_svr
 
         private static async void reset_peak_strength(System.DateTime _)
         {
-            var key = RedisHelp.BuildPeakStrengthID();
-            var peak_strength_id = await _redis_handle.GetData<long>(key);
-            await _redis_handle.SetData(key, ++peak_strength_id);
+            try
+            {
+                var key = RedisHelp.BuildPeakStrengthID();
+                var peak_strength_id = await _redis_handle.GetData<long>(key);
+                await _redis_handle.SetData(key, ++peak_strength_id);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("reset_peak_strength:{0}", ex);
+            }
         }
     }
 }
