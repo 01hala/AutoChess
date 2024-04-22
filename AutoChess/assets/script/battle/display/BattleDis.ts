@@ -27,7 +27,7 @@ export class BattleDis
 {
     //摄像机
     private cameraNode:Node;
-    private originnCameraPos:Vec3;
+    private originCameraPos:Vec3;
     //父级对象
     public father:Node;
     //顶级面板
@@ -131,15 +131,7 @@ export class BattleDis
             console.log("PutRole start");
             await this.PutRole();
             console.log("PutRole end");
-            this.father=father;
-            
-            this.cameraNode = this.panelNode.getChildByName('Camera');
-            if (!this.cameraNode) {
-                console.error('Camera node not found,shake screen failed');
-            }
-            else{
-                this.originnCameraPos = this.cameraNode.position;
-            }
+            this.father=father;      
 
             _callBack(()=>
             {
@@ -376,10 +368,17 @@ export class BattleDis
                     Camp.Enemy));
                 
                 await Promise.all(allAwait);
-                //震动部分
+                //震动部分                
+                if(null==this.cameraNode){
+                    this.cameraNode = this.panelNode.parent.getChildByName('Camera');
+                    if (!this.cameraNode) {
+                        console.error('Camera node not found,shake screen failed');
+                    }
+                    else{
+                        this.originCameraPos = this.cameraNode.getPosition();
+                    }
+                }
                 this.shakeScreen(0.5,10);
-                this.cameraNode.setPosition(this.originnCameraPos);
-
                 await this.ChangeAttEvent(evs_floating);
 
                 console.log("CheckAttackEvent end!");
@@ -402,13 +401,14 @@ export class BattleDis
         // 保存原始位置，以便震动后可以恢复
     
         // 震动效果
+        if(null==this.cameraNode) return;
         let elapsed = 0;
         const shake = () => {
             if (elapsed < duration) {
                 // 随机确定摄像机震动的新位置
                 const randomX = Math.random() * magnitude * 2 - magnitude;
                 const randomY = Math.random() * magnitude * 2 - magnitude;
-                this.cameraNode.setPosition(this.originnCameraPos.x + randomX, this.originnCameraPos.y + randomY);
+                this.cameraNode.setPosition(this.originCameraPos.x + randomX, this.originCameraPos.y + randomY);
     
                 // 更新已经过去的时间
                 elapsed += 0.05;
@@ -416,7 +416,7 @@ export class BattleDis
                 requestAnimationFrame(shake);
             } else {
                 // 震动结束，恢复摄像机的原始位置
-                this.cameraNode.setPosition(this.originnCameraPos);
+                this.cameraNode.setPosition(this.originCameraPos);
             }
         };
     
