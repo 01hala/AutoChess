@@ -1,6 +1,11 @@
 import * as client_handle from "./client_handle";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
+export enum BattleMod{
+    Battle = 1,
+    PeakStrength = 2
+}
+
 export enum Priority{
     Low = 1,
     Normal = 2,
@@ -203,6 +208,65 @@ export function protcol_to_RoleGroup(_protocol:any){
     return _struct;
 }
 
+export class BattleInfo
+{
+    public mod : BattleMod = BattleMod.Battle;
+    public isVictory : boolean = false;
+    public isStreakVictory : boolean = false;
+    public RoleList : Role[] = [];
+
+}
+
+export function BattleInfo_to_protcol(_struct:BattleInfo){
+    return _struct;
+}
+
+export function protcol_to_BattleInfo(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new BattleInfo();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "mod"){
+            _struct.mod = val as BattleMod;
+        }
+        else if (key === "isVictory"){
+            _struct.isVictory = val as boolean;
+        }
+        else if (key === "isStreakVictory"){
+            _struct.isStreakVictory = val as boolean;
+        }
+        else if (key === "RoleList"){
+            _struct.RoleList = [];
+            for(let v_ of val as any) {
+                _struct.RoleList.push(protcol_to_Role(v_));
+            }
+        }
+    }
+    return _struct;
+}
+
+export class AchievementReward
+{
+
+}
+
+export function AchievementReward_to_protcol(_struct:AchievementReward){
+    return _struct;
+}
+
+export function protcol_to_AchievementReward(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new AchievementReward();
+    for (const [key, val] of Object.entries(_protocol)) {
+    }
+    return _struct;
+}
+
 export class UserData
 {
     public User : UserInformation | null = null;
@@ -210,6 +274,10 @@ export class UserData
     public gold : number = 0;
     public diamond : number = 0;
     public score : number = 0;
+    public PeakStrengthVictory : boolean = false;
+    public Gold25 : boolean = false;
+    public battleInfo : BattleInfo[] = [];
+    public achievements : number[] = [];
     public bag : Bag | null = null;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
@@ -241,6 +309,24 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "score"){
             _struct.score = val as number;
+        }
+        else if (key === "PeakStrengthVictory"){
+            _struct.PeakStrengthVictory = val as boolean;
+        }
+        else if (key === "Gold25"){
+            _struct.Gold25 = val as boolean;
+        }
+        else if (key === "battleInfo"){
+            _struct.battleInfo = [];
+            for(let v_ of val as any) {
+                _struct.battleInfo.push(protcol_to_BattleInfo(v_));
+            }
+        }
+        else if (key === "achievements"){
+            _struct.achievements = [];
+            for(let v_ of val as any) {
+                _struct.achievements.push(v_);
+            }
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);

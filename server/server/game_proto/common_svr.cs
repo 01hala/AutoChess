@@ -8,6 +8,10 @@ namespace Abelkhan
 {
 /*this enum code is codegen by abelkhan codegen for c#*/
 
+    public enum BattleMod{
+        Battle = 1,
+        PeakStrength = 2
+    }
     public enum Priority{
         Low = 1,
         Normal = 2,
@@ -234,6 +238,80 @@ namespace Abelkhan
         }
     }
 
+    public class BattleInfo
+    {
+        public BattleMod mod;
+        public bool isVictory;
+        public bool isStreakVictory;
+        public List<Role> RoleList;
+        public static MsgPack.MessagePackObjectDictionary BattleInfo_to_protcol(BattleInfo _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("mod", (Int32)_struct.mod);
+            _protocol.Add("isVictory", _struct.isVictory);
+            _protocol.Add("isStreakVictory", _struct.isStreakVictory);
+            if (_struct.RoleList != null) {
+                var _array_RoleList = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.RoleList){
+                    _array_RoleList.Add( new MsgPack.MessagePackObject(Role.Role_to_protcol(v_)));
+                }
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
+            }
+            return _protocol;
+        }
+        public static BattleInfo protcol_to_BattleInfo(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f = new BattleInfo();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "mod"){
+                    _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.mod = (BattleMod)((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "isVictory"){
+                    _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.isVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "isStreakVictory"){
+                    _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.isStreakVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
+                    _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.RoleList = new List<Role>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.RoleList.Add(Role.protcol_to_Role(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
+            }
+            return _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f;
+        }
+    }
+
+    public class AchievementReward
+    {
+        public static MsgPack.MessagePackObjectDictionary AchievementReward_to_protcol(AchievementReward _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            return _protocol;
+        }
+        public static AchievementReward protcol_to_AchievementReward(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _structd775bff9_9118_3a98_a8ac_67991eeb0a97 = new AchievementReward();
+            foreach (var i in _protocol){
+            }
+            return _structd775bff9_9118_3a98_a8ac_67991eeb0a97;
+        }
+    }
+
     public class UserData
     {
         public UserInformation User;
@@ -241,6 +319,10 @@ namespace Abelkhan
         public Int32 gold;
         public Int32 diamond;
         public Int32 score;
+        public bool PeakStrengthVictory;
+        public bool Gold25;
+        public List<BattleInfo> battleInfo;
+        public List<Int32> achievements;
         public Bag bag;
         public List<Int32> RoleList;
         public List<RoleGroup> roleGroup;
@@ -255,6 +337,22 @@ namespace Abelkhan
             _protocol.Add("gold", _struct.gold);
             _protocol.Add("diamond", _struct.diamond);
             _protocol.Add("score", _struct.score);
+            _protocol.Add("PeakStrengthVictory", _struct.PeakStrengthVictory);
+            _protocol.Add("Gold25", _struct.Gold25);
+            if (_struct.battleInfo != null) {
+                var _array_battleInfo = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.battleInfo){
+                    _array_battleInfo.Add( new MsgPack.MessagePackObject(BattleInfo.BattleInfo_to_protcol(v_)));
+                }
+                _protocol.Add("battleInfo", new MsgPack.MessagePackObject(_array_battleInfo));
+            }
+            if (_struct.achievements != null) {
+                var _array_achievements = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.achievements){
+                    _array_achievements.Add(v_);
+                }
+                _protocol.Add("achievements", new MsgPack.MessagePackObject(_array_achievements));
+            }
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
@@ -293,6 +391,26 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "score"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.score = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "PeakStrengthVictory"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.PeakStrengthVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Gold25"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.Gold25 = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.battleInfo = new List<BattleInfo>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.battleInfo.Add(BattleInfo.protcol_to_BattleInfo(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "achievements"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.achievements = new List<Int32>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.achievements.Add(((MsgPack.MessagePackObject)v_).AsInt32());
+                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());

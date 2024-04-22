@@ -376,11 +376,36 @@ namespace Abelkhan
 
     }
 
+    public class player_battle_check_achievement_rsp : Common.Response {
+        private string _client_uuid_485acce4_315a_39a3_a37c_644d60c6fbba;
+        private UInt64 uuid_74213260_2b7a_39fc_a6ff_5f9e0f618e3a;
+        public player_battle_check_achievement_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_485acce4_315a_39a3_a37c_644d60c6fbba = client_uuid;
+            uuid_74213260_2b7a_39fc_a6ff_5f9e0f618e3a = _uuid;
+        }
+
+        public void rsp(){
+            var _argv_485acce4_315a_39a3_a37c_644d60c6fbba = new ArrayList();
+            _argv_485acce4_315a_39a3_a37c_644d60c6fbba.Add(uuid_74213260_2b7a_39fc_a6ff_5f9e0f618e3a);
+            Hub.Hub._gates.call_client(_client_uuid_485acce4_315a_39a3_a37c_644d60c6fbba, "player_battle_rsp_cb_check_achievement_rsp", _argv_485acce4_315a_39a3_a37c_644d60c6fbba);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_485acce4_315a_39a3_a37c_644d60c6fbba = new ArrayList();
+            _argv_485acce4_315a_39a3_a37c_644d60c6fbba.Add(uuid_74213260_2b7a_39fc_a6ff_5f9e0f618e3a);
+            _argv_485acce4_315a_39a3_a37c_644d60c6fbba.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_485acce4_315a_39a3_a37c_644d60c6fbba, "player_battle_rsp_cb_check_achievement_err", _argv_485acce4_315a_39a3_a37c_644d60c6fbba);
+        }
+
+    }
+
     public class player_battle_module : Common.IModule {
         public player_battle_module()
         {
             Hub.Hub._modules.add_mothed("player_battle_start_battle", start_battle);
             Hub.Hub._modules.add_mothed("player_battle_start_peak_strength", start_peak_strength);
+            Hub.Hub._modules.add_mothed("player_battle_check_achievement", check_achievement);
         }
 
         public event Action on_start_battle;
@@ -399,6 +424,17 @@ namespace Abelkhan
             rsp = new player_battle_start_peak_strength_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_start_peak_strength != null){
                 on_start_peak_strength();
+            }
+            rsp = null;
+        }
+
+        public event Action<Int32> on_check_achievement;
+        public void check_achievement(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _achievement_id = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            rsp = new player_battle_check_achievement_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_check_achievement != null){
+                on_check_achievement(_achievement_id);
             }
             rsp = null;
         }

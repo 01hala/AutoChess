@@ -746,10 +746,41 @@ export class player_battle_start_peak_strength_cb{
 
 }
 
+export class player_battle_check_achievement_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : player_battle_rsp_cb;
+
+    public event_check_achievement_handle_cb : ()=>void | null;
+    public event_check_achievement_handle_err : (err:number)=>void | null;
+    public event_check_achievement_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : player_battle_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_check_achievement_handle_cb = null;
+        this.event_check_achievement_handle_err = null;
+        this.event_check_achievement_handle_timeout = null;
+    }
+
+    callBack(_cb:()=>void, _err:(err:number)=>void)
+    {
+        this.event_check_achievement_handle_cb = _cb;
+        this.event_check_achievement_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.check_achievement_timeout(this.cb_uuid); }, tick);
+        this.event_check_achievement_handle_timeout = timeout_cb;
+    }
+
+}
+
 /*this cb code is codegen by abelkhan for ts*/
 export class player_battle_rsp_cb extends client_handle.imodule {
     public map_start_battle:Map<number, player_battle_start_battle_cb>;
     public map_start_peak_strength:Map<number, player_battle_start_peak_strength_cb>;
+    public map_check_achievement:Map<number, player_battle_check_achievement_cb>;
     constructor(modules:client_handle.modulemng){
         super();
         this.map_start_battle = new Map<number, player_battle_start_battle_cb>();
@@ -758,6 +789,9 @@ export class player_battle_rsp_cb extends client_handle.imodule {
         this.map_start_peak_strength = new Map<number, player_battle_start_peak_strength_cb>();
         modules.add_method("player_battle_rsp_cb_start_peak_strength_rsp", this.start_peak_strength_rsp.bind(this));
         modules.add_method("player_battle_rsp_cb_start_peak_strength_err", this.start_peak_strength_err.bind(this));
+        this.map_check_achievement = new Map<number, player_battle_check_achievement_cb>();
+        modules.add_method("player_battle_rsp_cb_check_achievement_rsp", this.check_achievement_rsp.bind(this));
+        modules.add_method("player_battle_rsp_cb_check_achievement_err", this.check_achievement_err.bind(this));
     }
     public start_battle_rsp(inArray:any[]){
         let uuid = inArray[0];
@@ -832,6 +866,40 @@ export class player_battle_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public check_achievement_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_485acce4_315a_39a3_a37c_644d60c6fbba:any[] = [];
+        var rsp = this.try_get_and_del_check_achievement_cb(uuid);
+        if (rsp && rsp.event_check_achievement_handle_cb) {
+            rsp.event_check_achievement_handle_cb.apply(null, _argv_485acce4_315a_39a3_a37c_644d60c6fbba);
+        }
+    }
+
+    public check_achievement_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_485acce4_315a_39a3_a37c_644d60c6fbba:any[] = [];
+        _argv_485acce4_315a_39a3_a37c_644d60c6fbba.push(inArray[1]);
+        var rsp = this.try_get_and_del_check_achievement_cb(uuid);
+        if (rsp && rsp.event_check_achievement_handle_err) {
+            rsp.event_check_achievement_handle_err.apply(null, _argv_485acce4_315a_39a3_a37c_644d60c6fbba);
+        }
+    }
+
+    public check_achievement_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_check_achievement_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_check_achievement_handle_timeout) {
+                rsp.event_check_achievement_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_check_achievement_cb(uuid : number){
+        var rsp = this.map_check_achievement.get(uuid);
+        this.map_check_achievement.delete(uuid);
+        return rsp;
+    }
+
 }
 
 let rsp_cb_player_battle_handle : player_battle_rsp_cb | null = null;
@@ -886,6 +954,19 @@ export class player_battle_hubproxy
             rsp_cb_player_battle_handle.map_start_peak_strength.set(uuid_b25d20bd_c716_573b_a301_3462f94ac7ec, cb_start_peak_strength_obj);
         }
         return cb_start_peak_strength_obj;
+    }
+
+    public check_achievement(achievement_id:number){
+        let uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31 = Math.round(this.uuid_4ffbb290_f238_38f6_b774_75ba1cccb192++);
+
+        let _argv_485acce4_315a_39a3_a37c_644d60c6fbba:any[] = [uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31];
+        _argv_485acce4_315a_39a3_a37c_644d60c6fbba.push(achievement_id);
+        this._client_handle.call_hub(this.hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_check_achievement", _argv_485acce4_315a_39a3_a37c_644d60c6fbba);
+        let cb_check_achievement_obj = new player_battle_check_achievement_cb(uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31, rsp_cb_player_battle_handle);
+        if (rsp_cb_player_battle_handle){
+            rsp_cb_player_battle_handle.map_check_achievement.set(uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31, cb_check_achievement_obj);
+        }
+        return cb_check_achievement_obj;
     }
 
 }
