@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using MongoDB.Bson;
+using Service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Rank
         internal string name;
         internal int capacity;
         internal int total_capacity;
+        internal long base_score;
         internal SortedList<long, rank_item> rankList = new();
         internal SortedDictionary<long, long> guidRank = new ();
 
@@ -62,21 +64,34 @@ namespace Rank
                 rankList.Remove(oldScore);
             }
 
-            var score = item.score << 32 | (int.MaxValue - item.guid);
+            var score = item.score << 32 | (int.MaxValue - Timerservice.Tick / 1000);
+            if (score < base_score)
+            {
+                return -1;
+            }
+
             rankList.Add(score, item);
             item.rank = rankList.IndexOfKey(score) + 1;
             guidRank[item.guid] = score;
 
-            if (rankList.Count > capacity) {
+            if (rankList.Count > total_capacity) {
                 var remove = new List<long>();
-                for (var i = capacity; i < rankList.Count; ++i)
+                var removeGuid = new List<long>();
+                for (var i = total_capacity; i < rankList.Count; ++i)
                 {
                     remove.Add(rankList.GetKeyAtIndex(i));
+                    removeGuid.Add(rankList.GetValueAtIndex(i).guid);
                 }
                 foreach (var key in remove)
                 {
                     rankList.Remove(key);
                 }
+                foreach (var guid in removeGuid)
+                {
+                    guidRank.Remove(guid);
+                }
+
+                base_score = rankList.GetKeyAtIndex(total_capacity - 1);
             }
 
             return item.rank;
@@ -86,6 +101,8 @@ namespace Rank
         {
             rankList.Clear();
             guidRank.Clear();
+
+            base_score = 0;
         }
 
         public rank_item GetRankGuid(long guid)
