@@ -26,4 +26,6 @@ module battle_client {
 	role_add_property ntf(UserBattleData battle_info);
 	add_coin ntf(int32 coin);
 	shop_summon ntf(int32 role_index, Role _role);
+	
+	replace_peak_strength req() rsp(bool confirm) err();
 }

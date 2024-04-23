@@ -24,7 +24,9 @@ namespace Abelkhan
         no_enough_card = 10,
         no_exist_role_card = 11,
         player_offline = 12,
-        exceeds_maximum_limit_role = 13
+        exceeds_maximum_limit_role = 13,
+        peak_strength_no_data = 14,
+        peak_strength_end = 15
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
 /*this caller code is codegen by abelkhan codegen for c#*/

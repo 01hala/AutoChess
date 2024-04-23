@@ -77,10 +77,107 @@ namespace Abelkhan
     }
 
 /*this caller code is codegen by abelkhan codegen for c#*/
+    public class battle_client_replace_peak_strength_cb
+    {
+        private UInt64 cb_uuid;
+        private battle_client_rsp_cb module_rsp_cb;
+
+        public battle_client_replace_peak_strength_cb(UInt64 _cb_uuid, battle_client_rsp_cb _module_rsp_cb)
+        {
+            cb_uuid = _cb_uuid;
+            module_rsp_cb = _module_rsp_cb;
+        }
+
+        public event Action<bool> on_replace_peak_strength_cb;
+        public event Action on_replace_peak_strength_err;
+        public event Action on_replace_peak_strength_timeout;
+
+        public battle_client_replace_peak_strength_cb callBack(Action<bool> cb, Action err)
+        {
+            on_replace_peak_strength_cb += cb;
+            on_replace_peak_strength_err += err;
+            return this;
+        }
+
+        public void timeout(UInt64 tick, Action timeout_cb)
+        {
+            TinyTimer.add_timer(tick, ()=>{
+                module_rsp_cb.replace_peak_strength_timeout(cb_uuid);
+            });
+            on_replace_peak_strength_timeout += timeout_cb;
+        }
+
+        public void call_cb(bool confirm)
+        {
+            if (on_replace_peak_strength_cb != null)
+            {
+                on_replace_peak_strength_cb(confirm);
+            }
+        }
+
+        public void call_err()
+        {
+            if (on_replace_peak_strength_err != null)
+            {
+                on_replace_peak_strength_err();
+            }
+        }
+
+        public void call_timeout()
+        {
+            if (on_replace_peak_strength_timeout != null)
+            {
+                on_replace_peak_strength_timeout();
+            }
+        }
+
+    }
+
 /*this cb code is codegen by abelkhan for c#*/
     public class battle_client_rsp_cb : Common.IModule {
+        public Dictionary<UInt64, battle_client_replace_peak_strength_cb> map_replace_peak_strength;
         public battle_client_rsp_cb() 
         {
+            map_replace_peak_strength = new Dictionary<UInt64, battle_client_replace_peak_strength_cb>();
+            Hub.Hub._modules.add_mothed("battle_client_rsp_cb_replace_peak_strength_rsp", replace_peak_strength_rsp);
+            Hub.Hub._modules.add_mothed("battle_client_rsp_cb_replace_peak_strength_err", replace_peak_strength_err);
+        }
+
+        public void replace_peak_strength_rsp(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _confirm = ((MsgPack.MessagePackObject)inArray[1]).AsBoolean();
+            var rsp = try_get_and_del_replace_peak_strength_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_cb(_confirm);
+            }
+        }
+
+        public void replace_peak_strength_err(IList<MsgPack.MessagePackObject> inArray){
+            var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var rsp = try_get_and_del_replace_peak_strength_cb(uuid);
+            if (rsp != null)
+            {
+                rsp.call_err();
+            }
+        }
+
+        public void replace_peak_strength_timeout(UInt64 cb_uuid){
+            var rsp = try_get_and_del_replace_peak_strength_cb(cb_uuid);
+            if (rsp != null){
+                rsp.call_timeout();
+            }
+        }
+
+        private battle_client_replace_peak_strength_cb try_get_and_del_replace_peak_strength_cb(UInt64 uuid){
+            lock(map_replace_peak_strength)
+            {
+                if (map_replace_peak_strength.TryGetValue(uuid, out battle_client_replace_peak_strength_cb rsp))
+                {
+                    map_replace_peak_strength.Remove(uuid);
+                }
+                return rsp;
+            }
         }
 
     }
@@ -202,6 +299,19 @@ namespace Abelkhan
             _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a.Add(role_index);
             _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a.Add(Role.Role_to_protcol(_role));
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_shop_summon", _argv_b209e11c_3408_34f8_94b3_a0d02a808f7a);
+        }
+
+        public battle_client_replace_peak_strength_cb replace_peak_strength(){
+            var uuid_1f0834d5_a4fc_5d7e_a21f_2c9c1447243d = (UInt64)Interlocked.Increment(ref uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124);
+
+            var _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d = new ArrayList();
+            _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d.Add(uuid_1f0834d5_a4fc_5d7e_a21f_2c9c1447243d);
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_replace_peak_strength", _argv_b6124ca7_ba56_39b8_9566_45bca78f3a8d);
+
+            var cb_replace_peak_strength_obj = new battle_client_replace_peak_strength_cb(uuid_1f0834d5_a4fc_5d7e_a21f_2c9c1447243d, rsp_cb_battle_client_handle);
+            lock(rsp_cb_battle_client_handle.map_replace_peak_strength)
+            {                rsp_cb_battle_client_handle.map_replace_peak_strength.Add(uuid_1f0834d5_a4fc_5d7e_a21f_2c9c1447243d, cb_replace_peak_strength_obj);
+            }            return cb_replace_peak_strength_obj;
         }
 
     }

@@ -444,89 +444,6 @@ namespace Abelkhan
         }
 
     }
-    public class peak_strength_get_peak_strength_formation_rsp : Common.Response {
-        private string _client_uuid_22f0b194_9ed2_3829_99ae_268b286a1a05;
-        private UInt64 uuid_91e6584f_113f_3440_bb18_f0995ce085f3;
-        public peak_strength_get_peak_strength_formation_rsp(string client_uuid, UInt64 _uuid)
-        {
-            _client_uuid_22f0b194_9ed2_3829_99ae_268b286a1a05 = client_uuid;
-            uuid_91e6584f_113f_3440_bb18_f0995ce085f3 = _uuid;
-        }
-
-        public void rsp(List<UserBattleData> self_809515b8_3e31_3feb_a08c_462fee09f6ef){
-            var _argv_22f0b194_9ed2_3829_99ae_268b286a1a05 = new ArrayList();
-            _argv_22f0b194_9ed2_3829_99ae_268b286a1a05.Add(uuid_91e6584f_113f_3440_bb18_f0995ce085f3);
-            var _array_809515b8_3e31_3feb_a08c_462fee09f6ef = new ArrayList();
-            foreach(var v_9d043920_d936_5a24_bb36_334fe3c35b20 in self_809515b8_3e31_3feb_a08c_462fee09f6ef){
-                _array_809515b8_3e31_3feb_a08c_462fee09f6ef.Add(UserBattleData.UserBattleData_to_protcol(v_9d043920_d936_5a24_bb36_334fe3c35b20));
-            }
-            _argv_22f0b194_9ed2_3829_99ae_268b286a1a05.Add(_array_809515b8_3e31_3feb_a08c_462fee09f6ef);
-            Hub.Hub._gates.call_client(_client_uuid_22f0b194_9ed2_3829_99ae_268b286a1a05, "peak_strength_rsp_cb_get_peak_strength_formation_rsp", _argv_22f0b194_9ed2_3829_99ae_268b286a1a05);
-        }
-
-        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
-            var _argv_22f0b194_9ed2_3829_99ae_268b286a1a05 = new ArrayList();
-            _argv_22f0b194_9ed2_3829_99ae_268b286a1a05.Add(uuid_91e6584f_113f_3440_bb18_f0995ce085f3);
-            _argv_22f0b194_9ed2_3829_99ae_268b286a1a05.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
-            Hub.Hub._gates.call_client(_client_uuid_22f0b194_9ed2_3829_99ae_268b286a1a05, "peak_strength_rsp_cb_get_peak_strength_formation_err", _argv_22f0b194_9ed2_3829_99ae_268b286a1a05);
-        }
-
-    }
-
-    public class peak_strength_del_peak_strength_formation_rsp : Common.Response {
-        private string _client_uuid_db7ed62a_657a_3ec6_9f6a_7d50bf13f867;
-        private UInt64 uuid_32bcc7b8_1eea_3d95_8bcd_62af7c46e94d;
-        public peak_strength_del_peak_strength_formation_rsp(string client_uuid, UInt64 _uuid)
-        {
-            _client_uuid_db7ed62a_657a_3ec6_9f6a_7d50bf13f867 = client_uuid;
-            uuid_32bcc7b8_1eea_3d95_8bcd_62af7c46e94d = _uuid;
-        }
-
-        public void rsp(List<UserBattleData> self_809515b8_3e31_3feb_a08c_462fee09f6ef){
-            var _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867 = new ArrayList();
-            _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867.Add(uuid_32bcc7b8_1eea_3d95_8bcd_62af7c46e94d);
-            var _array_809515b8_3e31_3feb_a08c_462fee09f6ef = new ArrayList();
-            foreach(var v_9d043920_d936_5a24_bb36_334fe3c35b20 in self_809515b8_3e31_3feb_a08c_462fee09f6ef){
-                _array_809515b8_3e31_3feb_a08c_462fee09f6ef.Add(UserBattleData.UserBattleData_to_protcol(v_9d043920_d936_5a24_bb36_334fe3c35b20));
-            }
-            _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867.Add(_array_809515b8_3e31_3feb_a08c_462fee09f6ef);
-            Hub.Hub._gates.call_client(_client_uuid_db7ed62a_657a_3ec6_9f6a_7d50bf13f867, "peak_strength_rsp_cb_del_peak_strength_formation_rsp", _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867);
-        }
-
-        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
-            var _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867 = new ArrayList();
-            _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867.Add(uuid_32bcc7b8_1eea_3d95_8bcd_62af7c46e94d);
-            _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
-            Hub.Hub._gates.call_client(_client_uuid_db7ed62a_657a_3ec6_9f6a_7d50bf13f867, "peak_strength_rsp_cb_del_peak_strength_formation_err", _argv_db7ed62a_657a_3ec6_9f6a_7d50bf13f867);
-        }
-
-    }
-
-    public class peak_strength_choose_peak_strength_rsp : Common.Response {
-        private string _client_uuid_47129469_d92d_37f1_8cdf_803a9920b5c6;
-        private UInt64 uuid_900ae376_5fd8_3305_9bdc_c509150f27ed;
-        public peak_strength_choose_peak_strength_rsp(string client_uuid, UInt64 _uuid)
-        {
-            _client_uuid_47129469_d92d_37f1_8cdf_803a9920b5c6 = client_uuid;
-            uuid_900ae376_5fd8_3305_9bdc_c509150f27ed = _uuid;
-        }
-
-        public void rsp(UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef){
-            var _argv_47129469_d92d_37f1_8cdf_803a9920b5c6 = new ArrayList();
-            _argv_47129469_d92d_37f1_8cdf_803a9920b5c6.Add(uuid_900ae376_5fd8_3305_9bdc_c509150f27ed);
-            _argv_47129469_d92d_37f1_8cdf_803a9920b5c6.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
-            Hub.Hub._gates.call_client(_client_uuid_47129469_d92d_37f1_8cdf_803a9920b5c6, "peak_strength_rsp_cb_choose_peak_strength_rsp", _argv_47129469_d92d_37f1_8cdf_803a9920b5c6);
-        }
-
-        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
-            var _argv_47129469_d92d_37f1_8cdf_803a9920b5c6 = new ArrayList();
-            _argv_47129469_d92d_37f1_8cdf_803a9920b5c6.Add(uuid_900ae376_5fd8_3305_9bdc_c509150f27ed);
-            _argv_47129469_d92d_37f1_8cdf_803a9920b5c6.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
-            Hub.Hub._gates.call_client(_client_uuid_47129469_d92d_37f1_8cdf_803a9920b5c6, "peak_strength_rsp_cb_choose_peak_strength_err", _argv_47129469_d92d_37f1_8cdf_803a9920b5c6);
-        }
-
-    }
-
     public class peak_strength_start_peak_strength_rsp : Common.Response {
         private string _client_uuid_604bcc66_d0b2_3376_8454_39a206b26543;
         private UInt64 uuid_469c67c5_686b_3b18_b93f_b1ae9f231dac;
@@ -579,43 +496,8 @@ namespace Abelkhan
     public class peak_strength_module : Common.IModule {
         public peak_strength_module()
         {
-            Hub.Hub._modules.add_mothed("peak_strength_get_peak_strength_formation", get_peak_strength_formation);
-            Hub.Hub._modules.add_mothed("peak_strength_del_peak_strength_formation", del_peak_strength_formation);
-            Hub.Hub._modules.add_mothed("peak_strength_choose_peak_strength", choose_peak_strength);
             Hub.Hub._modules.add_mothed("peak_strength_start_peak_strength", start_peak_strength);
             Hub.Hub._modules.add_mothed("peak_strength_confirm_peak_strength_victory", confirm_peak_strength_victory);
-        }
-
-        public event Action on_get_peak_strength_formation;
-        public void get_peak_strength_formation(IList<MsgPack.MessagePackObject> inArray){
-            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            rsp = new peak_strength_get_peak_strength_formation_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
-            if (on_get_peak_strength_formation != null){
-                on_get_peak_strength_formation();
-            }
-            rsp = null;
-        }
-
-        public event Action<Int32> on_del_peak_strength_formation;
-        public void del_peak_strength_formation(IList<MsgPack.MessagePackObject> inArray){
-            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _index = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            rsp = new peak_strength_del_peak_strength_formation_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
-            if (on_del_peak_strength_formation != null){
-                on_del_peak_strength_formation(_index);
-            }
-            rsp = null;
-        }
-
-        public event Action<Int32> on_choose_peak_strength;
-        public void choose_peak_strength(IList<MsgPack.MessagePackObject> inArray){
-            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _index = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            rsp = new peak_strength_choose_peak_strength_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
-            if (on_choose_peak_strength != null){
-                on_choose_peak_strength(_index);
-            }
-            rsp = null;
         }
 
         public event Action on_start_peak_strength;

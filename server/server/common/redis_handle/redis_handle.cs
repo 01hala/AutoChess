@@ -107,13 +107,28 @@ namespace Abelkhan
             }
         }
 
-        public void PushList<T>(string key, T data)
+        public Task<long> PushList<T>(string key, T data)
         {
             while (true)
             {
                 try
                 {
-                    database.ListLeftPushAsync(key, JsonConvert.SerializeObject(data));
+                    return database.ListLeftPushAsync(key, JsonConvert.SerializeObject(data));
+                }
+                catch (RedisTimeoutException e)
+                {
+                    Recover(e);
+                }
+            }
+        }
+
+        public void PopList(string key, long count)
+        {
+            while (true)
+            {
+                try
+                {
+                    database.ListRightPopAsync(key, count);
                     return;
                 }
                 catch (RedisTimeoutException e)

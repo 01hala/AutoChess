@@ -25,8 +25,6 @@ namespace Player
 
             _hub.set_support_take_over_svr(true);
 
-            HttpClientWrapper.Init();
-
             var _client_msg_handle = new client_msg_handle();
             var _login_msg_handle = new login_msg_handle();
             var _player_msg_handle = new player_msg_handle();

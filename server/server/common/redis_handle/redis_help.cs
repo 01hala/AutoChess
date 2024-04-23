@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection.Metadata;
+
 namespace Abelkhan
 {
     public class RedisHelp
@@ -43,11 +45,6 @@ namespace Abelkhan
             return $"AutoChess:battle:{round}";
         }
 
-        static public string BuildPlayerPeakStrengthCache(long guid)
-        {
-            return $"AutoChess:Player:Peak:Strength:{guid}";
-        }
-
         static public string BuildPlayerPeakStrengthFormationCache(long guid)
         {
             return $"AutoChess:Player:Peak:Strength:Formation:{guid}";
@@ -56,6 +53,11 @@ namespace Abelkhan
         static public string BuildPeakStrengthCache()
         {
             return $"AutoChess:Peak:Strength";
+        }
+
+        static public string BuildPeakStrengthID()
+        {
+            return $"AutoChess:Peak:Strength:ID";
         }
 
         static public int PlayerSvrInfoCacheTimeout = 1000 * 60 * 30;

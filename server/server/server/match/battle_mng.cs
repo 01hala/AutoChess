@@ -13,6 +13,10 @@ namespace Match
     {
         public long LastActiveTime = Timerservice.Tick;
 
+        public string PlayerHubName {
+            set; get;
+        }
+
         private battle_client_caller caller;
         public battle_client_caller BattleClientCaller
         {
