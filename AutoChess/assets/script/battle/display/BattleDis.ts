@@ -178,18 +178,26 @@ export class BattleDis
             {
                 let heath=(is_victory == battle_victory.victory) ? this.battleCentre.faild : this.battleCentre.faild-1;
                 settlement=true;
-                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath}));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath , isAddTime : false}));
             }
             else if (is_victory == battle_victory.tie) 
             {
                 settlement=true;
-                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild}));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild , isAddTime : false}));
             }
 
             if(!settlement)
             {
-                await sleep(4000);
-                netSingleton.game.confirm_round_victory(is_victory);
+                //await sleep(4000);
+                //netSingleton.game.confirm_round_victory(is_victory);
+                if(this.battleCentre.round<=15)
+                {
+                    this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild , isAddTime : true}));
+                }
+                else
+                {
+                    this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild , isAddTime : false}));
+                }
             }
             
         }

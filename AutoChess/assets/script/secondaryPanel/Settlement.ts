@@ -75,7 +75,7 @@ export class Settlement extends Component
         }
     }
 
-    public OpenSettlementBoard(_isVictory:battle_victory,_hpNum:number)
+    public OpenSettlementBoard(_isVictory:battle_victory,_hpNum:number,_isAddTime:boolean=false)
     {
         console.log("show settlement");
         this.node.getComponent(BlockInputEvents).enabled=true;
@@ -112,6 +112,10 @@ export class Settlement extends Component
                 this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.winRing;
                 break;
         }
+        this.midArea.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+        {
+            
+        });
     }
 
     public Exit()

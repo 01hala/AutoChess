@@ -33,6 +33,7 @@ export class Battle {
 
     public victory = 0;
     public faild = 0;
+    public round = 0;
 
     public constructor(self:common.UserBattleData, target:common.UserBattleData) {
         this.selfTeam = new team.Team(enums.Camp.Self, self, self.RoleList);
@@ -40,6 +41,7 @@ export class Battle {
 
         this.victory = self.victory;
         this.faild = self.faild;
+        this.round = self.round;
     }
 
     public GetSelfTeam() : team.Team {
