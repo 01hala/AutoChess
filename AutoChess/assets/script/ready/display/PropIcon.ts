@@ -156,16 +156,11 @@ export class PropIcon extends Component
                     this.effect = jconfig.Effect;
                     this.hpBonus = jconfig.HpBonus;
                     this.attackBonus = jconfig.AttackBonus;
-                    //this.vaule=jconfig.value;   
-                    
-                    //=========================这里不知道什么原因导致加载图片的过程中出现问题，但是又没有抛出错误，搞得后面的逻辑都没法执行
-                    //=========================暂时注释掉了！！！有时间记得修好然后去掉注释！！！！！！！！！！！！！！
-                    // let img = await loadAssets.LoadImg(jconfig.Res);
-                    // if(img)
-                    // {
-                    //     //共用同一个prefab了，名字一样的
-                    //     this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = img;
-                    // }
+                    let img = await loadAssets.LoadImg(jconfig.Res);
+                    if(img)
+                    {
+                        this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = img;
+                    }
                 }
         }
     }
@@ -188,6 +183,7 @@ export class PropIcon extends Component
                 //     singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
                 // });
                 this.OffTirrger();
+                
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //还原起始值
@@ -265,6 +261,7 @@ export class PropIcon extends Component
                 if(Date.now()-this.lastClickTime<100){
                     return;
                 }
+                
                 //计算位移坐标
                 let node: Node = event.currentTarget;
                 let pos = new Vec2();
@@ -282,6 +279,7 @@ export class PropIcon extends Component
                 this.Ontirrger();
                 //触摸到的对象
                 let node: Node = event.currentTarget;
+                console.log("人物可放置区域显示");
                 //设置ui坐标
                 this.touchStartPoint.set(event.getUILocation());
                 let x = this.touchStartPoint.x - view.getVisibleSize().width / 2 - node.getPosition().x;

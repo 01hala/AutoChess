@@ -46,6 +46,7 @@ export class RoleIcon extends Component
     public roleNode:Node;
     //各操作区域
     private roleArea:RoleArea;
+    private visiableArea:Node;
     private shopArea:ShopArea;
     //图标
     public iconMask:Node;
@@ -75,6 +76,7 @@ export class RoleIcon extends Component
             this.freezeSprite=this.node.getChildByPath("FreezeSprite");
             this.freezeSprite.active=false;
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
+            this.visiableArea=this.panel.getChildByPath("RoleArea/visiable");
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
@@ -109,6 +111,8 @@ export class RoleIcon extends Component
             await this.LoadOnConfig();
             this.freezeLock=_freeze;
             this.freezeSprite.active=_freeze;
+            this.visiableArea.active=false;
+
             this.DragEvent();
             if(!this.isBuy)
             {
@@ -136,6 +140,8 @@ export class RoleIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
                 this.OffTirrger();
+                //隐藏人物放置可视化区域
+                this.visiableArea.active=false;
                 //隐藏冻结栏
                 this.shopArea.ShowFreezeArea(false);
                 //重置值
@@ -155,6 +161,8 @@ export class RoleIcon extends Component
                     this.OffTirrger();
                     //重新注册按钮事件
                     //this.RegBtn(true);
+                    //隐藏人物放置可视化区域
+                    this.visiableArea.active=false;
                     //隐藏冻结栏
                     this.shopArea.ShowFreezeArea(false);
                     //还原起始值
@@ -251,6 +259,8 @@ export class RoleIcon extends Component
                 if(Date.now()-this.lastClickTime<100){
                     return;
                 }
+                //显示人物放置可视化区域
+                this.visiableArea.active=true;
                 //计算位移坐标
                 let node: Node = event.currentTarget;
                 let pos = new Vec2();
@@ -541,6 +551,7 @@ export class RoleIcon extends Component
     async EatFood(t:common.Role,food_id:number){
         try
         {
+            console.log("人物尝试吃食物");
             console.log("role"+t.RoleID+"eat food"+food_id);
             let foodInfo=config.FoodConfig.get(food_id);
             if(!foodInfo){
@@ -579,9 +590,10 @@ export class RoleIcon extends Component
     async Equipping(t:common.Role,equip_id:number){
         try
         {
+            console.log("人物尝试装备");
             let equipInfo=config.EquipConfig.get(equip_id);
             if(!equipInfo){
-                console.log("can not find config of food:"+equip_id);
+                console.log("can not find config of equip:"+equip_id);
                 return;
             }
             for(let effect of equipInfo.Effect){
@@ -612,7 +624,9 @@ export class RoleIcon extends Component
                         this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                 }
+                this.roleNode.getComponent(RoleDis).Equipping(equip_id);
             }
+
             this.upgradeLock=false;
         }
         catch(error)

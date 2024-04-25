@@ -65,7 +65,7 @@ export class Role {
     public skill : SkillInfo[] = []; // 一般情况只有一个技能，使用特殊食物时添加一个技能
     public fetter:common.Fetters;
     public buffer : buffer.Buffer[] = [];
-    public equip:number[];//装备id(一般只能装备一件装备)
+    public equip:number[]=[];//装备id(一般只能装备一件装备)
     private skill_is_lock : boolean = false;
 
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();

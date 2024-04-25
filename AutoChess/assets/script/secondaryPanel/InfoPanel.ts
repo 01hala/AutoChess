@@ -63,7 +63,10 @@ export class InfoPanel extends Component
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 
                 //道具名
-                let pn=config.FoodConfig.get(id);
+                let pn=null;
+                if(1000<id&&id<2000) pn=config.FoodConfig.get(id);
+                else pn=config.EquipConfig.get(id);
+                
                 this.propBoard.getChildByName("PropName").getComponent(Label).string=pn.Name;
                 //立绘
                 let img = await loadAssets.LoadImg(pn.Res);
@@ -188,6 +191,7 @@ export class InfoPanel extends Component
             //购买时的回合
             this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`<color=#ac8352>--在第${r.BuyRound}回合购买--</color>`;
             //装备图片
+            console.log("角色信息面板装备获取到的id"+r.equipID);
             if(r.equipID)
             {
                 let eq=config.EquipConfig.get(r.equipID);

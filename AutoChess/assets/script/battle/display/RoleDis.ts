@@ -502,6 +502,15 @@ export class RoleDis extends Component
             resolve(sp);
         });
     }
+    /*
+    * 添加
+    * author：Guanliu
+    * 2024/04/20
+    * 为人物添加装备
+    */
+   Equipping(equipId:number){
+        this.roleInfo.equip.push(equipId);
+   }
 /*
  * 添加
  * author：Hotaru
