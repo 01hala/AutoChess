@@ -30,9 +30,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 196
-      },
-      {
         "__id__": 198
       },
       {
@@ -40,10 +37,13 @@
       },
       {
         "__id__": 202
+      },
+      {
+        "__id__": 204
       }
     ],
     "_prefab": {
-      "__id__": 204
+      "__id__": 206
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -3292,10 +3292,13 @@
       },
       {
         "__id__": 193
+      },
+      {
+        "__id__": 195
       }
     ],
     "_prefab": {
-      "__id__": 195
+      "__id__": 197
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -4462,8 +4465,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 899.592,
-      "height": 1610.063
+      "width": 2152,
+      "height": 3708
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4489,10 +4492,10 @@
     },
     "_alignFlags": 45,
     "_target": null,
-    "_left": 0,
-    "_right": 0,
-    "_top": 0,
-    "_bottom": 0,
+    "_left": -626.204,
+    "_right": -626.204,
+    "_top": -1048.9685,
+    "_bottom": -1048.9685,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -4529,6 +4532,50 @@
     "fileId": "63DhNGXdFHhKgAu4G4kkNC"
   },
   {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 140
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 196
+    },
+    "_customMaterial": null,
+    "_srcBlendFactor": 2,
+    "_dstBlendFactor": 4,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_spriteFrame": {
+      "__uuid__": "d1c5b0bf-a41b-4242-b81f-58587d0c4182@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "_type": 0,
+    "_fillType": 0,
+    "_sizeMode": 1,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_useGrayscale": false,
+    "_atlas": null,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "d4u63Lm6pFzq5l9YmHyhiR"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -4550,7 +4597,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 197
+      "__id__": 199
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -4577,7 +4624,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 199
+      "__id__": 201
     },
     "_alignFlags": 45,
     "_target": null,
@@ -4612,7 +4659,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 201
+      "__id__": 203
     },
     "_id": ""
   },
@@ -4629,7 +4676,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 203
+      "__id__": 205
     },
     "winImg": {
       "__uuid__": "b17ff096-c1c3-4290-8b49-9c829fddc5e0@f9941",

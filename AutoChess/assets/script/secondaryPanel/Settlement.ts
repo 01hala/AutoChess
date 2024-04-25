@@ -45,7 +45,10 @@ export class Settlement extends Component
     //胜负横幅
     private banners:Node;
 
+    private addTimeBoard:Node;
+
     private isVictory:battle_victory;
+    private isAddTime:boolean;
 
     protected onLoad(): void 
     {
@@ -55,6 +58,7 @@ export class Settlement extends Component
         this.cupNum=this.node.getChildByPath("MidArea/CupNum");
         this.outCome=this.node.getChildByPath("MidArea/Outcome");
         this.banners=this.node.getChildByPath("MidArea/Banners");
+        this.addTimeBoard=this.node.getChildByPath("AddTime");
         this.Init();
     }
 
@@ -81,6 +85,7 @@ export class Settlement extends Component
         this.node.getComponent(BlockInputEvents).enabled=true;
         this.node.setSiblingIndex(100);
         this.isVictory=_isVictory;
+        this.isAddTime=_isAddTime;
         this.midArea.active=true;
         console.log(_hpNum);
         for(let i=0;i<_hpNum;i++)
@@ -114,8 +119,37 @@ export class Settlement extends Component
         }
         this.midArea.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
         {
-            
+            if(_isAddTime)
+            {
+                this.ShowAddTimeBoard();
+            }
         });
+    }
+
+    private boardLock=false;
+    private ShowAddTimeBoard()
+    {
+        if(!this.boardLock)
+        {
+            this.boardLock=true;
+            this.addTimeBoard.active=true;
+            
+            this.addTimeBoard.getChildByPath("Board/Confirm_Btn").on(Button.EventType.CLICK,()=>
+            {
+                this.node.active=false;
+                netSingleton.game.start_peak_strength();
+            },this);
+            this.addTimeBoard.getChildByPath("Board/Refuse_Btn").on(Button.EventType.CLICK,()=>
+            {
+                this.addTimeBoard.getChildByPath("Board").getComponent(Animation).play("PanelMid2Bottom");
+            },this);
+
+            this.addTimeBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
+        }
+        else
+        {
+            return;
+        }
     }
 
     public Exit()
@@ -125,8 +159,16 @@ export class Settlement extends Component
         {
             this.node.active=false;
             this.midArea.getComponent(Animation).off(Animation.EventType.FINISHED);
-            //返回准备界面代码写这
-            netSingleton.game.confirm_round_victory(this.isVictory);
+            if(this.isAddTime)
+            {
+                netSingleton.game.start_peak_strength();
+            }
+            else
+            {
+                //返回准备界面代码写这
+                netSingleton.game.confirm_round_victory(this.isVictory);
+            }
+            
         });
         this.midArea.getComponent(Animation).play("PanelDisappear");
         for(let t of this.hpGroup.children)
