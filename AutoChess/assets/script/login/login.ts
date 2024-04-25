@@ -242,6 +242,14 @@ export class login extends Component {
             
         }
 
+        singleton.netSingleton.game.cb_start_peak_strength = (_selfBattleData)=>
+        {
+            singleton.netSingleton.battle.destory();
+            singleton.netSingleton.battle=null;
+
+            singleton.netSingleton.game.battle1();
+        }
+
         this.netNode.on("connect", (e)=>{
             console.log("on net connect!");
 

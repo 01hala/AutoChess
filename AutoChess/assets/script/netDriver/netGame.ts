@@ -221,4 +221,27 @@ export class netGame {
         })
     }
 
+    //巅峰挑战
+    public cb_start_peak_strength:(_selfBattleData:common.UserBattleData)=>void;
+    public start_peak_strength()
+    {
+        return new Promise<void>((relolve, reject)=>
+        {
+            this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_peak_strength().callBack((_match_name,_self)=>
+                {
+                    this.match_name=_match_name;
+                    this.cb_start_peak_strength(_self);
+                    relolve();
+                },(_err)=>
+                {
+                    console.log("start_peak_strength err :",_err);
+                    reject();
+                }).timeout(3000,()=>
+                {
+                    console.log("start_peak_strength timeout!");
+                    reject();
+                })
+        });
+    }
+
 }

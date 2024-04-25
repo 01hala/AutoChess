@@ -172,23 +172,27 @@ export class BattleDis
                 is_victory = battle_victory.faild;
             }
 
-            let settlement:boolean=false;
-            if ((is_victory == battle_victory.victory && (this.battleCentre.victory + 1) < 10) ||
-                (is_victory == battle_victory.faild && (this.battleCentre.faild - 1) > 0))
+            let addTime=false;
+            let settlement=false;
+            if(this.battleCentre.round<=15 && 10 == this.battleCentre.victory)
+            {
+                addTime=true;
+            }
+            if (is_victory == battle_victory.victory || (is_victory == battle_victory.faild && (this.battleCentre.faild - 1) > 0))
             {
                 let heath=(is_victory == battle_victory.victory) ? this.battleCentre.faild : this.battleCentre.faild-1;
                 settlement=true;
-                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath}));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath , isAddTime : addTime}));
             }
             else if (is_victory == battle_victory.tie) 
             {
                 settlement=true;
-                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild}));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild , isAddTime : addTime}));
             }
 
             if(!settlement)
             {
-                await sleep(4000);
+                await sleep(500);
                 netSingleton.game.confirm_round_victory(is_victory);
             }
             

@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { SendMessage } from './MessageEvent';
@@ -8,6 +8,7 @@ import { UserInfo } from '../secondaryPanel/UserInfo';
 import { TaskAchieve } from '../secondaryPanel/TaskAchieve';
 import { RankList } from '../secondaryPanel/RankList';
 import { AudioManager } from './AudioManager';
+import { Loading } from '../loading/load';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -168,7 +169,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.settlementBoard.active=true;
-            this.settlementBoard.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome , event.detail.hpNum);
+            this.settlementBoard.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome , event.detail.hpNum , event.detail.isAddTime);
         },this);
 
         /* 消息来源
