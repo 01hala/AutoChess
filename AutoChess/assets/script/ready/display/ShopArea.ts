@@ -213,6 +213,15 @@ export class ShopArea extends Component
 
     async FreezeEntity(_shop_index:common.ShopIndex,_obj:Node , _isFreeze:boolean)
     {
+        if(_isFreeze)
+        {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_charfreeze_01");
+        }
+        else
+        {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_chardisfreeze_01");
+        }
+        
         if(common.ShopIndex.Prop==_shop_index)
         {
             for(let i=0;i<this.shopProps.length;i++)

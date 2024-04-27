@@ -238,6 +238,7 @@ export class RoleIcon extends Component
                
             }, this);
     //拖拽中
+            let drag=false;
             this.myTouch.on(Input.EventType.TOUCH_MOVE, (event: EventTouch) => 
             {
                 //关闭按钮事件
@@ -247,9 +248,18 @@ export class RoleIcon extends Component
                 {
                     this.shopArea.ShowFreezeArea(true);
                 }
+                
                 //前0.1s判断是不是点击事件，不进行拖拽行为
                 if(Date.now()-this.lastClickTime<100){
                     return;
+                }
+                else
+                {
+                    if(!drag)
+                    {
+                        AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
+                        drag=true;
+                    }
                 }
                 //计算位移坐标
                 let node: Node = event.currentTarget;
@@ -266,7 +276,6 @@ export class RoleIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
                 this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象

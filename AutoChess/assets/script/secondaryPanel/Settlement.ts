@@ -69,6 +69,7 @@ export class Settlement extends Component
             console.log("exitboard!");
             this.Exit();
         });
+        this.addTimeBoard.active=false;
     }
     
     private Init()
