@@ -15,6 +15,7 @@ import { login } from '../../login/login';
 import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
+import { sleep } from '../../other/sleep';
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -290,6 +291,7 @@ export class ReadyDis
     {
         try
         {
+            await sleep(10); //延后一帧刷新richtext
             this.coinText.string=""+_battle_info.coin;
             this.heathText.string=""+_battle_info.faild;
             this.roundText.string=""+_battle_info.round;
