@@ -12,6 +12,7 @@
 #include <vector>
 #include <queue>
 #include <set>
+#include <unordered_set>
 #include <unordered_map>
 
 #include <crossguid/guid.hpp>
@@ -38,7 +39,7 @@ public:
 	std::string _cuuid;
 
 	std::mutex _conn_hubproxys_mutex;
-	std::set<hubproxy*> conn_hubproxys;
+	std::unordered_set<hubproxy*> conn_hubproxys;
 
 	std::shared_ptr<abelkhan::Ichannel> _ch;
 	int index = 0;
