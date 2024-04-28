@@ -8,42 +8,24 @@ namespace Service
 {
     public class Mongodbproxy
 	{
-        private readonly Func<MongoClient> createMongocLient;
-        private readonly ConcurrentQueue<MongoClient> client_pool = new();
-
-		public Mongodbproxy(String ip, short port)
+        private readonly MongoClient _client;
+	
+        public Mongodbproxy(String ip, short port)
 		{
-            createMongocLient = ()=>
-            {
-                var setting = new MongoClientSettings();
-                setting.Server = new MongoServerAddress(ip, port);
-                return new MongoClient(setting);
-            };
+            var setting = new MongoClientSettings();
+            setting.Server = new MongoServerAddress(ip, port);
+            _client = new MongoClient(setting);
         }
 
         public Mongodbproxy(String url)
         {
-            createMongocLient = () =>
-            {
-                var mongo_url = new MongoUrl(url);
-                return new MongoClient(mongo_url);
-            };
+            var mongo_url = new MongoUrl(url);
+            _client = new MongoClient(mongo_url);
         }
 
         private MongoClient getMongoCLient()
         {
-            MongoClient tmp;
-            if (client_pool.TryDequeue(out tmp))
-            {
-                return tmp;
-            }
-
-            return createMongocLient();
-        }
-
-        private void releaseMongoClient(MongoClient client)
-        {
-            client_pool.Enqueue(client);
+            return _client;
         }
 
         public void create_index(string db, string collection, string key, bool is_unique)
@@ -65,10 +47,6 @@ namespace Service
             catch(System.Exception e)
             {
                 Log.Log.err("create_index faild, {0}", e.Message);
-            }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
             }
         }
 
@@ -94,10 +72,6 @@ namespace Service
             {
                 Log.Log.err("check_int_guid db: {0}, collection: {1}, inside_guid: {2}, faild: {3}", db, collection, _guid, e);
             }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
-            }
         }
 
         public async Task<bool> save(string db, string collection, byte[] bson_data) 
@@ -115,10 +89,6 @@ namespace Service
             {
                 Log.Log.err("save data faild, {0}", e.Message);
                 return false;
-            }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
             }
 
             return true;
@@ -145,10 +115,6 @@ namespace Service
             {
                 Log.Log.err("update data faild, {0}", e.Message);
                 return false;
-            }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
             }
 
             return true;
@@ -182,10 +148,7 @@ namespace Service
             {
                 Log.Log.err("find_and_modify data faild, {0}", e.Message);
             }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
-            }
+
             return null;
         }
 
@@ -225,10 +188,6 @@ namespace Service
             {
                 Log.Log.err("find faild, {0}", e.Message);
             }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
-            }
 
             return null;
 		}
@@ -251,10 +210,6 @@ namespace Service
                 Log.Log.err("count faild, {0}", e.Message);
                 return 0;
             }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
-            }
 
             return (int)c;
         }
@@ -274,10 +229,6 @@ namespace Service
             {
                 Log.Log.err("remove faild, {0}", e.Message);
                 return false;
-            }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
             }
 
             return true;
@@ -302,10 +253,6 @@ namespace Service
             {
                 Log.Log.err("get_guid data db: {0}, collection: {1}, guid_key: {2} faild, {3}", db, collection, "inside_guid", e);
                 return -1;
-            }
-            finally
-            {
-                releaseMongoClient(_mongoclient);
             }
         }
     }
