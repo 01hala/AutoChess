@@ -190,9 +190,8 @@ public:
 			return nullptr;
 		}
 
-		auto client_proxy = &client_proxy_pool[index];
-		client_proxy->init(cuuid, ch, index, _cli_mgr);
-		auto _client = std::shared_ptr<clientproxy>(client_proxy, std::bind(&clientmanager::recycle_client_proxy, _cli_mgr, std::placeholders::_1));
+		client_proxy_pool[index].init(cuuid, ch, index, _cli_mgr);
+		auto _client = std::shared_ptr<clientproxy>(&client_proxy_pool[index], std::bind(&clientmanager::recycle_client_proxy, _cli_mgr, std::placeholders::_1));
 
 		client_map.insert(std::make_pair(cuuid, _client));
 		client_uuid_map.insert(std::make_pair(ch, _client));
