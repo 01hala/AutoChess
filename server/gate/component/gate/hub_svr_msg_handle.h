@@ -105,8 +105,7 @@ public:
 	}
 
 	void forward_hub_call_group_client(std::vector<std::string> cuuids, std::vector<uint8_t> rpc_argv) {
-		auto ch = _hub_call_gate_module->current_ch;
-		auto hub_proxy = _hubsvrmanager->get_hub(ch);
+		auto hub_proxy = _hubsvrmanager->get_hub(_hub_call_gate_module->current_ch);
 
 		std::vector<std::shared_ptr<clientproxy> > crypt_clients;
 		std::vector<std::shared_ptr<clientproxy> > clients;
@@ -170,8 +169,7 @@ public:
 	}
 
 	void forward_hub_call_global_client(std::vector<uint8_t> rpc_argv) {
-		auto ch = _hub_call_gate_module->current_ch;
-		auto hub_proxy = _hubsvrmanager->get_hub(ch);
+		auto hub_proxy = _hubsvrmanager->get_hub(_hub_call_gate_module->current_ch);
 
 		std::vector<std::shared_ptr<clientproxy> > crypt_chs;
 		std::vector<std::shared_ptr<clientproxy> > chs;
