@@ -174,24 +174,23 @@ public:
 		return -1;
 	}
 
-	static void recycle_client_proxy(clientmanager* _cli_mgr, clientproxy * _proxy) {
+	void recycle_client_proxy(clientproxy * _proxy) {
 		_proxy->_ch = nullptr;
 		_proxy->_cli_mgr = nullptr;
 
-		_cli_mgr->client_proxy_recycle_pool.push(_proxy->index);
+		client_proxy_recycle_pool.push(_proxy->index);
 	}
 
 	std::shared_ptr<clientproxy> reg_client(std::shared_ptr<abelkhan::Ichannel> ch) {
 		auto cuuid = xg::newGuid().str();
-		auto _cli_mgr = this;
 
 		auto index = pop_client_proxy_from_pool();
 		if (index < 0) {
 			return nullptr;
 		}
 
-		client_proxy_pool[index].init(cuuid, ch, index, _cli_mgr);
-		auto _client = std::shared_ptr<clientproxy>(&client_proxy_pool[index], std::bind(&clientmanager::recycle_client_proxy, _cli_mgr, std::placeholders::_1));
+		client_proxy_pool[index].init(cuuid, ch, index, this);
+		auto _client = std::shared_ptr<clientproxy>(&client_proxy_pool[index], std::bind(&clientmanager::recycle_client_proxy, this, std::placeholders::_1));
 
 		client_uuid_map.insert(std::make_pair(cuuid, _client));
 		client_map.insert(std::make_pair(ch, _client));
