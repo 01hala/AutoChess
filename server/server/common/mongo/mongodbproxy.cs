@@ -55,8 +55,10 @@ namespace Service
             try
             {
                 var builder = new IndexKeysDefinitionBuilder<MongoDB.Bson.BsonDocument>();
-                var opt = new CreateIndexOptions();
-                opt.Unique = is_unique;
+                var opt = new CreateIndexOptions
+                {
+                    Unique = is_unique
+                };
                 var indexModel = new CreateIndexModel<MongoDB.Bson.BsonDocument>(builder.Ascending(key), opt);
                 _collection.Indexes.CreateOne(indexModel);
             }
