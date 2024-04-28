@@ -169,32 +169,32 @@ export class RoleDis extends Component
         try 
         {
             this.tAttack = tween(this.node)
-                .to(0.4, { position: readyLocation })
+                .to(0.15, { position: readyLocation })
                 //这里做出蓄力效果
-                .delay(0.25)
-                .to(0.1,{position:new Vec3(readyLocation.x+15,readyLocation.y,readyLocation.z)})
-                .to(0.1,{position:new Vec3(readyLocation.x-15,readyLocation.y,readyLocation.z)})
-                .to(0.1,{position:new Vec3(readyLocation.x,readyLocation.y+15,readyLocation.z)})
-                .to(0.1,{position:new Vec3(readyLocation.x,readyLocation.y-15,readyLocation.z)}) 
+                .delay(0.1)
+                .to(0.05,{position:new Vec3(readyLocation.x+15,readyLocation.y,readyLocation.z)})
+                .to(0.05,{position:new Vec3(readyLocation.x-15,readyLocation.y,readyLocation.z)})
+                .to(0.05,{position:new Vec3(readyLocation.x,readyLocation.y+15,readyLocation.z)})
+                .to(0.05,{position:new Vec3(readyLocation.x,readyLocation.y-15,readyLocation.z)}) 
                 //上面是蓄力效果
-                .to(0.1, { position: battleLocation })
+                .to(0.05, { position: battleLocation })
                 .call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
                     }
                 })
-                .delay(0.15).call(() => {
+                .delay(0.1).call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
                 })
-                .to(0.2, { position: readyLocation })
+                .to(0.1, { position: readyLocation })
                 .call(async () => {
                     await this.changeAtt();
                 })
                 .start();
 
-            return this.delay(1400, () => 
+            return this.delay(700, () => 
             {
                 if (this.tAttack) {
                     this.tAttack.stop();
