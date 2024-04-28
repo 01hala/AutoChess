@@ -228,8 +228,7 @@ public:
 		omp_set_nested(1);
 #pragma omp parallel for
 		for (int index = 0; index < wait_send_cli.size(); ++index) {
-			auto client_proxy = &client_proxy_pool[index];
-			client_proxy->done_send();
+			client_proxy_pool[index].done_send();
 		}
 		wait_send_cli.clear();
 	}
