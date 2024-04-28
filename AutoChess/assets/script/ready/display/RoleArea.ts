@@ -3,6 +3,7 @@ import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
 import * as common from '../../serverSDK/common';
 import { BundleManager } from '../../bundle/BundleManager';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleArea')
@@ -99,6 +100,7 @@ export class RoleArea extends Component
 
     async SaleRole(index:number)
     {
+        AudioManager.Instance.PlayerOnShot("Sound/sound_charsolded_01");
         console.log("SaleRole index:" + index);
         singleton.netSingleton.ready.readyData.Sale(index);
         this.rolesNode[index]=null;

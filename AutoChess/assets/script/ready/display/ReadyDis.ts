@@ -15,6 +15,7 @@ import { login } from '../../login/login';
 import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
+import { sleep } from '../../other/sleep';
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -290,10 +291,7 @@ export class ReadyDis
     {
         try
         {
-            this.coinText.string=""+_battle_info.coin;
-            this.heathText.string=""+_battle_info.faild;
-            this.roundText.string=""+_battle_info.round;
-            this.trophyText.string=""+_battle_info.victory;
+            this.UpdateText(_battle_info);
             console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
             for(let i=0;i<6;i++)
             {
@@ -320,6 +318,19 @@ export class ReadyDis
         {
             console.error("ReadyDis 里的 UpdatePlayerInfo 错误 err:",error);
         }
+    }
+
+    private UpdateText(_battle_info:common.UserBattleData):Promise<void>
+    {
+        return new Promise(async (relolve)=>
+        {
+            await sleep(10); //延后一帧刷新richtext
+            this.coinText.string=""+_battle_info.coin;
+            this.heathText.string=""+_battle_info.faild;
+            this.roundText.string=""+_battle_info.round;
+            this.trophyText.string=""+_battle_info.victory;
+            relolve();
+        });
     }
 
     private LoadFetterImg(_address:string):Promise<SpriteFrame>
