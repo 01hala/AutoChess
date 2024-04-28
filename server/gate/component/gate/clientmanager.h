@@ -140,7 +140,7 @@ public:
 	void heartbeat_client(int64_t ticktime) {
 		std::vector<std::shared_ptr<clientproxy> > remove_client;
 		std::vector<std::shared_ptr<clientproxy> > exception_client;
-		for (auto item : client_map) {
+		for (auto item : client_uuid_map) {
 			auto proxy = item.second;
 			if (proxy->_timetmp > 0 && (proxy->_timetmp + 10 * 1000) < ticktime) {
 				remove_client.push_back(proxy);
@@ -193,8 +193,8 @@ public:
 		client_proxy_pool[index].init(cuuid, ch, index, _cli_mgr);
 		auto _client = std::shared_ptr<clientproxy>(&client_proxy_pool[index], std::bind(&clientmanager::recycle_client_proxy, _cli_mgr, std::placeholders::_1));
 
-		client_map.insert(std::make_pair(cuuid, _client));
-		client_uuid_map.insert(std::make_pair(ch, _client));
+		client_uuid_map.insert(std::make_pair(cuuid, _client));
+		client_map.insert(std::make_pair(ch, _client));
 
 		_client->_timetmp = 0;
 
@@ -202,20 +202,20 @@ public:
 	}
 
 	void unreg_client(std::shared_ptr<abelkhan::Ichannel> _ch){
-		if (client_uuid_map.find(_ch) == client_uuid_map.end()){
+		if (client_map.find(_ch) == client_map.end()){
 			return;
 		}
 
-		auto _client = client_uuid_map[_ch];
+		auto _client = client_map[_ch];
 		spdlog::trace("unreg_client:{0}", _client->_cuuid);
 
-		if (client_map.find(_client->_cuuid) != client_map.end())
+		if (client_uuid_map.find(_client->_cuuid) != client_uuid_map.end())
 		{
-			client_map.erase(_client->_cuuid);
+			client_uuid_map.erase(_client->_cuuid);
 		}
-		if (client_uuid_map.find(_ch) != client_uuid_map.end())
+		if (client_map.find(_ch) != client_map.end())
 		{
-			client_uuid_map.erase(_ch);
+			client_map.erase(_ch);
 		}
 	}
 
@@ -233,38 +233,38 @@ public:
 	}
 
 	bool has_client(std::shared_ptr<abelkhan::Ichannel> ch) {
-		return client_uuid_map.find(ch) != client_uuid_map.end();
+		return client_map.find(ch) != client_map.end();
 	}
 
 	bool has_client(std::string uuid) {
-		return client_map.find(uuid) != client_map.end();
+		return client_uuid_map.find(uuid) != client_uuid_map.end();
 	} 
 
 	std::shared_ptr<clientproxy> get_client(std::shared_ptr<abelkhan::Ichannel> ch) {
-		auto it = client_uuid_map.find(ch);
-		if (it != client_uuid_map.end()) {
-			return it->second;
-		}
-		return nullptr;
-	}
-
-	std::shared_ptr<clientproxy> get_client(std::string cuuid) {
-		auto it = client_map.find(cuuid);
+		auto it = client_map.find(ch);
 		if (it != client_map.end()) {
 			return it->second;
 		}
 		return nullptr;
 	}
 
+	std::shared_ptr<clientproxy> get_client(std::string cuuid) {
+		auto it = client_uuid_map.find(cuuid);
+		if (it != client_uuid_map.end()) {
+			return it->second;
+		}
+		return nullptr;
+	}
+
 	void for_each_client(std::function<void(std::string, std::shared_ptr<clientproxy>)> fn) {
-		for (auto client : client_map){
+		for (auto client : client_uuid_map){
 			fn(client.first, client.second);
 		}
 	}
 
 private:
-	std::unordered_map<std::string, std::shared_ptr<clientproxy> > client_map;
-	std::unordered_map<std::shared_ptr<abelkhan::Ichannel>, std::shared_ptr<clientproxy> > client_uuid_map;
+	std::unordered_map<std::string, std::shared_ptr<clientproxy> > client_uuid_map;
+	std::unordered_map<std::shared_ptr<abelkhan::Ichannel>, std::shared_ptr<clientproxy> > client_map;
 
 	std::vector<clientproxy> client_proxy_pool;
 	std::priority_queue<int, std::vector<int>, std::greater<int> > client_proxy_recycle_pool;
