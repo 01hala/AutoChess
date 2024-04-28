@@ -372,6 +372,8 @@ export class BattleDis
                     Camp.Enemy));
                 
                 await Promise.all(allAwait);
+                allAwait=[];
+
                 //震动部分                
                 if(null==this.cameraNode){
                     this.cameraNode = this.panelNode.parent.getChildByName('Camera');
@@ -384,6 +386,15 @@ export class BattleDis
                 }
                 this.shakeScreen(0.5,10);
                 await this.ChangeAttEvent(evs_floating);
+                //角色回到准备战斗位置，手动调用，使得角色在执行到这里、回到原位之前的部分就执行受伤效果展示，即时性更强
+                // {
+                //     allAwait.push(selfRoleNodeRoleDis.ResetPos(
+                //     this.selfQueue.readyLocation.position));
+
+                //     allAwait.push(enemyRoleNodeRoleDis.ResetPos(
+                //     this.enemyQueue.readyLocation.position));
+                // }
+                // await Promise.all(allAwait);
 
                 console.log("CheckAttackEvent end!");
             }

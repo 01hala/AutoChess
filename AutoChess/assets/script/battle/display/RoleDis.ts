@@ -53,7 +53,8 @@ export class RoleDis extends Component
     private levelSprite: Node;
     //增益提示
     private intensifierText: Node;
-    private behurtedText:Node;
+    private behurtedTextEffect:Node;
+    private beHurtedText:Node;
     //受伤效果
     private bandage: Node;
     private hurtedSpine:Node;
@@ -77,12 +78,13 @@ export class RoleDis extends Component
             this.levelSprite = this.node.getChildByName("LevelSprite");
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
-            this.behurtedText=this.node.getChildByName("BeHurtedText");
+            this.behurtedTextEffect=this.node.getChildByName("BeHertedTextEffect");
+            this.beHurtedText=this.behurtedTextEffect.getChildByName("BeHurtedText");
             this.hurtedSpine=this.node.getChildByPath("BeHurtedSpine");
 
             this.bandage.active = false;
             this.intensifierText.active = false;
-            this.behurtedText.active=false;
+            this.behurtedTextEffect.active=false;
             this.hurtedSpine.active=false;
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
@@ -188,18 +190,19 @@ export class RoleDis extends Component
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
                 })
-                .to(0.1, { position: readyLocation })
                 .call(async () => {
                     await this.changeAtt();
+                    this.ResetPos(readyLocation);
                 })
+                // .to(0.1, { position: readyLocation })
                 .start();
 
-            return this.delay(700, () => 
+            return this.delay(450, () => 
             {
-                if (this.tAttack) {
-                    this.tAttack.stop();
-                    this.tAttack = null;
-                }
+                // if (this.tAttack) {
+                //     this.tAttack.stop();
+                //     this.tAttack = null;
+                // }
             });
         }
 
@@ -207,6 +210,19 @@ export class RoleDis extends Component
         {
             console.error("RoleDis 下的 Attack 错误 err:" + err);
         }
+    }
+
+    //异步执行将对撞角色归位，防止阻碍到后续判断
+    async ResetPos(readyLocation: Vec3){
+        this.tAttack = tween(this.node)
+        .to(0.1, { position: readyLocation }).start();
+        return this.delay(100, () => 
+        {
+            if (this.tAttack) {
+                this.tAttack.stop();
+                this.tAttack = null;
+            }
+        });
     }
 
     async changeAtt() 
@@ -241,18 +257,18 @@ export class RoleDis extends Component
             console.error("RoleDis 下的 changeAtt 错误 err:" + err);
         }
 
-        return this.delay(300, () => { });
+        return this.delay(100, () => { });
     }
 
     async BeHurted(_value:number)
     {
         try
         {
-            let hurtedTextAnim: Animation=this.behurtedText.getComponent(Animation);
+            let hurtedTextAnim: Animation=this.behurtedTextEffect.getComponent(Animation);
             hurtedTextAnim.on(Animation.EventType.FINISHED, () => 
             {
                 hurtedTextAnim.stop();
-                this.behurtedText.active = false;
+                this.behurtedTextEffect.active = false;
                 hurtedTextAnim.resume();
             }, this);
             let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
@@ -261,9 +277,9 @@ export class RoleDis extends Component
             {
                 hurtedTextAnim.resume();
                 hitAnim.resume();
-                this.behurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + _value + "</outline></color>";
-                this.behurtedText.getComponent(RichText).font = this.typeface;
-                this.behurtedText.active=true;
+                this.beHurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + _value + "</outline></color>";
+                this.beHurtedText.getComponent(RichText).font = this.typeface;
+                this.behurtedTextEffect.active=true;
                 this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
                 this.hurtedSpine.active=true;
                 hurtedTextAnim.play();
@@ -435,19 +451,21 @@ export class RoleDis extends Component
             let offset=-1000;
             if(Camp.Self!=this.roleInfo.selfCamp) offset=1000;
             let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
-            tween(this.node).call(()=>
+            tween(this.node)
+            .call(()=>
             {
-                hitAnim.resume();
-                this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
-                this.hurtedSpine.active=true;
-                hitAnim.play();
+                // hitAnim.resume();
+                // this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
+                // this.hurtedSpine.active=true;
+                // hitAnim.play();
                 this.node.getChildByName("Sprite").getComponent(sp.Skeleton).color=color(110,110,110,255);
-            }).delay(0.2).call(()=>
-            {
-                this.hurtedSpine.active=false;
                 this.RoleRotate();
-            })         
-            //.by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y+500)},{easing: 'quintIn'})
+            })
+            // .delay(0.2).call(()=>
+            // {
+            //     this.hurtedSpine.active=false; 
+            // })         
+            .by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y+500)},{easing: 'quintIn'})
             .to(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y+500)})
             .delay(0.2).call(() => {
                 this.isDead=true;
