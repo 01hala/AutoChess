@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, BlockInputEvents, Camera, Canvas, Component, instantiate, Node, Prefab, tween, Tween, UITransform, Vec3, view, Widget } from 'cc';
+import { _decorator, Animation, BlockInputEvents, Camera, Canvas, Component, instantiate, Node, Prefab, tween, Tween, UITransform, Vec3, view, Widget } from 'cc';
 import { ShopIndex, ShopProp, ShopRole } from '../../serverSDK/common';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
@@ -199,15 +199,22 @@ export class ShopArea extends Component
         {
             this.freezeArea.active=true;
             this.freezeArea.getComponent(BlockInputEvents).enabled=true;
-            tween(this.freezeArea).to(0.2,{position:new Vec3(0,170,0)}).start();
+            //tween(this.freezeArea).to(0.2,{position:new Vec3(0,170,0)}).start();
+            this.freezeArea.getComponent(Animation).play("FreezeAreaUp");
         }
         else
         {
             this.freezeArea.getComponent(BlockInputEvents).enabled=false;
-            tween(this.freezeArea).to(0.1,{position:new Vec3(0,0,0)}).call(()=>
+            // tween(this.freezeArea).to(0.1, { position: new Vec3(0, 0, 0) }).call(() =>
+            // {
+            //     this.freezeArea.active = false;
+            // }).start();
+            this.freezeArea.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
-                this.freezeArea.active=false;
-            }).start();
+                this.freezeArea.active = false;
+                this.freezeArea.getComponent(Animation).off(Animation.EventType.FINISHED);
+            })
+            this.freezeArea.getComponent(Animation).play("FreezeAreaDown");
         }
     }
 

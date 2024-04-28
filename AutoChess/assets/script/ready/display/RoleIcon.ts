@@ -136,6 +136,8 @@ export class RoleIcon extends Component
             //俩临时变量，用来记录拖拽前的位置信息
             let beforeIndex;
             let berforeTarget;
+            //拖拽锁
+            let drag=false;
     //拖拽取消
             this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
@@ -147,26 +149,29 @@ export class RoleIcon extends Component
                 //重置值
                 this.touchStartPoint = new Vec2(0, 0);
                 this.Adsorption();
+                //解除拖拽锁
+                drag=false;
             }, this);
     //拖拽结束
             this.myTouch.on(Input.EventType.TOUCH_END, async () => 
             {
                 try
                 {
-                    //手机上按钮事件无法正常工作，此处采用检测拖拽开始和取消的时间间隔，小于0.5s视为点击事件
-                    if (Date.now() - this.lastClickTime < 100) {
-                        console.log("Players click on role icon");
-                        this.ClickBtn();
-                    }
                     this.OffTirrger();
-                    //重新注册按钮事件
-                    //this.RegBtn(true);
                     //隐藏人物放置可视化区域
                     this.visiableArea.active=false;
                     //隐藏冻结栏
                     this.shopArea.ShowFreezeArea(false);
                     //还原起始值
                     this.touchStartPoint = new Vec2(0, 0);
+                    //手机上按钮事件无法正常工作，此处采用检测拖拽开始和取消的时间间隔，小于0.5s视为点击事件
+                    if (Date.now() - this.lastClickTime < 100) {
+                        console.log("Players click on role icon");
+                        this.ClickBtn();
+                        return;
+                    }
+                    //重新注册按钮事件
+                    //this.RegBtn(true);
                     //移动角色且判断是否出售
                     if (!this.isSale) {
                         if (this.isBuy) {
@@ -237,6 +242,8 @@ export class RoleIcon extends Component
                     if (!this.isMerge || !this.isBuy) {
                         this.Adsorption();
                     }
+
+                    drag=false;
                 }
                 catch(error)
                 {
@@ -251,13 +258,22 @@ export class RoleIcon extends Component
                 //关闭按钮事件
                 //this.RegBtn(false);
                 //显示冻结栏
-                if (!this.isBuy) 
-                {
-                    this.shopArea.ShowFreezeArea(true);
-                }
+                
                 //前0.1s判断是不是点击事件，不进行拖拽行为
                 if(Date.now()-this.lastClickTime<100){
                     return;
+                }
+                else
+                {
+                    if(!drag)   //只触发一次
+                    {
+                        AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
+                        if (!this.isBuy) 
+                        {
+                            this.shopArea.ShowFreezeArea(true);
+                        }
+                        drag=true;
+                    }
                 }
                 //显示人物放置可视化区域
                 this.visiableArea.active=true;
@@ -276,7 +292,6 @@ export class RoleIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
                 this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象
