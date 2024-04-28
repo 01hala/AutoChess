@@ -216,7 +216,7 @@ namespace DBProxy
             return tick;
         }
 
-        private object _run_mu = new object();
+        private readonly object _run_mu = new object();
         public async Task run()
         {
             if (!Monitor.TryEnter(_run_mu))
@@ -236,7 +236,7 @@ namespace DBProxy
                     Thread.Sleep((int)(33 - tick));
                 }
             }
-            Log.Log.info("server closed, dbproxy server:{0}", DBProxy.name);
+            Log.Log.info("server closed, dbproxy server:{0}", name);
 
             _redis_mq_service.close();
             Log.Log.close();
