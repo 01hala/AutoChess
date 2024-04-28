@@ -71,7 +71,7 @@ export class RoleArea extends Component
     {
         //this.LogShowRoles();
         console.log('-------------');
-        await singleton.netSingleton.ready.readyData.Move(_indexBefor,_indexAfter);
+        singleton.netSingleton.ready.readyData.Move(_indexBefor,_indexAfter);
         if(!_isMerge)
         {
             //console.log("_indexBefor:", _indexBefor, " _indexAfter:", _indexAfter);

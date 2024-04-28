@@ -157,8 +157,8 @@ export class RoleIcon extends Component
             {
                 try
                 {
-                    this.OffTirrger();                                                                      // 修改函数
-                    //隐藏人物放置可视化区域                                                                  
+                    this.OffTirrger();
+                    //隐藏人物放置可视化区域                                                                  // 修改函数
                     this.visiableArea.active=false;                                                         
                     //隐藏冻结栏                                                                             
                     this.shopArea.ShowFreezeArea(false);                                                    // Editor:Hotaru
@@ -167,7 +167,7 @@ export class RoleIcon extends Component
                     //手机上按钮事件无法正常工作，此处采用检测拖拽开始和取消的时间间隔，小于0.5s视为点击事件        
                     if (Date.now() - this.lastClickTime < 100) {                                            // 2024/04/29
                         console.log("Players click on role icon");                                          
-                        this.ClickBtn();
+                        this.ClickBtn();                                                                  
                         return;                                                                             
                     }                                                                                       // 如果是点击操作直接return
                     //重新注册按钮事件
@@ -176,7 +176,7 @@ export class RoleIcon extends Component
                     if (!this.isSale) {
                         if (this.isBuy) {
                             console.log(this.index, this.tempIndex);
-                            await this.roleArea.MovePos(this.index, this.tempIndex ,this.isMerge);
+                            this.roleArea.MovePos(this.index, this.tempIndex ,this.isMerge); 
                         }
 
                         //换位
@@ -239,9 +239,10 @@ export class RoleIcon extends Component
                         this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
                     }
                     //吸附缓动
-                    if (!this.isMerge || !this.isBuy) {
+                    //console.log(`isMerge : ${this.isMerge} ; isBuy : ${this.isBuy}`);
+                    //if (/*!this.isMerge ||*/ !this.isBuy) {
                         this.Adsorption();
-                    }
+                    //}
 
                     drag=false;
                 }
@@ -462,7 +463,7 @@ export class RoleIcon extends Component
                 //商店区域
                 if (null != otherCollider && 2 == otherCollider.tag) {
                     //this.index = null;
-                    this.tempIndex = null;
+                    //this.tempIndex = null;
                     if (this.isBuy) {
                         this.isSale = true;
                         this.isSwitch = false;
