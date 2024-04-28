@@ -51,8 +51,7 @@ public:
 
 	void reg_hub(std::string hub_name, std::string hub_type) {
 		auto rsp = std::static_pointer_cast<abelkhan::hub_call_gate_reg_hub_rsp>(_hub_call_gate_module->rsp);
-		auto ch = _hub_call_gate_module->current_ch;
-		auto proxy = _hubsvrmanager->reg_hub(hub_name, hub_type, ch);
+		auto proxy = _hubsvrmanager->reg_hub(hub_name, hub_type, _hub_call_gate_module->current_ch);
 		rsp->rsp();
 	}
 
