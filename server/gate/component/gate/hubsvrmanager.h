@@ -31,6 +31,8 @@ private:
 
 public:
 	hubproxy(std::string& hub_name, std::string& hub_type, std::shared_ptr<abelkhan::Ichannel> ch) : _gate_call_hub_caller(ch, service::_modulemng) {
+		_tick_time = 0;
+
 		_hub_name = hub_name;
 		_hub_type = hub_type;
 		_ch = ch;
@@ -130,7 +132,7 @@ public:
 	}
 
 	void for_each_hub(std::function<void(std::string hub_name, hubproxy* proxy)> fn){
-		for (auto it : hub_name_proxy) {
+		for (auto& it : hub_name_proxy) {
 			fn(it.first, it.second);
 		}
 	}
