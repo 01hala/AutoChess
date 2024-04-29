@@ -317,14 +317,14 @@ private:
 			if (redisReconnect(_ctx) == REDIS_OK) {
 				if (!_password.empty()) {
 					auto reply = (redisReply*)redisCommand(_ctx, "AUTH % s", _password.c_str());
-					if (reply->type == REDIS_REPLY_ERROR) {
-						spdlog::error("redisContext auth faild:{0}!", _password);
+					auto reply_type = reply->type;
+					freeReplyObject(reply);
 
-						freeReplyObject(reply);
+					if (reply_type == REDIS_REPLY_ERROR) {
+						spdlog::error("redisContext auth faild:{0}!", _password);
 						std::this_thread::sleep_for(std::chrono::milliseconds(8));
 						continue;
 					}
-					freeReplyObject(reply);
 				}
 				break;
 			}
