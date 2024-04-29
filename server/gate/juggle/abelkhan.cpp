@@ -103,8 +103,7 @@ int modulemng::process_event() {
     try {
         std::pair<std::shared_ptr<Ichannel>, msgpack11::MsgPack::array> event_;
         while (event_que.pop(event_)) {
-            std::shared_ptr<Ichannel> _ch = event_.first;
-            const msgpack11::MsgPack::array _event = event_.second;
+            auto& [_ch, _event] = event_;
 
             std::string method_name = _event[0].string_value();
             auto it_module = method_set.find(method_name);
