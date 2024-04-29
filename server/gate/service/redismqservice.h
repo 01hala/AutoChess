@@ -68,7 +68,6 @@ private:
 	std::jthread th_recv;
 
 	concurrent::ringque<redismqbuff> send_data;
-	concurrent::ringque<std::pair<std::string, msgpack11::MsgPack> > recv_data;
 
 public:
 	redismqservice(bool is_cluster, std::string _listen_channle_name, std::string redis_url, std::string password = "") {
@@ -158,18 +157,17 @@ public:
 		th_send.join();
 	}
 
-	void poll() {
-		std::pair<std::string, msgpack11::MsgPack> data;
-		while (recv_data.pop(data)) {
-			auto it = _ch_map.find(data.first);
-			if (it != _ch_map.end()) {
-				it->second->recv(data.second);
-			}
-			else {
-				auto ch = std::make_shared<redismqchannel>(data.first, shared_from_this());
-				ch->recv(data.second);
-				_ch_map.insert(std::make_pair(data.first, ch));
-			}
+	void recv(std::pair<std::string, msgpack11::MsgPack> data) {
+		std::lock_guard<std::mutex> l(_mu_ch_map);
+		auto it = _ch_map.find(data.first);
+		if (it != _ch_map.end()) {
+			it->second->recv(data.second);
+		}
+		else {
+			auto ch = std::make_shared<redismqchannel>(data.first, shared_from_this());
+			ch->recv(data.second);
+
+			_ch_map.insert(std::make_pair(data.first, ch));
 		}
 	}
 
@@ -245,7 +243,7 @@ private:
 					uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
 					std::string err;
 					auto obj = msgpack11::MsgPack::parse((const char*)tmp_buff, len, err);
-					recv_data.push(std::make_pair(_ch_name, obj));
+					recv(std::make_pair(_ch_name, obj));
 
 				}
 				else if (_reply->type != REDIS_REPLY_NIL) {
@@ -371,7 +369,7 @@ private:
 					uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
 					std::string err;
 					auto obj = msgpack11::MsgPack::parse((const char*)&tmp_buff[4], len, err);
-					recv_data.push(std::make_pair(_ch_name, obj));
+					recv(std::make_pair(_ch_name, obj));
 				}
 				else if (_reply->type != REDIS_REPLY_NIL) {
 					spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
