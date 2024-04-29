@@ -90,13 +90,7 @@ void modulemng::reg_method(std::string method_name, std::tuple<std::shared_ptr<I
 }
 
 void modulemng::enque_event(std::shared_ptr<Ichannel> _ch, const msgpack11::MsgPack::array& _event) {
-    try {
-        event_que.push(std::make_pair(_ch, _event));
-    }
-    catch (std::exception e)
-    {
-        throw Exception(fmt::format("System.Exception:{0}", e.what()));
-    }
+    event_que.push(std::make_pair(_ch, _event));
 }
 
 int modulemng::process_event() {
@@ -120,7 +114,7 @@ int modulemng::process_event() {
     }
     catch (std::exception e)
     {
-        throw Exception(fmt::format("System.Exception:{0}", e.what()));
+        throw Exception(fmt::format("process_event exception:{0}", e.what()));
     }
 
     return 0;
