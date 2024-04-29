@@ -106,8 +106,7 @@ public:
 
 	bool get_hub_list(std::string hub_type, abelkhan::hub_info& _info) {
 		std::vector<abelkhan::hub_info> hub_list;
-		uint32_t tick_time_tmp = INT32_MAX;
-		for (auto it : hub_name_proxy) {
+		for (auto &it : hub_name_proxy) {
 			if (it.second->_hub_type != hub_type) {
 				continue;
 			}
@@ -115,14 +114,9 @@ public:
 				continue;
 			}
 			
-			if (it.second->_tick_time < tick_time_tmp) {
-				tick_time_tmp = it.second->_tick_time;
-
-				_info.hub_name = it.second->_hub_name;
-				_info.hub_type = it.second->_hub_type;
-
-				hub_list.push_back(_info);
-			}
+			_info.hub_name = it.second->_hub_name;
+			_info.hub_type = it.second->_hub_type;
+			hub_list.push_back(_info);
 		}
 
 		if (hub_list.size() > 0) {
