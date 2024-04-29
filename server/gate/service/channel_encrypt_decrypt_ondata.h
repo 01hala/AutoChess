@@ -108,18 +108,20 @@ public:
 					}
 					std::string err;
 					auto obj = msgpack11::MsgPack::parse((const char*)proto_buff, len, err);
-					if (!obj.is_array()) {
+					if (obj.is_array()) {
+						try
+						{
+							_modulemng->enque_event(ch, obj.array_items());
+						}
+						catch (std::exception e)
+						{
+							spdlog::error("channel do rpc callback error");
+							ch->disconnect();
+							return;
+						}
+					}
+					else{
 						spdlog::error("channel recv parse MsgPack error");
-						ch->disconnect();
-						return;
-					}
-					try
-					{
-						_modulemng->enque_event(ch, obj.array_items());
-					}
-					catch (std::exception e)
-					{
-						spdlog::error("channel do rpc callback error");
 						ch->disconnect();
 						return;
 					}
