@@ -109,9 +109,7 @@ int modulemng::process_event() {
             std::string method_name = _event[0].string_value();
             auto it_module = method_set.find(method_name);
             if (it_module != method_set.end()) {
-                std::shared_ptr<Imodule> _module;
-                std::function<void(const msgpack11::MsgPack::array& doc)> _method;
-                std::tie(_module, _method) = it_module->second;
+                auto &[_module, _method] = it_module->second;
                 Imodule::current_ch = _ch;
                 _method(_event[1].array_items());
                 Imodule::current_ch = nullptr;
