@@ -304,7 +304,10 @@ private:
 
 		if (!_password.empty()) {
 			auto reply = (redisReply*)redisCommand(_ctx, "AUTH % s", _password.c_str());
-			if (reply->type == REDIS_REPLY_ERROR) {
+			auto reply_type = reply->type;
+			freeReplyObject(reply);
+
+			if (reply_type == REDIS_REPLY_ERROR) {
 				spdlog::error("redisContext auth faild:{0}!", _password);
 				throw redismqserviceException("redisContext auth faild!");
 			}
