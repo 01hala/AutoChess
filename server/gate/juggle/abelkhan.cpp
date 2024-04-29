@@ -6,6 +6,7 @@
 #include <chrono>
 #include <random>
 #include <fmt/format.h>
+#include <gc.h>
 
 #include <concurrent/string_tools.h>
 
@@ -32,8 +33,8 @@ Icaller::Icaller(std::string _module_name, std::shared_ptr<Ichannel> _ch) {
     module_name = _module_name;
     ch = _ch;
 
-    _data_size = 8 * 1024;
-    _data = (unsigned char*)malloc(_data_size);
+    _data_size = 8192;
+    _data = (unsigned char*)GC_malloc(_data_size);
 } 
 
 Icaller::~Icaller() {
@@ -50,8 +51,7 @@ void Icaller::call_module_method(std::string _method_name, msgpack11::MsgPack::a
     size_t len = data.size();
     if (_data_size < (len + 4)) {
         _data_size *= 2;
-        free(_data);
-        _data = (unsigned char*)malloc(_data_size);
+        _data = (unsigned char*)GC_malloc(_data_size);
     }
     _data[0] = len & 0xff;
     _data[1] = len >> 8 & 0xff;
