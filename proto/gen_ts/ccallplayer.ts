@@ -750,7 +750,7 @@ export class player_battle_check_achievement_cb{
     private cb_uuid : number;
     private module_rsp_cb : player_battle_rsp_cb;
 
-    public event_check_achievement_handle_cb : ()=>void | null;
+    public event_check_achievement_handle_cb : (reward:common.AchievementReward)=>void | null;
     public event_check_achievement_handle_err : (err:number)=>void | null;
     public event_check_achievement_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : player_battle_rsp_cb){
@@ -761,7 +761,7 @@ export class player_battle_check_achievement_cb{
         this.event_check_achievement_handle_timeout = null;
     }
 
-    callBack(_cb:()=>void, _err:(err:number)=>void)
+    callBack(_cb:(reward:common.AchievementReward)=>void, _err:(err:number)=>void)
     {
         this.event_check_achievement_handle_cb = _cb;
         this.event_check_achievement_handle_err = _err;
@@ -869,6 +869,7 @@ export class player_battle_rsp_cb extends client_handle.imodule {
     public check_achievement_rsp(inArray:any[]){
         let uuid = inArray[0];
         let _argv_485acce4_315a_39a3_a37c_644d60c6fbba:any[] = [];
+        _argv_485acce4_315a_39a3_a37c_644d60c6fbba.push(common.protcol_to_AchievementReward(inArray[1]));
         var rsp = this.try_get_and_del_check_achievement_cb(uuid);
         if (rsp && rsp.event_check_achievement_handle_cb) {
             rsp.event_check_achievement_handle_cb.apply(null, _argv_485acce4_315a_39a3_a37c_644d60c6fbba);

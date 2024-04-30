@@ -385,9 +385,10 @@ namespace Abelkhan
             uuid_74213260_2b7a_39fc_a6ff_5f9e0f618e3a = _uuid;
         }
 
-        public void rsp(){
+        public void rsp(AchievementReward reward_d54eefbf_3481_3a97_ad54_0d2f6eefafd7){
             var _argv_485acce4_315a_39a3_a37c_644d60c6fbba = new ArrayList();
             _argv_485acce4_315a_39a3_a37c_644d60c6fbba.Add(uuid_74213260_2b7a_39fc_a6ff_5f9e0f618e3a);
+            _argv_485acce4_315a_39a3_a37c_644d60c6fbba.Add(AchievementReward.AchievementReward_to_protcol(reward_d54eefbf_3481_3a97_ad54_0d2f6eefafd7));
             Hub.Hub._gates.call_client(_client_uuid_485acce4_315a_39a3_a37c_644d60c6fbba, "player_battle_rsp_cb_check_achievement_rsp", _argv_485acce4_315a_39a3_a37c_644d60c6fbba);
         }
 
