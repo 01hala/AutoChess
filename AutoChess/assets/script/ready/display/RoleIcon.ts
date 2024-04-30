@@ -232,10 +232,10 @@ export class RoleIcon extends Component
                     }
                     //console.log(this.isMerge);
                     //冻结角色
+                    this.freezeSprite.active = this.isFreeze;
                     if (this.isFreeze && !this.isBuy) {
                         console.log("RoleFreeze!!!");
                         this.freezeLock = !this.freezeLock;
-                        this.freezeSprite.active = this.freezeLock;
                         this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
                     }
                     //吸附缓动
@@ -473,7 +473,8 @@ export class RoleIcon extends Component
                 //冻结区域
                 if (null != otherCollider && 3 == otherCollider.tag) {
                     if (!this.isBuy) {
-                        this.isFreeze = true;
+                        //this.isFreeze = true;
+                        this.isFreeze=!this.isFreeze;
                     }
                 }
             }
