@@ -232,11 +232,13 @@ export class RoleIcon extends Component
                     }
                     //console.log(this.isMerge);
                     //冻结角色
+                    if(this.isBuy) this.isFreeze=false;
                     this.freezeSprite.active = this.isFreeze;
+                    this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.isFreeze);
                     if (this.isFreeze && !this.isBuy) {
                         console.log("RoleFreeze!!!");
                         this.freezeLock = !this.freezeLock;
-                        this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.freezeLock);
+                        
                     }
                     //吸附缓动
                     //console.log(`isMerge : ${this.isMerge} ; isBuy : ${this.isBuy}`);
