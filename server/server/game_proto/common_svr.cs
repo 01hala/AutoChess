@@ -262,7 +262,7 @@ namespace Abelkhan
     public class BattleInfo
     {
         public BattleMod mod;
-        public bool isVictory;
+        public BattleVictory isVictory;
         public bool isStreakVictory;
         public List<Role> RoleList;
         public static MsgPack.MessagePackObjectDictionary BattleInfo_to_protcol(BattleInfo _struct){
@@ -272,7 +272,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("mod", (Int32)_struct.mod);
-            _protocol.Add("isVictory", _struct.isVictory);
+            _protocol.Add("isVictory", (Int32)_struct.isVictory);
             _protocol.Add("isStreakVictory", _struct.isStreakVictory);
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
@@ -294,7 +294,7 @@ namespace Abelkhan
                     _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.mod = (BattleMod)((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "isVictory"){
-                    _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.isVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.isVictory = (BattleVictory)((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "isStreakVictory"){
                     _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.isStreakVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();

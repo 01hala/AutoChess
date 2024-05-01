@@ -34,7 +34,7 @@ enum BattleMod {
 
 struct BattleInfo {
 	BattleMod mod;
-	bool isVictory;
+	BattleVictory isVictory;
 	bool isStreakVictory;
 	Role[] RoleList;
 }

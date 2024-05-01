@@ -234,7 +234,7 @@ export function protcol_to_RoleGroup(_protocol:any){
 export class BattleInfo
 {
     public mod : BattleMod = BattleMod.Battle;
-    public isVictory : boolean = false;
+    public isVictory : BattleVictory = BattleVictory.faild;
     public isStreakVictory : boolean = false;
     public RoleList : Role[] = [];
 
@@ -255,7 +255,7 @@ export function protcol_to_BattleInfo(_protocol:any){
             _struct.mod = val as BattleMod;
         }
         else if (key === "isVictory"){
-            _struct.isVictory = val as boolean;
+            _struct.isVictory = val as BattleVictory;
         }
         else if (key === "isStreakVictory"){
             _struct.isStreakVictory = val as boolean;
