@@ -26,7 +26,8 @@ namespace Abelkhan
         player_offline = 12,
         exceeds_maximum_limit_role = 13,
         peak_strength_no_data = 14,
-        peak_strength_end = 15
+        peak_strength_end = 15,
+        not_complete_achievement = 16
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
 /*this caller code is codegen by abelkhan codegen for c#*/

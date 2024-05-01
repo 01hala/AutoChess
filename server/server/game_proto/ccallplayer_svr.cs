@@ -429,13 +429,13 @@ namespace Abelkhan
             rsp = null;
         }
 
-        public event Action<Int32> on_check_achievement;
+        public event Action<Achievement> on_check_achievement;
         public void check_achievement(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _achievement_id = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _achievement = (Achievement)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
             rsp = new player_battle_check_achievement_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_check_achievement != null){
-                on_check_achievement(_achievement_id);
+                on_check_achievement(_achievement);
             }
             rsp = null;
         }

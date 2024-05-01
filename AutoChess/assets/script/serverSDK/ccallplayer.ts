@@ -957,11 +957,11 @@ export class player_battle_hubproxy
         return cb_start_peak_strength_obj;
     }
 
-    public check_achievement(achievement_id:number){
+    public check_achievement(achievement:common.Achievement){
         let uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31 = Math.round(this.uuid_4ffbb290_f238_38f6_b774_75ba1cccb192++);
 
         let _argv_485acce4_315a_39a3_a37c_644d60c6fbba:any[] = [uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31];
-        _argv_485acce4_315a_39a3_a37c_644d60c6fbba.push(achievement_id);
+        _argv_485acce4_315a_39a3_a37c_644d60c6fbba.push(achievement);
         this._client_handle.call_hub(this.hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_check_achievement", _argv_485acce4_315a_39a3_a37c_644d60c6fbba);
         let cb_check_achievement_obj = new player_battle_check_achievement_cb(uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31, rsp_cb_player_battle_handle);
         if (rsp_cb_player_battle_handle){

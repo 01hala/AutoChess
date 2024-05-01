@@ -6,6 +6,23 @@ export enum BattleMod{
     PeakStrength = 2
 }
 
+export enum Achievement{
+    EMSuccessiveFiveVictory = 1,
+    EMFullLevelVictory = 2,
+    EMStreakVictory = 3,
+    EMFiveHundredGame = 4,
+    EMMachinistlVictory = 5,
+    EMPeakStrengthVictory = 6,
+    EMGold25 = 7,
+    EMFullAttributesVictory = 8,
+    EMNoneEquipmentVictory = 9,
+    EMWeekFiveVictory = 101,
+    EMWeekOneGame = 102,
+    EMWeekWizardVictory = 103,
+    EMWeekBerserkerVictory = 104,
+    EMWeekCorsairVictory = 105
+}
+
 export enum Priority{
     Low = 1,
     Normal = 2,
@@ -214,6 +231,7 @@ export class BattleInfo
     public isVictory : boolean = false;
     public isStreakVictory : boolean = false;
     public RoleList : Role[] = [];
+    public EnemyList : Role[] = [];
 
 }
 
@@ -243,6 +261,12 @@ export function protcol_to_BattleInfo(_protocol:any){
                 _struct.RoleList.push(protcol_to_Role(v_));
             }
         }
+        else if (key === "EnemyList"){
+            _struct.EnemyList = [];
+            for(let v_ of val as any) {
+                _struct.EnemyList.push(protcol_to_Role(v_));
+            }
+        }
     }
     return _struct;
 }
@@ -267,17 +291,116 @@ export function protcol_to_AchievementReward(_protocol:any){
     return _struct;
 }
 
+export class UserAchievement
+{
+    public successiveFiveVictory : boolean = false;
+    public fullLevelVictory : boolean = false;
+    public streakVictory : boolean = false;
+    public fiveHundredGame : boolean = false;
+    public machinistlVictory : boolean = false;
+    public PeakStrengthVictory : boolean = false;
+    public Gold25 : boolean = false;
+    public fullAttributesVictory : boolean = false;
+    public noneEquipmentVictory : boolean = false;
+
+}
+
+export function UserAchievement_to_protcol(_struct:UserAchievement){
+    return _struct;
+}
+
+export function protcol_to_UserAchievement(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new UserAchievement();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "successiveFiveVictory"){
+            _struct.successiveFiveVictory = val as boolean;
+        }
+        else if (key === "fullLevelVictory"){
+            _struct.fullLevelVictory = val as boolean;
+        }
+        else if (key === "streakVictory"){
+            _struct.streakVictory = val as boolean;
+        }
+        else if (key === "fiveHundredGame"){
+            _struct.fiveHundredGame = val as boolean;
+        }
+        else if (key === "machinistlVictory"){
+            _struct.machinistlVictory = val as boolean;
+        }
+        else if (key === "PeakStrengthVictory"){
+            _struct.PeakStrengthVictory = val as boolean;
+        }
+        else if (key === "Gold25"){
+            _struct.Gold25 = val as boolean;
+        }
+        else if (key === "fullAttributesVictory"){
+            _struct.fullAttributesVictory = val as boolean;
+        }
+        else if (key === "noneEquipmentVictory"){
+            _struct.noneEquipmentVictory = val as boolean;
+        }
+    }
+    return _struct;
+}
+
+export class UserWeekAchievement
+{
+    public fiveVictory : boolean = false;
+    public oneGame : boolean = false;
+    public wizardVictory : boolean = false;
+    public berserkerVictory : boolean = false;
+    public corsairVictory : boolean = false;
+    public timeout : number = 0;
+
+}
+
+export function UserWeekAchievement_to_protcol(_struct:UserWeekAchievement){
+    return _struct;
+}
+
+export function protcol_to_UserWeekAchievement(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new UserWeekAchievement();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "fiveVictory"){
+            _struct.fiveVictory = val as boolean;
+        }
+        else if (key === "oneGame"){
+            _struct.oneGame = val as boolean;
+        }
+        else if (key === "wizardVictory"){
+            _struct.wizardVictory = val as boolean;
+        }
+        else if (key === "berserkerVictory"){
+            _struct.berserkerVictory = val as boolean;
+        }
+        else if (key === "corsairVictory"){
+            _struct.corsairVictory = val as boolean;
+        }
+        else if (key === "timeout"){
+            _struct.timeout = val as number;
+        }
+    }
+    return _struct;
+}
+
 export class UserData
 {
     public User : UserInformation | null = null;
+    public Achiev : UserAchievement | null = null;
+    public wAchiev : UserWeekAchievement | null = null;
     public Strength : number = 0;
     public gold : number = 0;
     public diamond : number = 0;
     public score : number = 0;
-    public PeakStrengthVictory : boolean = false;
-    public Gold25 : boolean = false;
     public battleInfo : BattleInfo[] = [];
-    public achievements : number[] = [];
     public bag : Bag | null = null;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
@@ -298,6 +421,12 @@ export function protcol_to_UserData(_protocol:any){
         if (key === "User"){
             _struct.User = protcol_to_UserInformation(val);
         }
+        else if (key === "Achiev"){
+            _struct.Achiev = protcol_to_UserAchievement(val);
+        }
+        else if (key === "wAchiev"){
+            _struct.wAchiev = protcol_to_UserWeekAchievement(val);
+        }
         else if (key === "Strength"){
             _struct.Strength = val as number;
         }
@@ -310,22 +439,10 @@ export function protcol_to_UserData(_protocol:any){
         else if (key === "score"){
             _struct.score = val as number;
         }
-        else if (key === "PeakStrengthVictory"){
-            _struct.PeakStrengthVictory = val as boolean;
-        }
-        else if (key === "Gold25"){
-            _struct.Gold25 = val as boolean;
-        }
         else if (key === "battleInfo"){
             _struct.battleInfo = [];
             for(let v_ of val as any) {
                 _struct.battleInfo.push(protcol_to_BattleInfo(v_));
-            }
-        }
-        else if (key === "achievements"){
-            _struct.achievements = [];
-            for(let v_ of val as any) {
-                _struct.achievements.push(v_);
             }
         }
         else if (key === "bag"){

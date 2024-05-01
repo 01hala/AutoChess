@@ -11,9 +11,11 @@ export class player_client_module extends client_handle.imodule {
         this._client_handle = _client_handle_;
         this._client_handle._modulemng.add_method("player_client_archive_sync", this.archive_sync.bind(this));
         this._client_handle._modulemng.add_method("player_client_battle_victory", this.battle_victory.bind(this));
+        this._client_handle._modulemng.add_method("player_client_achievement_complete", this.achievement_complete.bind(this));
 
         this.cb_archive_sync = null;
         this.cb_battle_victory = null;
+        this.cb_achievement_complete = null;
     }
 
     public cb_archive_sync : (info:common.UserData)=>void | null;
@@ -30,6 +32,15 @@ export class player_client_module extends client_handle.imodule {
         let _argv_:any[] = [];
         if (this.cb_battle_victory){
             this.cb_battle_victory.apply(null, _argv_);
+        }
+    }
+
+    public cb_achievement_complete : (achievement:common.Achievement)=>void | null;
+    achievement_complete(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(inArray[0]);
+        if (this.cb_achievement_complete){
+            this.cb_achievement_complete.apply(null, _argv_);
         }
     }
 

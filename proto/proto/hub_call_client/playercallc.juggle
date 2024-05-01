@@ -3,4 +3,6 @@ import common
 module player_client{
 	archive_sync ntf(UserData info);
     battle_victory ntf();
+
+    achievement_complete ntf(Achievement achievement);
 }

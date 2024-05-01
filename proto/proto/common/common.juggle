@@ -31,26 +31,64 @@ struct BattleInfo {
 	bool isVictory;
 	bool isStreakVictory;
 	Role[] RoleList;
+	Role[] EnemyList;
 }
 
 struct AchievementReward {
+}
 
+enum Achievement {
+	EMSuccessiveFiveVictory = 1;      // 连续5次胜利     
+	EMFullLevelVictory = 2;           // 全员满级获得胜利
+	EMStreakVictory = 3;              // 10局连胜获得战斗胜利
+	EMFiveHundredGame = 4;			  // 500次游戏
+	EMMachinistlVictory = 5;          // 全员机械师获得胜利
+	EMPeakStrengthVictory = 6;        // 巅峰挑战冠军
+	EMGold25 = 7;			          // 成就 开局25枚金币
+	EMFullAttributesVictory = 8;      // 全员满属性获得胜利
+	EMNoneEquipmentVictory = 9;       // 全员无装备获得胜利
+
+	EMWeekFiveVictory = 101;          // 周成就 5次获得胜利
+	EMWeekOneGame = 102;              // 周成就 参与一次游戏
+	EMWeekWizardVictory = 103;        // 周成就 使用巫师获得胜利
+	EMWeekBerserkerVictory = 104;     // 周成就 使用狂战士获得胜利
+	EMWeekCorsairVictory = 105;       // 周成就 使用海盗获得胜利
+}
+
+struct UserAchievement {
+	bool successiveFiveVictory;      // 连续5次胜利     
+	bool fullLevelVictory;           // 全员满级获得胜利
+	bool streakVictory;              // 10局连胜获得战斗胜利
+	bool fiveHundredGame;			 // 500次游戏
+	bool machinistlVictory;          // 全员机械师获得胜利
+	bool PeakStrengthVictory;        // 巅峰挑战冠军
+	bool Gold25;			         // 成就 开局25枚金币
+	bool fullAttributesVictory;      // 全员满属性获得胜利
+	bool noneEquipmentVictory;       // 全员无装备获得胜利
+}
+
+struct UserWeekAchievement {
+	bool fiveVictory;            // 周成就 5次获得胜利
+	bool oneGame;                // 周成就 参与一次游戏
+	bool wizardVictory;          // 周成就 使用巫师获得胜利
+	bool berserkerVictory;       // 周成就 使用狂战士获得胜利
+	bool corsairVictory;         // 周成就 使用海盗获得胜利
+	int64 timeout;               // 周成就超时时间
 }
 
 struct UserData
 {
-	UserInformation User;	  // 用户信息
-	int32 Strength;			  // 体力
-	int32 gold;				  // 金币
-	int32 diamond;			  // 钻石
-	int32 score;			  // 积分
-	bool PeakStrengthVictory; // 巅峰挑战冠军
-	bool Gold25;			  // 成就 开局25枚金币
-	BattleInfo[] battleInfo;  // 战绩记录
-	int32[] achievements;     // 成就记录
-	Bag bag;				  // 背包
-	int32[] RoleList; 		  // 已有角色列表
-	RoleGroup[] roleGroup;	  // 卡组 玩家自行编辑
+	UserInformation User;	     // 用户信息
+	UserAchievement Achiev;	     // 成就
+	UserWeekAchievement wAchiev; // 周成就
+	int32 Strength;			     // 体力
+	int32 gold;				     // 金币
+	int32 diamond;			     // 钻石
+	int32 score;			     // 积分
+	BattleInfo[] battleInfo;     // 战绩记录
+	Bag bag;				     // 背包
+	int32[] RoleList; 		     // 已有角色列表
+	RoleGroup[] roleGroup;	     // 卡组 玩家自行编辑
 }
 
 struct Fetters {

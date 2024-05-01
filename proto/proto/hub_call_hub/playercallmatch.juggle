@@ -8,6 +8,6 @@ module player_match {
 }
 
 module match_player {
-    battle_victory ntf(UserBattleData userInfo);
-    peak_strength_victory req(UserBattleData userInfo) rsp(UserRankInfo self) err(int32 err);
+    battle_victory ntf(UserBattleData userInfo, UserBattleData enemyInfo);
+    peak_strength_victory req(UserBattleData userInfo, UserBattleData enemyInfo) rsp(UserRankInfo self) err(int32 err);
 }
