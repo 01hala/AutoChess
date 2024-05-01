@@ -543,18 +543,18 @@ namespace Abelkhan
             rsp_cb_match_player_handle = rsp_cb_match_player_handle_;
         }
 
-        public void battle_victory(Int64 guid){
+        public void battle_victory(UserBattleData userInfo){
             var _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5 = new ArrayList();
-            _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(guid);
+            _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(UserBattleData.UserBattleData_to_protcol(userInfo));
             Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_battle_victory", _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5);
         }
 
-        public match_player_peak_strength_victory_cb peak_strength_victory(Int64 guid){
+        public match_player_peak_strength_victory_cb peak_strength_victory(UserBattleData userInfo){
             var uuid_80151ab6_a86a_59d4_b889_d4567ca2a626 = (UInt64)Interlocked.Increment(ref uuid_da7b2c07_3c4d_366b_8def_7fa976df7502);
 
             var _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03 = new ArrayList();
             _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03.Add(uuid_80151ab6_a86a_59d4_b889_d4567ca2a626);
-            _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03.Add(guid);
+            _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03.Add(UserBattleData.UserBattleData_to_protcol(userInfo));
             Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_peak_strength_victory", _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03);
 
             var cb_peak_strength_victory_obj = new match_player_peak_strength_victory_cb(uuid_80151ab6_a86a_59d4_b889_d4567ca2a626, rsp_cb_match_player_handle);
@@ -724,21 +724,21 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("match_player_peak_strength_victory", peak_strength_victory);
         }
 
-        public event Action<Int64> on_battle_victory;
+        public event Action<UserBattleData> on_battle_victory;
         public void battle_victory(IList<MsgPack.MessagePackObject> inArray){
-            var _guid = ((MsgPack.MessagePackObject)inArray[0]).AsInt64();
+            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
             if (on_battle_victory != null){
-                on_battle_victory(_guid);
+                on_battle_victory(_userInfo);
             }
         }
 
-        public event Action<Int64> on_peak_strength_victory;
+        public event Action<UserBattleData> on_peak_strength_victory;
         public void peak_strength_victory(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _guid = ((MsgPack.MessagePackObject)inArray[1]).AsInt64();
+            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
             rsp = new match_player_peak_strength_victory_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_peak_strength_victory != null){
-                on_peak_strength_victory(_guid);
+                on_peak_strength_victory(_userInfo);
             }
             rsp = null;
         }
