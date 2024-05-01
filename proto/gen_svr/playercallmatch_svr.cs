@@ -543,18 +543,20 @@ namespace Abelkhan
             rsp_cb_match_player_handle = rsp_cb_match_player_handle_;
         }
 
-        public void battle_victory(UserBattleData userInfo, UserBattleData enemyInfo){
+        public void battle_victory(bool is_victory, UserBattleData userInfo, UserBattleData enemyInfo){
             var _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5 = new ArrayList();
+            _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(is_victory);
             _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(UserBattleData.UserBattleData_to_protcol(userInfo));
             _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(UserBattleData.UserBattleData_to_protcol(enemyInfo));
             Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_battle_victory", _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5);
         }
 
-        public match_player_peak_strength_victory_cb peak_strength_victory(UserBattleData userInfo, UserBattleData enemyInfo){
+        public match_player_peak_strength_victory_cb peak_strength_victory(bool is_victory, UserBattleData userInfo, UserBattleData enemyInfo){
             var uuid_80151ab6_a86a_59d4_b889_d4567ca2a626 = (UInt64)Interlocked.Increment(ref uuid_da7b2c07_3c4d_366b_8def_7fa976df7502);
 
             var _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03 = new ArrayList();
             _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03.Add(uuid_80151ab6_a86a_59d4_b889_d4567ca2a626);
+            _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03.Add(is_victory);
             _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03.Add(UserBattleData.UserBattleData_to_protcol(userInfo));
             _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03.Add(UserBattleData.UserBattleData_to_protcol(enemyInfo));
             Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_peak_strength_victory", _argv_77940b3a_d05b_3ecf_b91b_7f8acb810d03);
@@ -726,23 +728,25 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("match_player_peak_strength_victory", peak_strength_victory);
         }
 
-        public event Action<UserBattleData, UserBattleData> on_battle_victory;
+        public event Action<bool, UserBattleData, UserBattleData> on_battle_victory;
         public void battle_victory(IList<MsgPack.MessagePackObject> inArray){
-            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
-            var _enemyInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _is_victory = ((MsgPack.MessagePackObject)inArray[0]).AsBoolean();
+            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _enemyInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
             if (on_battle_victory != null){
-                on_battle_victory(_userInfo, _enemyInfo);
+                on_battle_victory(_is_victory, _userInfo, _enemyInfo);
             }
         }
 
-        public event Action<UserBattleData, UserBattleData> on_peak_strength_victory;
+        public event Action<bool, UserBattleData, UserBattleData> on_peak_strength_victory;
         public void peak_strength_victory(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
-            var _enemyInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _is_victory = ((MsgPack.MessagePackObject)inArray[1]).AsBoolean();
+            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
+            var _enemyInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[3]).AsDictionary());
             rsp = new match_player_peak_strength_victory_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_peak_strength_victory != null){
-                on_peak_strength_victory(_userInfo, _enemyInfo);
+                on_peak_strength_victory(_is_victory, _userInfo, _enemyInfo);
             }
             rsp = null;
         }

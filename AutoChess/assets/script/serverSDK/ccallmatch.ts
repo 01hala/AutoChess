@@ -2,12 +2,6 @@ import * as client_handle from "./client_handle";
 import * as common from "./common";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
-export enum battle_victory{
-    faild = -1,
-    tie = 0,
-    victory = 1
-}
-
 /*this struct code is codegen by abelkhan codegen for typescript*/
 export class RoleSetUp
 {
@@ -920,7 +914,7 @@ export class plan_hubproxy
         return cb_start_round1_obj;
     }
 
-    public confirm_round_victory(is_victory:battle_victory){
+    public confirm_round_victory(is_victory:common.BattleVictory){
         let uuid_e5597e65_791a_5923_ac90_94a6aa039d4f = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
 
         let _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0:any[] = [uuid_e5597e65_791a_5923_ac90_94a6aa039d4f];
@@ -1132,7 +1126,7 @@ export class peak_strength_hubproxy
         return cb_start_peak_strength_obj;
     }
 
-    public confirm_peak_strength_victory(is_victory:battle_victory){
+    public confirm_peak_strength_victory(is_victory:common.BattleVictory){
         let uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8 = Math.round(this.uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b++);
 
         let _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9:any[] = [uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8];

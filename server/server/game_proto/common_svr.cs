@@ -8,6 +8,11 @@ namespace Abelkhan
 {
 /*this enum code is codegen by abelkhan codegen for c#*/
 
+    public enum BattleVictory{
+        faild = -1,
+        tie = 0,
+        victory = 1
+    }
     public enum BattleMod{
         Battle = 1,
         PeakStrength = 2
@@ -260,7 +265,6 @@ namespace Abelkhan
         public bool isVictory;
         public bool isStreakVictory;
         public List<Role> RoleList;
-        public List<Role> EnemyList;
         public static MsgPack.MessagePackObjectDictionary BattleInfo_to_protcol(BattleInfo _struct){
         if (_struct == null) {
             return null;
@@ -276,13 +280,6 @@ namespace Abelkhan
                     _array_RoleList.Add( new MsgPack.MessagePackObject(Role.Role_to_protcol(v_)));
                 }
                 _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
-            }
-            if (_struct.EnemyList != null) {
-                var _array_EnemyList = new List<MsgPack.MessagePackObject>();
-                foreach(var v_ in _struct.EnemyList){
-                    _array_EnemyList.Add( new MsgPack.MessagePackObject(Role.Role_to_protcol(v_)));
-                }
-                _protocol.Add("EnemyList", new MsgPack.MessagePackObject(_array_EnemyList));
             }
             return _protocol;
         }
@@ -307,13 +304,6 @@ namespace Abelkhan
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
                     foreach (var v_ in _protocol_array){
                         _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.RoleList.Add(Role.protcol_to_Role(((MsgPack.MessagePackObject)v_).AsDictionary()));
-                    }
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "EnemyList"){
-                    _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.EnemyList = new List<Role>();
-                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
-                    foreach (var v_ in _protocol_array){
-                        _structb4ac1209_8551_3ba2_8c73_61bf7f7cb72f.EnemyList.Add(Role.protcol_to_Role(((MsgPack.MessagePackObject)v_).AsDictionary()));
                     }
                 }
             }
@@ -1006,6 +996,5 @@ namespace Abelkhan
     }
 
 /*this caller code is codegen by abelkhan codegen for c#*/
-/*this module code is codegen by abelkhan codegen for c#*/
 
 }

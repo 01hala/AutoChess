@@ -1,6 +1,12 @@
 import * as client_handle from "./client_handle";
 /*this enum code is codegen by abelkhan codegen for ts*/
 
+export enum BattleVictory{
+    faild = -1,
+    tie = 0,
+    victory = 1
+}
+
 export enum BattleMod{
     Battle = 1,
     PeakStrength = 2
@@ -231,7 +237,6 @@ export class BattleInfo
     public isVictory : boolean = false;
     public isStreakVictory : boolean = false;
     public RoleList : Role[] = [];
-    public EnemyList : Role[] = [];
 
 }
 
@@ -259,12 +264,6 @@ export function protcol_to_BattleInfo(_protocol:any){
             _struct.RoleList = [];
             for(let v_ of val as any) {
                 _struct.RoleList.push(protcol_to_Role(v_));
-            }
-        }
-        else if (key === "EnemyList"){
-            _struct.EnemyList = [];
-            for(let v_ of val as any) {
-                _struct.EnemyList.push(protcol_to_Role(v_));
             }
         }
     }

@@ -21,6 +21,12 @@ struct RoleGroup
 	int32[] RoleList; // 角色列表
 }
 
+enum BattleVictory {
+    faild = -1;
+    tie = 0;
+    victory = 1;
+}
+
 enum BattleMod {
 	Battle = 1;
 	PeakStrength = 2;
@@ -31,7 +37,6 @@ struct BattleInfo {
 	bool isVictory;
 	bool isStreakVictory;
 	Role[] RoleList;
-	Role[] EnemyList;
 }
 
 struct AchievementReward {

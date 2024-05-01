@@ -17,7 +17,7 @@ import { Role } from '../../serverSDK/common';
 import { Role as rRole } from '../role';
 import { netSingleton } from '../../netDriver/netSingleton';
 import * as singleton from '../../netDriver/netSingleton';
-import { battle_victory } from '../../serverSDK/ccallmatch';
+import { BattleVictory } from '../../serverSDK/common';
 import { Team } from '../team';
 import { GameManager } from '../../other/GameManager';
 import { SendMessage } from '../../other/MessageEvent';
@@ -164,12 +164,12 @@ export class BattleDis
                 await this.battleCentre.TickBattle();
             }
 
-            let is_victory = battle_victory.tie;
+            let is_victory = BattleVictory.tie;
             if (this.battleCentre.GetWinCamp() == Camp.Self) {
-                is_victory = battle_victory.victory;
+                is_victory = BattleVictory.victory;
             }
             else if (this.battleCentre.GetWinCamp() == Camp.Enemy) {
-                is_victory = battle_victory.faild;
+                is_victory = BattleVictory.faild;
             }
 
             let addTime=false;
@@ -178,13 +178,13 @@ export class BattleDis
             {
                 addTime=true;
             }
-            if (is_victory == battle_victory.victory || (is_victory == battle_victory.faild && (this.battleCentre.faild - 1) > 0))
+            if (is_victory == BattleVictory.victory || (is_victory == BattleVictory.faild && (this.battleCentre.faild - 1) > 0))
             {
-                let heath=(is_victory == battle_victory.victory) ? this.battleCentre.faild : this.battleCentre.faild-1;
+                let heath=(is_victory == BattleVictory.victory) ? this.battleCentre.faild : this.battleCentre.faild-1;
                 settlement=true;
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: heath , isAddTime : addTime}));
             }
-            else if (is_victory == battle_victory.tie) 
+            else if (is_victory == BattleVictory.tie) 
             {
                 settlement=true;
                 this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory , hpNum: this.battleCentre.faild , isAddTime : addTime}));

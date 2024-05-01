@@ -5,7 +5,7 @@
  * 2024/03/30
  */
 import { _decorator, Animation, BlockInputEvents, Button, Component, Node, RichText, Sprite, spriteAssembler, SpriteFrame, Toggle } from 'cc';
-import { battle_victory } from '../serverSDK/ccallmatch';
+import { BattleVictory } from '../serverSDK/common';
 import { netSingleton } from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
@@ -47,7 +47,7 @@ export class Settlement extends Component
 
     private addTimeBoard:Node;
 
-    private isVictory:battle_victory;
+    private isVictory:BattleVictory;
     private isAddTime:boolean;
 
     protected onLoad(): void 
@@ -80,7 +80,7 @@ export class Settlement extends Component
         }
     }
 
-    public OpenSettlementBoard(_isVictory:battle_victory,_hpNum:number,_isAddTime:boolean=false)
+    public OpenSettlementBoard(_isVictory:BattleVictory,_hpNum:number,_isAddTime:boolean=false)
     {
         console.log("show settlement");
         this.node.getComponent(BlockInputEvents).enabled=true;
@@ -96,21 +96,21 @@ export class Settlement extends Component
         this.midArea.getComponent(Animation).play("PanelAppear");
         switch(_isVictory)
         {
-            case battle_victory.faild:
+            case BattleVictory.faild:
                 AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#245998 width=20>失<size=30></size>败</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.loseBanners;
                 this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.loseImg;
                 this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.loseRing;
                 break;
-            case battle_victory.tie:
+            case BattleVictory.tie:
                 AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.drwaBanners;
                 this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
                 this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
                 break;
-            case battle_victory.victory:
+            case BattleVictory.victory:
                 AudioManager.Instance.PlayerOnShot("Sound/battle_win_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#f4b428 width=20>胜<size=30></size>利</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.winBanners;

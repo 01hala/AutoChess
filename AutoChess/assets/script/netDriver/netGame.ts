@@ -212,7 +212,7 @@ export class netGame {
         });
     }
 
-    public confirm_round_victory(is_victory:match.battle_victory) {
+    public confirm_round_victory(is_victory:common.BattleVictory) {
         this.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(()=>{
         }, ()=>{
             console.log("confirm_round_victory err");

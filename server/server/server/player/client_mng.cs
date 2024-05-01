@@ -421,6 +421,11 @@ namespace Player
 
             return s_change;
         }
+
+        public void AddCheckAchievement(BattleInfo info)
+        {
+
+        }
     }
 
     public static class AvatarExtensions

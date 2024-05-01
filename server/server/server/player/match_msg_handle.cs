@@ -14,7 +14,7 @@ namespace Player
             match_Player_Module.on_peak_strength_victory += Match_Player_Module_on_peak_strength_victory;
         }
 
-        private void Match_Player_Module_on_peak_strength_victory(UserBattleData user)
+        private void Match_Player_Module_on_peak_strength_victory(bool is_victory, UserBattleData user, UserBattleData enemy)
         {
             Log.Log.trace("on_battle_victory begin!");
 
@@ -24,7 +24,20 @@ namespace Player
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(user.User.UserGuid);
                 var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
-                _player_info.Data.Info().score += 5;
+                if (is_victory)
+                {
+                    _player_info.Data.Info().score += 5;
+                }
+                else
+                {
+                    _player_info.Data.Info().score -= 3;
+                }
+                _player_info.Data.AddCheckAchievement(new BattleInfo
+                {
+                    mod = BattleMod.PeakStrength,
+                    isVictory = is_victory,
+
+                });
                 _player_info.write_back();
 
                 var rank_Info = new UserRankInfo();
@@ -40,7 +53,7 @@ namespace Player
             }
         }
 
-        private void Match_Player_Module_on_battle_victory(UserBattleData user)
+        private void Match_Player_Module_on_battle_victory(bool is_victory, UserBattleData user, UserBattleData enemy)
         {
             Log.Log.trace("on_battle_victory begin!");
 
