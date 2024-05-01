@@ -34,7 +34,7 @@ namespace Match
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
         }
 
-        private async void Peak_Strength_Module_on_confirm_peak_strength_victory(battle_victory is_victory)
+        private async void Peak_Strength_Module_on_confirm_peak_strength_victory(BattleVictory is_victory)
         {
             var rsp = peak_Strength_Module.rsp as peak_strength_confirm_peak_strength_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -44,9 +44,8 @@ namespace Match
             {
                 var _player = Match.peak_strength_mng.get_battle_player(uuid);
                 var formation = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
-                var target = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerTargetFormationCache(_player.GUID));
                 var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
-                player_proxy.peak_strength_victory(formation, target).callBack(async (userRankInfo) =>
+                player_proxy.peak_strength_victory(is_victory, formation).callBack(async (userRankInfo) =>
                 {
                     userRankInfo.battle_data = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
                     using var st = MemoryStreamPool.mstMgr.GetStream();
@@ -90,7 +89,6 @@ namespace Match
                 var _player = Match.peak_strength_mng.get_battle_player(uuid);
                 var formation = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
                 var target = await Match._redis_handle.RandomList<UserBattleData>(RedisHelp.BuildPeakStrengthCache());
-                await Match._redis_handle.SetData(RedisHelp.BuildPlayerTargetFormationCache(_player.GUID), target);
                 rsp.rsp(formation, target);
             }
             catch (System.Exception ex)
@@ -156,7 +154,7 @@ namespace Match
             }
         }
 
-        private async void Plan_Module_on_confirm_round_victory(battle_victory is_victory)
+        private async void Plan_Module_on_confirm_round_victory(BattleVictory is_victory)
         {
             var rsp = plan_Module.rsp as plan_confirm_round_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -177,22 +175,20 @@ namespace Match
                 _player.BattleData.round++;
                 _player.BattleData.stage = (_player.BattleData.round + 1) / 2;
 
-                if (is_victory == battle_victory.victory)
+                if (is_victory == BattleVictory.victory)
                 {
                     _player.BattleData.victory++;
                 }
-                else if (is_victory == battle_victory.faild)
+                else if (is_victory == BattleVictory.faild)
                 {
                     _player.BattleData.faild--;
                 }
 
+                var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
                 if (_player.BattleData.victory >= 10)
                 {
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
-
-                    var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
-                    var target = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerTargetFormationCache(_player.BattleData.User.UserGuid));
-                    player_proxy.battle_victory(_player.BattleData, target);
+                    player_proxy.battle_victory(true, _player.BattleData);
 
                     if (_player.BattleData.round <= 15)
                     {
@@ -217,6 +213,7 @@ namespace Match
                     if (_player.BattleData.faild <= 0)
                     {
                         _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(false);
+                        player_proxy.battle_victory(false, _player.BattleData);
                     }
                     else
                     {
@@ -309,7 +306,6 @@ namespace Match
                     target = getRandomBattleData(_player.BattleData.round, targetSetUp);
                 }
 
-                await Match._redis_handle.SetData(RedisHelp.BuildPlayerTargetFormationCache(_player.BattleData.User.UserGuid), target);
                 rsp.rsp(_player.BattleData, target);
             }
             catch (System.Exception ex)

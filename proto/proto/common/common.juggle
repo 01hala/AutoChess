@@ -70,6 +70,7 @@ struct UserAchievement {
 	bool Gold25;			         // 成就 开局25枚金币
 	bool fullAttributesVictory;      // 全员满属性获得胜利
 	bool noneEquipmentVictory;       // 全员无装备获得胜利
+	BattleInfo[] battleInfo;         // 战绩记录
 }
 
 struct UserWeekAchievement {
@@ -78,6 +79,7 @@ struct UserWeekAchievement {
 	bool wizardVictory;          // 周成就 使用巫师获得胜利
 	bool berserkerVictory;       // 周成就 使用狂战士获得胜利
 	bool corsairVictory;         // 周成就 使用海盗获得胜利
+	BattleInfo[] battleInfo;     // 周成就 战绩记录
 	int64 timeout;               // 周成就超时时间
 }
 
@@ -90,7 +92,6 @@ struct UserData
 	int32 gold;				     // 金币
 	int32 diamond;			     // 钻石
 	int32 score;			     // 积分
-	BattleInfo[] battleInfo;     // 战绩记录
 	Bag bag;				     // 背包
 	int32[] RoleList; 		     // 已有角色列表
 	RoleGroup[] roleGroup;	     // 卡组 玩家自行编辑

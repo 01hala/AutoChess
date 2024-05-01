@@ -406,6 +406,7 @@ namespace Abelkhan
         {
             Hub.Hub._modules.add_mothed("player_battle_start_battle", start_battle);
             Hub.Hub._modules.add_mothed("player_battle_start_peak_strength", start_peak_strength);
+            Hub.Hub._modules.add_mothed("player_battle_achievement_gold25", achievement_gold25);
             Hub.Hub._modules.add_mothed("player_battle_check_achievement", check_achievement);
         }
 
@@ -427,6 +428,13 @@ namespace Abelkhan
                 on_start_peak_strength();
             }
             rsp = null;
+        }
+
+        public event Action on_achievement_gold25;
+        public void achievement_gold25(IList<MsgPack.MessagePackObject> inArray){
+            if (on_achievement_gold25 != null){
+                on_achievement_gold25();
+            }
         }
 
         public event Action<Achievement> on_check_achievement;

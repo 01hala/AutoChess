@@ -9,5 +9,5 @@ module player_match {
 
 module match_player {
     battle_victory ntf(bool is_victory, UserBattleData userInfo);
-    peak_strength_victory req(battle_victory is_victory, UserBattleData userInfo) rsp(UserRankInfo self) err(int32 err);
+    peak_strength_victory req(BattleVictory is_victory, UserBattleData userInfo) rsp(UserRankInfo self) err(int32 err);
 }

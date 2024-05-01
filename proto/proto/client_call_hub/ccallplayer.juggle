@@ -24,5 +24,6 @@ module player_battle {
 	start_battle req() rsp(string match_name, UserBattleData battle_info, ShopData shop_info) err(int32 err);
 	start_peak_strength req() rsp(string match_name, UserBattleData self) err(int32 err);
 
+	achievement_gold25 ntf();
 	check_achievement req(Achievement achievement) rsp(AchievementReward reward) err(int32 err);
 }

@@ -344,6 +344,7 @@ namespace Abelkhan
         public bool Gold25;
         public bool fullAttributesVictory;
         public bool noneEquipmentVictory;
+        public List<BattleInfo> battleInfo;
         public static MsgPack.MessagePackObjectDictionary UserAchievement_to_protcol(UserAchievement _struct){
         if (_struct == null) {
             return null;
@@ -359,6 +360,13 @@ namespace Abelkhan
             _protocol.Add("Gold25", _struct.Gold25);
             _protocol.Add("fullAttributesVictory", _struct.fullAttributesVictory);
             _protocol.Add("noneEquipmentVictory", _struct.noneEquipmentVictory);
+            if (_struct.battleInfo != null) {
+                var _array_battleInfo = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.battleInfo){
+                    _array_battleInfo.Add( new MsgPack.MessagePackObject(BattleInfo.BattleInfo_to_protcol(v_)));
+                }
+                _protocol.Add("battleInfo", new MsgPack.MessagePackObject(_array_battleInfo));
+            }
             return _protocol;
         }
         public static UserAchievement protcol_to_UserAchievement(MsgPack.MessagePackObjectDictionary _protocol){
@@ -395,6 +403,13 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "noneEquipmentVictory"){
                     _struct320a61f6_1974_35df_b00f_ef6fd1348b63.noneEquipmentVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
                 }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.battleInfo = new List<BattleInfo>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct320a61f6_1974_35df_b00f_ef6fd1348b63.battleInfo.Add(BattleInfo.protcol_to_BattleInfo(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
             }
             return _struct320a61f6_1974_35df_b00f_ef6fd1348b63;
         }
@@ -407,6 +422,7 @@ namespace Abelkhan
         public bool wizardVictory;
         public bool berserkerVictory;
         public bool corsairVictory;
+        public List<BattleInfo> battleInfo;
         public Int64 timeout;
         public static MsgPack.MessagePackObjectDictionary UserWeekAchievement_to_protcol(UserWeekAchievement _struct){
         if (_struct == null) {
@@ -419,6 +435,13 @@ namespace Abelkhan
             _protocol.Add("wizardVictory", _struct.wizardVictory);
             _protocol.Add("berserkerVictory", _struct.berserkerVictory);
             _protocol.Add("corsairVictory", _struct.corsairVictory);
+            if (_struct.battleInfo != null) {
+                var _array_battleInfo = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.battleInfo){
+                    _array_battleInfo.Add( new MsgPack.MessagePackObject(BattleInfo.BattleInfo_to_protcol(v_)));
+                }
+                _protocol.Add("battleInfo", new MsgPack.MessagePackObject(_array_battleInfo));
+            }
             _protocol.Add("timeout", _struct.timeout);
             return _protocol;
         }
@@ -444,6 +467,13 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "corsairVictory"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.corsairVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
                 }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.battleInfo = new List<BattleInfo>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct4294a96a_052b_34f0_967a_099171a3451d.battleInfo.Add(BattleInfo.protcol_to_BattleInfo(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "timeout"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.timeout = ((MsgPack.MessagePackObject)i.Value).AsInt64();
                 }
@@ -461,7 +491,6 @@ namespace Abelkhan
         public Int32 gold;
         public Int32 diamond;
         public Int32 score;
-        public List<BattleInfo> battleInfo;
         public Bag bag;
         public List<Int32> RoleList;
         public List<RoleGroup> roleGroup;
@@ -478,13 +507,6 @@ namespace Abelkhan
             _protocol.Add("gold", _struct.gold);
             _protocol.Add("diamond", _struct.diamond);
             _protocol.Add("score", _struct.score);
-            if (_struct.battleInfo != null) {
-                var _array_battleInfo = new List<MsgPack.MessagePackObject>();
-                foreach(var v_ in _struct.battleInfo){
-                    _array_battleInfo.Add( new MsgPack.MessagePackObject(BattleInfo.BattleInfo_to_protcol(v_)));
-                }
-                _protocol.Add("battleInfo", new MsgPack.MessagePackObject(_array_battleInfo));
-            }
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
@@ -529,13 +551,6 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "score"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.score = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.battleInfo = new List<BattleInfo>();
-                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
-                    foreach (var v_ in _protocol_array){
-                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.battleInfo.Add(BattleInfo.protcol_to_BattleInfo(((MsgPack.MessagePackObject)v_).AsDictionary()));
-                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());
@@ -996,5 +1011,6 @@ namespace Abelkhan
     }
 
 /*this caller code is codegen by abelkhan codegen for c#*/
+/*this module code is codegen by abelkhan codegen for c#*/
 
 }

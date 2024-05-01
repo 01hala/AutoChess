@@ -957,6 +957,11 @@ export class player_battle_hubproxy
         return cb_start_peak_strength_obj;
     }
 
+    public achievement_gold25(){
+        let _argv_5cd25ec8_fa20_3dd1_a685_26b91223e6b0:any[] = [];
+        this._client_handle.call_hub(this.hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_achievement_gold25", _argv_5cd25ec8_fa20_3dd1_a685_26b91223e6b0);
+    }
+
     public check_achievement(achievement:common.Achievement){
         let uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31 = Math.round(this.uuid_4ffbb290_f238_38f6_b774_75ba1cccb192++);
 

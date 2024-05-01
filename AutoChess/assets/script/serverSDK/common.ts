@@ -301,6 +301,7 @@ export class UserAchievement
     public Gold25 : boolean = false;
     public fullAttributesVictory : boolean = false;
     public noneEquipmentVictory : boolean = false;
+    public battleInfo : BattleInfo[] = [];
 
 }
 
@@ -342,6 +343,12 @@ export function protcol_to_UserAchievement(_protocol:any){
         else if (key === "noneEquipmentVictory"){
             _struct.noneEquipmentVictory = val as boolean;
         }
+        else if (key === "battleInfo"){
+            _struct.battleInfo = [];
+            for(let v_ of val as any) {
+                _struct.battleInfo.push(protcol_to_BattleInfo(v_));
+            }
+        }
     }
     return _struct;
 }
@@ -353,6 +360,7 @@ export class UserWeekAchievement
     public wizardVictory : boolean = false;
     public berserkerVictory : boolean = false;
     public corsairVictory : boolean = false;
+    public battleInfo : BattleInfo[] = [];
     public timeout : number = 0;
 
 }
@@ -383,6 +391,12 @@ export function protcol_to_UserWeekAchievement(_protocol:any){
         else if (key === "corsairVictory"){
             _struct.corsairVictory = val as boolean;
         }
+        else if (key === "battleInfo"){
+            _struct.battleInfo = [];
+            for(let v_ of val as any) {
+                _struct.battleInfo.push(protcol_to_BattleInfo(v_));
+            }
+        }
         else if (key === "timeout"){
             _struct.timeout = val as number;
         }
@@ -399,7 +413,6 @@ export class UserData
     public gold : number = 0;
     public diamond : number = 0;
     public score : number = 0;
-    public battleInfo : BattleInfo[] = [];
     public bag : Bag | null = null;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
@@ -437,12 +450,6 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "score"){
             _struct.score = val as number;
-        }
-        else if (key === "battleInfo"){
-            _struct.battleInfo = [];
-            for(let v_ of val as any) {
-                _struct.battleInfo.push(protcol_to_BattleInfo(v_));
-            }
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);

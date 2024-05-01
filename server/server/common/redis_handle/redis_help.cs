@@ -50,11 +50,6 @@ namespace Abelkhan
             return $"AutoChess:Player:Peak:Strength:Formation:{guid}";
         }
 
-        static public string BuildPlayerTargetFormationCache(long guid)
-        {
-            return $"AutoChess:Player:Target:Peak:Strength:Formation:{guid}";
-        }
-
         static public string BuildPeakStrengthCache()
         {
             return $"AutoChess:Peak:Strength";
