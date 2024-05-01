@@ -23,14 +23,14 @@ namespace Match
             _proxy = proxy;
         }
 
-        public void battle_victory(long guid)
+        public void battle_victory(UserBattleData user)
         {
-            _match_player_caller.get_hub(_proxy.name).battle_victory(guid);
+            _match_player_caller.get_hub(_proxy.name).battle_victory(user);
         }
 
-        public match_player_peak_strength_victory_cb peak_strength_victory(long guid)
+        public match_player_peak_strength_victory_cb peak_strength_victory(UserBattleData user)
         {
-            return _match_player_caller.get_hub(_proxy.name).peak_strength_victory(guid);
+            return _match_player_caller.get_hub(_proxy.name).peak_strength_victory(user);
         }
     }
 

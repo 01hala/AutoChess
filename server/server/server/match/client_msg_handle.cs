@@ -34,7 +34,7 @@ namespace Match
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
         }
 
-        private void Peak_Strength_Module_on_confirm_peak_strength_victory(battle_victory is_victory)
+        private async void Peak_Strength_Module_on_confirm_peak_strength_victory(battle_victory is_victory)
         {
             var rsp = peak_Strength_Module.rsp as peak_strength_confirm_peak_strength_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -43,8 +43,9 @@ namespace Match
             try
             {
                 var _player = Match.peak_strength_mng.get_battle_player(uuid);
+                var formation = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
                 var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
-                player_proxy.peak_strength_victory(_player.GUID).callBack(async (userRankInfo) =>
+                player_proxy.peak_strength_victory(formation).callBack(async (userRankInfo) =>
                 {
                     userRankInfo.battle_data = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
                     using var st = MemoryStreamPool.mstMgr.GetStream();
@@ -188,7 +189,7 @@ namespace Match
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
 
                     var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
-                    player_proxy.battle_victory(_player.BattleData.User.UserGuid);
+                    player_proxy.battle_victory(_player.BattleData);
 
                     if (_player.BattleData.round <= 15)
                     {
