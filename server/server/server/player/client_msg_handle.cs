@@ -1,14 +1,5 @@
 ﻿using Abelkhan;
-using Log;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson;
 using System;
-using MsgPack.Serialization;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
-using StackExchange.Redis;
 
 namespace Player
 {
@@ -28,12 +19,65 @@ namespace Player
             player_battle_Module = new();
             player_battle_Module.on_start_battle += Player_battle_Module_on_start_battle;
             player_battle_Module.on_start_peak_strength += Player_battle_Module_on_start_peak_strength;
+            player_battle_Module.on_achievement_gold25 += Player_battle_Module_on_achievement_gold25;
+            player_battle_Module.on_check_achievement += Player_battle_Module_on_check_achievement;
 
             player_shop_Module = new();
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_battle_Module_on_check_achievement(Achievement achievement)
+        {
+            Log.Log.trace("on_check_achievement begin!");
+
+            var rsp = player_shop_Module.rsp as player_battle_check_achievement_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                if (_data.Data.CheckAchievement(achievement))
+                {
+                    rsp.rsp(new AchievementReward());
+                }
+                else
+                {
+                    rsp.err((int)em_error.not_complete_achievement);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_shop_Module_on_get_user_data err:{ex}");
+                rsp.err((int)em_error.db_error);
+            }
+
+            Log.Log.trace("on_check_achievement end!");
+        }
+
+        private async void Player_battle_Module_on_achievement_gold25()
+        {
+            Log.Log.trace("on_achievement_gold25 begin!");
+
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                _data.Data.Info().Achiev.Gold25 = true;
+                _data.write_back();
+                client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(Achievement.EMGold25);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_battle_Module_on_achievement_gold25 err:{ex}");
+            }
+
+            Log.Log.trace("on_achievement_gold25 end!");
         }
 
         private async void Player_shop_Module_on_get_user_data()

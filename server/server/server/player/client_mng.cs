@@ -81,6 +81,29 @@ namespace Player
                         UserName = string.Empty,
                         UserGuid = 0,
                     },
+                    Achiev = new UserAchievement()
+                    {
+                        successiveFiveVictory = false,      // 连续5次胜利     
+                        fullLevelVictory = false,           // 全员满级获得胜利
+                        streakVictory = false,              // 10局连胜获得战斗胜利
+                        fiveHundredGame = false,            // 500次游戏
+                        machinistlVictory = false,          // 全员机械师获得胜利
+                        PeakStrengthVictory = false,        // 巅峰挑战冠军
+                        Gold25 = false,                     // 成就 开局25枚金币
+                        fullAttributesVictory = false,      // 全员满属性获得胜利
+                        noneEquipmentVictory = false,       // 全员无装备获得胜利
+                        battleInfo = new List<BattleInfo>(),// 战绩记录
+                    },
+                    wAchiev = new UserWeekAchievement()
+                    {
+                        fiveVictory = false,                      // 周成就 5次获得胜利
+                        oneGame = false,                          // 周成就 参与一次游戏
+                        wizardVictory = false,                    // 周成就 使用巫师获得胜利
+                        berserkerVictory = false,                 // 周成就 使用狂战士获得胜利
+                        corsairVictory = false,                   // 周成就 使用海盗获得胜利
+                        battleInfo = new List<BattleInfo>(),      // 周成就 战绩记录
+                        timeout = Timerservice.WeekEndTimetmp(),  // 周成就超时时间
+                    },
                     Strength = 100,
                     gold = 100,
                     diamond = 10,
@@ -104,6 +127,29 @@ namespace Player
                         UserName = string.Empty,
                         UserGuid = 0,
                     },
+                    Achiev = new UserAchievement()
+                    {
+                        successiveFiveVictory = false,      // 连续5次胜利     
+                        fullLevelVictory = false,           // 全员满级获得胜利
+                        streakVictory = false,              // 10局连胜获得战斗胜利
+                        fiveHundredGame = false,            // 500次游戏
+                        machinistlVictory = false,          // 全员机械师获得胜利
+                        PeakStrengthVictory = false,        // 巅峰挑战冠军
+                        Gold25 = false,                     // 成就 开局25枚金币
+                        fullAttributesVictory = false,      // 全员满属性获得胜利
+                        noneEquipmentVictory = false,       // 全员无装备获得胜利
+                        battleInfo = new List<BattleInfo>(),// 战绩记录
+                    },
+                    wAchiev = new UserWeekAchievement()
+                    {
+                        fiveVictory = false,                      // 周成就 5次获得胜利
+                        oneGame = false,                          // 周成就 参与一次游戏
+                        wizardVictory = false,                    // 周成就 使用巫师获得胜利
+                        berserkerVictory = false,                 // 周成就 使用狂战士获得胜利
+                        corsairVictory = false,                   // 周成就 使用海盗获得胜利
+                        battleInfo = new List<BattleInfo>(),      // 周成就 战绩记录
+                        timeout = Timerservice.WeekEndTimetmp(),  // 周成就超时时间
+                    },
                     bag = new Abelkhan.Bag(),
                     Strength = 0,
                     gold = 0,
@@ -114,8 +160,19 @@ namespace Player
             };
 
             var user = data.GetValue("User").AsBsonDocument;
-            info.info.User.UserName = user.GetValue("UserName").AsString;
-            info.info.User.UserGuid = user.GetValue("UserUid").AsInt64;
+            info.info.User = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserInformation>(user);
+
+            if (data.Contains("Achiev"))
+            {
+                var achiev = data.GetValue("Achiev").AsBsonDocument;
+                info.info.Achiev = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserAchievement>(achiev);
+            }
+
+            if (data.Contains("wAchiev"))
+            {
+                var wAchiev = data.GetValue("wAchiev").AsBsonDocument;
+                info.info.wAchiev = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserWeekAchievement>(wAchiev);
+            }
 
             info.info.Strength = data.GetValue("Strength").AsInt32;
 
@@ -237,7 +294,9 @@ namespace Player
 
             var doc = new BsonDocument
             {
-                { "User", new BsonDocument { {"UserName", info.User.UserName}, { "UserUid", info.User.UserGuid} } },
+                { "User", info.User.ToBsonDocument() },
+                { "Achiev", info.Achiev.ToBsonDocument() },
+                { "wAchiev", info.wAchiev.ToBsonDocument() },
                 { "Strength", info.Strength },
                 { "gold", info.gold },
                 { "diamond", info.diamond },
@@ -425,6 +484,11 @@ namespace Player
         public void AddCheckAchievement(BattleInfo info)
         {
 
+        }
+
+        public bool CheckAchievement(Achievement achievement)
+        {
+            return false;
         }
     }
 
