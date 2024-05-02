@@ -8,7 +8,7 @@ import { _decorator, Button, Component, EventHandler, instantiate, Node, PageVie
 import { BundleManager } from '../bundle/BundleManager';
 import { Biomes } from '../other/enums';
 import { config } from '../config/config';
-import { RoleCard } from './RoleCard';
+import { RoleCard } from '../part/RoleCard';
 import * as singleton from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;

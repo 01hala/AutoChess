@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, BlockInputEvents, Button, Color, color, Component, instantiate, math, Node, Sprite, SpriteFrame, tween, UIOpacity, UITransform, Vec3 } from 'cc';
+import { _decorator, Animation, animation, BlockInputEvents, Button, CCFloat, Color, color, Component, instantiate, math, Node, Sprite, SpriteFrame, tween, UIOpacity, UITransform, Vec3 } from 'cc';
 import { config } from '../config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
@@ -7,14 +7,14 @@ const { ccclass, property } = _decorator;
 export class UpStage extends Component 
 {
     @property({
-        type:Number,
+        type:CCFloat,
         max:100,
         min:5,
         displayName:"滚动速度"
     })
     public moveSpeed=15; //滚动速度
     @property({
-        type:Number,
+        type:CCFloat,
         max:1,
         min:0.02,
         displayName:"滚动间隔"

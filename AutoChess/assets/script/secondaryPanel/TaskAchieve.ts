@@ -10,7 +10,7 @@ import { BundleManager } from '../bundle/BundleManager';
 import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
-@ccclass('TaskAchieve')
+@ccclass('Task & Achieve')
 export class TaskAchieve extends Component 
 {
     //标签

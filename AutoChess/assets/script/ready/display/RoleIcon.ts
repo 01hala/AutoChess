@@ -466,10 +466,15 @@ export class RoleIcon extends Component
                 if (null != otherCollider && 2 == otherCollider.tag) {
                     //this.index = null;
                     //this.tempIndex = null;
-                    if (this.isBuy) {
+                    if (this.isBuy) 
+                    {
                         this.isSale = true;
                         this.isSwitch = false;
                         this.isMerge = false;
+                    }
+                    else
+                    {
+                        this.index = null;
                     }
                 }
                 //冻结区域
