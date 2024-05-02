@@ -5,7 +5,7 @@
  * 图标拖拽类
  */
 
-import { _decorator, Asset, Button, Collider, Collider2D, Component, Contact2DType, director, EventTouch, ImageAsset, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Mask, Node, Prefab, rect, Sprite, SpriteAtlas, SpriteFrame, Texture2D, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
+import { _decorator, Asset, Button, Collider, Collider2D, Color, color, Component, Contact2DType, director, EventTouch, ImageAsset, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Mask, Node, Prefab, rect, Sprite, SpriteAtlas, SpriteFrame, Texture2D, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
@@ -51,6 +51,7 @@ export class RoleIcon extends Component
     //图标
     public iconMask:Node;
     private freezeSprite:Node;
+    private farme:Node;
     //初始位置
     public originalPos:Vec3;
     private tweenNode:Tween<Node>;
@@ -78,6 +79,8 @@ export class RoleIcon extends Component
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.visiableArea=this.panel.getChildByPath("RoleArea/visiable");
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
+            this.farme=this.node.getChildByPath("Farme");
+            this.farme.active=false;
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
@@ -105,7 +108,6 @@ export class RoleIcon extends Component
             let r=new role.Role(_teamindex, _Id, _level, _stack, Camp.Self, map, _fetters);
             console.log('RoleIcon spawn role: ',_Id);
             this.roleNode=await this.SpawnRole(r);
-            this.roleNode.setScale(new Vec3(1.4,1.4,1));
             this.originalPos=this.node.getPosition();
             this.roleId=_Id;
             //通过配置文件加载资源
@@ -118,6 +120,11 @@ export class RoleIcon extends Component
             if(!this.isBuy)
             {
                 this.iconMask.active=true;
+                this.farme.active=true;
+            }
+            else
+            {
+                this.roleNode.setScale(new Vec3(1.2,1.2,1));
             }
             this.tempIndex=this.index;
         }
@@ -291,6 +298,7 @@ export class RoleIcon extends Component
                 //隐藏图标并显示角色实体
                 this.roleNode.active = true;
                 this.iconMask.active = false;
+                this.farme.active=false;
                 //设置坐标
                 node.setPosition(x, y, 0);
             }, this);
@@ -361,11 +369,35 @@ export class RoleIcon extends Component
     //从配置文件加载
     private async LoadOnConfig()
     {
-        let jconfig = config.RoleConfig.get(this.roleId);
-        let img = await loadAssets.LoadImg(jconfig.Avatar);
-        if(img)
+        try
         {
-            this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame=img;
+            let jconfig = config.RoleConfig.get(this.roleId);
+            let img = await loadAssets.LoadImg(jconfig.Avatar);
+            if(img)
+            {
+                if(null==this.iconMask)
+                {
+                    this.iconMask=this.node.getChildByName("IconMask");
+                }
+                this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame=img;
+            }
+            console.log("阶数",jconfig.Stage);
+            let color;
+            switch(jconfig.Stage)
+            {
+                case 1:color=new Color().fromHEX("#ffffff");break;
+                case 2:color=new Color().fromHEX("#6fce98");break;
+                case 3:color=new Color().fromHEX("#6f8ed3");break;
+                case 4:color=new Color().fromHEX("#c97ef3");break;
+                case 5:color=new Color().fromHEX("#e5ad27");break;
+                case 6:color=new Color().fromHEX("#d34fsa");break;
+            }
+            this.farme.getComponent(Sprite).color=color;
+            this.farme.getComponent(Sprite).markForUpdateRenderData(true);
+        }
+        catch(error)
+        {
+            console.error('RoleIcon 下 LoadOnConfig 错误 err: ',error);
         }
     }
     //点击事件

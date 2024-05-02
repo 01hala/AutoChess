@@ -41,7 +41,7 @@ export class TaskLable extends Component
 
     private async LoadOnConfig(_id:number)
     {
-
+        
     }
 
 }
