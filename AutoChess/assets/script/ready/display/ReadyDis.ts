@@ -83,15 +83,17 @@ export class ReadyDis
             this.launchSkillEffect.setSiblingIndex(99);
             this.launchSkillEffect.active=false;
 
+            
+
             _callBack(async ()=>
             {
                 await this.Init(father);
                 //准备开始
-                //this.coinText.string=""+this.ready.coin;
-                //await this.RefreshShop()
                 if (battle_info.round > 1) {
                     await this.Restore(battle_info);
                 }
+                //this.coinText.string=""+this.ready.coin;
+                //await this.RefreshShop()
                 this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(),this.readyData.GetStage());
                 //隐藏等待界面
                 this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
@@ -231,12 +233,14 @@ export class ReadyDis
         singleton.netSingleton.game.cb_add_coin=(coin:number)=>
         {
             this.readyData.SetCoins(coin);
-            this.coinText.string=""+coin;
         };
         singleton.netSingleton.game.cb_role_skill_update=async (role_index:number,_role:common.Role)=>
         {
             await this.showLaunchSkillEffect();
-            this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role,false);
+            if(this.roleArea.rolesNode[role_index])
+            {
+                this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role,false);
+            }
         };
         singleton.netSingleton.game.cb_role_add_property=async (battle_info:common.UserBattleData)=>
         {
@@ -262,12 +266,12 @@ export class ReadyDis
  */
     async Restore(_battle_info:common.UserBattleData)
     {
-        await this.roleArea.ResetTeam(_battle_info.RoleList);
-        //---------------------------//
+         //---------------------------//
         //此处更新玩家生命、阶段、奖杯数//
         //---------------------------//
         this.UpdatePlayerInfo(_battle_info);
         this.readyData.SetRoles(_battle_info.RoleList);
+        await this.roleArea.ResetTeam(_battle_info.RoleList);
     }
 
     public destory() {
@@ -324,12 +328,23 @@ export class ReadyDis
     {
         return new Promise(async (relolve)=>
         {
-            await sleep(10); //延后一帧刷新richtext
-            this.coinText.string=""+_battle_info.coin;
-            this.heathText.string=""+_battle_info.faild;
-            this.roundText.string=""+_battle_info.round;
-            this.trophyText.string=""+_battle_info.victory;
-            relolve();
+            try
+            {
+                await sleep(50); //延后一帧刷新richtext
+                if(this.coinText && this.heathText && this.roundText && this.trophyText)
+                {
+                    this.coinText.string=""+_battle_info.coin;
+                    this.heathText.string=""+_battle_info.faild;
+                    this.roundText.string=""+_battle_info.round;
+                    this.trophyText.string=""+_battle_info.victory;
+                }
+                relolve();
+            }
+            catch(error)
+            {
+                console.warn("引擎bug，还是会有极小概率richtext报空函数，可以忽略");
+                relolve();
+            }
         });
     }
 
