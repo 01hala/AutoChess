@@ -105,6 +105,7 @@ export class RoleIcon extends Component
             let r=new role.Role(_teamindex, _Id, _level, _stack, Camp.Self, map, _fetters);
             console.log('RoleIcon spawn role: ',_Id);
             this.roleNode=await this.SpawnRole(r);
+            this.roleNode.setScale(new Vec3(1.4,1.4,1));
             this.originalPos=this.node.getPosition();
             this.roleId=_Id;
             //通过配置文件加载资源
@@ -141,6 +142,7 @@ export class RoleIcon extends Component
     //拖拽取消
             this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
+                this.node.setSiblingIndex(98);
                 this.OffTirrger();
                 //隐藏人物放置可视化区域
                 this.visiableArea.active=false;
@@ -157,6 +159,7 @@ export class RoleIcon extends Component
             {
                 try
                 {
+                    this.node.setSiblingIndex(98);
                     this.OffTirrger();
                     //隐藏人物放置可视化区域                                                                  // 修改函数
                     this.visiableArea.active=false;                                                         
@@ -233,12 +236,11 @@ export class RoleIcon extends Component
                     //console.log(this.isMerge);
                     //冻结角色
                     if(this.isBuy) this.isFreeze=false;
-                    this.freezeSprite.active = this.isFreeze;
-                    this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.isFreeze);
-                    if (this.isFreeze && !this.isBuy) {
-                        console.log("RoleFreeze!!!");
-                        this.freezeLock = !this.freezeLock;
-                        
+                    if(this.freezeLock)
+                    {
+                        this.freezeSprite.active = this.isFreeze;
+                        this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.isFreeze);
+                        this.freezeLock=false;
                     }
                     //吸附缓动
                     //console.log(`isMerge : ${this.isMerge} ; isBuy : ${this.isBuy}`);
@@ -295,6 +297,7 @@ export class RoleIcon extends Component
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
+                this.node.setSiblingIndex(99);
                 this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象
@@ -409,7 +412,7 @@ export class RoleIcon extends Component
                 }
                 //冻结区域
                 if (null != otherCollider && 3 == otherCollider.tag) {
-                    this.isFreeze = false;
+                    this.freezeLock=false;
                 }
             }
             catch(error)
@@ -475,12 +478,13 @@ export class RoleIcon extends Component
                     else
                     {
                         this.index = null;
+                        this.tempIndex = null;
                     }
                 }
                 //冻结区域
                 if (null != otherCollider && 3 == otherCollider.tag) {
                     if (!this.isBuy) {
-                        //this.isFreeze = true;
+                        this.freezeLock=true;
                         this.isFreeze=!this.isFreeze;
                     }
                 }
@@ -512,9 +516,11 @@ export class RoleIcon extends Component
              .call(()=>
              {
                 this.originalPos=this.node.getPosition();
+             }).delay(0.1).call(()=>
+             {
+                tween(this.roleNode).to(0.1,{scale:new Vec3(1.2,1.2,1)}).start();
                 this.tweenNode.stop();
-             })
-             .start();
+             }).start();
             //this.node.setWorldPosition(this.target.worldPosition);
         }
         else
