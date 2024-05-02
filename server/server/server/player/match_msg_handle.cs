@@ -36,13 +36,16 @@ namespace Player
                 {
                     _player_info.Data.Info().score -= 3;
                 }
-                _player_info.Data.AddCheckAchievement(new BattleInfo
+
+                var battleInfo = new BattleInfo
                 {
                     mod = BattleMod.PeakStrength,
                     isVictory = is_victory,
                     isStreakVictory = false,
                     RoleList = user.RoleList,
-                });
+                };
+                _player_info.Data.AddCheckAchievement(_avatar.ClientUUID, battleInfo);
+                _player_info.Data.AddCheckWeekAchievement(_avatar.ClientUUID, battleInfo);
                 _player_info.write_back();
 
                 var rank_Info = new UserRankInfo
@@ -68,13 +71,15 @@ namespace Player
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(user.User.UserGuid);
                 var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
-                _player_info.Data.AddCheckAchievement(new BattleInfo
+                var battleInfo = new BattleInfo
                 {
                     mod = BattleMod.PeakStrength,
                     isVictory = is_victory ? BattleVictory.victory : BattleVictory.faild,
                     isStreakVictory = is_victory && user.faild <= 0,
                     RoleList = user.RoleList,
-                });
+                };
+                _player_info.Data.AddCheckAchievement(_avatar.ClientUUID, battleInfo);
+                _player_info.Data.AddCheckWeekAchievement(_avatar.ClientUUID, battleInfo);
 
                 client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).battle_victory();
             }
