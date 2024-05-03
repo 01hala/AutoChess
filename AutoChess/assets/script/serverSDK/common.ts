@@ -279,6 +279,7 @@ export function protcol_to_BattleInfo(_protocol:any){
 
 export class AchievementReward
 {
+    public gold : number = 0;
 
 }
 
@@ -293,6 +294,9 @@ export function protcol_to_AchievementReward(_protocol:any){
 
     let _struct = new AchievementReward();
     for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "gold"){
+            _struct.gold = val as number;
+        }
     }
     return _struct;
 }
