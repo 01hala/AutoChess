@@ -32,6 +32,16 @@ namespace Match
         {
             return _match_player_caller.get_hub(_proxy.name).peak_strength_victory(is_victory, user);
         }
+
+        public void buy_role(long guid, Role roleInfo)
+        {
+            _match_player_caller.get_hub(_proxy.name).buy_role(guid, roleInfo);
+        }
+
+        public void buy_equip(long guid, int equipId) 
+        {
+            _match_player_caller.get_hub(_proxy.name).buy_equip(guid, equipId);
+        }
     }
 
     public class player_proxy_mng

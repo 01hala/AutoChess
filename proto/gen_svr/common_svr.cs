@@ -31,9 +31,9 @@ namespace Abelkhan
         EMWeekOneGameVictory = 101,
         EMWeekOpenCardPack = 102,
         EMWeekTotalAnnihilation = 103,
-        EMWeekWizardVictory = 104,
-        EMWeekBerserkerVictory = 105,
-        EMWeekCorsairVictory = 106,
+        EMWeekWizardAnnihilation = 104,
+        EMWeekBerserkerAnnihilation = 105,
+        EMWeekCorsairAnnihilation = 106,
         EMWeekBuyTenBeforeRound = 107,
         EMWeekBuyBeHurted = 108,
         EMWeekBuyBeDead = 109,
@@ -320,12 +320,14 @@ namespace Abelkhan
 
     public class AchievementReward
     {
+        public Int32 gold;
         public static MsgPack.MessagePackObjectDictionary AchievementReward_to_protcol(AchievementReward _struct){
         if (_struct == null) {
             return null;
         }
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("gold", _struct.gold);
             return _protocol;
         }
         public static AchievementReward protcol_to_AchievementReward(MsgPack.MessagePackObjectDictionary _protocol){
@@ -335,6 +337,9 @@ namespace Abelkhan
 
             var _structd775bff9_9118_3a98_a8ac_67991eeb0a97 = new AchievementReward();
             foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "gold"){
+                    _structd775bff9_9118_3a98_a8ac_67991eeb0a97.gold = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
             }
             return _structd775bff9_9118_3a98_a8ac_67991eeb0a97;
         }
@@ -430,6 +435,7 @@ namespace Abelkhan
     public class UserWeekAchievement
     {
         public bool oneGameVictory;
+        public bool openCardPack;
         public Int32 totalAnnihilation;
         public Int32 wizardAnnihilation;
         public Int32 berserkerAnnihilation;
@@ -448,6 +454,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("oneGameVictory", _struct.oneGameVictory);
+            _protocol.Add("openCardPack", _struct.openCardPack);
             _protocol.Add("totalAnnihilation", _struct.totalAnnihilation);
             _protocol.Add("wizardAnnihilation", _struct.wizardAnnihilation);
             _protocol.Add("berserkerAnnihilation", _struct.berserkerAnnihilation);
@@ -476,6 +483,9 @@ namespace Abelkhan
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneGameVictory"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.oneGameVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "openCardPack"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.openCardPack = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "totalAnnihilation"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.totalAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();

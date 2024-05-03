@@ -40,6 +40,7 @@ struct BattleInfo {
 }
 
 struct AchievementReward {
+	int32 gold;
 }
 
 enum Achievement {
@@ -54,17 +55,17 @@ enum Achievement {
 	EMNoneEquipmentVictory = 9;       // 全员无装备获得胜利
 	EMNotGivenAllYet = 10;			  // 获胜时还有空位
 
-	EMWeekOneGameVictory = 101;       // 周成就 获取一次游戏胜利
-	EMWeekOpenCardPack = 102;		  // 周成就 开启一次卡包
-	EMWeekTotalAnnihilation =103;	  // 周成就 消灭80个角色
-	EMWeekWizardVictory = 104;        // 周成就 使用巫师获得胜利
-	EMWeekBerserkerVictory = 105;     // 周成就 使用狂战士获得胜利
-	EMWeekCorsairVictory = 106;       // 周成就 使用海盗获得胜利
-	EMWeekBuyTenBeforeRound = 107;	  // 周成就 购买十位效果在“回合开始前”触发的角色
-	EMWeekBuyBeHurted = 108;		  // 周成就 购买十位效果在“受伤时”触发的角色
-	EMWeekBuyBeDead = 109;			  // 周成就 购买十位效果在“晕厥时”触发的角色
-	EMWeekBuyTenEquip =110;			  // 周成就 购买十件装备
-	EMWeekOneFullLevelRole = 111;	  // 周成就 拥有一个满级角色
+	EMWeekOneGameVictory = 101;       	// 周成就 获取一次游戏胜利
+	EMWeekOpenCardPack = 102;		  	// 周成就 开启一次卡包
+	EMWeekTotalAnnihilation =103;	  	// 周成就 消灭80个角色
+	EMWeekWizardAnnihilation = 104;   	// 周成就 使用巫师消灭100个角色
+	EMWeekBerserkerAnnihilation = 105;	// 周成就 使用狂战士消灭100个角色
+	EMWeekCorsairAnnihilation = 106;  	// 周成就 使用海盗获消灭100个角色
+	EMWeekBuyTenBeforeRound = 107;	  	// 周成就 购买十位效果在“回合开始前”触发的角色
+	EMWeekBuyBeHurted = 108;		  	// 周成就 购买十位效果在“受伤时”触发的角色
+	EMWeekBuyBeDead = 109;			  	// 周成就 购买十位效果在“晕厥时”触发的角色
+	EMWeekBuyTenEquip =110;			  	// 周成就 购买十件装备
+	EMWeekOneFullLevelRole = 111;	  	// 周成就 拥有一个满级角色
 }
 
 struct UserAchievement {
@@ -83,6 +84,7 @@ struct UserAchievement {
 
 struct UserWeekAchievement {
 	bool oneGameVictory;         // 周成就 参与一次游戏并获得胜利
+	bool openCardPack;			 // 周成就 开启一次卡包
 	int32 totalAnnihilation;     // 周成就 消灭80个角色
 	int32 wizardAnnihilation;    // 周成就 使用巫师消灭100个角色
 	int32 berserkerAnnihilation; // 周成就 使用狂战士消灭100个角色
