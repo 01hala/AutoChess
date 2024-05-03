@@ -26,9 +26,9 @@ export enum Achievement{
     EMWeekOneGameVictory = 101,
     EMWeekOpenCardPack = 102,
     EMWeekTotalAnnihilation = 103,
-    EMWeekWizardVictory = 104,
-    EMWeekBerserkerVictory = 105,
-    EMWeekCorsairVictory = 106,
+    EMWeekWizardAnnihilation = 104,
+    EMWeekBerserkerAnnihilation = 105,
+    EMWeekCorsairAnnihilation = 106,
     EMWeekBuyTenBeforeRound = 107,
     EMWeekBuyBeHurted = 108,
     EMWeekBuyBeDead = 109,
@@ -367,6 +367,7 @@ export function protcol_to_UserAchievement(_protocol:any){
 export class UserWeekAchievement
 {
     public oneGameVictory : boolean = false;
+    public openCardPack : boolean = false;
     public totalAnnihilation : number = 0;
     public wizardAnnihilation : number = 0;
     public berserkerAnnihilation : number = 0;
@@ -394,6 +395,9 @@ export function protcol_to_UserWeekAchievement(_protocol:any){
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "oneGameVictory"){
             _struct.oneGameVictory = val as boolean;
+        }
+        else if (key === "openCardPack"){
+            _struct.openCardPack = val as boolean;
         }
         else if (key === "totalAnnihilation"){
             _struct.totalAnnihilation = val as number;

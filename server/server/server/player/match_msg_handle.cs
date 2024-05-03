@@ -1,5 +1,7 @@
 ﻿using Abelkhan;
 using System;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Player
 {
@@ -10,8 +12,48 @@ namespace Player
         public match_msg_handle()
         {
             match_Player_Module = new ();
+            match_Player_Module.on_buy_role += Match_Player_Module_on_buy_role;
+            match_Player_Module.on_buy_equip += Match_Player_Module_on_buy_equip;
             match_Player_Module.on_battle_victory += Match_Player_Module_on_battle_victory;
             match_Player_Module.on_peak_strength_victory += Match_Player_Module_on_peak_strength_victory;
+        }
+
+        private void Match_Player_Module_on_buy_equip(long guid, int equip)
+        {
+            Log.Log.trace("on_buy_equip begin!");
+
+            try
+            {
+                var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
+                var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
+                _player_info.Data.CheckBuyEquip(_avatar.ClientUUID, equip);
+                _player_info.write_back();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"on_buy_equip error:{ex}");
+            }
+
+            Log.Log.trace("on_buy_equip end!");
+        }
+
+        private void Match_Player_Module_on_buy_role(long guid, Role roleInfo)
+        {
+            Log.Log.trace("on_buy_role begin!");
+
+            try
+            {
+                var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
+                var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
+                _player_info.Data.CheckBuyRole(_avatar.ClientUUID, roleInfo);
+                _player_info.write_back();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"on_buy_role error:{ex}");
+            }
+
+            Log.Log.trace("on_buy_role end!");
         }
 
         private void Match_Player_Module_on_peak_strength_victory(BattleVictory is_victory, UserBattleData user)

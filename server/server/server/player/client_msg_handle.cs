@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using System;
+using System.Security.Cryptography;
 
 namespace Player
 {
@@ -20,6 +21,7 @@ namespace Player
             player_battle_Module.on_start_battle += Player_battle_Module_on_start_battle;
             player_battle_Module.on_start_peak_strength += Player_battle_Module_on_start_peak_strength;
             player_battle_Module.on_achievement_gold25 += Player_battle_Module_on_achievement_gold25;
+            player_battle_Module.on_kill_role += Player_battle_Module_on_kill_role;
             player_battle_Module.on_check_achievement += Player_battle_Module_on_check_achievement;
 
             player_shop_Module = new();
@@ -27,6 +29,25 @@ namespace Player
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_battle_Module_on_kill_role(Role roleInfo)
+        {
+            Log.Log.trace("on_kill_role begin!");
+
+            try
+            {
+                var uuid = Hub.Hub._gates.current_client_uuid;
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                _data.Data.CheckKillRole(_avatar.ClientUUID, roleInfo);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_shop_Module_on_get_user_data err:{ex}");
+            }
+
+            Log.Log.trace("on_kill_role end!");
         }
 
         private async void Player_battle_Module_on_check_achievement(Achievement achievement)

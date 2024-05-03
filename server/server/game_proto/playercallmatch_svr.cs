@@ -543,6 +543,20 @@ namespace Abelkhan
             rsp_cb_match_player_handle = rsp_cb_match_player_handle_;
         }
 
+        public void buy_role(Int64 guid, Role roleInfo){
+            var _argv_79547ae1_cf59_3c32_9657_51ae5d97001e = new ArrayList();
+            _argv_79547ae1_cf59_3c32_9657_51ae5d97001e.Add(guid);
+            _argv_79547ae1_cf59_3c32_9657_51ae5d97001e.Add(Role.Role_to_protcol(roleInfo));
+            Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_buy_role", _argv_79547ae1_cf59_3c32_9657_51ae5d97001e);
+        }
+
+        public void buy_equip(Int64 guid, Int32 equipID){
+            var _argv_614a081d_0f9b_3fdd_9f4e_28d56e883756 = new ArrayList();
+            _argv_614a081d_0f9b_3fdd_9f4e_28d56e883756.Add(guid);
+            _argv_614a081d_0f9b_3fdd_9f4e_28d56e883756.Add(equipID);
+            Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_buy_equip", _argv_614a081d_0f9b_3fdd_9f4e_28d56e883756);
+        }
+
         public void battle_victory(bool is_victory, UserBattleData userInfo){
             var _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5 = new ArrayList();
             _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(is_victory);
@@ -722,8 +736,28 @@ namespace Abelkhan
     public class match_player_module : Common.IModule {
         public match_player_module() 
         {
+            Hub.Hub._modules.add_mothed("match_player_buy_role", buy_role);
+            Hub.Hub._modules.add_mothed("match_player_buy_equip", buy_equip);
             Hub.Hub._modules.add_mothed("match_player_battle_victory", battle_victory);
             Hub.Hub._modules.add_mothed("match_player_peak_strength_victory", peak_strength_victory);
+        }
+
+        public event Action<Int64, Role> on_buy_role;
+        public void buy_role(IList<MsgPack.MessagePackObject> inArray){
+            var _guid = ((MsgPack.MessagePackObject)inArray[0]).AsInt64();
+            var _roleInfo = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            if (on_buy_role != null){
+                on_buy_role(_guid, _roleInfo);
+            }
+        }
+
+        public event Action<Int64, Int32> on_buy_equip;
+        public void buy_equip(IList<MsgPack.MessagePackObject> inArray){
+            var _guid = ((MsgPack.MessagePackObject)inArray[0]).AsInt64();
+            var _equipID = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            if (on_buy_equip != null){
+                on_buy_equip(_guid, _equipID);
+            }
         }
 
         public event Action<bool, UserBattleData> on_battle_victory;
