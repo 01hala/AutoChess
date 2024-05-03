@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using System;
+using System.Drawing;
 using System.Security.Cryptography;
 
 namespace Player
@@ -63,7 +64,12 @@ namespace Player
                 var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                 if (_data.Data.CheckAchievement(achievement))
                 {
-                    rsp.rsp(new AchievementReward());
+                    var reward = new AchievementReward();
+                    if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), achievement), out var task))
+                    {
+                        reward.gold = task.RewardGold;
+                    }
+                    rsp.rsp(reward);
                 }
                 else
                 {
