@@ -299,11 +299,12 @@ export class ReadyDis
             console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
             for(let i=0;i<6;i++)
             {
+                this.fetters[i].active=false;
                 if(i<_battle_info.FettersList.length)
-                {
-                    this.fetters[i].active=true;
+                {                 
                     //let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
                     let str=config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Res;
+                    let fetterLevels=config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).roleNum;
                     let sf:SpriteFrame=await this.LoadFetterImg(str);
                     if(sf)
                     {
@@ -313,9 +314,21 @@ export class ReadyDis
                     sf=await loadAssets.LoadImg(str);
                     //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
                     this.fetters[i].getComponent(Sprite).spriteFrame=sf;
-                    continue;
-                }
-                this.fetters[i].active=false;
+                    this.fetters[i].active=true;
+                    let text = this.fetters[i].getChildByPath("Level/Text");
+                    let content="";
+                    console.log("id为："+_battle_info.FettersList[i].fetters_id+"的羁绊等级："+_battle_info.FettersList[i].fetters_level);
+                    for(let j=0;j<fetterLevels.length;j++){
+                        if(_battle_info.FettersList[i].fetters_level>=j+1){
+                            content+="<color=#ffffff>"+fetterLevels[j]+" ";
+                        }
+                        else{
+                            content+="<color=#AAAAAA>"+fetterLevels[j]+" ";
+                        }
+                    }
+                    text.getComponent(RichText).string=content;
+                    //continue;
+                }               
             }       
         }
        catch(error)
