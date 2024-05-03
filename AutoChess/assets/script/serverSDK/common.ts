@@ -22,11 +22,18 @@ export enum Achievement{
     EMGold25 = 7,
     EMFullAttributesVictory = 8,
     EMNoneEquipmentVictory = 9,
-    EMWeekFiveVictory = 101,
-    EMWeekOneGame = 102,
-    EMWeekWizardVictory = 103,
-    EMWeekBerserkerVictory = 104,
-    EMWeekCorsairVictory = 105
+    EMNotGivenAllYet = 10,
+    EMWeekOneGameVictory = 101,
+    EMWeekOpenCardPack = 102,
+    EMWeekTotalAnnihilation = 103,
+    EMWeekWizardVictory = 104,
+    EMWeekBerserkerVictory = 105,
+    EMWeekCorsairVictory = 106,
+    EMWeekBuyTenBeforeRound = 107,
+    EMWeekBuyBeHurted = 108,
+    EMWeekBuyBeDead = 109,
+    EMWeekBuyTenEquip = 110,
+    EMWeekOneFullLevelRole = 111
 }
 
 export enum Priority{
@@ -301,6 +308,7 @@ export class UserAchievement
     public Gold25 : boolean = false;
     public fullAttributesVictory : boolean = false;
     public noneEquipmentVictory : boolean = false;
+    public notGivenAllYet : boolean = false;
     public battleInfo : BattleInfo[] = [];
 
 }
@@ -343,6 +351,9 @@ export function protcol_to_UserAchievement(_protocol:any){
         else if (key === "noneEquipmentVictory"){
             _struct.noneEquipmentVictory = val as boolean;
         }
+        else if (key === "notGivenAllYet"){
+            _struct.notGivenAllYet = val as boolean;
+        }
         else if (key === "battleInfo"){
             _struct.battleInfo = [];
             for(let v_ of val as any) {
@@ -355,11 +366,16 @@ export function protcol_to_UserAchievement(_protocol:any){
 
 export class UserWeekAchievement
 {
-    public fiveVictory : boolean = false;
-    public oneGame : boolean = false;
-    public wizardVictory : boolean = false;
-    public berserkerVictory : boolean = false;
-    public corsairVictory : boolean = false;
+    public oneGameVictory : boolean = false;
+    public totalAnnihilation : number = 0;
+    public wizardAnnihilation : number = 0;
+    public berserkerAnnihilation : number = 0;
+    public corsairAnnihilation : number = 0;
+    public buyBeforeRoundSkill : number = 0;
+    public buyBeHurtedSkill : number = 0;
+    public buyBeDeadSkill : number = 0;
+    public buyTenEquip : number = 0;
+    public oneFullLevelRole : boolean = false;
     public battleInfo : BattleInfo[] = [];
     public timeout : number = 0;
 
@@ -376,20 +392,35 @@ export function protcol_to_UserWeekAchievement(_protocol:any){
 
     let _struct = new UserWeekAchievement();
     for (const [key, val] of Object.entries(_protocol)) {
-        if (key === "fiveVictory"){
-            _struct.fiveVictory = val as boolean;
+        if (key === "oneGameVictory"){
+            _struct.oneGameVictory = val as boolean;
         }
-        else if (key === "oneGame"){
-            _struct.oneGame = val as boolean;
+        else if (key === "totalAnnihilation"){
+            _struct.totalAnnihilation = val as number;
         }
-        else if (key === "wizardVictory"){
-            _struct.wizardVictory = val as boolean;
+        else if (key === "wizardAnnihilation"){
+            _struct.wizardAnnihilation = val as number;
         }
-        else if (key === "berserkerVictory"){
-            _struct.berserkerVictory = val as boolean;
+        else if (key === "berserkerAnnihilation"){
+            _struct.berserkerAnnihilation = val as number;
         }
-        else if (key === "corsairVictory"){
-            _struct.corsairVictory = val as boolean;
+        else if (key === "corsairAnnihilation"){
+            _struct.corsairAnnihilation = val as number;
+        }
+        else if (key === "buyBeforeRoundSkill"){
+            _struct.buyBeforeRoundSkill = val as number;
+        }
+        else if (key === "buyBeHurtedSkill"){
+            _struct.buyBeHurtedSkill = val as number;
+        }
+        else if (key === "buyBeDeadSkill"){
+            _struct.buyBeDeadSkill = val as number;
+        }
+        else if (key === "buyTenEquip"){
+            _struct.buyTenEquip = val as number;
+        }
+        else if (key === "oneFullLevelRole"){
+            _struct.oneFullLevelRole = val as boolean;
         }
         else if (key === "battleInfo"){
             _struct.battleInfo = [];

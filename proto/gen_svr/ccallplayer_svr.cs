@@ -407,6 +407,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_battle_start_battle", start_battle);
             Hub.Hub._modules.add_mothed("player_battle_start_peak_strength", start_peak_strength);
             Hub.Hub._modules.add_mothed("player_battle_achievement_gold25", achievement_gold25);
+            Hub.Hub._modules.add_mothed("player_battle_kill_role", kill_role);
             Hub.Hub._modules.add_mothed("player_battle_check_achievement", check_achievement);
         }
 
@@ -434,6 +435,14 @@ namespace Abelkhan
         public void achievement_gold25(IList<MsgPack.MessagePackObject> inArray){
             if (on_achievement_gold25 != null){
                 on_achievement_gold25();
+            }
+        }
+
+        public event Action<Role> on_kill_role;
+        public void kill_role(IList<MsgPack.MessagePackObject> inArray){
+            var _self = Role.protcol_to_Role(((MsgPack.MessagePackObject)inArray[0]).AsDictionary());
+            if (on_kill_role != null){
+                on_kill_role(_self);
             }
         }
 
