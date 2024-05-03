@@ -5,7 +5,7 @@
         "Class": "EMWeekOneGameVictory",
         "Lable": "赢得一局游戏",
         "Condition": "赢得一局任意模式的胜利",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1002": {
         "ID": 1002.0,
@@ -13,7 +13,7 @@
         "Class": "EMWeekTotalAnnihilation",
         "Lable": "消灭八十个敌人",
         "Condition": "消灭八十个敌人",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1003": {
         "ID": 1003.0,
@@ -21,7 +21,7 @@
         "Class": "EMWeekOpenCardPack",
         "Lable": "开启一次卡包",
         "Condition": "开一个任意的卡包（暂时不做这个逻辑）",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1004": {
         "ID": 1004.0,
@@ -29,7 +29,7 @@
         "Class": "EMWeekWizardVictory",
         "Lable": "使用“巫师角色”击败一百个敌人",
         "Condition": "使用“巫师角色”击败一百个敌人",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1005": {
         "ID": 1005.0,
@@ -37,7 +37,7 @@
         "Class": "EMWeekBerserkerVictory",
         "Lable": "使用“狂战士角色”击败一百个敌人",
         "Condition": "使用“狂战士角色”击败一百个敌人",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1006": {
         "ID": 1006.0,
@@ -45,7 +45,7 @@
         "Class": "EMWeekCorsairVictory",
         "Lable": "使用“海盗角色”击败一百个敌人",
         "Condition": "使用“海盗角色”击败一百个敌人",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1007": {
         "ID": 1007.0,
@@ -53,7 +53,7 @@
         "Class": "EMWeekBuyTenBeforeRound",
         "Lable": "购买十位效果在“回合开始前”触发的角色",
         "Condition": "购买十位效果在“回合开始前”触发的角色",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1008": {
         "ID": 1008.0,
@@ -61,7 +61,7 @@
         "Class": "EMWeekBuyBeHurted",
         "Lable": "购买十位效果在“受伤时”触发的角色",
         "Condition": "购买十位效果在“受伤时”触发的角色",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1009": {
         "ID": 1009.0,
@@ -69,7 +69,7 @@
         "Class": "EMWeekBuyBeDead",
         "Lable": "购买十位效果在“晕厥时”触发的角色",
         "Condition": "购买十位效果在“晕厥时”触发的角色",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1010": {
         "ID": 1010.0,
@@ -77,7 +77,7 @@
         "Class": "EMWeekBuyTenEquip",
         "Lable": "购买十件装备",
         "Condition": "购买十件装备",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "1011": {
         "ID": 1011.0,
@@ -85,7 +85,7 @@
         "Class": "EMWeekOneFullLevelRole",
         "Lable": "拥有一个满级角色",
         "Condition": "拥有一个满级角色",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2001": {
         "ID": 2001.0,
@@ -93,7 +93,7 @@
         "Class": "EMSuccessiveFiveVictory",
         "Lable": "连续获得五局皇冠",
         "Condition": "连续赢得五局游戏",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2002": {
         "ID": 2002.0,
@@ -101,7 +101,7 @@
         "Class": "EMFullLevelVictory",
         "Lable": "获胜时场上全部角色都是满级",
         "Condition": "获胜时场上全部角色都是满级",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2003": {
         "ID": 2003.0,
@@ -109,7 +109,7 @@
         "Class": "EMStreakVictory",
         "Lable": "十连胜赢得皇冠",
         "Condition": "十连胜获胜",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2004": {
         "ID": 2004.0,
@@ -117,7 +117,7 @@
         "Class": "EMFiveHundredGame",
         "Lable": "匹配/排位模式累计对局五百次",
         "Condition": "匹配/排位模式累计对局五百次",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2005": {
         "ID": 2005.0,
@@ -125,7 +125,7 @@
         "Class": "EMMachinistlVictory",
         "Lable": "获胜时全部角色都是机械师序列",
         "Condition": "获胜时全部角色都是机械师序列",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2006": {
         "ID": 2006.0,
@@ -133,7 +133,7 @@
         "Class": "EMPeakStrengthVictory",
         "Lable": "获得巅峰对决冠军",
         "Condition": "获得巅峰对决冠军",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2007": {
         "ID": 2007.0,
@@ -141,7 +141,7 @@
         "Class": "",
         "Lable": "获胜时场上还剩一个角色空位",
         "Condition": "获胜时场上还剩一个角色空位",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2008": {
         "ID": 2008.0,
@@ -149,7 +149,7 @@
         "Class": "EMGold25",
         "Lable": "回合开始时拥有25枚金币",
         "Condition": "回合开始时拥有25枚金币",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2009": {
         "ID": 2009.0,
@@ -157,7 +157,7 @@
         "Class": "EMFullAttributesVictory",
         "Lable": "获胜时全部角色攻防全满",
         "Condition": "获胜时全部角色攻防全满",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     },
     "2010": {
         "ID": 2010.0,
@@ -165,6 +165,6 @@
         "Class": "EMNoneEquipmentVictory",
         "Lable": "获胜时全部角色均未携带装备",
         "Condition": "获胜时全部角色均未携带装备",
-        "Reward": "[Gold,100]"
+        "Reward": "[\"Gold\",100]"
     }
 }
