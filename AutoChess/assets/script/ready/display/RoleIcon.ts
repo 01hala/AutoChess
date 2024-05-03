@@ -105,7 +105,7 @@ export class RoleIcon extends Component
         {
             let map=new Map<Property,number>().set(Property.HP,_Hp).set(Property.Attack,_Atk);
             console.log("new role");
-            let r=new role.Role(_teamindex, _Id, _level, _stack, Camp.Self, map, _fetters);
+            let r=new role.Role(null,_teamindex, _Id, _level, _stack, Camp.Self, map, _fetters);
             console.log('RoleIcon spawn role: ',_Id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
@@ -593,7 +593,7 @@ export class RoleIcon extends Component
         {
             let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
             let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-            let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
             //console.log('当前等级 ')
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
@@ -638,7 +638,7 @@ export class RoleIcon extends Component
                 }
             }
             let map=new Map<Property,number>().set(Property.HP,t.HP).set(Property.Attack,t.Attack);
-            let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
             this.upgradeLock=false;
@@ -669,7 +669,7 @@ export class RoleIcon extends Component
                         for(let temp of equipInfo.Vaule){
                             t.additionBuffer.push(temp);
                         }
-                        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer);
                         this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                     case 4:break;
@@ -682,7 +682,7 @@ export class RoleIcon extends Component
                         for(let temp of equipInfo.Vaule){
                             additionSkill.push(temp);
                         }
-                        let r=new role.Role(this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer,additionSkill);
+                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,Camp.Self,map,t.FettersSkillID,t.additionBuffer,additionSkill);
                         this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                 }
