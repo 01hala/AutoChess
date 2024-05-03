@@ -5,7 +5,7 @@
  * 图标拖拽类
  */
 
-import { _decorator, Asset, Button, Collider, Collider2D, Component, Contact2DType, director, EventTouch, ImageAsset, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Mask, Node, Prefab, rect, Sprite, SpriteAtlas, SpriteFrame, Texture2D, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
+import { _decorator, Asset, Button, Collider, Collider2D, Color, color, Component, Contact2DType, director, EventTouch, ImageAsset, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Mask, Node, Prefab, rect, Sprite, SpriteAtlas, SpriteFrame, Texture2D, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
@@ -51,6 +51,7 @@ export class RoleIcon extends Component
     //图标
     public iconMask:Node;
     private freezeSprite:Node;
+    private farme:Node;
     //初始位置
     public originalPos:Vec3;
     private tweenNode:Tween<Node>;
@@ -78,6 +79,8 @@ export class RoleIcon extends Component
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.visiableArea=this.panel.getChildByPath("RoleArea/visiable");
             this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
+            this.farme=this.node.getChildByPath("Farme");
+            this.farme.active=false;
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
             this.collider=this.node.getComponent(Collider2D);
@@ -117,6 +120,11 @@ export class RoleIcon extends Component
             if(!this.isBuy)
             {
                 this.iconMask.active=true;
+                this.farme.active=true;
+            }
+            else
+            {
+                this.roleNode.setScale(new Vec3(1.2,1.2,1));
             }
             this.tempIndex=this.index;
         }
@@ -141,6 +149,7 @@ export class RoleIcon extends Component
     //拖拽取消
             this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
+                this.node.setSiblingIndex(98);
                 this.OffTirrger();
                 //隐藏人物放置可视化区域
                 this.visiableArea.active=false;
@@ -157,6 +166,7 @@ export class RoleIcon extends Component
             {
                 try
                 {
+                    this.node.setSiblingIndex(98);
                     this.OffTirrger();
                     //隐藏人物放置可视化区域                                                                  // 修改函数
                     this.visiableArea.active=false;                                                         
@@ -233,12 +243,11 @@ export class RoleIcon extends Component
                     //console.log(this.isMerge);
                     //冻结角色
                     if(this.isBuy) this.isFreeze=false;
-                    this.freezeSprite.active = this.isFreeze;
-                    this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.isFreeze);
-                    if (this.isFreeze && !this.isBuy) {
-                        console.log("RoleFreeze!!!");
-                        this.freezeLock = !this.freezeLock;
-                        
+                    if(this.freezeLock)
+                    {
+                        this.freezeSprite.active = this.isFreeze;
+                        this.shopArea.FreezeEntity(common.ShopIndex.Role, this.node, this.isFreeze);
+                        this.freezeLock=false;
                     }
                     //吸附缓动
                     //console.log(`isMerge : ${this.isMerge} ; isBuy : ${this.isBuy}`);
@@ -289,12 +298,14 @@ export class RoleIcon extends Component
                 //隐藏图标并显示角色实体
                 this.roleNode.active = true;
                 this.iconMask.active = false;
+                this.farme.active=false;
                 //设置坐标
                 node.setPosition(x, y, 0);
             }, this);
     //拖拽开始
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
+                this.node.setSiblingIndex(99);
                 this.lastClickTime=Date.now();
                 this.Ontirrger();
                 //触摸到的对象
@@ -358,11 +369,35 @@ export class RoleIcon extends Component
     //从配置文件加载
     private async LoadOnConfig()
     {
-        let jconfig = config.RoleConfig.get(this.roleId);
-        let img = await loadAssets.LoadImg(jconfig.Avatar);
-        if(img)
+        try
         {
-            this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame=img;
+            let jconfig = config.RoleConfig.get(this.roleId);
+            let img = await loadAssets.LoadImg(jconfig.Avatar);
+            if(img)
+            {
+                if(null==this.iconMask)
+                {
+                    this.iconMask=this.node.getChildByName("IconMask");
+                }
+                this.iconMask.getChildByPath("RoleSprite").getComponent(Sprite).spriteFrame=img;
+            }
+            console.log("阶数",jconfig.Stage);
+            let color;
+            switch(jconfig.Stage)
+            {
+                case 1:color=new Color().fromHEX("#ffffff");break;
+                case 2:color=new Color().fromHEX("#6fce98");break;
+                case 3:color=new Color().fromHEX("#6f8ed3");break;
+                case 4:color=new Color().fromHEX("#c97ef3");break;
+                case 5:color=new Color().fromHEX("#e5ad27");break;
+                case 6:color=new Color().fromHEX("#d34fsa");break;
+            }
+            this.farme.getComponent(Sprite).color=color;
+            this.farme.getComponent(Sprite).markForUpdateRenderData(true);
+        }
+        catch(error)
+        {
+            console.error('RoleIcon 下 LoadOnConfig 错误 err: ',error);
         }
     }
     //点击事件
@@ -409,7 +444,7 @@ export class RoleIcon extends Component
                 }
                 //冻结区域
                 if (null != otherCollider && 3 == otherCollider.tag) {
-                    this.isFreeze = false;
+                    this.freezeLock=false;
                 }
             }
             catch(error)
@@ -466,16 +501,22 @@ export class RoleIcon extends Component
                 if (null != otherCollider && 2 == otherCollider.tag) {
                     //this.index = null;
                     //this.tempIndex = null;
-                    if (this.isBuy) {
+                    if (this.isBuy) 
+                    {
                         this.isSale = true;
                         this.isSwitch = false;
                         this.isMerge = false;
+                    }
+                    else
+                    {
+                        this.index = null;
+                        this.tempIndex = null;
                     }
                 }
                 //冻结区域
                 if (null != otherCollider && 3 == otherCollider.tag) {
                     if (!this.isBuy) {
-                        //this.isFreeze = true;
+                        this.freezeLock=true;
                         this.isFreeze=!this.isFreeze;
                     }
                 }
@@ -507,9 +548,11 @@ export class RoleIcon extends Component
              .call(()=>
              {
                 this.originalPos=this.node.getPosition();
+             }).delay(0.1).call(()=>
+             {
+                tween(this.roleNode).to(0.1,{scale:new Vec3(1.2,1.2,1)}).start();
                 this.tweenNode.stop();
-             })
-             .start();
+             }).start();
             //this.node.setWorldPosition(this.target.worldPosition);
         }
         else

@@ -68,9 +68,12 @@ namespace Player
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                _data.Data.Info().Achiev.Gold25 = true;
-                _data.write_back();
-                client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(Achievement.EMGold25);
+                if (!_data.Data.Info().Achiev.Gold25)
+                {
+                    _data.Data.Info().Achiev.Gold25 = true;
+                    _data.write_back();
+                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(Achievement.EMGold25);
+                }
             }
             catch (System.Exception ex)
             {

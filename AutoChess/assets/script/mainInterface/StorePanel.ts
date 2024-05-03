@@ -9,7 +9,6 @@ import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../config/config';
 import { loadAssets } from '../bundle/LoadAsset';
-import { RoleCard } from './RoleCard';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
@@ -179,61 +178,61 @@ export class StorePanel extends Component
         }
     }
 
-    private async LoadCard()
-    {
-        try
-        {
-            console.log("LoadCard!!!");
-            let jconfig=null;
-            let i=100001;
-            let j=0;
-            do
-            {
-                //console.log("id: "+i);
-                jconfig=config.RoleConfig.get(i);
-                if(jconfig!=null)
-                {
-                    let card=instantiate(this.roleCardPre);
-                    card.getComponent(RoleCard).Init(i);
-                    try
-                    {
-                        if(singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
-                        {
-                            card.getComponent(RoleCard).Lock=true;
-                            card.getComponent(RoleCard).SetNumberText
-                            (
-                                singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number,8
-                            );
-                        }
-                        else
-                        {
-                            card.getComponent(RoleCard).Lock=false;
-                            card.getChildByPath("NumberText").active=false;
-                        }
-                    }
-                    catch(error)
-                    {
-                        console.error('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
-                    }
-                    //this.cards.push(card);
-                    this.cardListPage.addChild(card);
-                    //card.getComponent(RoleCard).storePanel=this.node;
-                    if(i%8==0)
-                    {
-                        this.cardListPage=instantiate(this.cardListPre);
-                        this.pageView.addPage(this.cardListPage);
-                    }
-                    i++;j++;
-                }
-            }
-            while(jconfig!=null)
-            console.log("LoadCard done!!!");
-        }
-        catch(error)
-        {
-            console.error('StorePanel 下 LoadCard 错误 err: ',error);
-        }
-    }
+    // private async LoadCard()
+    // {
+    //     try
+    //     {
+    //         console.log("LoadCard!!!");
+    //         let jconfig=null;
+    //         let i=100001;
+    //         let j=0;
+    //         do
+    //         {
+    //             //console.log("id: "+i);
+    //             jconfig=config.RoleConfig.get(i);
+    //             if(jconfig!=null)
+    //             {
+    //                 let card=instantiate(this.roleCardPre);
+    //                 card.getComponent(RoleCard).Init(i);
+    //                 try
+    //                 {
+    //                     if(singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
+    //                     {
+    //                         card.getComponent(RoleCard).Lock=true;
+    //                         card.getComponent(RoleCard).SetNumberText
+    //                         (
+    //                             singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number,8
+    //                         );
+    //                     }
+    //                     else
+    //                     {
+    //                         card.getComponent(RoleCard).Lock=false;
+    //                         card.getChildByPath("NumberText").active=false;
+    //                     }
+    //                 }
+    //                 catch(error)
+    //                 {
+    //                     console.error('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
+    //                 }
+    //                 //this.cards.push(card);
+    //                 this.cardListPage.addChild(card);
+    //                 //card.getComponent(RoleCard).storePanel=this.node;
+    //                 if(i%8==0)
+    //                 {
+    //                     this.cardListPage=instantiate(this.cardListPre);
+    //                     this.pageView.addPage(this.cardListPage);
+    //                 }
+    //                 i++;j++;
+    //             }
+    //         }
+    //         while(jconfig!=null)
+    //         console.log("LoadCard done!!!");
+    //     }
+    //     catch(error)
+    //     {
+    //         console.error('StorePanel 下 LoadCard 错误 err: ',error);
+    //     }
+    // }
 
     private InitStore()
     {
