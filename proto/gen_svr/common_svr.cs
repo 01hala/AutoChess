@@ -27,11 +27,18 @@ namespace Abelkhan
         EMGold25 = 7,
         EMFullAttributesVictory = 8,
         EMNoneEquipmentVictory = 9,
-        EMWeekFiveVictory = 101,
-        EMWeekOneGame = 102,
-        EMWeekWizardVictory = 103,
-        EMWeekBerserkerVictory = 104,
-        EMWeekCorsairVictory = 105
+        EMNotGivenAllYet = 10,
+        EMWeekOneGameVictory = 101,
+        EMWeekOpenCardPack = 102,
+        EMWeekTotalAnnihilation = 103,
+        EMWeekWizardVictory = 104,
+        EMWeekBerserkerVictory = 105,
+        EMWeekCorsairVictory = 106,
+        EMWeekBuyTenBeforeRound = 107,
+        EMWeekBuyBeHurted = 108,
+        EMWeekBuyBeDead = 109,
+        EMWeekBuyTenEquip = 110,
+        EMWeekOneFullLevelRole = 111
     }
     public enum Priority{
         Low = 1,
@@ -344,6 +351,7 @@ namespace Abelkhan
         public bool Gold25;
         public bool fullAttributesVictory;
         public bool noneEquipmentVictory;
+        public bool notGivenAllYet;
         public List<BattleInfo> battleInfo;
         public static MsgPack.MessagePackObjectDictionary UserAchievement_to_protcol(UserAchievement _struct){
         if (_struct == null) {
@@ -360,6 +368,7 @@ namespace Abelkhan
             _protocol.Add("Gold25", _struct.Gold25);
             _protocol.Add("fullAttributesVictory", _struct.fullAttributesVictory);
             _protocol.Add("noneEquipmentVictory", _struct.noneEquipmentVictory);
+            _protocol.Add("notGivenAllYet", _struct.notGivenAllYet);
             if (_struct.battleInfo != null) {
                 var _array_battleInfo = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.battleInfo){
@@ -403,6 +412,9 @@ namespace Abelkhan
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "noneEquipmentVictory"){
                     _struct320a61f6_1974_35df_b00f_ef6fd1348b63.noneEquipmentVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
                 }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "notGivenAllYet"){
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.notGivenAllYet = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
                     _struct320a61f6_1974_35df_b00f_ef6fd1348b63.battleInfo = new List<BattleInfo>();
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
@@ -417,11 +429,16 @@ namespace Abelkhan
 
     public class UserWeekAchievement
     {
-        public bool fiveVictory;
-        public bool oneGame;
-        public bool wizardVictory;
-        public bool berserkerVictory;
-        public bool corsairVictory;
+        public bool oneGameVictory;
+        public Int32 totalAnnihilation;
+        public Int32 wizardAnnihilation;
+        public Int32 berserkerAnnihilation;
+        public Int32 corsairAnnihilation;
+        public Int32 buyBeforeRoundSkill;
+        public Int32 buyBeHurtedSkill;
+        public Int32 buyBeDeadSkill;
+        public Int32 buyTenEquip;
+        public bool oneFullLevelRole;
         public List<BattleInfo> battleInfo;
         public Int64 timeout;
         public static MsgPack.MessagePackObjectDictionary UserWeekAchievement_to_protcol(UserWeekAchievement _struct){
@@ -430,11 +447,16 @@ namespace Abelkhan
         }
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("fiveVictory", _struct.fiveVictory);
-            _protocol.Add("oneGame", _struct.oneGame);
-            _protocol.Add("wizardVictory", _struct.wizardVictory);
-            _protocol.Add("berserkerVictory", _struct.berserkerVictory);
-            _protocol.Add("corsairVictory", _struct.corsairVictory);
+            _protocol.Add("oneGameVictory", _struct.oneGameVictory);
+            _protocol.Add("totalAnnihilation", _struct.totalAnnihilation);
+            _protocol.Add("wizardAnnihilation", _struct.wizardAnnihilation);
+            _protocol.Add("berserkerAnnihilation", _struct.berserkerAnnihilation);
+            _protocol.Add("corsairAnnihilation", _struct.corsairAnnihilation);
+            _protocol.Add("buyBeforeRoundSkill", _struct.buyBeforeRoundSkill);
+            _protocol.Add("buyBeHurtedSkill", _struct.buyBeHurtedSkill);
+            _protocol.Add("buyBeDeadSkill", _struct.buyBeDeadSkill);
+            _protocol.Add("buyTenEquip", _struct.buyTenEquip);
+            _protocol.Add("oneFullLevelRole", _struct.oneFullLevelRole);
             if (_struct.battleInfo != null) {
                 var _array_battleInfo = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.battleInfo){
@@ -452,20 +474,35 @@ namespace Abelkhan
 
             var _struct4294a96a_052b_34f0_967a_099171a3451d = new UserWeekAchievement();
             foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "fiveVictory"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.fiveVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneGameVictory"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneGameVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneGame"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneGame = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "totalAnnihilation"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.totalAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "wizardVictory"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.wizardVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "wizardAnnihilation"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.wizardAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "berserkerVictory"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.berserkerVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "berserkerAnnihilation"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.berserkerAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "corsairVictory"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.corsairVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "corsairAnnihilation"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.corsairAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyBeforeRoundSkill"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyBeforeRoundSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyBeHurtedSkill"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyBeHurtedSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyBeDeadSkill"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyBeDeadSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyTenEquip"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyTenEquip = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneFullLevelRole"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneFullLevelRole = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.battleInfo = new List<BattleInfo>();
