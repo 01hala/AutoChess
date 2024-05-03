@@ -43,7 +43,6 @@ export class TaskLable extends Component
     {
         
     }
-
 }
 
 
