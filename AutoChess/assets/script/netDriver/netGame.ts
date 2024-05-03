@@ -244,4 +244,15 @@ export class netGame {
         });
     }
 
+    //向服务器发送报文：击杀角色
+    public kill_Role_ntf(_selfRole:common.Role)
+    {
+        this.c_player_battle__caller.get_hub(netSingleton.player.player_name).kill_role(_selfRole);
+    }
+    //向服务器发送报文：达成25金币条件
+    public achievement_gold25_ntf()
+    {
+        this.c_player_battle__caller.get_hub(netSingleton.player.player_name).achievement_gold25();
+    }
+
 }

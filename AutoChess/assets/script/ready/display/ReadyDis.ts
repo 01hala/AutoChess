@@ -83,7 +83,10 @@ export class ReadyDis
             this.launchSkillEffect.setSiblingIndex(99);
             this.launchSkillEffect.active=false;
 
-            
+            if(battle_info.coin>=25)
+            {
+                singleton.netSingleton.game.achievement_gold25_ntf();
+            }
 
             _callBack(async ()=>
             {

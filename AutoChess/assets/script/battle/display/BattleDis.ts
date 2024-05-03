@@ -329,6 +329,13 @@ export class BattleDis
                 {
                     if (!selfAttack)
                     {
+                        for(let r of ev.recipient)
+                        {
+                            if(this.battleCentre.GetEnemyTeam().GetRole(r.index).CheckDead())
+                            {
+                                singleton.netSingleton.game.kill_Role_ntf(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
+                            }
+                        }
                         let roleNode = this.selfQueue.roleNodes[ev.spellcaster.index];
                         if(roleNode)
                         {
@@ -481,13 +488,22 @@ export class BattleDis
                             }
                         }
                         else{
-                            if(Camp.Self==ev.spellcaster.camp) {
+                            if(Camp.Self==ev.spellcaster.camp) 
+                            {
+                                for(let r of ev.recipient)
+                                {
+                                    if(this.battleCentre.GetEnemyTeam().GetRole(r.index).CheckDead())
+                                    {
+                                        singleton.netSingleton.game.kill_Role_ntf(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
+                                    }
+                                }
                                 let selfRoleDis = self.getComponent(RoleDis);
                                 if (selfRoleDis) {
                                     this.selfParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos,this.father, ev));
                                 }
                             }
-                            else {
+                            else 
+                            {
                                 let selfRoleDis = self.getComponent(RoleDis); 
                                 if (selfRoleDis) {
                                     this.enemyParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos,this.father, ev));
@@ -524,7 +540,7 @@ export class BattleDis
                 
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
-                    tmp = new rRole(element.index,element.id, 1,0, element.camp, element.properties,null);
+                    tmp = new rRole(null,element.index,element.id, 1,0, element.camp, element.properties,null);
                     let targetTeam = Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
                     let queue = Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
