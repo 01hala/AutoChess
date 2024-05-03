@@ -320,12 +320,14 @@ namespace Abelkhan
 
     public class AchievementReward
     {
+        public Int32 gold;
         public static MsgPack.MessagePackObjectDictionary AchievementReward_to_protcol(AchievementReward _struct){
         if (_struct == null) {
             return null;
         }
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("gold", _struct.gold);
             return _protocol;
         }
         public static AchievementReward protcol_to_AchievementReward(MsgPack.MessagePackObjectDictionary _protocol){
@@ -335,6 +337,9 @@ namespace Abelkhan
 
             var _structd775bff9_9118_3a98_a8ac_67991eeb0a97 = new AchievementReward();
             foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "gold"){
+                    _structd775bff9_9118_3a98_a8ac_67991eeb0a97.gold = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
             }
             return _structd775bff9_9118_3a98_a8ac_67991eeb0a97;
         }
