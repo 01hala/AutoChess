@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 
 namespace config
 {
-    public class BufferConfig
+    public class TaskConfig
     {
         public int Id;
         public string Name;
