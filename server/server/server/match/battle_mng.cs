@@ -584,6 +584,9 @@ namespace Match
                 battleData.RoleList[role_index] = r;
                 check_fetters();
                 shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
+                
+                var player_proxy = Match._player_proxy_mng.get_player(PlayerHubName);
+                player_proxy.buy_role(battleData.User.UserGuid, r);
 
                 return true;
             }
@@ -660,6 +663,9 @@ namespace Match
                 {
                     BattleClientCaller.get_client(ClientUUID).role_buy_merge(role_index, r, false);
                 }
+
+                var player_proxy = Match._player_proxy_mng.get_player(PlayerHubName);
+                player_proxy.buy_role(battleData.User.UserGuid, r);
             }
 
             shopData.SaleRoleList[index] = null;
@@ -842,6 +848,9 @@ namespace Match
             {
                 r.equipID = equipcfg.Id;
                 BattleClientCaller.get_client(ClientUUID).role_equip(p.PropID, role_index, r);
+
+                var player_proxy = Match._player_proxy_mng.get_player(PlayerHubName);
+                player_proxy.buy_equip(battleData.User.UserGuid, r.equipID);
             }
             
             return em_error.success;

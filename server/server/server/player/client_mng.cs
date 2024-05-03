@@ -669,6 +669,7 @@ namespace Player
 
         public void CheckKillRole(string uuid, Role roleInfo)
         {
+            RefreshWeekAchiev();
             info.wAchiev.totalAnnihilation++;
             if (info.wAchiev.totalAnnihilation >= 80)
             {
@@ -711,11 +712,39 @@ namespace Player
 
         public void CheckBuyRole(string uuid, Role roleInfo)
         {
-
+            RefreshWeekAchiev();
+            if (config.Config.SkillConfigs.TryGetValue(roleInfo.SkillID, out var skill))
+            {
+                if (skill.EffectTime == 3)
+                {
+                    info.wAchiev.buyBeforeRoundSkill++;
+                    if (info.wAchiev.buyBeforeRoundSkill >= 10)
+                    {
+                        client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyTenBeforeRound);
+                    }
+                }
+                else if (skill.EffectTime == 18)
+                {
+                    info.wAchiev.buyBeHurtedSkill++;
+                    if (info.wAchiev.buyBeHurtedSkill >= 10)
+                    {
+                        client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyBeHurted);
+                    }
+                }
+                else if (skill.EffectTime == 8)
+                {
+                    info.wAchiev.buyBeDeadSkill++;
+                    if (info.wAchiev.buyBeDeadSkill >= 10)
+                    {
+                        client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyBeDead);
+                    }
+                }
+            }
         }
 
         public void CheckBuyEquip(string uuid, int equipID)
         {
+            RefreshWeekAchiev();
             info.wAchiev.buyTenEquip++;
             if (info.wAchiev.buyTenEquip >= 10)
             {
