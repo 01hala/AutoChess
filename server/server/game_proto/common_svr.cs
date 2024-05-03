@@ -31,9 +31,9 @@ namespace Abelkhan
         EMWeekOneGameVictory = 101,
         EMWeekOpenCardPack = 102,
         EMWeekTotalAnnihilation = 103,
-        EMWeekWizardVictory = 104,
-        EMWeekBerserkerVictory = 105,
-        EMWeekCorsairVictory = 106,
+        EMWeekWizardAnnihilation = 104,
+        EMWeekBerserkerAnnihilation = 105,
+        EMWeekCorsairAnnihilation = 106,
         EMWeekBuyTenBeforeRound = 107,
         EMWeekBuyBeHurted = 108,
         EMWeekBuyBeDead = 109,
@@ -430,6 +430,7 @@ namespace Abelkhan
     public class UserWeekAchievement
     {
         public bool oneGameVictory;
+        public bool openCardPack;
         public Int32 totalAnnihilation;
         public Int32 wizardAnnihilation;
         public Int32 berserkerAnnihilation;
@@ -448,6 +449,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("oneGameVictory", _struct.oneGameVictory);
+            _protocol.Add("openCardPack", _struct.openCardPack);
             _protocol.Add("totalAnnihilation", _struct.totalAnnihilation);
             _protocol.Add("wizardAnnihilation", _struct.wizardAnnihilation);
             _protocol.Add("berserkerAnnihilation", _struct.berserkerAnnihilation);
@@ -476,6 +478,9 @@ namespace Abelkhan
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneGameVictory"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.oneGameVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "openCardPack"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.openCardPack = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "totalAnnihilation"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.totalAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
