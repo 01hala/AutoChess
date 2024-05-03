@@ -1,4 +1,5 @@
 import { _decorator, Component, Label, Node, primitives, RichText } from 'cc';
+import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('TaskLable')
@@ -41,7 +42,7 @@ export class TaskLable extends Component
 
     private async LoadOnConfig(_id:number)
     {
-        
+
     }
 }
 
