@@ -34,6 +34,7 @@ namespace config
         public static Dictionary<int, FettersConfig> FettersConfigs;
         public static Dictionary<int, ShopSkillConfig> ShopSkillConfigs;
         public static Dictionary<int, SkillConfig> SkillConfigs;
+        public static Dictionary<string, TaskConfig> TaskConfigs;
 
         public static void Load(string path)
         {
@@ -49,6 +50,7 @@ namespace config
             FettersConfigs = FettersConfig.Load(Path.Combine(path, "Fetters.json"));
             ShopSkillConfigs = ShopSkillConfig.Load(Path.Combine(path, "Shop_Skill.json"));
             SkillConfigs = SkillConfig.Load(Path.Combine(path, "Skill.json"));
+            TaskConfigs = TaskConfig.Load(Path.Combine(path, "Task.json"));
         }
     }
 }

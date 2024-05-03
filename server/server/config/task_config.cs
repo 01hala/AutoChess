@@ -2,20 +2,22 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using Newtonsoft.Json.Linq;
 
 namespace config
 {
     public class TaskConfig
     {
-        public int Id;
+        public int ID;
         public string Name;
-        public int Type;
-        public int Value;
-        public int Round;
+        public string Class;
+        public string Lable;
+        public string Condition;
+        public int RewardGold;
 
-        public static Dictionary<int, BufferConfig> Load(string path)
+        public static Dictionary<string, TaskConfig> Load(string path)
         {
-            var obj = new Dictionary<int, BufferConfig>();
+            var obj = new Dictionary<string, TaskConfig>();
 
             FileStream fs = File.OpenRead(path);
             byte[] data = new byte[fs.Length];
@@ -35,14 +37,27 @@ namespace config
             var handle = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(System.Text.Encoding.Default.GetString(data));
             foreach (var o in handle.Values)
             {
-                var bufferc = new BufferConfig();
-                bufferc.Id = (int)o["Id"];
-                bufferc.Name = (string)o["Name"];
-                bufferc.Type = (int)o["Type"];
-                bufferc.Value = (int)o["Value"];
-                bufferc.Round = (int)o["Round"];
+                var taskc = new TaskConfig();
+                taskc.ID = (int)o["ID"];
+                taskc.Name = (string)o["Name"];
+                taskc.Class = (string)o["Class"];
+                taskc.Lable = (string)o["Lable"];
+                taskc.Condition = (string)o["Condition"];
 
-                obj[bufferc.Id] = bufferc;
+                var reward = (string)o["Reward"];
+                var rewardList = JArray.Parse(reward);
+                for (var index = 0; index < rewardList.Count;)
+                {
+                    var r = rewardList[index++];
+                    if (r.Value<string>() == "Gold")
+                    {
+                        var gold = rewardList[index++];
+                        taskc.RewardGold = gold.Value<int>();
+                        break;
+                    }
+                }
+
+                obj[taskc.Class] = taskc;
             }
 
             return obj;
