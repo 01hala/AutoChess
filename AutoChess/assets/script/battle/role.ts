@@ -56,6 +56,7 @@ function createBuffer(id:number) : buffer.Buffer {
 }
 
 export class Role {
+    public c_role:common.Role;
     public index:number;
     public id:number;
     public skillid:number;
@@ -71,7 +72,7 @@ export class Role {
     private properties : Map<enums.Property, number> = new Map<enums.Property, number>();
     public selfCamp: enums.Camp;
 
-    public constructor(index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[],additionSkill?:number[]) {
+    public constructor(c_role:common.Role,index:number, id:number, level:number, exp:number, selfCamp: enums.Camp, properties: Map<enums.Property, number>, fetters:common.Fetters, additionBuffer?:number[],additionSkill?:number[]) {
         this.index = index;
         this.id=id;
         this.level=level;
