@@ -56,19 +56,58 @@ namespace config
                 skillc.Priority = (string)o["Priority"];
                 skillc.EffectTime = (int)o["EffectTime"];
                 skillc.Effect = (int)o["Effect"];
-                skillc.ObjCount = (int)o["ObjCount"];
-                skillc.ObjectDirection = (int)o["ObjectDirection"];
-                skillc.Level1Value_1 = (int)o["Level1Value_1"];
-                skillc.Level1Value_2 = (int)o["Level1Value_2"];
-                skillc.Level2Value_1 = (int)o["Level2Value_1"];
-                skillc.Level2Value_2 = (int)o["Level2Value_2"];
-                skillc.Level3Value_1 = (int)o["Level3Value_1"];
-                skillc.Level3Value_2 = (int)o["Level3Value_2"];
-                skillc.SummonId = (string)o["SummonId"];
-                skillc.SummonLevel = (int)o["SummonLevel"];
-                skillc.ChangePositionType = (int)o["ChangePositionType"];
-                skillc.SwapPropertiesType = (int)o["SwapPropertiesType"];
-                skillc.AddBufferID = (int)o["AddBufferID"];
+                if (o["ObjCount"] != null)
+                {
+                    skillc.ObjCount = (int)o["ObjCount"];
+                }
+                if (o["ObjectDirection"] != null)
+                {
+                    skillc.ObjectDirection = (int)o["ObjectDirection"];
+                }
+                if (o["Level1Value_1"] != null)
+                {
+                    skillc.Level1Value_1 = (int)o["Level1Value_1"];
+                }
+                if (o["Level1Value_2"] != null)
+                {
+                    skillc.Level1Value_2 = (int)o["Level1Value_2"];
+                }
+                if (o["Level2Value_1"] != null)
+                {
+                    skillc.Level2Value_1 = (int)o["Level2Value_1"];
+                }
+                if (o["Level2Value_2"] != null)
+                {
+                    skillc.Level2Value_2 = (int)o["Level2Value_2"];
+                }
+                if (o["Level3Value_1"] != null)
+                {
+                    skillc.Level3Value_1 = (int)o["Level3Value_1"];
+                }
+                if (o["Level3Value_2"] != null)
+                {
+                    skillc.Level3Value_2 = (int)o["Level3Value_2"];
+                }
+                if (o["SummonId"] != null)
+                {
+                    skillc.SummonId = (string)o["SummonId"];
+                }
+                if (o["SummonLevel"] != null)
+                {
+                    skillc.SummonLevel = (int)o["SummonLevel"];
+                }
+                if (o["ChangePositionType"] != null)
+                {
+                    skillc.ChangePositionType = (int)o["ChangePositionType"];
+                }
+                if (o["SwapPropertiesType"] != null)
+                {
+                    skillc.SwapPropertiesType = (int)o["SwapPropertiesType"];
+                }
+                if (o["AddBufferID"] != null)
+                {
+                    skillc.AddBufferID = (int)o["AddBufferID"];
+                }
                 obj[skillc.Id] = skillc;
             }
 
