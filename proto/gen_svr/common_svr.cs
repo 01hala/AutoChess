@@ -40,6 +40,11 @@ namespace Abelkhan
         EMWeekBuyTenEquip = 110,
         EMWeekOneFullLevelRole = 111
     }
+    public enum AchievementAwardStatus{
+        EMNotComplete = 0,
+        EMComplete = 1,
+        EMRecv = -1
+    }
     public enum Priority{
         Low = 1,
         Normal = 2,
@@ -347,16 +352,16 @@ namespace Abelkhan
 
     public class UserAchievement
     {
-        public bool successiveFiveVictory;
-        public bool fullLevelVictory;
-        public bool streakVictory;
-        public bool fiveHundredGame;
-        public bool machinistlVictory;
-        public bool PeakStrengthVictory;
-        public bool Gold25;
-        public bool fullAttributesVictory;
-        public bool noneEquipmentVictory;
-        public bool notGivenAllYet;
+        public Int32 successiveFiveVictory;
+        public Int32 fullLevelVictory;
+        public Int32 streakVictory;
+        public Int32 fiveHundredGame;
+        public Int32 machinistlVictory;
+        public Int32 PeakStrengthVictory;
+        public Int32 Gold25;
+        public Int32 fullAttributesVictory;
+        public Int32 noneEquipmentVictory;
+        public Int32 notGivenAllYet;
         public List<BattleInfo> battleInfo;
         public static MsgPack.MessagePackObjectDictionary UserAchievement_to_protcol(UserAchievement _struct){
         if (_struct == null) {
@@ -391,34 +396,34 @@ namespace Abelkhan
             var _struct320a61f6_1974_35df_b00f_ef6fd1348b63 = new UserAchievement();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "successiveFiveVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.successiveFiveVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.successiveFiveVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fullLevelVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fullLevelVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fullLevelVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "streakVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.streakVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.streakVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fiveHundredGame"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fiveHundredGame = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fiveHundredGame = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "machinistlVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.machinistlVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.machinistlVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "PeakStrengthVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.PeakStrengthVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.PeakStrengthVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Gold25"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.Gold25 = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.Gold25 = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fullAttributesVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fullAttributesVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fullAttributesVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "noneEquipmentVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.noneEquipmentVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.noneEquipmentVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "notGivenAllYet"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.notGivenAllYet = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.notGivenAllYet = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
                     _struct320a61f6_1974_35df_b00f_ef6fd1348b63.battleInfo = new List<BattleInfo>();
@@ -434,8 +439,8 @@ namespace Abelkhan
 
     public class UserWeekAchievement
     {
-        public bool oneGameVictory;
-        public bool openCardPack;
+        public Int32 oneGameVictory;
+        public Int32 openCardPack;
         public Int32 totalAnnihilation;
         public Int32 wizardAnnihilation;
         public Int32 berserkerAnnihilation;
@@ -444,7 +449,7 @@ namespace Abelkhan
         public Int32 buyBeHurtedSkill;
         public Int32 buyBeDeadSkill;
         public Int32 buyTenEquip;
-        public bool oneFullLevelRole;
+        public Int32 oneFullLevelRole;
         public List<BattleInfo> battleInfo;
         public Int64 timeout;
         public static MsgPack.MessagePackObjectDictionary UserWeekAchievement_to_protcol(UserWeekAchievement _struct){
@@ -482,10 +487,10 @@ namespace Abelkhan
             var _struct4294a96a_052b_34f0_967a_099171a3451d = new UserWeekAchievement();
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneGameVictory"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneGameVictory = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneGameVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "openCardPack"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.openCardPack = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.openCardPack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "totalAnnihilation"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.totalAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
@@ -512,7 +517,7 @@ namespace Abelkhan
                     _struct4294a96a_052b_34f0_967a_099171a3451d.buyTenEquip = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneFullLevelRole"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneFullLevelRole = ((MsgPack.MessagePackObject)i.Value).AsBoolean();
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneFullLevelRole = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.battleInfo = new List<BattleInfo>();

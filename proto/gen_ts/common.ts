@@ -36,6 +36,12 @@ export enum Achievement{
     EMWeekOneFullLevelRole = 111
 }
 
+export enum AchievementAwardStatus{
+    EMNotComplete = 0,
+    EMComplete = 1,
+    EMRecv = -1
+}
+
 export enum Priority{
     Low = 1,
     Normal = 2,
@@ -303,16 +309,16 @@ export function protcol_to_AchievementReward(_protocol:any){
 
 export class UserAchievement
 {
-    public successiveFiveVictory : boolean = false;
-    public fullLevelVictory : boolean = false;
-    public streakVictory : boolean = false;
-    public fiveHundredGame : boolean = false;
-    public machinistlVictory : boolean = false;
-    public PeakStrengthVictory : boolean = false;
-    public Gold25 : boolean = false;
-    public fullAttributesVictory : boolean = false;
-    public noneEquipmentVictory : boolean = false;
-    public notGivenAllYet : boolean = false;
+    public successiveFiveVictory : number = 0;
+    public fullLevelVictory : number = 0;
+    public streakVictory : number = 0;
+    public fiveHundredGame : number = 0;
+    public machinistlVictory : number = 0;
+    public PeakStrengthVictory : number = 0;
+    public Gold25 : number = 0;
+    public fullAttributesVictory : number = 0;
+    public noneEquipmentVictory : number = 0;
+    public notGivenAllYet : number = 0;
     public battleInfo : BattleInfo[] = [];
 
 }
@@ -329,34 +335,34 @@ export function protcol_to_UserAchievement(_protocol:any){
     let _struct = new UserAchievement();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "successiveFiveVictory"){
-            _struct.successiveFiveVictory = val as boolean;
+            _struct.successiveFiveVictory = val as number;
         }
         else if (key === "fullLevelVictory"){
-            _struct.fullLevelVictory = val as boolean;
+            _struct.fullLevelVictory = val as number;
         }
         else if (key === "streakVictory"){
-            _struct.streakVictory = val as boolean;
+            _struct.streakVictory = val as number;
         }
         else if (key === "fiveHundredGame"){
-            _struct.fiveHundredGame = val as boolean;
+            _struct.fiveHundredGame = val as number;
         }
         else if (key === "machinistlVictory"){
-            _struct.machinistlVictory = val as boolean;
+            _struct.machinistlVictory = val as number;
         }
         else if (key === "PeakStrengthVictory"){
-            _struct.PeakStrengthVictory = val as boolean;
+            _struct.PeakStrengthVictory = val as number;
         }
         else if (key === "Gold25"){
-            _struct.Gold25 = val as boolean;
+            _struct.Gold25 = val as number;
         }
         else if (key === "fullAttributesVictory"){
-            _struct.fullAttributesVictory = val as boolean;
+            _struct.fullAttributesVictory = val as number;
         }
         else if (key === "noneEquipmentVictory"){
-            _struct.noneEquipmentVictory = val as boolean;
+            _struct.noneEquipmentVictory = val as number;
         }
         else if (key === "notGivenAllYet"){
-            _struct.notGivenAllYet = val as boolean;
+            _struct.notGivenAllYet = val as number;
         }
         else if (key === "battleInfo"){
             _struct.battleInfo = [];
@@ -370,8 +376,8 @@ export function protcol_to_UserAchievement(_protocol:any){
 
 export class UserWeekAchievement
 {
-    public oneGameVictory : boolean = false;
-    public openCardPack : boolean = false;
+    public oneGameVictory : number = 0;
+    public openCardPack : number = 0;
     public totalAnnihilation : number = 0;
     public wizardAnnihilation : number = 0;
     public berserkerAnnihilation : number = 0;
@@ -380,7 +386,7 @@ export class UserWeekAchievement
     public buyBeHurtedSkill : number = 0;
     public buyBeDeadSkill : number = 0;
     public buyTenEquip : number = 0;
-    public oneFullLevelRole : boolean = false;
+    public oneFullLevelRole : number = 0;
     public battleInfo : BattleInfo[] = [];
     public timeout : number = 0;
 
@@ -398,10 +404,10 @@ export function protcol_to_UserWeekAchievement(_protocol:any){
     let _struct = new UserWeekAchievement();
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "oneGameVictory"){
-            _struct.oneGameVictory = val as boolean;
+            _struct.oneGameVictory = val as number;
         }
         else if (key === "openCardPack"){
-            _struct.openCardPack = val as boolean;
+            _struct.openCardPack = val as number;
         }
         else if (key === "totalAnnihilation"){
             _struct.totalAnnihilation = val as number;
@@ -428,7 +434,7 @@ export function protcol_to_UserWeekAchievement(_protocol:any){
             _struct.buyTenEquip = val as number;
         }
         else if (key === "oneFullLevelRole"){
-            _struct.oneFullLevelRole = val as boolean;
+            _struct.oneFullLevelRole = val as number;
         }
         else if (key === "battleInfo"){
             _struct.battleInfo = [];
