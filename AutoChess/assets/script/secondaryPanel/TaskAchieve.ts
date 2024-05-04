@@ -4,12 +4,14 @@
  * 2024/04/15
  * 任务、成就面板
  */
-import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Toggle, ToggleContainer } from 'cc';
+import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Sprite, Toggle, ToggleContainer } from 'cc';
 import { PageType } from '../other/enums';
 import { BundleManager } from '../bundle/BundleManager';
 import { AudioManager } from '../other/AudioManager';
 import { config } from '../config/config';
 import { TaskLable } from '../part/TaskLable';
+import { UserAccount } from '../mainInterface/MainInterface';
+import { Achievement } from '../serverSDK/common';
 const { ccclass, property } = _decorator;
 
 @ccclass('Task & Achieve')
@@ -55,7 +57,7 @@ export class TaskAchieve extends Component
         {
             const containerEventHandler = new EventHandler();
             containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
-            containerEventHandler.component = 'TaskAchieve';// 这个是脚本类名
+            containerEventHandler.component = 'Task & Achieve';// 这个是脚本类名
             containerEventHandler.handler = 'OnCheckToggleEvent';
 
             this.toggleGroup.getComponent(ToggleContainer).checkEvents.push(containerEventHandler);
@@ -73,7 +75,7 @@ export class TaskAchieve extends Component
             this.node.getComponent(BlockInputEvents).enabled=true;
             this.node.setSiblingIndex(100);
             this.board.active=true;
-            //this.ShowLabels(PageType.Task);
+            this.ShowLabels(PageType.Task);
             this.board.getComponent(Animation).play("PanelAppear");
         }
         catch(error)
@@ -90,11 +92,11 @@ export class TaskAchieve extends Component
             this.RemoveAllLables();
             if(this.toggleGroup.getChildByPath("TaskList").getComponent(Toggle).isChecked)
             {
-                //this.ShowLabels(PageType.Task);
+                this.ShowLabels(PageType.Task);
             }
             if(this.toggleGroup.getChildByPath("AchieveList").getComponent(Toggle).isChecked)
             {
-                //this.ShowLabels(PageType.Achieve);
+                this.ShowLabels(PageType.Achieve);
             }
         }
         catch(error)
@@ -103,7 +105,7 @@ export class TaskAchieve extends Component
         }
     }
 
-    private ShowLabels(_flag:PageType,_UserAchievement:UserActivation)
+    private ShowLabels(_flag:PageType,_user?:UserAccount)
     {
         let jconfig = null;
 
@@ -117,13 +119,18 @@ export class TaskAchieve extends Component
         do
         {
             jconfig=config.TaskConfig.get(i);
-
-            let lab=instantiate(this.lablePre);
-            lab.getComponent(TaskLable).Init(i,false);
-            this.scrollView.getChildByPath("view/content").addChild(lab);
-
+            if(jconfig!=null)
+            {
+                let lab=instantiate(this.lablePre);
+                lab.getComponent(TaskLable).Init(i,false);
+                this.scrollView.getChildByPath("view/content").addChild(lab);
+            }
+            
+            i++;
         }while(jconfig!=null)
     }
+
+
 
     private RemoveAllLables()
     {

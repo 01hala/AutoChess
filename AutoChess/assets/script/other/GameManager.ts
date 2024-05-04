@@ -100,7 +100,7 @@ export class GameManager extends Component
             this.taskAchieveBoard.setParent(this.node);
             this.taskAchieveBoard.active=false;
 
-            this.rankListBoard=instantiate(t_taskBoard);
+            this.rankListBoard=instantiate(t_rankListBoard);
             this.rankListBoard.setParent(this.node);
             this.rankListBoard.active=false;
         }

@@ -2,7 +2,7 @@ import { _decorator, Animation, animation, assetManager, Button, Component, Imag
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
-import { Bag, RoleCardInfo, UserData } from '../serverSDK/common';
+import { Bag, RoleCardInfo, UserAchievement, UserData, UserWeekAchievement } from '../serverSDK/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { UserInfo } from '../secondaryPanel/UserInfo';
@@ -18,6 +18,8 @@ export class UserAccount
     public money:number;//金币
     public diamond:number;//钻石
     public playerBag:Bag;//背包
+    public Achiev : UserAchievement | null = null;//成就
+    public wAchiev : UserWeekAchievement | null = null;//周成就（任务）
 
     constructor()
     {
@@ -257,6 +259,8 @@ export class MainInterface
             this.userAccount.diamond=_userData.diamond;
             this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userData.gold;
             this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
+            this.userAccount.Achiev=_userData.Achiev;
+            this.userAccount.wAchiev=_userData.wAchiev;
         }
     }
 
