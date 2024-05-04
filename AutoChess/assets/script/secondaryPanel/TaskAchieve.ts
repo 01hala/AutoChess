@@ -4,13 +4,15 @@
  * 2024/04/15
  * 任务、成就面板
  */
-import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandler, Node, Prefab, RichText, Toggle, ToggleContainer } from 'cc';
+import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Toggle, ToggleContainer } from 'cc';
 import { PageType } from '../other/enums';
 import { BundleManager } from '../bundle/BundleManager';
 import { AudioManager } from '../other/AudioManager';
+import { config } from '../config/config';
+import { TaskLable } from '../part/TaskLable';
 const { ccclass, property } = _decorator;
 
-@ccclass('TaskAchieve')
+@ccclass('Task & Achieve')
 export class TaskAchieve extends Component 
 {
     //标签
@@ -71,7 +73,7 @@ export class TaskAchieve extends Component
             this.node.getComponent(BlockInputEvents).enabled=true;
             this.node.setSiblingIndex(100);
             this.board.active=true;
-            this.ShowLabels(PageType.Task);
+            //this.ShowLabels(PageType.Task);
             this.board.getComponent(Animation).play("PanelAppear");
         }
         catch(error)
@@ -88,11 +90,11 @@ export class TaskAchieve extends Component
             this.RemoveAllLables();
             if(this.toggleGroup.getChildByPath("TaskList").getComponent(Toggle).isChecked)
             {
-                this.ShowLabels(PageType.Task);
+                //this.ShowLabels(PageType.Task);
             }
             if(this.toggleGroup.getChildByPath("AchieveList").getComponent(Toggle).isChecked)
             {
-                this.ShowLabels(PageType.Achieve);
+                //this.ShowLabels(PageType.Achieve);
             }
         }
         catch(error)
@@ -101,9 +103,26 @@ export class TaskAchieve extends Component
         }
     }
 
-    private ShowLabels(_flag:PageType)
+    private ShowLabels(_flag:PageType,_UserAchievement:UserActivation)
     {
+        let jconfig = null;
 
+        let i;
+        switch(_flag)
+        {
+            case PageType.Task:i=1001;break;
+            case PageType.Achieve:i=2001;break;
+        }
+
+        do
+        {
+            jconfig=config.TaskConfig.get(i);
+
+            let lab=instantiate(this.lablePre);
+            lab.getComponent(TaskLable).Init(i,false);
+            this.scrollView.getChildByPath("view/content").addChild(lab);
+
+        }while(jconfig!=null)
     }
 
     private RemoveAllLables()

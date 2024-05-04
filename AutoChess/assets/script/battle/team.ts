@@ -34,7 +34,7 @@ export class Team {
                 properties.set(enums.Property.HP, r.HP + r.TempHP);
                 properties.set(enums.Property.TotalHP, r.HP + r.TempHP);
                 properties.set(enums.Property.Attack, r.Attack + r.TempAttack);
-                this.roleList.push(new role.Role(index, r.RoleID, r.Level, r.Number, selfCamp, properties, r.FettersSkillID, [...r.additionBuffer, ...r.TempAdditionBuffer]));
+                this.roleList.push(new role.Role(r,index, r.RoleID, r.Level, r.Number, selfCamp, properties, r.FettersSkillID, [...r.additionBuffer, ...r.TempAdditionBuffer]));
             }
             index++;
         }

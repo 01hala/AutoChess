@@ -33,9 +33,13 @@ export class Queue extends Component
 
     }
 
-    update(deltaTime: number) 
+    public GetRole(_index)
     {
-        
+        if(_index>0 && _index<7)
+        {
+            return this.roleNodes[_index];
+        }
+        return null;
     }
 /*
  * 修改

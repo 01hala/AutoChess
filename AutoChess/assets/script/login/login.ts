@@ -195,11 +195,10 @@ export class login extends Component {
                 {
                     await sleep(2000);
                     this._setProgress(1.0);
-                    this._loading.done();
                     this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
                     await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
                     event();
-                    
+                    this._loading.done();
                     console.log("Start Ready sucess!");
                     clearInterval(this.interval);
                 });
@@ -213,6 +212,8 @@ export class login extends Component {
 
             this.BackMainInterface();
         }
+
+        singleton.netSingleton.player.cb_battle_victory=()=>{};
         //战斗阶段
         singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
             console.log("cb_battle start round!");

@@ -962,6 +962,12 @@ export class player_battle_hubproxy
         this._client_handle.call_hub(this.hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_achievement_gold25", _argv_5cd25ec8_fa20_3dd1_a685_26b91223e6b0);
     }
 
+    public kill_role(self:common.Role){
+        let _argv_b6c71434_50ac_3952_8c95_87ad2a241a8f:any[] = [];
+        _argv_b6c71434_50ac_3952_8c95_87ad2a241a8f.push(common.Role_to_protcol(self));
+        this._client_handle.call_hub(this.hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_kill_role", _argv_b6c71434_50ac_3952_8c95_87ad2a241a8f);
+    }
+
     public check_achievement(achievement:common.Achievement){
         let uuid_76aeb6f4_afa6_580a_b3fa_ed1a3451eb31 = Math.round(this.uuid_4ffbb290_f238_38f6_b774_75ba1cccb192++);
 

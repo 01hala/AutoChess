@@ -5,7 +5,7 @@
  */
 import { JsonAsset, resources, error } from 'cc';
 import { ChangePositionType, SwapPropertiesType } from '../other/enums';
-import { Direction, Priority } from '../serverSDK/common';
+import { Direction, Priority, Role } from '../serverSDK/common';
 
 export class FettersConfig {
     public Id: number;
@@ -14,6 +14,7 @@ export class FettersConfig {
     public EffectTime: number;
     public Effect: number;
     public RoleNum: string;
+    public roleNum:number[];
     public ObjCount: number[];
     public EffectScope: number;
     public Stage1value_1: number;
@@ -54,6 +55,8 @@ export async function LoadFettersConfig() : Promise<Map<number, FettersConfig>> 
                 fettersc.EffectTime =  v["EffectTime"];
                 fettersc.Effect =  v["Effect"];
                 fettersc.RoleNum =  v["RoleNum"];
+                let t=fettersc.RoleNum.split("|");
+                fettersc.roleNum=t.map(Number);
 
                 var count:string = v["ObjCount"];
                 console.log("ObjCount:", count);

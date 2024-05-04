@@ -8,6 +8,9 @@ module player_match {
 }
 
 module match_player {
+    buy_role ntf(int64 guid, Role roleInfo);
+    buy_equip ntf(int64 guid, int32 equipID);
+
     battle_victory ntf(bool is_victory, UserBattleData userInfo);
     peak_strength_victory req(BattleVictory is_victory, UserBattleData userInfo) rsp(UserRankInfo self) err(int32 err);
 }

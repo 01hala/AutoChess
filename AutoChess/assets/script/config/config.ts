@@ -10,6 +10,7 @@ import * as bundle_config from './bundle_config'
 import * as Food_config from './Food_config';
 import * as fetters from './fetters_config'
 import * as Equip_Config from './Equip_config';
+import * as task_config from './task_config';
 import * as SkillIntroduce_config from './SkillIntroduce_config'
 
 export class config {
@@ -22,6 +23,7 @@ export class config {
     public static BundleConfig:Map<number, bundle_config.BundleConfig>;
     public static FoodConfig:Map<number,Food_config.FoodConfig>;
     public static EquipConfig:Map<number,Equip_Config.EquipConfig>;
+    public static TaskConfig:Map<number,task_config.TaskConfig>;
     public static SkillIntroduceConfig:Map<number,SkillIntroduce_config.SkillIntroduceConfig>;
 
     public static async load() {
@@ -32,6 +34,7 @@ export class config {
         config.BundleConfig=await bundle_config.LoadBundleConfig();
         config.FoodConfig=await Food_config.LoadFoodConfig();
         config.EquipConfig=await Equip_Config.LoadEquipConfig();
+        config.TaskConfig=await task_config.LoadTaskConfig();
         config.SkillIntroduceConfig=await SkillIntroduce_config.LoadSkillIntroduceConfig();
     }
 }
