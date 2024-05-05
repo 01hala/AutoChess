@@ -34,15 +34,15 @@ export class TaskLable extends Component
         this.icon=this.node.getChildByPath("Icon");
     }
 
-    public async Init(_id:number , _finish:boolean)
+    public async Init(_id:number , _state:number)
     {
         this.id=_id;
 
         await this.LoadOnConfig();
 
-        if(_finish)
+        if(_state)
         {
-            this.node.getComponent(Sprite).grayscale=_finish;
+            this.node.getComponent(Sprite).grayscale=(_state>0);
         }
     }
 
