@@ -74,34 +74,21 @@ enum AchievementAwardStatus {
 	EMRecv = -1;				   // 已领取
 }
 
+struct AchievementData {
+	Achievement emAchievement;
+	AchievementAwardStatus status;
+	int32 count;
+}
+
 struct UserAchievement {
-	int32 successiveFiveVictory;      // 连续5次胜利     
-	int32 fullLevelVictory;           // 全员满级获得胜利
-	int32 streakVictory;              // 10局连胜获得战斗胜利
-	int32 fiveHundredGame;			  // 500次游戏
-	int32 machinistlVictory;          // 全员机械师获得胜利
-	int32 PeakStrengthVictory;        // 巅峰挑战冠军
-	int32 Gold25;			          // 成就 开局25枚金币
-	int32 fullAttributesVictory;      // 全员满属性获得胜利
-	int32 noneEquipmentVictory;       // 全员无装备获得胜利
-	int32 notGivenAllYet;			  // 获胜时阵型不满6人
+	AchievementData[] achievData;     // 成就数据
 	BattleInfo[] battleInfo;          // 战绩记录
 }
 
 struct UserWeekAchievement {
-	int32 oneGameVictory;        // 周成就 参与一次游戏并获得胜利
-	int32 openCardPack;			 // 周成就 开启一次卡包
-	int32 totalAnnihilation;     // 周成就 消灭80个角色
-	int32 wizardAnnihilation;    // 周成就 使用巫师消灭100个角色
-	int32 berserkerAnnihilation; // 周成就 使用狂战士消灭100个角色
-	int32 corsairAnnihilation;   // 周成就 使用海盗消灭100个角色
-	int32 buyBeforeRoundSkill;   // 周成就 购买十位效果在“回合开始前”触发的角色
-	int32 buyBeHurtedSkill;		 // 周成就 购买十位效果在“受伤时”触发的角色
-	int32 buyBeDeadSkill;	     // 周成就 购买十位效果在“晕厥时”触发的角色
-	int32 buyTenEquip;		     // 周成就 购买十件装备
-	int32 oneFullLevelRole;		 // 周成就 拥有一个满级角色
-	BattleInfo[] battleInfo;     // 周成就 战绩记录
-	int64 timeout;               // 周成就超时时间
+	AchievementData[] wAchievData;     // 周成就数据
+	BattleInfo[] battleInfo;          // 周成就 战绩记录
+	int64 timeout;                    // 周成就超时时间
 }
 
 struct UserData

@@ -58,15 +58,7 @@ namespace Player
         {
             return new UserWeekAchievement()
             {
-                oneGameVictory = 0,                   // 周成就 参与一次游戏并获得胜利
-                totalAnnihilation = 0,                    // 周成就 消灭80个角色
-                wizardAnnihilation = 0,                   // 周成就 使用巫师消灭100个角色
-                berserkerAnnihilation = 0,                // 周成就 使用狂战士消灭100个角色
-                corsairAnnihilation = 0,                  // 周成就 使用海盗消灭100个角色
-                buyBeforeRoundSkill = 0,                  // 周成就 购买十位效果在“回合开始前”触发的角色
-                buyBeHurtedSkill = 0,                     // 周成就 购买十位效果在“受伤时”触发的角色
-                buyBeDeadSkill = 0,                       // 周成就 购买十位效果在“晕厥时”触发的角色
-                buyTenEquip = 0,                          // 周成就 购买十件装备
+                wAchievData = new List<AchievementData>(),
                 battleInfo = new List<BattleInfo>(),      // 周成就 战绩记录
                 timeout = Timerservice.WeekEndTimetmp(),  // 周成就超时时间
             };
@@ -101,15 +93,7 @@ namespace Player
                     },
                     Achiev = new UserAchievement()
                     {
-                        successiveFiveVictory = 0,      // 连续5次胜利     
-                        fullLevelVictory = 0,           // 全员满级获得胜利
-                        streakVictory = 0,              // 10局连胜获得战斗胜利
-                        fiveHundredGame = 0,            // 500次游戏
-                        machinistlVictory = 0,          // 全员机械师获得胜利
-                        PeakStrengthVictory = 0,        // 巅峰挑战冠军
-                        Gold25 = 0,                     // 成就 开局25枚金币
-                        fullAttributesVictory = 0,      // 全员满属性获得胜利
-                        noneEquipmentVictory = 0,       // 全员无装备获得胜利
+                        achievData = new List<AchievementData>(),
                         battleInfo = new List<BattleInfo>(),// 战绩记录
                     },
                     wAchiev = NewUserWeekAchievement(),
@@ -138,15 +122,7 @@ namespace Player
                     },
                     Achiev = new UserAchievement()
                     {
-                        successiveFiveVictory = 0,      // 连续5次胜利     
-                        fullLevelVictory = 0,           // 全员满级获得胜利
-                        streakVictory = 0,              // 10局连胜获得战斗胜利
-                        fiveHundredGame = 0,            // 500次游戏
-                        machinistlVictory = 0,          // 全员机械师获得胜利
-                        PeakStrengthVictory = 0,        // 巅峰挑战冠军
-                        Gold25 = 0,                     // 成就 开局25枚金币
-                        fullAttributesVictory = 0,      // 全员满属性获得胜利
-                        noneEquipmentVictory = 0,       // 全员无装备获得胜利
+                        achievData = new List<AchievementData>(),
                         battleInfo = new List<BattleInfo>(),// 战绩记录
                     },
                     wAchiev = NewUserWeekAchievement(),
@@ -481,8 +457,35 @@ namespace Player
             return s_change;
         }
 
+        public AchievementData GetAchievementData(Achievement enumAchieve)
+        {
+            foreach(var a in info.Achiev.achievData)
+            {
+                if (a.emAchievement == enumAchieve)
+                {
+                    return a;
+                }
+            }
+
+            var data = new AchievementData()
+            {
+                emAchievement = enumAchieve,
+                status = AchievementAwardStatus.EMNotComplete,
+                count = 0,
+            };
+            info.Achiev.achievData.Add(data);
+
+            return data;
+        }
+
         private bool CheckSuccessiveFiveVictory()
         {
+            var data = GetAchievementData(Achievement.EMSuccessiveFiveVictory);
+            if (data.status == AchievementAwardStatus.EMRecv)
+            {
+                return false;
+            }
+
             var check = true;
             for(int i = info.Achiev.battleInfo.Count - 1; i < 0 && i < (info.Achiev.battleInfo.Count - 5); --i)
             {
@@ -499,7 +502,7 @@ namespace Player
 
             if (check)
             {
-                info.Achiev.successiveFiveVictory = (int)AchievementAwardStatus.EMComplete;
+                data.status = AchievementAwardStatus.EMComplete;
             }
 
             return check;
@@ -507,8 +510,13 @@ namespace Player
 
         private bool CheckFullLevelVictory(BattleInfo battleInfo)
         {
-            var check = true;
+            var data = GetAchievementData(Achievement.EMFullLevelVictory);
+            if (data.status == AchievementAwardStatus.EMRecv)
+            {
+                return false;
+            }
 
+            var check = true;
             foreach(var r in battleInfo.RoleList)
             {
                 if (r.Level < 3)
@@ -520,7 +528,7 @@ namespace Player
 
             if (check)
             {
-                info.Achiev.fullLevelVictory = (int)AchievementAwardStatus.EMComplete;
+                data.status = AchievementAwardStatus.EMComplete;
             }
 
             return check;
@@ -528,8 +536,13 @@ namespace Player
 
         private bool CheckMachinistlVictory(BattleInfo battleInfo)
         {
-            var check = true;
+            var data = GetAchievementData(Achievement.EMMachinistlVictory);
+            if (data.status == AchievementAwardStatus.EMRecv)
+            {
+                return false;
+            }
 
+            var check = true;
             foreach (var r in battleInfo.RoleList)
             {
                 if (r.FettersSkillID.fetters_id != 6)
@@ -541,7 +554,7 @@ namespace Player
 
             if (check)
             {
-                info.Achiev.machinistlVictory = (int)AchievementAwardStatus.EMComplete;
+                data.status = AchievementAwardStatus.EMComplete;
             }
 
             return check;
@@ -549,8 +562,13 @@ namespace Player
 
         private bool CheckFullAttributesVictory(BattleInfo battleInfo)
         {
-            var check = true;
+            var data = GetAchievementData(Achievement.EMFullAttributesVictory);
+            if (data.status == AchievementAwardStatus.EMRecv)
+            {
+                return false;
+            }
 
+            var check = true;
             foreach (var r in battleInfo.RoleList)
             {
                 if (r.Attack >= 50 && r.HP >= 50)
@@ -562,7 +580,7 @@ namespace Player
 
             if (check)
             {
-                info.Achiev.fullAttributesVictory = (int)AchievementAwardStatus.EMComplete;
+                data.status = AchievementAwardStatus.EMComplete;
             }
 
             return check;
@@ -570,8 +588,13 @@ namespace Player
 
         private bool CheckNoneEquipmentVictory(BattleInfo battleInfo)
         {
-            var check = true;
+            var data = GetAchievementData(Achievement.EMNoneEquipmentVictory);
+            if (data.status == AchievementAwardStatus.EMRecv)
+            {
+                return false;
+            }
 
+            var check = true;
             foreach (var r in battleInfo.RoleList)
             {
                 if (r.equipID != 0)
@@ -583,7 +606,7 @@ namespace Player
 
             if (check)
             {
-                info.Achiev.noneEquipmentVictory = (int)AchievementAwardStatus.EMComplete;
+                data.status = AchievementAwardStatus.EMComplete;
             }
 
             return check;
@@ -593,66 +616,76 @@ namespace Player
         {
             info.Achiev.battleInfo.Add(battleInfo);
 
-            if (info.Achiev.successiveFiveVictory == (int)AchievementAwardStatus.EMNotComplete)
+            if (CheckSuccessiveFiveVictory())
             {
-                if (CheckSuccessiveFiveVictory())
-                {
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMSuccessiveFiveVictory);
-                }
+                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMSuccessiveFiveVictory);
             }
-            if (info.Achiev.fullLevelVictory == (int)AchievementAwardStatus.EMNotComplete)
+            if (CheckFullLevelVictory(battleInfo))
             {
-                if (CheckFullLevelVictory(battleInfo))
-                {
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFullLevelVictory);
-                }
+                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFullLevelVictory);
             }
-            if (info.Achiev.streakVictory == (int)AchievementAwardStatus.EMNotComplete)
+            if (battleInfo.isStreakVictory)
             {
-                if (battleInfo.isStreakVictory)
+                var data = GetAchievementData(Achievement.EMStreakVictory);
+                if (data.status != AchievementAwardStatus.EMRecv)
                 {
-                    info.Achiev.streakVictory = (int)AchievementAwardStatus.EMComplete;
+                    data.status = AchievementAwardStatus.EMComplete;
                     client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMStreakVictory);
                 }
             }
-            if (info.Achiev.fiveHundredGame == (int)AchievementAwardStatus.EMNotComplete)
+            if (info.Achiev.battleInfo.Count >= 500)
             {
-                if (info.Achiev.battleInfo.Count >= 500)
+                var data = GetAchievementData(Achievement.EMFiveHundredGame);
+                if (data.status != AchievementAwardStatus.EMRecv)
                 {
-                    info.Achiev.fiveHundredGame =  (int)AchievementAwardStatus.EMComplete;
+                    data.status = AchievementAwardStatus.EMComplete;
                     client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFiveHundredGame);
                 }
             }
-            if (info.Achiev.machinistlVictory == (int)AchievementAwardStatus.EMNotComplete)
+            if (CheckMachinistlVictory(battleInfo))
             {
-                if (CheckMachinistlVictory(battleInfo))
-                {
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMMachinistlVictory);
-                }
+                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMMachinistlVictory);
             }
-            if (info.Achiev.fullAttributesVictory == (int)AchievementAwardStatus.EMNotComplete)
+            if (CheckFullAttributesVictory(battleInfo))
             {
-                if (CheckFullAttributesVictory(battleInfo))
-                {
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFullAttributesVictory);
-                }
+                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFullAttributesVictory);
             }
-            if (info.Achiev.noneEquipmentVictory == (int)AchievementAwardStatus.EMNotComplete)
+            if (CheckNoneEquipmentVictory(battleInfo))
             {
-                if (CheckNoneEquipmentVictory(battleInfo))
-                {
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMNoneEquipmentVictory);
-                }
+                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMNoneEquipmentVictory);
             }
-            if (info.Achiev.notGivenAllYet == (int)AchievementAwardStatus.EMNotComplete)
+            if (battleInfo.RoleList.Count < 6)
             {
-                if (battleInfo.RoleList.Count < 6)
+                var data = GetAchievementData(Achievement.EMNotGivenAllYet);
+                if (data.status != AchievementAwardStatus.EMRecv)
                 {
-                    info.Achiev.notGivenAllYet = (int)AchievementAwardStatus.EMComplete;
+                    data.status = AchievementAwardStatus.EMComplete;
                     client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMNotGivenAllYet);
                 }
-            } 
+            }
         }
+
+        public AchievementData GetWeekAchievementData(Achievement enumAchieve)
+        {
+            foreach (var a in info.wAchiev.wAchievData)
+            {
+                if (a.emAchievement == enumAchieve)
+                {
+                    return a;
+                }
+            }
+
+            var data = new AchievementData()
+            {
+                emAchievement = enumAchieve,
+                status = AchievementAwardStatus.EMNotComplete,
+                count = 0,
+            };
+            info.wAchiev.wAchievData.Add(data);
+
+            return data;
+        }
+
 
         private bool CheckFullLevelRole(BattleInfo battleInfo)
         {
@@ -670,11 +703,12 @@ namespace Player
         public void CheckKillRole(string uuid, Role roleInfo)
         {
             RefreshWeekAchiev();
-            
-            if (info.wAchiev.totalAnnihilation != (int)AchievementAwardStatus.EMRecv)
+
+            var a = GetWeekAchievementData(Achievement.EMWeekTotalAnnihilation);
+            if (a.status != AchievementAwardStatus.EMRecv)
             {
-                info.wAchiev.totalAnnihilation++;
-                if (info.wAchiev.totalAnnihilation >= 80)
+                a.count++;
+                if (a.count >= 80)
                 {
                     client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekTotalAnnihilation);
                 }
@@ -684,10 +718,11 @@ namespace Player
             {
                 case 9:
                     {
-                        if (info.wAchiev.wizardAnnihilation != (int)AchievementAwardStatus.EMRecv)
+                        a = GetWeekAchievementData(Achievement.EMWeekWizardAnnihilation);
+                        if (a.status != AchievementAwardStatus.EMRecv)
                         {
-                            info.wAchiev.wizardAnnihilation++;
-                            if (info.wAchiev.wizardAnnihilation >= 100)
+                            a.count++;
+                            if (a.count >= 80)
                             {
                                 client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekWizardAnnihilation);
                             }
@@ -697,10 +732,11 @@ namespace Player
 
                 case 2:
                     {
-                        if (info.wAchiev.berserkerAnnihilation != (int)AchievementAwardStatus.EMRecv)
+                        a = GetWeekAchievementData(Achievement.EMWeekBerserkerAnnihilation);
+                        if (a.status != AchievementAwardStatus.EMRecv)
                         {
-                            info.wAchiev.berserkerAnnihilation++;
-                            if (info.wAchiev.berserkerAnnihilation >= 100)
+                            a.count++;
+                            if (a.count >= 100)
                             {
                                 client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBerserkerAnnihilation);
                             }
@@ -710,10 +746,11 @@ namespace Player
 
                 case 3:
                     {
-                        if (info.wAchiev.corsairAnnihilation != (int)AchievementAwardStatus.EMRecv)
+                        a = GetWeekAchievementData(Achievement.EMWeekCorsairAnnihilation);
+                        if (a.status != AchievementAwardStatus.EMRecv)
                         {
-                            info.wAchiev.corsairAnnihilation++;
-                            if (info.wAchiev.corsairAnnihilation >= 100)
+                            a.count++;
+                            if (a.count >= 100)
                             {
                                 client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekCorsairAnnihilation);
                             }
@@ -730,10 +767,11 @@ namespace Player
             {
                 if (skill.EffectTime == 3)
                 {
-                    if (info.wAchiev.buyBeforeRoundSkill != (int)AchievementAwardStatus.EMRecv)
+                    var a = GetWeekAchievementData(Achievement.EMWeekBuyTenBeforeRound);
+                    if (a.status != AchievementAwardStatus.EMRecv)
                     {
-                        info.wAchiev.buyBeforeRoundSkill++;
-                        if (info.wAchiev.buyBeforeRoundSkill >= 10)
+                        a.count++;
+                        if (a.count >= 10)
                         {
                             client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyTenBeforeRound);
                         }
@@ -741,10 +779,11 @@ namespace Player
                 }
                 else if (skill.EffectTime == 18)
                 {
-                    if (info.wAchiev.buyBeHurtedSkill != (int)AchievementAwardStatus.EMRecv)
+                    var a = GetWeekAchievementData(Achievement.EMWeekBuyBeHurted);
+                    if (a.status != AchievementAwardStatus.EMRecv)
                     {
-                        info.wAchiev.buyBeHurtedSkill++;
-                        if (info.wAchiev.buyBeHurtedSkill >= 10)
+                        a.count++;
+                        if (a.count >= 10)
                         {
                             client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyBeHurted);
                         }
@@ -752,10 +791,11 @@ namespace Player
                 }
                 else if (skill.EffectTime == 8)
                 {
-                    if (info.wAchiev.buyBeDeadSkill != (int)AchievementAwardStatus.EMRecv)
+                    var a = GetWeekAchievementData(Achievement.EMWeekBuyBeDead);
+                    if (a.status != AchievementAwardStatus.EMRecv)
                     {
-                        info.wAchiev.buyBeDeadSkill++;
-                        if (info.wAchiev.buyBeDeadSkill >= 10)
+                        a.count++;
+                        if (a.count >= 10)
                         {
                             client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyBeDead);
                         }
@@ -768,10 +808,11 @@ namespace Player
         {
             RefreshWeekAchiev();
 
-            if (info.wAchiev.buyTenEquip != (int)AchievementAwardStatus.EMRecv)
+            var a = GetWeekAchievementData(Achievement.EMWeekBuyTenEquip);
+            if (a.status != AchievementAwardStatus.EMRecv)
             {
-                info.wAchiev.buyTenEquip++;
-                if (info.wAchiev.buyTenEquip >= 10)
+                a.count++;
+                if (a.count >= 10)
                 {
                     client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyTenEquip);
                 }
@@ -783,19 +824,21 @@ namespace Player
             RefreshWeekAchiev();
             info.wAchiev.battleInfo.Add(battleInfo);
 
-            if (info.wAchiev.oneGameVictory == (int)AchievementAwardStatus.EMNotComplete)
+            if (battleInfo.isVictory == BattleVictory.victory)
             {
-                if (battleInfo.isVictory == BattleVictory.victory)
+                var a = GetWeekAchievementData(Achievement.EMWeekOneGameVictory);
+                if (a.status != AchievementAwardStatus.EMRecv)
                 {
-                    info.wAchiev.oneGameVictory = (int)AchievementAwardStatus.EMComplete;
+                    a.status = AchievementAwardStatus.EMComplete;
                     client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekOneGameVictory);
                 }
             }
-            if (info.wAchiev.oneFullLevelRole == (int)AchievementAwardStatus.EMNotComplete)
+            if (CheckFullLevelRole(battleInfo))
             {
-                if (CheckFullLevelRole(battleInfo))
+                var a = GetWeekAchievementData(Achievement.EMWeekOneFullLevelRole);
+                if (a.status != AchievementAwardStatus.EMRecv)
                 {
-                    info.wAchiev.oneFullLevelRole = (int)AchievementAwardStatus.EMComplete;
+                    a.status = AchievementAwardStatus.EMComplete;
                     client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekOneFullLevelRole);
                 }
             }
@@ -816,144 +859,42 @@ namespace Player
             switch (achievement)
             {
                 case Achievement.EMSuccessiveFiveVictory:
-                    if (info.Achiev.successiveFiveVictory > 0)
-                    {
-                        info.Achiev.successiveFiveVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMFullLevelVictory:
-                    if (info.Achiev.fullLevelVictory > 0)
-                    {
-                        info.Achiev.fullLevelVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMStreakVictory:
-                    if (info.Achiev.streakVictory > 0)
-                    {
-                        info.Achiev.streakVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMFiveHundredGame:
-                    if (info.Achiev.fiveHundredGame > 0)
-                    {
-                        info.Achiev.fiveHundredGame = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMMachinistlVictory:
-                    if (info.Achiev.machinistlVictory > 0)
-                    {
-                        info.Achiev.machinistlVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMPeakStrengthVictory:
-                    if (info.Achiev.PeakStrengthVictory > 0)
-                    {
-                        info.Achiev.PeakStrengthVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMGold25:
-                    if (info.Achiev.Gold25 > 0)
-                    {
-                        info.Achiev.Gold25 = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMFullAttributesVictory:
-                    if (info.Achiev.fullAttributesVictory > 0)
-                    {
-                        info.Achiev.fullAttributesVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMNoneEquipmentVictory:
-                    if (info.Achiev.noneEquipmentVictory > 0)
                     {
-                        info.Achiev.noneEquipmentVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
+                        var a = GetAchievementData(achievement);
+                        if (a.status == AchievementAwardStatus.EMComplete)
+                        {
+                            a.status = AchievementAwardStatus.EMRecv;
+                            return true;
+                        }
                     }
                     break;
 
                 case Achievement.EMWeekOneGameVictory:
-                    if (info.wAchiev.oneGameVictory > 0)
-                    {
-                        info.wAchiev.oneGameVictory = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekOpenCardPack:
-                    if (info.wAchiev.openCardPack > 0)
-                    {
-                        info.wAchiev.openCardPack = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekTotalAnnihilation:
-                    if (info.wAchiev.totalAnnihilation >= 80)
-                    {
-                        info.wAchiev.totalAnnihilation = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekWizardAnnihilation:
-                    if (info.wAchiev.wizardAnnihilation >= 100)
-                    {
-                        info.wAchiev.wizardAnnihilation = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekBerserkerAnnihilation:
-                    if (info.wAchiev.berserkerAnnihilation >= 100)
-                    {
-                        info.wAchiev.berserkerAnnihilation = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekCorsairAnnihilation:
-                    if (info.wAchiev.corsairAnnihilation >= 100)
-                    {
-                        info.wAchiev.corsairAnnihilation = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekBuyTenBeforeRound:
-                    if (info.wAchiev.buyBeforeRoundSkill >= 10)
-                    {
-                        info.wAchiev.buyBeforeRoundSkill = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekBuyBeHurted:
-                    if (info.wAchiev.buyBeHurtedSkill >= 10)
-                    {
-                        info.wAchiev.buyBeHurtedSkill = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekBuyBeDead:
-                    if (info.wAchiev.buyBeDeadSkill >= 10)
-                    {
-                        info.wAchiev.buyBeDeadSkill = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekBuyTenEquip:
-                    if (info.wAchiev.buyTenEquip >= 10)
-                    {
-                        info.wAchiev.buyTenEquip = (int)AchievementAwardStatus.EMRecv;
-                        return true;
-                    }
-                    break;
                 case Achievement.EMWeekOneFullLevelRole:
-                    if (info.wAchiev.oneFullLevelRole > 0)
                     {
-                        info.wAchiev.oneFullLevelRole = (int)AchievementAwardStatus.EMRecv;
-                        return true;
+                        var a = GetWeekAchievementData(achievement);
+                        if (a.status == AchievementAwardStatus.EMComplete)
+                        {
+                            a.status = AchievementAwardStatus.EMRecv;
+                            return true;
+                        }
                     }
                     break;
             }

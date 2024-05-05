@@ -44,6 +44,10 @@ export class netPlayer {
             this.cb_battle_victory.call(null);
         }
 
+        this.player_client_module.cb_achievement_complete = (achievement)=>
+        {
+
+        }
     }
 
     private login_callback(player_name:string, token:string, nick_name:string, avatar_url:string) {

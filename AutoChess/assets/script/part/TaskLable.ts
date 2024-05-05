@@ -11,13 +11,13 @@ export class TaskLable extends Component
     public set TaskName(_value:string)
     {
         this._taskName=_value;
-        this.node.getChildByPath("Name").getComponent(RichText).string=_value;
+        this.node.getChildByPath("Name").getComponent(RichText).string="<color = #000000>"+_value + "</color>";
     }
     private _taskLable:string;
     public set TaskLable(_value:string)
     {
         this._taskLable=_value;
-        this.node.getChildByPath("Label").getComponent(Label).string=_value;
+        this.node.getChildByPath("Label").getComponent(Label).string="<color = #000000>" + _value + "</color>";
     }
 
     private icon:Node;
