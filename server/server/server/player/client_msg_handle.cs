@@ -69,6 +69,7 @@ namespace Player
                     {
                         reward.gold = task.RewardGold;
                     }
+                    _data.Data.Info().gold += task.RewardGold;
                     rsp.rsp(reward);
                 }
                 else
