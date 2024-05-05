@@ -122,7 +122,7 @@ export class TaskAchieve extends Component
             if(jconfig!=null)
             {
                 let lab=instantiate(this.lablePre);
-                lab.getComponent(TaskLable).Init(i,false);
+                lab.getComponent(TaskLable).Init(i,1);
                 this.scrollView.getChildByPath("view/content").addChild(lab);
             }
             
