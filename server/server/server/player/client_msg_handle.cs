@@ -95,9 +95,10 @@ namespace Player
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                if (_data.Data.Info().Achiev.Gold25 == 0)
+                var a = _data.Data.GetAchievementData(Achievement.EMGold25);
+                if (a.status != AchievementAwardStatus.EMRecv)
                 {
-                    _data.Data.Info().Achiev.Gold25 = (int)AchievementAwardStatus.EMComplete;
+                    a.status = AchievementAwardStatus.EMComplete;
                     _data.write_back();
                     client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(Achievement.EMGold25);
                 }
