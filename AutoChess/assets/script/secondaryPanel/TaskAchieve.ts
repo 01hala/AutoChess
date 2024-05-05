@@ -105,7 +105,7 @@ export class TaskAchieve extends Component
         }
     }
 
-    private ShowLabels(_flag:PageType,_user?:UserAccount)
+    private async ShowLabels(_flag:PageType,_user?:UserAccount)
     {
         let jconfig = null;
 
@@ -118,11 +118,11 @@ export class TaskAchieve extends Component
 
         do
         {
-            jconfig=config.TaskConfig.get(i);
+            jconfig = await config.TaskConfig.get(i);
             if(jconfig!=null)
             {
                 let lab=instantiate(this.lablePre);
-                lab.getComponent(TaskLable).Init(i,false);
+                lab.getComponent(TaskLable).Init(jconfig , false);
                 this.scrollView.getChildByPath("view/content").addChild(lab);
             }
             

@@ -1,5 +1,6 @@
 import { _decorator, Component, Label, Node, primitives, RichText, Sprite } from 'cc';
 import { config } from '../config/config';
+import { TaskConfig } from '../config/task_config';
 const { ccclass, property } = _decorator;
 
 @ccclass('TaskLable')
@@ -22,23 +23,17 @@ export class TaskLable extends Component
 
     private icon:Node;
 
-    private async LoadOnConfig()
-    {
-        let jconfig=config.TaskConfig.get(this.id);
-        this.TaskName=jconfig.Name;
-        this.TaskName=jconfig.tLable;
-    }
-
     protected onLoad(): void
     {
         this.icon=this.node.getChildByPath("Icon");
     }
 
-    public async Init(_id:number , _finish:boolean)
+    public async Init(_config:TaskConfig, _finish:boolean)
     {
-        this.id=_id;
+        this.id=_config.Id;
 
-        await this.LoadOnConfig();
+        this.TaskName=_config.Name;
+        this.TaskLable=_config.tLable;
 
         if(_finish)
         {
