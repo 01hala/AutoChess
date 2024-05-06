@@ -1,6 +1,8 @@
 import { _decorator, Component, Label, Node, primitives, RichText, Sprite } from 'cc';
 import { config } from '../config/config';
 import { TaskConfig } from '../config/task_config';
+import { AchievementAwardStatus } from '../serverSDK/common';
+import { UserAccount } from '../mainInterface/MainInterface';
 const { ccclass, property } = _decorator;
 
 @ccclass('TaskLable')
@@ -28,22 +30,19 @@ export class TaskLable extends Component
         this.icon=this.node.getChildByPath("Icon");
     }
 
-    public async Init(_config:TaskConfig, _finish:boolean)
+    public async Init(_config:TaskConfig, _status:AchievementAwardStatus)
     {
         this.id=_config.Id;
 
         this.TaskName=_config.Name;
         this.TaskLable=_config.tLable;
 
-        if(_finish)
-        {
-            this.node.getComponent(Sprite).grayscale=_finish;
-        }
+        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMComplete==_status);
     }
 
-
-
-
+    public async RefreshLable(_status:AchievementAwardStatus){
+        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMComplete==_status);
+    }
 }
 
 

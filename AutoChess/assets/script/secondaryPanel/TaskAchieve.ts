@@ -11,7 +11,7 @@ import { AudioManager } from '../other/AudioManager';
 import { config } from '../config/config';
 import { TaskLable } from '../part/TaskLable';
 import { UserAccount } from '../mainInterface/MainInterface';
-import { Achievement } from '../serverSDK/common';
+import { Achievement, AchievementData } from '../serverSDK/common';
 const { ccclass, property } = _decorator;
 
 @ccclass('Task & Achieve')
@@ -26,12 +26,18 @@ export class TaskAchieve extends Component
     private toggleGroup:Node;
     private scrollView:Node;
 
+    //用户数据，切换页表标签的时候保存用
+    private _userAccount:UserAccount;
+    //map保存lable列表方便刷新
+    private lableList:Map<Achievement,Node>;
+
     protected async onLoad(): Promise<void> 
     {
         this.exitBtn=this.node.getChildByPath("Exit_Btn").getComponent(Button);
         this.board=this.node.getChildByPath("Board");
         this.toggleGroup=this.node.getChildByPath("Board/ToggleGroup");
         this.scrollView=this.node.getChildByPath("Board/ScrollView");
+        this.lableList=new Map<Achievement,Node>();
 
         this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","TaskLabel")as Prefab;
     }
@@ -67,14 +73,15 @@ export class TaskAchieve extends Component
         }
     }
 
-    public OpenTaskAchieveBoard()
+    public OpenTaskAchieveBoard(_userAccount:UserAccount)
     {
         try
         {
             this.node.getComponent(BlockInputEvents).enabled=true;
             this.node.setSiblingIndex(100);
             this.board.active=true;
-            this.ShowLabels(PageType.Task);
+            this._userAccount=_userAccount;
+            this.ShowLabels(PageType.Task,this._userAccount);
             this.board.getComponent(Animation).play("PanelAppear");
         }
         catch(error)
@@ -91,11 +98,11 @@ export class TaskAchieve extends Component
             this.RemoveAllLables();
             if(this.toggleGroup.getChildByPath("TaskList").getComponent(Toggle).isChecked)
             {
-                this.ShowLabels(PageType.Task);
+                this.ShowLabels(PageType.Task,this._userAccount);
             }
             if(this.toggleGroup.getChildByPath("AchieveList").getComponent(Toggle).isChecked)
             {
-                this.ShowLabels(PageType.Achieve);
+                this.ShowLabels(PageType.Achieve,this._userAccount);
             }
         }
         catch(error)
@@ -115,22 +122,48 @@ export class TaskAchieve extends Component
             case PageType.Task:i=1001;break;
             case PageType.Achieve:i=2001;break;
         }
+        this.lableList.clear();
 
         do
         {
             jconfig = await config.TaskConfig.get(i);
-            if(jconfig!=null)
-            {
-                let lab=instantiate(this.lablePre);
-                lab.getComponent(TaskLable).Init(jconfig , false);
-                this.scrollView.getChildByPath("view/content").addChild(lab);
+            for(let t of _user.Achiev.achievData){         
+                if(jconfig!=null&&jconfig.tClass==t.emAchievement)
+                {
+                    let lab=instantiate(this.lablePre);
+                    lab.getComponent(TaskLable).Init(jconfig , t.status);
+                    this.scrollView.getChildByPath("view/content").addChild(lab);
+                    this.lableList.set(t.emAchievement,lab);
+
+                    i++;
+                    break;
+                }
             }
-            
-            i++;
         }while(jconfig!=null)
     }
 
-
+    public async RefreshList(_user?:UserAccount){
+        if(this.toggleGroup.getChildByPath("TaskList").getComponent(Toggle).isChecked)
+        {
+            this._userAccount=_user;
+            for(let t of this._userAccount.wAchiev.wAchievData){
+                let temp=this.lableList.get(t.emAchievement)
+                if(temp){
+                    temp.getComponent(TaskLable).RefreshLable(t.status);
+                }
+            }
+        }
+        if(this.toggleGroup.getChildByPath("AchieveList").getComponent(Toggle).isChecked)
+        {
+            this._userAccount=_user;
+            for(let t of this._userAccount.Achiev.achievData){
+                let temp=this.lableList.get(t.emAchievement)
+                if(temp){
+                    temp.getComponent(TaskLable).RefreshLable(t.status);
+                }
+            }
+        }
+    }
 
     private RemoveAllLables()
     {

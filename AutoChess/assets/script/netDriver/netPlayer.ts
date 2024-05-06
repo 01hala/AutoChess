@@ -23,6 +23,7 @@ export class netPlayer {
 
     public cb_archive_sync : () => void;
     public cb_battle_victory : () => void;
+    public cb_achievement_complete:(_userData:common.UserData)=>void;
     private player_client_module : player_client.player_client_module;
 
     public UserData: common.UserData = null;
@@ -46,7 +47,10 @@ export class netPlayer {
 
         this.player_client_module.cb_achievement_complete = (achievement)=>
         {
-
+            if(this.cb_achievement_complete){
+                //服务器协议改动后将这里变为传入改动后用户数据
+                this.cb_achievement_complete.call(null);
+            }
         }
     }
 

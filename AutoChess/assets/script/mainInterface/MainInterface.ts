@@ -217,7 +217,7 @@ export class MainInterface
             this.taskAchieveBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true));
+                this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true,this.userAccount));
             },this);
             //打开排行榜
             this.rankListBtn.on(Button.EventType.CLICK,()=>
@@ -261,6 +261,21 @@ export class MainInterface
             this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
             this.userAccount.Achiev=_userData.Achiev;
             this.userAccount.wAchiev=_userData.wAchiev;
+        }
+        singleton.netSingleton.player.cb_achievement_complete=(_userData:UserData)=>{
+            this.userData=_userData;
+            this.userAccount.money=_userData.gold;
+            this.userAccount.playerBag=_userData.bag;
+            this.userAccount.diamond=_userData.diamond;
+            this.userAccount.Achiev=_userData.Achiev;
+            this.userAccount.wAchiev=_userData.wAchiev;
+
+            //不在战斗中,说明在主界面（？
+            if(null != singleton.netSingleton.battle){
+                this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userData.gold;
+                this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
+                this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true,this.userAccount));
+            }
         }
     }
 
