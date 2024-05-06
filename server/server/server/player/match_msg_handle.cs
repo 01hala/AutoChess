@@ -26,7 +26,10 @@ namespace Player
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
                 var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
-                _player_info.Data.CheckBuyEquip(_avatar.ClientUUID, equip);
+                if (_player_info.Data.CheckBuyEquip(equip))
+                {
+                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
+                }
                 _player_info.write_back();
             }
             catch (System.Exception ex)
@@ -45,7 +48,10 @@ namespace Player
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
                 var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
-                _player_info.Data.CheckBuyRole(_avatar.ClientUUID, roleInfo);
+                if (_player_info.Data.CheckBuyRole(roleInfo))
+                {
+                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
+                }
                 _player_info.write_back();
             }
             catch (System.Exception ex)
@@ -86,8 +92,10 @@ namespace Player
                     isStreakVictory = false,
                     RoleList = user.RoleList,
                 };
-                _player_info.Data.AddCheckAchievement(_avatar.ClientUUID, battleInfo);
-                _player_info.Data.AddCheckWeekAchievement(_avatar.ClientUUID, battleInfo);
+                if (_player_info.Data.AddCheckAchievement(battleInfo) || _player_info.Data.AddCheckWeekAchievement(battleInfo))
+                {
+                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
+                }
                 _player_info.write_back();
 
                 var rank_Info = new UserRankInfo
@@ -120,8 +128,11 @@ namespace Player
                     isStreakVictory = is_victory && user.faild <= 0,
                     RoleList = user.RoleList,
                 };
-                _player_info.Data.AddCheckAchievement(_avatar.ClientUUID, battleInfo);
-                _player_info.Data.AddCheckWeekAchievement(_avatar.ClientUUID, battleInfo);
+                if (_player_info.Data.AddCheckAchievement(battleInfo) || _player_info.Data.AddCheckWeekAchievement(battleInfo))
+                {
+                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
+                }
+                _player_info.write_back();
 
                 client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).battle_victory();
             }

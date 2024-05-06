@@ -40,9 +40,10 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_1aaece60_7bb0_3cf7_bd66_aeb26a76183d, "player_client_battle_victory", _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5);
         }
 
-        public void achievement_complete(Achievement achievement){
+        public void achievement_complete(UserAchievement achieve, UserWeekAchievement wAchieve){
             var _argv_9b26826c_861c_3222_982d_eea9222c423a = new ArrayList();
-            _argv_9b26826c_861c_3222_982d_eea9222c423a.Add((int)achievement);
+            _argv_9b26826c_861c_3222_982d_eea9222c423a.Add(UserAchievement.UserAchievement_to_protcol(achieve));
+            _argv_9b26826c_861c_3222_982d_eea9222c423a.Add(UserWeekAchievement.UserWeekAchievement_to_protcol(wAchieve));
             Hub.Hub._gates.call_client(client_uuid_1aaece60_7bb0_3cf7_bd66_aeb26a76183d, "player_client_achievement_complete", _argv_9b26826c_861c_3222_982d_eea9222c423a);
         }
 
