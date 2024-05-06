@@ -45,11 +45,13 @@ export class netPlayer {
             this.cb_battle_victory.call(null);
         }
 
-        this.player_client_module.cb_achievement_complete = (achievement)=>
+        this.player_client_module.cb_achievement_complete = (achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement )=>
         {
+            this.UserData.Achiev=achieve;
+            this.UserData.wAchiev=wAchieve;
             if(this.cb_achievement_complete){
                 //服务器协议改动后将这里变为传入改动后用户数据
-                this.cb_achievement_complete.call(null);
+                this.cb_achievement_complete.call(this.UserData);
             }
         }
     }

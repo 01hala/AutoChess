@@ -23,6 +23,14 @@ export class TaskLable extends Component
         this.node.getChildByPath("Label").getComponent(Label).string=_value;
     }
 
+    private _taskMaxValue:number;
+    private _taskValue:number;
+    public set TaskValue(_value:number){
+        this._taskValue=_value;
+        this.node.getChildByPath("Count").getComponent(RichText).string=
+            "<color=#000000>"+this._taskValue+"/"+this._taskMaxValue+"</color>"
+    }
+
     private icon:Node;
 
     protected onLoad(): void
@@ -36,6 +44,7 @@ export class TaskLable extends Component
 
         this.TaskName=_config.Name;
         this.TaskLable=_config.tLable;
+        this._taskMaxValue=_config.tValue;
 
         this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMComplete==_status);
     }

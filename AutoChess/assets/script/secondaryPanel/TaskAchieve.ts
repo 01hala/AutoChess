@@ -11,7 +11,7 @@ import { AudioManager } from '../other/AudioManager';
 import { config } from '../config/config';
 import { TaskLable } from '../part/TaskLable';
 import { UserAccount } from '../mainInterface/MainInterface';
-import { Achievement, AchievementData } from '../serverSDK/common';
+import { Achievement, AchievementAwardStatus, AchievementData, AchievementReward } from '../serverSDK/common';
 const { ccclass, property } = _decorator;
 
 @ccclass('Task & Achieve')
@@ -117,28 +117,43 @@ export class TaskAchieve extends Component
         let i;
 
         this.scrollView.getComponent(ScrollView).scrollToTop(0.1);
+        let achieveList:AchievementData[];
         switch(_flag)
         {
-            case PageType.Task:i=1001;break;
-            case PageType.Achieve:i=2001;break;
+            case PageType.Task:{
+                i=1001;
+                achieveList=_user.wAchiev.wAchievData;
+            }break;
+            case PageType.Achieve:{
+                i=2001;
+                achieveList=_user.Achiev.achievData;
+            }break;
         }
         this.lableList.clear();
 
         do
         {
-            jconfig = await config.TaskConfig.get(i);
-            for(let t of _user.Achiev.achievData){         
+            // jconfig = await config.TaskConfig.get(i);
+            // if(jconfig!=null)
+            // {
+            //     let lab=instantiate(this.lablePre);
+            //     lab.getComponent(TaskLable).Init(jconfig , AchievementAwardStatus.EMComplete);
+            //     this.scrollView.getChildByPath("view/content").addChild(lab);
+            // }
+
+            i++;
+            for(let t of achieveList){         
                 if(jconfig!=null&&jconfig.tClass==t.emAchievement)
                 {
                     let lab=instantiate(this.lablePre);
                     lab.getComponent(TaskLable).Init(jconfig , t.status);
                     this.scrollView.getChildByPath("view/content").addChild(lab);
                     this.lableList.set(t.emAchievement,lab);
-
-                    i++;
+    
                     break;
                 }
             }
+            i++;
         }while(jconfig!=null)
     }
 

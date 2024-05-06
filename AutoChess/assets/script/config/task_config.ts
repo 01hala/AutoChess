@@ -12,6 +12,7 @@ export class TaskConfig {
     public tClass : Achievement;
     public tLable: string;
     public Condition : string;
+    public tValue:number;
     public Reward : Map<string,number>;
 }
 
@@ -36,6 +37,7 @@ export async function LoadTaskConfig() : Promise<Map<number, TaskConfig>> {
                 taskc.tClass=v["Class"] as Achievement;
                 taskc.tLable=v["Lable"];
                 taskc.Condition=v["Condition"];
+                taskc.tValue=v["Value"];
                 taskc.Reward=new Map<string,number>();
                 let tempList:string[] = v["Reward"] == "" ? [] : JSON.parse(v["Reward"]);
                 taskc.Reward.set(tempList[0],parseInt(tempList[1]));
