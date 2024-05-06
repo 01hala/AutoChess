@@ -4,7 +4,7 @@
  * 2024/04/15
  * 任务、成就面板
  */
-import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Sprite, Toggle, ToggleContainer } from 'cc';
+import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, ScrollView, Sprite, Toggle, ToggleContainer, Vec3, Widget } from 'cc';
 import { PageType } from '../other/enums';
 import { BundleManager } from '../bundle/BundleManager';
 import { AudioManager } from '../other/AudioManager';
@@ -46,7 +46,6 @@ export class TaskAchieve extends Component
         {
             this.Exit();
         })
-
         this.node.getComponent(BlockInputEvents).enabled=true;
         this.Init();
     }
@@ -105,11 +104,12 @@ export class TaskAchieve extends Component
         }
     }
 
-    private ShowLabels(_flag:PageType,_user?:UserAccount)
+    private async ShowLabels(_flag:PageType,_user?:UserAccount)
     {
         let jconfig = null;
-
         let i;
+
+        this.scrollView.getComponent(ScrollView).scrollToTop(0.1);
         switch(_flag)
         {
             case PageType.Task:i=1001;break;
@@ -118,11 +118,11 @@ export class TaskAchieve extends Component
 
         do
         {
-            jconfig=config.TaskConfig.get(i);
+            jconfig = await config.TaskConfig.get(i);
             if(jconfig!=null)
             {
                 let lab=instantiate(this.lablePre);
-                lab.getComponent(TaskLable).Init(i,1);
+                lab.getComponent(TaskLable).Init(jconfig , false);
                 this.scrollView.getChildByPath("view/content").addChild(lab);
             }
             

@@ -1,5 +1,6 @@
 import { _decorator, Component, Label, Node, primitives, RichText, Sprite } from 'cc';
 import { config } from '../config/config';
+import { TaskConfig } from '../config/task_config';
 const { ccclass, property } = _decorator;
 
 @ccclass('TaskLable')
@@ -11,38 +12,32 @@ export class TaskLable extends Component
     public set TaskName(_value:string)
     {
         this._taskName=_value;
-        this.node.getChildByPath("Name").getComponent(RichText).string="<color = #000000>"+_value + "</color>";
+        this.node.getChildByPath("Name").getComponent(RichText).string="<color = #000000>"+_value+"</color>";
     }
     private _taskLable:string;
     public set TaskLable(_value:string)
     {
         this._taskLable=_value;
-        this.node.getChildByPath("Label").getComponent(Label).string="<color = #000000>" + _value + "</color>";
+        this.node.getChildByPath("Label").getComponent(Label).string=_value;
     }
 
     private icon:Node;
-
-    private async LoadOnConfig()
-    {
-        let jconfig=config.TaskConfig.get(this.id);
-        this.TaskName=jconfig.Name;
-        this.TaskName=jconfig.tLable;
-    }
 
     protected onLoad(): void
     {
         this.icon=this.node.getChildByPath("Icon");
     }
 
-    public async Init(_id:number , _state:number)
+    public async Init(_config:TaskConfig, _finish:boolean)
     {
-        this.id=_id;
+        this.id=_config.Id;
 
-        await this.LoadOnConfig();
+        this.TaskName=_config.Name;
+        this.TaskLable=_config.tLable;
 
-        if(_state)
+        if(_finish)
         {
-            this.node.getComponent(Sprite).grayscale=(_state>0);
+            this.node.getComponent(Sprite).grayscale=_finish;
         }
     }
 
