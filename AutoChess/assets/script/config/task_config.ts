@@ -9,7 +9,7 @@ import { Achievement } from '../serverSDK/common';
 export class TaskConfig {
     public Id : number;
     public Name : string;
-    public tClass : Achievement;
+    public tClass : string;
     public tLable: string;
     public Condition : string;
     public tValue:number;
@@ -34,7 +34,7 @@ export async function LoadTaskConfig() : Promise<Map<number, TaskConfig>> {
                 let taskc = new TaskConfig();
                 taskc.Id = v["ID"];
                 taskc.Name = v["Name"];
-                taskc.tClass=v["Class"] as Achievement;
+                taskc.tClass=Achievement[v["Class"]];
                 taskc.tLable=v["Lable"];
                 taskc.Condition=v["Condition"];
                 taskc.tValue=v["Value"];
