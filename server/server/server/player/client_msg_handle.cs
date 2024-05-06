@@ -41,7 +41,10 @@ namespace Player
                 var uuid = Hub.Hub._gates.current_client_uuid;
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                _data.Data.CheckKillRole(_avatar.ClientUUID, roleInfo);
+                if (_data.Data.CheckKillRole(roleInfo))
+                {
+                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_data.Data.Info().Achiev, _data.Data.Info().wAchiev);
+                }
             }
             catch (System.Exception ex)
             {
@@ -101,7 +104,7 @@ namespace Player
                 {
                     a.status = AchievementAwardStatus.EMComplete;
                     _data.write_back();
-                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(Achievement.EMGold25);
+                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_data.Data.Info().Achiev, _data.Data.Info().wAchiev);
                 }
             }
             catch (System.Exception ex)

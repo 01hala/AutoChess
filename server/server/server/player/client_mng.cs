@@ -612,17 +612,18 @@ namespace Player
             return check;
         }
 
-        public void AddCheckAchievement(string uuid, BattleInfo battleInfo)
+        public bool AddCheckAchievement(BattleInfo battleInfo)
         {
             info.Achiev.battleInfo.Add(battleInfo);
 
+            bool check = false;
             if (CheckSuccessiveFiveVictory())
             {
-                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMSuccessiveFiveVictory);
+                check = true;
             }
             if (CheckFullLevelVictory(battleInfo))
             {
-                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFullLevelVictory);
+                check = true;
             }
             if (battleInfo.isStreakVictory)
             {
@@ -630,7 +631,7 @@ namespace Player
                 if (data.status != AchievementAwardStatus.EMRecv)
                 {
                     data.status = AchievementAwardStatus.EMComplete;
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMStreakVictory);
+                    check = true;
                 }
             }
             if (info.Achiev.battleInfo.Count >= 500)
@@ -639,20 +640,20 @@ namespace Player
                 if (data.status != AchievementAwardStatus.EMRecv)
                 {
                     data.status = AchievementAwardStatus.EMComplete;
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFiveHundredGame);
+                    check = true;
                 }
             }
             if (CheckMachinistlVictory(battleInfo))
             {
-                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMMachinistlVictory);
+                check = true;
             }
             if (CheckFullAttributesVictory(battleInfo))
             {
-                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMFullAttributesVictory);
+                check = true;
             }
             if (CheckNoneEquipmentVictory(battleInfo))
             {
-                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMNoneEquipmentVictory);
+                check = true;
             }
             if (battleInfo.RoleList.Count < 6)
             {
@@ -660,9 +661,11 @@ namespace Player
                 if (data.status != AchievementAwardStatus.EMRecv)
                 {
                     data.status = AchievementAwardStatus.EMComplete;
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMNotGivenAllYet);
+                    check = true;
                 }
             }
+
+            return check;
         }
 
         public AchievementData GetWeekAchievementData(Achievement enumAchieve)
@@ -700,17 +703,18 @@ namespace Player
             return false;
         }
 
-        public void CheckKillRole(string uuid, Role roleInfo)
+        public bool CheckKillRole(Role roleInfo)
         {
             RefreshWeekAchiev();
 
+            var check = false;
             var a = GetWeekAchievementData(Achievement.EMWeekTotalAnnihilation);
             if (a.status != AchievementAwardStatus.EMRecv)
             {
                 a.count++;
                 if (a.count >= 80)
                 {
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekTotalAnnihilation);
+                    check = true;
                 }
             }
 
@@ -724,7 +728,7 @@ namespace Player
                             a.count++;
                             if (a.count >= 80)
                             {
-                                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekWizardAnnihilation);
+                                check = true;
                             }
                         }
                     }
@@ -738,7 +742,7 @@ namespace Player
                             a.count++;
                             if (a.count >= 100)
                             {
-                                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBerserkerAnnihilation);
+                                check = true;
                             }
                         }
                     }
@@ -752,17 +756,21 @@ namespace Player
                             a.count++;
                             if (a.count >= 100)
                             {
-                                client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekCorsairAnnihilation);
+                                check = true;
                             }
                         }
                     }
                     break;
             }
+
+            return check;
         }
 
-        public void CheckBuyRole(string uuid, Role roleInfo)
+        public bool CheckBuyRole(Role roleInfo)
         {
             RefreshWeekAchiev();
+
+            var check = false;
             if (config.Config.SkillConfigs.TryGetValue(roleInfo.SkillID, out var skill))
             {
                 if (skill.EffectTime == 3)
@@ -773,7 +781,7 @@ namespace Player
                         a.count++;
                         if (a.count >= 10)
                         {
-                            client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyTenBeforeRound);
+                            check = true;
                         }
                     }
                 }
@@ -785,7 +793,7 @@ namespace Player
                         a.count++;
                         if (a.count >= 10)
                         {
-                            client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyBeHurted);
+                            check = true;
                         }
                     }
                 }
@@ -797,14 +805,16 @@ namespace Player
                         a.count++;
                         if (a.count >= 10)
                         {
-                            client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyBeDead);
+                            check = true;
                         }
                     }
                 }
             }
+
+            return check;
         }
 
-        public void CheckBuyEquip(string uuid, int equipID)
+        public bool CheckBuyEquip(int equipID)
         {
             RefreshWeekAchiev();
 
@@ -814,23 +824,26 @@ namespace Player
                 a.count++;
                 if (a.count >= 10)
                 {
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekBuyTenEquip);
+                    return true;
                 }
             }
+
+            return false;
         }
 
-        public void AddCheckWeekAchievement(string uuid, BattleInfo battleInfo)
+        public bool AddCheckWeekAchievement(BattleInfo battleInfo)
         {
             RefreshWeekAchiev();
             info.wAchiev.battleInfo.Add(battleInfo);
 
+            var check = false;
             if (battleInfo.isVictory == BattleVictory.victory)
             {
                 var a = GetWeekAchievementData(Achievement.EMWeekOneGameVictory);
                 if (a.status != AchievementAwardStatus.EMRecv)
                 {
                     a.status = AchievementAwardStatus.EMComplete;
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekOneGameVictory);
+                    check = true;
                 }
             }
             if (CheckFullLevelRole(battleInfo))
@@ -839,9 +852,11 @@ namespace Player
                 if (a.status != AchievementAwardStatus.EMRecv)
                 {
                     a.status = AchievementAwardStatus.EMComplete;
-                    client_mng.PlayerClientCaller.get_client(uuid).achievement_complete(Achievement.EMWeekOneFullLevelRole);
+                    check = true;
                 }
             }
+
+            return check;
         }
 
         private void RefreshWeekAchiev()

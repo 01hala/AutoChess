@@ -35,10 +35,11 @@ export class player_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_achievement_complete : (achievement:common.Achievement)=>void | null;
+    public cb_achievement_complete : (achieve:common.UserAchievement, wAchieve:common.UserWeekAchievement)=>void | null;
     achievement_complete(inArray:any[]){
         let _argv_:any[] = [];
-        _argv_.push(inArray[0]);
+        _argv_.push(common.protcol_to_UserAchievement(inArray[0]));
+        _argv_.push(common.protcol_to_UserWeekAchievement(inArray[1]));
         if (this.cb_achievement_complete){
             this.cb_achievement_complete.apply(null, _argv_);
         }
