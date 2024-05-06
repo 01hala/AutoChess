@@ -13,6 +13,7 @@ namespace config
         public string Class;
         public string Lable;
         public string Condition;
+        public int Value;
         public int RewardGold;
 
         public static Dictionary<string, TaskConfig> Load(string path)
@@ -43,6 +44,7 @@ namespace config
                 taskc.Class = (string)o["Class"];
                 taskc.Lable = (string)o["Lable"];
                 taskc.Condition = (string)o["Condition"];
+                taskc.Value = (int)o["Value"];
 
                 var reward = (string)o["Reward"];
                 var rewardList = JArray.Parse(reward);

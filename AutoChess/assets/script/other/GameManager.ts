@@ -100,7 +100,7 @@ export class GameManager extends Component
             this.taskAchieveBoard.setParent(this.node);
             this.taskAchieveBoard.active=false;
 
-            this.rankListBoard=instantiate(t_taskBoard);
+            this.rankListBoard=instantiate(t_rankListBoard);
             this.rankListBoard.setParent(this.node);
             this.rankListBoard.active=false;
         }
@@ -213,7 +213,22 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.taskAchieveBoard.active=true;
-            this.taskAchieveBoard.getComponent(TaskAchieve).OpenTaskAchieveBoard();
+            this.taskAchieveBoard.getComponent(TaskAchieve).OpenTaskAchieveBoard(event.detail);
+        },this);
+
+        /* 消息来源
+         * MainInterface.ts : 第 277 行
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('RefreshTaskAchieveBoard',(event:SendMessage)=>{
+            event.propagationStopped=true;
+            if(true==this.taskAchieveBoard.activeInHierarchy){
+                this.taskAchieveBoard.getComponent(TaskAchieve).RefreshList(event.detail);
+            }
         },this);
         /* 消息来源
          * MainInterface.ts : 第 221 行

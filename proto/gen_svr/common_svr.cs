@@ -350,18 +350,46 @@ namespace Abelkhan
         }
     }
 
+    public class AchievementData
+    {
+        public Achievement emAchievement;
+        public AchievementAwardStatus status;
+        public Int32 count;
+        public static MsgPack.MessagePackObjectDictionary AchievementData_to_protcol(AchievementData _struct){
+        if (_struct == null) {
+            return null;
+        }
+
+            var _protocol = new MsgPack.MessagePackObjectDictionary();
+            _protocol.Add("emAchievement", (Int32)_struct.emAchievement);
+            _protocol.Add("status", (Int32)_struct.status);
+            _protocol.Add("count", _struct.count);
+            return _protocol;
+        }
+        public static AchievementData protcol_to_AchievementData(MsgPack.MessagePackObjectDictionary _protocol){
+        if (_protocol == null) {
+            return null;
+        }
+
+            var _struct101f5d6a_763e_32eb_8b6e_601f073e4a26 = new AchievementData();
+            foreach (var i in _protocol){
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "emAchievement"){
+                    _struct101f5d6a_763e_32eb_8b6e_601f073e4a26.emAchievement = (Achievement)((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "status"){
+                    _struct101f5d6a_763e_32eb_8b6e_601f073e4a26.status = (AchievementAwardStatus)((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "count"){
+                    _struct101f5d6a_763e_32eb_8b6e_601f073e4a26.count = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+            }
+            return _struct101f5d6a_763e_32eb_8b6e_601f073e4a26;
+        }
+    }
+
     public class UserAchievement
     {
-        public Int32 successiveFiveVictory;
-        public Int32 fullLevelVictory;
-        public Int32 streakVictory;
-        public Int32 fiveHundredGame;
-        public Int32 machinistlVictory;
-        public Int32 PeakStrengthVictory;
-        public Int32 Gold25;
-        public Int32 fullAttributesVictory;
-        public Int32 noneEquipmentVictory;
-        public Int32 notGivenAllYet;
+        public List<AchievementData> achievData;
         public List<BattleInfo> battleInfo;
         public static MsgPack.MessagePackObjectDictionary UserAchievement_to_protcol(UserAchievement _struct){
         if (_struct == null) {
@@ -369,16 +397,13 @@ namespace Abelkhan
         }
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("successiveFiveVictory", _struct.successiveFiveVictory);
-            _protocol.Add("fullLevelVictory", _struct.fullLevelVictory);
-            _protocol.Add("streakVictory", _struct.streakVictory);
-            _protocol.Add("fiveHundredGame", _struct.fiveHundredGame);
-            _protocol.Add("machinistlVictory", _struct.machinistlVictory);
-            _protocol.Add("PeakStrengthVictory", _struct.PeakStrengthVictory);
-            _protocol.Add("Gold25", _struct.Gold25);
-            _protocol.Add("fullAttributesVictory", _struct.fullAttributesVictory);
-            _protocol.Add("noneEquipmentVictory", _struct.noneEquipmentVictory);
-            _protocol.Add("notGivenAllYet", _struct.notGivenAllYet);
+            if (_struct.achievData != null) {
+                var _array_achievData = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.achievData){
+                    _array_achievData.Add( new MsgPack.MessagePackObject(AchievementData.AchievementData_to_protcol(v_)));
+                }
+                _protocol.Add("achievData", new MsgPack.MessagePackObject(_array_achievData));
+            }
             if (_struct.battleInfo != null) {
                 var _array_battleInfo = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.battleInfo){
@@ -395,35 +420,12 @@ namespace Abelkhan
 
             var _struct320a61f6_1974_35df_b00f_ef6fd1348b63 = new UserAchievement();
             foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "successiveFiveVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.successiveFiveVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fullLevelVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fullLevelVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "streakVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.streakVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fiveHundredGame"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fiveHundredGame = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "machinistlVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.machinistlVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "PeakStrengthVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.PeakStrengthVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Gold25"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.Gold25 = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "fullAttributesVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.fullAttributesVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "noneEquipmentVictory"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.noneEquipmentVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "notGivenAllYet"){
-                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.notGivenAllYet = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "achievData"){
+                    _struct320a61f6_1974_35df_b00f_ef6fd1348b63.achievData = new List<AchievementData>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct320a61f6_1974_35df_b00f_ef6fd1348b63.achievData.Add(AchievementData.protcol_to_AchievementData(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
                     _struct320a61f6_1974_35df_b00f_ef6fd1348b63.battleInfo = new List<BattleInfo>();
@@ -439,17 +441,7 @@ namespace Abelkhan
 
     public class UserWeekAchievement
     {
-        public Int32 oneGameVictory;
-        public Int32 openCardPack;
-        public Int32 totalAnnihilation;
-        public Int32 wizardAnnihilation;
-        public Int32 berserkerAnnihilation;
-        public Int32 corsairAnnihilation;
-        public Int32 buyBeforeRoundSkill;
-        public Int32 buyBeHurtedSkill;
-        public Int32 buyBeDeadSkill;
-        public Int32 buyTenEquip;
-        public Int32 oneFullLevelRole;
+        public List<AchievementData> wAchievData;
         public List<BattleInfo> battleInfo;
         public Int64 timeout;
         public static MsgPack.MessagePackObjectDictionary UserWeekAchievement_to_protcol(UserWeekAchievement _struct){
@@ -458,17 +450,13 @@ namespace Abelkhan
         }
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("oneGameVictory", _struct.oneGameVictory);
-            _protocol.Add("openCardPack", _struct.openCardPack);
-            _protocol.Add("totalAnnihilation", _struct.totalAnnihilation);
-            _protocol.Add("wizardAnnihilation", _struct.wizardAnnihilation);
-            _protocol.Add("berserkerAnnihilation", _struct.berserkerAnnihilation);
-            _protocol.Add("corsairAnnihilation", _struct.corsairAnnihilation);
-            _protocol.Add("buyBeforeRoundSkill", _struct.buyBeforeRoundSkill);
-            _protocol.Add("buyBeHurtedSkill", _struct.buyBeHurtedSkill);
-            _protocol.Add("buyBeDeadSkill", _struct.buyBeDeadSkill);
-            _protocol.Add("buyTenEquip", _struct.buyTenEquip);
-            _protocol.Add("oneFullLevelRole", _struct.oneFullLevelRole);
+            if (_struct.wAchievData != null) {
+                var _array_wAchievData = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.wAchievData){
+                    _array_wAchievData.Add( new MsgPack.MessagePackObject(AchievementData.AchievementData_to_protcol(v_)));
+                }
+                _protocol.Add("wAchievData", new MsgPack.MessagePackObject(_array_wAchievData));
+            }
             if (_struct.battleInfo != null) {
                 var _array_battleInfo = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.battleInfo){
@@ -486,38 +474,12 @@ namespace Abelkhan
 
             var _struct4294a96a_052b_34f0_967a_099171a3451d = new UserWeekAchievement();
             foreach (var i in _protocol){
-                if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneGameVictory"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneGameVictory = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "openCardPack"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.openCardPack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "totalAnnihilation"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.totalAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "wizardAnnihilation"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.wizardAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "berserkerAnnihilation"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.berserkerAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "corsairAnnihilation"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.corsairAnnihilation = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyBeforeRoundSkill"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyBeforeRoundSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyBeHurtedSkill"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyBeHurtedSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyBeDeadSkill"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyBeDeadSkill = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "buyTenEquip"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.buyTenEquip = ((MsgPack.MessagePackObject)i.Value).AsInt32();
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "oneFullLevelRole"){
-                    _struct4294a96a_052b_34f0_967a_099171a3451d.oneFullLevelRole = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                if (((MsgPack.MessagePackObject)i.Key).AsString() == "wAchievData"){
+                    _struct4294a96a_052b_34f0_967a_099171a3451d.wAchievData = new List<AchievementData>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _struct4294a96a_052b_34f0_967a_099171a3451d.wAchievData.Add(AchievementData.protcol_to_AchievementData(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "battleInfo"){
                     _struct4294a96a_052b_34f0_967a_099171a3451d.battleInfo = new List<BattleInfo>();

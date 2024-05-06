@@ -307,18 +307,41 @@ export function protcol_to_AchievementReward(_protocol:any){
     return _struct;
 }
 
+export class AchievementData
+{
+    public emAchievement : Achievement = Achievement.EMSuccessiveFiveVictory;
+    public status : AchievementAwardStatus = AchievementAwardStatus.EMNotComplete;
+    public count : number = 0;
+
+}
+
+export function AchievementData_to_protcol(_struct:AchievementData){
+    return _struct;
+}
+
+export function protcol_to_AchievementData(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new AchievementData();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "emAchievement"){
+            _struct.emAchievement = val as Achievement;
+        }
+        else if (key === "status"){
+            _struct.status = val as AchievementAwardStatus;
+        }
+        else if (key === "count"){
+            _struct.count = val as number;
+        }
+    }
+    return _struct;
+}
+
 export class UserAchievement
 {
-    public successiveFiveVictory : number = 0;
-    public fullLevelVictory : number = 0;
-    public streakVictory : number = 0;
-    public fiveHundredGame : number = 0;
-    public machinistlVictory : number = 0;
-    public PeakStrengthVictory : number = 0;
-    public Gold25 : number = 0;
-    public fullAttributesVictory : number = 0;
-    public noneEquipmentVictory : number = 0;
-    public notGivenAllYet : number = 0;
+    public achievData : AchievementData[] = [];
     public battleInfo : BattleInfo[] = [];
 
 }
@@ -334,35 +357,11 @@ export function protcol_to_UserAchievement(_protocol:any){
 
     let _struct = new UserAchievement();
     for (const [key, val] of Object.entries(_protocol)) {
-        if (key === "successiveFiveVictory"){
-            _struct.successiveFiveVictory = val as number;
-        }
-        else if (key === "fullLevelVictory"){
-            _struct.fullLevelVictory = val as number;
-        }
-        else if (key === "streakVictory"){
-            _struct.streakVictory = val as number;
-        }
-        else if (key === "fiveHundredGame"){
-            _struct.fiveHundredGame = val as number;
-        }
-        else if (key === "machinistlVictory"){
-            _struct.machinistlVictory = val as number;
-        }
-        else if (key === "PeakStrengthVictory"){
-            _struct.PeakStrengthVictory = val as number;
-        }
-        else if (key === "Gold25"){
-            _struct.Gold25 = val as number;
-        }
-        else if (key === "fullAttributesVictory"){
-            _struct.fullAttributesVictory = val as number;
-        }
-        else if (key === "noneEquipmentVictory"){
-            _struct.noneEquipmentVictory = val as number;
-        }
-        else if (key === "notGivenAllYet"){
-            _struct.notGivenAllYet = val as number;
+        if (key === "achievData"){
+            _struct.achievData = [];
+            for(let v_ of val as any) {
+                _struct.achievData.push(protcol_to_AchievementData(v_));
+            }
         }
         else if (key === "battleInfo"){
             _struct.battleInfo = [];
@@ -376,17 +375,7 @@ export function protcol_to_UserAchievement(_protocol:any){
 
 export class UserWeekAchievement
 {
-    public oneGameVictory : number = 0;
-    public openCardPack : number = 0;
-    public totalAnnihilation : number = 0;
-    public wizardAnnihilation : number = 0;
-    public berserkerAnnihilation : number = 0;
-    public corsairAnnihilation : number = 0;
-    public buyBeforeRoundSkill : number = 0;
-    public buyBeHurtedSkill : number = 0;
-    public buyBeDeadSkill : number = 0;
-    public buyTenEquip : number = 0;
-    public oneFullLevelRole : number = 0;
+    public wAchievData : AchievementData[] = [];
     public battleInfo : BattleInfo[] = [];
     public timeout : number = 0;
 
@@ -403,38 +392,11 @@ export function protcol_to_UserWeekAchievement(_protocol:any){
 
     let _struct = new UserWeekAchievement();
     for (const [key, val] of Object.entries(_protocol)) {
-        if (key === "oneGameVictory"){
-            _struct.oneGameVictory = val as number;
-        }
-        else if (key === "openCardPack"){
-            _struct.openCardPack = val as number;
-        }
-        else if (key === "totalAnnihilation"){
-            _struct.totalAnnihilation = val as number;
-        }
-        else if (key === "wizardAnnihilation"){
-            _struct.wizardAnnihilation = val as number;
-        }
-        else if (key === "berserkerAnnihilation"){
-            _struct.berserkerAnnihilation = val as number;
-        }
-        else if (key === "corsairAnnihilation"){
-            _struct.corsairAnnihilation = val as number;
-        }
-        else if (key === "buyBeforeRoundSkill"){
-            _struct.buyBeforeRoundSkill = val as number;
-        }
-        else if (key === "buyBeHurtedSkill"){
-            _struct.buyBeHurtedSkill = val as number;
-        }
-        else if (key === "buyBeDeadSkill"){
-            _struct.buyBeDeadSkill = val as number;
-        }
-        else if (key === "buyTenEquip"){
-            _struct.buyTenEquip = val as number;
-        }
-        else if (key === "oneFullLevelRole"){
-            _struct.oneFullLevelRole = val as number;
+        if (key === "wAchievData"){
+            _struct.wAchievData = [];
+            for(let v_ of val as any) {
+                _struct.wAchievData.push(protcol_to_AchievementData(v_));
+            }
         }
         else if (key === "battleInfo"){
             _struct.battleInfo = [];
