@@ -634,13 +634,16 @@ namespace Player
                     check = true;
                 }
             }
-            if (info.Achiev.battleInfo.Count >= 500)
+            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMFiveHundredGame), out var task))
             {
-                var data = GetAchievementData(Achievement.EMFiveHundredGame);
-                if (data.status != AchievementAwardStatus.EMRecv)
+                if (info.Achiev.battleInfo.Count >= task.Value)
                 {
-                    data.status = AchievementAwardStatus.EMComplete;
-                    check = true;
+                    var data = GetAchievementData(Achievement.EMFiveHundredGame);
+                    if (data.status != AchievementAwardStatus.EMRecv)
+                    {
+                        data.status = AchievementAwardStatus.EMComplete;
+                        check = true;
+                    }
                 }
             }
             if (CheckMachinistlVictory(battleInfo))
@@ -655,13 +658,16 @@ namespace Player
             {
                 check = true;
             }
-            if (battleInfo.RoleList.Count < 6)
+            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMNotGivenAllYet), out var task1))
             {
-                var data = GetAchievementData(Achievement.EMNotGivenAllYet);
-                if (data.status != AchievementAwardStatus.EMRecv)
+                if (battleInfo.RoleList.Count < task1.Value)
                 {
-                    data.status = AchievementAwardStatus.EMComplete;
-                    check = true;
+                    var data = GetAchievementData(Achievement.EMNotGivenAllYet);
+                    if (data.status != AchievementAwardStatus.EMRecv)
+                    {
+                        data.status = AchievementAwardStatus.EMComplete;
+                        check = true;
+                    }
                 }
             }
 
@@ -689,7 +695,6 @@ namespace Player
             return data;
         }
 
-
         private bool CheckFullLevelRole(BattleInfo battleInfo)
         {
             foreach (var role in battleInfo.RoleList)
@@ -712,9 +717,12 @@ namespace Player
             if (a.status != AchievementAwardStatus.EMRecv)
             {
                 a.count++;
-                if (a.count >= 80)
+                if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekTotalAnnihilation), out var task))
                 {
-                    check = true;
+                    if (a.count >= task.Value)
+                    {
+                        check = true;
+                    }
                 }
             }
 
@@ -726,9 +734,12 @@ namespace Player
                         if (a.status != AchievementAwardStatus.EMRecv)
                         {
                             a.count++;
-                            if (a.count >= 80)
+                            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekWizardAnnihilation), out var task))
                             {
-                                check = true;
+                                if (a.count >= task.Value)
+                                {
+                                    check = true;
+                                }
                             }
                         }
                     }
@@ -740,9 +751,12 @@ namespace Player
                         if (a.status != AchievementAwardStatus.EMRecv)
                         {
                             a.count++;
-                            if (a.count >= 100)
+                            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekBerserkerAnnihilation), out var task))
                             {
-                                check = true;
+                                if (a.count >= task.Value)
+                                {
+                                    check = true;
+                                }
                             }
                         }
                     }
@@ -753,10 +767,13 @@ namespace Player
                         a = GetWeekAchievementData(Achievement.EMWeekCorsairAnnihilation);
                         if (a.status != AchievementAwardStatus.EMRecv)
                         {
-                            a.count++;
-                            if (a.count >= 100)
+                            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekCorsairAnnihilation), out var task))
                             {
-                                check = true;
+                                a.count++;
+                                if (a.count >= task.Value)
+                                {
+                                    check = true;
+                                }
                             }
                         }
                     }
@@ -779,9 +796,12 @@ namespace Player
                     if (a.status != AchievementAwardStatus.EMRecv)
                     {
                         a.count++;
-                        if (a.count >= 10)
+                        if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekBuyTenBeforeRound), out var task))
                         {
-                            check = true;
+                            if (a.count >= task.Value)
+                            {
+                                check = true;
+                            }
                         }
                     }
                 }
@@ -791,9 +811,12 @@ namespace Player
                     if (a.status != AchievementAwardStatus.EMRecv)
                     {
                         a.count++;
-                        if (a.count >= 10)
+                        if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekBuyBeHurted), out var task))
                         {
-                            check = true;
+                            if (a.count >= task.Value)
+                            {
+                                check = true;
+                            }
                         }
                     }
                 }
@@ -803,9 +826,12 @@ namespace Player
                     if (a.status != AchievementAwardStatus.EMRecv)
                     {
                         a.count++;
-                        if (a.count >= 10)
+                        if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekBuyBeDead), out var task))
                         {
-                            check = true;
+                            if (a.count >= task.Value)
+                            {
+                                check = true;
+                            }
                         }
                     }
                 }
@@ -822,9 +848,12 @@ namespace Player
             if (a.status != AchievementAwardStatus.EMRecv)
             {
                 a.count++;
-                if (a.count >= 10)
+                if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekBuyTenEquip), out var task))
                 {
-                    return true;
+                    if (a.count >= task.Value)
+                    {
+                        return true;
+                    }
                 }
             }
 
