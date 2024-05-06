@@ -38,19 +38,21 @@ export class TaskLable extends Component
         this.icon=this.node.getChildByPath("Icon");
     }
 
-    public async Init(_config:TaskConfig, _status:AchievementAwardStatus)
+    public async Init(_config:TaskConfig,_count:number, _status:AchievementAwardStatus)
     {
         this.id=_config.Id;
 
         this.TaskName=_config.Name;
         this.TaskLable=_config.tLable;
         this._taskMaxValue=_config.tValue;
+        this.TaskValue=_count;
 
-        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMComplete==_status);
+        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMNotComplete==_status);
     }
 
-    public async RefreshLable(_status:AchievementAwardStatus){
-        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMComplete==_status);
+    public async RefreshLable(_count:number,_status:AchievementAwardStatus){
+        this.TaskValue=_count;
+        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMNotComplete==_status);
     }
 }
 

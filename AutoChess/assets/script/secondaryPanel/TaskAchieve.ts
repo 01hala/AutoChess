@@ -29,7 +29,7 @@ export class TaskAchieve extends Component
     //用户数据，切换页表标签的时候保存用
     private _userAccount:UserAccount;
     //map保存lable列表方便刷新
-    private lableList:Map<Achievement,Node>;
+    private lableList:Map<number,Node>;
 
     protected async onLoad(): Promise<void> 
     {
@@ -37,7 +37,7 @@ export class TaskAchieve extends Component
         this.board=this.node.getChildByPath("Board");
         this.toggleGroup=this.node.getChildByPath("Board/ToggleGroup");
         this.scrollView=this.node.getChildByPath("Board/ScrollView");
-        this.lableList=new Map<Achievement,Node>();
+        this.lableList=new Map<number,Node>();
 
         this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","TaskLabel")as Prefab;
     }
@@ -133,28 +133,26 @@ export class TaskAchieve extends Component
 
         do
         {
-            // jconfig = await config.TaskConfig.get(i);
-            // if(jconfig!=null)
-            // {
-            //     let lab=instantiate(this.lablePre);
-            //     lab.getComponent(TaskLable).Init(jconfig , AchievementAwardStatus.EMComplete);
-            //     this.scrollView.getChildByPath("view/content").addChild(lab);
-            // }
+            jconfig = await config.TaskConfig.get(i);
+            if(jconfig!=null){
+                let lab=instantiate(this.lablePre);
+                lab.getComponent(TaskLable).Init(jconfig ,0 , AchievementAwardStatus.EMNotComplete);
+                this.scrollView.getChildByPath("view/content").addChild(lab); 
 
-            i++;
-            for(let t of achieveList){         
-                if(jconfig!=null&&jconfig.tClass==t.emAchievement)
-                {
-                    let lab=instantiate(this.lablePre);
-                    lab.getComponent(TaskLable).Init(jconfig , t.status);
-                    this.scrollView.getChildByPath("view/content").addChild(lab);
-                    this.lableList.set(t.emAchievement,lab);
-    
-                    break;
-                }
-            }
+                this.lableList.set(jconfig.tClass,lab);
+            } 
+            
             i++;
         }while(jconfig!=null)
+
+        //console.log(achieveList);
+        for(let t of achieveList){    
+            //console.log(t.emAchievement.toString());
+            let temp=this.lableList.get(t.emAchievement);  
+            if(null!=temp){
+                temp.getComponent(TaskLable).RefreshLable(t.count,t.status);  
+            }     
+        }
     }
 
     public async RefreshList(_user?:UserAccount){
@@ -164,7 +162,7 @@ export class TaskAchieve extends Component
             for(let t of this._userAccount.wAchiev.wAchievData){
                 let temp=this.lableList.get(t.emAchievement)
                 if(temp){
-                    temp.getComponent(TaskLable).RefreshLable(t.status);
+                    temp.getComponent(TaskLable).RefreshLable(t.count,t.status);
                 }
             }
         }
@@ -174,7 +172,7 @@ export class TaskAchieve extends Component
             for(let t of this._userAccount.Achiev.achievData){
                 let temp=this.lableList.get(t.emAchievement)
                 if(temp){
-                    temp.getComponent(TaskLable).RefreshLable(t.status);
+                    temp.getComponent(TaskLable).RefreshLable(t.count,t.status);
                 }
             }
         }
