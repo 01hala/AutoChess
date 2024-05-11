@@ -11,16 +11,15 @@ COPY . .
 
 # 1. build
 # copy and publish app and libraries
-RUN chmod +x start.sh
+RUN chmod +x bin/gate_svr
 RUN mkdir /target
-RUN mv mongod.conf supervisord.conf bin config excel_json supervisord.d start.sh /target 
+RUN mv bin config excel_json supervisord.conf supervisord.d /target 
 
 # 2. final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 
 WORKDIR /app
 COPY --from=build /target ./
-COPY mongod.conf /etc/mongod.conf
 RUN apt-get update 
 RUN apt-get -y install supervisor 
-ENTRYPOINT ["/bin/bash", "start.sh"]
+ENTRYPOINT ["supervisord", "-c", "supervisord.d/youconf.conf"]

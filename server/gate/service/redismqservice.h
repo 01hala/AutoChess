@@ -225,39 +225,37 @@ private:
 	}
 
 	void redis_cluster_recv_data() {
-		std::string cmd = "BRPOP";
 		for (auto channel_name : listen_channel_names) {
-			cmd += " " + channel_name;
-		}
-		cmd += " 1";
-		while (true) {
-			auto _reply = (redisReply*)redisClusterCommand(_recv_cluster_ctx, cmd.c_str());
-			if (_reply) {
-				if (_reply->type == REDIS_REPLY_ARRAY) {
-					auto _buf = _reply->element[1]->str;
-					auto _ch_name_size = (uint32_t)_buf[0] | ((uint32_t)_buf[1] << 8) | ((uint32_t)_buf[2] << 16) | ((uint32_t)_buf[3] << 24);
-					auto _ch_name = std::string(&_buf[4], _ch_name_size);
-					auto _header_len = 4 + _ch_name_size;
+			std::string cmd = "RPOP " + channel_name;
+			while (true) {
+				auto _reply = (redisReply*)redisClusterCommand(_recv_cluster_ctx, cmd.c_str());
+				if (_reply) {
+					if (_reply->type == REDIS_REPLY_STRING) {
+						auto _buf = _reply->str;
+						auto _ch_name_size = (uint32_t)_buf[0] | ((uint32_t)_buf[1] << 8) | ((uint32_t)_buf[2] << 16) | ((uint32_t)_buf[3] << 24);
+						auto _ch_name = std::string(&_buf[4], _ch_name_size);
+						auto _header_len = 4 + _ch_name_size;
 
-					auto tmp_buff = (unsigned char*)&_buf[_header_len];
-					uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
-					std::string err;
-					auto obj = msgpack11::MsgPack::parse((const char*)tmp_buff, len, err);
-					recv(std::make_pair(_ch_name, obj));
+						auto tmp_buff = (unsigned char*)&_buf[_header_len];
+						uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
+						std::string err;
+						auto obj = msgpack11::MsgPack::parse((const char*)tmp_buff, len, err);
+						recv(std::make_pair(_ch_name, obj));
 
-				}
-				else if (_reply->type != REDIS_REPLY_NIL) {
-					spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+					}
+					else if (_reply->type != REDIS_REPLY_NIL) {
+						spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+					}
+					else {
+						freeReplyObject(_reply);
+						break;
+					}
+					freeReplyObject(_reply);
 				}
 				else {
-					freeReplyObject(_reply);
-					break;
+					spdlog::error("redis exception operate type:{0}, str:{1}", _recv_cluster_ctx->err, _recv_cluster_ctx->errstr);
+					init_recv_cluster_ctx();
 				}
-				freeReplyObject(_reply);
-			}
-			else {
-				spdlog::error("redis exception operate type:{0}, str:{1}", _recv_cluster_ctx->err, _recv_cluster_ctx->errstr);
-				init_recv_cluster_ctx();
 			}
 		}
 	}
@@ -351,37 +349,35 @@ private:
 	}
 
 	void redis_mq_recv_data() {
-		std::string cmd = "BRPOP";
 		for (auto channel_name : listen_channel_names) {
-			cmd += " " + channel_name;
-		}
-		cmd += " 1";
-		while (true) {
-			auto _reply = (redisReply*)redisCommand(_recv_ctx, cmd.c_str());
-			if (_reply) {
-				if (_reply->type == REDIS_REPLY_ARRAY) {
-					auto _buf = _reply->element[1]->str;
-					auto _ch_name_size = (uint32_t)_buf[0] | ((uint32_t)_buf[1] << 8) | ((uint32_t)_buf[2] << 16) | ((uint32_t)_buf[3] << 24);
-					auto _ch_name = std::string(&_buf[4], _ch_name_size);
-					auto _header_len = 4 + _ch_name_size;
+			std::string cmd = "RPOP " + channel_name;
+			while (true) {
+				auto _reply = (redisReply*)redisCommand(_recv_ctx, cmd.c_str());
+				if (_reply) {
+					if (_reply->type == REDIS_REPLY_STRING) {
+						auto _buf = _reply->str;
+						auto _ch_name_size = (uint32_t)_buf[0] | ((uint32_t)_buf[1] << 8) | ((uint32_t)_buf[2] << 16) | ((uint32_t)_buf[3] << 24);
+						auto _ch_name = std::string(&_buf[4], _ch_name_size);
+						auto _header_len = 4 + _ch_name_size;
 
-					auto tmp_buff = (unsigned char*)&_buf[_header_len];
-					uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
-					std::string err;
-					auto obj = msgpack11::MsgPack::parse((const char*)&tmp_buff[4], len, err);
-					recv(std::make_pair(_ch_name, obj));
-				}
-				else if (_reply->type != REDIS_REPLY_NIL) {
-					spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+						auto tmp_buff = (unsigned char*)&_buf[_header_len];
+						uint32_t len = (uint32_t)tmp_buff[0] | ((uint32_t)tmp_buff[1] << 8) | ((uint32_t)tmp_buff[2] << 16) | ((uint32_t)tmp_buff[3] << 24);
+						std::string err;
+						auto obj = msgpack11::MsgPack::parse((const char*)&tmp_buff[4], len, err);
+						recv(std::make_pair(_ch_name, obj));
+					}
+					else if (_reply->type != REDIS_REPLY_NIL) {
+						spdlog::error(fmt::format("redis exception operate type:{0}, str:{1}", _reply->type, _reply->str));
+					}
+					else {
+						freeReplyObject(_reply);
+						break;
+					}
+					freeReplyObject(_reply);
 				}
 				else {
-					freeReplyObject(_reply);
-					break;
+					re_conn_redis(_recv_ctx);
 				}
-				freeReplyObject(_reply);
-			}
-			else {
-				re_conn_redis(_recv_ctx);
 			}
 		}
 	}

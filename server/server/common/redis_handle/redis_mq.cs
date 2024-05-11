@@ -180,26 +180,29 @@ namespace Abelkhan
                     }
                 }
 
-                while (true)
+                foreach (data in push_data_array) 
                 {
-                    try
+                    while (true)
                     {
-                        await database.ListLeftPushAsync(ch_name, push_data_array);
-                        break;
-                    }
-                    catch (RedisTimeoutException ex)
-                    {
-                        Log.Log.err("ListLeftPushAsync error:{0}", ex);
-                        Recover(ex);
-                    }
-                    catch (RedisConnectionException ex)
-                    {
-                        Log.Log.err("ListLeftPushAsync error:{0}", ex);
-                        Recover(ex);
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Log.Log.err("sendmsg_mq error:{0}", ex);
+                        try
+                        {
+                            await database.ListLeftPushAsync(ch_name, data);
+                            break;
+                        }
+                        catch (RedisTimeoutException ex)
+                        {
+                            Log.Log.err("ListLeftPushAsync error:{0}", ex);
+                            Recover(ex);
+                        }
+                        catch (RedisConnectionException ex)
+                        {
+                            Log.Log.err("ListLeftPushAsync error:{0}", ex);
+                            Recover(ex);
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Log.Log.err("sendmsg_mq error:{0}", ex);
+                        }
                     }
                 }
             }
@@ -209,28 +212,26 @@ namespace Abelkhan
 
         private async Task recvmsg_mq_ch(string ch_name)
         {
-            var batch_pop_data = await database.ListRightPopAsync(ch_name, 10);
-            while (batch_pop_data != null)
+            byte[] pop_data = await database.ListRightPopAsync(ch_name);
+            while (pop_data != null)
             {
-                foreach (byte[] pop_data in batch_pop_data) {
-                    var _ch_name_size = pop_data[0] | ((uint)pop_data[1] << 8) | ((uint)pop_data[2] << 16) | ((uint)pop_data[3] << 24);
-                    var _ch_name = System.Text.Encoding.UTF8.GetString(pop_data, 4, (int)_ch_name_size);
-                    var _header_len = 4 + _ch_name_size;
-                    var _msg_len = pop_data.Length - _header_len;
+                var _ch_name_size = pop_data[0] | ((uint)pop_data[1] << 8) | ((uint)pop_data[2] << 16) | ((uint)pop_data[3] << 24);
+                var _ch_name = System.Text.Encoding.UTF8.GetString(pop_data, 4, (int)_ch_name_size);
+                var _header_len = 4 + _ch_name_size;
+                var _msg_len = pop_data.Length - _header_len;
 
-                    using var _st = MemoryStreamPool.mstMgr.GetStream();
-                    _st.Write(pop_data, (int)_header_len, (int)_msg_len);
-                    _st.Position = 0;
+                using var _st = MemoryStreamPool.mstMgr.GetStream();
+                _st.Write(pop_data, (int)_header_len, (int)_msg_len);
+                _st.Position = 0;
 
-                    if (!channels.TryGetValue(_ch_name, out Redischannel ch))
-                    {
-                        ch = new Redischannel(_ch_name, this);
-                        channels.TryAdd(_ch_name, ch);
-                    }
-                    ch._channel_onrecv.on_recv(_st.ToArray());
+                if (!channels.TryGetValue(_ch_name, out Redischannel ch))
+                {
+                    ch = new Redischannel(_ch_name, this);
+                    channels.TryAdd(_ch_name, ch);
                 }
+                ch._channel_onrecv.on_recv(_st.ToArray());
 
-                batch_pop_data = await database.ListRightPopAsync(ch_name, 10);
+                pop_data = await database.ListRightPopAsync(ch_name);
             }
         }
 
