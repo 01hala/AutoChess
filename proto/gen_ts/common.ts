@@ -307,6 +307,34 @@ export function protcol_to_AchievementReward(_protocol:any){
     return _struct;
 }
 
+export class RankReward
+{
+    public rank : number = 0;
+    public gold : number = 0;
+
+}
+
+export function RankReward_to_protcol(_struct:RankReward){
+    return _struct;
+}
+
+export function protcol_to_RankReward(_protocol:any){
+    if (_protocol == null) {
+        return null;
+    }
+
+    let _struct = new RankReward();
+    for (const [key, val] of Object.entries(_protocol)) {
+        if (key === "rank"){
+            _struct.rank = val as number;
+        }
+        else if (key === "gold"){
+            _struct.gold = val as number;
+        }
+    }
+    return _struct;
+}
+
 export class AchievementData
 {
     public emAchievement : Achievement = Achievement.EMSuccessiveFiveVictory;

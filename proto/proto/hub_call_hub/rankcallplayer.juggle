@@ -1,0 +1,8 @@
+struct RankPlayer {
+    int64 guid;
+    int32 rank;
+}
+
+module rank_player{
+    rank_reward ntf(RankPlayer[] rewards);
+}
