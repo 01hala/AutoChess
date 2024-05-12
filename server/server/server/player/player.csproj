@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <None Remove="match_msg_handle.cs~RF1f008777.TMP" />
+    <None Remove="rank_msg_handle.cs~RF28ee123b.TMP" />
   </ItemGroup>
 
   <ItemGroup>

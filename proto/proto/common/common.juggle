@@ -68,6 +68,12 @@ enum Achievement {
 	EMWeekOneFullLevelRole = 111;	  	// 周成就 拥有一个满级角色
 }
 
+struct RankReward {
+	int32 rank;
+	int32 gold;
+	int64 timetmp;
+}
+
 enum AchievementAwardStatus {
 	EMNotComplete = 0;             // 未达成
 	EMComplete = 1;				   // 达成
