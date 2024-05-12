@@ -354,6 +354,7 @@ namespace Abelkhan
     {
         public Int32 rank;
         public Int32 gold;
+        public Int64 timetmp;
         public static MsgPack.MessagePackObjectDictionary RankReward_to_protcol(RankReward _struct){
         if (_struct == null) {
             return null;
@@ -362,6 +363,7 @@ namespace Abelkhan
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("rank", _struct.rank);
             _protocol.Add("gold", _struct.gold);
+            _protocol.Add("timetmp", _struct.timetmp);
             return _protocol;
         }
         public static RankReward protcol_to_RankReward(MsgPack.MessagePackObjectDictionary _protocol){
@@ -376,6 +378,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "gold"){
                     _struct592b3814_e3b4_362e_b8d6_fa9f3db2571b.gold = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "timetmp"){
+                    _struct592b3814_e3b4_362e_b8d6_fa9f3db2571b.timetmp = ((MsgPack.MessagePackObject)i.Value).AsInt64();
                 }
             }
             return _struct592b3814_e3b4_362e_b8d6_fa9f3db2571b;

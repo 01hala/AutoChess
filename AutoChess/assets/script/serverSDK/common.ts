@@ -311,6 +311,7 @@ export class RankReward
 {
     public rank : number = 0;
     public gold : number = 0;
+    public timetmp : number = 0;
 
 }
 
@@ -330,6 +331,9 @@ export function protcol_to_RankReward(_protocol:any){
         }
         else if (key === "gold"){
             _struct.gold = val as number;
+        }
+        else if (key === "timetmp"){
+            _struct.timetmp = val as number;
         }
     }
     return _struct;

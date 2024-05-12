@@ -71,6 +71,7 @@ enum Achievement {
 struct RankReward {
 	int32 rank;
 	int32 gold;
+	int64 timetmp;
 }
 
 enum AchievementAwardStatus {
