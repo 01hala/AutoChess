@@ -1,0 +1,42 @@
+{
+    "1": {
+        "Rank": 1,
+        "Reward": "{\"Gold\":300}"
+    },
+    "2": {
+        "Rank": 2,
+        "Reward": "{\"Gold\":200}"
+    },
+    "3": {
+        "Rank": 3,
+        "Reward": "{\"Gold\":100}"
+    },
+    "4": {
+        "Rank": 4,
+        "Reward": "{\"Gold\":50}"
+    },
+    "5": {
+        "Rank": 5,
+        "Reward": "{\"Gold\":50}"
+    },
+    "6": {
+        "Rank": 6,
+        "Reward": "{\"Gold\":50}"
+    },
+    "7": {
+        "Rank": 7,
+        "Reward": "{\"Gold\":50}"
+    },
+    "8": {
+        "Rank": 8,
+        "Reward": "{\"Gold\":50}"
+    },
+    "9": {
+        "Rank": 9,
+        "Reward": "{\"Gold\":50}"
+    },
+    "10": {
+        "Rank": 10,
+        "Reward": "{\"Gold\":50}"
+    }
+}
