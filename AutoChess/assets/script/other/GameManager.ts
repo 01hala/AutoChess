@@ -9,6 +9,8 @@ import { TaskAchieve } from '../secondaryPanel/TaskAchieve';
 import { RankList } from '../secondaryPanel/RankList';
 import { AudioManager } from './AudioManager';
 import { Loading } from '../loading/load';
+import * as enums from '../other/enums';
+import { PopUps } from '../secondaryPanel/PopUps';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -23,6 +25,8 @@ export class GameManager extends Component
     private typeface: TTFFont;
     //提示飘字
     private textTipNodePre:Prefab;
+    //弹窗
+    private upsBoard:Prefab;
     //角色、道具信息界面
     private infoPanel:Node;
     //战斗结算界面
@@ -35,7 +39,7 @@ export class GameManager extends Component
     private taskAchieveBoard:Node;
     //排行榜
     private rankListBoard:Node;
-
+    
     protected onLoad()
     {
         GameManager._instance=this.node.getComponent(GameManager);
@@ -68,10 +72,12 @@ export class GameManager extends Component
             let up = BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard");
             let ta = BundleManager.Instance.loadAssetsFromBundle("Board","TaskAchieveBoard");
             let rk = BundleManager.Instance.loadAssetsFromBundle("Board","RankListBoard");
+            let ups = BundleManager.Instance.loadAssetsFromBundle("Board","PopUpsBoard");
             //加载
-            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up,ta,rk]);
+            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up,ta,rk,ups]);
             this.textTipNodePre = awaitResult[0] as Prefab;
             this.typeface = awaitResult[1] as TTFFont;
+            this.upsBoard=awaitResult[8] as Prefab;
 
             let t_infoPanel = awaitResult[2] as Prefab;
             let t_settlementBoard = awaitResult[3] as Prefab;
@@ -187,6 +193,7 @@ export class GameManager extends Component
             this.upStageBoard.getComponent(UpStage).OpenUpStageBoard(event.detail);
 
         },this);
+
         /* 消息来源
          *  MainInterface.ts : 第 203 行
          * 
@@ -201,6 +208,7 @@ export class GameManager extends Component
             this.userInfoBoard.active=true;
             this.userInfoBoard.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
         },this);
+
         /* 消息来源
          * MainInterface.ts : 第 214 行
          * 
@@ -230,6 +238,7 @@ export class GameManager extends Component
                 this.taskAchieveBoard.getComponent(TaskAchieve).RefreshList(event.detail);
             }
         },this);
+
         /* 消息来源
          * MainInterface.ts : 第 221 行
          * 
@@ -243,6 +252,20 @@ export class GameManager extends Component
             event.propagationStopped=true;
             this.rankListBoard.active=true;
             this.rankListBoard.getComponent(RankList).OpenRankListBoard(event.detail);
+        },this);
+
+        /* 消息来源
+         * MainInterface.ts : 第 303 行
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('OpenPopUps',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.OpenPopUps(event.detail.type , event.detail.title , event.detail.subheading , event.detail.items)
         },this);
     }
 
@@ -273,6 +296,14 @@ export class GameManager extends Component
         }
     }
 
+    private OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number>)
+    {
+        let ups=instantiate(this.upStageBoard);
+        ups.getComponent(PopUps).title=_title;
+        ups.getComponent(PopUps).subheading=_subheading;
+        ups.setParent(this.node);
+        ups.getComponent(PopUps).OpenBoard(_type,_items);
+    }
 }
 
 

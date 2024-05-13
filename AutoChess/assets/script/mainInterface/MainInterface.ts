@@ -2,7 +2,8 @@ import { _decorator, Animation, animation, assetManager, Button, Component, Imag
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
-import { Bag, RoleCardInfo, UserAchievement, UserData, UserWeekAchievement } from '../serverSDK/common';
+import * as common from "../serverSDK/common"
+import { Bag, RankReward, RoleCardInfo, UserAchievement, UserData, UserWeekAchievement } from '../serverSDK/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { UserInfo } from '../secondaryPanel/UserInfo';
@@ -10,6 +11,7 @@ import { CardLib } from './CardLib';
 import { SendMessage } from '../other/MessageEvent';
 import { StartGame } from './StartGame';
 import { AudioManager } from '../other/AudioManager';
+import * as enums from '../other/enums';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -231,27 +233,35 @@ export class MainInterface
             console.error('MainInterface 下 Init 错误 err: ',error);
         }
     }
-
-    RegCallBack()
+/*
+ * 修改RegCallBack
+ * author：Hotaru
+ * 2024/05/13
+ * 格式化、回调排行榜周结算奖励
+ */
+    private RegCallBack()
     {
-        singleton.netSingleton.player.cb_buy_card_packet=(_cardPacketInfo:CardPacket,_bagInfo:Bag)=>
+        //回调打开弹窗显示获得的卡牌或者碎片
+        singleton.netSingleton.player.cb_buy_card_packet=(_cardPacketInfo:CardPacket,_bagInfo:common.Bag)=>
         {
-            //回调打开弹窗显示获得的卡牌或者碎片
             if(_bagInfo && _cardPacketInfo)
             {
                 this.userAccount.playerBag=_bagInfo;
                 this.storePanel.getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
             }
         };
-        singleton.netSingleton.player.cb_buy_card_merge=(_roleId:number,_playerInfo:UserData)=>
+        //回调合并碎片后获得卡牌
+        singleton.netSingleton.player.cb_buy_card_merge=(_roleId:number,_playerInfo:common.UserData)=>
         {
-            //回调合并碎片后获得卡牌
+            
         }
-        singleton.netSingleton.player.cb_edit_role_group=(_userInfo:UserData)=>
+        //回调编辑卡组
+        singleton.netSingleton.player.cb_edit_role_group=(_userInfo:common.UserData)=>
         {
-            //回调编辑卡组
+            
         }
-        singleton.netSingleton.player.cb_get_user_data=(_userData:UserData)=>
+        //回调返回用户信息
+        singleton.netSingleton.player.cb_get_user_data=(_userData:common.UserData)=>
         {
             this.userData=_userData;
             this.userAccount.money=_userData.gold;
@@ -262,7 +272,9 @@ export class MainInterface
             this.userAccount.Achiev=_userData.Achiev;
             this.userAccount.wAchiev=_userData.wAchiev;
         }
-        singleton.netSingleton.player.cb_achievement_complete=(_userData:UserData)=>{
+        //回调任务成就奖励
+        singleton.netSingleton.player.cb_achievement_complete=(_userData:common.UserData)=>
+        {
             this.userData=_userData;
             this.userAccount.money=_userData.gold;
             this.userAccount.playerBag=_userData.bag;
@@ -275,6 +287,26 @@ export class MainInterface
                 this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userData.gold;
                 this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
                 this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true,this.userAccount));
+            }
+        }
+        //回调排行榜周结算奖励
+        singleton.netSingleton.player.cb_rank_reward=(_reward:common.RankReward , _timeDiff)=>
+        {
+            if(_timeDiff>7)
+            {
+                singleton.netSingleton.player.get_user_data();
+            }
+            else
+            {
+                let items:Map<string,number>=new Map();
+                items.set("Gold",_reward.gold);
+                this.panelNode.dispatchEvent(new SendMessage('OpenPopUps',true,
+                {
+                    type:enums.PopUpsType.Reward , 
+                    title:"获得" , 
+                    subheading:"周排行榜奖励" , 
+                    items:items
+                }));
             }
         }
     }

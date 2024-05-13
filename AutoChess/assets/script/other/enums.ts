@@ -110,3 +110,10 @@ export enum PageType
     Task=1,
     Achieve=2
 }
+
+export enum PopUpsType
+{
+    Other=1,
+    Reward=2
+}
+

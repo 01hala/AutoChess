@@ -22,4 +22,4 @@ WORKDIR /app
 COPY --from=build /target ./
 RUN apt-get update 
 RUN apt-get -y install supervisor 
-ENTRYPOINT ["supervisord", "-c", "supervisord.d/youconf.conf"]
+ENTRYPOINT ["supervisord", "-c", "supervisord.conf"]
