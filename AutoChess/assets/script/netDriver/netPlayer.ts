@@ -59,13 +59,15 @@ export class netPlayer {
         this.player_client_module.cb_rank_reward =(reward:common.RankReward)=>
         {
             //计算时间差
-            let now = new Date();
-            let nowDayStr=now.getFullYear+"/"+now.getMonth()+"/"+now.getDay();
-            let nowDay=new Date(nowDayStr);
+            let nowTime = new Date();
+            let startTime=new Date(reward.timetmp*1000);
+
+            let timeDiff=Math.abs(nowTime.getTime()-startTime.getTime());
+            let days=Math.floor(timeDiff/(1000*60*60*24));
             
             if(this.cb_rank_reward)
             {
-                this.cb_rank_reward.call(reward , now.getTime()-reward.timetmp);
+                this.cb_rank_reward.call(reward , days);
             }
         }
     }
