@@ -24,6 +24,7 @@ export class netPlayer {
     public cb_archive_sync : () => void;
     public cb_battle_victory : () => void;
     public cb_achievement_complete:(_userData:common.UserData)=>void;
+    public cb_rank_reward:(reward:common.RankReward , timeDifference:number)=>void;
     private player_client_module : player_client.player_client_module;
 
     public UserData: common.UserData = null;
@@ -52,6 +53,19 @@ export class netPlayer {
             if(this.cb_achievement_complete){
                 //服务器协议改动后将这里变为传入改动后用户数据
                 this.cb_achievement_complete.call(this.UserData);
+            }
+        }
+
+        this.player_client_module.cb_rank_reward =(reward:common.RankReward)=>
+        {
+            //计算时间差
+            let now = new Date();
+            let nowDayStr=now.getFullYear+"/"+now.getMonth()+"/"+now.getDay();
+            let nowDay=new Date(nowDayStr);
+            
+            if(this.cb_rank_reward)
+            {
+                this.cb_rank_reward.call(reward , now.getTime()-reward.timetmp);
             }
         }
     }
