@@ -180,7 +180,7 @@ namespace Abelkhan
                     }
                 }
 
-                foreach (data in push_data_array) 
+                foreach (var data in push_data_array) 
                 {
                     while (true)
                     {
