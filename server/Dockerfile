@@ -22,4 +22,7 @@ WORKDIR /app
 COPY --from=build /target ./
 RUN apt-get update 
 RUN apt-get -y install supervisor 
+
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/bin/
+
 ENTRYPOINT ["supervisord", "-c", "supervisord.conf"]
