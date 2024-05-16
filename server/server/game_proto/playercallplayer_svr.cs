@@ -53,7 +53,7 @@ namespace Abelkhan
         }
 
         public void player_have_offline_msg(Int64 guid){
-            var _argv_0031381b_1b05_3a71_a318_b52adaa27ce5 = new ArrayList();
+            var _argv_0031381b_1b05_3a71_a318_b52adaa27ce5 = new List<MsgPack.MessagePackObject>();
             _argv_0031381b_1b05_3a71_a318_b52adaa27ce5.Add(guid);
             Hub.Hub._hubs.call_hub(hub_name_d5d0e1c9_52d5_396b_96e3_551f12e9aeb0, "player_player_offline_msg_player_have_offline_msg", _argv_0031381b_1b05_3a71_a318_b52adaa27ce5);
         }

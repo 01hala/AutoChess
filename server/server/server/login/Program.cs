@@ -34,7 +34,7 @@ namespace Login
 
             Log.Log.trace("login start ok");
 
-            _hub.run().Wait();
+            _hub.run();
         }
 
         private static void on_hubproxy(Hub.HubProxy _proxy)

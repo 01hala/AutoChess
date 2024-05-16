@@ -85,12 +85,12 @@ namespace Abelkhan
         }
 
         public void rank_reward(List<RankPlayer> rewards){
-            var _argv_5992f63c_f8fd_3884_8a61_540c35c40178 = new ArrayList();
-            var _array_0ec2fc23_234f_345d_9084_1d6d019cf4ae = new ArrayList();
+            var _argv_5992f63c_f8fd_3884_8a61_540c35c40178 = new List<MsgPack.MessagePackObject>();
+            var _array_0ec2fc23_234f_345d_9084_1d6d019cf4ae = new List<MsgPack.MessagePackObject>();
             foreach(var v_74e8c787_aa11_5942_96cd_c06dc60b8ce9 in rewards){
-                _array_0ec2fc23_234f_345d_9084_1d6d019cf4ae.Add(RankPlayer.RankPlayer_to_protcol(v_74e8c787_aa11_5942_96cd_c06dc60b8ce9));
+                _array_0ec2fc23_234f_345d_9084_1d6d019cf4ae.Add(MsgPack.MessagePackObject.FromObject(RankPlayer.RankPlayer_to_protcol(v_74e8c787_aa11_5942_96cd_c06dc60b8ce9)));
             }
-            _argv_5992f63c_f8fd_3884_8a61_540c35c40178.Add(_array_0ec2fc23_234f_345d_9084_1d6d019cf4ae);
+            _argv_5992f63c_f8fd_3884_8a61_540c35c40178.Add(MsgPack.MessagePackObject.FromObject(_array_0ec2fc23_234f_345d_9084_1d6d019cf4ae));
             Hub.Hub._hubs.call_hub(hub_name_3a069ca7_3e1a_3794_808f_5cb5261ebb92, "rank_player_rank_reward", _argv_5992f63c_f8fd_3884_8a61_540c35c40178);
         }
 

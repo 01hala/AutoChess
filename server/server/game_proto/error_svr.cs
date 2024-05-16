@@ -51,7 +51,7 @@ namespace Abelkhan
         }
 
         public void error_code(em_error err_code){
-            var _argv_b2890040_4e10_3967_a5ca_fac1ca306870 = new ArrayList();
+            var _argv_b2890040_4e10_3967_a5ca_fac1ca306870 = new List<MsgPack.MessagePackObject>();
             _argv_b2890040_4e10_3967_a5ca_fac1ca306870.Add((int)err_code);
             Hub.Hub._gates.call_client(client_uuid_f657c200_2a33_308f_b478_82cef68fbca2, "error_code_ntf_error_code", _argv_b2890040_4e10_3967_a5ca_fac1ca306870);
         }

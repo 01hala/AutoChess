@@ -76,6 +76,7 @@ namespace Abelkhan
 
             wait_send_data = new();
             send_data = new();
+
             th_recv = Task.Factory.StartNew(th_recv_poll, TaskCreationOptions.LongRunning);
         }
 
@@ -92,7 +93,7 @@ namespace Abelkhan
         public void close()
         {
             run_flag = false;
-            Task.WaitAll(th_recv);
+            th_recv.Wait();
         }
 
         public Redischannel connect(string ch_name)

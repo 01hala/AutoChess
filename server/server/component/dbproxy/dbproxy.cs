@@ -20,7 +20,7 @@ namespace DBProxy
 
             _root_config = new Abelkhan.Config(cfg_file);
             _center_config = _root_config.get_value_dict("center");
-            var _config = _root_config.get_value_dict(cfg_name);
+            _config = _root_config.get_value_dict(cfg_name);
 
             name = $"{cfg_name}_{Guid.NewGuid().ToString("N")}";
 
@@ -106,7 +106,7 @@ namespace DBProxy
             _hubmanager = new HubManager();
 
             var redismq_url = _root_config.get_value_string("redis_for_mq");
-            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name, 100);
+            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name);
 
             var _center_ch = _redis_mq_service.connect(_center_config.get_value_string("name"));
             lock (add_chs)
@@ -169,7 +169,7 @@ namespace DBProxy
 
             try
             {
-                while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
+                while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, List<MsgPack.MessagePackObject>> _event))
                 {
                     Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
                 }
@@ -216,16 +216,16 @@ namespace DBProxy
             return tick;
         }
 
-        private readonly object _run_mu = new object();
-        public async Task run()
+        private async Task _run()
         {
-            if (!Monitor.TryEnter(_run_mu))
-            {
-                throw new Abelkhan.Exception("run mast at single thread!");
-            }
-
             var _hub_msg_handle = new hub_msg_handle(_hubmanager);
             var _center_msg_handle = new center_msg_handle(_closeHandle, _centerproxy, _hubmanager);
+
+            if (_config.has_key("prometheus_port"))
+            {
+                var _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
+                _prometheus.Start();
+            }
 
             while (!_closeHandle.is_close())
             {
@@ -236,15 +236,27 @@ namespace DBProxy
                     Thread.Sleep((int)(33 - tick));
                 }
             }
-            Log.Log.info("server closed, dbproxy server:{0}", name);
+            Log.Log.info("server closed, dbproxy server:{0}", DBProxy.name);
 
             _redis_mq_service.close();
             Log.Log.close();
 
+        }
+
+        private readonly object _run_mu = new();
+        public void run()
+        {
+            if (!Monitor.TryEnter(_run_mu))
+            {
+                throw new Abelkhan.Exception("run mast at single thread!");
+            }
+
+            _run().Wait();
+
             Monitor.Exit(_run_mu);
         }
 
-		public static string name;
+        public static string name;
 		public static bool is_busy;
         public static uint tick;
 		public static CloseHandle _closeHandle;
@@ -255,6 +267,7 @@ namespace DBProxy
 
         public readonly Abelkhan.Config _root_config;
         public readonly Abelkhan.Config _center_config;
+        public readonly Abelkhan.Config _config;
 
         private readonly List<Abelkhan.Ichannel> add_chs;
         private readonly List<Abelkhan.Ichannel> remove_chs;

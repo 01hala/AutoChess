@@ -156,24 +156,21 @@ namespace Abelkhan
                         }
                         _svrproxy.on_svr_close += on_svr_close;
 
-                        if (_svr_info.type == "hub")
-                        {
-                            var _hubproxy = new HubProxy(_ch, _svr_info.hub_type, _svr_info.name);
-                            hubproxys[_ch] = _hubproxy;
+                        var _hubproxy = new HubProxy(_ch, _svr_info.hub_type, _svr_info.name);
+                        hubproxys[_ch] = _hubproxy;
 
-                            if (!type_hubproxys.TryGetValue(_svr_info.hub_type, out List<HubProxy> hubproxy_list))
-                            {
-                                hubproxy_list = new();
-                                type_hubproxys[_svr_info.hub_type] = hubproxy_list;
-                            }
-                            hubproxy_list.Add(_hubproxy);
+                        if (!type_hubproxys.TryGetValue(_svr_info.hub_type, out List<HubProxy> hubproxy_list))
+                        {
+                            hubproxy_list = new();
+                            type_hubproxys[_svr_info.hub_type] = hubproxy_list;
                         }
+                        hubproxy_list.Add(_hubproxy);
                     }
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("load_svr_info:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -194,12 +191,11 @@ namespace Abelkhan
                 }
                 return await _redis_handle.SetData("svr_info_list", svr_info_list);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("store_svr_info:{0}", e);
+                Log.Log.err(e.ToString());
+                return false;
             }
-
-            return false;
         }
 
         public void reg_svr(Abelkhan.Ichannel ch, string type, string hub_type, string name, bool is_reconn = false)
@@ -219,18 +215,18 @@ namespace Abelkhan
                     new_svrproxys.Add(_svrproxy);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("reg_svr:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
         public HubProxy reg_hub(Abelkhan.Ichannel ch, string hub_type, string _name, bool is_reconn = false)
         {
-            Log.Log.trace("reg_hub name:{0}", _name);
-
             try
             {
+                Log.Log.trace("reg_hub name:{0}", _name);
+
                 var _hubproxy = new HubProxy(ch, hub_type, _name);
                 hubproxys[ch] = _hubproxy;
 
@@ -248,12 +244,11 @@ namespace Abelkhan
 
                 return _hubproxy;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("reg_hub:{0}", e);
+                Log.Log.err(e.ToString());
+                return null;
             }
-
-            return null;
         }
 
         public List<SvrProxy> closed_svr_list;
@@ -304,9 +299,9 @@ namespace Abelkhan
 
                 closed_svr_list.Clear();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("remove_closed_svr:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -336,9 +331,9 @@ namespace Abelkhan
 
                 _timer.addticktime(6000, heartbeat_svr);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("heartbeat_svr:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -353,9 +348,9 @@ namespace Abelkhan
                     _proxy_tmp.server_be_closed(_proxy.type, _proxy.name);
                 });
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("on_svr_close:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -391,9 +386,9 @@ namespace Abelkhan
                 }
                 _replace?.take_over_svr(_proxy.name);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("on_svr_close_callback:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -450,9 +445,9 @@ namespace Abelkhan
                     _center.remove_chs.Add(_close_svrproxy.ch);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("console_close_server:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -470,18 +465,18 @@ namespace Abelkhan
                 }
                 return _all_closed;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("check_all_hub_closed:{0}", e);
+                Log.Log.err(e.ToString());
+                return false;
             }
-            return false;
         }
 
         public bool check_all_db_closed()
         {
-            bool _all_closed = true;
             try
             {
+                bool _all_closed = true;
                 foreach (var _proxy in dbproxys)
                 {
                     if (!_proxy.is_closed)
@@ -489,12 +484,13 @@ namespace Abelkhan
                         _all_closed = false;
                     }
                 }
+                return _all_closed;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("check_all_db_closed:{0}", e);
+                Log.Log.err(e.ToString());
+                return false;
             }
-            return _all_closed;
         }
 
         private bool is_ntf_db_close = false;
@@ -514,9 +510,9 @@ namespace Abelkhan
 
                 is_ntf_db_close = true;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("close_db:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -529,9 +525,9 @@ namespace Abelkhan
                     fn(_proxy);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("for_each_svr:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
         
@@ -544,9 +540,9 @@ namespace Abelkhan
                     fn(_proxy);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("for_each_hub:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -559,9 +555,9 @@ namespace Abelkhan
                     fn(_proxy);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("for_each_new_svr:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
@@ -574,9 +570,9 @@ namespace Abelkhan
                     fn(_proxy);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Log.Log.err("for_each_new_hub:{0}", e);
+                Log.Log.err(e.ToString());
             }
         }
 
