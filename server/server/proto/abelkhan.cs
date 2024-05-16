@@ -17,7 +17,7 @@ namespace Abelkhan
 
     public class RandomUUID
     {
-        private static Random ran = new Random();
+        private static readonly Random ran = new Random();
         public static UInt32 random()
         {
             return (UInt32)(ran.NextDouble() * Int32.MaxValue);
@@ -27,7 +27,7 @@ namespace Abelkhan
     public class TinyTimer
     {
         private static UInt64 tick;
-        private static Dictionary<UInt64, Action> timer = new Dictionary<UInt64, Action>();
+        private static readonly Dictionary<UInt64, Action> timer = new Dictionary<UInt64, Action>();
 
         private static UInt64 refresh()
         {
@@ -191,6 +191,6 @@ namespace Abelkhan
             }
         }
 
-        private Dictionary<string, Tuple<Imodule, Action<IList<MsgPack.MessagePackObject> > > > method_set;
+        private readonly Dictionary<string, Tuple<Imodule, Action<IList<MsgPack.MessagePackObject> > > > method_set;
     }
 }
