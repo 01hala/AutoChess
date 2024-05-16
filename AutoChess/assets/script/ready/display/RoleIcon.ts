@@ -283,6 +283,10 @@ export class RoleIcon extends Component
                         AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
                         if (!this.isBuy) 
                         {
+                            //如果角色未被购买则缩小角色图标，静止动画
+                            this.roleNode.scale=
+                                new Vec3(this.roleNode.scale.x*(2/3),this.roleNode.scale.y*(2/3),this.roleNode.scale.z);
+                            this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=0;
                             this.shopArea.ShowFreezeArea(true);
                         }
                         drag=true;
@@ -298,12 +302,7 @@ export class RoleIcon extends Component
                 let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
                 //隐藏图标并显示角色实体
                 this.roleNode.active = true;
-                //如果角色未被购买则缩小角色图标，静止动画
-                if(!this.isBuy){
-                    this.roleNode.scale=
-                        new Vec3(this.roleNode.scale.x*0.75,this.roleNode.scale.y*0.75,this.roleNode.scale.z);
-                    this.roleNode.getComponent(sp.Skeleton).timeScale=0;
-                }
+                
                 this.iconMask.active = false;
                 this.farme.active=false;
                 //设置坐标
@@ -355,9 +354,9 @@ export class RoleIcon extends Component
     }
     //购买角色时的动画效果
     private async BuyRole(){
-        this.roleNode.getComponent(sp.Skeleton).timeScale=1;
+        this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=1;
         tween(this.roleNode)
-        .to(0.5, { scale: new Vec3(this.roleNode.scale.x*(4/3),this.roleNode.scale.y*(4/3),this.roleNode.scale.z) }) // 在0.5秒内将缩放变为原来的两倍
+        .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) }) // 在0.5秒内将缩放变为原来的两倍
         .start();
     }
     //加载图片

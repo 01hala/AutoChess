@@ -16,6 +16,7 @@ import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
+import { PropsType } from '../../other/enums';
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -320,7 +321,6 @@ export class ReadyDis
                     this.fetters[i].active=true;
                     let text = this.fetters[i].getChildByPath("Level/Text");
                     let content="";
-                    console.log("id为："+_battle_info.FettersList[i].fetters_id+"的羁绊等级："+_battle_info.FettersList[i].fetters_level);
                     for(let j=0;j<fetterLevels.length;j++){
                         if(_battle_info.FettersList[i].fetters_level>=j+1){
                             content+="<color=#ffffff>"+fetterLevels[j]+" ";
@@ -330,6 +330,9 @@ export class ReadyDis
                         }
                     }
                     text.getComponent(RichText).string=content;
+                    this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK,()=>{
+                        //打开羁绊面板，传入当前的羁绊id用以获取信息
+                    })
                     //continue;
                 }               
             }       
