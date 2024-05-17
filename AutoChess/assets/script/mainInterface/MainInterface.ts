@@ -61,7 +61,7 @@ export class MainInterface
     private userMoney:Node;
     private userDiamonds:Node;
     private avatarUrl:string;
-    private userData:UserData;
+    public userData:UserData;
     //玩家头像
     private userAvatar:Node;
 

@@ -21,9 +21,14 @@ export class PopUps extends Component
     }
     
     private bar:Node;
+    //标题
     private titleText:Node;
+    //小标题
     private subheadingText:Node;
+    //奖励显示区域
     private content:Node;
+    //确认按钮区域
+    private BtnArea:Node;
 
     private board:Node
 
@@ -34,44 +39,89 @@ export class PopUps extends Component
         this.subheadingText=this.node.getChildByPath("Board/Subheading");
         this.content=this.node.getChildByPath("Board/ScrollView/view/content");
         this.board=this.node.getChildByPath("Board");
+        this.BtnArea=this.node.getChildByPath("BtnArea");
     }
 
     start() 
     {
-        this.node.getChildByPath("BG").on(Button.EventType.CLICK,()=>
+        try
         {
-            this.CloseBoard();
-        },this);
+            this.node.getChildByPath("BG").on(Button.EventType.CLICK, () =>
+            {
+                this.CloseBoard();
+            }, this);
+            this.content.active = false;
+            this.BtnArea.active = false;
+        }
+        catch (error)
+        {
+            console.log("PopUps 下的 start 错误:", error);
+        }
     }
 
-    public async OpenBoard(_type:enums.PopUpsType , _items:Map<string,number>)
+    public async OpenBoard(_type:enums.PopUpsType , _items:Map<string,number> , _callBack?:(e?:boolean)=>void)
     {
-        if(enums.PopUpsType.Reward == _type)
+        try
         {
-            if(_items.size > 4)
+            //奖励面板
+            if (enums.PopUpsType.Reward == _type) 
             {
-                this.content.getComponent(Widget).isAlignRight=true;
-                this.content.getComponent(Widget).left=0;
+                this.content.active = true;
+                if (_items.size > 4)
+                {
+                    this.content.getComponent(Widget).isAlignRight = true;
+                    this.content.getComponent(Widget).left = 0;
+                }
+                let rewardIcon = await BundleManager.Instance.loadAssetsFromBundle("Icons", "RewardIcon") as Prefab;
+                for (let [key, value] of _items)
+                {
+                    let newNode = instantiate(rewardIcon);
+                    newNode.getChildByPath("Mask/Label").getComponent(Label).string = "" + value;
+                    newNode.setParent(this.content);
+                }
             }
-            let rewardIcon=await BundleManager.Instance.loadAssetsFromBundle("Icons","RewardIcon") as Prefab;
-            for(let [key , value] of _items)
+            //确认面板
+            if (enums.PopUpsType.ConfirmBoard == _type)
             {
-                let newNode=instantiate(rewardIcon);
-                newNode.getChildByPath("Mask/Label").getComponent(Label).string=""+value;
-                newNode.setParent(this.content);
+                this.BtnArea.active = true;
+                this.BtnArea.getChildByPath("Confim").on(Button.EventType.CLICK,()=>
+                {
+                    if (_callBack)
+                    {
+                        _callBack(true);
+                    }
+                });
+                this.BtnArea.getChildByPath("Cancel").on(Button.EventType.CLICK, () =>
+                {
+                    if (_callBack)
+                    {
+                        _callBack(false);
+                    }
+                });
             }
+            this.board.getComponent(Animation).play("PanelAppear");
         }
-        this.board.getComponent(Animation).play("PanelAppear");
+        catch(error)
+        {
+            console.log("PopUps 下的 OpenBoard 错误:",error);
+        }
     }
 
     private CloseBoard()
     {
-        this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+        try
         {
-            this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
-            this.node.destroy();
-        });
-        this.board.getComponent(Animation).play("PanelDisappear");
+            this.board.getComponent(Animation).on(Animation.EventType.FINISHED, () =>
+            {
+                this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.destroy();
+            });
+            this.board.getComponent(Animation).play("PanelDisappear");
+        }
+        catch(error)
+        {
+            console.log("PopUps 下的 CloseBoard 错误:",error);
+        }
     }
 }
 

@@ -256,7 +256,7 @@ export class GameManager extends Component
 
         /* 消息来源
          * MainInterface.ts : 第 303 行
-         * 
+         * CardEditor.ts : 第 43 行
          * 
          * 
          * 
@@ -265,7 +265,7 @@ export class GameManager extends Component
         this.node.on('OpenPopUps',(event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.OpenPopUps(event.detail.type , event.detail.title , event.detail.subheading , event.detail.items)
+            this.OpenPopUps(event.detail.type , event.detail.title , event.detail.subheading , event.detail.items , event.callBack)
         },this);
     }
 
@@ -296,13 +296,13 @@ export class GameManager extends Component
         }
     }
 
-    private OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number>)
+    private OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number> ,  _callBack?:(e?:boolean)=>void)
     {
         let ups=instantiate(this.upStageBoard);
         ups.getComponent(PopUps).title=_title;
         ups.getComponent(PopUps).subheading=_subheading;
         ups.setParent(this.node);
-        ups.getComponent(PopUps).OpenBoard(_type,_items);
+        ups.getComponent(PopUps).OpenBoard(_type,_items , _callBack);
     }
 }
 
