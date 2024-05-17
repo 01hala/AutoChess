@@ -12,6 +12,7 @@ import { SendMessage } from '../other/MessageEvent';
 import { StartGame } from './StartGame';
 import { AudioManager } from '../other/AudioManager';
 import * as enums from '../other/enums';
+import { CardEditor } from './CardEditor';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -45,13 +46,16 @@ export class MainInterface
     private storePanel:Node;
     //牌库界面
     private cardLibPanel:Node;
+    //卡组编辑界面
+    private cardEditorPanel:Node
     //各区域按钮
-    private startBtn:Node;
-    private storeBtn:Node;
-    private amusementBtn:Node;
-    private cardlibraryBtn:Node;
-    private taskAchieveBtn:Node;
-    private rankListBtn:Node;
+    private startBtn:Node;//匹配按钮
+    private storeBtn:Node;//商店按钮
+    private amusementBtn:Node;//娱乐模式按钮
+    private cardlibraryBtn:Node;//牌库按钮
+    private taskAchieveBtn:Node;//任务按钮
+    private rankListBtn:Node;//排行榜按钮
+    private cardEditor:Node;//卡组编辑按钮
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -61,7 +65,7 @@ export class MainInterface
     private userMoney:Node;
     private userDiamonds:Node;
     private avatarUrl:string;
-    private userData:UserData;
+    public userData:UserData;
     //玩家头像
     private userAvatar:Node;
 
@@ -81,11 +85,13 @@ export class MainInterface
         let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface");
         let StorePanelmPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel");
         let CardLibPromise=BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary");
+        let CardEditorPromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "CardEditor");
 
         let awaitResult= await Promise.all([
             MainInterfacePromise, 
             StorePanelmPromise,
-            CardLibPromise
+            CardLibPromise,
+            CardEditorPromise
         ]);;
 
         return awaitResult;
@@ -106,6 +112,7 @@ export class MainInterface
             let MainInterfacepanel = assets[0] as Prefab;
             let StorePanel=assets[1] as Prefab;
             let CardLib=assets[2] as Prefab;
+            let CardEditor=assets [3] as Prefab;
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
             //商店界面
@@ -116,17 +123,22 @@ export class MainInterface
             this.cardLibPanel=instantiate(CardLib);
             this.cardLibPanel.setParent(_father);
             this.cardLibPanel.active=false;
+            //
+            this.cardEditorPanel=instantiate(CardEditor);
+            this.cardEditorPanel.setParent(_father);
+            this.cardEditorPanel.active=false;
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePanel=this.panelNode.getChildByPath("StartGamePanel");
             //各区域按钮
-            this.startBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");
-            this.storeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");
-            this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");
-            this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");
-            this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList");
-            this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel//UiLayer/BtnList/BtnLayout/Task_Btn");
-            this.rankListBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/RankList/Rank_Btn");
+            this.startBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Start_Btn");//匹配
+            this.storeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");//商店
+            this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");//娱乐
+            this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");//牌库
+            this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList");//下拉列表
+            this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList/BtnLayout/Task_Btn");//任务
+            this.rankListBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/RankList/Rank_Btn");//排行
+            this.cardEditor=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList/BtnLayout/Card_Btn");//卡组编辑
             //玩家信息
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/UserMoney");
             this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
@@ -226,6 +238,15 @@ export class MainInterface
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,this.userData));
+            },this);
+            //打开卡组编辑界面
+            this.cardEditor.on(Button.EventType.CLICK,()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                this.cardEditorPanel.active=true;
+                this.panelNode.active=false;
+                this.cardEditorPanel.getComponent(CardEditor).OpenCardEditor();
+
             },this);
         }
         catch(error)
