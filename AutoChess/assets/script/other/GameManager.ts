@@ -298,11 +298,12 @@ export class GameManager extends Component
 
     private OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number> ,  _callBack?:(e?:boolean)=>void)
     {
-        let ups=instantiate(this.upStageBoard);
+        console.log("弹窗类型：",_type);
+        let ups=instantiate(this.upsBoard);
+        ups.setParent(this.node);
         ups.getComponent(PopUps).title=_title;
         ups.getComponent(PopUps).subheading=_subheading;
-        ups.setParent(this.node);
-        ups.getComponent(PopUps).OpenBoard(_type,_items , _callBack);
+        ups.getComponent(PopUps).OpenBoard(_type , _items , _callBack);
     }
 }
 

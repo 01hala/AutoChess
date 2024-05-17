@@ -21,18 +21,11 @@ export class RoleToggleList extends Component
     //toggle预制体
     private roleTogglePre:Prefab
     //选中的toggle列表
-    private confirmToggles:Node[];
+    private confirmToggles:Node[]=[];
     //等阶文本
     private stageLvText:RichText;
     //父节点组件
     private cardEditor:CardEditor;
-
-    protected async onLoad(): Promise<void>
-    {
-        this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggel") as Prefab;
-        this.stageLvText=this.node.getChildByPath("RichText").getComponent(RichText);
-    }
-
 
     start() 
     {
@@ -43,6 +36,9 @@ export class RoleToggleList extends Component
     {
         try
         {
+            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggel") as Prefab; 
+            this.stageLvText=this.node.parent.getChildByPath("RichText").getComponent(RichText);
+
             this.stageLvText.string="<color=#ffffff>"+_stageLv+"阶角色</color>";
             this.stageLv=_stageLv;
             this.cardEditor=_father.getComponent(CardEditor);
@@ -59,18 +55,23 @@ export class RoleToggleList extends Component
                 jconfig=config.RoleConfig.get(i);
                 if(jconfig!=null)
                 {
-                    let t_node=instantiate(this.roleTogglePre);
-                    t_node.name=jconfig.Id.toString();
-                    this.LoadImgOnConfig(t_node,jconfig.Avatar);
-                    t_node.setParent(this.node);
-                    if(_roleGroup.RoleList.find((value)=>(value==jconfig.Id)))
+                    if (jconfig.Stage == this.stageLv)
                     {
-                        this.confirmToggles.push(t_node);
-                        t_node.getComponent(Toggle).isChecked=true;
+                        let t_node = instantiate(this.roleTogglePre);
+                        t_node.name = jconfig.Id.toString();
+                        t_node.getComponent(Toggle).isChecked;
+                        this.LoadImgOnConfig(t_node, jconfig.Avatar);
+                        t_node.setParent(this.node);
+                        if (_roleGroup.RoleList.find((value) => (value == jconfig.Id)))
+                        {
+                            this.confirmToggles.push(t_node);
+                            t_node.getComponent(Toggle).isChecked = true;
+                        }
+                        checkEventHandler.customEventData = jconfig.Id.toString();
+                        let toggle = t_node.getComponent(Toggle);
+                        toggle.checkEvents.push(checkEventHandler);
                     }
-                    checkEventHandler.customEventData = jconfig.Id.toString();
-                    let toggle=t_node.getComponent(Toggle);
-                    toggle.checkEvents.push(checkEventHandler);
+                    i++;
                 }
             }while(jconfig!=null)
         }
@@ -107,19 +108,24 @@ export class RoleToggleList extends Component
     {
         try
         {
-            //将当前组里第一个角色取消勾选
-            let t=this.confirmToggles.pop();
-            t.getComponent(Toggle).isChecked=false;
-            this.confirmToggles.push(this.node.getChildByName(customEventData));
-            //查找并替换卡组里原本的角色
-            for(let i=0;i<this.cardEditor.roleGroup.RoleList.length;i++)
+            let checkNode=this.node.getChildByName(customEventData);
+            if (checkNode.getComponent(Toggle).isChecked)
             {
-                if(Number(customEventData)==this.cardEditor.roleGroup.RoleList[i])
+                //将当前组里的一个角色取消勾选
+                let t = this.confirmToggles.pop();
+                t.getComponent(Toggle).isChecked = false;
+                this.confirmToggles.push(checkNode);
+                //查找并替换卡组里原本的角色
+                for (let i = 0; i < this.cardEditor.roleGroup.RoleList.length; i++)
                 {
-                    this.cardEditor.roleGroup.RoleList.splice(i,1,Number(customEventData));
-                    break;
+                    if (Number(customEventData) == this.cardEditor.roleGroup.RoleList[i])
+                    {
+                        this.cardEditor.roleGroup.RoleList.splice(i, 1, Number(customEventData));
+                        break;
+                    }
                 }
             }
+            
         }
         catch(error)
         {

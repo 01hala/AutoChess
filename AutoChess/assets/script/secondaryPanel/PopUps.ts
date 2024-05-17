@@ -7,17 +7,17 @@ const { ccclass, property } = _decorator;
 export class PopUps extends Component 
 {
     private titleStr:string;
-    public set title(value)
+    public set title(value:string)
     {
         this.titleStr=value;
-        this.titleText.getComponent(RichText).string="<color=#ffffff><outline color=#888888 width=5>"+this.titleStr+"</outline></color>";
+        this.node.getChildByPath("Board/Title").getComponent(RichText).string="<color=#ffffff><outline color=#888888 width=5>"+this.titleStr+"</outline></color>";
     }
 
     private subheadingStr:string;
-    public set subheading(value)
+    public set subheading(value:string)
     {
         this.subheadingStr=value;
-        this.subheadingText.getComponent(RichText).string="<color=#ffff00><outline width=3>- "+this.subheadingStr+" -</outline></color>";
+        this.node.getChildByPath("Board/Subheading").getComponent(RichText).string="<color=#ffff00><outline width=3>- "+this.subheadingStr+" -</outline></color>";
     }
     
     private bar:Node;
@@ -39,7 +39,10 @@ export class PopUps extends Component
         this.subheadingText=this.node.getChildByPath("Board/Subheading");
         this.content=this.node.getChildByPath("Board/ScrollView/view/content");
         this.board=this.node.getChildByPath("Board");
-        this.BtnArea=this.node.getChildByPath("BtnArea");
+        this.BtnArea=this.node.getChildByPath("Board/BtnArea");
+
+        this.content.active = false;
+        this.BtnArea.active = false;
     }
 
     start() 
@@ -50,8 +53,6 @@ export class PopUps extends Component
             {
                 this.CloseBoard();
             }, this);
-            this.content.active = false;
-            this.BtnArea.active = false;
         }
         catch (error)
         {
@@ -63,6 +64,7 @@ export class PopUps extends Component
     {
         try
         {
+            this.node.setSiblingIndex(99);
             //奖励面板
             if (enums.PopUpsType.Reward == _type) 
             {
@@ -83,11 +85,13 @@ export class PopUps extends Component
             //确认面板
             if (enums.PopUpsType.ConfirmBoard == _type)
             {
+                console.log("打开确认面板")
                 this.BtnArea.active = true;
                 this.BtnArea.getChildByPath("Confim").on(Button.EventType.CLICK,()=>
                 {
                     if (_callBack)
                     {
+                        this.CloseBoard();
                         _callBack(true);
                     }
                 });
@@ -95,6 +99,7 @@ export class PopUps extends Component
                 {
                     if (_callBack)
                     {
+                        this.CloseBoard();
                         _callBack(false);
                     }
                 });
