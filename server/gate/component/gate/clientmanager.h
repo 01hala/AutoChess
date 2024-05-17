@@ -142,10 +142,10 @@ public:
 		std::vector<std::shared_ptr<clientproxy> > exception_client;
 		for (auto item : client_uuid_map) {
 			auto proxy = item.second;
-			if (proxy->_timetmp > 0 && (proxy->_timetmp + 10 * 1000) < ticktime) {
+			if (proxy->_timetmp > 0 && (proxy->_timetmp + 15 * 1000) < ticktime) {
 				remove_client.push_back(proxy);
 			}
-			if (proxy->_timetmp > 0 && proxy->_theory_timetmp > 0 && (proxy->_theory_timetmp - proxy->_timetmp) > 10 * 1000) {
+			if (proxy->_timetmp > 0 && proxy->_theory_timetmp > 0 && (proxy->_theory_timetmp - proxy->_timetmp) > 15 * 1000) {
 				exception_client.push_back(proxy);
 			}
 		}
