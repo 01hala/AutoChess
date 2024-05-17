@@ -326,35 +326,37 @@ namespace Player
                     var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
                     string match_name = await Player._redis_handle.GetStrData(match_key);
 
+                    match_proxy _match = null;
                     if (string.IsNullOrEmpty(match_name))
                     {
-                        var _match = Player.match_Proxy_Mng.get_match_proxy(match_name);
-                        if (_match != null)
-                        {
-                            _match.reconnect(_avatar.ClientUUID, uuid).callBack((is_online) =>
-                            {
-                                if (is_online)
-                                {
-                                    rsp.rsp(_avatar.PlayerInfo().Info(), match_name);
-                                }
-                                else
-                                {
-                                    rsp.rsp(_avatar.PlayerInfo().Info(), "");
-                                }
-                            }, () =>
-                            {
-                                Log.Log.err("match reconnect error!");
-                            }).timeout(3000, () =>
-                            {
-                                Log.Log.err("match reconnect timeout!");
-                            });
-                        }
-                        else
-                        {
-                            rsp.rsp(_avatar.PlayerInfo().Info(), "");
-                        }
-                        _avatar.ClientUUID = uuid;
+                        _match = Player.match_Proxy_Mng.get_match_proxy(match_name);
                     }
+
+                    if (_match != null)
+                    {
+                        _match.reconnect(_avatar.ClientUUID, uuid).callBack((is_online) =>
+                        {
+                            if (is_online)
+                            {
+                                rsp.rsp(_avatar.PlayerInfo().Info(), match_name);
+                            }
+                            else
+                            {
+                                rsp.rsp(_avatar.PlayerInfo().Info(), "");
+                            }
+                        }, () =>
+                        {
+                            Log.Log.err("match reconnect error!");
+                        }).timeout(3000, () =>
+                        {
+                            Log.Log.err("match reconnect timeout!");
+                        });
+                    }
+                    else
+                    {
+                        rsp.rsp(_avatar.PlayerInfo().Info(), "");
+                    }
+                    _avatar.ClientUUID = uuid;
                 }
             }
             catch (System.Exception ex)
