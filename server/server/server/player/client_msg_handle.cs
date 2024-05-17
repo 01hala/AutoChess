@@ -40,10 +40,13 @@ namespace Player
             {
                 var uuid = Hub.Hub._gates.current_client_uuid;
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                if (_data.Data.CheckKillRole(roleInfo))
+                if (_avatar != null)
                 {
-                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_data.Data.Info().Achiev, _data.Data.Info().wAchiev);
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    if (_data.Data.CheckKillRole(roleInfo))
+                    {
+                        client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_data.Data.Info().Achiev, _data.Data.Info().wAchiev);
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -64,20 +67,23 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                if (_data.Data.CheckGetAchievementReward(achievement))
+                if (_avatar != null)
                 {
-                    var reward = new AchievementReward();
-                    if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), achievement), out var task))
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    if (_data.Data.CheckGetAchievementReward(achievement))
                     {
-                        reward.gold = task.RewardGold;
+                        var reward = new AchievementReward();
+                        if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), achievement), out var task))
+                        {
+                            reward.gold = task.RewardGold;
+                        }
+                        _data.Data.Info().gold += task.RewardGold;
+                        rsp.rsp(reward);
                     }
-                    _data.Data.Info().gold += task.RewardGold;
-                    rsp.rsp(reward);
-                }
-                else
-                {
-                    rsp.err((int)em_error.not_complete_achievement);
+                    else
+                    {
+                        rsp.err((int)em_error.not_complete_achievement);
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -98,13 +104,16 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                var a = _data.Data.GetAchievementData(Achievement.EMGold25);
-                if (a.status != AchievementAwardStatus.EMRecv)
+                if (_avatar != null)
                 {
-                    a.status = AchievementAwardStatus.EMComplete;
-                    _data.write_back();
-                    client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_data.Data.Info().Achiev, _data.Data.Info().wAchiev);
+                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var a = _data.Data.GetAchievementData(Achievement.EMGold25);
+                    if (a.status != AchievementAwardStatus.EMRecv)
+                    {
+                        a.status = AchievementAwardStatus.EMComplete;
+                        _data.write_back();
+                        client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_data.Data.Info().Achiev, _data.Data.Info().wAchiev);
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -125,8 +134,11 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                rsp.rsp(_data.Data.Info());
+                if (_avatar == null)
+                {
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    rsp.rsp(_data.Data.Info());
+                }
             }
             catch (System.Exception ex)
             {
@@ -145,16 +157,19 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                var err = _data.Data.EditRoleGroup(_group);
-                if (err != 0)
+                if (_avatar == null)
                 {
-                    rsp.err((int)err);
-                }
-                else
-                {
-                    _data.write_back();
-                    rsp.rsp(_data.Data.Info());
+                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var err = _data.Data.EditRoleGroup(_group);
+                    if (err == 0)
+                    {
+                        _data.write_back();
+                        rsp.rsp(_data.Data.Info());
+                    }
+                    else
+                    {
+                        rsp.err((int)err);
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -174,16 +189,19 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                var (err, packet) = _data.Data.BuyCardPacket();
-                if (err != 0)
+                if (_avatar == null)
                 {
-                    rsp.err((int)err);
-                }
-                else
-                {
-                    _data.write_back();
-                    rsp.rsp(packet, _data.Data.Info().bag);
+                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var (err, packet) = _data.Data.BuyCardPacket();
+                    if (err == 0)
+                    {
+                        _data.write_back();
+                        rsp.rsp(packet, _data.Data.Info().bag);
+                    }
+                    else
+                    {
+                        rsp.err((int)err);
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -203,16 +221,19 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                var err = _data.Data.BuyCardMerge(_roleID);
-                if (err != 0)
+                if (_avatar != null)
                 {
-                    rsp.err((int)err);
-                }
-                else
-                {
-                    _data.write_back();
-                    rsp.rsp(_roleID, _data.Data.Info());
+                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var err = _data.Data.BuyCardMerge(_roleID);
+                    if (err == 0)
+                    {
+                        _data.write_back();
+                        rsp.rsp(_roleID, _data.Data.Info());
+                    }
+                    else
+                    {
+                        rsp.err((int)err);
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -232,22 +253,25 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var peakStrengthID = await Player._redis_handle.GetData<long>(RedisHelp.BuildPeakStrengthID());
-                if (peakStrengthID != _avatar.PlayerInfo().PeakStrengthID)
+                if (_avatar != null)
                 {
-                    _avatar.PlayerInfo().PeakStrengthID = peakStrengthID;
-                    Player._redis_handle.DelData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_avatar.Guid));
+                    var peakStrengthID = await Player._redis_handle.GetData<long>(RedisHelp.BuildPeakStrengthID());
+                    if (peakStrengthID != _avatar.PlayerInfo().PeakStrengthID)
+                    {
+                        _avatar.PlayerInfo().PeakStrengthID = peakStrengthID;
+                        Player._redis_handle.DelData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_avatar.Guid));
+                    }
+
+                    var _match = Player.match_Proxy_Mng.get_match_proxy();
+                    _match.start_peak_strength(uuid, _avatar.Guid).callBack(async (battleData) =>
+                    {
+                        rsp.rsp(_match.name, battleData);
+
+                        var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
+                        await Player._redis_handle.SetStrData(match_key, _match.name, RedisHelp.PlayerMatchSvrCacheTimeout);
+
+                    }, rsp.err);
                 }
-
-                var _match = Player.match_Proxy_Mng.get_match_proxy();
-                _match.start_peak_strength(uuid, _avatar.Guid).callBack(async (battleData) =>
-                {
-                    rsp.rsp(_match.name, battleData);
-
-                    var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
-                    await Player._redis_handle.SetStrData(match_key, _match.name, RedisHelp.PlayerMatchSvrCacheTimeout);
-
-                }, rsp.err);
             }
             catch (System.Exception ex)
             {
@@ -266,15 +290,18 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                var _match = Player.match_Proxy_Mng.get_match_proxy();
-                _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack( async (battle, shop) =>
+                if (_avatar == null)
                 {
-                    rsp.rsp(_match.name, battle, shop);
+                    var _match = Player.match_Proxy_Mng.get_match_proxy();
+                    _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack(async (battle, shop) =>
+                    {
+                        rsp.rsp(_match.name, battle, shop);
 
-                    var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
-                    await Player._redis_handle.SetStrData(match_key, _match.name, RedisHelp.PlayerMatchSvrCacheTimeout);
+                        var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
+                        await Player._redis_handle.SetStrData(match_key, _match.name, RedisHelp.PlayerMatchSvrCacheTimeout);
 
-                }, rsp.err);
+                    }, rsp.err);
+                }
             }
             catch (System.Exception ex)
             {

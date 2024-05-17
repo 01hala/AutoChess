@@ -38,7 +38,10 @@ namespace Player
                 try
                 {
                     var _client = await client_Mng.uuid_get_client_proxy(uuid);
-                    _client.LastActiveTime = Timerservice.Tick;
+                    if (_client != null)
+                    {
+                        _client.LastActiveTime = Timerservice.Tick;
+                    }
                 }
                 catch (System.Exception ex)
                 {
