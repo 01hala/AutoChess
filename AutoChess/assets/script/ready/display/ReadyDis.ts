@@ -17,6 +17,7 @@ import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
 import { PropsType } from '../../other/enums';
+import { SendMessage } from '../../other/MessageEvent';
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -331,7 +332,8 @@ export class ReadyDis
                     }
                     text.getComponent(RichText).string=content;
                     this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK,()=>{
-                        //打开羁绊面板，传入当前的羁绊id用以获取信息
+                        this.fetters[i].getChildByName("Button").
+                            dispatchEvent(new SendMessage('OpenFetterInfo',true,{id:_battle_info.FettersList[i].fetters_id}));
                     })
                     //continue;
                 }               

@@ -135,6 +135,21 @@ export class GameManager extends Component
         },this);
 
         /* 消息来源
+         * ReadyDis.ts : 第 334 行 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+        this.node.on('OpenFetterInfo',(event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            this.infoPanel.active=true;
+            this.infoPanel.getComponent(InfoPanel).OpenFetterInfo(event.detail);
+        },this);
+
+        /* 消息来源
          * RoleIcon.ts : 第 345 行 
          * 
          * 

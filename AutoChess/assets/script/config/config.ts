@@ -12,6 +12,7 @@ import * as fetters from './fetters_config'
 import * as Equip_Config from './Equip_config';
 import * as task_config from './task_config';
 import * as SkillIntroduce_config from './SkillIntroduce_config'
+import * as  FetterIntroduceConfig from './FetterIntroduce_config';
 
 export class config {
     public static MechanicFetters = 6;
@@ -25,6 +26,7 @@ export class config {
     public static EquipConfig:Map<number,Equip_Config.EquipConfig>;
     public static TaskConfig:Map<number,task_config.TaskConfig>;
     public static SkillIntroduceConfig:Map<number,SkillIntroduce_config.SkillIntroduceConfig>;
+    public static FetterIntroduceConfig:Map<number,FetterIntroduceConfig.FetterIntroduceConfig>;
 
     public static async load() {
         config.SkillConfig = await skill_config.LoadSkillConfig();
@@ -36,5 +38,6 @@ export class config {
         config.EquipConfig=await Equip_Config.LoadEquipConfig();
         config.TaskConfig=await task_config.LoadTaskConfig();
         config.SkillIntroduceConfig=await SkillIntroduce_config.LoadSkillIntroduceConfig();
+        config.FetterIntroduceConfig=await FetterIntroduceConfig.LoadFetterIntroduceConfig();
     }
 }

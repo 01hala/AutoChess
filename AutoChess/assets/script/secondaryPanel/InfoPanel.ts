@@ -19,6 +19,7 @@ export class InfoPanel extends Component
     private simpleBoard:Node;
     private detailedBoard:Node;
     private propBoard:Node;
+    private fetterBoard:Node;
 
     onLoad()
     {
@@ -28,6 +29,7 @@ export class InfoPanel extends Component
         this.simpleBoard=this.node.getChildByPath("Simple");
         this.detailedBoard=this.node.getChildByPath("Detailed");
         this.propBoard=this.node.getChildByPath("SimpleProps");
+        this.fetterBoard=this.node.getChildByPath("");
     }
 
     start() 
@@ -118,6 +120,12 @@ export class InfoPanel extends Component
             console.error('InfoPanel 下 OpenInfoBoard 错误 err: ',error);
         }
         
+    }
+
+    OpenFetterInfo(_id:number){
+        this.simpleBoard.active=false;
+        this.detailedBoard.active=false;
+        this.propBoard.active=false;
     }
 
     OpenCardInfo(_id:number)
