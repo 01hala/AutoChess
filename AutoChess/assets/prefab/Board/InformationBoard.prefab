@@ -480,7 +480,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 23.68350000000001,
+      "y": -38.20100000000002,
       "z": 0
     },
     "_lrot": {
@@ -746,7 +746,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 387.2950000000001,
-      "height": -623.989
+      "height": -747.7580000000002
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1940,7 +1940,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 960,
-      "height": -338.6330000000001
+      "height": -462.40200000000016
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1968,7 +1968,7 @@
     "_target": null,
     "_left": -0.20400000000000773,
     "_right": -0.20400000000000773,
-    "_top": 470.66450000000003,
+    "_top": 594.4335000000001,
     "_bottom": 518.0315,
     "_horizontalCenter": -12.5,
     "_verticalCenter": 0,
@@ -3419,8 +3419,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -184.04299999999998,
-      "y": -33.396000000000015,
+      "x": -356.5539999999999,
+      "y": 80.495,
       "z": 0
     },
     "_lrot": {
@@ -3468,8 +3468,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -3.363000000000028,
-      "y": -5.259500000000003,
+      "x": -5.038000000000082,
+      "y": 23.212999999999965,
       "z": 0
     },
     "_lrot": {
@@ -3508,8 +3508,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 278,
-      "height": 310.5
+      "width": 113.864,
+      "height": 127.17543884892086
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3592,8 +3592,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 384.979,
-      "height": -601.6330000000002
+      "width": 384.9789999999999,
+      "height": -601.6330000000003
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3684,10 +3684,10 @@
     },
     "_alignFlags": 45,
     "_target": null,
-    "_left": 103.46750000000002,
-    "_right": 471.5535,
-    "_top": 164.89600000000002,
-    "_bottom": 98.10399999999998,
+    "_left": -69.0434999999999,
+    "_right": 644.0645,
+    "_top": 51.00500000000005,
+    "_bottom": 211.99500000000006,
     "_horizontalCenter": 0,
     "_verticalCenter": -23,
     "_isAbsLeft": true,
@@ -3741,8 +3741,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 188.384,
-      "y": 134.936,
+      "x": -7.575,
+      "y": 141.635,
       "z": 0
     },
     "_lrot": {
@@ -3877,8 +3877,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 116.512,
-      "y": 55.16599999999994,
+      "x": -195.013,
+      "y": 93.688,
       "z": 0
     },
     "_lrot": {
@@ -3943,10 +3943,10 @@
       "__id__": 179
     },
     "_lineHeight": 100,
-    "_string": "<color=#00ff00>详情：</color>",
+    "_string": "<color=#000000>详情：</color>",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_fontSize": 100,
+    "_fontSize": 80,
     "_maxWidth": 400,
     "_fontFamily": "Arial",
     "_font": {
@@ -4002,8 +4002,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 197.2055,
-      "y": -101.97399999999999,
+      "x": -129.394,
+      "y": 19.155,
       "z": 0
     },
     "_lrot": {
@@ -4042,8 +4042,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 361.3879999999999,
-      "height": 221.21000000000004
+      "width": 400,
+      "height": 50.4
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4057,7 +4057,7 @@
     "fileId": "67Sw/UZyNJwZ2qsgnDIYjv"
   },
   {
-    "__type__": "cc.Label",
+    "__type__": "cc.RichText",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -4067,41 +4067,24 @@
     "__prefab": {
       "__id__": 185
     },
-    "_customMaterial": null,
-    "_srcBlendFactor": 2,
-    "_dstBlendFactor": 4,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_string": "给予一个角色1点生命值和1点攻击力",
+    "_lineHeight": 40,
+    "_string": "未能获取羁绊信息",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_actualFontSize": 41,
-    "_fontSize": 40,
+    "_fontSize": 50,
+    "_maxWidth": 0,
     "_fontFamily": "Arial",
-    "_lineHeight": 50,
-    "_overflow": 2,
-    "_enableWrapText": true,
-    "_font": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
-      "__expectedType__": "cc.TTFFont"
-    },
-    "_isSystemFontUsed": false,
-    "_spacingX": 0,
-    "_isItalic": false,
-    "_isBold": false,
-    "_isUnderline": false,
-    "_underlineHeight": 2,
+    "_font": null,
+    "_isSystemFontUsed": true,
+    "_userDefinedFont": null,
     "_cacheMode": 0,
+    "_imageAtlas": null,
+    "_handleTouchEvent": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "6cFt0SlORNkZfA7Y3s5xu4"
+    "fileId": "e8cHXoIeNPBrYj8hxzFAC7"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -4138,8 +4121,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0.20400000000000773,
-      "y": 253.60800000000006,
+      "x": 0.204,
+      "y": 280.406,
       "z": 0
     },
     "_lrot": {
@@ -4325,7 +4308,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af@f9941",
+      "__uuid__": "f6ba4642-9808-412b-a3b2-9d81ee63fc45@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -4390,7 +4373,7 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af@f9941",
+      "__uuid__": "f6ba4642-9808-412b-a3b2-9d81ee63fc45@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": null,

@@ -320,6 +320,8 @@ export class ReadyDis
                     //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
                     this.fetters[i].getComponent(Sprite).spriteFrame=sf;
                     this.fetters[i].active=true;
+                    this.fetters[i].getChildByName("FetterName").getComponent(RichText).string=
+                        "<color=#00ff00>"+config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Name+"</color>";
                     let text = this.fetters[i].getChildByPath("Level/Text");
                     let content="";
                     for(let j=0;j<fetterLevels.length;j++){
@@ -333,7 +335,8 @@ export class ReadyDis
                     text.getComponent(RichText).string=content;
                     this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK,()=>{
                         this.fetters[i].getChildByName("Button").
-                            dispatchEvent(new SendMessage('OpenFetterInfo',true,{id:_battle_info.FettersList[i].fetters_id}));
+                            dispatchEvent(new SendMessage('OpenFetterInfo',true,
+                                {id:_battle_info.FettersList[i].fetters_id,sprite:sf,level:_battle_info.FettersList[i].fetters_level}));
                     })
                     //continue;
                 }               

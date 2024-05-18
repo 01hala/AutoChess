@@ -29,7 +29,7 @@ export class InfoPanel extends Component
         this.simpleBoard=this.node.getChildByPath("Simple");
         this.detailedBoard=this.node.getChildByPath("Detailed");
         this.propBoard=this.node.getChildByPath("SimpleProps");
-        this.fetterBoard=this.node.getChildByPath("");
+        this.fetterBoard=this.node.getChildByPath("Fetter");
     }
 
     start() 
@@ -56,6 +56,7 @@ export class InfoPanel extends Component
             this.simpleBoard.active=false;
             this.detailedBoard.active=false;
             this.propBoard.active=false;
+            this.fetterBoard.active=false;
     
             if(null!=propType)
             {
@@ -122,18 +123,38 @@ export class InfoPanel extends Component
         
     }
 
-    OpenFetterInfo(_id:number){
+    OpenFetterInfo(_id:number,sprite:SpriteFrame,level:number){
         this.simpleBoard.active=false;
         this.detailedBoard.active=false;
         this.propBoard.active=false;
+        this.fetterBoard.active=true;
+
+        this.fetterBoard.getComponent(Animation).play("PanelAppear");
+        this.node.setSiblingIndex(98);
+        this.node.getComponent(BlockInputEvents).enabled=true;
+
+        let cf=config.FetterIntroduceConfig.get(_id);
+
+        this.fetterBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=sprite;
+        this.fetterBoard.getChildByName("FetterName").getComponent(Label).string=cf.FetterName;
+        this.fetterBoard.getChildByName("RichText").getComponent(RichText).string="<color=#000000>"+cf.Introductory+"</color>";
+        let content="";
+        let list=cf.Text.split("\n");
+        for(let i=0;i<list.length;i++){
+            if(level>=i+1) content+="<color=#ffffff>"+list[i]+"\n";
+            else content+="<color=#AAAAAA>"+list[i]+"\n";        
+        }
+        this.fetterBoard.getChildByName("Introduce").getComponent(RichText).string=content;
     }
 
     OpenCardInfo(_id:number)
     {
+        this.node.setSiblingIndex(98);
         this.node.getComponent(BlockInputEvents).enabled=true;
         this.simpleBoard.active=true;
         this.detailedBoard.active=false;
         this.propBoard.active=false;
+        this.fetterBoard.active=true;
         this.node.setSiblingIndex(98);
 
         this.simpleBoard.getComponent(Animation).play("PanelAppear");
@@ -254,8 +275,14 @@ export class InfoPanel extends Component
             });
             this.detailedBoard.getComponent(Animation).play("PanelDisappear");
         }
-
-        
+        if(this.fetterBoard.active){
+            this.fetterBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                this.node.active=false;
+                this.fetterBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+            });
+            this.fetterBoard.getComponent(Animation).play("PanelDisappear");
+        }   
     }
 
     private async LoadRoleImage(_r:Role)

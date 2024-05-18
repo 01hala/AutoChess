@@ -146,7 +146,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoPanel).OpenFetterInfo(event.detail);
+            this.infoPanel.getComponent(InfoPanel).OpenFetterInfo(event.detail.id,event.detail.sprite,event.detail.level);
         },this);
 
         /* 消息来源
