@@ -18,6 +18,16 @@ import { MainInterface } from '../mainInterface/MainInterface';
 import { sleep } from '../other/sleep';
 import { AudioManager } from '../other/AudioManager';
 
+function unicodeToUtf8(unicode:any) {
+    let utf8str = "";
+    for(let i = 0; i < unicode.length; i += 2) {
+        let uchar = (unicode[i] << 8) | unicode[i+1];
+        utf8str += String.fromCharCode(uchar);
+    }
+
+    return utf8str;
+}
+
 @ccclass('login')
 export class login extends Component {
     @property(Node)
@@ -40,8 +50,9 @@ export class login extends Component {
             success: (result) => {
                 this._progress += 0.1;
                 this._setProgress(this._progress);
-
-                this.nick_name = result.userInfo.nickName.slice(0, 3);
+                
+                let nickName = unicodeToUtf8(result.userInfo.nickName);
+                this.nick_name = nickName.slice(0, 3);
                 this.avatar_url = result.userInfo.avatarUrl;
                 singleton.netSingleton.player.login_player("wx", code, this.nick_name, this.avatar_url);
             },
