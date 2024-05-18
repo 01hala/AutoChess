@@ -271,7 +271,7 @@ export class login extends Component {
                             singleton.netSingleton.ready.Restore(battle_info);
                         }, () => {
                             console.log("on net reconnect get_battle_data error!");
-                        }).timeout(2000, () => {
+                        }).timeout(3000, () => {
                             console.log("on net reconnect get_battle_data timeout!");
                         })
                     }
