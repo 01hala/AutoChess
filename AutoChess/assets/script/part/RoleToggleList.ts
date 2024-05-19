@@ -85,7 +85,11 @@ export class RoleToggleList extends Component
     {
         try
         {
-            _node.getChildByPath("IconMask/RoleSprite").getComponent(Sprite).spriteFrame=await loadAssets.LoadImg(_address);
+            let texture=await loadAssets.LoadImg(_address);
+            if(texture)
+            {
+                _node.getChildByPath("IconMask/RoleSprite").getComponent(Sprite).spriteFrame=texture;
+            }
             let color;
             switch(this.stageLv)
             {

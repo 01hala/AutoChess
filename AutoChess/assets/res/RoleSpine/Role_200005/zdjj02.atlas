@@ -1,0 +1,62 @@
+
+zdjj02.png
+size: 458,458
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+zdjj_0
+  rotate: false
+  xy: 295, 168
+  size: 106, 108
+  orig: 106, 125
+  offset: 0, 0
+  index: -1
+zdjj_1
+  rotate: false
+  xy: 167, 83
+  size: 62, 77
+  orig: 62, 77
+  offset: 0, 0
+  index: -1
+zdjj_2
+  rotate: false
+  xy: 2, 162
+  size: 291, 294
+  orig: 291, 294
+  offset: 0, 0
+  index: -1
+zdjj_3
+  rotate: true
+  xy: 87, 98
+  size: 62, 78
+  orig: 62, 78
+  offset: 0, 0
+  index: -1
+zdjj_4
+  rotate: false
+  xy: 2, 81
+  size: 83, 79
+  orig: 83, 79
+  offset: 0, 0
+  index: -1
+zdjj_5
+  rotate: false
+  xy: 397, 90
+  size: 36, 76
+  orig: 36, 76
+  offset: 0, 0
+  index: -1
+zdjj_6
+  rotate: true
+  xy: 295, 278
+  size: 178, 161
+  orig: 178, 161
+  offset: 0, 0
+  index: -1
+zdjj_7
+  rotate: true
+  xy: 295, 41
+  size: 125, 100
+  orig: 125, 100
+  offset: 0, 0
+  index: -1

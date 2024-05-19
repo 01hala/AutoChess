@@ -1,0 +1,76 @@
+
+xkc01.png
+size: 399,399
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+xkc_0
+  rotate: false
+  xy: 251, 220
+  size: 113, 177
+  orig: 113, 177
+  offset: 0, 0
+  index: -1
+xkc_1
+  rotate: true
+  xy: 2, 6
+  size: 135, 174
+  orig: 135, 174
+  offset: 0, 0
+  index: -1
+xkc_2
+  rotate: true
+  xy: 251, 149
+  size: 69, 54
+  orig: 69, 60
+  offset: 0, 6
+  index: -1
+xkc_3
+  rotate: true
+  xy: 238, 7
+  size: 34, 42
+  orig: 34, 45
+  offset: 0, 3
+  index: -1
+xkc_4
+  rotate: false
+  xy: 2, 143
+  size: 247, 254
+  orig: 247, 254
+  offset: 0, 0
+  index: -1
+xkc_5
+  rotate: false
+  xy: 311, 30
+  size: 68, 94
+  orig: 71, 94
+  offset: 0, 0
+  index: -1
+xkc_6
+  rotate: true
+  xy: 311, 126
+  size: 92, 84
+  orig: 92, 84
+  offset: 0, 0
+  index: -1
+xkc_7
+  rotate: true
+  xy: 178, 22
+  size: 119, 58
+  orig: 119, 58
+  offset: 0, 0
+  index: -1
+xkc_8
+  rotate: false
+  xy: 366, 317
+  size: 31, 80
+  orig: 31, 80
+  offset: 0, 0
+  index: -1
+xkc_9
+  rotate: false
+  xy: 238, 43
+  size: 71, 98
+  orig: 71, 98
+  offset: 0, 0
+  index: -1
