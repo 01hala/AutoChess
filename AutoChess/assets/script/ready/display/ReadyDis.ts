@@ -16,6 +16,8 @@ import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
+import { PropsType } from '../../other/enums';
+import { SendMessage } from '../../other/MessageEvent';
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -318,9 +320,10 @@ export class ReadyDis
                     //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
                     this.fetters[i].getComponent(Sprite).spriteFrame=sf;
                     this.fetters[i].active=true;
+                    this.fetters[i].getChildByName("FetterName").getComponent(RichText).string=
+                        "<color=#00ff00>"+config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Name+"</color>";
                     let text = this.fetters[i].getChildByPath("Level/Text");
                     let content="";
-                    console.log("id为："+_battle_info.FettersList[i].fetters_id+"的羁绊等级："+_battle_info.FettersList[i].fetters_level);
                     for(let j=0;j<fetterLevels.length;j++){
                         if(_battle_info.FettersList[i].fetters_level>=j+1){
                             content+="<color=#ffffff>"+fetterLevels[j]+" ";
@@ -330,6 +333,11 @@ export class ReadyDis
                         }
                     }
                     text.getComponent(RichText).string=content;
+                    this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK,()=>{
+                        this.fetters[i].getChildByName("Button").
+                            dispatchEvent(new SendMessage('OpenFetterInfo',true,
+                                {id:_battle_info.FettersList[i].fetters_id,sprite:sf,level:_battle_info.FettersList[i].fetters_level}));
+                    })
                     //continue;
                 }               
             }       
