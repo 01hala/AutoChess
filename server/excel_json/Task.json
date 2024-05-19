@@ -104,7 +104,7 @@
         "Class": "EMSuccessiveFiveVictory",
         "Lable": "连续获得五局皇冠",
         "Condition": "连续赢得五局游戏",
-        "Value": 1,
+        "Value": 5,
         "Reward": "[\"Gold\",100]"
     },
     "2002": {
@@ -122,7 +122,7 @@
         "Class": "EMStreakVictory",
         "Lable": "十连胜赢得皇冠",
         "Condition": "十连胜获胜",
-        "Value": 1,
+        "Value": 10,
         "Reward": "[\"Gold\",100]"
     },
     "2004": {
