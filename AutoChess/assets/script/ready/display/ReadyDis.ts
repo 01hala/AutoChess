@@ -18,6 +18,7 @@ import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
 import { PropsType } from '../../other/enums';
 import { SendMessage } from '../../other/MessageEvent';
+import { RoleDis } from '../../battle/display/RoleDis';
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -43,6 +44,7 @@ export class ReadyDis
     private trophyText:RichText;
     private roundText:RichText;
 
+    private roleInfoNode:Node;
     private fetters:Node[]=[];
 
     private waitingPanel:Node;
@@ -84,6 +86,9 @@ export class ReadyDis
             this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
             this.launchSkillEffect.setSiblingIndex(99);
             this.launchSkillEffect.active=false;
+
+            this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
+            this.roleInfoNode.active=false;
 
             if(battle_info.coin>=25)
             {
@@ -357,10 +362,10 @@ export class ReadyDis
                 await sleep(50); //延后一帧刷新richtext
                 if(this.coinText && this.heathText && this.roundText && this.trophyText)
                 {
-                    this.coinText.string=""+_battle_info.coin;
-                    this.heathText.string=""+_battle_info.faild;
-                    this.roundText.string=""+_battle_info.round;
-                    this.trophyText.string=""+_battle_info.victory;
+                    this.coinText.string="<color=000000>"+_battle_info.coin+"</color>";
+                    this.heathText.string="<color=000000>"+_battle_info.faild+"</color>";
+                    this.roundText.string="<color=000000>"+_battle_info.round+"</color>";
+                    this.trophyText.string="<color=000000>"+_battle_info.victory+"</color>";
                 }
                 relolve();
             }
@@ -370,6 +375,30 @@ export class ReadyDis
                 relolve();
             }
         });
+    }
+
+    ShowRoleInfo(roleInfo:RoleDis){
+        if(null == roleInfo){
+            console.log("未获取到角色信息");
+            return;
+        }
+        this.roleInfoNode.active=true;
+
+        let roleSkillInfo=config.SkillIntroduceConfig.get(roleInfo.GetRoleSkillID());
+        if(roleSkillInfo){
+            let content="";
+            switch(roleInfo.Level){
+                case 1:content=roleSkillInfo.Leve1Text;break;
+                case 2:content=roleSkillInfo.Leve2Text;break;
+                default:content=roleSkillInfo.Leve3Text;
+            }
+            this.roleInfoNode.getChildByName("SkillIntroduce").getComponent(RichText).string=
+                roleSkillInfo.Timeing_Text+":"+content;
+        }      
+    }
+
+    HideRoleInfo(){
+        this.roleInfoNode.active=false;
     }
 
     private LoadFetterImg(_address:string):Promise<SpriteFrame>

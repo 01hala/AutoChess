@@ -151,6 +151,7 @@ export class RoleIcon extends Component
             {
                 this.node.setSiblingIndex(98);
                 this.OffTirrger();
+                singleton.netSingleton.ready.HideRoleInfo();
                 //隐藏人物放置可视化区域
                 this.visiableArea.active=false;
                 //隐藏冻结栏
@@ -168,6 +169,7 @@ export class RoleIcon extends Component
                 {
                     this.node.setSiblingIndex(98);
                     this.OffTirrger();
+                    singleton.netSingleton.ready.HideRoleInfo();
                     //隐藏人物放置可视化区域                                                                  // 修改函数
                     this.visiableArea.active=false;                                                         
                     //隐藏冻结栏                                                                             
@@ -324,6 +326,8 @@ export class RoleIcon extends Component
                 //记录拖拽前的位置信息
                 beforeIndex=this.index;
                 berforeTarget=this.target;
+
+                singleton.netSingleton.ready.ShowRoleInfo(this.roleNode.getComponent(RoleDis));
             }, this);
         }
         catch(error)
