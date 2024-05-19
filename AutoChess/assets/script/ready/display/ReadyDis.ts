@@ -88,6 +88,7 @@ export class ReadyDis
             this.launchSkillEffect.active=false;
 
             this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
+            this.roleInfoNode.active=false;
 
             if(battle_info.coin>=25)
             {
