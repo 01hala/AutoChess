@@ -6,7 +6,9 @@
   "files": [],
   "subMetas": {},
   "userData": {
-    "compressionType": {},
+    "compressionType": {
+      "wechatgame": "merge_all_json"
+    },
     "isRemoteBundle": {
       "wechatgame": true
     },
