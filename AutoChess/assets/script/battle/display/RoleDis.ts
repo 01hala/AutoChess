@@ -553,7 +553,7 @@ export class RoleDis extends Component
         }
         catch(error)
         {
-            console.error("RoleDis 下的 LoadOnConfig 错误 err:" + error);
+            console.error(`RoleDis 下的 LoadOnConfig 错误 err:${error} RoleId:${this.RoleId}`);
         }
     }
 }
