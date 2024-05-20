@@ -377,7 +377,7 @@ export class ReadyDis
         });
     }
 
-    ShowRoleInfo(roleInfo:RoleDis){
+    async ShowRoleInfo(roleInfo:RoleDis){
         if(null == roleInfo){
             console.log("未获取到角色信息");
             return;
@@ -393,9 +393,21 @@ export class ReadyDis
                 default:content=roleSkillInfo.Leve3Text;
             }
             this.roleInfoNode.getChildByName("SkillIntroduce").getComponent(RichText).string=
-                roleSkillInfo.Timeing_Text+":"+content;
+                roleSkillInfo.Timeing_Text+":"+content;           
         }      
+        let roleFetterInfo=config.FettersConfig.get(roleInfo.GetRoleFetter().fetters_id);
+        if(roleFetterInfo){
+            let str=roleFetterInfo.Res;
+            let sf:SpriteFrame=await this.LoadFetterImg(str);
+            if(sf)
+            {
+                this.roleInfoNode.getChildByName("Fetter/IconImage").getComponent(Sprite).spriteFrame=sf;             
+            }
+            this.roleInfoNode.getChildByName("Fetter/FetterName").getComponent(RichText).string=roleFetterInfo.Name;
+        }
     }
+
+    
 
     HideRoleInfo(){
         this.roleInfoNode.active=false;
