@@ -291,7 +291,7 @@ export class client
             value.heartbeats();
         });
 
-        if (this._gateproxy && this._gateproxy.timetmp < (timetmp - 15000)) {
+        if (this._gateproxy && this._gateproxy.timetmp < (timetmp - 10000)) {
             if (this.onGateDisConnect){
                 this.onGateDisConnect();
             }

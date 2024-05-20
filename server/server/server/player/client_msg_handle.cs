@@ -134,7 +134,7 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                if (_avatar == null)
+                if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     rsp.rsp(_data.Data.Info());
@@ -157,7 +157,7 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                if (_avatar == null)
+                if (_avatar != null)
                 {
                     var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
                     var err = _data.Data.EditRoleGroup(_group);
@@ -189,7 +189,7 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                if (_avatar == null)
+                if (_avatar != null)
                 {
                     var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
                     var (err, packet) = _data.Data.BuyCardPacket();
@@ -290,7 +290,7 @@ namespace Player
             try
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
-                if (_avatar == null)
+                if (_avatar != null)
                 {
                     var _match = Player.match_Proxy_Mng.get_match_proxy();
                     _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack(async (battle, shop) =>
@@ -344,7 +344,7 @@ namespace Player
             try
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
-                if (_avatar == null)
+                if (_avatar != null)
                 {
                     rsp.err((int)em_error.player_offline);
                 }
@@ -354,7 +354,7 @@ namespace Player
                     string match_name = await Player._redis_handle.GetStrData(match_key);
 
                     match_proxy _match = null;
-                    if (string.IsNullOrEmpty(match_name))
+                    if (!string.IsNullOrEmpty(match_name))
                     {
                         _match = Player.match_Proxy_Mng.get_match_proxy(match_name);
                     }
@@ -384,6 +384,7 @@ namespace Player
                         rsp.rsp(_avatar.PlayerInfo().Info(), "");
                     }
                     _avatar.ClientUUID = uuid;
+
                 }
             }
             catch (System.Exception ex)

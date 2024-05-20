@@ -160,6 +160,10 @@ export class RoleDis extends Component
     {
         if(this.roleInfo) return this.roleInfo.fetter;
     }
+    GetRoleSkillID():number
+    {
+        if(this.roleInfo) return this.roleInfo.skillid;
+    }
 
     AttackInit() 
     {
@@ -544,11 +548,17 @@ export class RoleDis extends Component
             this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
             if(skdata)
             {
-                let anims=skdata.getAnimsEnum();
                 this.roleSprite.skeletonData=skdata;
-                //this.roleSprite.animation="animation";
-                this.roleSprite.setAnimation(0,String(anims[1]),true);
-                
+                try
+                {
+                    let anims=skdata.getAnimsEnum();
+                    //this.roleSprite.animation="animation";
+                    this.roleSprite.setAnimation(0,String(anims[1]),true);
+                }
+                catch
+                {
+                    console.warn(`角色 ${jconfig.Id} 的动画设置失败`);
+                }
             }
         }
         catch(error)

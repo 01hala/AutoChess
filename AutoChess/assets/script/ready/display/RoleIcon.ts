@@ -5,7 +5,7 @@
  * 图标拖拽类
  */
 
-import { _decorator, Asset, Button, Collider, Collider2D, Color, color, Component, Contact2DType, director, EventTouch, ImageAsset, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Mask, Node, Prefab, rect, Sprite, SpriteAtlas, SpriteFrame, Texture2D, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
+import { _decorator, Asset, Button, Collider, Collider2D, Color, color, Component, Contact2DType, director, EventTouch, ImageAsset, Input, instantiate, IPhysics2DContact, ITriggerEvent, Layers, Mask, Node, Prefab, rect, Skeleton, sp, Sprite, SpriteAtlas, SpriteFrame, Texture2D, tween, Tween, UITransform, Vec2, Vec3, view } from 'cc';
 import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
@@ -151,6 +151,7 @@ export class RoleIcon extends Component
             {
                 this.node.setSiblingIndex(98);
                 this.OffTirrger();
+                singleton.netSingleton.ready.HideRoleInfo();
                 //隐藏人物放置可视化区域
                 this.visiableArea.active=false;
                 //隐藏冻结栏
@@ -168,6 +169,7 @@ export class RoleIcon extends Component
                 {
                     this.node.setSiblingIndex(98);
                     this.OffTirrger();
+                    singleton.netSingleton.ready.HideRoleInfo();
                     //隐藏人物放置可视化区域                                                                  // 修改函数
                     this.visiableArea.active=false;                                                         
                     //隐藏冻结栏                                                                             
@@ -222,6 +224,7 @@ export class RoleIcon extends Component
                                     // {
                                     //     this.roleArea.targets.set(this.target.name,this.node);
                                     // }
+                                    this.BuyRole();
                                     await this.shopArea.BuyRole(this.index, this.node, this.isMerge);
                                     console.log(`购买时，欲在 ${this.index} 购买位置角色信息：` + this.roleArea.rolesNode[this.tempIndex].name + "是否合并" + this.isMerge);
                                 }
@@ -282,6 +285,10 @@ export class RoleIcon extends Component
                         AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
                         if (!this.isBuy) 
                         {
+                            //如果角色未被购买则缩小角色图标，静止动画
+                            this.roleNode.scale=
+                                new Vec3(this.roleNode.scale.x*(2/3),this.roleNode.scale.y*(2/3),this.roleNode.scale.z);
+                            this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=0;
                             this.shopArea.ShowFreezeArea(true);
                         }
                         drag=true;
@@ -297,6 +304,7 @@ export class RoleIcon extends Component
                 let y = shit.y - view.getVisibleSize().height / 2 - this.touchStartPoint.y;
                 //隐藏图标并显示角色实体
                 this.roleNode.active = true;
+                
                 this.iconMask.active = false;
                 this.farme.active=false;
                 //设置坐标
@@ -318,6 +326,8 @@ export class RoleIcon extends Component
                 //记录拖拽前的位置信息
                 beforeIndex=this.index;
                 berforeTarget=this.target;
+
+                singleton.netSingleton.ready.ShowRoleInfo(this.roleNode.getComponent(RoleDis));
             }, this);
         }
         catch(error)
@@ -345,6 +355,13 @@ export class RoleIcon extends Component
             roleDis.Refresh(r,true);
             resolve(role);
         });
+    }
+    //购买角色时的动画效果
+    private async BuyRole(){
+        this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=1;
+        tween(this.roleNode)
+        .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) }) // 在0.5秒内将缩放变为原来的两倍
+        .start();
     }
     //加载图片
     private LoadImg(_address:string,_id:number):Promise<SpriteFrame>

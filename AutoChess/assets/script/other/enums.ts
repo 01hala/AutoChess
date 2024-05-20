@@ -114,6 +114,7 @@ export enum PageType
 export enum PopUpsType
 {
     Other=1,
-    Reward=2
+    Reward=2,
+    ConfirmBoard=3
 }
 
