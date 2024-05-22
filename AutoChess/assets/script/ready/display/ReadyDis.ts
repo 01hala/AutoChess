@@ -86,14 +86,16 @@ export class ReadyDis
             this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
             this.launchSkillEffect.setSiblingIndex(99);
             this.launchSkillEffect.active=false;
-
-            this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
-            this.roleInfoNode.active=false;
+            
+            // this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
+            // this.roleInfoNode.active=false;
 
             if(battle_info.coin>=25)
             {
                 singleton.netSingleton.game.achievement_gold25_ntf();
             }
+
+            console.log("Ready to go");
 
             _callBack(async ()=>
             {
