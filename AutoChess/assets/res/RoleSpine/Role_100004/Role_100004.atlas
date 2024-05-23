@@ -1,257 +1,257 @@
 
 Role_100004.png
-size: 946,946
+size: 961,961
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 bu1
-  rotate: false
-  xy: 544, 13
+  rotate: true
+  xy: 142, 202
   size: 64, 38
   orig: 64, 38
   offset: 0, 0
   index: -1
 bu2
-  rotate: true
-  xy: 510, 2
+  rotate: false
+  xy: 192, 122
   size: 51, 32
   orig: 51, 32
   offset: 0, 0
   index: -1
 hushi_0
-  rotate: false
-  xy: 414, 2
+  rotate: true
+  xy: 142, 268
   size: 48, 51
   orig: 48, 51
   offset: 0, 0
   index: -1
 hushi_1
-  rotate: false
-  xy: 866, 626
+  rotate: true
+  xy: 440, 404
   size: 35, 31
   orig: 35, 31
   offset: 0, 0
   index: -1
 hushi_10
   rotate: false
-  xy: 769, 735
+  xy: 2, 107
   size: 138, 209
   orig: 138, 209
   offset: 0, 0
   index: -1
 hushi_11
-  rotate: false
-  xy: 466, 218
+  rotate: true
+  xy: 293, 203
   size: 110, 224
   orig: 110, 224
   offset: 0, 0
   index: -1
 hushi_12
   rotate: false
-  xy: 335, 205
+  xy: 809, 400
   size: 129, 283
   orig: 129, 283
   offset: 0, 0
   index: -1
 hushi_13
-  rotate: false
-  xy: 476, 631
+  rotate: true
+  xy: 476, 446
   size: 195, 313
   orig: 195, 313
   offset: 0, 0
   index: -1
 hushi_14
   rotate: true
-  xy: 476, 444
+  xy: 2, 318
   size: 185, 193
   orig: 189, 193
   offset: 0, 0
   index: -1
 hushi_15
-  rotate: false
-  xy: 2, 22
+  rotate: true
+  xy: 809, 685
   size: 274, 148
   orig: 274, 148
   offset: 0, 0
   index: -1
 hushi_16
   rotate: true
-  xy: 671, 435
+  xy: 293, 315
   size: 188, 145
   orig: 188, 145
   offset: 0, 0
   index: -1
 hushi_17
-  rotate: false
-  xy: 578, 198
+  rotate: true
+  xy: 2, 33
   size: 72, 244
   orig: 72, 244
   offset: 0, 0
   index: -1
 hushi_18
   rotate: false
-  xy: 2, 172
+  xy: 476, 643
   size: 331, 316
   orig: 331, 316
   offset: 0, 0
   index: -1
 hushi_19
-  rotate: false
-  xy: 773, 236
+  rotate: true
+  xy: 248, 23
   size: 83, 197
   orig: 83, 197
   offset: 0, 0
   index: -1
 hushi_2
   rotate: false
-  xy: 785, 40
+  xy: 782, 191
   size: 65, 71
   orig: 65, 71
   offset: 0, 0
   index: -1
 hushi_20
-  rotate: false
-  xy: 692, 113
+  rotate: true
+  xy: 506, 63
   size: 118, 121
   orig: 118, 121
   offset: 0, 0
   index: -1
 hushi_21
   rotate: false
-  xy: 818, 471
+  xy: 664, 141
   size: 116, 153
   orig: 116, 153
   offset: 0, 0
   index: -1
 hushi_22
-  rotate: true
-  xy: 464, 2
+  rotate: false
+  xy: 142, 156
   size: 51, 44
   orig: 51, 44
   offset: 0, 0
   index: -1
 hushi_23
-  rotate: true
-  xy: 909, 896
+  rotate: false
+  xy: 142, 119
   size: 48, 35
   orig: 48, 35
   offset: 0, 0
   index: -1
 hushi_24
-  rotate: true
-  xy: 550, 53
+  rotate: false
+  xy: 519, 183
   size: 143, 140
   orig: 143, 140
   offset: 0, 0
   index: -1
 hushi_25
-  rotate: true
-  xy: 692, 2
+  rotate: false
+  xy: 320, 110
   size: 109, 91
   orig: 109, 91
   offset: 0, 0
   index: -1
 hushi_26
   rotate: false
-  xy: 2, 490
+  xy: 2, 505
   size: 472, 454
   orig: 472, 454
   offset: 0, 0
   index: -1
 hushi_26_1
   rotate: false
-  xy: 414, 55
+  xy: 671, 296
   size: 134, 148
   orig: 134, 148
   offset: 0, 0
   index: -1
 hushi_26_2
-  rotate: false
-  xy: 278, 22
+  rotate: true
+  xy: 807, 264
   size: 134, 148
   orig: 134, 148
   offset: 0, 0
   index: -1
 hushi_27
-  rotate: true
-  xy: 652, 237
+  rotate: false
+  xy: 473, 325
   size: 196, 119
   orig: 196, 119
   offset: 0, 0
   index: -1
 hushi_28
   rotate: false
-  xy: 769, 626
+  xy: 742, 32
   size: 95, 107
   orig: 95, 107
   offset: 0, 0
   index: -1
 hushi_29
   rotate: false
-  xy: 858, 236
+  xy: 2, 7
   size: 49, 24
   orig: 82, 24
   offset: 33, 0
   index: -1
 hushi_3
-  rotate: false
-  xy: 858, 262
+  rotate: true
+  xy: 431, 129
   size: 72, 73
   orig: 72, 73
   offset: 0, 0
   index: -1
 hushi_30
   rotate: false
-  xy: 673, 625
+  xy: 197, 184
   size: 94, 319
   orig: 94, 319
   offset: 0, 0
   index: -1
 hushi_31
-  rotate: true
-  xy: 858, 413
+  rotate: false
+  xy: 447, 41
   size: 56, 86
   orig: 56, 86
   offset: 0, 0
   index: -1
 hushi_4
-  rotate: false
-  xy: 335, 172
+  rotate: true
+  xy: 440, 441
   size: 62, 31
   orig: 62, 31
   offset: 0, 0
   index: -1
 hushi_5
   rotate: true
-  xy: 925, 215
+  xy: 940, 638
   size: 45, 19
   orig: 45, 19
   offset: 0, 0
   index: -1
 hushi_6
-  rotate: true
-  xy: 866, 659
+  rotate: false
+  xy: 839, 127
   size: 74, 62
   orig: 74, 62
   offset: 0, 0
   index: -1
 hushi_7
   rotate: false
-  xy: 852, 64
+  xy: 505, 5
   size: 68, 56
   orig: 68, 56
   offset: 0, 0
   index: -1
 hushi_8
   rotate: false
-  xy: 858, 337
+  xy: 245, 108
   size: 73, 74
   orig: 73, 74
   offset: 0, 0
   index: -1
 hushi_9
   rotate: true
-  xy: 812, 122
+  xy: 629, 27
   size: 112, 111
   orig: 112, 115
   offset: 0, 4

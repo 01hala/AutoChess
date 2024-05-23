@@ -4,7 +4,7 @@
  * 2024/05/22
  * 修改
  */
-import { _decorator, Button, ccenum, Color, color, Component, debug, enumerableProps, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
+import { _decorator, Animation, Button, ccenum, Color, color, Component, debug, enumerableProps, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -65,6 +65,8 @@ export class RoleCard extends Component
         {
             this.painting=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
         }
+
+        this.node.active=false;
     }
 
 
@@ -86,6 +88,8 @@ export class RoleCard extends Component
             this.roleId=_id;
             
             await this.LoadOnConfig();
+            this.node.active=true;
+            this.node.getComponent(Animation).play();
         }
         catch(error)
         {
