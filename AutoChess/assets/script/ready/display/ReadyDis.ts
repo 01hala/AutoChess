@@ -407,7 +407,6 @@ export class ReadyDis
         }
     }
 
-    
 
     HideRoleInfo(){
         this.roleInfoNode.active=false;
