@@ -46,6 +46,7 @@ export class BundleManager
                 if(error)
                 {
                     console.warn("loadAssetsFromBundleSync 读取bundle失败 :  ", error.message);
+                    _callBack(null);
                 }
                 else
                 {
@@ -54,6 +55,7 @@ export class BundleManager
                         if(error)
                         {
                             console.warn("loadAssetsFromBundleSync 读取资源失败 :  ", error.message);
+                            _callBack(null);
                         }
                         else
                         {
