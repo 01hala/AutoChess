@@ -121,16 +121,19 @@ export class RoleCard extends Component
                 loadAssets.LoadSkeletonData(jconfig.Skel,(data)=>
                 {
                     console.log(`当前 ${jconfig.Id} 的动画信息 ${data}`);
-                    try
+                    if(data)
                     {
-                        this.painting.skeletonData = data;
-                        let anims = data.getAnimsEnum();
-                        //this.roleSprite.animation="animation";
-                        this.painting.setAnimation(0, String(anims[1]), true);
-                    }
-                    catch (error)
-                    {
-                        console.warn(`角色 ${jconfig.Id} 的动画设置失败：`, error);
+                        try
+                        {
+                            this.painting.skeletonData = data;
+                            let anims = data.getAnimsEnum();
+                            //this.roleSprite.animation="animation";
+                            this.painting.setAnimation(0, String(anims[1]), true);
+                        }
+                        catch (error)
+                        {
+                            console.warn(`角色 ${jconfig.Id} 的动画设置失败：`, error);
+                        }
                     }
                     this.node.active=true;
                     this.node.getComponent(Animation).play();
