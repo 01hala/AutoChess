@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "cc170419-a812-4ed1-a52c-1491fb520075",
+  "uuid": "26fc863b-43c7-455b-8b87-1ab414e14d34",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "cc170419-a812-4ed1-a52c-1491fb520075@6c48a",
+      "uuid": "26fc863b-43c7-455b-8b87-1ab414e14d34@6c48a",
       "displayName": "UserRankFarmerBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "cc170419-a812-4ed1-a52c-1491fb520075",
+        "imageUuidOrDatabaseUri": "26fc863b-43c7-455b-8b87-1ab414e14d34",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "cc170419-a812-4ed1-a52c-1491fb520075@f9941",
+      "uuid": "26fc863b-43c7-455b-8b87-1ab414e14d34@f9941",
       "displayName": "UserRankFarmerBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "cc170419-a812-4ed1-a52c-1491fb520075@6c48a",
+        "imageUuidOrDatabaseUri": "26fc863b-43c7-455b-8b87-1ab414e14d34@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "cc170419-a812-4ed1-a52c-1491fb520075@f9941"
+    "redirect": "26fc863b-43c7-455b-8b87-1ab414e14d34@f9941"
   }
 }

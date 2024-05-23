@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "af37ff5a-920f-4054-8ff6-1854233a6993",
+  "uuid": "6fd0690a-658c-4e1b-8ade-752bfa23a594",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "af37ff5a-920f-4054-8ff6-1854233a6993@6c48a",
+      "uuid": "6fd0690a-658c-4e1b-8ade-752bfa23a594@6c48a",
       "displayName": "AmusementBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "af37ff5a-920f-4054-8ff6-1854233a6993",
+        "imageUuidOrDatabaseUri": "6fd0690a-658c-4e1b-8ade-752bfa23a594",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "af37ff5a-920f-4054-8ff6-1854233a6993@f9941",
+      "uuid": "6fd0690a-658c-4e1b-8ade-752bfa23a594@f9941",
       "displayName": "AmusementBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "af37ff5a-920f-4054-8ff6-1854233a6993@6c48a",
+        "imageUuidOrDatabaseUri": "6fd0690a-658c-4e1b-8ade-752bfa23a594@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "af37ff5a-920f-4054-8ff6-1854233a6993@f9941"
+    "redirect": "6fd0690a-658c-4e1b-8ade-752bfa23a594@f9941"
   }
 }

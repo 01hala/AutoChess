@@ -2,11 +2,16 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "7f830331-6ff5-4c54-9270-2d1b36df9e63",
+  "uuid": "af52079f-ebc9-4e66-82c3-07b37ed10dd5",
   "files": [],
   "subMetas": {},
   "userData": {
+    "isBundle": true,
+    "bundleName": "Battle",
+    "bundleConfigID": "85ThGQdaRIbo1oHhQGeHzA",
     "compressionType": {},
-    "isRemoteBundle": {}
+    "isRemoteBundle": {
+      "wechatgame": true
+    }
   }
 }

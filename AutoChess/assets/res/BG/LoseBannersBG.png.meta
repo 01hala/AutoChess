@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "e9fa30d4-687b-49ff-aa68-e92cd384ca23",
+  "uuid": "1dd73bac-ed9c-40fa-9fda-e35756c0c826",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "e9fa30d4-687b-49ff-aa68-e92cd384ca23@6c48a",
+      "uuid": "1dd73bac-ed9c-40fa-9fda-e35756c0c826@6c48a",
       "displayName": "LoseBannersBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "e9fa30d4-687b-49ff-aa68-e92cd384ca23",
+        "imageUuidOrDatabaseUri": "1dd73bac-ed9c-40fa-9fda-e35756c0c826",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "e9fa30d4-687b-49ff-aa68-e92cd384ca23@f9941",
+      "uuid": "1dd73bac-ed9c-40fa-9fda-e35756c0c826@f9941",
       "displayName": "LoseBannersBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "e9fa30d4-687b-49ff-aa68-e92cd384ca23@6c48a",
+        "imageUuidOrDatabaseUri": "1dd73bac-ed9c-40fa-9fda-e35756c0c826@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "e9fa30d4-687b-49ff-aa68-e92cd384ca23@f9941"
+    "redirect": "1dd73bac-ed9c-40fa-9fda-e35756c0c826@f9941"
   }
 }

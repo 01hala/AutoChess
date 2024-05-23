@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "b8fa119a-5168-4847-8be3-a6559316d157",
+  "uuid": "eb30efd1-5377-44ad-a263-aa75502400c4",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b8fa119a-5168-4847-8be3-a6559316d157@6c48a",
+      "uuid": "eb30efd1-5377-44ad-a263-aa75502400c4@6c48a",
       "displayName": "HPIcon",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b8fa119a-5168-4847-8be3-a6559316d157",
+        "imageUuidOrDatabaseUri": "eb30efd1-5377-44ad-a263-aa75502400c4",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b8fa119a-5168-4847-8be3-a6559316d157@f9941",
+      "uuid": "eb30efd1-5377-44ad-a263-aa75502400c4@f9941",
       "displayName": "HPIcon",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b8fa119a-5168-4847-8be3-a6559316d157@6c48a",
+        "imageUuidOrDatabaseUri": "eb30efd1-5377-44ad-a263-aa75502400c4@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "b8fa119a-5168-4847-8be3-a6559316d157@f9941"
+    "redirect": "eb30efd1-5377-44ad-a263-aa75502400c4@f9941"
   }
 }

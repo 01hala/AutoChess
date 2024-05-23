@@ -2,11 +2,15 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "671b229e-df8b-48b5-af91-20eae22d1ba0",
+  "uuid": "2f1444f9-e62c-4531-bea5-1a22f98024b8",
   "files": [],
   "subMetas": {},
   "userData": {
     "compressionType": {},
-    "isRemoteBundle": {}
+    "isRemoteBundle": {
+      "wechatgame": true
+    },
+    "isBundle": true,
+    "bundleName": "ImgSpine"
   }
 }

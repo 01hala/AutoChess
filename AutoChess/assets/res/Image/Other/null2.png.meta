@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "c744cd5d-8894-4ac7-b194-ffa74690c2a3",
+  "uuid": "0d9fed7a-cc6e-424b-b380-de2172151830",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "c744cd5d-8894-4ac7-b194-ffa74690c2a3@6c48a",
+      "uuid": "0d9fed7a-cc6e-424b-b380-de2172151830@6c48a",
       "displayName": "null2",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "c744cd5d-8894-4ac7-b194-ffa74690c2a3",
+        "imageUuidOrDatabaseUri": "0d9fed7a-cc6e-424b-b380-de2172151830",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "c744cd5d-8894-4ac7-b194-ffa74690c2a3@f9941",
+      "uuid": "0d9fed7a-cc6e-424b-b380-de2172151830@f9941",
       "displayName": "null2",
       "id": "f9941",
       "name": "spriteFrame",
@@ -50,10 +50,10 @@
         "height": 563,
         "rawWidth": 570,
         "rawHeight": 564,
-        "borderTop": 0,
-        "borderBottom": 0,
-        "borderLeft": 0,
-        "borderRight": 0,
+        "borderTop": 85,
+        "borderBottom": 89,
+        "borderLeft": 102,
+        "borderRight": 102,
         "packable": true,
         "pixelsToUnit": 100,
         "pivotX": 0.5,
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "c744cd5d-8894-4ac7-b194-ffa74690c2a3@6c48a",
+        "imageUuidOrDatabaseUri": "0d9fed7a-cc6e-424b-b380-de2172151830@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "c744cd5d-8894-4ac7-b194-ffa74690c2a3@f9941"
+    "redirect": "0d9fed7a-cc6e-424b-b380-de2172151830@f9941"
   }
 }

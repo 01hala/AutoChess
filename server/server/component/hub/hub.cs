@@ -1,12 +1,10 @@
 ﻿using Abelkhan;
 using ENet.Managed;
-using Service;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -75,22 +73,18 @@ namespace Hub
             _dbproxys = new ConcurrentDictionary<string, DBProxyProxy>();
 
             var redismq_url = _root_config.get_value_string("redis_for_mq");
-            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name);
+            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name, 100);
             _gates = new GateManager(_redis_mq_service);
-
-            _redis_handle = new RedisHandle(_root_config.get_value_string("redis_for_cache"));
 
             _closeHandle = new CloseHandle();
             _hubs = new HubManager();
 
             _hubs.on_hubproxy += (_proxy) =>
             {
-                check_connnect_hub(_proxy);
                 on_hubproxy?.Invoke(_proxy);
             };
             _hubs.on_hubproxy_reconn += (_proxy) =>
             {
-                check_connnect_hub(_proxy);
                 on_hubproxy_reconn?.Invoke(_proxy);
             };
 
@@ -116,27 +110,6 @@ namespace Hub
             _centerproxy.reg_hub(() => {
                 heartbeat(Service.Timerservice.Tick);
             });
-
-            if (_config.has_key("tcp_inside_listen"))
-            {
-                var tcp_inside_listen = _config.get_value_bool("tcp_inside_listen");
-                if (tcp_inside_listen)
-                {
-                    tcp_inside_address = new Addressinfo();
-                    tcp_inside_address.host = _config.get_value_string("tcp_inside_host");
-                    tcp_inside_address.port = (ushort)_config.get_value_int("tcp_inside_port");
-                    _acceptservice = new Abelkhan.Acceptservice(tcp_inside_address.port);
-                    Acceptservice.on_connect += (ch) => {
-                        lock (add_chs)
-                        {
-                            add_chs.Add(ch);
-                        }
-                    };
-                    _acceptservice.start();
-
-                    flush_host();
-                }
-            }
            
             if (_config.has_key("tcp_listen"))
             {
@@ -227,29 +200,6 @@ namespace Hub
             {
                 on_client_msg?.Invoke(uuid);
             };
-        }
-
-        private async void check_connnect_hub(HubProxy _proxy)
-        {
-            if (OnCheckConnHub != null && OnCheckConnHub(_proxy.name) && _proxy._tcp_ch == null)
-            {
-                string host = await _redis_handle.GetStrData(name);
-                var host_info = host.Split(":");
-                var s = ConnectService.connect(IPAddress.Parse(host_info[0]), short.Parse(host_info[1]));
-                var ch = new Abelkhan.RawChannel(s);
-                var _caller = new Abelkhan.hub_call_hub_caller(ch, Abelkhan.ModuleMgrHandle._modulemng);
-                _caller.reg_hub(name, type);
-
-                _hubs.replace_hub(_proxy.name, _proxy.type, ch);
-            }
-        }
-
-        private void flush_host(long _ = 0)
-        {
-            var host = $"{tcp_inside_address.host}:{tcp_inside_address.port}";
-            _redis_handle.SetStrData(name, host, 60);
-
-            _timer.addticktime(40000, flush_host);
         }
 
         public void set_support_take_over_svr(bool is_support)
@@ -395,25 +345,26 @@ namespace Hub
 
         public void reg_hub(String hub_name)
         {
-            if (!_hubs.get_hub(hub_name, out var _))
-            {
-                var ch = _redis_mq_service.connect(hub_name);
-                var _caller = new Abelkhan.hub_call_hub_caller(ch, Abelkhan.ModuleMgrHandle._modulemng);
-                _caller.reg_hub(name, type);
-            }
+            var ch = _redis_mq_service.connect(hub_name);
+            var _caller = new Abelkhan.hub_call_hub_caller(ch, Abelkhan.ModuleMgrHandle._modulemng);
+            _caller.reg_hub(name, type);
         }
 
-        private List<Task> wait_task = new ();
         private async Task<long> poll()
         {
+            
             long tick_begin = _timer.refresh();
 
             try
             {
                 _timer.poll();
 
-                while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, List<MsgPack.MessagePackObject>> _event))
+                while (true)
                 {
+                    if (!Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
+                    {
+                        break;
+                    }
                     Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
                 }
 
@@ -444,6 +395,7 @@ namespace Hub
 
             long tick_end = _timer.refresh();
             tick = (uint)(tick_end - tick_begin);
+
             if (tick > 50)
             {
                 Log.Log.trace("poll_tick:{0}", tick);
@@ -452,12 +404,12 @@ namespace Hub
             return tick;
         }
 
-        private async Task _run()
+        private readonly object _run_mu = new();
+        public async Task run()
         {
-            if (_config.has_key("prometheus_port"))
+            if (!Monitor.TryEnter(_run_mu))
             {
-                var _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
-                _prometheus.Start();
+                throw new Abelkhan.Exception("run mast at single thread!");
             }
 
             while (!_closeHandle.is_close)
@@ -471,17 +423,6 @@ namespace Hub
             }
             Log.Log.info("server closed, hub server:{0}", Hub.name);
             Log.Log.close();
-        }
-
-        private readonly object _run_mu = new();
-        public void run()
-        {
-            if (!Monitor.TryEnter(_run_mu))
-            {
-                throw new Abelkhan.Exception("run mast at single thread!");
-            }
-
-            _run().Wait();
 
             Monitor.Exit(_run_mu);
         }
@@ -501,8 +442,6 @@ namespace Hub
         public static Addressinfo enet_outside_address = null;
         public static Addressinfo http_outside_address = null;
 
-        public static Addressinfo tcp_inside_address = null;
-
         public static Abelkhan.Config _config;
         public static Abelkhan.Config _root_config;
         public static Abelkhan.Config _center_config;
@@ -514,7 +453,6 @@ namespace Hub
 
         public static bool is_support_take_over_svr = true;
         public static Abelkhan.RedisMQ _redis_mq_service;
-        public static Abelkhan.RedisHandle _redis_handle;
 
         private static Random _r;
         private static ConcurrentDictionary<string, DBProxyProxy> _dbproxys;
@@ -524,15 +462,10 @@ namespace Hub
         public static GateManager _gates;
         public static Service.Timerservice _timer;
 
-        public static Func<string, bool> OnCheckConnHub;
-        public static Func<bool> OnCheckConnGate;
-
         private readonly Abelkhan.EnetService _enetservice;
         private readonly Abelkhan.CryptAcceptService _cryptacceptservice;
         private readonly Abelkhan.WebsocketAcceptService _websocketacceptservice;
         private readonly Service.HttpService _httpservice;
-
-        private readonly Abelkhan.Acceptservice _acceptservice;
 
         private uint reconn_count = 0;
         private CenterProxy _centerproxy;
@@ -551,7 +484,6 @@ namespace Hub
         public event Action<string> on_client_msg;
 
         public event Action<string> on_direct_client_disconnect;
-
     }
 }
 

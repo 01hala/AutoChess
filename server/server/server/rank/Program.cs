@@ -42,10 +42,7 @@ namespace RankSvr
 
             _hub.onDBProxyInit += async () =>
             {
-                await Rank.RankModule.Init(Constant.Constant.player_db_name, Constant.Constant.player_db_guid_rank, new List<Rank.RankInitInfo>() { new Rank.RankInitInfo() {
-                    name = Constant.Constant.player_rank_name_combat_power,
-                    capacity = 100,
-                } });
+                await Rank.RankModule.Init(Constant.Constant.player_db_name, Constant.Constant.player_db_guid_rank, new List<string>() { Constant.Constant.player_rank_name_combat_power });
             };
 
             Hub.Hub._timer.addloopweekdaytime(System.DayOfWeek.Monday, 0, 0, 0, reset_peak_strength_rank);
@@ -53,7 +50,7 @@ namespace RankSvr
 
             Log.Log.trace("rank svr start ok");
 
-            _hub.run();
+            _hub.run().Wait();
 
             Rank.RankModule.save_rank();
         }

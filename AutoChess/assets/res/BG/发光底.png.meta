@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "7dbd9fe9-fff0-4c9e-af13-49afdf2abb2b",
+  "uuid": "70675215-73d7-43b4-87af-dd5b2e3d149f",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "7dbd9fe9-fff0-4c9e-af13-49afdf2abb2b@6c48a",
+      "uuid": "70675215-73d7-43b4-87af-dd5b2e3d149f@6c48a",
       "displayName": "发光底",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "7dbd9fe9-fff0-4c9e-af13-49afdf2abb2b",
+        "imageUuidOrDatabaseUri": "70675215-73d7-43b4-87af-dd5b2e3d149f",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "7dbd9fe9-fff0-4c9e-af13-49afdf2abb2b@f9941",
+      "uuid": "70675215-73d7-43b4-87af-dd5b2e3d149f@f9941",
       "displayName": "发光底",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "7dbd9fe9-fff0-4c9e-af13-49afdf2abb2b@6c48a",
+        "imageUuidOrDatabaseUri": "70675215-73d7-43b4-87af-dd5b2e3d149f@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "7dbd9fe9-fff0-4c9e-af13-49afdf2abb2b@f9941"
+    "redirect": "70675215-73d7-43b4-87af-dd5b2e3d149f@f9941"
   }
 }

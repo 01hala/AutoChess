@@ -62,7 +62,7 @@ cs_15
   index: -1
 cs_15_1
   rotate: false
-  xy: 324, 14
+  xy: 407, 14
   size: 86, 33
   orig: 86, 33
   offset: 0, 0
@@ -230,7 +230,7 @@ cs_7
   index: -1
 cs_8
   rotate: false
-  xy: 412, 8
+  xy: 324, 8
   size: 81, 39
   orig: 81, 39
   offset: 0, 0

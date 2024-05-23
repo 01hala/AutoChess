@@ -1,5 +1,4 @@
 ﻿
-using System.Diagnostics.Metrics;
 
 namespace DBProxy
 {
@@ -28,9 +27,17 @@ namespace DBProxy
             Log.Log.trace("hub {0} connected", hub_name);
                 
             var rsp = (Abelkhan.hub_call_dbproxy_reg_hub_rsp)_hub_call_dbproxy_module.rsp.Value;
-            _ = _hubmanager.reg_hub(_hub_call_dbproxy_module.current_ch.Value, hub_name);
-            rsp.rsp();
-        }
+
+            try
+            {
+                _ = _hubmanager.reg_hub(_hub_call_dbproxy_module.current_ch.Value, hub_name);
+                rsp.rsp();
+            }
+			catch (System.Exception e)
+			{
+				Log.Log.err("reg_hub:{0}", e);
+			}
+}
 
         private async void get_guid(string db, string collection)
         {
@@ -243,7 +250,6 @@ namespace DBProxy
             else
             {
                 Log.Log.err("hubproxy is null");
-                _hubproxy.ack_get_object_info_end(callbackid);
             }
 
             Log.Log.trace("end get_object_info");

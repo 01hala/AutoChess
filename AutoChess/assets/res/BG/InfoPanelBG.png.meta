@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "b9d4240f-be00-4453-b60a-98d20aed2263",
+  "uuid": "c7801b01-d513-41d6-b269-6438ad6f4bab",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b9d4240f-be00-4453-b60a-98d20aed2263@6c48a",
+      "uuid": "c7801b01-d513-41d6-b269-6438ad6f4bab@6c48a",
       "displayName": "InfoPanelBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b9d4240f-be00-4453-b60a-98d20aed2263",
+        "imageUuidOrDatabaseUri": "c7801b01-d513-41d6-b269-6438ad6f4bab",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b9d4240f-be00-4453-b60a-98d20aed2263@f9941",
+      "uuid": "c7801b01-d513-41d6-b269-6438ad6f4bab@f9941",
       "displayName": "InfoPanelBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -50,10 +50,10 @@
         "height": 2992,
         "rawWidth": 1500,
         "rawHeight": 2992,
-        "borderTop": 0,
-        "borderBottom": 0,
-        "borderLeft": 0,
-        "borderRight": 0,
+        "borderTop": 405,
+        "borderBottom": 595,
+        "borderLeft": 172,
+        "borderRight": 47,
         "packable": true,
         "pixelsToUnit": 100,
         "pivotX": 0.5,
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b9d4240f-be00-4453-b60a-98d20aed2263@6c48a",
+        "imageUuidOrDatabaseUri": "c7801b01-d513-41d6-b269-6438ad6f4bab@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "b9d4240f-be00-4453-b60a-98d20aed2263@f9941"
+    "redirect": "c7801b01-d513-41d6-b269-6438ad6f4bab@f9941"
   }
 }

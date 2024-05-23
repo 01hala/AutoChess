@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "4c0647fe-276e-42f0-82b8-cc9c73ee992c",
+  "uuid": "6f7b0e69-ef40-4f67-823b-6c7911fe28ed",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "4c0647fe-276e-42f0-82b8-cc9c73ee992c@6c48a",
+      "uuid": "6f7b0e69-ef40-4f67-823b-6c7911fe28ed@6c48a",
       "displayName": "diceng",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "4c0647fe-276e-42f0-82b8-cc9c73ee992c",
+        "imageUuidOrDatabaseUri": "6f7b0e69-ef40-4f67-823b-6c7911fe28ed",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "4c0647fe-276e-42f0-82b8-cc9c73ee992c@f9941",
+      "uuid": "6f7b0e69-ef40-4f67-823b-6c7911fe28ed@f9941",
       "displayName": "diceng",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "4c0647fe-276e-42f0-82b8-cc9c73ee992c@6c48a",
+        "imageUuidOrDatabaseUri": "6f7b0e69-ef40-4f67-823b-6c7911fe28ed@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "4c0647fe-276e-42f0-82b8-cc9c73ee992c@f9941"
+    "redirect": "6f7b0e69-ef40-4f67-823b-6c7911fe28ed@f9941"
   }
 }

@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "84ef6134-7f0b-43c5-8e00-12d35ca5421c",
+  "uuid": "b3b723d3-8c1f-45a0-9cdb-618c259136b3",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "84ef6134-7f0b-43c5-8e00-12d35ca5421c@6c48a",
+      "uuid": "b3b723d3-8c1f-45a0-9cdb-618c259136b3@6c48a",
       "displayName": "CardEdit",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "84ef6134-7f0b-43c5-8e00-12d35ca5421c",
+        "imageUuidOrDatabaseUri": "b3b723d3-8c1f-45a0-9cdb-618c259136b3",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "84ef6134-7f0b-43c5-8e00-12d35ca5421c@f9941",
+      "uuid": "b3b723d3-8c1f-45a0-9cdb-618c259136b3@f9941",
       "displayName": "CardEdit",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "84ef6134-7f0b-43c5-8e00-12d35ca5421c@6c48a",
+        "imageUuidOrDatabaseUri": "b3b723d3-8c1f-45a0-9cdb-618c259136b3@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "84ef6134-7f0b-43c5-8e00-12d35ca5421c@f9941"
+    "redirect": "b3b723d3-8c1f-45a0-9cdb-618c259136b3@f9941"
   }
 }

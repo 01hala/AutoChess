@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "bd3dccba-8bd3-4be3-91ae-fed0334b7736",
+  "uuid": "260a0039-700b-4233-9812-94c2b4271c32",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "bd3dccba-8bd3-4be3-91ae-fed0334b7736@6c48a",
+      "uuid": "260a0039-700b-4233-9812-94c2b4271c32@6c48a",
       "displayName": "juese3",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "bd3dccba-8bd3-4be3-91ae-fed0334b7736",
+        "imageUuidOrDatabaseUri": "260a0039-700b-4233-9812-94c2b4271c32",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "bd3dccba-8bd3-4be3-91ae-fed0334b7736@f9941",
+      "uuid": "260a0039-700b-4233-9812-94c2b4271c32@f9941",
       "displayName": "juese3",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "bd3dccba-8bd3-4be3-91ae-fed0334b7736@6c48a",
+        "imageUuidOrDatabaseUri": "260a0039-700b-4233-9812-94c2b4271c32@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "bd3dccba-8bd3-4be3-91ae-fed0334b7736@f9941"
+    "redirect": "260a0039-700b-4233-9812-94c2b4271c32@f9941"
   }
 }

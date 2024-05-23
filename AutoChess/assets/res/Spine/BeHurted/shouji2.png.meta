@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "b532fcdc-a09d-4bec-a59b-305a6b85cce9",
+  "uuid": "a3523b6a-7a5a-42ab-b344-0a84285431c9",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b532fcdc-a09d-4bec-a59b-305a6b85cce9@6c48a",
+      "uuid": "a3523b6a-7a5a-42ab-b344-0a84285431c9@6c48a",
       "displayName": "shouji2",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b532fcdc-a09d-4bec-a59b-305a6b85cce9",
+        "imageUuidOrDatabaseUri": "a3523b6a-7a5a-42ab-b344-0a84285431c9",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b532fcdc-a09d-4bec-a59b-305a6b85cce9@f9941",
+      "uuid": "a3523b6a-7a5a-42ab-b344-0a84285431c9@f9941",
       "displayName": "shouji2",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b532fcdc-a09d-4bec-a59b-305a6b85cce9@6c48a",
+        "imageUuidOrDatabaseUri": "a3523b6a-7a5a-42ab-b344-0a84285431c9@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "b532fcdc-a09d-4bec-a59b-305a6b85cce9@f9941"
+    "redirect": "a3523b6a-7a5a-42ab-b344-0a84285431c9@f9941"
   }
 }

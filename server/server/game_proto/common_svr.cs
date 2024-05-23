@@ -204,9 +204,9 @@ namespace Abelkhan
             if (_struct.ItemList != null) {
                 var _array_ItemList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.ItemList){
-                    _array_ItemList.Add( MsgPack.MessagePackObject.FromObject(RoleCardInfo.RoleCardInfo_to_protcol(v_)));
+                    _array_ItemList.Add( new MsgPack.MessagePackObject(RoleCardInfo.RoleCardInfo_to_protcol(v_)));
                 }
-                _protocol.Add("ItemList", MsgPack.MessagePackObject.FromObject(_array_ItemList));
+                _protocol.Add("ItemList", new MsgPack.MessagePackObject(_array_ItemList));
             }
             return _protocol;
         }
@@ -245,7 +245,7 @@ namespace Abelkhan
                 foreach(var v_ in _struct.RoleList){
                     _array_RoleList.Add(v_);
                 }
-                _protocol.Add("RoleList", MsgPack.MessagePackObject.FromObject(_array_RoleList));
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
             }
             return _protocol;
         }
@@ -289,9 +289,9 @@ namespace Abelkhan
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
-                    _array_RoleList.Add( MsgPack.MessagePackObject.FromObject(Role.Role_to_protcol(v_)));
+                    _array_RoleList.Add( new MsgPack.MessagePackObject(Role.Role_to_protcol(v_)));
                 }
-                _protocol.Add("RoleList", MsgPack.MessagePackObject.FromObject(_array_RoleList));
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
             }
             return _protocol;
         }
@@ -437,16 +437,16 @@ namespace Abelkhan
             if (_struct.achievData != null) {
                 var _array_achievData = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.achievData){
-                    _array_achievData.Add( MsgPack.MessagePackObject.FromObject(AchievementData.AchievementData_to_protcol(v_)));
+                    _array_achievData.Add( new MsgPack.MessagePackObject(AchievementData.AchievementData_to_protcol(v_)));
                 }
-                _protocol.Add("achievData", MsgPack.MessagePackObject.FromObject(_array_achievData));
+                _protocol.Add("achievData", new MsgPack.MessagePackObject(_array_achievData));
             }
             if (_struct.battleInfo != null) {
                 var _array_battleInfo = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.battleInfo){
-                    _array_battleInfo.Add( MsgPack.MessagePackObject.FromObject(BattleInfo.BattleInfo_to_protcol(v_)));
+                    _array_battleInfo.Add( new MsgPack.MessagePackObject(BattleInfo.BattleInfo_to_protcol(v_)));
                 }
-                _protocol.Add("battleInfo", MsgPack.MessagePackObject.FromObject(_array_battleInfo));
+                _protocol.Add("battleInfo", new MsgPack.MessagePackObject(_array_battleInfo));
             }
             return _protocol;
         }
@@ -490,16 +490,16 @@ namespace Abelkhan
             if (_struct.wAchievData != null) {
                 var _array_wAchievData = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.wAchievData){
-                    _array_wAchievData.Add( MsgPack.MessagePackObject.FromObject(AchievementData.AchievementData_to_protcol(v_)));
+                    _array_wAchievData.Add( new MsgPack.MessagePackObject(AchievementData.AchievementData_to_protcol(v_)));
                 }
-                _protocol.Add("wAchievData", MsgPack.MessagePackObject.FromObject(_array_wAchievData));
+                _protocol.Add("wAchievData", new MsgPack.MessagePackObject(_array_wAchievData));
             }
             if (_struct.battleInfo != null) {
                 var _array_battleInfo = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.battleInfo){
-                    _array_battleInfo.Add( MsgPack.MessagePackObject.FromObject(BattleInfo.BattleInfo_to_protcol(v_)));
+                    _array_battleInfo.Add( new MsgPack.MessagePackObject(BattleInfo.BattleInfo_to_protcol(v_)));
                 }
-                _protocol.Add("battleInfo", MsgPack.MessagePackObject.FromObject(_array_battleInfo));
+                _protocol.Add("battleInfo", new MsgPack.MessagePackObject(_array_battleInfo));
             }
             _protocol.Add("timeout", _struct.timeout);
             return _protocol;
@@ -551,27 +551,27 @@ namespace Abelkhan
         }
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("User", MsgPack.MessagePackObject.FromObject(UserInformation.UserInformation_to_protcol(_struct.User)));
-            _protocol.Add("Achiev", MsgPack.MessagePackObject.FromObject(UserAchievement.UserAchievement_to_protcol(_struct.Achiev)));
-            _protocol.Add("wAchiev", MsgPack.MessagePackObject.FromObject(UserWeekAchievement.UserWeekAchievement_to_protcol(_struct.wAchiev)));
+            _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
+            _protocol.Add("Achiev", new MsgPack.MessagePackObject(UserAchievement.UserAchievement_to_protcol(_struct.Achiev)));
+            _protocol.Add("wAchiev", new MsgPack.MessagePackObject(UserWeekAchievement.UserWeekAchievement_to_protcol(_struct.wAchiev)));
             _protocol.Add("Strength", _struct.Strength);
             _protocol.Add("gold", _struct.gold);
             _protocol.Add("diamond", _struct.diamond);
             _protocol.Add("score", _struct.score);
-            _protocol.Add("bag", MsgPack.MessagePackObject.FromObject(Bag.Bag_to_protcol(_struct.bag)));
+            _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
                     _array_RoleList.Add(v_);
                 }
-                _protocol.Add("RoleList", MsgPack.MessagePackObject.FromObject(_array_RoleList));
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
             }
             if (_struct.roleGroup != null) {
                 var _array_roleGroup = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.roleGroup){
-                    _array_roleGroup.Add( MsgPack.MessagePackObject.FromObject(RoleGroup.RoleGroup_to_protcol(v_)));
+                    _array_roleGroup.Add( new MsgPack.MessagePackObject(RoleGroup.RoleGroup_to_protcol(v_)));
                 }
-                _protocol.Add("roleGroup", MsgPack.MessagePackObject.FromObject(_array_roleGroup));
+                _protocol.Add("roleGroup", new MsgPack.MessagePackObject(_array_roleGroup));
             }
             return _protocol;
         }
@@ -687,7 +687,7 @@ namespace Abelkhan
             _protocol.Add("BuyRound", _struct.BuyRound);
             _protocol.Add("Level", _struct.Level);
             _protocol.Add("SkillID", _struct.SkillID);
-            _protocol.Add("FettersSkillID", MsgPack.MessagePackObject.FromObject(Fetters.Fetters_to_protcol(_struct.FettersSkillID)));
+            _protocol.Add("FettersSkillID", new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(_struct.FettersSkillID)));
             _protocol.Add("equipID", _struct.equipID);
             _protocol.Add("Number", _struct.Number);
             _protocol.Add("HP", _struct.HP);
@@ -699,14 +699,14 @@ namespace Abelkhan
                 foreach(var v_ in _struct.additionBuffer){
                     _array_additionBuffer.Add(v_);
                 }
-                _protocol.Add("additionBuffer", MsgPack.MessagePackObject.FromObject(_array_additionBuffer));
+                _protocol.Add("additionBuffer", new MsgPack.MessagePackObject(_array_additionBuffer));
             }
             if (_struct.TempAdditionBuffer != null) {
                 var _array_TempAdditionBuffer = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.TempAdditionBuffer){
                     _array_TempAdditionBuffer.Add(v_);
                 }
-                _protocol.Add("TempAdditionBuffer", MsgPack.MessagePackObject.FromObject(_array_TempAdditionBuffer));
+                _protocol.Add("TempAdditionBuffer", new MsgPack.MessagePackObject(_array_TempAdditionBuffer));
             }
             return _protocol;
         }
@@ -786,7 +786,7 @@ namespace Abelkhan
         }
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
-            _protocol.Add("User", MsgPack.MessagePackObject.FromObject(UserInformation.UserInformation_to_protcol(_struct.User)));
+            _protocol.Add("User", new MsgPack.MessagePackObject(UserInformation.UserInformation_to_protcol(_struct.User)));
             _protocol.Add("coin", _struct.coin);
             _protocol.Add("round", _struct.round);
             _protocol.Add("stage", _struct.stage);
@@ -796,16 +796,16 @@ namespace Abelkhan
             if (_struct.FettersList != null) {
                 var _array_FettersList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.FettersList){
-                    _array_FettersList.Add( MsgPack.MessagePackObject.FromObject(Fetters.Fetters_to_protcol(v_)));
+                    _array_FettersList.Add( new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(v_)));
                 }
-                _protocol.Add("FettersList", MsgPack.MessagePackObject.FromObject(_array_FettersList));
+                _protocol.Add("FettersList", new MsgPack.MessagePackObject(_array_FettersList));
             }
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
-                    _array_RoleList.Add( MsgPack.MessagePackObject.FromObject(Role.Role_to_protcol(v_)));
+                    _array_RoleList.Add( new MsgPack.MessagePackObject(Role.Role_to_protcol(v_)));
                 }
-                _protocol.Add("RoleList", MsgPack.MessagePackObject.FromObject(_array_RoleList));
+                _protocol.Add("RoleList", new MsgPack.MessagePackObject(_array_RoleList));
             }
             return _protocol;
         }
@@ -871,7 +871,7 @@ namespace Abelkhan
             _protocol.Add("score", _struct.score);
             _protocol.Add("nick_name", _struct.nick_name);
             _protocol.Add("avatar", _struct.avatar);
-            _protocol.Add("battle_data", MsgPack.MessagePackObject.FromObject(UserBattleData.UserBattleData_to_protcol(_struct.battle_data)));
+            _protocol.Add("battle_data", new MsgPack.MessagePackObject(UserBattleData.UserBattleData_to_protcol(_struct.battle_data)));
             return _protocol;
         }
         public static UserRankInfo protcol_to_UserRankInfo(MsgPack.MessagePackObjectDictionary _protocol){
@@ -990,16 +990,16 @@ namespace Abelkhan
             if (_struct.SaleRoleList != null) {
                 var _array_SaleRoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.SaleRoleList){
-                    _array_SaleRoleList.Add( MsgPack.MessagePackObject.FromObject(ShopRole.ShopRole_to_protcol(v_)));
+                    _array_SaleRoleList.Add( new MsgPack.MessagePackObject(ShopRole.ShopRole_to_protcol(v_)));
                 }
-                _protocol.Add("SaleRoleList", MsgPack.MessagePackObject.FromObject(_array_SaleRoleList));
+                _protocol.Add("SaleRoleList", new MsgPack.MessagePackObject(_array_SaleRoleList));
             }
             if (_struct.SalePropList != null) {
                 var _array_SalePropList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.SalePropList){
-                    _array_SalePropList.Add( MsgPack.MessagePackObject.FromObject(ShopProp.ShopProp_to_protcol(v_)));
+                    _array_SalePropList.Add( new MsgPack.MessagePackObject(ShopProp.ShopProp_to_protcol(v_)));
                 }
-                _protocol.Add("SalePropList", MsgPack.MessagePackObject.FromObject(_array_SalePropList));
+                _protocol.Add("SalePropList", new MsgPack.MessagePackObject(_array_SalePropList));
             }
             return _protocol;
         }

@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "01a20ba8-e214-420b-b555-3e5ec013b7fb",
+  "uuid": "2755c680-ad1c-403f-8312-370aaecb20cb",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "01a20ba8-e214-420b-b555-3e5ec013b7fb@6c48a",
+      "uuid": "2755c680-ad1c-403f-8312-370aaecb20cb@6c48a",
       "displayName": "WinText",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "01a20ba8-e214-420b-b555-3e5ec013b7fb",
+        "imageUuidOrDatabaseUri": "2755c680-ad1c-403f-8312-370aaecb20cb",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "01a20ba8-e214-420b-b555-3e5ec013b7fb@f9941",
+      "uuid": "2755c680-ad1c-403f-8312-370aaecb20cb@f9941",
       "displayName": "WinText",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "01a20ba8-e214-420b-b555-3e5ec013b7fb@6c48a",
+        "imageUuidOrDatabaseUri": "2755c680-ad1c-403f-8312-370aaecb20cb@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "01a20ba8-e214-420b-b555-3e5ec013b7fb@f9941"
+    "redirect": "2755c680-ad1c-403f-8312-370aaecb20cb@f9941"
   }
 }

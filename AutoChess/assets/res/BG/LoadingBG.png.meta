@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "8847cd81-8f92-42f2-bae2-b22a27763f6b",
+  "uuid": "26a635a2-122c-4a1b-bd23-de3dca2c2ed3",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "8847cd81-8f92-42f2-bae2-b22a27763f6b@6c48a",
+      "uuid": "26a635a2-122c-4a1b-bd23-de3dca2c2ed3@6c48a",
       "displayName": "LoadingBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "8847cd81-8f92-42f2-bae2-b22a27763f6b",
+        "imageUuidOrDatabaseUri": "26a635a2-122c-4a1b-bd23-de3dca2c2ed3",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "8847cd81-8f92-42f2-bae2-b22a27763f6b@f9941",
+      "uuid": "26a635a2-122c-4a1b-bd23-de3dca2c2ed3@f9941",
       "displayName": "LoadingBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "8847cd81-8f92-42f2-bae2-b22a27763f6b@6c48a",
+        "imageUuidOrDatabaseUri": "26a635a2-122c-4a1b-bd23-de3dca2c2ed3@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "8847cd81-8f92-42f2-bae2-b22a27763f6b@f9941"
+    "redirect": "26a635a2-122c-4a1b-bd23-de3dca2c2ed3@f9941"
   }
 }

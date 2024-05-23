@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "d8165eb3-6a76-4ac0-b622-43f29e03041a",
+  "uuid": "2b214c7f-3281-4f71-99a9-e995dd81867f",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "d8165eb3-6a76-4ac0-b622-43f29e03041a@6c48a",
+      "uuid": "2b214c7f-3281-4f71-99a9-e995dd81867f@6c48a",
       "displayName": "HpComplete",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "d8165eb3-6a76-4ac0-b622-43f29e03041a",
+        "imageUuidOrDatabaseUri": "2b214c7f-3281-4f71-99a9-e995dd81867f",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "d8165eb3-6a76-4ac0-b622-43f29e03041a@f9941",
+      "uuid": "2b214c7f-3281-4f71-99a9-e995dd81867f@f9941",
       "displayName": "HpComplete",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "d8165eb3-6a76-4ac0-b622-43f29e03041a@6c48a",
+        "imageUuidOrDatabaseUri": "2b214c7f-3281-4f71-99a9-e995dd81867f@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "d8165eb3-6a76-4ac0-b622-43f29e03041a@f9941"
+    "redirect": "2b214c7f-3281-4f71-99a9-e995dd81867f@f9941"
   }
 }

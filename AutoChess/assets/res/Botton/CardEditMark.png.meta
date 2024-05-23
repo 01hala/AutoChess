@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "15214a39-bb47-4c94-8402-795938e729b8",
+  "uuid": "b2712355-270f-4e4d-a79e-18a72b6d9367",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "15214a39-bb47-4c94-8402-795938e729b8@6c48a",
+      "uuid": "b2712355-270f-4e4d-a79e-18a72b6d9367@6c48a",
       "displayName": "CardEditMark",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "15214a39-bb47-4c94-8402-795938e729b8",
+        "imageUuidOrDatabaseUri": "b2712355-270f-4e4d-a79e-18a72b6d9367",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "15214a39-bb47-4c94-8402-795938e729b8@f9941",
+      "uuid": "b2712355-270f-4e4d-a79e-18a72b6d9367@f9941",
       "displayName": "CardEditMark",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "15214a39-bb47-4c94-8402-795938e729b8@6c48a",
+        "imageUuidOrDatabaseUri": "b2712355-270f-4e4d-a79e-18a72b6d9367@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "15214a39-bb47-4c94-8402-795938e729b8@f9941"
+    "redirect": "b2712355-270f-4e4d-a79e-18a72b6d9367@f9941"
   }
 }

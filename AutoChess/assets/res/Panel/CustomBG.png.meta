@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "f090592b-23c3-4644-bb5e-24519619293c",
+  "uuid": "f6ba4642-9808-412b-a3b2-9d81ee63fc45",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "f090592b-23c3-4644-bb5e-24519619293c@6c48a",
+      "uuid": "f6ba4642-9808-412b-a3b2-9d81ee63fc45@6c48a",
       "displayName": "CustomBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "f090592b-23c3-4644-bb5e-24519619293c",
+        "imageUuidOrDatabaseUri": "f6ba4642-9808-412b-a3b2-9d81ee63fc45",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "f090592b-23c3-4644-bb5e-24519619293c@f9941",
+      "uuid": "f6ba4642-9808-412b-a3b2-9d81ee63fc45@f9941",
       "displayName": "CustomBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "f090592b-23c3-4644-bb5e-24519619293c@6c48a",
+        "imageUuidOrDatabaseUri": "f6ba4642-9808-412b-a3b2-9d81ee63fc45@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "f090592b-23c3-4644-bb5e-24519619293c@f9941"
+    "redirect": "f6ba4642-9808-412b-a3b2-9d81ee63fc45@f9941"
   }
 }

@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "c8169439-db80-4a1e-903b-ae5e1dfee60b",
+  "uuid": "662bd80f-f595-4c86-9210-c3940fead0d4",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "c8169439-db80-4a1e-903b-ae5e1dfee60b@6c48a",
+      "uuid": "662bd80f-f595-4c86-9210-c3940fead0d4@6c48a",
       "displayName": "RechargeMark",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "c8169439-db80-4a1e-903b-ae5e1dfee60b",
+        "imageUuidOrDatabaseUri": "662bd80f-f595-4c86-9210-c3940fead0d4",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "c8169439-db80-4a1e-903b-ae5e1dfee60b@f9941",
+      "uuid": "662bd80f-f595-4c86-9210-c3940fead0d4@f9941",
       "displayName": "RechargeMark",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "c8169439-db80-4a1e-903b-ae5e1dfee60b@6c48a",
+        "imageUuidOrDatabaseUri": "662bd80f-f595-4c86-9210-c3940fead0d4@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "c8169439-db80-4a1e-903b-ae5e1dfee60b@f9941"
+    "redirect": "662bd80f-f595-4c86-9210-c3940fead0d4@f9941"
   }
 }

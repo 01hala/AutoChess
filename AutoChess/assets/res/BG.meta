@@ -2,11 +2,15 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "839c3bee-acb7-4614-9f98-27dfa059277b",
+  "uuid": "49e92b50-6d76-4e81-8ccc-1322635ec03f",
   "files": [],
   "subMetas": {},
   "userData": {
     "compressionType": {},
-    "isRemoteBundle": {}
+    "isRemoteBundle": {
+      "wechatgame": true
+    },
+    "isBundle": true,
+    "bundleName": "BackGroung"
   }
 }

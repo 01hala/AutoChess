@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "9de237af-4251-43b9-9f4f-ac209901fafa",
+  "uuid": "054be8c2-bb13-488b-b66c-3bc414572df6",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "9de237af-4251-43b9-9f4f-ac209901fafa@6c48a",
+      "uuid": "054be8c2-bb13-488b-b66c-3bc414572df6@6c48a",
       "displayName": "DrwaBannersBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "9de237af-4251-43b9-9f4f-ac209901fafa",
+        "imageUuidOrDatabaseUri": "054be8c2-bb13-488b-b66c-3bc414572df6",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "9de237af-4251-43b9-9f4f-ac209901fafa@f9941",
+      "uuid": "054be8c2-bb13-488b-b66c-3bc414572df6@f9941",
       "displayName": "DrwaBannersBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "9de237af-4251-43b9-9f4f-ac209901fafa@6c48a",
+        "imageUuidOrDatabaseUri": "054be8c2-bb13-488b-b66c-3bc414572df6@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "9de237af-4251-43b9-9f4f-ac209901fafa@f9941"
+    "redirect": "054be8c2-bb13-488b-b66c-3bc414572df6@f9941"
   }
 }

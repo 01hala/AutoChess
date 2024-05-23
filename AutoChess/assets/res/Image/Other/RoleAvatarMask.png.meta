@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "946be93d-9bdf-4ae6-bf6a-c06670714b3a",
+  "uuid": "dc7f91f3-0aa1-4ba7-9a32-be391fc0e5f6",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "946be93d-9bdf-4ae6-bf6a-c06670714b3a@6c48a",
+      "uuid": "dc7f91f3-0aa1-4ba7-9a32-be391fc0e5f6@6c48a",
       "displayName": "RoleAvatarMask",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "946be93d-9bdf-4ae6-bf6a-c06670714b3a",
+        "imageUuidOrDatabaseUri": "dc7f91f3-0aa1-4ba7-9a32-be391fc0e5f6",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "946be93d-9bdf-4ae6-bf6a-c06670714b3a@f9941",
+      "uuid": "dc7f91f3-0aa1-4ba7-9a32-be391fc0e5f6@f9941",
       "displayName": "RoleAvatarMask",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "946be93d-9bdf-4ae6-bf6a-c06670714b3a@6c48a",
+        "imageUuidOrDatabaseUri": "dc7f91f3-0aa1-4ba7-9a32-be391fc0e5f6@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "946be93d-9bdf-4ae6-bf6a-c06670714b3a@f9941"
+    "redirect": "dc7f91f3-0aa1-4ba7-9a32-be391fc0e5f6@f9941"
   }
 }

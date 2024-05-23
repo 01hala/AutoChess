@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "18f0a0a1-f7b5-49ed-a711-b8d526148e82",
+  "uuid": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "18f0a0a1-f7b5-49ed-a711-b8d526148e82@6c48a",
+      "uuid": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af@6c48a",
       "displayName": "Card",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "18f0a0a1-f7b5-49ed-a711-b8d526148e82",
+        "imageUuidOrDatabaseUri": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "18f0a0a1-f7b5-49ed-a711-b8d526148e82@f9941",
+      "uuid": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af@f9941",
       "displayName": "Card",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "18f0a0a1-f7b5-49ed-a711-b8d526148e82@6c48a",
+        "imageUuidOrDatabaseUri": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "18f0a0a1-f7b5-49ed-a711-b8d526148e82@f9941"
+    "redirect": "c9e2ddd8-8e65-4609-bd34-7aebcf2f03af@f9941"
   }
 }

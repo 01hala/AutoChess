@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "ab299a57-8ac1-40d9-8ef0-be6673e8a10a",
+  "uuid": "7152a7b5-9bc5-4eab-bbee-11331c218605",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "ab299a57-8ac1-40d9-8ef0-be6673e8a10a@6c48a",
+      "uuid": "7152a7b5-9bc5-4eab-bbee-11331c218605@6c48a",
       "displayName": "Fight2",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "ab299a57-8ac1-40d9-8ef0-be6673e8a10a",
+        "imageUuidOrDatabaseUri": "7152a7b5-9bc5-4eab-bbee-11331c218605",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "ab299a57-8ac1-40d9-8ef0-be6673e8a10a@f9941",
+      "uuid": "7152a7b5-9bc5-4eab-bbee-11331c218605@f9941",
       "displayName": "Fight2",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "ab299a57-8ac1-40d9-8ef0-be6673e8a10a@6c48a",
+        "imageUuidOrDatabaseUri": "7152a7b5-9bc5-4eab-bbee-11331c218605@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "ab299a57-8ac1-40d9-8ef0-be6673e8a10a@f9941"
+    "redirect": "7152a7b5-9bc5-4eab-bbee-11331c218605@f9941"
   }
 }

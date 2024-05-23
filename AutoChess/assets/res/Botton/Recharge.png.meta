@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "ebd3bbe3-25f5-40ba-89e0-f1b1e7d0200e",
+  "uuid": "f9c622bd-8a1e-45c5-8ea2-b65d064c39d6",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "ebd3bbe3-25f5-40ba-89e0-f1b1e7d0200e@6c48a",
+      "uuid": "f9c622bd-8a1e-45c5-8ea2-b65d064c39d6@6c48a",
       "displayName": "Recharge",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "ebd3bbe3-25f5-40ba-89e0-f1b1e7d0200e",
+        "imageUuidOrDatabaseUri": "f9c622bd-8a1e-45c5-8ea2-b65d064c39d6",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "ebd3bbe3-25f5-40ba-89e0-f1b1e7d0200e@f9941",
+      "uuid": "f9c622bd-8a1e-45c5-8ea2-b65d064c39d6@f9941",
       "displayName": "Recharge",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "ebd3bbe3-25f5-40ba-89e0-f1b1e7d0200e@6c48a",
+        "imageUuidOrDatabaseUri": "f9c622bd-8a1e-45c5-8ea2-b65d064c39d6@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "ebd3bbe3-25f5-40ba-89e0-f1b1e7d0200e@f9941"
+    "redirect": "f9c622bd-8a1e-45c5-8ea2-b65d064c39d6@f9941"
   }
 }

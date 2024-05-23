@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "de7d7e26-8273-4122-b15a-be0ff1c5bc2f",
+  "uuid": "e213af10-522d-4c37-8107-ce9816a4919b",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "de7d7e26-8273-4122-b15a-be0ff1c5bc2f@6c48a",
+      "uuid": "e213af10-522d-4c37-8107-ce9816a4919b@6c48a",
       "displayName": "Progress",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "de7d7e26-8273-4122-b15a-be0ff1c5bc2f",
+        "imageUuidOrDatabaseUri": "e213af10-522d-4c37-8107-ce9816a4919b",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "de7d7e26-8273-4122-b15a-be0ff1c5bc2f@f9941",
+      "uuid": "e213af10-522d-4c37-8107-ce9816a4919b@f9941",
       "displayName": "Progress",
       "id": "f9941",
       "name": "spriteFrame",
@@ -50,10 +50,10 @@
         "height": 88,
         "rawWidth": 1197,
         "rawHeight": 88,
-        "borderTop": 0,
-        "borderBottom": 0,
-        "borderLeft": 0,
-        "borderRight": 0,
+        "borderTop": 35,
+        "borderBottom": 35,
+        "borderLeft": 40,
+        "borderRight": 40,
         "packable": true,
         "pixelsToUnit": 100,
         "pivotX": 0.5,
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "de7d7e26-8273-4122-b15a-be0ff1c5bc2f@6c48a",
+        "imageUuidOrDatabaseUri": "e213af10-522d-4c37-8107-ce9816a4919b@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "de7d7e26-8273-4122-b15a-be0ff1c5bc2f@f9941"
+    "redirect": "e213af10-522d-4c37-8107-ce9816a4919b@f9941"
   }
 }

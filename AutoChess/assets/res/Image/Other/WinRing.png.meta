@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "ca531466-ff02-43c4-9172-05b021b72e06",
+  "uuid": "98de96d7-868d-4a91-8ae0-b00f9c6eb7a7",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "ca531466-ff02-43c4-9172-05b021b72e06@6c48a",
+      "uuid": "98de96d7-868d-4a91-8ae0-b00f9c6eb7a7@6c48a",
       "displayName": "WinRing",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "ca531466-ff02-43c4-9172-05b021b72e06",
+        "imageUuidOrDatabaseUri": "98de96d7-868d-4a91-8ae0-b00f9c6eb7a7",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "ca531466-ff02-43c4-9172-05b021b72e06@f9941",
+      "uuid": "98de96d7-868d-4a91-8ae0-b00f9c6eb7a7@f9941",
       "displayName": "WinRing",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "ca531466-ff02-43c4-9172-05b021b72e06@6c48a",
+        "imageUuidOrDatabaseUri": "98de96d7-868d-4a91-8ae0-b00f9c6eb7a7@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "ca531466-ff02-43c4-9172-05b021b72e06@f9941"
+    "redirect": "98de96d7-868d-4a91-8ae0-b00f9c6eb7a7@f9941"
   }
 }

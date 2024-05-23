@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "a64b5586-17dc-4177-ba16-2e3eb590800f",
+  "uuid": "6dd65797-0b29-429e-8597-ec5817705e7b",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "a64b5586-17dc-4177-ba16-2e3eb590800f@6c48a",
+      "uuid": "6dd65797-0b29-429e-8597-ec5817705e7b@6c48a",
       "displayName": "Task",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "a64b5586-17dc-4177-ba16-2e3eb590800f",
+        "imageUuidOrDatabaseUri": "6dd65797-0b29-429e-8597-ec5817705e7b",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "a64b5586-17dc-4177-ba16-2e3eb590800f@f9941",
+      "uuid": "6dd65797-0b29-429e-8597-ec5817705e7b@f9941",
       "displayName": "Task",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "a64b5586-17dc-4177-ba16-2e3eb590800f@6c48a",
+        "imageUuidOrDatabaseUri": "6dd65797-0b29-429e-8597-ec5817705e7b@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "a64b5586-17dc-4177-ba16-2e3eb590800f@f9941"
+    "redirect": "6dd65797-0b29-429e-8597-ec5817705e7b@f9941"
   }
 }
