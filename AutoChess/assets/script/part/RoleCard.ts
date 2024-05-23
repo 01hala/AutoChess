@@ -4,7 +4,7 @@
  * 2024/05/22
  * 修改
  */
-import { _decorator, Animation, Button, ccenum, Color, color, Component, debug, enumerableProps, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
+import { _decorator, Animation, assetManager, Button, ccenum, Color, color, Component, debug, enumerableProps, error, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -87,9 +87,8 @@ export class RoleCard extends Component
         {
             this.roleId=_id;
             
-            await this.LoadOnConfig();
-            this.node.active=true;
-            this.node.getComponent(Animation).play();
+            this.LoadOnConfig();
+            
         }
         catch(error)
         {
@@ -119,22 +118,52 @@ export class RoleCard extends Component
             }
             if(CardType.Painting==this.type)
             {
-                let skdata = await loadAssets.LoadSkeletonData(jconfig.Skel);
-                if(skdata)
+                loadAssets.LoadSkeletonData(jconfig.Skel,(data)=>
+                {
+                    console.log(`当前 ${jconfig.Id} 的动画信息 ${data}`);
+                    if(data)
                     {
-                        console.log(`当前 ${jconfig.Id} 的动画信息 ${skdata}`);
                         try
                         {
-                            this.painting.skeletonData=skdata;
-                            let anims=skdata.getAnimsEnum();
+                            this.painting.skeletonData = data;
+                            let anims = data.getAnimsEnum();
                             //this.roleSprite.animation="animation";
-                            this.painting.setAnimation(0,String(anims[1]),true);
+                            this.painting.setAnimation(0, String(anims[1]), true);
                         }
-                        catch
+                        catch (error)
                         {
-                            console.warn(`角色 ${jconfig.Id} 的动画设置失败`);
+                            console.warn(`角色 ${jconfig.Id} 的动画设置失败：`, error);
                         }
                     }
+                    this.node.active=true;
+                    this.node.getComponent(Animation).play();
+                });
+                // let skdata:sp.SkeletonData;
+                // let ads=jconfig.Skel.split('/');
+                // let path=ads[1]+"/"+ads[2];
+                // console.log(ads[0]);
+                // assetManager.loadBundle(ads[0],(error,bundle)=>
+                // {
+                //     if(error)
+                //     {
+                //         console.log("没有此bundle");
+                //     }
+                //     else
+                //     {
+                //         bundle.load(path,sp.SkeletonData,(error,data)=>
+                //         {
+                //             if(error)
+                //             {
+                //                 console.log("没有此资源");
+                //             }
+                //             else
+                //             {
+                //                 skdata=data;
+                               
+                //             }
+                //         })
+                //     }
+                // });
             }
         }
        catch(error)

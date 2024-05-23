@@ -1,4 +1,4 @@
-import { __private, _decorator, Asset, assetManager, AssetManager, Component, ImageAsset, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
+import { __private, _decorator, Asset, assetManager, AssetManager, Component, error, ImageAsset, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
 import { config } from '../config/config';
 const { ccclass, property } = _decorator;
 
@@ -36,6 +36,43 @@ export class BundleManager
         });
     }
 
+    loadAssetsFromBundleSync(type: __private._types_globals__Constructor<Asset> ,bundleRes:string, assetsRes:string ,_callBack:(data)=>void)
+    {
+        try
+        {
+            let asset=null;
+            assetManager.loadBundle(bundleRes,(error,bundle)=>
+            {
+                if(error)
+                {
+                    console.warn("loadAssetsFromBundleSync 读取bundle失败 :  ", error.message);
+                    _callBack(null);
+                }
+                else
+                {
+                    bundle.load(assetsRes, type ,(error,data)=>
+                    {
+                        if(error)
+                        {
+                            console.warn("loadAssetsFromBundleSync 读取资源失败 :  ", error.message);
+                            _callBack(null);
+                        }
+                        else
+                        {
+                            _callBack(data);
+                        }
+                    })
+                }
+            });
+        }
+        catch(error)
+        {
+            console.error(this.res+"下的 loadAssetsFromBundleSync 错误:"+error);
+            return null;
+        }
+        
+    }
+
     loadAssetsFromBundle(bundleRes:string, assetsRes:string) : Promise<Asset> {   
         return new Promise(async (resolve) => {
             try {
@@ -59,7 +96,7 @@ export class BundleManager
                 });
             }
             catch (err) {
-                console.warn(this.res+"下的 loadAssets 错误:"+err);
+                console.error(this.res+"下的 loadAssetsFromBundle 错误:"+err);
                 resolve(null);
             }    
         });
