@@ -160,6 +160,7 @@ export class RoleDis extends Component
     {
         if(this.roleInfo) return this.roleInfo.fetter;
     }
+    
     GetRoleSkillID():number
     {
         if(this.roleInfo) return this.roleInfo.skillid;
