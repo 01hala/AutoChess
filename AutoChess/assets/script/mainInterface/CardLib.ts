@@ -4,7 +4,7 @@
  * 2024/03/14
  * 牌库
  */
-import { _decorator, Button, Component, EventHandler, instantiate, Node, PageView, Prefab, Toggle, ToggleContainer } from 'cc';
+import { _decorator, Button, Component, EventHandler, instantiate, Node, PageView, Prefab, ScrollView, Toggle, ToggleContainer, UITransform } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { Biomes } from '../other/enums';
 import { config } from '../config/config';
@@ -22,29 +22,42 @@ export class CardLib extends Component
     private cardListPre:Prefab;
     private roleCardPre:Prefab;
 
+    private cardBoothPre:Prefab;
+    private rolePaintingPre:Prefab;
+
     private cardListPage:Node;
 
-    public toggleGroup:Node;
+    public toggleBar:Node;
+    //角色立绘展示区域
+    private cardContent:Node;
+    //滑动组件
+    private scroll:ScrollView;
 
     protected async onLoad(): Promise<void> 
     {
         try
         {
-            let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage");
-            let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
+            //let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage");
+            //let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
+
+            let rp = BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePainting");
+            let cb = BundleManager.Instance.loadAssetsFromBundle("Parts", "CardBooth");
 
             let awaitResult=await Promise.all(
-                [
-                    cardListPrePromise,
-                    roleCardPrePromise
+            [
+                rp,
+                cb
             ]);
 
-            this.cardListPre=awaitResult[0] as Prefab;
-            this.roleCardPre=awaitResult[1] as Prefab;
+            this.rolePaintingPre=awaitResult[0] as Prefab;
+            this.cardBoothPre=awaitResult[1] as Prefab;
 
             this.backBtn=this.node.getChildByPath("Back_Btn");
-            this.pageView=this.node.getChildByPath("CardArea/PageView").getComponent(PageView);
-            this.toggleGroup=this.node.getChildByPath("ToggleGroup");
+            //this.pageView=this.node.getChildByPath("CardArea/PageView").getComponent(PageView);
+            this.toggleBar=this.node.getChildByPath("ToggleBar");
+
+            this.cardContent=this.node.getChildByPath("CardView/view/content");
+            this.scroll=this.node.getChildByPath("CardView").getComponent(ScrollView);
         }
         catch(error)
         {
@@ -61,7 +74,8 @@ export class CardLib extends Component
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
                 this.node.active=false;
                 singleton.netSingleton.mainInterface.panelNode.active=true;
-                this.pageView.removeAllPages();
+                //this.pageView.removeAllPages();
+                this.RemoveAllBooth();
     
             },this);
 
@@ -82,7 +96,7 @@ export class CardLib extends Component
             containerEventHandler.component = 'CardLib';// 这个是脚本类名
             containerEventHandler.handler = 'OnCheckToggleEvent';
 
-            this.toggleGroup.getComponent(ToggleContainer).checkEvents.push(containerEventHandler);
+            this.toggleBar.getComponent(ToggleContainer).checkEvents.push(containerEventHandler);
         }
         catch(error)
         {
@@ -95,7 +109,7 @@ export class CardLib extends Component
         try
         {
             this.LoadCard(Biomes.Mountain);
-            this.toggleGroup.getChildByPath("Mountain").getComponent(Toggle).isChecked=true;
+            this.toggleBar.getChildByPath("Mountain").getComponent(Toggle).isChecked=true;
         }
         catch(error)
         {
@@ -109,28 +123,29 @@ export class CardLib extends Component
         {
             AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             console.log("check");
-            this.pageView.removeAllPages();
-            if(this.toggleGroup.getChildByPath("Sea").getComponent(Toggle).isChecked)
+            //this.pageView.removeAllPages();
+            this.RemoveAllBooth();
+            if(this.toggleBar.getChildByPath("Sea").getComponent(Toggle).isChecked)
             {
                 this.LoadCard(Biomes.Sea);
             }
-            if(this.toggleGroup.getChildByPath("Mountain").getComponent(Toggle).isChecked)
+            if(this.toggleBar.getChildByPath("Mountain").getComponent(Toggle).isChecked)
             {
                 this.LoadCard(Biomes.Mountain);
             }
-            if(this.toggleGroup.getChildByPath("Grassland").getComponent(Toggle).isChecked)
+            if(this.toggleBar.getChildByPath("Grassland").getComponent(Toggle).isChecked)
             {
                 this.LoadCard(Biomes.Grassland);
             }
-            if(this.toggleGroup.getChildByPath("Wind").getComponent(Toggle).isChecked)
+            if(this.toggleBar.getChildByPath("Wind").getComponent(Toggle).isChecked)
             {
                 this.LoadCard(Biomes.Wind);
             }
-            if(this.toggleGroup.getChildByPath("Jungle").getComponent(Toggle).isChecked)
+            if(this.toggleBar.getChildByPath("Jungle").getComponent(Toggle).isChecked)
             {
                 this.LoadCard(Biomes.Jungle);
             }
-            if(this.toggleGroup.getChildByPath("Cave").getComponent(Toggle).isChecked)
+            if(this.toggleBar.getChildByPath("Cave").getComponent(Toggle).isChecked)
             {
                 this.LoadCard(Biomes.Cave);
             }
@@ -145,8 +160,11 @@ export class CardLib extends Component
     {
         try
         {
-            this.cardListPage=instantiate(this.cardListPre);
-            this.pageView.addPage(this.cardListPage);
+            //this.cardListPage=instantiate(this.cardListPre);
+            //this.pageView.addPage(this.cardListPage);
+
+            let tnode=instantiate(this.cardBoothPre);
+            tnode.setParent(this.cardContent);
             console.log("LoadCard!!!");
             let jconfig=null;
             let i=100001;   //角色id
@@ -161,7 +179,7 @@ export class CardLib extends Component
                 {
                     if(_biomes == jconfig.Biomes)
                     {
-                        let card=instantiate(this.roleCardPre);
+                        let card=instantiate(this.rolePaintingPre);
                         card.getComponent(RoleCard).Init(i);
                         try
                         {
@@ -169,9 +187,9 @@ export class CardLib extends Component
                             {
                                 card.getComponent(RoleCard).Lock=true;
                                 card.getComponent(RoleCard).SetNumberText
-                                (
-                                    singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number,8
-                                );
+                                    (
+                                        singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number, 8
+                                    );
                             }
                             else
                             {
@@ -184,12 +202,14 @@ export class CardLib extends Component
                             console.warn('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
                         }
                         //this.cards.push(card);
-                        this.cardListPage.addChild(card);
+                        tnode.getChildByPath("Layout").addChild(card);
                         num++;
-                        if(num%8 == 0)
+                        if(num%3 == 0)
                         {
-                            this.cardListPage=instantiate(this.cardListPre);
-                            this.pageView.addPage(this.cardListPage);
+                            //this.cardListPage=instantiate(this.cardListPre);
+                            //this.pageView.addPage(this.cardListPage);
+                            tnode=instantiate(this.cardBoothPre);
+                            tnode.setParent(this.cardContent);
                         }
                     }
                     
@@ -198,12 +218,25 @@ export class CardLib extends Component
                     i++;j++;
                 }
             }
-            while(jconfig!=null)
+            while(jconfig!=null);
+            
+            if((this.cardContent.getComponent(UITransform).contentSize.y-400) < this.cardContent.parent.getComponent(UITransform).contentSize.y)
+            {
+                this.scroll.enabled=false;
+            }
             console.log("LoadCard done!!!");
         }
         catch(error)
         {
             console.error("CardLibPanel 下的 LoadCard 错误：",error);
+        }
+    }
+
+    private RemoveAllBooth()
+    {
+        for(let t of this.cardContent.children)
+        {
+            t.destroy();
         }
     }
 }

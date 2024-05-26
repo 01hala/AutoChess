@@ -160,6 +160,10 @@ export class RoleDis extends Component
     {
         if(this.roleInfo) return this.roleInfo.fetter;
     }
+    GetRoleSkillID():number
+    {
+        if(this.roleInfo) return this.roleInfo.skillid;
+    }
 
     AttackInit() 
     {
@@ -535,25 +539,33 @@ export class RoleDis extends Component
  * 2024/03/06
  * 从配置文件加载
  */
-    private async LoadOnConfig()
+    private LoadOnConfig()
     {
         try
         {
             let jconfig = config.RoleConfig.get(this.RoleId);
-            let skdata = await loadAssets.LoadSkeletonData(jconfig.Skel);
             this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
-            if(skdata)
+            loadAssets.LoadSkeletonData(jconfig.Skel,(data)=>
             {
-                let anims=skdata.getAnimsEnum();
-                this.roleSprite.skeletonData=skdata;
-                //this.roleSprite.animation="animation";
-                this.roleSprite.setAnimation(0,String(anims[1]),true);
-                
-            }
+                if (data)
+                {
+                    try
+                    {
+                        this.roleSprite.skeletonData = data;
+                        let anims = data.getAnimsEnum();
+                        //this.roleSprite.animation="animation";
+                        this.roleSprite.setAnimation(0, String(anims[1]), true);
+                    }
+                    catch (error)
+                    {
+                        console.warn(`角色 ${jconfig.Id} 的动画设置失败：`, error);
+                    }
+                }
+            });
         }
         catch(error)
         {
-            console.error("RoleDis 下的 LoadOnConfig 错误 err:" + error);
+            console.error(`RoleDis 下的 LoadOnConfig 错误 err:${error} RoleId:${this.RoleId}`);
         }
     }
 }

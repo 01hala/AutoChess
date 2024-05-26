@@ -6,9 +6,12 @@
   "files": [],
   "subMetas": {},
   "userData": {
-    "compressionType": {},
+    "compressionType": {
+      "xiaomi-quick-game": "merge_all_json"
+    },
     "isRemoteBundle": {
-      "wechatgame": true
+      "wechatgame": true,
+      "xiaomi-quick-game": true
     },
     "isBundle": true
   }

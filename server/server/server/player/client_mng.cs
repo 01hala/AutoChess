@@ -1094,20 +1094,29 @@ namespace Player
         public async Task<Avatar> uuid_get_client_proxy(string uuid)
         {
             var _avatar = avatarMgr.get_avatar(uuid);
-            if (_avatar == null)
+            if (_avatar != null)
             {
-                var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);
-                var sdk_uuid = await Player._redis_handle.GetStrData(uuid_key);
-                await Player._redis_handle.Expire(uuid_key, RedisHelp.PlayerSvrInfoCacheTimeout);
+                return _avatar;
+            }
 
+
+            var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);
+            var sdk_uuid = await Player._redis_handle.GetStrData(uuid_key);
+            await Player._redis_handle.Expire(uuid_key, RedisHelp.PlayerSvrInfoCacheTimeout);
+
+            if (!string.IsNullOrEmpty(sdk_uuid))
+            {
                 var gate_key = RedisHelp.BuildPlayerGateCacheKey(sdk_uuid);
                 var gate_name = await Player._redis_handle.GetStrData(gate_key);
                 await Player._redis_handle.Expire(gate_key, RedisHelp.PlayerSvrInfoCacheTimeout);
 
                 _avatar = await avatarMgr.load_or_create(sdk_uuid, uuid);
                 Hub.Hub._gates.client_seep(uuid, gate_name);
+
+                return _avatar;
             }
-            return _avatar;
+
+            return null;
         }
 
         public Avatar sdk_uuid_get_client_proxy(string sdk_uuid)

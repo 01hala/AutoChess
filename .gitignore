@@ -426,3 +426,5 @@ lib_debug
 config_node.txt
 /server/redis/dump.rdb
 /server/start_node.bat
+/AutoChess/assets/scene/scene-2d-001.scene
+/AutoChess/assets/scene/scene-2d-001.scene.meta

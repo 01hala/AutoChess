@@ -3,7 +3,7 @@
         "Id": 100001,
         "Name": "暂无",
         "Skill": 1,
-        "Stage": 1,
+        "Stage": 2,
         "Price": 3,
         "Attack": 1,
         "Hp": 3,
@@ -13,23 +13,23 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100001",
         "Avatar": "RoleAvatar/Role_100001",
-        "Skel": "RoleSpine/Role_100001/yuanyang_jiapu"
+        "Skel": "RoleSpine/Role_100001/Role_100001"
     },
     "100002": {
         "Id": 100002,
         "Name": "暂无",
         "Skill": 2,
-        "Stage": 5,
-        "Price": 4,
-        "Attack": 4,
-        "Hp": 3,
+        "Stage": 6,
+        "Price": 3,
+        "Attack": 10,
+        "Hp": 6,
         "Biomes": 1,
         "Fetters": 2,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100002",
         "Avatar": "RoleAvatar/Role_100002",
-        "Skel": "RoleSpine/Role_100002/yuanyang_kuangzhanshi"
+        "Skel": "RoleSpine/Role_100002/Role_100002"
     },
     "100003": {
         "Id": 100003,
@@ -37,15 +37,15 @@
         "Skill": 3,
         "Stage": 1,
         "Price": 3,
-        "Attack": 2,
-        "Hp": 2,
+        "Attack": 1,
+        "Hp": 3,
         "Biomes": 1,
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100003",
         "Avatar": "RoleAvatar/Role_100003",
-        "Skel": "RoleSpine/Role_100003/yuanyang_dafu"
+        "Skel": "RoleSpine/Role_100003/Role_100003"
     },
     "100004": {
         "Id": 100004,
@@ -54,21 +54,21 @@
         "Stage": 3,
         "Price": 3,
         "Attack": 2,
-        "Hp": 4,
+        "Hp": 5,
         "Biomes": 1,
         "Fetters": 4,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100004",
         "Avatar": "RoleAvatar/Role_100004",
-        "Skel": "RoleSpine/Role_100004/yuanyang_hushi"
+        "Skel": "RoleSpine/Role_100004/Role_100004"
     },
     "100005": {
         "Id": 100005,
         "Name": "暂无",
         "Skill": 5,
-        "Stage": 5,
-        "Price": 4,
+        "Stage": 6,
+        "Price": 3,
         "Attack": 8,
         "Hp": 4,
         "Biomes": 1,
@@ -77,7 +77,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100005",
         "Avatar": "RoleAvatar/Role_100005",
-        "Skel": "RoleSpine/Role_100005"
+        "Skel": "RoleSpine/Role_100005/Role_100005"
     },
     "100006": {
         "Id": 100006,
@@ -86,21 +86,21 @@
         "Stage": 2,
         "Price": 3,
         "Attack": 3,
-        "Hp": 6,
+        "Hp": 3,
         "Biomes": 1,
         "Fetters": 5,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100006",
         "Avatar": "RoleAvatar/Role_100006",
-        "Skel": "RoleSpine/Role_100006/yuanyang_zhanbushi"
+        "Skel": "RoleSpine/Role_100006/Role_100006"
     },
     "100007": {
         "Id": 100007,
         "Name": "暂无",
         "Skill": 7,
         "Stage": 4,
-        "Price": 4,
+        "Price": 3,
         "Attack": 1,
         "Hp": 1,
         "Biomes": 1,
@@ -109,7 +109,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100007",
         "Avatar": "RoleAvatar/Role_100007",
-        "Skel": "RoleSpine/Role_100007"
+        "Skel": "RoleSpine/Role_100007/Role_100007"
     },
     "100008": {
         "Id": 100008,
@@ -125,7 +125,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100008",
         "Avatar": "RoleAvatar/Role_100008",
-        "Skel": "RoleSpine/Role_100008"
+        "Skel": "RoleSpine/Role_100008/Role_100008"
     },
     "100009": {
         "Id": 100009,
@@ -141,7 +141,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100009",
         "Avatar": "RoleAvatar/Role_100009",
-        "Skel": "RoleSpine/Role_100009/yuanyang_jianshendaren"
+        "Skel": "RoleSpine/Role_100009/Role_100009"
     },
     "100010": {
         "Id": 100010,
@@ -150,30 +150,30 @@
         "Stage": 1,
         "Price": 3,
         "Attack": 2,
-        "Hp": 3,
+        "Hp": 1,
         "Biomes": 2,
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100010",
         "Avatar": "RoleAvatar/Role_100010",
-        "Skel": "RoleSpine/Role_100010"
+        "Skel": "RoleSpine/Role_100010/Role_100010"
     },
     "100011": {
         "Id": 100011,
         "Name": "暂无",
         "Skill": 11,
         "Stage": 2,
-        "Price": 4,
+        "Price": 3,
         "Attack": 2,
-        "Hp": 5,
+        "Hp": 3,
         "Biomes": 2,
         "Fetters": 6,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100011",
         "Avatar": "RoleAvatar/Role_100011",
-        "Skel": "RoleSpine/Role_100011/gaoshan_jixieshi"
+        "Skel": "RoleSpine/Role_100011/Role_100011"
     },
     "100012": {
         "Id": 100012,
@@ -181,22 +181,22 @@
         "Skill": 12,
         "Stage": 3,
         "Price": 3,
-        "Attack": 1,
-        "Hp": 2,
+        "Attack": 3,
+        "Hp": 8,
         "Biomes": 2,
         "Fetters": 8,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100012",
         "Avatar": "RoleAvatar/Role_100012",
-        "Skel": "RoleSpine/Role_100012"
+        "Skel": "RoleSpine/Role_100012/Role_100012"
     },
     "100013": {
         "Id": 100013,
         "Name": "暂无",
         "Skill": 13,
         "Stage": 6,
-        "Price": 4,
+        "Price": 3,
         "Attack": 7,
         "Hp": 10,
         "Biomes": 2,
@@ -212,8 +212,8 @@
         "Name": "暂无",
         "Skill": 14,
         "Stage": 6,
-        "Price": 5,
-        "Attack": 3,
+        "Price": 3,
+        "Attack": 4,
         "Hp": 5,
         "Biomes": 2,
         "Fetters": 8,
@@ -221,14 +221,14 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100014",
         "Avatar": "RoleAvatar/Role_100014",
-        "Skel": "RoleSpine/Role_100014/gaoshan_chushi"
+        "Skel": "RoleSpine/Role_100014/Role_100014"
     },
     "100015": {
         "Id": 100015,
         "Name": "暂无",
         "Skill": 15,
         "Stage": 4,
-        "Price": 4,
+        "Price": 3,
         "Attack": 1,
         "Hp": 7,
         "Biomes": 2,
@@ -237,15 +237,15 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100015",
         "Avatar": "RoleAvatar/Role_100015",
-        "Skel": "RoleSpine/Role_100015"
+        "Skel": "RoleSpine/Role_100015/Role_100015"
     },
     "100016": {
         "Id": 100016,
         "Name": "暂无",
         "Skill": 16,
         "Stage": 6,
-        "Price": 5,
-        "Attack": 2,
+        "Price": 3,
+        "Attack": 3,
         "Hp": 4,
         "Biomes": 2,
         "Fetters": 5,
@@ -253,23 +253,23 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100016",
         "Avatar": "RoleAvatar/Role_100016",
-        "Skel": "RoleSpine/Role_100016"
+        "Skel": "RoleSpine/Role_100016/Role_100016"
     },
     "100017": {
         "Id": 100017,
         "Name": "暂无",
         "Skill": 17,
-        "Stage": 3,
+        "Stage": 4,
         "Price": 3,
-        "Attack": 2,
-        "Hp": 2,
+        "Attack": 3,
+        "Hp": 5,
         "Biomes": 2,
         "Fetters": 10,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100017",
         "Avatar": "RoleAvatar/Role_100017",
-        "Skel": "RoleSpine/Role_100017"
+        "Skel": "RoleSpine/Role_100017/Role_100017"
     },
     "100018": {
         "Id": 100018,
@@ -277,8 +277,8 @@
         "Skill": 18,
         "Stage": 2,
         "Price": 3,
-        "Attack": 4,
-        "Hp": 1,
+        "Attack": 2,
+        "Hp": 2,
         "Biomes": 2,
         "Fetters": 11,
         "Grade": 1,
@@ -294,7 +294,7 @@
         "Stage": 3,
         "Price": 3,
         "Attack": 4,
-        "Hp": 1,
+        "Hp": 5,
         "Biomes": 3,
         "Fetters": 13,
         "Grade": 1,
@@ -308,23 +308,23 @@
         "Name": "暂无",
         "Skill": 20,
         "Stage": 5,
-        "Price": 4,
+        "Price": 3,
         "Attack": 6,
-        "Hp": 3,
+        "Hp": 6,
         "Biomes": 3,
         "Fetters": 2,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100020",
         "Avatar": "RoleAvatar/Role_100020",
-        "Skel": "RoleSpine/Role_100019/Role_100020"
+        "Skel": "RoleSpine/Role_100020/Role_100020"
     },
     "100021": {
         "Id": 100021,
         "Name": "暂无",
         "Skill": 21,
         "Stage": 6,
-        "Price": 5,
+        "Price": 3,
         "Attack": 1,
         "Hp": 1,
         "Biomes": 3,
@@ -333,7 +333,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100021",
         "Avatar": "RoleAvatar/Role_100021",
-        "Skel": "RoleSpine/Role_100021/caoyuan_jixieshi"
+        "Skel": "RoleSpine/Role_100021/Role_100021"
     },
     "100022": {
         "Id": 100022,
@@ -341,15 +341,15 @@
         "Skill": 22,
         "Stage": 4,
         "Price": 3,
-        "Attack": 4,
-        "Hp": 4,
+        "Attack": 2,
+        "Hp": 2,
         "Biomes": 3,
         "Fetters": 4,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100022",
         "Avatar": "RoleAvatar/Role_100022",
-        "Skel": "RoleSpine/Role_100022/caoyuan_hushi"
+        "Skel": "RoleSpine/Role_100022/Role_100022"
     },
     "100023": {
         "Id": 100023,
@@ -365,7 +365,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100023",
         "Avatar": "RoleAvatar/Role_100023",
-        "Skel": "RoleSpine/Role_100023"
+        "Skel": "RoleSpine/Role_100023/Role_100023"
     },
     "100024": {
         "Id": 100024,
@@ -373,7 +373,7 @@
         "Skill": 24,
         "Stage": 1,
         "Price": 3,
-        "Attack": 4,
+        "Attack": 3,
         "Hp": 1,
         "Biomes": 3,
         "Fetters": 12,
@@ -381,7 +381,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100024",
         "Avatar": "RoleAvatar/Role_100024",
-        "Skel": "RoleSpine/Role_100024/conlin_moshushi"
+        "Skel": "RoleSpine/Role_100024/Role_100024"
     },
     "100025": {
         "Id": 100025,
@@ -389,7 +389,7 @@
         "Skill": 25,
         "Stage": 5,
         "Price": 3,
-        "Attack": 2,
+        "Attack": 4,
         "Hp": 8,
         "Biomes": 3,
         "Fetters": 10,
@@ -397,7 +397,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100025",
         "Avatar": "RoleAvatar/Role_100025",
-        "Skel": "RoleSpine/Role_100025/Role_100023"
+        "Skel": "RoleSpine/Role_100025/Role_100025"
     },
     "100026": {
         "Id": 100026,
@@ -405,63 +405,63 @@
         "Skill": 26,
         "Stage": 3,
         "Price": 3,
-        "Attack": 1,
-        "Hp": 2,
+        "Attack": 2,
+        "Hp": 6,
         "Biomes": 3,
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100026",
         "Avatar": "RoleAvatar/Role_100026",
-        "Skel": "RoleSpine/Role_100026"
+        "Skel": "RoleSpine/Role_100026/Role_100026"
     },
     "100027": {
         "Id": 100027,
         "Name": "暂无",
         "Skill": 27,
-        "Stage": 4,
-        "Price": 5,
-        "Attack": 4,
-        "Hp": 2,
+        "Stage": 3,
+        "Price": 3,
+        "Attack": 2,
+        "Hp": 5,
         "Biomes": 3,
         "Fetters": 9,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100027",
         "Avatar": "RoleAvatar/Role_100027",
-        "Skel": "RoleSpine/Role_100027"
+        "Skel": "RoleSpine/Role_100027/Role_100027"
     },
     "100028": {
         "Id": 100028,
         "Name": "暂无",
         "Skill": 28,
-        "Stage": 4,
-        "Price": 4,
+        "Stage": 5,
+        "Price": 3,
         "Attack": 3,
-        "Hp": 5,
+        "Hp": 3,
         "Biomes": 4,
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100028",
         "Avatar": "RoleAvatar/Role_100028",
-        "Skel": "RoleSpine/Role_100028"
+        "Skel": "RoleSpine/Role_100028/Role_100028"
     },
     "100029": {
         "Id": 100029,
         "Name": "暂无",
         "Skill": 29,
         "Stage": 3,
-        "Price": 4,
-        "Attack": 1,
-        "Hp": 6,
+        "Price": 3,
+        "Attack": 3,
+        "Hp": 7,
         "Biomes": 4,
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100029",
         "Avatar": "RoleAvatar/Role_100029",
-        "Skel": "RoleSpine/Role_100029/kuangfeng_shenqishilong"
+        "Skel": "RoleSpine/Role_100029/Role_100029"
     },
     "100030": {
         "Id": 100030,
@@ -469,31 +469,31 @@
         "Skill": 30,
         "Stage": 5,
         "Price": 3,
-        "Attack": 4,
-        "Hp": 2,
+        "Attack": 5,
+        "Hp": 5,
         "Biomes": 4,
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100030",
         "Avatar": "RoleAvatar/Role_100030",
-        "Skel": "RoleSpine/Role_100030/kuangfeng_shenqishitiane"
+        "Skel": "RoleSpine/Role_100030/Role_100030"
     },
     "100031": {
         "Id": 100031,
         "Name": "暂无",
         "Skill": 31,
-        "Stage": 2,
+        "Stage": 5,
         "Price": 3,
-        "Attack": 1,
-        "Hp": 4,
+        "Attack": 4,
+        "Hp": 3,
         "Biomes": 4,
         "Fetters": 12,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100031",
         "Avatar": "RoleAvatar/Role_100031",
-        "Skel": "RoleSpine/Role_100031"
+        "Skel": "RoleSpine/Role_100031/Role_100031"
     },
     "100032": {
         "Id": 100032,
@@ -502,14 +502,14 @@
         "Stage": 2,
         "Price": 3,
         "Attack": 2,
-        "Hp": 5,
+        "Hp": 3,
         "Biomes": 4,
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100032",
         "Avatar": "RoleAvatar/Role_100032",
-        "Skel": "RoleSpine/Role_100032"
+        "Skel": "RoleSpine/Role_100032/Role_100032"
     },
     "100033": {
         "Id": 100033,
@@ -517,7 +517,7 @@
         "Skill": 33,
         "Stage": 1,
         "Price": 3,
-        "Attack": 1,
+        "Attack": 2,
         "Hp": 2,
         "Biomes": 4,
         "Fetters": 9,
@@ -525,7 +525,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100033",
         "Avatar": "RoleAvatar/Role_100033",
-        "Skel": "RoleSpine/Role_100033/kuangfeng_wushi"
+        "Skel": "RoleSpine/Role_100033/Role_100033"
     },
     "100034": {
         "Id": 100034,
@@ -533,47 +533,47 @@
         "Skill": 34,
         "Stage": 2,
         "Price": 3,
-        "Attack": 3,
-        "Hp": 3,
+        "Attack": 1,
+        "Hp": 5,
         "Biomes": 4,
         "Fetters": 1,
         "Grade": 1,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100034",
         "Avatar": "RoleAvatar/Role_100034",
-        "Skel": "RoleSpine/Role_100034"
+        "Skel": "RoleSpine/Role_100034/Role_100034"
     },
     "100035": {
         "Id": 100035,
         "Name": "暂无",
         "Skill": 35,
-        "Stage": 3,
-        "Price": 4,
+        "Stage": 5,
+        "Price": 3,
         "Attack": 2,
-        "Hp": 4,
+        "Hp": 2,
         "Biomes": 4,
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100035",
         "Avatar": "RoleAvatar/Role_100035",
-        "Skel": "RoleSpine/Role_100035/kuangfeng_moshushi"
+        "Skel": "RoleSpine/Role_100035/Role_100035"
     },
     "100036": {
         "Id": 100036,
         "Name": "暂无",
         "Skill": 36,
-        "Stage": 3,
+        "Stage": 5,
         "Price": 3,
-        "Attack": 1,
-        "Hp": 3,
+        "Attack": 5,
+        "Hp": 7,
         "Biomes": 4,
         "Fetters": 3,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100036",
         "Avatar": "RoleAvatar/Role_100036",
-        "Skel": "RoleSpine/Role_100036/kuangfeng_maoxianjia"
+        "Skel": "RoleSpine/Role_100036/Role_100036"
     },
     "100037": {
         "Id": 100037,
@@ -589,23 +589,23 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100037",
         "Avatar": "RoleAvatar/Role_100037",
-        "Skel": "RoleSpine/Role_100037"
+        "Skel": "RoleSpine/Role_100037/Role_100037"
     },
     "100038": {
         "Id": 100038,
         "Name": "暂无",
         "Skill": 38,
         "Stage": 4,
-        "Price": 4,
-        "Attack": 2,
-        "Hp": 3,
+        "Price": 3,
+        "Attack": 3,
+        "Hp": 8,
         "Biomes": 5,
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100038",
         "Avatar": "RoleAvatar/Role_100038",
-        "Skel": "RoleSpine/Role_100038"
+        "Skel": "RoleSpine/Role_100038/Role_100038"
     },
     "100039": {
         "Id": 100039,
@@ -613,22 +613,22 @@
         "Skill": 39,
         "Stage": 2,
         "Price": 3,
-        "Attack": 1,
-        "Hp": 3,
+        "Attack": 4,
+        "Hp": 2,
         "Biomes": 5,
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100039",
         "Avatar": "RoleAvatar/Role_100039",
-        "Skel": "RoleSpine/Role_100039/conlin_moshushi"
+        "Skel": "RoleSpine/Role_100039/Role_100039"
     },
     "100040": {
         "Id": 100040,
         "Name": "暂无",
         "Skill": 40,
         "Stage": 4,
-        "Price": 4,
+        "Price": 3,
         "Attack": 4,
         "Hp": 7,
         "Biomes": 5,
@@ -637,13 +637,13 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100040",
         "Avatar": "RoleAvatar/Role_100040",
-        "Skel": "RoleSpine/Role_100040"
+        "Skel": "RoleSpine/Role_100040/Role_100040"
     },
     "100041": {
         "Id": 100041,
         "Name": "暂无",
         "Skill": 41,
-        "Stage": 1,
+        "Stage": 2,
         "Price": 3,
         "Attack": 3,
         "Hp": 2,
@@ -653,7 +653,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100041",
         "Avatar": "RoleAvatar/Role_100041",
-        "Skel": "RoleSpine/Role_100041"
+        "Skel": "RoleSpine/Role_100041/Role_100041"
     },
     "100042": {
         "Id": 100042,
@@ -661,23 +661,23 @@
         "Skill": 42,
         "Stage": 2,
         "Price": 3,
-        "Attack": 4,
-        "Hp": 6,
+        "Attack": 3,
+        "Hp": 4,
         "Biomes": 5,
         "Fetters": 2,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100042",
         "Avatar": "RoleAvatar/Role_100042",
-        "Skel": "RoleSpine/Role_100042"
+        "Skel": "RoleSpine/Role_100042/Role_100042"
     },
     "100043": {
         "Id": 100043,
         "Name": "暂无",
         "Skill": 43,
         "Stage": 4,
-        "Price": 5,
-        "Attack": 2,
+        "Price": 3,
+        "Attack": 4,
         "Hp": 4,
         "Biomes": 5,
         "Fetters": 14,
@@ -701,7 +701,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100044",
         "Avatar": "RoleAvatar/Role_100044",
-        "Skel": "RoleSpine/Role_100044"
+        "Skel": "RoleSpine/Role_100044/Role_100044"
     },
     "100045": {
         "Id": 100045,
@@ -710,46 +710,46 @@
         "Stage": 1,
         "Price": 3,
         "Attack": 4,
-        "Hp": 2,
+        "Hp": 1,
         "Biomes": 5,
         "Fetters": 2,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100045",
         "Avatar": "RoleAvatar/Role_100045",
-        "Skel": "RoleSpine/Role_100045/conlin_kaungzhanshi"
+        "Skel": "RoleSpine/Role_100045/Role_100045"
     },
     "100046": {
         "Id": 100046,
         "Name": "暂无",
         "Skill": 46,
         "Stage": 6,
-        "Price": 4,
-        "Attack": 4,
-        "Hp": 4,
+        "Price": 3,
+        "Attack": 1,
+        "Hp": 8,
         "Biomes": 6,
         "Fetters": 12,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100046",
         "Avatar": "RoleAvatar/Role_100046",
-        "Skel": "RoleSpine/Role_100046"
+        "Skel": "RoleSpine/Role_100046/Role_100046"
     },
     "100047": {
         "Id": 100047,
         "Name": "暂无",
         "Skill": 47,
-        "Stage": 2,
+        "Stage": 3,
         "Price": 3,
-        "Attack": 2,
-        "Hp": 2,
+        "Attack": 4,
+        "Hp": 3,
         "Biomes": 6,
         "Fetters": 12,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100047",
         "Avatar": "RoleAvatar/Role_100047",
-        "Skel": "RoleSpine/Role_100047"
+        "Skel": "RoleSpine/Role_100047/Role_100047"
     },
     "100048": {
         "Id": 100048,
@@ -757,23 +757,23 @@
         "Skill": 48,
         "Stage": 3,
         "Price": 3,
-        "Attack": 2,
-        "Hp": 5,
+        "Attack": 4,
+        "Hp": 6,
         "Biomes": 6,
         "Fetters": 1,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100048",
         "Avatar": "RoleAvatar/Role_100048",
-        "Skel": "RoleSpine/Role_100048/dongxue_qishi"
+        "Skel": "RoleSpine/Role_100048/Role_100048"
     },
     "100049": {
         "Id": 100049,
         "Name": "暂无",
         "Skill": 49,
-        "Stage": 1,
+        "Stage": 4,
         "Price": 3,
-        "Attack": 3,
+        "Attack": 2,
         "Hp": 2,
         "Biomes": 6,
         "Fetters": 1,
@@ -781,23 +781,23 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100049",
         "Avatar": "RoleAvatar/Role_100049",
-        "Skel": "RoleSpine/Role_100049/dongxue_nvhuang"
+        "Skel": "RoleSpine/Role_100049/Role_100049"
     },
     "100050": {
         "Id": 100050,
         "Name": "暂无",
         "Skill": 50,
         "Stage": 5,
-        "Price": 4,
-        "Attack": 3,
-        "Hp": 4,
+        "Price": 3,
+        "Attack": 2,
+        "Hp": 3,
         "Biomes": 6,
         "Fetters": 5,
         "Grade": 2,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100050",
         "Avatar": "RoleAvatar/Role_100050",
-        "Skel": "RoleSpine/Role_100050"
+        "Skel": "RoleSpine/Role_100050/Role_100050"
     },
     "100051": {
         "Id": 100051,
@@ -813,7 +813,7 @@
         "ActiveState": 1,
         "Res": "RolesImg/Role_100051",
         "Avatar": "RoleAvatar/Role_100051",
-        "Skel": "RoleSpine/Role_100051"
+        "Skel": "RoleSpine/Role_100051/Role_100051"
     },
     "100052": {
         "Id": 100052,
@@ -822,45 +822,45 @@
         "Stage": 1,
         "Price": 3,
         "Attack": 1,
-        "Hp": 1,
+        "Hp": 2,
         "Biomes": 6,
         "Fetters": 6,
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100052",
         "Avatar": "RoleAvatar/Role_100052",
-        "Skel": "RoleSpine/Role_100052/gaoshan_jixieshi"
+        "Skel": "RoleSpine/Role_100052/Role_100052"
     },
     "100053": {
         "Id": 100053,
         "Name": "暂无",
         "Skill": 53,
         "Stage": 6,
-        "Price": 5,
-        "Attack": 5,
-        "Hp": 5,
+        "Price": 3,
+        "Attack": 4,
+        "Hp": 10,
         "Biomes": 6,
         "Fetters": 14,
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100053",
         "Avatar": "RoleAvatar/Role_100053",
-        "Skel": "RoleSpine/Role_100053"
+        "Skel": "RoleSpine/Role_100053/Role_100053"
     },
     "100054": {
         "Id": 100054,
         "Name": "暂无",
         "Skill": 54,
         "Stage": 4,
-        "Price": 4,
-        "Attack": 3,
-        "Hp": 3,
+        "Price": 3,
+        "Attack": 5,
+        "Hp": 6,
         "Biomes": 6,
         "Fetters": 14,
         "Grade": 3,
         "ActiveState": 1,
         "Res": "RolesImg/Role_100054",
         "Avatar": "RoleAvatar/Role_100054",
-        "Skel": "RoleSpine/Role_100054/gaoshan_tiejiang"
+        "Skel": "RoleSpine/Role_100054/Role_100054"
     }
 }
