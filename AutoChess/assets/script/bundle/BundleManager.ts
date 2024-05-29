@@ -40,30 +40,51 @@ export class BundleManager
     {
         try
         {
-            let asset=null;
-            assetManager.loadBundle(bundleRes,(error,bundle)=>
+            let bundle : AssetManager.Bundle = null;
+            if(this.bundles.has(bundleRes))
             {
-                if(error)
+                bundle = this.bundles.get(bundleRes);
+                bundle.load(assetsRes, type, (error, data) =>
                 {
-                    console.warn("loadAssetsFromBundleSync 读取bundle失败 :  ", error.message);
-                    _callBack(null);
-                }
-                else
-                {
-                    bundle.load(assetsRes, type ,(error,data)=>
+                    if (error)
+                    {
+                        console.warn("loadAssetsFromBundleSync 读取资源失败 :  ", error.message);
+                        _callBack(null);
+                    }
+                    else
+                    {
+                        _callBack(data);
+                    }
+                });
+            }
+            else
+            {
+                assetManager.loadBundle(bundleRes,(error,bundle)=>
                     {
                         if(error)
                         {
-                            console.warn("loadAssetsFromBundleSync 读取资源失败 :  ", error.message);
+                            console.warn("loadAssetsFromBundleSync 读取bundle失败 :  ", error.message);
                             _callBack(null);
                         }
                         else
                         {
-                            _callBack(data);
+                            this.bundles.set(bundleRes, bundle);
+                            bundle.load(assetsRes, type ,(error,data)=>
+                            {
+                                if(error)
+                                {
+                                    console.warn("loadAssetsFromBundleSync 读取资源失败 :  ", error.message);
+                                    _callBack(null);
+                                }
+                                else
+                                {
+                                    _callBack(data);
+                                }
+                            });
                         }
-                    })
-                }
-            });
+                    });
+            }
+            
         }
         catch(error)
         {
