@@ -1,0 +1,34 @@
+
+pkbj.png
+size: 487,487
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pkbj_0
+  rotate: true
+  xy: 86, 17
+  size: 26, 18
+  orig: 28, 20
+  offset: 1, 1
+  index: -1
+pkbj_1
+  rotate: true
+  xy: 2, 2
+  size: 41, 54
+  orig: 41, 54
+  offset: 0, 0
+  index: -1
+pkbj_2
+  rotate: false
+  xy: 58, 6
+  size: 26, 37
+  orig: 26, 37
+  offset: 0, 0
+  index: -1
+pkbj_3
+  rotate: false
+  xy: 2, 45
+  size: 434, 440
+  orig: 442, 442
+  offset: 7, 1
+  index: -1
