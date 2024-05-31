@@ -4,5 +4,11 @@
     "Name": "音效",
     "URL": "https://www.ucat.games:8001/zzq/prefab/",
     "Path": "Sound"
+  },
+  "1":{
+    "ID": 1,
+    "Name": "角色立绘",
+    "URL": "https://www.ucat.games:8001/zzq/res/",
+    "Path": "RoleSpine"
   }
 }
