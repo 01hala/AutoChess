@@ -14,7 +14,15 @@ namespace Match
 		{
             var _hub = new Hub.Hub(args[0], args[1], "match");
 
-            _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
+            if (!Hub.Hub._root_config.has_key("redis_for_mq_pwd"))
+            {
+                _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"), string.Empty);
+            }
+            else
+            {
+                _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"), Hub.Hub._root_config.get_value_string("redis_for_mq_pwd"));
+            }
+
             config.Config.Load(Hub.Hub._config.get_value_string("excel_json_config"));
 
             var _player_msg_handle = new player_msg_handle();
@@ -29,7 +37,7 @@ namespace Match
 
             Log.Log.trace("login start ok");
 
-            _hub.run().Wait();
+            _hub.run();
         }
 
         private static void on_hubproxy(Hub.HubProxy _proxy)

@@ -28,10 +28,9 @@ namespace Abelkhan
 
         private void reg_server_mq(string type, string hub_type, string svr_name)
         {
-            var rsp = (Abelkhan.center_reg_server_mq_rsp)_center_module.rsp.Value;
-
             try
             {
+                var rsp = (Abelkhan.center_reg_server_mq_rsp)_center_module.rsp.Value;
                 rsp.rsp();
 
                 _svrmng.for_each_hub((HubProxy _proxy) =>
@@ -51,18 +50,17 @@ namespace Abelkhan
 
                 _svrmng.reg_svr(_center_module.current_ch.Value, type, hub_type, svr_name);
             }
-            catch (Exception ex)
+            catch (System.Exception e)
             {
-                Log.Log.err("reg_server_mq:{0}", ex);
+                Log.Log.err("reg_server_mq err:{0}", e.ToString());
             }
-}
+        }
 
         private void on_reconn_reg_server_mq(string type, string hub_type, string svr_name)
         {
-            var rsp = (Abelkhan.center_reconn_reg_server_mq_rsp)_center_module.rsp.Value;
-
             try
             {
+                var rsp = (Abelkhan.center_reconn_reg_server_mq_rsp)_center_module.rsp.Value;
                 rsp.rsp();
 
                 _svrmng.for_each_new_hub((HubProxy _proxy) =>
@@ -81,18 +79,17 @@ namespace Abelkhan
                 }
                 _svrmng.reg_svr(_center_module.current_ch.Value, type, hub_type, svr_name, true);
             }
-            catch (Exception ex)
+            catch (System.Exception e)
             {
-                Log.Log.err("on_reconn_reg_server_mq:{0}", ex);
+                Log.Log.err("on_reconn_reg_server_mq err:{0}", e.ToString());
             }
         }
 
         private void heartbeat(uint tick)
         {
-            var rsp = (Abelkhan.center_heartbeat_rsp)_center_module.rsp.Value;
-
             try
             {
+                var rsp = (Abelkhan.center_heartbeat_rsp)_center_module.rsp.Value;
                 rsp.rsp();
 
                 if (_svrmng.get_svr(_center_module.current_ch.Value, out SvrProxy _svr_proxy))
@@ -101,9 +98,9 @@ namespace Abelkhan
                     _svr_proxy.tick = tick;
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception e)
             {
-                Log.Log.err("heartbeat:{0}", ex);
+                Log.Log.err("heartbeat err:{0}", e.ToString());
             }
         }
 
@@ -132,9 +129,9 @@ namespace Abelkhan
                     }
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception e)
             {
-                Log.Log.err("closed:{0}", ex);
+                Log.Log.err("closed err:{0}", e.ToString());
             }
         }
     }

@@ -26,8 +26,8 @@ namespace Abelkhan
         public readonly CloseHandle _closeHandle;
         public readonly Service.Timerservice _timer; 
         public readonly Abelkhan.Config _root_cfg;
-        public readonly Config _center_config;
-        
+        public readonly Abelkhan.Config _config;
+
         public event Action<SvrProxy> on_svr_disconnect;
 
         static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -39,10 +39,10 @@ namespace Abelkhan
         public Center(string cfg_file, string cfg_name)
         {
             _root_cfg = new Config(cfg_file);
-            _center_config = _root_cfg.get_value_dict(cfg_name);
-            var name = _center_config.get_value_string("name");
+            _config = _root_cfg.get_value_dict(cfg_name);
+            var name = _config.get_value_string("name");
 
-            var log_level = _center_config.get_value_string("log_level");
+            var log_level = _config.get_value_string("log_level");
             if (log_level == "trace")
             {
                 Log.Log.logMode = Log.Log.enLogMode.trace;
@@ -63,9 +63,9 @@ namespace Abelkhan
             {
                 Log.Log.logMode = Log.Log.enLogMode.err;
             }
-            var log_file = _center_config.get_value_string("log_file");
+            var log_file = _config.get_value_string("log_file");
             Log.Log.logFile = log_file;
-            var log_dir = _center_config.get_value_string("log_dir");
+            var log_dir = _config.get_value_string("log_dir");
             Log.Log.logPath = log_dir;
             {
                 if (!System.IO.Directory.Exists(log_dir))
@@ -83,7 +83,14 @@ namespace Abelkhan
             _closeHandle = new CloseHandle();
 
             var redismq_url = _root_cfg.get_value_string("redis_for_mq");
-            _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, name, 333);
+            if (!_root_cfg.has_key("redis_for_mq_pwd"))
+            {
+                _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, string.Empty, name, 333);
+            }
+            else
+            {
+                _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, _root_cfg.get_value_string("redis_for_mq_pwd"), name, 333);
+            }
 
             _svrmanager = new SvrManager(_timer, this, _redis_mq_service);
             _svr_msg_handle = new svr_msg_handle(_svrmanager, _closeHandle);
@@ -94,8 +101,8 @@ namespace Abelkhan
 
             _gmmanager = new GMManager();
             _gm_msg_handle = new gm_msg_handle(_svrmanager, _gmmanager, _closeHandle);
-            var gm_host = _center_config.get_value_string("gm_host");
-            var gm_port = _center_config.get_value_int("gm_port");
+            var gm_host = _config.get_value_string("gm_host");
+            var gm_port = _config.get_value_int("gm_port");
             _accept_gm_service = new Acceptservice((ushort)gm_port);
             Acceptservice.on_connect += (Abelkhan.Ichannel ch) =>{
                 lock (add_chs)
@@ -113,12 +120,8 @@ namespace Abelkhan
             {
                 _timer.poll();
 
-                while (true)
+                while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
                 {
-                    if (!EventQueue.msgQue.TryDequeue(out Tuple<Ichannel, ArrayList> _event))
-                    {
-                        break;
-                    }
                     Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
                 }
 
@@ -162,12 +165,12 @@ namespace Abelkhan
             return tick_end - tick_begin;
         }
 
-        private object _run_mu = new object();
-        public async Task run()
+        private async Task _run()
         {
-            if (!Monitor.TryEnter(_run_mu))
+            if (_config.has_key("prometheus_port"))
             {
-                throw new Abelkhan.Exception("run mast at single thread!");
+                var _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
+                _prometheus.Start();
             }
 
             while (!_closeHandle.is_close)
@@ -186,6 +189,17 @@ namespace Abelkhan
                 }
             }
             Log.Log.close();
+        }
+
+        private readonly object _run_mu = new();
+        public void run()
+        {
+            if (!Monitor.TryEnter(_run_mu))
+            {
+                throw new Abelkhan.Exception("run mast at single thread!");
+            }
+
+            _run().Wait();
 
             Monitor.Exit(_run_mu);
         }

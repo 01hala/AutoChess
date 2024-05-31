@@ -20,7 +20,16 @@ namespace Player
 		static void Main(string[] args)
 		{
             var _hub = new Hub.Hub(args[0], args[1], "player");
-            _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
+            
+            if (!Hub.Hub._root_config.has_key("redis_for_mq_pwd"))
+            {
+                _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"), string.Empty);
+            }
+            else
+            {
+                _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"), Hub.Hub._root_config.get_value_string("redis_for_mq_pwd"));
+            }
+
             config.Config.Load(Hub.Hub._config.get_value_string("excel_json_config"));
 
             _hub.set_support_take_over_svr(true);
@@ -57,7 +66,7 @@ namespace Player
 
             Log.Log.trace("player start ok");
 
-            _hub.run().Wait();
+            _hub.run();
         }
 
         private static void tick_set_player_svr_info(long tick_time)

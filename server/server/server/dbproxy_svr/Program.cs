@@ -11,7 +11,7 @@ namespace dbproxy_svr
 
             Log.Log.trace("dbproxy start ok");
 
-            _dbproxy.run().Wait();
+            _dbproxy.run();
         }
 	}
 }
