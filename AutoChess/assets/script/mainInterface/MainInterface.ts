@@ -135,14 +135,15 @@ export class MainInterface
             this.storeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");//商店
             this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");//娱乐
             this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");//牌库
-            this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList");//下拉列表
-            this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList/BtnLayout/Task_Btn");//任务
             this.rankListBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/RankList/Rank_Btn");//排行
-            this.cardEditor=this.panelNode.getChildByPath("MainPanel/UiLayer/BtnList/BtnLayout/Card_Btn");//卡组编辑
+            //下拉按钮列表
+            this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
+            this.cardEditor=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
+            this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Task_Btn");//任务
             //玩家信息
-            this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/UserMoney");
-            this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
-            this.userAvatar=this.panelNode.getChildByPath("MainPanel/UiLayer/UserAvatar");
+            this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserMoney");
+            this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserDiamonds");
+            this.userAvatar=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserAvatar");
             //屏幕适配
             this.Adaptation();
             //初始化
@@ -159,7 +160,12 @@ export class MainInterface
     public destory() {
         this.panelNode.destroy();
     }
-    //背景屏幕适配
+/*
+ * 添加Adaptation
+ * author：Hotaru
+ * 2024/06/1
+ * 屏幕适配
+ */
     private Adaptation()
     {
         try
@@ -169,9 +175,13 @@ export class MainInterface
             {
                 return;
             }
+            //底部物体对齐
             let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, 0, 0));
-            //this.node.getComponent(Widget).bottom=outPos.y;
             this.mainPanel.getChildByPath("BG/Foreground").getComponent(Widget).bottom=outPos.y;
+            //顶部物体对齐
+            let bpttomHeigh=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height);
+            outPos=cam.getComponent(Camera).screenToWorld(new Vec3(0, bpttomHeigh, 0));
+            this.mainPanel.getChildByPath("UiLayer/TopArea").getComponent(Widget).top=outPos.y;
         }
         catch(error)
         {
@@ -360,7 +370,7 @@ export class MainInterface
         {
             console.log("尝试加载头像：",_url);
             this.avatarUrl=_url;
-            let sprite=this.mainPanel.getChildByPath("UiLayer/UserAvatar/Mask/Sprite").getComponent(Sprite);
+            let sprite=this.mainPanel.getChildByPath("UiLayer/TopArea/UserAvatar/Mask/Sprite").getComponent(Sprite);
             await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
             {
                 let sp = new SpriteFrame();
