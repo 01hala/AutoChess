@@ -377,17 +377,18 @@ export class ReadyDis
         });
     }
 
-    async ShowRoleInfo(roleInfo:RoleDis){
+    async ShowRoleInfo(id:number,level:number){
+        let roleInfo=config.RoleConfig.get(id);
         if(null == roleInfo){
             console.log("未获取到角色信息");
             return;
         }
         this.roleInfoNode.active=true;
 
-        let roleSkillInfo=config.SkillIntroduceConfig.get(roleInfo.GetRoleSkillID());
+        let roleSkillInfo=config.SkillIntroduceConfig.get(roleInfo.SkillID);
         if(roleSkillInfo){
             let content="";
-            switch(roleInfo.Level){
+            switch(level){
                 case 1:content=roleSkillInfo.Leve1Text;break;
                 case 2:content=roleSkillInfo.Leve2Text;break;
                 default:content=roleSkillInfo.Leve3Text;
@@ -395,15 +396,15 @@ export class ReadyDis
             this.roleInfoNode.getChildByName("SkillIntroduce").getComponent(RichText).string=
                 roleSkillInfo.Timeing_Text+":"+content;           
         }      
-        let roleFetterInfo=config.FettersConfig.get(roleInfo.GetRoleFetter().fetters_id);
+        let roleFetterInfo=config.FettersConfig.get(roleInfo.Fetters);
         if(roleFetterInfo){
             let str=roleFetterInfo.Res;
             let sf:SpriteFrame=await this.LoadFetterImg(str);
             if(sf)
             {
-                this.roleInfoNode.getChildByName("Fetter/IconImage").getComponent(Sprite).spriteFrame=sf;             
+                this.roleInfoNode.getChildByPath("Fetter/IconImage").getComponent(Sprite).spriteFrame=sf;             
             }
-            this.roleInfoNode.getChildByName("Fetter/FetterName").getComponent(RichText).string=roleFetterInfo.Name;
+            this.roleInfoNode.getChildByPath("Fetter/FetterName").getComponent(RichText).string=roleFetterInfo.Name;
         }
     }
 
