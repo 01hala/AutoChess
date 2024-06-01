@@ -2,13 +2,11 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "15039b15-81d6-43a5-b595-ddef00f2904f",
+  "uuid": "ba9ab16d-044e-469d-a424-286f5719d8bb",
   "files": [],
   "subMetas": {},
   "userData": {
     "compressionType": {},
-    "isRemoteBundle": {},
-    "isBundle": true,
-    "bundleName": "FetterImg"
+    "isRemoteBundle": {}
   }
 }

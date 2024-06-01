@@ -46,33 +46,37 @@ export class loadAssets
     }
 
     
-    public static LoadSkeletonData(_address:string,_callBack:(data)=>void)
+    public static LoadSkeletonData(_address:string,_callBack:(data)=>void):Promise<void>
     {
-        try
+        return new Promise(async(resolve)=>
         {
-            let ads: string[] = null;
-            if (_address)
+            try
             {
-                ads = _address.split('/');
-                BundleManager.Instance.loadAssetsFromBundleSync(sp.SkeletonData ,ads[0], `${ads[1]}/${ads[2]}`,(data)=>
+                let ads: string[] = null;
+                if (_address)
                 {
-                    if(data)
+                    ads = _address.split('/');
+                    BundleManager.Instance.loadAssetsFromBundleSync(sp.SkeletonData ,ads[0], `${ads[1]}/${ads[2]}`,(data)=>
                     {
-                        _callBack(data);
-                    }
-                    else
-                    {
-                        console.warn(`loadAssets 里的 LoadSkeletonData 异常 : 路径${_address}下没有相对应资源,替换为默认`);
-                        //temp=await BundleManager.Instance.loadAssetsFromBundle("RoleSpine", "Role_100004/kuangfeng_moshushi.skel") as sp.SkeletonData;
-                        _callBack(null);
-                    }
-                });
+                        if(data)
+                        {
+                            _callBack(data);
+                        }
+                        else
+                        {
+                            console.warn(`loadAssets 里的 LoadSkeletonData 异常 : 路径${_address}下没有相对应资源,替换为默认`);
+                            //temp=await BundleManager.Instance.loadAssetsFromBundle("RoleSpine", "Role_100004/kuangfeng_moshushi.skel") as sp.SkeletonData;
+                            _callBack(null);
+                        }
+                    });
+                }
             }
-        }
-        catch (error)
-        {
-            console.error('loadAssets 下 LoadSkeletonData 错误 err: ', error);
-        }
+            catch (error)
+            {
+                console.error('loadAssets 下 LoadSkeletonData 错误 err: ', error);
+            }
+            resolve();
+        });
     }
 
     public static LoadAudio(_address:string):Promise<AudioClip>

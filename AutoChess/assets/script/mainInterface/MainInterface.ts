@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, assetManager, Button, Component, ImageAsset, instantiate, Node, Prefab, RichText, Sprite, SpriteFrame, Texture2D, Toggle, tween } from 'cc';
+import { _decorator, Animation, animation, assetManager, Button, Camera, Component, ImageAsset, instantiate, Node, Prefab, RichText, Sprite, SpriteFrame, Texture2D, Toggle, tween, Vec3, Widget } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
@@ -143,6 +143,8 @@ export class MainInterface
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/UserMoney");
             this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/UserDiamonds");
             this.userAvatar=this.panelNode.getChildByPath("MainPanel/UiLayer/UserAvatar");
+            //屏幕适配
+            this.Adaptation();
             //初始化
             this.Init();
             _callBack();
@@ -156,6 +158,26 @@ export class MainInterface
 
     public destory() {
         this.panelNode.destroy();
+    }
+    //背景屏幕适配
+    private Adaptation()
+    {
+        try
+        {
+            let cam=this.father.getChildByPath("Camera");
+            if (wx.getSystemInfoSync().safeArea.height == wx.getSystemInfoSync().screenHeight)
+            {
+                return;
+            }
+            let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, 0, 0));
+            //this.node.getComponent(Widget).bottom=outPos.y;
+            this.mainPanel.getChildByPath("BG/Foreground").getComponent(Widget).bottom=outPos.y;
+        }
+        catch(error)
+        {
+            console.error('MainInterface 下 Adaptation 错误 err: ',error);
+        }
+        
     }
 
     private Init() 

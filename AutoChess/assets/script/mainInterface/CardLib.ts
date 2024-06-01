@@ -33,6 +33,8 @@ export class CardLib extends Component
     //滑动组件
     private scroll:ScrollView;
 
+    private containerEventHandler:EventHandler;
+
     protected async onLoad(): Promise<void> 
     {
         try
@@ -76,6 +78,7 @@ export class CardLib extends Component
                 singleton.netSingleton.mainInterface.panelNode.active=true;
                 //this.pageView.removeAllPages();
                 this.RemoveAllBooth();
+                this.toggleBar.getComponent(ToggleContainer).checkEvents.splice(0,this.toggleBar.getComponent(ToggleContainer).checkEvents.length);
     
             },this);
 
@@ -91,12 +94,12 @@ export class CardLib extends Component
     {
         try
         {
-            const containerEventHandler = new EventHandler();
-            containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
-            containerEventHandler.component = 'CardLib';// 这个是脚本类名
-            containerEventHandler.handler = 'OnCheckToggleEvent';
+            this.containerEventHandler = new EventHandler();
+            this.containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
+            this.containerEventHandler.component = 'CardLib';// 这个是脚本类名
+            this.containerEventHandler.handler = 'OnCheckToggleEvent';
 
-            this.toggleBar.getComponent(ToggleContainer).checkEvents.push(containerEventHandler);
+            this.toggleBar.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
         }
         catch(error)
         {
@@ -108,8 +111,9 @@ export class CardLib extends Component
     {
         try
         {
-            this.LoadCard(Biomes.Mountain);
             this.toggleBar.getChildByPath("Mountain").getComponent(Toggle).isChecked=true;
+            this.toggleBar.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
+            this.LoadCard(Biomes.Mountain);
         }
         catch(error)
         {
@@ -171,6 +175,7 @@ export class CardLib extends Component
             let j=0;        //背包里物品下标
 
             let num=0;      //页面里的card数量
+            let promise=[];
             do
             {
                 //console.log("id: "+i);
@@ -180,7 +185,8 @@ export class CardLib extends Component
                     if(_biomes == jconfig.Biomes)
                     {
                         let card=instantiate(this.rolePaintingPre);
-                        card.getComponent(RoleCard).Init(i);
+                        tnode.getChildByPath("Layout").addChild(card);
+                        card.getComponent(RoleCard).Init(i,jconfig.Skel);
                         try
                         {
                             if(singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
@@ -202,7 +208,6 @@ export class CardLib extends Component
                             console.warn('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
                         }
                         //this.cards.push(card);
-                        tnode.getChildByPath("Layout").addChild(card);
                         num++;
                         if(num%3 == 0)
                         {
@@ -219,7 +224,6 @@ export class CardLib extends Component
                 }
             }
             while(jconfig!=null);
-            
             if((this.cardContent.getComponent(UITransform).contentSize.y-400) < this.cardContent.parent.getComponent(UITransform).contentSize.y)
             {
                 this.scroll.enabled=false;
@@ -236,6 +240,10 @@ export class CardLib extends Component
     {
         for(let t of this.cardContent.children)
         {
+            for(let tt of t.children)
+            {
+                tt.destroy();
+            }
             t.destroy();
         }
     }
