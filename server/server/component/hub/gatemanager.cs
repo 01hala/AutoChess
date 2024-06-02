@@ -67,9 +67,20 @@ namespace Hub
             Hub._timer.addticktime(10000, heartbeat_client);
         }
 
-        public void connect_gate(String name)
+        public async void connect_gate(String name)
         {
-            var ch = _gate_redismq_conn.connect(name);
+            Ichannel ch = null;
+            if (Hub.OnCheckConnGate != null && Hub.OnCheckConnGate())
+            {
+                string host = await Hub._redis_handle.GetStrData(name);
+                var host_info = host.Split(":");
+                var s = ConnectService.connect(IPAddress.Parse(host_info[0]), short.Parse(host_info[1]));
+                ch = new Abelkhan.RawChannel(s);
+            }
+            else
+            {
+                ch = _gate_redismq_conn.connect(name);
+            }
             if (ch != null)
             {
                 var _proxy = new GateProxy(ch, name);
@@ -364,11 +375,11 @@ namespace Hub
 
                 if (clients.TryGetValue(_uuid, out GateProxy _proxy))
                 {
-                    if (!tmp_gates.ContainsKey(_proxy))
+                    if (!tmp_gates.TryGetValue(_proxy, out var uuidlist))
                     {
                         tmp_gates.Add(_proxy, new List<string>());
                     }
-                    tmp_gates[_proxy].Add(_uuid);
+                    uuidlist.Add(_uuid);
                 }
             }
 

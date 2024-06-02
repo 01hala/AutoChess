@@ -31,9 +31,9 @@ namespace Abelkhan
             {
                 gmmng.reg_gm(gm_name, gm_center_module.current_ch.Value);
             }
-            catch(Exception ex)
+            catch (System.Exception e)
             {
-                Log.Log.err("confirm_gm:{0}", ex);
+                Log.Log.err("confirm_gm {0} {1}", gm_name, e.Message);
             }
         }
 
@@ -57,9 +57,9 @@ namespace Abelkhan
                     }
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception e)
             {
-                Log.Log.err("close_clutter:{0}", ex);
+                Log.Log.err("close_clutter {0} {1}", gmname, e.Message);
             }
         }
 
@@ -75,9 +75,9 @@ namespace Abelkhan
                     });
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception e)
             {
-                Log.Log.err("reload:{0}", ex);
+                Log.Log.err("reload {0} {1}", gmname, e.Message);
             }
         }
     }

@@ -14,7 +14,15 @@ namespace Login
         static void Main(string[] args)
 		{
             var _hub = new Hub.Hub(args[0], args[1], "login");
-            _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"));
+
+            if (!Hub.Hub._root_config.has_key("redis_for_mq_pwd"))
+            {
+                _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"), string.Empty);
+            }
+            else
+            {
+                _redis_handle = new RedisHandle(Hub.Hub._root_config.get_value_string("redis_for_cache"), Hub.Hub._root_config.get_value_string("redis_for_mq_pwd"));
+            }
 
             HttpClientWrapper.Init();
 
@@ -34,7 +42,7 @@ namespace Login
 
             Log.Log.trace("login start ok");
 
-            _hub.run().Wait();
+            _hub.run();
         }
 
         private static void on_hubproxy(Hub.HubProxy _proxy)

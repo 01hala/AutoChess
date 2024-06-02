@@ -1,11 +1,11 @@
-import { _decorator, instantiate, Node, Prefab, ProgressBar } from 'cc';
+import { _decorator, instantiate, Node, Prefab, ProgressBar, RichText } from 'cc';
 const { ccclass, property } = _decorator;
 
 export class Loading {
     public static loading:Prefab = null;
     private _load:Node = null;
 
-    public load(father:Node) : (progress:number) => void {
+    public load(father:Node, desc:boolean = false) : (progress:number) => void {
         console.log("Loading load begin!");
 
         try {
@@ -16,6 +16,9 @@ export class Loading {
 
             let progressBar = this._load.getChildByName("Progress").getComponent(ProgressBar);
             progressBar.progress = 0;
+
+            let descTxt = this._load.getChildByName("desc");
+            descTxt.active = desc;
             
             return (progress:number) => { progressBar.progress = 0 + progress; }
         }

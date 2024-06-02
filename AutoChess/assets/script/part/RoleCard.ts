@@ -66,7 +66,7 @@ export class RoleCard extends Component
             this.painting=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
         }
 
-        this.node.active=false;
+        this.painting.node.active=false;
     }
 
 
@@ -81,19 +81,54 @@ export class RoleCard extends Component
 
     }
 
-    public async Init(_id:number)
+    public Init(_id:number,_res:string):Promise<void>
     {
-        try
+        return new Promise(async(resolve)=>
         {
-            this.roleId=_id;
-            
-            this.LoadOnConfig();
-            
-        }
-        catch(error)
-        {
-            console.error('RoleCard 下 Init 错误 err: ',error);
-        }
+            try
+            {
+                this.roleId=_id;
+                if (CardType.Card == this.type)
+                {
+                    let img = await loadAssets.LoadImg(_res);
+                    if (img)
+                    {
+                        this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame = img;
+                    }
+                }
+                if (CardType.Painting == this.type)
+                {
+                    loadAssets.LoadSkeletonData(_res, (data) =>
+                    {
+                        //console.log(`当前 ${this.roleId} 的动画信息 ${data}`);
+                        if (data)
+                        {
+                            try
+                            {
+                                this.painting.skeletonData = data;
+                                let anims = data.getAnimsEnum();
+                                //this.roleSprite.animation="animation";
+                                this.painting.setAnimation(0, String(anims[1]), true);
+                            }
+                            catch (error)
+                            {
+                                console.warn(`角色 ${this.roleId} 的动画设置失败：`, error);
+                            }
+                        }
+                        if(this.node)
+                        {
+                            this.painting.node.active=true;
+                            this.node.getComponent(Animation).play();
+                        }
+                    });
+                }
+            }
+            catch(error)
+            {
+                console.error('RoleCard 下 Init 错误 err: ',error);
+            }
+            resolve();
+        });
     }
 
     public SetNumberText(_molecule:number,_denominator:number)
@@ -102,75 +137,4 @@ export class RoleCard extends Component
         "<color=#000000>"+ _molecule + "</color>" +
         "<color=#000000> | "+ _denominator +"</color>";
     }
-
-    private async LoadOnConfig()
-    {
-        try
-        {
-            let jconfig = config.RoleConfig.get(this.roleId);
-            if(CardType.Card==this.type)
-            {
-                let img = await loadAssets.LoadImg(jconfig.Avatar);
-                if(img)
-                {
-                    this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame=img;
-                }
-            }
-            if(CardType.Painting==this.type)
-            {
-                loadAssets.LoadSkeletonData(jconfig.Skel,(data)=>
-                {
-                    console.log(`当前 ${jconfig.Id} 的动画信息 ${data}`);
-                    if(data)
-                    {
-                        try
-                        {
-                            this.painting.skeletonData = data;
-                            let anims = data.getAnimsEnum();
-                            //this.roleSprite.animation="animation";
-                            this.painting.setAnimation(0, String(anims[1]), true);
-                        }
-                        catch (error)
-                        {
-                            console.warn(`角色 ${jconfig.Id} 的动画设置失败：`, error);
-                        }
-                    }
-                    this.node.active=true;
-                    this.node.getComponent(Animation).play();
-                });
-                // let skdata:sp.SkeletonData;
-                // let ads=jconfig.Skel.split('/');
-                // let path=ads[1]+"/"+ads[2];
-                // console.log(ads[0]);
-                // assetManager.loadBundle(ads[0],(error,bundle)=>
-                // {
-                //     if(error)
-                //     {
-                //         console.log("没有此bundle");
-                //     }
-                //     else
-                //     {
-                //         bundle.load(path,sp.SkeletonData,(error,data)=>
-                //         {
-                //             if(error)
-                //             {
-                //                 console.log("没有此资源");
-                //             }
-                //             else
-                //             {
-                //                 skdata=data;
-                               
-                //             }
-                //         })
-                //     }
-                // });
-            }
-        }
-       catch(error)
-       {
-            console.error("RoleCard 下的 LoadOnConfig 错误 err:",error)
-       }
-    }
 }
-
-

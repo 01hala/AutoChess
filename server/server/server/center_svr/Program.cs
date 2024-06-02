@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Service;
 using System;
 using System.Threading;
+using System.Xml.Linq;
 
 namespace center_svr
 {
@@ -19,9 +20,16 @@ namespace center_svr
                 Log.Log.err("svr:{0},{1} exception!", _proxy.type, _proxy.name);
             };
 
-            _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"));
+            if (!_center._root_cfg.has_key("redis_for_mq_pwd"))
+            {
+                _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"), string.Empty);
+            }
+            else
+            {
+                _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"), _center._root_cfg.get_value_string("redis_for_mq_pwd"));
+            }
 
-            if (_center._center_config.get_value_bool("init_peak_strength_id"))
+            if (_center._config.get_value_bool("init_peak_strength_id"))
             {
                 var peak_strength_id = RandomHelper.RandomInt(100);
                 _redis_handle.SetData(RedisHelp.BuildPeakStrengthID(), peak_strength_id);
@@ -31,7 +39,7 @@ namespace center_svr
 
             Log.Log.trace("Center start ok");
 
-            _center.run().Wait();
+            _center.run();
         }
 
         private static async void reset_peak_strength(System.DateTime _)

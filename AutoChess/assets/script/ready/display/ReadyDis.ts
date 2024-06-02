@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, BlockInputEvents, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view } from 'cc';
+import { _decorator, BlockInputEvents,Camera, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view, Widget } from 'cc';
 import { RoleArea } from './RoleArea';
 import { ReadyData } from '../ReadyData';
 import { BundleManager } from '../../bundle/BundleManager';
@@ -19,6 +19,7 @@ import { sleep } from '../../other/sleep';
 import { PropsType } from '../../other/enums';
 import { SendMessage } from '../../other/MessageEvent';
 import { RoleDis } from '../../battle/display/RoleDis';
+
 const { ccclass, property } = _decorator;
 
 export class ReadyDis 
@@ -30,6 +31,9 @@ export class ReadyDis
     //操作界面
     public roleArea:RoleArea;
     public shopArea:ShopArea;
+    //界面适配
+    public cameraNode:Node;
+    public topArea:Node;
     //主要数据
     public readyData:ReadyData;
     //动效
@@ -77,6 +81,9 @@ export class ReadyDis
             //操作区域
             this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
             this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
+            //图形适配获取整个区域
+            this.cameraNode = this.father.getChildByName('Camera');
+            this.topArea=this.panelNode.getChildByPath("TopArea");
             //文本
             this.coinText=this.panelNode.getChildByPath("TopArea/CoinInfo/RichText").getComponent(RichText);
             this.heathText=this.panelNode.getChildByPath("TopArea/HpInfo/RichText").getComponent(RichText);
@@ -121,9 +128,10 @@ export class ReadyDis
     {
         try
         {
+            this.InterfaceAdjust();
             this.RegCallBack();
             //羁绊信息框
-            let tNode = this.panelNode.getChildByPath("TopArea/FetterArea");
+            let tNode = this.panelNode.getChildByPath("RoleArea/FetterArea");
             for (let i = 1; i <= 6; i++) {
                 let t = tNode.getChildByName("FettersIcon_" + i);
                 t.active = false;
@@ -152,6 +160,12 @@ export class ReadyDis
         {
             console.error("ReadyDis 里的 Init 错误 err:",error);
         }
+    }
+
+    private InterfaceAdjust(){
+        let bpttomHeight=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height);
+        let outPos:Vec3=this.cameraNode.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeight,0));
+        this.topArea.getComponent(Widget).top=outPos.y;
     }
 
     private delay(ms: number, release: () => void): Promise<void> 
@@ -377,17 +391,18 @@ export class ReadyDis
         });
     }
 
-    async ShowRoleInfo(roleInfo:RoleDis){
+    async ShowRoleInfo(id:number,level:number){
+        let roleInfo=config.RoleConfig.get(id);
         if(null == roleInfo){
             console.log("未获取到角色信息");
             return;
         }
         this.roleInfoNode.active=true;
 
-        let roleSkillInfo=config.SkillIntroduceConfig.get(roleInfo.GetRoleSkillID());
+        let roleSkillInfo=config.SkillIntroduceConfig.get(roleInfo.SkillID);
         if(roleSkillInfo){
             let content="";
-            switch(roleInfo.Level){
+            switch(level){
                 case 1:content=roleSkillInfo.Leve1Text;break;
                 case 2:content=roleSkillInfo.Leve2Text;break;
                 default:content=roleSkillInfo.Leve3Text;
@@ -395,15 +410,15 @@ export class ReadyDis
             this.roleInfoNode.getChildByName("SkillIntroduce").getComponent(RichText).string=
                 roleSkillInfo.Timeing_Text+":"+content;           
         }      
-        let roleFetterInfo=config.FettersConfig.get(roleInfo.GetRoleFetter().fetters_id);
+        let roleFetterInfo=config.FettersConfig.get(roleInfo.Fetters);
         if(roleFetterInfo){
             let str=roleFetterInfo.Res;
             let sf:SpriteFrame=await this.LoadFetterImg(str);
             if(sf)
             {
-                this.roleInfoNode.getChildByName("Fetter/IconImage").getComponent(Sprite).spriteFrame=sf;             
+                this.roleInfoNode.getChildByPath("Fetter/IconImage").getComponent(Sprite).spriteFrame=sf;             
             }
-            this.roleInfoNode.getChildByName("Fetter/FetterName").getComponent(RichText).string=roleFetterInfo.Name;
+            this.roleInfoNode.getChildByPath("Fetter/FetterName").getComponent(RichText).string=roleFetterInfo.Name;
         }
     }
 

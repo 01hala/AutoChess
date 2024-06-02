@@ -141,7 +141,7 @@ export class login extends Component {
         console.log("login start!");
 
         this._loading = new load.Loading();
-        this._setProgress = this._loading.load(this.bk.node);
+        this._setProgress = this._loading.load(this.bk.node, true);
 
         this.interval=setInterval(()=>{
             this._progress += 0.01;
