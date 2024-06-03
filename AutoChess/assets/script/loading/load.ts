@@ -19,6 +19,15 @@ export class Loading {
 
             let descTxt = this._load.getChildByName("desc");
             descTxt.active = desc;
+
+            let titelTxt = this._load.getChildByName("titel");
+            titelTxt.active = desc;
+
+            let ageTxt = this._load.getChildByName("age");
+            ageTxt.active = desc;
+
+            let promptTxt = this._load.getChildByName("prompt");
+            promptTxt.active = desc;
             
             return (progress:number) => { progressBar.progress = 0 + progress; }
         }
