@@ -13,6 +13,7 @@ import { StartGame } from './StartGame';
 import { AudioManager } from '../other/AudioManager';
 import * as enums from '../other/enums';
 import { CardEditor } from './CardEditor';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -199,11 +200,16 @@ export class MainInterface
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
+                if (GameManager.Instance.guide)
+                {
+                    GameManager.Instance.guide.Checkguide();
+                }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePanel.active=true;
                 this.startGamePanel.getComponent(StartGame).OpenAthleticsWindow();
                 //this.mainPanel.active=false;
+                
     
             },this);
             //打开自定义模式

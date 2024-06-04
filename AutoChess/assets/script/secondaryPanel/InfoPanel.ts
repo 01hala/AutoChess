@@ -9,6 +9,7 @@ import { loadAssets } from '../bundle/LoadAsset';
 import { Role } from '../serverSDK/common';
 import { RoleConfig } from '../config/role_config';
 import { AudioManager } from '../other/AudioManager';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -114,6 +115,10 @@ export class InfoPanel extends Component
                     
                     this.ShowDetailed(id);
                 }   
+            }
+            if (GameManager.Instance.guide)
+            {
+                GameManager.Instance.guide.step++;
             }
         }
         catch(error)
