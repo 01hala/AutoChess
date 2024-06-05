@@ -4,6 +4,7 @@ import { Property, Camp, EventType, SkillType } from '../../other/enums';
 import { Battle } from '../battle';
 import { Role } from '../role';
 import { random } from '../util';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('Skill_RecoveryHP_2')
@@ -11,11 +12,15 @@ export class Skill_RecoveryHP_2 extends SkillBase {
     public res:string="battle/skill/Skill_RecoveryHP_2";
     private numberOfRole:number;
     private effectiveValue : number;
+    private eventSound:string;
 
-    constructor(priority:number, numberOfRole:number, effectiveValue : number){
+    constructor(priority:number, numberOfRole:number, effectiveValue : number,eventSound?:string){
         super(priority);
         this.numberOfRole = numberOfRole;
         this.effectiveValue = effectiveValue;
+        if(null!=eventSound){
+            this.eventSound=eventSound;
+        }
     }
 
     UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void
@@ -43,6 +48,7 @@ export class Skill_RecoveryHP_2 extends SkillBase {
                 if (HP > totalHP) {
                     HP = totalHP;
                 }
+                AudioManager.Instance.PlaySound(this.eventSound);
                 r.ChangeProperties(Property.HP, HP);
             }
         }

@@ -19,6 +19,7 @@ import { Fetters } from '../../serverSDK/common';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -188,6 +189,12 @@ export class RoleDis extends Component
                 .call(() => {
                     if (Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
+                        // let roleConfig = config.RoleConfig.get(this.RoleId);
+                        // let audioString="Sound/sound_character_hit_MN";
+                        // if(undefined!=roleConfig.Sex&&undefined!=roleConfig.Armor){
+                        //     audioString="Sound/sound_character_hit_"+roleConfig.Sex+roleConfig.Armor;
+                        // }
+                        // AudioManager.Instance.PlayerOnShot(audioString);
                     }
                 })
                 .delay(0.1).call(() => {
@@ -289,6 +296,13 @@ export class RoleDis extends Component
                 this.hurtedSpine.active=true;
                 hurtedTextAnim.play();
                 hitAnim.play();
+                
+                let roleConfig = config.RoleConfig.get(this.RoleId);
+                let audioString="Sound/sound_character_hit_MN";
+                if(undefined!=roleConfig.Sex&&undefined!=roleConfig.Armor){
+                    audioString="Sound/sound_character_hit_"+roleConfig.Sex+roleConfig.Armor;
+                }
+                AudioManager.Instance.PlayerOnShot(audioString);
             }).delay(0.2).call(()=>
             {
                 this.hurtedSpine.active=false;
@@ -350,6 +364,7 @@ export class RoleDis extends Component
                 
             }).delay(0.7).call(async ()=>
             {
+                AudioManager.Instance.PlayerOnShot("battle_Valuechange");
                 await this.changeAtt();
                 anim.stop();
                 this.intensifierText.active = false;

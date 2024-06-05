@@ -22,15 +22,19 @@ export class Skill_Shields_6 extends SkillBase
     private value:number;
     private round:number;
     private dir:Direction;
+    private eventSound:string;
 
     event:Event=new Event();
 
-    public constructor(priority:number, value:number,round:number,dir:Direction) {
+    public constructor(priority:number, value:number,round:number,dir:Direction,eventSound?:string) {
         super(priority);
 
         this.value=value;
         this.round=round;
         this.dir=dir;
+        if(null!=eventSound){
+            this.eventSound=eventSound;
+        }
     }
 
     public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
@@ -53,6 +57,7 @@ export class Skill_Shields_6 extends SkillBase
             let teamTemp:Role[]=null;
             let recipientRole:Role=null;
             this.event.isParallel=isPar;
+            this.event.eventSound=this.eventSound;
 
             if(Camp.Self==selfInfo.camp)
             {

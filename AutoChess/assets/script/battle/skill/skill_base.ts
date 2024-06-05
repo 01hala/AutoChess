@@ -28,6 +28,8 @@ export class Event {
     //是否是并行发动的
     public isParallel:boolean=false;
     public roleParallel:Role = null;
+    //事件音效
+    public eventSound:string="";
 }
 
 export abstract class SkillTriggerBase {
