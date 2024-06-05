@@ -33,7 +33,7 @@ export class Guide extends Component
         this.end=9;
 
         this.pointer=this.node.getChildByPath("Pointer");
-        this.guideText=this.node.getChildByPath("Text");
+        this.guideText=this.node.getChildByPath("GuideText");
         this.mask=this.node.getChildByPath("Mask");
 
         this.node.setSiblingIndex(101);
@@ -71,58 +71,74 @@ export class Guide extends Component
     private OnGuide()
     {
         this.mask.active=true;
+        if (this.step >= 3 && this.step <= 8)
+        {
+            this.mask.getChildByPath("RichText").active = true;
+        }
+        else
+        {
+            this.mask.getChildByPath("RichText").active = false;
+        }
         switch(this.step)
         {
             case 1:
                 this.tnode=this.node.parent.getChildByPath("MainInterface/MainPanel/BottomLayer/StartHouse");
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
-                this.pointer.active=true;
-                this.pointer.setWorldPosition(this.tnode.getChildByPath("Start_Btn").worldPosition);
+                //this.pointer.active=true;
+                //this.pointer.setWorldPosition(this.tnode.getChildByPath("Start_Btn").worldPosition);
+                this.guideText.setPosition(new Vec3(-211.372,54.5225,0));
                 this.guideText.getComponent(RichText).string="点击游戏大厅";
                 break;
             case 2:
                 this.tnode=this.node.parent.getChildByPath("MainInterface/StartGamePanel/AthleticsWindow/Normal");
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
-                this.pointer.active=true;
-                this.pointer.setWorldPosition(this.tnode.worldPosition);
+                //this.pointer.active=true;
+                //this.pointer.setWorldPosition(this.tnode.worldPosition);
+                this.guideText.setPosition(new Vec3(0,-365.5275,0));
                 this.guideText.getComponent(RichText).string="点击匹配";
                 break;
             case 3:
                 this.tnode=this.node.parent.getChildByPath("ReadyPanel/TopArea/HpInfo");
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
+                this.guideText.setPosition(new Vec3(0,595.665,0));
                 this.guideText.getComponent(RichText).string="生命值";
                 break;
             case 4:
                 this.tnode=this.node.parent.getChildByPath("ReadyPanel/TopArea/TrophyInfo");
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
+                this.guideText.setPosition(new Vec3(0,595.665,0));
                 this.guideText.getComponent(RichText).string="奖杯";
                 break;
             case 5:
                 this.tnode=this.node.parent.getChildByPath("ReadyPanel/TopArea/CoinInfo");
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
+                this.guideText.setPosition(new Vec3(0,595.665,0));
                 this.guideText.getComponent(RichText).string="金币";
                 break;
             case 6:
                 this.tnode=this.node.parent.getChildByPath("ReadyPanel/TopArea/RoundInfo");
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
+                this.guideText.setPosition(new Vec3(0,595.665,0));
                 this.guideText.getComponent(RichText).string="回合";
                 break;
             case 7:
                 this.tnode=this.node.parent.getChildByPath("ReadyPanel/ShopArea");
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
+                this.guideText.setPosition(new Vec3(0,-637.995,0));
                 this.guideText.getComponent(RichText).string="商店";
                 break;
             case 8:
-                this.pointer.active=true;
-                this.pointer.setWorldPosition(this.tnode.worldPosition);
-                this.tween=tween(this.pointer).to(1,{position:this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_0").worldPosition}).repeatForever().start();
+                //this.pointer.active=true;
+                //this.pointer.setWorldPosition(this.tnode.worldPosition);
+                //this.tween=tween(this.pointer).to(1,{position:this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_0").worldPosition}).repeatForever().start();
+                this.guideText.setPosition(new Vec3(0,-637.995,0));
                 this.guideText.getComponent(RichText).string="拖拽购买角色";
                 break;
             case 9:
@@ -137,6 +153,7 @@ export class Guide extends Component
                 this.siblingIndex=this.tnode.getSiblingIndex();
                 this.tnode.setSiblingIndex(102);
                 this.pointer.setWorldPosition(this.tnode.worldPosition);
+                this.guideText.setPosition(new Vec3(0,-85.498,0));
                 this.guideText.getComponent(RichText).string="点击角色查看详细界面";
                 break;
 
@@ -157,7 +174,7 @@ export class Guide extends Component
         }
         if(8==this.step)
         {
-            this.tween.stop();
+            //this.tween.stop();
         }
         this.pointer.active=false;
     }
