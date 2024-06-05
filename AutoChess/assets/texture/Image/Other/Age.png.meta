@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "940ee951-e50c-4a9d-9a89-4b96654cc363",
+  "uuid": "5922ab21-fcb3-4bad-84a6-1248eb799544",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "940ee951-e50c-4a9d-9a89-4b96654cc363@6c48a",
+      "uuid": "5922ab21-fcb3-4bad-84a6-1248eb799544@6c48a",
       "displayName": "Age",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "940ee951-e50c-4a9d-9a89-4b96654cc363",
+        "imageUuidOrDatabaseUri": "5922ab21-fcb3-4bad-84a6-1248eb799544",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "940ee951-e50c-4a9d-9a89-4b96654cc363@f9941",
+      "uuid": "5922ab21-fcb3-4bad-84a6-1248eb799544@f9941",
       "displayName": "Age",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "940ee951-e50c-4a9d-9a89-4b96654cc363@6c48a",
+        "imageUuidOrDatabaseUri": "5922ab21-fcb3-4bad-84a6-1248eb799544@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "940ee951-e50c-4a9d-9a89-4b96654cc363@f9941"
+    "redirect": "5922ab21-fcb3-4bad-84a6-1248eb799544@f9941"
   }
 }
