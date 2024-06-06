@@ -17,6 +17,7 @@ import { ReadyDis } from '../ready/display/ReadyDis';
 import { MainInterface } from '../mainInterface/MainInterface';
 import { sleep } from '../other/sleep';
 import { AudioManager } from '../other/AudioManager';
+import { GameManager } from '../other/GameManager';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -219,6 +220,10 @@ export class login extends Component {
                     console.log("Start Ready sucess!");
                     clearInterval(this.interval);
                 });
+            }
+            if (GameManager.Instance.guide)
+            {
+                GameManager.Instance.guide.step++;
             }
         }
         //游戏结束

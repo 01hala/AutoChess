@@ -11,6 +11,7 @@ import { AudioManager } from './AudioManager';
 import { Loading } from '../loading/load';
 import * as enums from '../other/enums';
 import { PopUps } from '../secondaryPanel/PopUps';
+import { Guide } from './Guide';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -39,6 +40,8 @@ export class GameManager extends Component
     private taskAchieveBoard:Node;
     //排行榜
     private rankListBoard:Node;
+    //新手引导
+    public guide:Guide;
     
     protected onLoad()
     {
@@ -120,7 +123,7 @@ export class GameManager extends Component
     private InitEvent()
     {
         /* 消息来源
-         * RoleCard.ts : 第 42 行 
+         * RoleCard.ts : 第 78 行 
          * 
          * 
          * 
@@ -320,6 +323,15 @@ export class GameManager extends Component
         ups.getComponent(PopUps).subheading=_subheading;
         ups.getComponent(PopUps).OpenBoard(_type , _items , _callBack);
     }
+
+    
+
+    private StartGuide()
+    {
+        //this.guide.Init(1,9);
+    }
+
+    
 }
 
 

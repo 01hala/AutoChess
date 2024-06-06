@@ -35,8 +35,8 @@ export class ShopArea extends Component
     public panel:Node;
     public cam:Node;
     //物体列表
-    private shopRoles:Node[]=[];
-    private shopProps:Node[]=[];
+    public shopRoles:Node[]=[];
+    public shopProps:Node[]=[];
     //各操作区域
     private roleArea:RoleArea;
     private freezeArea:Node;
