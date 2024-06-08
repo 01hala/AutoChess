@@ -21,13 +21,17 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
     private numberOfRole : number;
     private attack : number;
     private isAll:boolean;
+    private eventSound;
 
-    public constructor(priority:number, numberOfRole:number, attack:number,isAll:boolean) {
+    public constructor(priority:number, numberOfRole:number, attack:number,isAll:boolean,eventSound?:string) {
         super(priority);
 
         this.numberOfRole = numberOfRole;
         this.attack = attack;
         this.isAll=isAll;
+        if(null!=eventSound){
+            this.eventSound=eventSound;
+        }
 
         //this.event.type=EventType.RemoteInjured;
     }
@@ -67,6 +71,7 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
             let self:Role = null;
             let enemyRoles:Role[] = null;
             this.event.isParallel=isPar;
+            this.event.eventSound=this.eventSound;
 
             attack=Math.round(attack);                                          //四舍五入
             if(attack<1)

@@ -3,6 +3,7 @@ const { ccclass, property } = _decorator;
 
 export class Loading {
     public static loading:Prefab = null;
+    public progressBar:Node = null;
     private _load:Node = null;
 
     public load(father:Node, desc:boolean = false) : (progress:number) => void {
@@ -14,7 +15,8 @@ export class Loading {
                 father.addChild(this._load);
             }
 
-            let progressBar = this._load.getChildByName("Progress").getComponent(ProgressBar);
+            this.progressBar = this._load.getChildByName("Progress");
+            let progressBar = this.progressBar.getComponent(ProgressBar)
             progressBar.progress = 0;
 
             let descTxt = this._load.getChildByName("desc");
@@ -28,6 +30,9 @@ export class Loading {
 
             let promptTxt = this._load.getChildByName("prompt");
             promptTxt.active = desc;
+
+            let Age = this._load.getChildByName("Age");
+            Age.active = desc;
             
             return (progress:number) => { progressBar.progress = 0 + progress; }
         }

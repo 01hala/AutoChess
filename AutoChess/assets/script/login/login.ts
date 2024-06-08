@@ -36,6 +36,8 @@ export class login extends Component {
     @property(Canvas)
     bk:Canvas = null;
 
+    private progressBar:Node = null;
+
     private interval;
 
     private _loading:load.Loading = null;
@@ -71,10 +73,10 @@ export class login extends Component {
         let wxSize = wx.getSystemInfoSync();
         let btn = wx.createUserInfoButton({
             type: 'text',
-            text: '微信登录',
+            text: '点击登录',
             style: {
                 left: wxSize.screenWidth / 2 - 100,
-                top: wxSize.screenHeight / 2 - 40,
+                top: wxSize.screenHeight / 2 + 60,
                 width: 200,
                 height: 40,
                 lineHeight: 40,
@@ -95,6 +97,8 @@ export class login extends Component {
             console.log("createUserInfoButton:" + JSON.stringify(res));
             this.get_user_info_login(login_res.code)
             btn.destroy();
+
+            this.progressBar.active = true;
         });
     }
 
@@ -123,6 +127,7 @@ export class login extends Component {
                         console.log("authSetting:", JSON.stringify(res));
 
                         if (!res.needAuthorization) {
+                            this.progressBar.active = true;
                             this.get_user_info_login(login_res.code);
                         }
                         else {
@@ -141,6 +146,9 @@ export class login extends Component {
 
         this._loading = new load.Loading();
         this._setProgress = this._loading.load(this.bk.node, true);
+
+        this.progressBar = this._loading.progressBar;
+        this.progressBar.active = false;
 
         this.interval=setInterval(()=>{
             this._progress += 0.01;
