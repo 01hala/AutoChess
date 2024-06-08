@@ -104,11 +104,11 @@ export class StartGame extends Component
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
             },this);
             //匹配
-            this.athleticsWindow.getChildByPath("Normal/Normal_Btn").on(Button.EventType.CLICK, async ()=>
+            this.athleticsWindow.getChildByPath("Normal/Button").on(Button.EventType.CLICK, async ()=>
             {
                 if (GameManager.Instance.guide)
                 {
-                    GameManager.Instance.guide.Checkguide();
+                    //GameManager.Instance.guide.Checkguide();
                 }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 console.log("Normal_Btn start_battle!");

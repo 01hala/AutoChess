@@ -326,9 +326,15 @@ export class GameManager extends Component
 
     
 
-    private StartGuide()
+    public async StartGuide()
     {
-        //this.guide.Init(1,9);
+        let tnode=await BundleManager.Instance.loadAssetsFromBundle("Panel","GuidePanel") as Prefab;
+        let gnode=instantiate(tnode);
+        
+        gnode.setParent(this.node);
+        this.guide=gnode.getComponent(Guide);
+
+        this.guide.Init();
     }
 
     

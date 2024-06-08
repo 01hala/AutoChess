@@ -177,6 +177,7 @@ export class login extends Component {
 
                 console.log("login sucess!");
                 clearInterval(this.interval);
+                GameManager.Instance.StartGuide();
             });
             
         }
@@ -212,10 +213,6 @@ export class login extends Component {
                     console.log("Start Ready sucess!");
                     clearInterval(this.interval);
                 });
-            }
-            if (GameManager.Instance.guide)
-            {
-                GameManager.Instance.guide.step++;
             }
         }
         //游戏结束
