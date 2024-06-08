@@ -135,7 +135,8 @@ namespace Player
                     diamond = 0,
                     RoleList = new (),
                     roleGroup = new(),
-                }
+                },
+                guideSteps = new List<GuideStep>()
             };
 
             var user = data.GetValue("User").AsBsonDocument;
