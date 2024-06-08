@@ -12,6 +12,7 @@ import { Loading } from '../loading/load';
 import * as enums from '../other/enums';
 import { PopUps } from '../secondaryPanel/PopUps';
 import { Guide } from './Guide';
+import * as common from "../serverSDK/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -326,15 +327,15 @@ export class GameManager extends Component
 
     
 
-    public async StartGuide()
+    public async StartGuide(_step:common.GuideStep)
     {
         let tnode=await BundleManager.Instance.loadAssetsFromBundle("Panel","GuidePanel") as Prefab;
         let gnode=instantiate(tnode);
-        
+
         gnode.setParent(this.node);
         this.guide=gnode.getComponent(Guide);
 
-        this.guide.Init();
+        this.guide.Init(_step);
     }
 
     

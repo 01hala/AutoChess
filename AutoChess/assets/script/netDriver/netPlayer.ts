@@ -147,11 +147,12 @@ export class netPlayer {
 
     //更新玩家账户信息
     public cb_get_user_data:(_userInfo:common.UserData)=>void;
-    public get_user_data()
+    public get_user_data(_onCallBack?:()=>void)
     {
         this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
         {
             this.cb_get_user_data(_userInfo);
+            _onCallBack();
         },(err)=>
         {
             console.log("get user data error:" + err);
@@ -248,6 +249,10 @@ export class netPlayer {
             console.log("get rank range timeout");
         })
     }
-
+    //发送新手引导执行到的步骤
+    public guide_step_ntf(_guideStep : common.GuideStep)
+    {
+        this.c_player_login_caller.get_hub(this.player_name).guide_step(_guideStep);
+    }
 
 }

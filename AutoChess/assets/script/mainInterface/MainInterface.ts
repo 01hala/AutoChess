@@ -24,6 +24,7 @@ export class UserAccount
     public playerBag:Bag;//背包
     public Achiev : UserAchievement | null = null;//成就
     public wAchiev : UserWeekAchievement | null = null;//周成就（任务）
+    public guideStep:common.GuideStep;
 
     constructor()
     {
@@ -330,6 +331,7 @@ export class MainInterface
             this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
             this.userAccount.Achiev=_userData.Achiev;
             this.userAccount.wAchiev=_userData.wAchiev;
+            this.userAccount.guideStep=_userData.guideStep;
         }
         //回调任务成就奖励
         singleton.netSingleton.player.cb_achievement_complete=(_userData:common.UserData)=>
