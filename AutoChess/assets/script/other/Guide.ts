@@ -3,6 +3,7 @@ import { SendEvent } from './MessageEvent';
 import { GameManager } from './GameManager';
 import { ShopArea } from '../ready/display/ShopArea';
 import { RoleArea } from '../ready/display/RoleArea';
+import { RoleIcon } from '../ready/display/RoleIcon';
 const { ccclass, property } = _decorator;
 
 @ccclass('Guide')
@@ -47,10 +48,8 @@ export class Guide extends Component
             }
         }, this);
         
-        //this.mask.on(Node.EventType.TOUCH_CANCEL,this.OnTouch,this);
         this.mask.on(Node.EventType.TOUCH_END,this.OnTouch,this);
         this.mask.on(Node.EventType.TOUCH_START,this.OnTouch,this);
-        //this.mask.on(Node.EventType.TOUCH_MOVE,this.OnTouch,this);
 
         this.skipBtn.on(Button.EventType.CLICK, () =>
         {
@@ -76,6 +75,10 @@ export class Guide extends Component
         if(this.step < 3 || this.step > 7)
         {
             let t=this.tnode.getChildByName("Button");
+            if(null==t)
+            {
+                t=this.tnode;
+            }
             let contentSizeX=t.getComponent(UITransform).contentSize.x/2;
             let contentSizeY=t.getComponent(UITransform).contentSize.y/2;
             let tpos = this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(t.worldPosition.x,t.worldPosition.y,0));
@@ -124,7 +127,7 @@ export class Guide extends Component
                 clearInterval(this.interval);
                 this.node.destroy();
             }
-        }, 10);
+        }, 50);
     }
 
     private OnGuide()
@@ -133,6 +136,7 @@ export class Guide extends Component
         {
             let t=null;
             this.mask.active=true;
+            this.node.getChildByPath("BG").active=true;
             this.node.setSiblingIndex(101);
             this.mask.getComponent(BlockInputEvents).enabled=true;
             switch(this.step)
@@ -180,7 +184,7 @@ export class Guide extends Component
                     //this.pointer.active=true;
                     //this.pointer.setWorldPosition(this.tnode.worldPosition);
                     //this.tween=tween(this.pointer).to(1,{position:this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_0").worldPosition}).repeatForever().start();
-                    t=this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_0");
+                    t=this.node.parent.getChildByPath("ReadyPanel/ShopArea").getComponent(ShopArea).shopRoles[0];
                     this.guideText.setPosition(new Vec3(0,-637.995,0));
                     this.guideText.getComponent(RichText).string="拖拽购买角色";
                     break;
@@ -203,7 +207,8 @@ export class Guide extends Component
             this.tnode=instantiate(t);
             try
             {
-                this.tnode.getChildByName("Button").getComponent(Button).destroy();
+                this.tnode.getChildByName("Button")?.getComponent(Button).destroy();
+                this.tnode.getComponent(RoleIcon)?.destroy();
             }
             catch
             {
@@ -229,6 +234,10 @@ export class Guide extends Component
         {
             this.mask.getComponent(BlockInputEvents).enabled=false;
             this.mask.active = false;
+            if(this.step > 7)
+            {
+                this.node.getChildByPath("BG").active=false;
+            }
         }
         //if(8==this.step)
         //{

@@ -112,7 +112,7 @@ export class ReadyDis
                 }
                 //this.coinText.string=""+this.ready.coin;
                 //await this.RefreshShop()
-                await this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(),this.readyData.GetStage());
+                this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(),this.readyData.GetStage());
                 //隐藏等待界面
                 this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
                 this.waitingPanel.active = false;
