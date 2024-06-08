@@ -12,6 +12,18 @@ export enum BattleMod{
     PeakStrength = 2
 }
 
+export enum GuideStep{
+    ClickGameLobby = 1,
+    ClickMatch = 2,
+    HPInfo = 3,
+    TrophyInfo = 4,
+    CoinInfo = 5,
+    RoundInfo = 6,
+    ShopArea = 7,
+    BuyRole = 8,
+    RoleInfo = 9
+}
+
 export enum Achievement{
     EMSuccessiveFiveVictory = 1,
     EMFullLevelVictory = 2,
@@ -453,6 +465,7 @@ export class UserData
     public diamond : number = 0;
     public score : number = 0;
     public bag : Bag | null = null;
+    public guideStep : GuideStep = GuideStep.ClickGameLobby;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
 
@@ -492,6 +505,9 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);
+        }
+        else if (key === "guideStep"){
+            _struct.guideStep = val as GuideStep;
         }
         else if (key === "RoleList"){
             _struct.RoleList = [];

@@ -319,6 +319,12 @@ export class player_login_hubproxy
         return cb_reconnect_obj;
     }
 
+    public guide_step(step:common.GuideStep){
+        let _argv_91882016_2b9d_3ab2_82a8_c1cc18b215f9:any[] = [];
+        _argv_91882016_2b9d_3ab2_82a8_c1cc18b215f9.push(step);
+        this._client_handle.call_hub(this.hub_name_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b, "player_login_guide_step", _argv_91882016_2b9d_3ab2_82a8_c1cc18b215f9);
+    }
+
 }
 export class player_shop_buy_card_packet_cb{
     private cb_uuid : number;

@@ -32,6 +32,18 @@ enum BattleMod {
 	PeakStrength = 2;
 }
 
+enum GuideStep {
+	ClickGameLobby = 1;
+	ClickMatch = 2;
+	HPInfo = 3;
+	TrophyInfo = 4;
+	CoinInfo = 5;
+	RoundInfo = 6;
+	ShopArea = 7;
+	BuyRole = 8;
+	RoleInfo = 9;
+}
+
 struct BattleInfo {
 	BattleMod mod;
 	BattleVictory isVictory;
@@ -107,6 +119,7 @@ struct UserData
 	int32 diamond;			     // 钻石
 	int32 score;			     // 积分
 	Bag bag;				     // 背包
+	GuideStep guideStep;		 // 新手引导进度
 	int32[] RoleList; 		     // 已有角色列表
 	RoleGroup[] roleGroup;	     // 卡组 玩家自行编辑
 }

@@ -1,6 +1,7 @@
 ﻿using Abelkhan;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Security.Cryptography;
 
 namespace Player
@@ -17,6 +18,7 @@ namespace Player
             player_login_Module.on_player_login += Login_Player_Module_on_player_login;
             player_login_Module.on_create_role += Player_login_Module_on_create_role;
             player_login_Module.on_reconnect += Player_login_Module_on_reconnect;
+            player_login_Module.on_guide_step += Player_login_Module_on_guide_step;
 
             player_battle_Module = new();
             player_battle_Module.on_start_battle += Player_battle_Module_on_start_battle;
@@ -30,6 +32,28 @@ namespace Player
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_login_Module_on_guide_step(GuideStep step)
+        {
+            Log.Log.trace("on_guide_step begin!");
+
+            try
+            {
+                var uuid = Hub.Hub._gates.current_client_uuid;
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                if (_avatar != null)
+                {
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    _data.Data.UpdateGuideStep(step);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_login_Module_on_guide_step err:{ex}");
+            }
+
+            Log.Log.trace("on_guide_step end!");
         }
 
         private async void Player_battle_Module_on_kill_role(Role roleInfo)
