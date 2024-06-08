@@ -285,9 +285,12 @@ namespace Player
             }
 
             var tmpGuideSteps = new BsonArray();
-            foreach (var g in guideSteps)
+            if (guideSteps != null)
             {
-                tmpGuideSteps.Add(g);
+                foreach (var g in guideSteps)
+                {
+                    tmpGuideSteps.Add(g);
+                }
             }
 
             var doc = new BsonDocument
