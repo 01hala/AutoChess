@@ -4,6 +4,8 @@ import { GameManager } from './GameManager';
 import { ShopArea } from '../ready/display/ShopArea';
 import { RoleArea } from '../ready/display/RoleArea';
 import { RoleIcon } from '../ready/display/RoleIcon';
+import * as common from "../serverSDK/common"
+import * as singleton from '../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
 @ccclass('Guide')
@@ -54,15 +56,17 @@ export class Guide extends Component
         this.skipBtn.on(Button.EventType.CLICK, () =>
         {
             GameManager.Instance.guide = null;
+            clearInterval(this.interval);
+            //singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
             this.node.destroy();
         }, this);
     }
 
-    public async Init()
+    public async Init(_step:common.GuideStep)
     {   
-
-        this.next=0;
-        this.step=1;
+        this.step=_step+1;
+        this.next=_step;
+        
         this.end=9;
 
         this.node.setSiblingIndex(101);
@@ -100,20 +104,6 @@ export class Guide extends Component
 
     private StartGuide()
     {
-        // return new Promise((resolve)=>
-        // {
-        //     while(this.step<=this.end)
-        //     {
-        //         if(this.next!=this.step)
-        //         {
-        //             this.OnGuide();
-        //             this.next=this.step;
-        //         }
-        //     }
-        //     GameManager.Instance.guide=null;
-        //     this.node.destroy();
-        //     resolve();
-        // });
         this.interval=setInterval(()=>
         {
             if(this.next!=this.step)
@@ -125,6 +115,7 @@ export class Guide extends Component
             {
                 GameManager.Instance.guide = null;
                 clearInterval(this.interval);
+                singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
                 this.node.destroy();
             }
         }, 50);
