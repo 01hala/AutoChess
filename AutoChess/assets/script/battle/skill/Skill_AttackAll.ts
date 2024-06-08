@@ -10,16 +10,21 @@ import { Property, Camp, EventType, SkillType } from '../../other/enums';
 import { Battle } from '../battle';
 import { Role } from '../role';
 import { random } from '../util';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('Skill_AttackAll')
 export class Skill_AttackAll extends SkillBase {
     public res:string="battle/skill/Skill_AttackAll";
     private effectiveValue:number;
+    private eventSound:string;
 
-    constructor(priority:number, effectiveValue : number){
+    constructor(priority:number, effectiveValue : number,eventSound?:string){
         super(priority);
         this.effectiveValue = effectiveValue;
+        if(null!=eventSound){
+            this.eventSound=eventSound;
+        }
     }
 
     UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void
@@ -27,6 +32,7 @@ export class Skill_AttackAll extends SkillBase {
         try
         {
             let effectiveRole : Role[] = null;
+            AudioManager.Instance.PlayerOnShot(this.eventSound);
 
             effectiveRole = battle.GetEnemyTeam().GetRoles().slice();
             for(const r of effectiveRole){

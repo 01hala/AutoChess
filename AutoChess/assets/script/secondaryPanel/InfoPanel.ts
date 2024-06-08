@@ -9,6 +9,7 @@ import { loadAssets } from '../bundle/LoadAsset';
 import { Role } from '../serverSDK/common';
 import { RoleConfig } from '../config/role_config';
 import { AudioManager } from '../other/AudioManager';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -115,6 +116,10 @@ export class InfoPanel extends Component
                     this.ShowDetailed(id);
                 }   
             }
+            if (GameManager.Instance.guide)
+            {
+                GameManager.Instance.guide.step++;
+            }
         }
         catch(error)
         {
@@ -137,12 +142,12 @@ export class InfoPanel extends Component
 
         this.fetterBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=sprite;
         this.fetterBoard.getChildByName("FetterName").getComponent(Label).string=cf.FetterName;
-        this.fetterBoard.getChildByName("RichText").getComponent(RichText).string="<color=#000000>"+cf.Introductory+"</color>";
+        this.fetterBoard.getChildByName("Introduce").getComponent(RichText).string="<color=#000000>"+cf.Introductory+"</color>";
         let content="";
         let list=cf.Text.split("\n");
         for(let i=0;i<list.length;i++){
-            if(level>=i+1) content+="<color=#ffffff>"+list[i]+"\n";
-            else content+="<color=#AAAAAA>"+list[i]+"\n";        
+            if(level>=i+1) content+="<color=#FFD700>"+list[i]+"</color>\n";
+            else content+="<color=#AAAAAA>"+list[i]+"</color>\n";        
         }
         this.fetterBoard.getChildByName("Introduce").getComponent(RichText).string=content;
     }

@@ -19,7 +19,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "3": {
         "Id": 3,
@@ -41,7 +42,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "4": {
         "Id": 4,
@@ -63,7 +65,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "5": {
         "Id": 5,
@@ -85,7 +88,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "6": {
         "Id": 6,
@@ -103,11 +107,12 @@
         "Level2Value_2": 3.0,
         "Level3Value_1": 4.0,
         "Level3Value_2": 4.0,
-        "SummonId": "[100001]",
+        "SummonId": "[200001]",
         "SummonLevel": 1,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "7": {
         "Id": 7,
@@ -125,11 +130,12 @@
         "Level2Value_2": 6.0,
         "Level3Value_1": 7.0,
         "Level3Value_2": 7.0,
-        "SummonId": "[100001]",
+        "SummonId": "[200001]",
         "SummonLevel": 1,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "13": {
         "Id": 13,
@@ -151,7 +157,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 6
+        "AddBufferID": 6,
+        "SkillAudio": ""
     },
     "15": {
         "Id": 15,
@@ -173,7 +180,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "16": {
         "Id": 16,
@@ -195,7 +203,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "17": {
         "Id": 17,
@@ -217,7 +226,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "19": {
         "Id": 19,
@@ -239,7 +249,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 2,
-        "AddBufferID": 1
+        "AddBufferID": 1,
+        "SkillAudio": ""
     },
     "20": {
         "Id": 20,
@@ -261,7 +272,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "22": {
         "Id": 22,
@@ -283,7 +295,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "23": {
         "Id": 23,
@@ -305,7 +318,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "25": {
         "Id": 25,
@@ -327,7 +341,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "27": {
         "Id": 27,
@@ -349,7 +364,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "28": {
         "Id": 28,
@@ -371,7 +387,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "29": {
         "Id": 29,
@@ -393,7 +410,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "30": {
         "Id": 30,
@@ -415,7 +433,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "31": {
         "Id": 31,
@@ -437,7 +456,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 1,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "32": {
         "Id": 32,
@@ -459,7 +479,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "33": {
         "Id": 33,
@@ -481,7 +502,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "37": {
         "Id": 37,
@@ -503,7 +525,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "38": {
         "Id": 38,
@@ -525,7 +548,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "39": {
         "Id": 39,
@@ -547,7 +571,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "40": {
         "Id": 40,
@@ -569,7 +594,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "42": {
         "Id": 42,
@@ -591,7 +617,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "45": {
         "Id": 45,
@@ -613,7 +640,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "50": {
         "Id": 50,
@@ -635,7 +663,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "51": {
         "Id": 51,
@@ -657,7 +686,8 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     },
     "52": {
         "Id": 52,
@@ -679,6 +709,7 @@
         "SummonLevel": 0,
         "SwapPropertiesType": 0,
         "ChangePositionType": 0,
-        "AddBufferID": 0
+        "AddBufferID": 0,
+        "SkillAudio": ""
     }
 }

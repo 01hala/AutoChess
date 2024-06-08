@@ -44,6 +44,7 @@ namespace Player
     public class PlayerInfo : IHostingData
     {
         private UserData info;
+        private List<GuideStep> guideSteps;
         private int currentRolrGroup = 101;
         private long lastTickStrengthTime;
 
@@ -102,9 +103,11 @@ namespace Player
                     diamond = 10,
                     score = 0,
                     bag = new Abelkhan.Bag() { ItemList = new() },
+                    guideStep = 0,
                     RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,
                 },
+                guideSteps = new List<GuideStep>(),
                 lastTickStrengthTime = Timerservice.Tick
             };
         }
@@ -191,6 +194,14 @@ namespace Player
             }
             info.info.bag.ItemList = itemList;
 
+            if (data.Contains("guideSteps"))
+            {
+                foreach (var g in data.GetValue("guideSteps").AsBsonArray)
+                {
+                    info.guideSteps.Add((GuideStep)g.AsInt32);
+                }
+            }
+
             if (data.Contains("gold"))
             {
                 info.info.gold = data.GetValue("gold").AsInt32;
@@ -207,6 +218,11 @@ namespace Player
             else
             {
                 info.info.diamond = 10;
+            }
+
+            if (data.Contains("guideStep"))
+            {
+                info.info.guideStep = (GuideStep)data.GetValue("guideStep").AsInt32;
             }
 
             if (data.Contains("lastTickStrengthTime"))
@@ -268,6 +284,15 @@ namespace Player
                 itemList.Add(i);
             }
 
+            var tmpGuideSteps = new BsonArray();
+            if (guideSteps != null)
+            {
+                foreach (var g in guideSteps)
+                {
+                    tmpGuideSteps.Add(g);
+                }
+            }
+
             var doc = new BsonDocument
             {
                 { "User", info.User.ToBsonDocument() },
@@ -279,6 +304,7 @@ namespace Player
                 { "RoleList", roleList },
                 { "RoleGroup",  roleGroup },
                 { "bag", itemList },
+                { "guideSteps", tmpGuideSteps },
                 { "lastTickStrengthTime", lastTickStrengthTime },
                 { "currentRolrGroup", currentRolrGroup },
                 { "peakStrengthID", PeakStrengthID }
@@ -302,6 +328,12 @@ namespace Player
             }
 
             return null;
+        }
+
+        public void UpdateGuideStep(GuideStep step)
+        {
+            info.guideStep = step;
+            guideSteps.Add(step);
         }
 
         private void AddCardItem(RoleCardInfo infoCard)

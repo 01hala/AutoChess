@@ -420,6 +420,10 @@ export class RoleIcon extends Component
     //点击事件
     private ClickBtn()
     {
+        if (GameManager.Instance.guide)
+        {
+            GameManager.Instance.guide.Checkguide();
+        }
         AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
         let roleInfo :RoleDis=null;
         if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);

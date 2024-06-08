@@ -4,7 +4,7 @@
  * 2023/9/27
  * 召唤一个角色（可选指定属性与等级）
  */
-import { _decorator, Component, debug, log, Node, random } from 'cc';
+import { _decorator, Component, debug, log, Node, random, RichText } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase } from './skill_base';
 import { Battle } from '../battle';
 import { Team } from '../team';
@@ -21,12 +21,17 @@ export class Skill_Summon_4 extends SkillBase
     private addedID: number;
     private addedLevel:number;
     private addedProperties: Map<Property, number>;
-    public constructor(priority:number, id : number,level:number=1,roleProperties : Map<Property, number>=null) {
+    private eventSound:string;
+
+    public constructor(priority:number, id : number,level:number=1,roleProperties : Map<Property, number>=null,eventSound?:string) {
         super(priority);
 
         this.addedID=id;
         this.addedLevel=level;
         this.addedProperties=roleProperties;
+        if(null!=eventSound){
+            this.eventSound=eventSound;
+        }
     }
 
     public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
@@ -52,7 +57,8 @@ export class Skill_Summon_4 extends SkillBase
             battleEvent.spellcaster = selfInfo;
             battleEvent.recipient = [];
             battleEvent.value = [];
-            battleEvent.isParallel=isPar
+            battleEvent.isParallel=isPar;
+            battleEvent.eventSound=this.eventSound;
 
             let addedIdx:number;
             if(Camp.Self==selfInfo.camp)
@@ -106,13 +112,18 @@ export class Skill_SummonMecha extends SkillBase
     private addedLevel:number;
     private addedProperties: Map<Property, number>;
     private addedBuildLevel:number;
-    public constructor(priority:number, id : number,level:number=1,buildValue:number=1,roleProperties : Map<Property, number>=null) {
+    private eventSound:string;
+
+    public constructor(priority:number, id : number,level:number=1,buildValue:number=1,roleProperties : Map<Property, number>=null,eventSound?:string) {
         super(priority);
 
         this.addedID=id;
         this.addedLevel=level;
         this.addedBuildLevel=buildValue;
         this.addedProperties=roleProperties;
+        if(null!=eventSound){
+            this.eventSound=eventSound;
+        }
     }
 
     public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
@@ -139,6 +150,7 @@ export class Skill_SummonMecha extends SkillBase
             battleEvent.recipient = [];
             battleEvent.value = [];
             battleEvent.isParallel=isPar;
+            battleEvent.eventSound=this.eventSound;
 
             let addedIdx:number;
             //机甲修建值表现

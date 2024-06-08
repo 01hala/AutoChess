@@ -19,6 +19,7 @@ import { sleep } from '../../other/sleep';
 import { PropsType } from '../../other/enums';
 import { SendMessage } from '../../other/MessageEvent';
 import { RoleDis } from '../../battle/display/RoleDis';
+import { GameManager } from '../../other/GameManager';
 
 const { ccclass, property } = _decorator;
 
@@ -115,6 +116,10 @@ export class ReadyDis
                 //隐藏等待界面
                 this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
                 this.waitingPanel.active = false;
+                if (GameManager.Instance.guide)
+                {
+                    GameManager.Instance.guide.step++;
+                }
             });
             
         }
@@ -162,7 +167,8 @@ export class ReadyDis
         }
     }
 
-    private InterfaceAdjust(){
+    private InterfaceAdjust()
+    {
         let bpttomHeight=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height);
         let outPos:Vec3=this.cameraNode.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeight,0));
         this.topArea.getComponent(Widget).top=outPos.y;

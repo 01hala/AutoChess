@@ -3334,7 +3334,7 @@
         "__id__": 187
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 193
@@ -3361,7 +3361,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 23.68350000000001,
+      "y": 23.68349999999998,
       "z": 0
     },
     "_lrot": {
@@ -3419,8 +3419,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -356.5539999999999,
-      "y": 80.495,
+      "x": -168.54900000000004,
+      "y": 181.609,
       "z": 0
     },
     "_lrot": {
@@ -3468,8 +3468,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -5.038000000000082,
-      "y": 23.212999999999965,
+      "x": -2.529,
+      "y": 9.404,
       "z": 0
     },
     "_lrot": {
@@ -3508,8 +3508,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 113.864,
-      "height": 127.17543884892086
+      "width": 103.822,
+      "height": 108.42746402877698
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3592,8 +3592,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 384.9789999999999,
-      "height": -601.6330000000003
+      "width": 116.33399999999995,
+      "height": -105.42900000000037
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3684,10 +3684,10 @@
     },
     "_alignFlags": 45,
     "_target": null,
-    "_left": -69.0434999999999,
-    "_right": 644.0645,
-    "_top": 51.00500000000005,
-    "_bottom": 211.99500000000006,
+    "_left": 253.284,
+    "_right": 590.3820000000001,
+    "_top": -373.5799999999998,
+    "_bottom": -10.36199999999981,
     "_horizontalCenter": 0,
     "_verticalCenter": -23,
     "_isAbsLeft": true,
@@ -3742,7 +3742,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -7.575,
-      "y": 141.635,
+      "y": 194.36,
       "z": 0
     },
     "_lrot": {
@@ -3877,8 +3877,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -195.013,
-      "y": 93.688,
+      "x": 0.204,
+      "y": 142.317,
       "z": 0
     },
     "_lrot": {
@@ -3917,8 +3917,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 400,
-      "height": 126
+      "width": 604.57,
+      "height": 189
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3929,7 +3929,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "ceWPrqh/hL1anE62Uv1jnb"
+    "fileId": "25YcjAV0VMCId3F6AD4PLo"
   },
   {
     "__type__": "cc.RichText",
@@ -3942,12 +3942,12 @@
     "__prefab": {
       "__id__": 179
     },
-    "_lineHeight": 100,
-    "_string": "<color=#000000>详情：</color>",
-    "_horizontalAlign": 0,
-    "_verticalAlign": 1,
-    "_fontSize": 80,
-    "_maxWidth": 400,
+    "_lineHeight": 150,
+    "_string": "<color=#000000>羁 绊 简 介</color>",
+    "_horizontalAlign": 1,
+    "_verticalAlign": 2,
+    "_fontSize": 120,
+    "_maxWidth": 0,
     "_fontFamily": "Arial",
     "_font": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
@@ -3960,12 +3960,12 @@
     },
     "_cacheMode": 0,
     "_imageAtlas": null,
-    "_handleTouchEvent": true,
+    "_handleTouchEvent": false,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "53cZoSBhBMV4TcxZnhRq0L"
+    "fileId": "c2c1kvoLtKqpO18ym+4pAl"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -3975,7 +3975,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "c4Ef/FIM9Mca23E6NMBItE",
+    "fileId": "763qIPOI1Ge4sgMFxWAHiJ",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -4002,8 +4002,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -129.394,
-      "y": 19.155,
+      "x": 1.163,
+      "y": -23.527,
       "z": 0
     },
     "_lrot": {
@@ -4042,7 +4042,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 400,
+      "width": 320,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -4068,10 +4068,10 @@
       "__id__": 185
     },
     "_lineHeight": 40,
-    "_string": "未能获取羁绊信息",
+    "_string": "<color=#FFD700>未能获取羁绊信息</color>",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_fontSize": 50,
+    "_fontSize": 40,
     "_maxWidth": 0,
     "_fontFamily": "Arial",
     "_font": null,
@@ -4238,7 +4238,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 960,
-      "height": -338.6330000000001
+      "height": -489.371
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4266,8 +4266,8 @@
     "_target": null,
     "_left": -0.20400000000000773,
     "_right": -0.20400000000000773,
-    "_top": 470.66450000000003,
-    "_bottom": 518.0315,
+    "_top": 546.0335,
+    "_bottom": 593.4005,
     "_horizontalCenter": -12.5,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -4467,7 +4467,7 @@
         "__id__": 359
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 377
@@ -4491,7 +4491,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0.20400000000000773,
-      "y": 5.031499999999937,
+      "y": 5.031500000000051,
       "z": 0
     },
     "_lrot": {
@@ -8280,7 +8280,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 873.7520000000001,
-      "height": 80.81500000000017
+      "height": 1151.7890000000002
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -8352,8 +8352,8 @@
     "_target": null,
     "_left": 43.123999999999974,
     "_right": 42.71599999999998,
-    "_top": 279.5925,
-    "_bottom": 289.65549999999985,
+    "_top": -255.8945000000001,
+    "_bottom": -245.83150000000012,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,

@@ -129,6 +129,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_login_player_login", player_login);
             Hub.Hub._modules.add_mothed("player_login_create_role", create_role);
             Hub.Hub._modules.add_mothed("player_login_reconnect", reconnect);
+            Hub.Hub._modules.add_mothed("player_login_guide_step", guide_step);
         }
 
         public event Action<string, string, string> on_player_login;
@@ -166,6 +167,14 @@ namespace Abelkhan
                 on_reconnect(_guid);
             }
             rsp = null;
+        }
+
+        public event Action<GuideStep> on_guide_step;
+        public void guide_step(IList<MsgPack.MessagePackObject> inArray){
+            var _step = (GuideStep)((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            if (on_guide_step != null){
+                on_guide_step(_step);
+            }
         }
 
     }

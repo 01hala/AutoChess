@@ -2,6 +2,7 @@ import { _decorator, animation, Animation, Button, Component, Node, Sprite, Spri
 import * as singleton from '../netDriver/netSingleton';
 import { GameDifficulty } from '../other/enums';
 import { AudioManager } from '../other/AudioManager';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('StartGame')
@@ -87,6 +88,13 @@ export class StartGame extends Component
     {
         try
         {
+            if(GameManager.Instance.guide)
+            {
+                this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+                {
+                    GameManager.Instance.guide.step++;
+                });
+            }
             this.amusementWindow.active=false;
             this.athleticsWindow.active=true;
             this.athleticsWindow.getComponent(Animation).play("PanelAppear");
@@ -96,8 +104,12 @@ export class StartGame extends Component
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
             },this);
             //匹配
-            this.athleticsWindow.getChildByPath("Normal/Normal_Btn").on(Button.EventType.CLICK, async ()=>
+            this.athleticsWindow.getChildByPath("Normal/Button").on(Button.EventType.CLICK, async ()=>
             {
+                if (GameManager.Instance.guide)
+                {
+                    //GameManager.Instance.guide.Checkguide();
+                }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 console.log("Normal_Btn start_battle!");
                 await singleton.netSingleton.game.start_battle();

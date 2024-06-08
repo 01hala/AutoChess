@@ -23,9 +23,11 @@ export class Skill_AttGain_1 extends SkillBase
     private health:number;
     private attack:number;
 
+    private eventSound:string;
+
     event:Event=new Event();
 
-    public constructor(priority:number,health:number, attack:number,dir:Direction,numberOfRole?:number) {
+    public constructor(priority:number,health:number, attack:number,dir:Direction,numberOfRole?:number,eventSound?:string) {
         super(priority);
 
         this.attack = attack;
@@ -38,7 +40,9 @@ export class Skill_AttGain_1 extends SkillBase
         {
             this.numberOfRole=numberOfRole;
         }
-        
+        if(null!=eventSound){
+            this.eventSound=eventSound;
+        }       
     }
 
     public UseSkill(selfInfo: RoleInfo, battle: Battle,isParallel:boolean): void 
@@ -72,6 +76,7 @@ export class Skill_AttGain_1 extends SkillBase
             event.spellcaster = selfInfo;
             event.recipient = [];
             event.isParallel=isPar;
+            event.eventSound=this.eventSound;
 
             let teamTemp:Team=null;
             let recipientRole:Role=null;

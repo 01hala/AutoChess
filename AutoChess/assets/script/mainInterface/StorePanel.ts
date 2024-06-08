@@ -150,6 +150,12 @@ export class StorePanel extends Component
     {
         try
         {
+            let sysinfo=wx.getSystemInfoSync().platform;
+            if(sysinfo === "ios" || sysinfo === "mac")
+            {
+                this.ClearPageView();
+                return;
+            }
             AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             if(!this.toggleGroup.getChildByPath("Recharge").getComponent(Toggle).isChecked)
             {
