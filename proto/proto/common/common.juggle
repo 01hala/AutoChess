@@ -33,6 +33,7 @@ enum BattleMod {
 }
 
 enum GuideStep {
+	None = 0;
 	ClickGameLobby = 1;
 	ClickMatch = 2;
 	HPInfo = 3;
@@ -42,6 +43,7 @@ enum GuideStep {
 	ShopArea = 7;
 	BuyRole = 8;
 	RoleInfo = 9;
+	Done = 10;
 }
 
 struct BattleInfo {
