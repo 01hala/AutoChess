@@ -300,7 +300,6 @@ export function protcol_to_BattleInfo(_protocol:any){
 export class AchievementReward
 {
     public gold : number = 0;
-
 }
 
 export function AchievementReward_to_protcol(_struct:AchievementReward){

@@ -50,6 +50,7 @@ export class TaskAchieve extends Component
         });
         this.exitBtn.node.on(Button.EventType.CLICK,()=>
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
             this.Exit();
         })
         this.node.getComponent(BlockInputEvents).enabled=true;
@@ -136,7 +137,7 @@ export class TaskAchieve extends Component
             jconfig = await config.TaskConfig.get(i);
             if(jconfig!=null){
                 let lab=instantiate(this.lablePre);
-                lab.getComponent(TaskLable).Init(jconfig ,0 , AchievementAwardStatus.EMNotComplete);
+                lab.getComponent(TaskLable).Init(jconfig ,0 , AchievementAwardStatus.EMNotComplete,jconfig.tClass);
                 this.scrollView.getChildByPath("view/content").addChild(lab); 
 
                 this.lableList.set(jconfig.tClass,lab);

@@ -333,22 +333,26 @@ export class MainInterface
             this.userAccount.wAchiev=_userData.wAchiev;
             this.userAccount.guideStep=_userData.guideStep;
         }
-        //回调任务成就奖励
-        singleton.netSingleton.player.cb_achievement_complete=(_userData:common.UserData)=>
+        //回调任务成就完成
+        singleton.netSingleton.player.cb_achievement_complete=(achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement)=>
         {
-            this.userData=_userData;
-            this.userAccount.money=_userData.gold;
-            this.userAccount.playerBag=_userData.bag;
-            this.userAccount.diamond=_userData.diamond;
-            this.userAccount.Achiev=_userData.Achiev;
-            this.userAccount.wAchiev=_userData.wAchiev;
+            this.userAccount.money=this.userData.gold;
+            this.userAccount.playerBag=this.userData.bag;
+            this.userAccount.diamond=this.userData.diamond;
+            this.userAccount.Achiev=achieve;
+            this.userAccount.wAchiev=wAchieve;
 
             //不在战斗中,说明在主界面（？
             if(null != singleton.netSingleton.battle){
-                this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userData.gold;
-                this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
+                //this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.gold;
+                //this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.diamond;
                 this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true,this.userAccount));
             }
+        }
+        //回调领取任务奖励
+        singleton.netSingleton.game.cb_check_achievement=(_achievementReward:common.AchievementReward)=>
+        {
+            this.userAccount.money+=_achievementReward.gold;
         }
         //回调排行榜周结算奖励
         singleton.netSingleton.player.cb_rank_reward=(_reward:common.RankReward , _timeDiff)=>
