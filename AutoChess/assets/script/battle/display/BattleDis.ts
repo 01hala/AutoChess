@@ -333,6 +333,7 @@ export class BattleDis
                         {
                             if(this.battleCentre.GetEnemyTeam().GetRole(r.index).CheckDead())
                             {
+                                console.log(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
                                 singleton.netSingleton.game.kill_Role_ntf(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
                             }
                         }
@@ -494,6 +495,7 @@ export class BattleDis
                                 {
                                     if(this.battleCentre.GetEnemyTeam().GetRole(r.index).CheckDead())
                                     {
+                                        console.log(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
                                         singleton.netSingleton.game.kill_Role_ntf(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
                                     }
                                 }
