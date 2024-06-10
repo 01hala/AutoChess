@@ -3,6 +3,7 @@
  * author: qianqians
  * 2023/9/24
  */
+import * as singleton from '../../netDriver/netSingleton';
 import * as skill from './skill/skill_base'
 import * as buffer from './buffer/buffer'
 import * as battle from './battle'
@@ -180,6 +181,8 @@ export class Role {
             ev.value = [];
             ev.value.push(damage);
             battle.AddBattleEvent(ev);
+
+            singleton.netSingleton.game.kill_Role_ntf(enemy);
         } 
     }
 
