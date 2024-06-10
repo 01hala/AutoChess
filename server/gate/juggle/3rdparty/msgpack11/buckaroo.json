@@ -1,6 +1,0 @@
-{
-  "name": "msgpack11",
-  "dependencies": {
-    "google/gtest": "1.8.0"
-  }
-}
