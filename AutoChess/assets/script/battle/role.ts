@@ -182,7 +182,7 @@ export class Role {
             ev.value.push(damage);
             battle.AddBattleEvent(ev);
 
-            singleton.netSingleton.game.kill_Role_ntf(enemy);
+            singleton.netSingleton.game.kill_Role_ntf(enemy.c_role);
         } 
     }
 
