@@ -43,7 +43,7 @@ export class player_client_module extends client_handle.imodule {
         _argv_.push(common.protcol_to_UserAchievement(inArray[0]));
         _argv_.push(common.protcol_to_UserWeekAchievement(inArray[1]));
         if (this.cb_achievement_complete){
-            this.cb_achievement_complete.apply(null, _argv_);
+            this.cb_achievement_complete.apply(_argv_[0],_argv_[1]);
         }
     }
 

@@ -20,6 +20,7 @@ import { PropsType } from '../../other/enums';
 import { SendMessage } from '../../other/MessageEvent';
 import { RoleDis } from '../../battle/display/RoleDis';
 import { GameManager } from '../../other/GameManager';
+import { AudioManager } from '../../other/AudioManager';
 
 const { ccclass, property } = _decorator;
 
@@ -158,6 +159,7 @@ export class ReadyDis
             });
             this.exitBtn = this.panelNode.getChildByPath("TopArea/Exit_Btn").getComponent(Button);
             this.exitBtn.node.on(Button.EventType.CLICK, () => {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
                 father.getComponent(login).BackMainInterface();
             }, this);
         }
@@ -404,6 +406,7 @@ export class ReadyDis
             return;
         }
         this.roleInfoNode.active=true;
+        this.topArea.setSiblingIndex(98);
 
         let roleSkillInfo=config.SkillIntroduceConfig.get(roleInfo.SkillID);
         if(roleSkillInfo){

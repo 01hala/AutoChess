@@ -244,6 +244,28 @@ export class netGame {
         });
     }
 
+    //领取成就奖励
+    public cb_check_achievement:(achievementReward:common.AchievementReward)=>void;
+    public check_achievement(achievement:common.Achievement)
+    {
+        return new Promise<void>((relolve, reject)=>
+        {
+            this.c_player_battle__caller.get_hub(netSingleton.player.player_name).check_achievement(achievement).callBack((achievementReward)=>
+                {
+                    this.cb_check_achievement(achievementReward);
+                    relolve();
+                },(_err)=>
+                {
+                    console.log("check_achievement err :",_err);
+                    reject();
+                }).timeout(3000,()=>
+                {
+                    console.log("check_achievement timeout!");
+                    reject();
+                })
+        });
+    }
+
     //向服务器发送报文：击杀角色
     public kill_Role_ntf(_selfRole:common.Role)
     {

@@ -219,7 +219,7 @@ export class RoleIcon extends Component
                             this.freezeSprite.active = false;
                             if (null != this.target || this.isMerge) {
                                 if (null == this.roleArea.rolesNode[this.tempIndex] || this.isMerge) {
-                                    this.isBuy = true;
+                                    this.isBuy = true;                                    
                                     // if(!this.isMerge)
                                     // {
                                     //     this.roleArea.targets.set(this.target.name,this.node);
