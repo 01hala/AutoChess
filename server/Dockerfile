@@ -11,7 +11,7 @@ COPY . .
 
 # 1. build
 # copy and publish app and libraries
-RUN chmod +x bin/gate_svr
+# RUN chmod +x bin/gate_svr
 RUN mkdir /target
 RUN mv bin config excel_json supervisord.conf supervisord.d /target 
 
@@ -20,9 +20,12 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 
 WORKDIR /app
 COPY --from=build /target ./
-RUN apt-get update 
-RUN apt-get -y install supervisor 
 
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/bin/
+RUN apt-get update
+RUN apt-get -y install supervisor
+# RUN apt-get -y install libc++1
 
+# ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/bin/
+
+EXPOSE 3001
 ENTRYPOINT ["supervisord", "-c", "supervisord.conf"]
