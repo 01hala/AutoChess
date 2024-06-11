@@ -754,6 +754,7 @@ namespace Player
                 {
                     if (a.count >= task.Value)
                     {
+                        a.status = AchievementAwardStatus.EMComplete;
                         check = true;
                     }
                 }
@@ -771,6 +772,7 @@ namespace Player
                             {
                                 if (a.count >= task.Value)
                                 {
+                                    a.status = AchievementAwardStatus.EMComplete;
                                     check = true;
                                 }
                             }
@@ -788,6 +790,7 @@ namespace Player
                             {
                                 if (a.count >= task.Value)
                                 {
+                                    a.status = AchievementAwardStatus.EMComplete;
                                     check = true;
                                 }
                             }
@@ -805,6 +808,7 @@ namespace Player
                                 a.count++;
                                 if (a.count >= task.Value)
                                 {
+                                    a.status = AchievementAwardStatus.EMComplete;
                                     check = true;
                                 }
                             }
@@ -833,6 +837,7 @@ namespace Player
                         {
                             if (a.count >= task.Value)
                             {
+                                a.status = AchievementAwardStatus.EMComplete;
                                 check = true;
                             }
                         }
@@ -848,6 +853,7 @@ namespace Player
                         {
                             if (a.count >= task.Value)
                             {
+                                a.status = AchievementAwardStatus.EMComplete;
                                 check = true;
                             }
                         }
@@ -863,6 +869,7 @@ namespace Player
                         {
                             if (a.count >= task.Value)
                             {
+                                a.status = AchievementAwardStatus.EMComplete;
                                 check = true;
                             }
                         }
@@ -885,6 +892,7 @@ namespace Player
                 {
                     if (a.count >= task.Value)
                     {
+                        a.status = AchievementAwardStatus.EMComplete;
                         return true;
                     }
                 }
