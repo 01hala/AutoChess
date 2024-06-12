@@ -460,14 +460,19 @@ namespace Match
         public List<Fetters> check_fetters()
         {
             var mapFetters = new Dictionary<int, Fetters>();
+            var mapFetterRole = new Dictionary<int, List<int> >();
 
-            foreach(var r in battleData.RoleList)
+            foreach (var r in battleData.RoleList)
             {
                 if (r != null)
                 {
                     if (mapFetters.TryGetValue(r.FettersSkillID.fetters_id, out var fetters))
                     {
-                        fetters.number++;
+                        var rolelist = mapFetterRole[r.FettersSkillID.fetters_id];
+                        if (!rolelist.Contains(r.RoleID))
+                        {
+                            fetters.number++;
+                        }
                     }
                     else
                     {
@@ -477,6 +482,8 @@ namespace Match
                             fetters_level = 0,
                             number = 1
                         });
+
+                        mapFetterRole.Add(r.FettersSkillID.fetters_id, new List<int>());
                     }
                 }
             }
