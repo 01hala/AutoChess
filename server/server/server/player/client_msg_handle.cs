@@ -85,7 +85,7 @@ namespace Player
         {
             Log.Log.trace("on_check_achievement begin!");
 
-            var rsp = player_shop_Module.rsp as player_battle_check_achievement_rsp;
+            var rsp = player_battle_Module.rsp as player_battle_check_achievement_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
 
             try
