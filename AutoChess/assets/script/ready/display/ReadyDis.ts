@@ -328,7 +328,8 @@ export class ReadyDis
         try
         {
             this.UpdateText(_battle_info);
-            console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
+
+            //console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
             for(let i=0;i<6;i++)
             {
                 this.fetters[i].active=false;
