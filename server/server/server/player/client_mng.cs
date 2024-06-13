@@ -304,6 +304,7 @@ namespace Player
                 { "Strength", info.Strength },
                 { "gold", info.gold },
                 { "diamond", info.diamond },
+                { "guideStep", info.guideStep },
                 { "RoleList", roleList },
                 { "RoleGroup",  roleGroup },
                 { "bag", itemList },
