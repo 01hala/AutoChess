@@ -57,17 +57,17 @@ export class Guide extends Component
         {
             GameManager.Instance.guide = null;
             clearInterval(this.interval);
-            //singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
+            singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
             this.node.destroy();
         }, this);
     }
-
+    
     public async Init(_step:common.GuideStep)
     {   
         this.step=_step+1;
         this.next=_step;
         
-        this.end=9;
+        this.end=common.GuideStep.Done;
 
         this.node.setSiblingIndex(101);
 
