@@ -30,7 +30,7 @@ export class TaskLable extends Component
     private _taskMaxValue:number;
     private _taskValue:number;
     public set TaskValue(_value:number){
-        this._taskValue=_value;
+        this._taskValue=_value>this._taskMaxValue?this._taskMaxValue:_value;
         this.node.getChildByPath("Count").getComponent(RichText).string=
             "<color=#000000>"+this._taskValue+"/"+this._taskMaxValue+"</color>"
     }
