@@ -180,12 +180,12 @@ export class login extends Component {
             {
                 this._setProgress(1.0);
                 this._loading.done();
-                singleton.netSingleton.player.get_user_data(()=>
+                singleton.netSingleton.player.get_user_data((_step)=>
                 {
-                    console.log("guide step:", singleton.netSingleton.mainInterface.userAccount.guideStep);
-                    if (common.GuideStep.None == singleton.netSingleton.mainInterface.userAccount.guideStep)
+                    console.log("guide step:", _step);
+                    if (common.GuideStep.None == _step)
                     {
-                        GameManager.Instance.StartGuide(singleton.netSingleton.mainInterface.userAccount.guideStep);
+                        GameManager.Instance.StartGuide(_step);
                     }
                 });
                 await sleep(100);
