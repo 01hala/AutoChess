@@ -704,8 +704,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 324.76800000000003,
-      "y": -745.2215000000001,
+      "x": 322.874,
+      "y": -740.456,
       "z": 0
     },
     "_lrot": {
@@ -753,8 +753,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": -4.263256414560601e-14,
+      "x": -0.7430000000000518,
+      "y": 3.0370000000000203,
       "z": 0
     },
     "_lrot": {
@@ -793,8 +793,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 128.547,
-      "height": 40
+      "width": 250,
+      "height": 120
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -823,22 +823,25 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
+      "r": 175,
+      "g": 175,
+      "b": 175,
       "a": 255
     },
-    "_string": "跳过教程",
+    "_string": "跳过教程 >>>",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 38,
+    "_fontSize": 38.1,
     "_fontFamily": "Arial",
-    "_lineHeight": 40,
-    "_overflow": 1,
+    "_lineHeight": 54.6,
+    "_overflow": 2,
     "_enableWrapText": false,
-    "_font": null,
-    "_isSystemFontUsed": true,
+    "_font": {
+      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__expectedType__": "cc.TTFFont"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_isItalic": false,
     "_isBold": false,
@@ -877,8 +880,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160.243,
-      "height": 59.364000000000004
+      "width": 250,
+      "height": 120
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -898,7 +901,7 @@
     "node": {
       "__id__": 30
     },
-    "_enabled": true,
+    "_enabled": false,
     "__prefab": {
       "__id__": 40
     },
