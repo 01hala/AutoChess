@@ -20,10 +20,9 @@ export enum GuideStep{
     TrophyInfo = 4,
     CoinInfo = 5,
     RoundInfo = 6,
-    ShopArea = 7,
-    BuyRole = 8,
-    RoleInfo = 9,
-    Done = 10
+    BuyRole = 7,
+    RoleInfo = 8,
+    Done = 9
 }
 
 export enum Achievement{
