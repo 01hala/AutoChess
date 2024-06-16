@@ -13,15 +13,16 @@ export enum BattleMod{
 }
 
 export enum GuideStep{
+    None = 0,
     ClickGameLobby = 1,
     ClickMatch = 2,
     HPInfo = 3,
     TrophyInfo = 4,
     CoinInfo = 5,
     RoundInfo = 6,
-    ShopArea = 7,
-    BuyRole = 8,
-    RoleInfo = 9
+    BuyRole = 7,
+    RoleInfo = 8,
+    Done = 9
 }
 
 export enum Achievement{
@@ -465,7 +466,7 @@ export class UserData
     public diamond : number = 0;
     public score : number = 0;
     public bag : Bag | null = null;
-    public guideStep : GuideStep = GuideStep.ClickGameLobby;
+    public guideStep : GuideStep = GuideStep.None;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
 

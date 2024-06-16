@@ -18,6 +18,7 @@ import { MainInterface } from '../mainInterface/MainInterface';
 import { sleep } from '../other/sleep';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
+import { Guide } from '../other/Guide';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -176,20 +177,25 @@ export class login extends Component {
             this._setProgress(this._progress);
             //进入主界面
             singleton.netSingleton.mainInterface=new MainInterface();
+            
             await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
             {
                 this._setProgress(1.0);
                 this._loading.done();
+                singleton.netSingleton.player.get_user_data((_step)=>
+                {
+                    console.log("guide step:", _step);
+                    if (common.GuideStep.None == _step)
+                    {
+                        GameManager.Instance.StartGuide(_step);
+                    }
+                });
                 await sleep(100);
-                singleton.netSingleton.player.get_user_data();
                 await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
-
                 console.log("login sucess!");
                 clearInterval(this.interval);
-                GameManager.Instance.StartGuide();
             });
-            
         }
         //准备阶段
         singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData , fetters_info:common.Fetters[]) => 

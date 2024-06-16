@@ -18,15 +18,16 @@ namespace Abelkhan
         PeakStrength = 2
     }
     public enum GuideStep{
+        None = 0,
         ClickGameLobby = 1,
         ClickMatch = 2,
         HPInfo = 3,
         TrophyInfo = 4,
         CoinInfo = 5,
         RoundInfo = 6,
-        ShopArea = 7,
-        BuyRole = 8,
-        RoleInfo = 9
+        BuyRole = 7,
+        RoleInfo = 8,
+        Done = 9
     }
     public enum Achievement{
         EMSuccessiveFiveVictory = 1,

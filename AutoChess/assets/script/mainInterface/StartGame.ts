@@ -281,7 +281,7 @@ export class StartGame extends Component
         try
         {
             this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").off(Button.EventType.CLICK);
-            this.athleticsWindow.getChildByPath("Normal/Normal_Btn").off(Button.EventType.CLICK);
+            this.athleticsWindow.getChildByPath("Normal/Button").off(Button.EventType.CLICK);
             if(this.athleticsWindow.active)
             {
                 this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>

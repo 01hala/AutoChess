@@ -135,7 +135,8 @@ namespace Player
                     diamond = 0,
                     RoleList = new (),
                     roleGroup = new(),
-                }
+                },
+                guideSteps = new List<GuideStep>()
             };
 
             var user = data.GetValue("User").AsBsonDocument;
@@ -145,12 +146,14 @@ namespace Player
             {
                 var achiev = data.GetValue("Achiev").AsBsonDocument;
                 info.info.Achiev = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserAchievement>(achiev);
+                info.CheckAchievementStatus();
             }
 
             if (data.Contains("wAchiev"))
             {
                 var wAchiev = data.GetValue("wAchiev").AsBsonDocument;
                 info.info.wAchiev = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserWeekAchievement>(wAchiev);
+                info.CheckWeekAchievement();
             }
 
             info.info.Strength = data.GetValue("Strength").AsInt32;
@@ -301,6 +304,7 @@ namespace Player
                 { "Strength", info.Strength },
                 { "gold", info.gold },
                 { "diamond", info.diamond },
+                { "guideStep", info.guideStep },
                 { "RoleList", roleList },
                 { "RoleGroup",  roleGroup },
                 { "bag", itemList },
@@ -510,6 +514,33 @@ namespace Player
             return data;
         }
 
+        private void CheckAchievementStatus()
+        {
+            foreach (var info in info.Achiev.battleInfo)
+            {
+                CheckAchievement(info);
+            }
+        }
+
+        private void CheckWeekAchievement()
+        {
+            foreach (var info in info.wAchiev.battleInfo)
+            {
+                CheckWeekAchievement(info);
+            }
+
+            foreach (var a in info.wAchiev.wAchievData)
+            {
+                if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), a.emAchievement), out var task))
+                {
+                    if (a.count >= task.Value && a.status != AchievementAwardStatus.EMRecv)
+                    {
+                        a.status = AchievementAwardStatus.EMComplete;
+                    }
+                }
+            }
+        }
+
         private bool CheckSuccessiveFiveVictory()
         {
             var data = GetAchievementData(Achievement.EMSuccessiveFiveVictory);
@@ -644,10 +675,8 @@ namespace Player
             return check;
         }
 
-        public bool AddCheckAchievement(BattleInfo battleInfo)
+        public bool CheckAchievement(BattleInfo battleInfo)
         {
-            info.Achiev.battleInfo.Add(battleInfo);
-
             bool check = false;
             if (CheckSuccessiveFiveVictory())
             {
@@ -706,6 +735,13 @@ namespace Player
             return check;
         }
 
+        public bool AddCheckAchievement(BattleInfo battleInfo)
+        {
+            info.Achiev.battleInfo.Add(battleInfo);
+
+            return CheckAchievement(battleInfo);
+        }
+
         public AchievementData GetWeekAchievementData(Achievement enumAchieve)
         {
             foreach (var a in info.wAchiev.wAchievData)
@@ -753,6 +789,7 @@ namespace Player
                 {
                     if (a.count >= task.Value)
                     {
+                        a.status = AchievementAwardStatus.EMComplete;
                         check = true;
                     }
                 }
@@ -770,6 +807,7 @@ namespace Player
                             {
                                 if (a.count >= task.Value)
                                 {
+                                    a.status = AchievementAwardStatus.EMComplete;
                                     check = true;
                                 }
                             }
@@ -787,6 +825,7 @@ namespace Player
                             {
                                 if (a.count >= task.Value)
                                 {
+                                    a.status = AchievementAwardStatus.EMComplete;
                                     check = true;
                                 }
                             }
@@ -804,6 +843,7 @@ namespace Player
                                 a.count++;
                                 if (a.count >= task.Value)
                                 {
+                                    a.status = AchievementAwardStatus.EMComplete;
                                     check = true;
                                 }
                             }
@@ -832,6 +872,7 @@ namespace Player
                         {
                             if (a.count >= task.Value)
                             {
+                                a.status = AchievementAwardStatus.EMComplete;
                                 check = true;
                             }
                         }
@@ -847,6 +888,7 @@ namespace Player
                         {
                             if (a.count >= task.Value)
                             {
+                                a.status = AchievementAwardStatus.EMComplete;
                                 check = true;
                             }
                         }
@@ -862,6 +904,7 @@ namespace Player
                         {
                             if (a.count >= task.Value)
                             {
+                                a.status = AchievementAwardStatus.EMComplete;
                                 check = true;
                             }
                         }
@@ -884,6 +927,7 @@ namespace Player
                 {
                     if (a.count >= task.Value)
                     {
+                        a.status = AchievementAwardStatus.EMComplete;
                         return true;
                     }
                 }
@@ -892,11 +936,8 @@ namespace Player
             return false;
         }
 
-        public bool AddCheckWeekAchievement(BattleInfo battleInfo)
+        private bool CheckWeekAchievement(BattleInfo battleInfo)
         {
-            RefreshWeekAchiev();
-            info.wAchiev.battleInfo.Add(battleInfo);
-
             var check = false;
             if (battleInfo.isVictory == BattleVictory.victory)
             {
@@ -918,6 +959,14 @@ namespace Player
             }
 
             return check;
+        }
+
+        public bool AddCheckWeekAchievement(BattleInfo battleInfo)
+        {
+            RefreshWeekAchiev();
+            info.wAchiev.battleInfo.Add(battleInfo);
+
+            return CheckWeekAchievement(battleInfo);
         }
 
         private void RefreshWeekAchiev()

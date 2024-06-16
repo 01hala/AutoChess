@@ -1,7 +1,8 @@
-import { _decorator, Component, Label, Node, primitives, RichText, Sprite } from 'cc';
+import { _decorator, Button, Component, Label, Node, primitives, RichText, Sprite } from 'cc';
 import { config } from '../config/config';
 import { TaskConfig } from '../config/task_config';
-import { AchievementAwardStatus } from '../serverSDK/common';
+import { Achievement, AchievementAwardStatus } from '../serverSDK/common';
+import * as singleton from '../netDriver/netSingleton';
 import { UserAccount } from '../mainInterface/MainInterface';
 const { ccclass, property } = _decorator;
 
@@ -11,6 +12,9 @@ export class TaskLable extends Component
     public id:number;
 
     private _taskName:string;
+    private status:AchievementAwardStatus;
+    private button:Node;
+
     public set TaskName(_value:string)
     {
         this._taskName=_value;
@@ -26,7 +30,7 @@ export class TaskLable extends Component
     private _taskMaxValue:number;
     private _taskValue:number;
     public set TaskValue(_value:number){
-        this._taskValue=_value;
+        this._taskValue=_value>this._taskMaxValue?this._taskMaxValue:_value;
         this.node.getChildByPath("Count").getComponent(RichText).string=
             "<color=#000000>"+this._taskValue+"/"+this._taskMaxValue+"</color>"
     }
@@ -38,8 +42,8 @@ export class TaskLable extends Component
         this.icon=this.node.getChildByPath("Icon");
     }
 
-    public async Init(_config:TaskConfig,_count:number, _status:AchievementAwardStatus)
-    {
+    public async Init(_config:TaskConfig,_count:number, _status:AchievementAwardStatus,_achievement: Achievement)
+    {       
         this.id=_config.Id;
 
         this.TaskName=_config.Name;
@@ -47,12 +51,30 @@ export class TaskLable extends Component
         this._taskMaxValue=_config.tValue;
         this.TaskValue=_count;
 
-        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMNotComplete==_status);
+        this.button=this.node.getChildByName("Button");
+        this.button.on(Button.EventType.CLICK,()=>
+        {
+            if(AchievementAwardStatus.EMComplete == this.status){
+                singleton.netSingleton.game.check_achievement(_achievement);
+                this.RefreshLable(this._taskValue,AchievementAwardStatus.EMRecv);
+            }
+        },this);
+
+        this.status=_status;
+        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMNotComplete==this.status);
+        if(AchievementAwardStatus.EMRecv==this.status){
+            this.button.active=false;
+        }
     }
 
     public async RefreshLable(_count:number,_status:AchievementAwardStatus){
+        console.log( this._taskName+":"+_status);
+        this.status=_status;
         this.TaskValue=_count;
-        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMNotComplete==_status);
+        this.node.getComponent(Sprite).grayscale=(AchievementAwardStatus.EMNotComplete==this.status);
+        if(AchievementAwardStatus.EMRecv==this.status){
+            this.button.active=false;
+        }
     }
 }
 

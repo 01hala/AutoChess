@@ -219,7 +219,7 @@ export class RoleIcon extends Component
                             this.freezeSprite.active = false;
                             if (null != this.target || this.isMerge) {
                                 if (null == this.roleArea.rolesNode[this.tempIndex] || this.isMerge) {
-                                    this.isBuy = true;
+                                    this.isBuy = true;                                    
                                     // if(!this.isMerge)
                                     // {
                                     //     this.roleArea.targets.set(this.target.name,this.node);
@@ -360,7 +360,14 @@ export class RoleIcon extends Component
     private async BuyRole(){
         this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=1;
         tween(this.roleNode)
-        .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) }) // 在0.5秒内将缩放变为原来的两倍
+        .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) })
+        .call(()=>
+        {
+            if (GameManager.Instance.guide)
+            {
+                GameManager.Instance.guide.step++;
+            }
+        }) // 在0.5秒内将缩放变为原来的两倍
         .start();
     }
     //加载图片
@@ -422,7 +429,7 @@ export class RoleIcon extends Component
     {
         if (GameManager.Instance.guide)
         {
-            GameManager.Instance.guide.Checkguide();
+            GameManager.Instance.guide.step++;
         }
         AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
         let roleInfo :RoleDis=null;

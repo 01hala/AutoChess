@@ -12,6 +12,7 @@ import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';
 import { AudioManager } from '../../other/AudioManager';
+import { GameManager } from '../../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')

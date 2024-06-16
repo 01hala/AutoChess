@@ -23,7 +23,7 @@ export class netPlayer {
 
     public cb_archive_sync : () => void;
     public cb_battle_victory : () => void;
-    public cb_achievement_complete:(_userData:common.UserData)=>void;
+    public cb_achievement_complete:(achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement)=>void;
     public cb_rank_reward:(reward:common.RankReward , timeDifference:number)=>void;
     private player_client_module : player_client.player_client_module;
 
@@ -52,7 +52,7 @@ export class netPlayer {
             this.UserData.wAchiev=wAchieve;
             if(this.cb_achievement_complete){
                 //服务器协议改动后将这里变为传入改动后用户数据
-                this.cb_achievement_complete.call(this.UserData);
+                this.cb_achievement_complete.call(achieve,wAchieve);
             }
         }
 
@@ -147,11 +147,12 @@ export class netPlayer {
 
     //更新玩家账户信息
     public cb_get_user_data:(_userInfo:common.UserData)=>void;
-    public get_user_data()
+    public get_user_data(_onCallBack?:(_step:common.GuideStep)=>void)
     {
         this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
         {
             this.cb_get_user_data(_userInfo);
+            _onCallBack(_userInfo.guideStep);
         },(err)=>
         {
             console.log("get user data error:" + err);
@@ -248,6 +249,10 @@ export class netPlayer {
             console.log("get rank range timeout");
         })
     }
-
+    //发送新手引导执行到的步骤
+    public guide_step_ntf(_guideStep : common.GuideStep)
+    {
+        this.c_player_login_caller.get_hub(this.player_name).guide_step(_guideStep);
+    }
 
 }

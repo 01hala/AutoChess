@@ -4,6 +4,9 @@ import { GameManager } from './GameManager';
 import { ShopArea } from '../ready/display/ShopArea';
 import { RoleArea } from '../ready/display/RoleArea';
 import { RoleIcon } from '../ready/display/RoleIcon';
+import * as common from "../serverSDK/common"
+import * as singleton from '../netDriver/netSingleton';
+import { sleep } from './sleep';
 const { ccclass, property } = _decorator;
 
 @ccclass('Guide')
@@ -54,16 +57,18 @@ export class Guide extends Component
         this.skipBtn.on(Button.EventType.CLICK, () =>
         {
             GameManager.Instance.guide = null;
+            clearInterval(this.interval);
+            singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
             this.node.destroy();
         }, this);
     }
-
-    public async Init()
+    
+    public async Init(_step:common.GuideStep)
     {   
-
-        this.next=0;
-        this.step=1;
-        this.end=9;
+        this.step=_step+1;
+        this.next=_step;
+        
+        this.end=common.GuideStep.Done;
 
         this.node.setSiblingIndex(101);
 
@@ -72,7 +77,7 @@ export class Guide extends Component
 
     private OnTouch(event:EventTouch)
     {
-        if(this.step < 3 || this.step > 7)
+        if(this.step < 3 || this.step > 6)
         {
             let t=this.tnode.getChildByName("Button");
             if(null==t)
@@ -100,20 +105,6 @@ export class Guide extends Component
 
     private StartGuide()
     {
-        // return new Promise((resolve)=>
-        // {
-        //     while(this.step<=this.end)
-        //     {
-        //         if(this.next!=this.step)
-        //         {
-        //             this.OnGuide();
-        //             this.next=this.step;
-        //         }
-        //     }
-        //     GameManager.Instance.guide=null;
-        //     this.node.destroy();
-        //     resolve();
-        // });
         this.interval=setInterval(()=>
         {
             if(this.next!=this.step)
@@ -125,6 +116,7 @@ export class Guide extends Component
             {
                 GameManager.Instance.guide = null;
                 clearInterval(this.interval);
+                singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
                 this.node.destroy();
             }
         }, 50);
@@ -175,12 +167,12 @@ export class Guide extends Component
                     this.guideText.setPosition(new Vec3(0,595.665,0));
                     this.guideText.getComponent(RichText).string="回合";
                     break;
+                // case 7:
+                //     t=this.node.parent.getChildByPath("ReadyPanel/ShopArea");
+                //     this.guideText.setPosition(new Vec3(0,-637.995,0));
+                //     this.guideText.getComponent(RichText).string="商店";
+                //     break;
                 case 7:
-                    t=this.node.parent.getChildByPath("ReadyPanel/ShopArea");
-                    this.guideText.setPosition(new Vec3(0,-637.995,0));
-                    this.guideText.getComponent(RichText).string="商店";
-                    break;
-                case 8:
                     //this.pointer.active=true;
                     //this.pointer.setWorldPosition(this.tnode.worldPosition);
                     //this.tween=tween(this.pointer).to(1,{position:this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_0").worldPosition}).repeatForever().start();
@@ -188,7 +180,7 @@ export class Guide extends Component
                     this.guideText.setPosition(new Vec3(0,-637.995,0));
                     this.guideText.getComponent(RichText).string="拖拽购买角色";
                     break;
-                case 9:
+                case 8:
                     for(let r of this.node.parent.getChildByPath("ReadyPanel/RoleArea").getComponent(RoleArea).rolesNode)
                     {
                         if(null != r)
@@ -216,6 +208,10 @@ export class Guide extends Component
             }
             this.tnode.setParent(this.node);
             this.tnode.setWorldPosition(t.worldPosition);
+            sleep(100).then(()=>
+            {
+                this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
+            });
         }
         catch(error)
         {
@@ -230,7 +226,7 @@ export class Guide extends Component
             this.tnode.destroy();
         }
         
-        if (this.step < 3 || this.step > 7)
+        if (this.step < 3 || this.step > 6)
         {
             this.mask.getComponent(BlockInputEvents).enabled=false;
             this.mask.active = false;   //此处必须关闭mask中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
