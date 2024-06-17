@@ -59,6 +59,7 @@ export class Guide extends Component
             GameManager.Instance.guide = null;
             clearInterval(this.interval);
             singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
+            this.mask.getComponent(BlockInputEvents).enabled=false;
             this.node.destroy();
         }, this);
     }
