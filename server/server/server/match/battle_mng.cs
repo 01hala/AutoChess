@@ -472,6 +472,7 @@ namespace Match
                         if (!rolelist.Contains(r.RoleID))
                         {
                             fetters.number++;
+                            rolelist.Add(r.RoleID);
                         }
                     }
                     else
@@ -483,7 +484,7 @@ namespace Match
                             number = 1
                         });
 
-                        mapFetterRole.Add(r.FettersSkillID.fetters_id, new List<int>());
+                        mapFetterRole.Add(r.FettersSkillID.fetters_id, new List<int>() { r.RoleID });
                     }
                 }
             }

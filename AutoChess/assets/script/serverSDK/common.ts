@@ -20,10 +20,9 @@ export enum GuideStep{
     TrophyInfo = 4,
     CoinInfo = 5,
     RoundInfo = 6,
-    ShopArea = 7,
-    BuyRole = 8,
-    RoleInfo = 9,
-    Done = 10
+    BuyRole = 7,
+    RoleInfo = 8,
+    Done = 9
 }
 
 export enum Achievement{
@@ -300,6 +299,7 @@ export function protcol_to_BattleInfo(_protocol:any){
 export class AchievementReward
 {
     public gold : number = 0;
+
 }
 
 export function AchievementReward_to_protcol(_struct:AchievementReward){
