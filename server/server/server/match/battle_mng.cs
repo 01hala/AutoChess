@@ -472,6 +472,7 @@ namespace Match
                         if (!rolelist.Contains(r.RoleID))
                         {
                             fetters.number++;
+                            rolelist.Add(r.RoleID);
                         }
                     }
                     else
