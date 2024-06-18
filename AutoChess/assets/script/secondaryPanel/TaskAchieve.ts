@@ -30,6 +30,7 @@ export class TaskAchieve extends Component
     private _userAccount:UserAccount;
     //map保存lable列表方便刷新
     private lableList:Map<number,Node>;
+    private taskCompletePanel:Node;
 
     protected async onLoad(): Promise<void> 
     {
@@ -37,6 +38,12 @@ export class TaskAchieve extends Component
         this.board=this.node.getChildByPath("Board");
         this.toggleGroup=this.node.getChildByPath("Board/ToggleGroup");
         this.scrollView=this.node.getChildByPath("Board/ScrollView");
+        this.taskCompletePanel=this.node.getChildByName("TaskComplete");
+
+        this.taskCompletePanel.active=false;
+        this.taskCompletePanel.getChildByName("BG").on(Button.EventType.CLICK,()=>{
+            this.taskCompletePanel.active=false;
+        });
         this.lableList=new Map<number,Node>();
 
         this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","TaskLabel")as Prefab;
@@ -137,7 +144,7 @@ export class TaskAchieve extends Component
             jconfig = await config.TaskConfig.get(i);
             if(jconfig!=null){
                 let lab=instantiate(this.lablePre);
-                lab.getComponent(TaskLable).Init(jconfig ,0 , AchievementAwardStatus.EMNotComplete,jconfig.tClass);
+                lab.getComponent(TaskLable).Init(jconfig ,0 , AchievementAwardStatus.EMNotComplete,jconfig.tClass,this.ShowCompleteTask);
                 this.scrollView.getChildByPath("view/content").addChild(lab); 
 
                 this.lableList.set(jconfig.tClass,lab);
@@ -154,6 +161,12 @@ export class TaskAchieve extends Component
                 temp.getComponent(TaskLable).RefreshLable(t.count,t.status);  
             }     
         }
+    }
+
+    private ShowCompleteTask(_name:string,_lable:string){
+        this.taskCompletePanel.active=true;
+        this.taskCompletePanel.getChildByPath("ShowBG/Name").getComponent(RichText).string=_name;
+        this.taskCompletePanel.getChildByPath("ShowBG/Lable").getComponent(RichText).string=_lable;
     }
 
     public async RefreshList(_user?:UserAccount){
