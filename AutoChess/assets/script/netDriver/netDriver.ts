@@ -17,7 +17,7 @@ import { netSingleton } from "./netSingleton"
  *
  */
 
-let game_url:string = "ws://192.168.4.3:3001";
+let game_url:string = "ws://192.168.11.2:3001";
  
  @ccclass('netDriver')
  export class netDriver extends Component {
