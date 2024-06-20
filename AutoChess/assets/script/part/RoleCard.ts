@@ -4,7 +4,7 @@
  * 2024/05/22
  * 修改
  */
-import { _decorator, Animation, assetManager, Button, ccenum, Color, color, Component, debug, enumerableProps, error, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
+import { _decorator, Animation, assetManager, Button, ccenum, Color, color, Component, debug, enumerableProps, error, Label, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -26,14 +26,45 @@ export class RoleCard extends Component
         displayName:"Type"
     })
     public type:CardType;
-
+    //立绘
     private spr:Sprite;
     private painting:sp.Skeleton
-
+    //是否解锁
     private lock:boolean=false;
-    private numberText:RichText;
-
+    //碎片数量
+    private numberText:Label;
+    //角色ID
     public roleId:number = 0;
+    //角色名
+    private roleName:string;
+    //阶数
+    private stage:number;
+    //解锁按钮
+    private unlockBtn:Node;
+
+    //获取阶数
+    public get Stage()
+    {
+        return this.stage;
+    }
+    //设置阶数
+    public set Stage(value:number)
+    {
+        this.stage=value;
+        this.node.getChildByPath("Info/Stage/RichText").getComponent(RichText).string="<color=#1d994f><outline color=#74eda5 width=4>"+ value +"</outline></color>";
+    }
+
+    //获取角色名
+    public get Name()
+    {
+        return this.roleName;
+    }
+    //设置角色名
+    public set Name(value:string)
+    {
+        this.roleName=value;
+        this.node.getChildByPath("Info/Name").getComponent(RichText).string="<color=#ffffff>"+ value +"</color>";
+    }
 
     public get Lock()
     {
@@ -50,7 +81,17 @@ export class RoleCard extends Component
         }
         if (CardType.Painting == this.type)
         {
-            this.node.getChildByPath("Sprite").getComponent(sp.Skeleton).color = new Color().fromHEX('#686868');
+            let color;
+            if(value)
+            {
+                color = new Color().fromHEX('#686868');
+                this.unlockBtn.active=true;
+            }
+            else
+            {
+                color = new Color().fromHEX('#FFFFFF');
+            }
+            this.node.getChildByPath("Sprite").getComponent(sp.Skeleton).color = color;
         }
     }
 
@@ -59,12 +100,14 @@ export class RoleCard extends Component
         if(CardType.Card==this.type)
         {
             this.spr=this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite);
-            this.numberText=this.node.getChildByPath("NumberText").getComponent(RichText);
         }
         if(CardType.Painting==this.type)
         {
             this.painting=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
         }
+
+        this.numberText=this.node.getChildByPath("Unlock_Btn/Label").getComponent(Label);
+        this.unlockBtn=this.node.getChildByPath("Unlock_Btn");
 
         this.painting.node.active=false;
     }
@@ -79,6 +122,13 @@ export class RoleCard extends Component
 
         },this);
 
+        this.unlockBtn.on(Button.EventType.CLICK,()=>
+        {
+            this.unlockBtn.active=false;
+            this.Lock=true;
+        },this);
+
+        this.unlockBtn.getComponent(Button).enabled=false;
     }
 
     public Init(_id:number,_res:string):Promise<void>
@@ -133,8 +183,16 @@ export class RoleCard extends Component
 
     public SetNumberText(_molecule:number,_denominator:number)
     {
-        this.numberText.string=
-        "<color=#000000>"+ _molecule + "</color>" +
-        "<color=#000000> | "+ _denominator +"</color>";
+        this.numberText.string= "" + _molecule  + " | " + _denominator;
+    }
+
+    public CanMerge(_flag:boolean)
+    {
+        if(_flag)
+        {
+            this.unlockBtn.getComponent(Button).enabled=true;
+            this.unlockBtn.getComponent(Sprite).grayscale=false;
+            this.numberText.string="可合成";
+        }
     }
 }
