@@ -187,6 +187,8 @@ export class CardLib extends Component
                         let card=instantiate(this.rolePaintingPre);
                         tnode.getChildByPath("Layout").addChild(card);
                         card.getComponent(RoleCard).Init(i,jconfig.Skel);
+                        card.getComponent(RoleCard).Stage=jconfig.Stage;
+                        card.getComponent(RoleCard).Name=jconfig.Name;
                         try
                         {
                             if(singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
