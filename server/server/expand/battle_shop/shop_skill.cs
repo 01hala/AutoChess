@@ -1,17 +1,12 @@
 ﻿using Abelkhan;
 using config;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Match
+namespace battle_shop
 {
     public partial class shop_skill_role
     {
-        private void AddProperty(ShopSkillConfig skill, battle_player _player)
+        private void AddProperty(ShopSkillConfig skill, battle_shop_player _player)
         {
             var skilleffect = new ShopSkillEffect();
             skilleffect.skill_id = skill.Id;
@@ -59,7 +54,7 @@ namespace Match
             is_trigger = true;
         }
 
-        private void AddCoin(ShopSkillConfig skill, battle_player _player)
+        private void AddCoin(ShopSkillConfig skill, battle_shop_player _player)
         {
             var addCoin = 0;
             var r = _player.BattleData.RoleList[index];
@@ -97,7 +92,7 @@ namespace Match
             is_trigger = true;
         }
 
-        private void AddBuffer(ShopSkillConfig skill, battle_player _player)
+        private void AddBuffer(ShopSkillConfig skill, battle_shop_player _player)
         {
             var target_list = GetTargetIndex(_player, skill.ObjectDirection, skill.ObjCount);
             foreach (var target_index in target_list)
@@ -106,7 +101,7 @@ namespace Match
             }
         }
 
-        private void UseSkill(battle_player _player, shop_event trigger_ev)
+        private void UseSkill(battle_shop_player _player, shop_event trigger_ev, int stage)
         {
             ShopSkillConfig skill;
             if (!config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
@@ -130,7 +125,7 @@ namespace Match
 
                 case SkillEffectEM.RefreshShop:
                 {
-                    RefreshShop(skill, _player);
+                    RefreshShop(skill, _player, stage);
                 }
                 break;
 

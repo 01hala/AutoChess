@@ -1,14 +1,9 @@
 ﻿using Abelkhan;
 using config;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Match
+namespace battle_shop
 {
     public class shop_event
     {
@@ -45,7 +40,7 @@ namespace Match
             fettersLevel = _fettersLevel;
         }
 
-        public List<skill_execute> Trigger(List<shop_event> evs, battle_player _player)
+        public List<skill_execute> Trigger(int stage, List<shop_event> evs, battle_shop_player _player)
         {
             if (is_trigger)
             {
@@ -64,7 +59,7 @@ namespace Match
                         Priority = skill.Priority,
                         execute = () =>
                         {
-                            UseSkill(_player, ev);
+                            UseSkill(_player, ev, stage);
                         }
                     });
                 }
@@ -80,7 +75,7 @@ namespace Match
                         Priority = fettersc.Priority,
                         execute = () =>
                         {
-                            UseFettersSkill(_player, ev);
+                            UseFettersSkill(_player, ev, stage);
                         }
                     });
                 }
@@ -175,7 +170,7 @@ namespace Match
             return false;
         }
 
-        private List<int> GetTargetIndex(battle_player _player, Direction ObjectDirection, int ObjCount)
+        private List<int> GetTargetIndex(battle_shop_player _player, Direction ObjectDirection, int ObjCount)
         {
             var target_list = new List<int>();
 
@@ -322,7 +317,7 @@ namespace Match
             return target_list;
         }
 
-        private void AddProperty(battle_player _player, int target_index, EffectScope scope, int hp, int attack)
+        private void AddProperty(battle_shop_player _player, int target_index, EffectScope scope, int hp, int attack)
         {
             Role target_r = _player.BattleData.RoleList[target_index];
             if (target_r != null)
@@ -340,15 +335,15 @@ namespace Match
             }
         }
 
-        private void AddCoin(battle_player _player, int num)
+        private void AddCoin(battle_shop_player _player, int num)
         {
             _player.BattleData.coin += num;
             _player.BattleClientCaller.get_client(_player.ClientUUID).add_coin(_player.BattleData.coin);
         }
 
-        private void RefreshShop(ShopSkillConfig skill, battle_player _player)
+        private void RefreshShop(ShopSkillConfig skill, battle_shop_player _player, int stage)
         {
-            _player.refresh();
+            _player.refresh(stage);
 
             var skilleffect = new ShopSkillEffect();
             skilleffect.skill_id = skill.Id;
@@ -363,7 +358,7 @@ namespace Match
             is_trigger = true;
         }
 
-        private void UpdateLevel(battle_player _player)
+        private void UpdateLevel(battle_shop_player _player)
         {
             var r = _player.BattleData.RoleList[index];
             r.Level += 1;
@@ -376,7 +371,7 @@ namespace Match
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_skill_update(index, r);
         }
 
-        private void SummonShop(battle_player _player, shop_event trigger_ev)
+        private void SummonShop(battle_shop_player _player, shop_event trigger_ev)
         {
             ShopSkillConfig skill;
             if (!config.Config.ShopSkillConfigs.TryGetValue(trigger_ev.skill_id, out skill))
@@ -408,14 +403,14 @@ namespace Match
                     return;
                 }
 
-                if (_player.add_role(summon_index, SummonId, skill.SummonLevel))
+                if (_player.add_role(summon_index, SummonId, skill.SummonLevel) != null)
                 {
                     _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
                 }
             }
         }
 
-        private void AddBuffer(battle_player _player, int target_index, EffectScope scope, int buffer_id)
+        private void AddBuffer(battle_shop_player _player, int target_index, EffectScope scope, int buffer_id)
         {
             Role target_r = _player.BattleData.RoleList[target_index];
             if (target_r != null)
