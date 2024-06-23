@@ -465,6 +465,7 @@ export class UserData
     public gold : number = 0;
     public diamond : number = 0;
     public score : number = 0;
+    public quest : number = 0;
     public bag : Bag | null = null;
     public guideStep : GuideStep = GuideStep.None;
     public RoleList : number[] = [];
@@ -503,6 +504,9 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "score"){
             _struct.score = val as number;
+        }
+        else if (key === "quest"){
+            _struct.quest = val as number;
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);

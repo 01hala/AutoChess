@@ -1,6 +1,8 @@
 ﻿using Abelkhan;
 using avatar;
 using bag;
+using battle_shop;
+using config;
 using Hub;
 using MongoDB.Bson;
 using OfflineMsg;
@@ -8,7 +10,9 @@ using Service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Player
@@ -49,6 +53,8 @@ namespace Player
         private long lastTickStrengthTime;
 
         public long PeakStrengthID = 0;
+
+        public battle_shop_player BattleShopPlayer;
 
         public static string Type()
         {
@@ -102,6 +108,7 @@ namespace Player
                     gold = 100,
                     diamond = 10,
                     score = 0,
+                    quest = 1,
                     bag = new Abelkhan.Bag() { ItemList = new() },
                     guideStep = 0,
                     RoleList = new List<int>(roleList),
@@ -133,6 +140,8 @@ namespace Player
                     Strength = 0,
                     gold = 0,
                     diamond = 0,
+                    quest = 0, 
+                    score = 0,
                     RoleList = new (),
                     roleGroup = new(),
                 },
@@ -223,6 +232,24 @@ namespace Player
                 info.info.diamond = 10;
             }
 
+            if (data.Contains("quest"))
+            {
+                info.info.diamond = data.GetValue("quest").AsInt32;
+            }
+            else
+            {
+                info.info.quest = 1;
+            }
+
+            if (data.Contains("score"))
+            {
+                info.info.diamond = data.GetValue("score").AsInt32;
+            }
+            else
+            {
+                info.info.score = 0;
+            }
+
             if (data.Contains("guideStep"))
             {
                 info.info.guideStep = (GuideStep)data.GetValue("guideStep").AsInt32;
@@ -304,6 +331,8 @@ namespace Player
                 { "Strength", info.Strength },
                 { "gold", info.gold },
                 { "diamond", info.diamond },
+                { "quest", info.quest },
+                { "score", info.score },
                 { "guideStep", info.guideStep },
                 { "RoleList", roleList },
                 { "RoleGroup",  roleGroup },
@@ -1026,6 +1055,245 @@ namespace Player
 
             return false;
         }
+
+        public void refresh(int stage)
+        {
+            BattleShopPlayer.ShopData = BattleShopPlayer.refresh(stage);
+        }
+
+        public int GetStage()
+        {
+            if (config.Config.PVEConfigs.TryGetValue(info.quest, out var cfg))
+            {
+                return cfg.Stage;
+            }
+
+            return 1;
+        }
+
+        public Tuple<bool, List<int>> StartQuestReady(string _clientUUID, battle_client_caller battleClientCaller)
+        {
+            var isExist = false;
+            var events = new List<int>();
+
+            BattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
+
+            if (config.Config.PVEConfigs.TryGetValue(info.quest, out var cfg))
+            {
+                var eventIds = cfg.EventID.Split(',');
+                foreach (var id in eventIds)
+                {
+                    events.Add(int.Parse(id));
+                }
+
+                isExist = true;
+            }
+
+            return Tuple.Create(isExist, events);
+        }
+
+        public void StartQuestShop(int eventid)
+        {
+            if (eventid > 0)
+            {
+                if (config.Config.PVEEventConfigs.TryGetValue(eventid, out var cfg))
+                {
+                    if (config.Config.RoleConfigs.TryGetValue(cfg.RoleID, out RoleConfig rcfg))
+                    {
+                        var r = new Role();
+
+                        r.RoleID = cfg.RoleID;
+                        r.Level = cfg.RoleLevel;
+                        r.SkillID = rcfg.SkillID;
+                        r.HP = rcfg.Hp;
+                        r.Attack = rcfg.Attack;
+                        r.TempHP = 0;
+                        r.TempAttack = 0;
+                        r.additionBuffer = new();
+                        r.TempAdditionBuffer = new();
+                        r.FettersSkillID = new Fetters()
+                        {
+                            fetters_id = rcfg.Fetters,
+                            fetters_level = 0,
+                            number = 1
+                        };
+                        r.equipID = cfg.RoleEquip;
+
+                        BattleShopPlayer.BattleData.RoleList[5] = r;
+                        BattleShopPlayer.check_fetters();
+                        BattleShopPlayer.ShopSkillRoles[5] = new shop_skill_role(5, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
+                    }
+                }
+            }
+        }
+
+        public UserBattleData StartQuestBattle()
+        {
+            var target = new UserBattleData();
+
+            if (config.Config.PVEConfigs.TryGetValue(info.quest, out var cfg))
+            {
+                foreach(var rInfo in cfg.Roles)
+                {
+                    if (config.Config.RoleConfigs.TryGetValue(rInfo.RoleID, out RoleConfig rcfg))
+                    {
+                        var r = new Role();
+
+                        r.RoleID = rInfo.RoleID;
+                        r.Level = rInfo.RoleLevel;
+                        r.SkillID = rcfg.SkillID;
+                        r.HP = rInfo.RoleHP;
+                        r.Attack = rInfo.RoleAttack;
+                        r.TempHP = 0;
+                        r.TempAttack = 0;
+                        r.additionBuffer = new();
+                        r.TempAdditionBuffer = new();
+                        r.FettersSkillID = new Fetters()
+                        {
+                            fetters_id = rcfg.Fetters,
+                            fetters_level = 0,
+                            number = 1
+                        };
+                        r.equipID = rInfo.RoleEquip;
+
+                        target.RoleList.Add(r);
+                    }
+                }
+
+                target.FettersList = battle_shop_player.check_fetters(target.RoleList);
+            }
+
+            return target;
+        }
+
+        public bool add_role(string ClientUUID, int role_index, int role_id, int role_Level)
+        {
+            var r = BattleShopPlayer.add_role(role_index, role_id, role_Level);
+            if (r != null)
+            {
+                if (CheckBuyRole(r))
+                {
+                    client_mng.PlayerClientCaller.get_client(ClientUUID).achievement_complete(info.Achiev, info.wAchiev);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public em_error buy_role(string ClientUUID, int index, int role_index)
+        {
+            var r = BattleShopPlayer.BattleData.RoleList[role_index];
+            var s = BattleShopPlayer.ShopData.SaleRoleList[index];
+
+
+            if (s == null)
+            {
+                return em_error.db_error;
+            }
+
+            if (r == null)
+            {
+                if (!add_role(ClientUUID, role_index, s.RoleID, 1))
+                {
+                    return em_error.db_error;
+                }
+            }
+            else
+            {
+                var err = BattleShopPlayer.merge_role(index, role_index);
+                if (err != em_error.success)
+                {
+                    return err;
+                }
+
+                if (CheckBuyRole(r))
+                {
+                    client_mng.PlayerClientCaller.get_client(ClientUUID).achievement_complete(info.Achiev, info.wAchiev);
+                }
+            }
+
+            return em_error.success;
+        }
+
+        public em_error buy_equip(string ClientUUID, ShopProp p, int index, int role_index)
+        {
+            var err = BattleShopPlayer.buy_equip(p, index, role_index);
+            if (err != em_error.success)
+            {
+                return err;
+            }
+
+            if (CheckBuyEquip(p.PropID))
+            {
+                client_mng.PlayerClientCaller.get_client(ClientUUID).achievement_complete(info.Achiev, info.wAchiev);
+            }
+
+            return em_error.success;
+        }
+
+        public em_error buy(string ClientUUID, ShopIndex shop_index, int index, int role_index)
+        {
+            if (BattleShopPlayer.BattleData.coin < 3)
+            {
+                return em_error.no_enough_coin;
+            }
+            BattleShopPlayer.BattleData.coin -= 3;
+
+            if (shop_index == ShopIndex.Role)
+            {
+                var result = buy_role(ClientUUID, index, role_index);
+                if (result != em_error.success)
+                {
+                    return result;
+                }
+            }
+            else if (shop_index == ShopIndex.Prop)
+            {
+                var p = BattleShopPlayer.ShopData.SalePropList[index];
+                if (p == null)
+                {
+                    return em_error.db_error;
+                }
+
+                if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
+                {
+                    var result = BattleShopPlayer.buy_food(p, index, role_index);
+                    if (result != em_error.success)
+                    {
+                        return result;
+                    }
+                }
+                else if (p.PropID >= config.Config.EquipIDMin && p.PropID <= config.Config.EquipIDMax)
+                {
+                    var result = buy_equip(ClientUUID, p, index, role_index);
+                    if (result != em_error.success)
+                    {
+                        return result;
+                    }
+                }
+                else
+                {
+                    return em_error.db_error;
+                }
+
+                BattleShopPlayer.ShopData.SalePropList[index] = null;
+            }
+            else
+            {
+                return em_error.db_error;
+            }
+
+            BattleShopPlayer.evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.buy,
+            });
+
+            BattleShopPlayer.clear_skill_tag();
+
+            return em_error.success;
+        }
     }
 
     public static class AvatarExtensions
@@ -1047,6 +1315,15 @@ namespace Player
             get
             {
                 return player_Client_Caller;
+            }
+        }
+
+        private static readonly battle_client_caller battleClientCaller = new();
+        public static battle_client_caller BattleClientCaller
+        {
+            get
+            {
+                return battleClientCaller;
             }
         }
 

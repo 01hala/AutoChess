@@ -119,6 +119,7 @@ struct UserData
 	int32 gold;				     // 金币
 	int32 diamond;			     // 钻石
 	int32 score;			     // 积分
+	int32 quest;				 // 主线任务进度
 	Bag bag;				     // 背包
 	GuideStep guideStep;		 // 新手引导进度
 	int32[] RoleList; 		     // 已有角色列表

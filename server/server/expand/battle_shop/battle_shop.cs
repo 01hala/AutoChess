@@ -21,6 +21,13 @@ namespace battle_shop
         }
 
         private List<shop_skill_role> shop_skill_roles;
+        public List<shop_skill_role> ShopSkillRoles
+        {
+            get
+            {
+                return shop_skill_roles;
+            }
+        }
 
         private ShopData shopData;
         public ShopData ShopData
@@ -35,8 +42,8 @@ namespace battle_shop
             }
         }
 
-        public List<shop_event> evs = new List<shop_event>();
-        public List<int> skip_level = new List<int>();
+        public List<shop_event> evs = new ();
+        public List<int> skip_level = new ();
 
         private string clientUUID;
         public string ClientUUID
@@ -95,7 +102,6 @@ namespace battle_shop
 
             return 6;
         }
-
 
         public ShopRole randomShopRole(int stage)
         {
@@ -417,7 +423,7 @@ namespace battle_shop
             }
         }
 
-        private int check_fetters_level(Fetters fetters)
+        private static int check_fetters_level(Fetters fetters)
         {
             if (config.Config.FettersConfigs.TryGetValue(fetters.fetters_id, out var fettersConfig))
             {
@@ -433,12 +439,12 @@ namespace battle_shop
             return 0;
         }
 
-        public List<Fetters> check_fetters()
+        public static List<Fetters> check_fetters(List<Role> RoleList)
         {
             var mapFetters = new Dictionary<int, Fetters>();
             var mapFetterRole = new Dictionary<int, List<int>>();
 
-            foreach (var r in battleData.RoleList)
+            foreach (var r in RoleList)
             {
                 if (r != null)
                 {
@@ -468,7 +474,7 @@ namespace battle_shop
             var fetters_info = new List<Fetters>();
             foreach (var fetters in mapFetters.Values)
             {
-                foreach (var r in battleData.RoleList)
+                foreach (var r in RoleList)
                 {
                     if (r != null && r.FettersSkillID.fetters_id == fetters.fetters_id)
                     {
@@ -478,7 +484,17 @@ namespace battle_shop
 
                 fetters.fetters_level = check_fetters_level(fetters);
                 fetters_info.Add(fetters);
+            }
 
+            return fetters_info;
+        }
+
+        public List<Fetters> check_fetters()
+        {
+            var fetters_info = check_fetters(battleData.RoleList);
+
+            foreach (var fetters in fetters_info)
+            {
                 if (fetters.fetters_level > 0)
                 {
                     for (var i = 0; i < battleData.RoleList.Count; i++)

@@ -30,3 +30,10 @@ module player_battle {
     kill_role ntf(Role self);
 	check_achievement req(Achievement achievement) rsp(AchievementReward reward) err(int32 err);
 }
+
+module player_quest {
+	start_quest_ready req() rsp(int32[] events) err(int32 err);
+	start_quest_shop req(int32 eventID) rsp(UserBattleData self, ShopData shop_info) err(int32 err);
+	start_quest_battle req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
+    confirm_quest_victory req(BattleVictory is_victory) rsp() err();
+}

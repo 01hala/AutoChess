@@ -125,7 +125,6 @@ namespace Match
             return false;
         }
 
-
         public em_error buy_role(int index, int role_index)
         {
             var r = BattleShopPlayer.BattleData.RoleList[role_index];
@@ -172,7 +171,6 @@ namespace Match
 
             return em_error.success;
         }
-
 
         public em_error buy(ShopIndex shop_index, int index, int role_index)
         {
