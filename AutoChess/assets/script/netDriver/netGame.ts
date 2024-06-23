@@ -11,7 +11,6 @@ import { netSingleton } from "./netSingleton"
 
 export class netGame {
     private c_player_battle__caller : player_login.player_battle_caller;
-    private c_match : match.plan_caller;
     private c_match_gm : match.gm_caller;
 
     private match_c : match_c.battle_client_module;
@@ -30,7 +29,6 @@ export class netGame {
     public cb_shop_summon : (role_index:number, _role:common.Role) => void;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
-        this.c_match = new match.plan_caller(cli.cli_handle);
         this.c_match_gm = new match.gm_caller(cli.cli_handle);
 
         this.match_c = new match_c.battle_client_module(cli.cli_handle);
@@ -125,12 +123,12 @@ export class netGame {
     }
 
     public get_battle_data() {
-        return this.c_match.get_hub(this.match_name).get_battle_data();
+        return netSingleton.shop.c_match.get_hub(this.match_name).get_battle_data();
     }
 
     public freeze(shop_index:common.ShopIndex, index:number, is_freeze:boolean) {
         return new Promise<void>((resolve) => {
-            this.c_match.get_hub(this.match_name).freeze(shop_index, index, is_freeze).callBack((data:common.ShopData) => {
+            netSingleton.shop.c_match.get_hub(this.match_name).freeze(shop_index, index, is_freeze).callBack((data:common.ShopData) => {
                 this.cb_shop_info.call(null, data);
                 resolve();
             }, (err) => {
@@ -144,7 +142,7 @@ export class netGame {
     public cb_battle_info: (battle_info:common.UserBattleData) => void;
     public cb_shop_info: (shop_info:common.ShopData) => void;
     public buy(shop_index:common.ShopIndex, index:number, role_index:number) {
-        this.c_match.get_hub(this.match_name).buy(shop_index, index, role_index).callBack((battle_info, shop_info)=>{
+        netSingleton.shop.buy(this.match_name, shop_index, index, role_index).callBack((battle_info, shop_info)=>{
             this.cb_battle_info.call(null, battle_info);
             this.cb_shop_info.call(null, shop_info);
         }, (err)=>{
@@ -155,7 +153,7 @@ export class netGame {
     }
 
     public move(role_index1:number, role_index2:number) {
-        this.c_match.get_hub(this.match_name).move(role_index1, role_index2).callBack((battle_info)=>{
+        netSingleton.shop.move(this.match_name, role_index1, role_index2).callBack((battle_info)=>{
             this.cb_battle_info.call(null, battle_info);
         }, (err)=>{
             console.log("move err:", err);
@@ -165,7 +163,7 @@ export class netGame {
     }
 
     public sale_role(index:number) {
-        this.c_match.get_hub(this.match_name).sale_role(index).callBack((battle_info)=>{
+        netSingleton.shop.sale_role(this.match_name, index).callBack((battle_info)=>{
             this.cb_battle_info.call(null, battle_info);
         }, (err)=>{
             console.log("sale_role err:", err);
@@ -176,7 +174,7 @@ export class netGame {
     
     public refresh() {
         return new Promise<void>((resolve) => {
-            this.c_match.get_hub(this.match_name).refresh().callBack((shop_info)=>{
+            netSingleton.shop.refresh(this.match_name).callBack((shop_info)=>{
                 this.cb_shop_info.call(null, shop_info);
                 resolve();
             }, (err)=>{
@@ -190,7 +188,7 @@ export class netGame {
     //战斗阶段(测试用)
     public cb_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
     public battle() {
-        this.c_match.get_hub(this.match_name).start_round().callBack((self, target)=>{
+        netSingleton.shop.c_match.get_hub(this.match_name).start_round().callBack((self, target)=>{
             this.cb_battle.call(null, self, target);
         }, (err)=>{
             console.log("battle err:", err);
@@ -201,7 +199,7 @@ export class netGame {
     //战斗阶段
     public battle1() {
         return new Promise<void>((relolve, reject) => {
-            this.c_match.get_hub(this.match_name).start_round1().callBack((self, target)=>{
+            netSingleton.shop.c_match.get_hub(this.match_name).start_round1().callBack((self, target)=>{
                 this.cb_battle.call(null, self, target);
                 relolve();
             }, (err)=>{
@@ -213,7 +211,7 @@ export class netGame {
     }
 
     public confirm_round_victory(is_victory:common.BattleVictory) {
-        this.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(()=>{
+        netSingleton.shop.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(()=>{
         }, ()=>{
             console.log("confirm_round_victory err");
         }).timeout(3000, ()=>{

@@ -21,6 +21,8 @@ export class netPlayer {
 
     private c_rank_cli_service_caller:rank_cli.rank_cli_service_caller;
 
+    private c_player_quest_caller:player_login.player_quest_caller;
+
     public cb_archive_sync : () => void;
     public cb_battle_victory : () => void;
     public cb_achievement_complete:(achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement)=>void;
@@ -32,6 +34,7 @@ export class netPlayer {
     public constructor() {
         this.c_login_caller = new login.login_caller(cli.cli_handle); 
         this.c_player_login_caller = new player_login.player_login_caller(cli.cli_handle);
+        this.c_player_quest_caller = new player_login.player_quest_caller(cli.cli_handle);
 
         this.player_client_module = new player_client.player_client_module(cli.cli_handle);
         this.c_player_shop_caller=new player_login.player_shop_caller(cli.cli_handle);
@@ -86,6 +89,22 @@ export class netPlayer {
         }).timeout(3000, ()=>{
             console.log("login player timeout");
         });
+    }
+
+    public start_quest_ready() {
+        return this.c_player_quest_caller.get_hub(this.player_name).start_quest_ready();
+    }
+
+    public start_quest_shop(eventID:number) {
+        return this.c_player_quest_caller.get_hub(this.player_name).start_quest_shop(eventID);
+    }
+
+    public start_quest_battle() {
+        return this.c_player_quest_caller.get_hub(this.player_name).start_quest_battle();
+    }
+
+    public confirm_quest_victory(is_victory:common.BattleVictory) {
+        return this.c_player_quest_caller.get_hub(this.player_name).confirm_quest_victory(is_victory);
     }
 
     public cb_player_login_sucess:() => void;
@@ -255,4 +274,49 @@ export class netPlayer {
         this.c_player_login_caller.get_hub(this.player_name).guide_step(_guideStep);
     }
 
+    public cb_battle_info: (battle_info:common.UserBattleData) => void;
+    public cb_shop_info: (shop_info:common.ShopData) => void;
+    public buy(shop_index:common.ShopIndex, index:number, role_index:number) {
+        singleton.netSingleton.shop.buy(this.player_name, shop_index, index, role_index).callBack((battle_info, shop_info)=>{
+            this.cb_battle_info.call(null, battle_info);
+            this.cb_shop_info.call(null, shop_info);
+        }, (err)=>{
+            console.log("buy err:", err);
+        }).timeout(3000, ()=>{
+            console.log("buy timeout!");
+        })
+    }
+
+    public move(role_index1:number, role_index2:number) {
+        singleton.netSingleton.shop.move(this.player_name, role_index1, role_index2).callBack((battle_info)=>{
+            this.cb_battle_info.call(null, battle_info);
+        }, (err)=>{
+            console.log("move err:", err);
+        }).timeout(3000, ()=>{
+            console.log("move timeout!");
+        })
+    }
+
+    public sale_role(index:number) {
+        singleton.netSingleton.shop.sale_role(this.player_name, index).callBack((battle_info)=>{
+            this.cb_battle_info.call(null, battle_info);
+        }, (err)=>{
+            console.log("sale_role err:", err);
+        }).timeout(3000, ()=>{
+            console.log("sale_role timeout!");
+        })
+    }
+    
+    public refresh() {
+        return new Promise<void>((resolve) => {
+            singleton.netSingleton.shop.refresh(this.player_name).callBack((shop_info)=>{
+                this.cb_shop_info.call(null, shop_info);
+                resolve();
+            }, (err)=>{
+                console.log("refresh err:", err);
+            }).timeout(3000, ()=>{
+                console.log("refresh timeout!");
+            })
+        });
+    }
 }

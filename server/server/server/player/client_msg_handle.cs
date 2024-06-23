@@ -1,10 +1,5 @@
 ﻿using Abelkhan;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Drawing;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 
 namespace Player
 {
@@ -41,12 +36,41 @@ namespace Player
             player_quest_Module.on_start_quest_ready += Player_quest_Module_on_start_quest_ready;
             player_quest_Module.on_start_quest_shop += Player_quest_Module_on_start_quest_shop;
             player_quest_Module.on_start_quest_battle += Player_quest_Module_on_start_quest_battle;
+            player_quest_Module.on_confirm_quest_victory += Player_quest_Module_on_confirm_quest_victory;
 
             player_shop_Module = new();
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_quest_Module_on_confirm_quest_victory(BattleVictory is_victory)
+        {
+            Log.Log.trace("on_confirm_quest_victory begin!");
+
+            try
+            {
+                var rsp = plan_Module.rsp as player_quest_confirm_quest_victory_rsp;
+                var uuid = Hub.Hub._gates.current_client_uuid;
+
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                if (_avatar != null)
+                {
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    if (is_victory == BattleVictory.victory)
+                    {
+                        _data.Data.Info().quest++;
+                    }
+                    rsp.rsp();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Player_quest_Module_on_confirm_quest_victory error:{0}", ex);
+            }
+
+            Log.Log.trace("on_confirm_quest_victory end!");
         }
 
         private async void Plan_Module_on_refresh()
