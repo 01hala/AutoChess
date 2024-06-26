@@ -16,7 +16,7 @@ import { RoleIcon } from './RoleIcon';
 import { config } from '../../config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
-import { PropsType } from '../../other/enums';
+import * as enmus from '../../other/enums';
 import { SendMessage } from '../../other/MessageEvent';
 import { RoleDis } from '../../battle/display/RoleDis';
 import { GameManager } from '../../other/GameManager';
@@ -40,25 +40,27 @@ export class ReadyDis
     public readyData:ReadyData;
     //动效
     private launchSkillEffect:Node;
-
+    //按钮
     private refreshBtn:Button;
     private startBtn:Button;
     private exitBtn:Button;
-
+    //文本
     private heathText:RichText;
     private coinText:RichText;
     private trophyText:RichText;
     private roundText:RichText;
-
+    //角色信息
     private roleInfoNode:Node;
     private fetters:Node[]=[];
-
+    //等待界面
     private waitingPanel:Node;
+    //游戏模式
+    private gameMode:enmus.GameMode;
 
     public constructor(ready:ReadyData) 
     {
         this.readyData = ready;
-        this.onEvent();
+        //this.onEvent();
     }
 /*
  * 修改start
@@ -66,11 +68,12 @@ export class ReadyDis
  * 2024/03/07
  * 让加载更平顺
  */
-    async start(father:Node,battle_info:common.UserBattleData,_callBack:(event?:()=>void)=>void) 
+    async start(_father:Node,battle_info:common.UserBattleData,_gamemode:enmus.GameMode,_callBack:(event?:()=>void)=>void) 
     {
         try
         {
-            this.father=father;
+            this.father=_father;
+            this.gameMode=_gamemode;
             //主要界面
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
             this.panelNode = instantiate(panel);
@@ -106,7 +109,7 @@ export class ReadyDis
 
             _callBack(async ()=>
             {
-                await this.Init(father);
+                await this.Init(_father);
                 //准备开始
                 if (battle_info.round > 1) {
                     await this.Restore(battle_info);
@@ -130,12 +133,16 @@ export class ReadyDis
         }
     }
 
-    async Init(father:Node)
+    async Init(_father:Node)
     {
         try
         {
             this.InterfaceAdjust();
-            this.RegCallBack();
+            if(enmus.GameMode.PVP == this.gameMode)
+            {
+                this.RegCallBack();
+            }
+            
             //羁绊信息框
             let tNode = this.panelNode.getChildByPath("RoleArea/FetterArea");
             for (let i = 1; i <= 6; i++) {
@@ -152,7 +159,7 @@ export class ReadyDis
             this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () => {
                 if (this.readyData.GetRolesNumber() > 0) {
-                    await this.readyData.StartBattle();
+                    await this.readyData.StartBattle(this.gameMode);
                     this.panelNode.active = false;
                     this.destory();
                 }
@@ -160,7 +167,7 @@ export class ReadyDis
             this.exitBtn = this.panelNode.getChildByPath("TopArea/Exit_Btn").getComponent(Button);
             this.exitBtn.node.on(Button.EventType.CLICK, () => {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
-                father.getComponent(login).BackMainInterface();
+                _father.getComponent(login).BackMainInterface();
             }, this);
         }
         catch(error)
@@ -318,7 +325,7 @@ export class ReadyDis
     //刷新商店
     private async RefreshShop()
     {
-        await this.readyData.Refresh();
+        await this.readyData.Refresh(this.gameMode);
         console.log('refresh');
         this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
     }
@@ -452,11 +459,11 @@ export class ReadyDis
         });
     }
 
-    onEvent()
-    {
-        this.readyData.on_event = async (evs) =>
-        {
-            
-        }
-    }
+    // onEvent()
+    // {
+    //     this.readyData.on_event = async (evs) =>
+    //     {
+
+    //     }
+    // }
 }

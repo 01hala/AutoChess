@@ -19,6 +19,7 @@ import { sleep } from '../other/sleep';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
 import { Guide } from '../other/Guide';
+import * as enmus from '../other/enums';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -255,7 +256,7 @@ export class login extends Component {
                 //新的一局游戏
                 let _ready = new ReadyData(battle_info, shop_info ,fetters_info);
                 singleton.netSingleton.ready=new ReadyDis(_ready);
-                await singleton.netSingleton.ready.start(this.bk.node , battle_info , async (event)=>
+                await singleton.netSingleton.ready.start(this.bk.node , battle_info , enmus.GameMode.PVP ,async (event)=>
                 {
                     await sleep(2000);
                     this._setProgress(1.0);

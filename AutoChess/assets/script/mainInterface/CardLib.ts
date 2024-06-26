@@ -194,7 +194,7 @@ export class CardLib extends Component
                             if(singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
                             {
                                 card.getComponent(RoleCard).Lock=true;
-                                card.getComponent(RoleCard).SetNumberText
+                                card.getComponent(RoleCard).SetNumber
                                     (
                                         singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number, 8
                                     );
@@ -202,7 +202,6 @@ export class CardLib extends Component
                             else
                             {
                                 card.getComponent(RoleCard).Lock=false;
-                                card.getChildByPath("NumberText").active=false;
                             }
                         }
                         catch(error)

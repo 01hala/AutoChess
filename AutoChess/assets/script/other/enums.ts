@@ -118,3 +118,9 @@ export enum PopUpsType
     ConfirmBoard=3
 }
 
+export enum GameMode
+{
+    PVP=1,
+    PVE=2
+}
+

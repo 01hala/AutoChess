@@ -10,6 +10,7 @@ import { ShopProp, ShopRole } from '../serverSDK/common';
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
 import { EventType } from '../other/enums';
+import * as enmus from '../other/enums';
 const { ccclass, property } = _decorator;
 
 /*
@@ -32,9 +33,9 @@ export class ReadyData
 
     //private freezeRoles:Role[]=[];
 
-    private evs:skill.Event[] = [];
+    //private evs:skill.Event[] = [];
 
-    public on_event : ((evs:skill.Event[]) => Promise<void>) = null;
+    //public on_event : ((evs:skill.Event[]) => Promise<void>) = null;
 
     public constructor(battle_info:common.UserBattleData, self:common.ShopData , fetters_info?:common.Fetters[]) 
     {
@@ -202,14 +203,20 @@ export class ReadyData
         }
     }
 
-    public async Refresh()
+    public async Refresh(_gamemode:enmus.GameMode)
     {
-        await singleton.netSingleton.game.refresh();
+        if(enmus.GameMode.PVP == _gamemode)
+        {
+            await singleton.netSingleton.game.refresh();
+        }
     }
 
-    public async StartBattle()
+    public async StartBattle(_gamemode:enmus.GameMode)
     {
-        await singleton.netSingleton.game.battle1();
+        if(enmus.GameMode.PVP == _gamemode)
+        {
+            await singleton.netSingleton.game.battle1();
+        }
     }
 
     public async Buy(shop_index: common.ShopIndex,index:number,role_index:number)
@@ -218,20 +225,20 @@ export class ReadyData
 
         await singleton.netSingleton.game.buy(shop_index,index,role_index);
 
-        let ev = new skill.Event();
-        ev.type=EventType.Purchase;
-        ev.value=[];
-        ev.value.push(this.coin);
+        // let ev = new skill.Event();
+        // ev.type = EventType.Purchase;
+        // ev.value = [];
+        // ev.value.push(this.coin);
     }
 
     public async Sale(role_index:number)
     {
         await singleton.netSingleton.game.sale_role(role_index);
 
-        let ev = new skill.Event();
-        ev.type=EventType.Sold;
-        ev.value=[];
-        ev.value.push(this.coin);
+        // let ev = new skill.Event();
+        // ev.type=EventType.Sold;
+        // ev.value=[];
+        // ev.value.push(this.coin);
     }
 
     public async Move(index_befor:number,index_after:number)

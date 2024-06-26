@@ -90,6 +90,7 @@ export class RoleCard extends Component
             else
             {
                 color = new Color().fromHEX('#FFFFFF');
+                this.unlockBtn.active=false;
             }
             this.node.getChildByPath("Sprite").getComponent(sp.Skeleton).color = color;
         }
@@ -124,8 +125,8 @@ export class RoleCard extends Component
 
         this.unlockBtn.on(Button.EventType.CLICK,()=>
         {
-            this.unlockBtn.active=false;
-            this.Lock=true;
+            this.Lock=false;
+            //合成代码...
         },this);
 
         this.unlockBtn.getComponent(Button).enabled=false;
@@ -181,14 +182,10 @@ export class RoleCard extends Component
         });
     }
 
-    public SetNumberText(_molecule:number,_denominator:number)
+    public SetNumber(_molecule:number,_denominator:number)
     {
         this.numberText.string= "" + _molecule  + " | " + _denominator;
-    }
-
-    public CanMerge(_flag:boolean)
-    {
-        if(_flag)
+        if(_molecule>=_denominator)
         {
             this.unlockBtn.getComponent(Button).enabled=true;
             this.unlockBtn.getComponent(Sprite).grayscale=false;
