@@ -13,6 +13,7 @@ import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';
 import { AudioManager } from '../../other/AudioManager';
 import { GameManager } from '../../other/GameManager';
+import * as enmus from '../../other/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -182,7 +183,7 @@ export class ShopArea extends Component
         }
     }
 
-    async BuyProp(_index:number,_obj:Node)
+    async BuyProp(_index:number,_obj:Node,_gamemode:enmus.GameMode)
     {
         for(let i=0;i<this.shopProps.length;i++)
         {

@@ -54,8 +54,6 @@ export class ReadyDis
     private fetters:Node[]=[];
     //等待界面
     private waitingPanel:Node;
-    //游戏模式
-    private gameMode:enmus.GameMode;
 
     public constructor(ready:ReadyData) 
     {
@@ -68,12 +66,11 @@ export class ReadyDis
  * 2024/03/07
  * 让加载更平顺
  */
-    async start(_father:Node,battle_info:common.UserBattleData,_gamemode:enmus.GameMode,_callBack:(event?:()=>void)=>void) 
+    async start(_father:Node,battle_info:common.UserBattleData,_callBack:(event?:()=>void)=>void) 
     {
         try
         {
             this.father=_father;
-            this.gameMode=_gamemode;
             //主要界面
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
             this.panelNode = instantiate(panel);
@@ -138,9 +135,9 @@ export class ReadyDis
         try
         {
             this.InterfaceAdjust();
-            if(enmus.GameMode.PVP == this.gameMode)
+            if(enmus.GameMode.PVP == this.readyData.gameMode)
             {
-                this.RegCallBack();
+                this.RegPvpCallBack();
             }
             
             //羁绊信息框
@@ -159,7 +156,7 @@ export class ReadyDis
             this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () => {
                 if (this.readyData.GetRolesNumber() > 0) {
-                    await this.readyData.StartBattle(this.gameMode);
+                    await this.readyData.StartBattle();
                     this.panelNode.active = false;
                     this.destory();
                 }
@@ -211,7 +208,8 @@ export class ReadyDis
 
     }
 
-    private RegCallBack()
+    //PVP回调事件
+    private RegPvpCallBack()
     {
         //注册回调
         singleton.netSingleton.game.cb_battle_info = (battle_info: common.UserBattleData) => {
@@ -223,10 +221,12 @@ export class ReadyDis
             //console.log('player coin: ',battle_info.coin);
             this.UpdatePlayerInfo(battle_info);
         };
+
         singleton.netSingleton.game.cb_shop_info = (shop_info: common.ShopData) => {
             console.log("shop_info:", shop_info);
             this.readyData.SetShopData(shop_info);
         };
+
         singleton.netSingleton.game.cb_role_buy_merge = (target_role_index: number, target_role: common.Role, is_update: boolean) => 
         {
             try
@@ -243,6 +243,7 @@ export class ReadyDis
                 console.error("cb_role_buy_merge 错误: ",(error));
            }
         };
+
         singleton.netSingleton.game.cb_role_merge = (source_role_index: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             console.log('cb_role_merge,source_role:', source_role_index);
             this.roleArea.rolesNode[source_role_index].getComponent(RoleIcon).roleNode.destroy();
@@ -255,6 +256,7 @@ export class ReadyDis
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).GetUpgrade(target_role, is_update);
 
         };
+
         singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) => {
             // let str = "Location_" + target_role_index;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
@@ -262,17 +264,21 @@ export class ReadyDis
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).EatFood(target_role, food_id);
         };
+
         singleton.netSingleton.game.cb_role_equip=(equip_id:number,target_role_index:number, target_role:common.Role)=>{
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).Equipping(target_role,equip_id);
         }
+
         singleton.netSingleton.game.cb_role_update_refresh_shop=(shop_info: common.ShopData)=> {
             this.readyData.SetShopData(shop_info);
             this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
         };
+
         singleton.netSingleton.game.cb_add_coin=(coin:number)=>
         {
             this.readyData.SetCoins(coin);
         };
+
         singleton.netSingleton.game.cb_role_skill_update=async (role_index:number,_role:common.Role)=>
         {
             await this.showLaunchSkillEffect();
@@ -281,6 +287,7 @@ export class ReadyDis
                 this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role,false);
             }
         };
+
         singleton.netSingleton.game.cb_role_add_property=async (battle_info:common.UserBattleData)=>
         {
             await this.showLaunchSkillEffect();
@@ -292,12 +299,20 @@ export class ReadyDis
                 }
             }
         };
+
         singleton.netSingleton.game.cb_shop_summon=(role_index:number, _role:common.Role)=>
         { 
             this.roleArea.SummonRole(role_index,_role);
         };
 
     }
+
+    //PVE回调事件
+    private RegPveCallBack()
+    {
+        
+    }
+
 /*
  * 修改方法 每次返回更新角色列表
  * Editor: Hotaru
@@ -325,7 +340,7 @@ export class ReadyDis
     //刷新商店
     private async RefreshShop()
     {
-        await this.readyData.Refresh(this.gameMode);
+        await this.readyData.Refresh();
         console.log('refresh');
         this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
     }

@@ -254,9 +254,9 @@ export class login extends Component {
                 }
 
                 //新的一局游戏
-                let _ready = new ReadyData(battle_info, shop_info ,fetters_info);
-                singleton.netSingleton.ready=new ReadyDis(_ready);
-                await singleton.netSingleton.ready.start(this.bk.node , battle_info , enmus.GameMode.PVP ,async (event)=>
+                let _readyData = new ReadyData(battle_info, shop_info , enmus.GameMode.PVP ,fetters_info);
+                singleton.netSingleton.ready=new ReadyDis(_readyData);
+                await singleton.netSingleton.ready.start(this.bk.node , battle_info ,async (event)=>
                 {
                     await sleep(2000);
                     this._setProgress(1.0);
@@ -315,7 +315,7 @@ export class login extends Component {
             singleton.netSingleton.battle.destory();
             singleton.netSingleton.battle=null;
 
-            singleton.netSingleton.game.battle1();
+            singleton.netSingleton.game.battle();
         }
 
         this.netNode.on("connect", (e)=>{

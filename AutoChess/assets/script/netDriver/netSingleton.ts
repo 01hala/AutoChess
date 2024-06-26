@@ -10,7 +10,7 @@ export class netSingleton {
     public static is_conn_gate = false;
     public static player = new player.netPlayer(); 
     public static game = new game.netGame();
-    public static shop = new shop.netBattleShop();
+    public static battleshop = new shop.netBattleShop();
     public static battle:BattleDis = null;
     public static ready:ReadyDis=null;
     public static mainInterface:MainInterface=null;
