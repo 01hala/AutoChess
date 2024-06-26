@@ -154,7 +154,9 @@ export class netPlayer {
         this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
         {
             this.cb_get_user_data(_userInfo);
-            _onCallBack(_userInfo.guideStep);
+            if (_onCallBack) {
+                _onCallBack(_userInfo.guideStep);
+            }
         },(err)=>
         {
             console.log("get user data error:" + err);
