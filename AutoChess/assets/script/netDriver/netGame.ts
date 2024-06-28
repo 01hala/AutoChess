@@ -349,6 +349,24 @@ export class netGame {
         return this.c_player_quest_caller.get_hub(netSingleton.player.player_name).confirm_quest_victory(is_victory);
     }
 
+    public get_quest_shop_data() {
+        return new Promise<void>((resolve,reject)=>
+        {
+            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((self,shop_info)=>
+            {
+                this.cb_start_quest_shop(self,shop_info);
+                resolve();
+            },(err)=>
+            {
+                console.log("start_quest_shop err:", err);
+                reject();
+            }).timeout(3000,()=>
+            {
+                console.log("start_quest_shop timeout");
+                reject();
+            });
+        });
+    }
 
     public cb_quest_battle_info: (battle_info: common.UserBattleData) => void;
     public cb_quest_shop_info: (shop_info: common.ShopData) => void;

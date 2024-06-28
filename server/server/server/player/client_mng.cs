@@ -1,18 +1,12 @@
 ﻿using Abelkhan;
 using avatar;
-using bag;
 using battle_shop;
 using config;
-using Hub;
 using MongoDB.Bson;
 using OfflineMsg;
 using Service;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Player
@@ -55,6 +49,8 @@ namespace Player
         public long PeakStrengthID = 0;
 
         public battle_shop_player BattleShopPlayer;
+        public PVEConfig PVECfg;
+        public int PVELevelIndex = 0;
 
         public static string Type()
         {
@@ -1063,7 +1059,7 @@ namespace Player
 
         public int GetStage()
         {
-            if (config.Config.PVEConfigs.TryGetValue(info.quest, out var cfg))
+            if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
             {
                 return cfg.Stage;
             }
@@ -1071,25 +1067,58 @@ namespace Player
             return 1;
         }
 
+        public void ClearPVEState()
+        {
+            BattleShopPlayer = null;
+            PVECfg = null;
+            PVELevelIndex = 0;
+        }
+
+        public void StartPVERound()
+        {
+            foreach (var r in BattleShopPlayer.BattleData.RoleList)
+            {
+                if (r != null)
+                {
+                    r.TempHP = 0;
+                    r.TempAttack = 0;
+                    r.TempAdditionBuffer.Clear();
+                }
+            }
+
+            BattleShopPlayer.ShopData = BattleShopPlayer.refresh(GetStage());
+
+            BattleShopPlayer.evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.start_round
+            });
+
+            BattleShopPlayer.clear_skill_tag();
+            BattleShopPlayer.do_skill(GetStage());
+        }
+
+        public void EndPVERound()
+        {
+            BattleShopPlayer.evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.end_round
+            });
+
+            BattleShopPlayer.clear_skill_tag();
+            BattleShopPlayer.do_skill(GetStage());
+        }
+
         public Tuple<bool, List<int>> StartQuestReady(string _clientUUID, battle_client_caller battleClientCaller)
         {
-            var isExist = false;
-            var events = new List<int>();
-
             BattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
 
             if (config.Config.PVEConfigs.TryGetValue(info.quest, out var cfg))
             {
-                var eventIds = cfg.EventID.Split(',');
-                foreach (var id in eventIds)
-                {
-                    events.Add(int.Parse(id));
-                }
-
-                isExist = true;
+                PVECfg = cfg;
+                return Tuple.Create(true, cfg.EventID);
             }
 
-            return Tuple.Create(isExist, events);
+            return Tuple.Create(false, new List<int>());
         }
 
         public void StartQuestShop(int eventid)
@@ -1131,7 +1160,7 @@ namespace Player
         {
             var target = new UserBattleData();
 
-            if (config.Config.PVEConfigs.TryGetValue(info.quest, out var cfg))
+            if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
             {
                 foreach(var rInfo in cfg.Roles)
                 {
