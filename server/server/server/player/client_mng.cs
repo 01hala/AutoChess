@@ -1088,6 +1088,11 @@ namespace Player
 
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(GetStage());
 
+            if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
+            {
+                BattleShopPlayer.BattleData.coin = cfg.Gold;
+            }
+
             BattleShopPlayer.evs.Add(new shop_event()
             {
                 ev = EMRoleShopEvent.start_round
