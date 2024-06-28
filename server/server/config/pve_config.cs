@@ -3,25 +3,15 @@ using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Abelkhan;
+using System.Linq;
 
 namespace config
 {
-    public class RoleInfo
-    {
-        public int RoleID;
-        public int RoleAttack;
-        public int RoleHP;
-        public int RoleLevel;
-        public int RoleEquip;
-    }
-
     public class PVEConfig
     {
         public int ID;
-        public string EventID;
-        public int Stage;
-        public int Gold;
-        public List<RoleInfo> Roles;
+        public List<int> EventID;
+        public List<int> Level;
 
         public static Dictionary<int, PVEConfig> Load(string path)
         {
@@ -45,61 +35,14 @@ namespace config
             var handle = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(System.Text.Encoding.Default.GetString(data));
             foreach (var o in handle.Values)
             {
-                var pvec = new PVEConfig();
-                pvec.ID = (int)o["ID"];
-                pvec.EventID = (string)o["EventID"];
-                pvec.Stage = (int)o["Stage"];
-                pvec.Gold = (int)o["Gold"];
+                var pec = new PVEConfig();
+                pec.ID = (int)o["ID"];
+                var eventIDs = (string)o["EventID"];
+                pec.EventID = eventIDs.Split(',').Select(int.Parse).ToList();
+                var levels = (string)o["Level"];
+                pec.Level = levels.Split(',').Select(int.Parse).ToList();
 
-                var roleInfo = new RoleInfo();
-                roleInfo.RoleID = (int)o["Role1ID"];
-                roleInfo.RoleAttack = (int)o["Role1Attack"];
-                roleInfo.RoleHP = (int)o["Role1HP"];
-                roleInfo.RoleLevel = (int)o["Role1Level"];
-                roleInfo.RoleEquip = (int)o["Role1Equip"];
-                pvec.Roles.Add(roleInfo);
-
-                roleInfo = new RoleInfo();
-                roleInfo.RoleID = (int)o["Role2ID"];
-                roleInfo.RoleAttack = (int)o["Role2Attack"];
-                roleInfo.RoleHP = (int)o["Role2HP"];
-                roleInfo.RoleLevel = (int)o["Role2Level"];
-                roleInfo.RoleEquip = (int)o["Role2Equip"];
-                pvec.Roles.Add(roleInfo);
-
-                roleInfo = new RoleInfo();
-                roleInfo.RoleID = (int)o["Role3ID"];
-                roleInfo.RoleAttack = (int)o["Role3Attack"];
-                roleInfo.RoleHP = (int)o["Role3HP"];
-                roleInfo.RoleLevel = (int)o["Role3Level"];
-                roleInfo.RoleEquip = (int)o["Role3Equip"];
-                pvec.Roles.Add(roleInfo);
-
-                roleInfo = new RoleInfo();
-                roleInfo.RoleID = (int)o["Role4ID"];
-                roleInfo.RoleAttack = (int)o["Role4Attack"];
-                roleInfo.RoleHP = (int)o["Role4HP"];
-                roleInfo.RoleLevel = (int)o["Role4Level"];
-                roleInfo.RoleEquip = (int)o["Role4Equip"];
-                pvec.Roles.Add(roleInfo);
-
-                roleInfo = new RoleInfo();
-                roleInfo.RoleID = (int)o["Role5ID"];
-                roleInfo.RoleAttack = (int)o["Role5Attack"];
-                roleInfo.RoleHP = (int)o["Role5HP"];
-                roleInfo.RoleLevel = (int)o["Role5Level"];
-                roleInfo.RoleEquip = (int)o["Role5Equip"];
-                pvec.Roles.Add(roleInfo);
-
-                roleInfo = new RoleInfo();
-                roleInfo.RoleID = (int)o["Role6ID"];
-                roleInfo.RoleAttack = (int)o["Role6Attack"];
-                roleInfo.RoleHP = (int)o["Role6HP"];
-                roleInfo.RoleLevel = (int)o["Role6Level"];
-                roleInfo.RoleEquip = (int)o["Role6Equip"];
-                pvec.Roles.Add(roleInfo);
-
-                obj[pvec.ID] = pvec;
+                obj[pec.ID] = pec;
             }
 
             return obj;
