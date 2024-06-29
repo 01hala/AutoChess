@@ -108,18 +108,23 @@ export class netGame {
     public match_name:string = "";
     //准备阶段
     public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
-    public start_battle() {
-        return new Promise<void>((relolve, reject) => {
-            this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info)=>{
+    public start_battle()
+    {
+        return new Promise((relolve, reject) =>
+        {
+            this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info) =>
+            {
                 this.match_name = match_name;
-                this.cb_start_battle.call(null, battle_info, shop_info, null);
-                relolve();
-            }, (err)=>{
+                this.cb_start_battle(battle_info, shop_info, null);
+                relolve(null);
+            }, (err) =>
+            {
                 console.log("start_battle err:", err);
-                reject();
-            }).timeout(3000, ()=>{
+                reject("error");
+            }).timeout(3000, () =>
+            {
                 console.log("start_battle timeout!");
-                reject();
+                reject("timeout");
             });
         });
     }
@@ -128,96 +133,155 @@ export class netGame {
         return netSingleton.battleshop.c_match.get_hub(this.match_name).get_battle_data();
     }
 
-    public freeze(shop_index:common.ShopIndex, index:number, is_freeze:boolean) {
-        return new Promise<void>((resolve) => {
-            netSingleton.battleshop.c_match.get_hub(this.match_name).freeze(shop_index, index, is_freeze).callBack((data:common.ShopData) => {
-                this.cb_shop_info.call(null, data);
-                resolve();
-            }, (err) => {
+    public freeze(shop_index: common.ShopIndex, index: number, is_freeze: boolean)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.c_match.get_hub(this.match_name).freeze(shop_index, index, is_freeze).callBack((data: common.ShopData) =>
+            {
+                this.cb_shop_info(data);
+                resolve(null);
+            }, (err) =>
+            {
                 console.log("freeze err:", err);
-            }).timeout(3000, ()=>{
+                reject("error");
+            }).timeout(3000, () =>
+            {
                 console.log("freeze timeout!");
+                reject("timeout");
             })
         });
     }
 
     public cb_battle_info: (battle_info:common.UserBattleData) => void;
     public cb_shop_info: (shop_info:common.ShopData) => void;
-    public buy(shop_index:common.ShopIndex, index:number, role_index:number) {
-        netSingleton.battleshop.buy(this.match_name, shop_index, index, role_index).callBack((battle_info, shop_info)=>{
-            this.cb_battle_info.call(null, battle_info);
-            this.cb_shop_info.call(null, shop_info);
-        }, (err)=>{
-            console.log("buy err:", err);
-        }).timeout(3000, ()=>{
-            console.log("buy timeout!");
-        })
+    public buy(shop_index: common.ShopIndex, index: number, role_index: number)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.buy(this.match_name, shop_index, index, role_index).callBack((battle_info, shop_info) =>
+            {
+                this.cb_battle_info(battle_info);
+                this.cb_shop_info(shop_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("buy err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("buy timeout!");
+                reject("timeout");
+            });
+        });
     }
 
-    public move(role_index1:number, role_index2:number) {
-        netSingleton.battleshop.move(this.match_name, role_index1, role_index2).callBack((battle_info)=>{
-            this.cb_battle_info.call(null, battle_info);
-        }, (err)=>{
-            console.log("move err:", err);
-        }).timeout(3000, ()=>{
-            console.log("move timeout!");
-        })
+    public move(role_index1: number, role_index2: number)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.move(this.match_name, role_index1, role_index2).callBack((battle_info) =>
+            {
+                this.cb_battle_info(battle_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("move err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("move timeout!");
+                reject("timeout");
+            });
+        });
     }
 
-    public sale_role(index:number) {
-        netSingleton.battleshop.sale_role(this.match_name, index).callBack((battle_info)=>{
-            this.cb_battle_info.call(null, battle_info);
-        }, (err)=>{
-            console.log("sale_role err:", err);
-        }).timeout(3000, ()=>{
-            console.log("sale_role timeout!");
-        })
-    }
-    
-    public refresh() {
-        return new Promise<void>((resolve) => {
-            netSingleton.battleshop.refresh(this.match_name).callBack((shop_info)=>{
-                this.cb_shop_info.call(null, shop_info);
-                resolve();
-            }, (err)=>{
-                console.log("refresh err:", err);
-            }).timeout(3000, ()=>{
-                console.log("refresh timeout!");
-            })
+    public sale_role(index: number)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.sale_role(this.match_name, index).callBack((battle_info) =>
+                {
+                    this.cb_battle_info(battle_info);
+                    resolve(null);
+                }, (err) =>
+                {
+                    console.log("sale_role err:", err);
+                    reject("error");
+                }).timeout(3000, () =>
+                {
+                    console.log("sale_role timeout!");
+                    reject("timeout");
+                });
         });
     }
     
+    public refresh()
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.refresh(this.match_name).callBack((shop_info) =>
+            {
+                this.cb_shop_info.call(null, shop_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("refresh err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("refresh timeout!");
+                reject("timeout");
+            })
+        });
+    }
     
     public cb_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
     //战斗阶段(测试用)
-    public battle_test() {
-        netSingleton.battleshop.c_match.get_hub(this.match_name).start_round().callBack((self, target)=>{
+    public battle_test()
+    {
+        netSingleton.battleshop.c_match.get_hub(this.match_name).start_round().callBack((self, target) =>
+        {
             this.cb_battle.call(null, self, target);
-        }, (err)=>{
+        }, (err) =>
+        {
             console.log("battle err:", err);
-        }).timeout(3000, ()=>{
+        }).timeout(3000, () =>
+        {
             console.log("battle timeout!");
-        })
+        });
     }
     //战斗阶段
-    public battle() {
-        return new Promise<void>((relolve, reject) => {
-            netSingleton.battleshop.c_match.get_hub(this.match_name).start_round1().callBack((self, target)=>{
+    public battle()
+    {
+        return new Promise((relolve, reject) =>
+        {
+            netSingleton.battleshop.c_match.get_hub(this.match_name).start_round1().callBack((self, target) =>
+            {
                 this.cb_battle.call(null, self, target);
-                relolve();
-            }, (err)=>{
+                relolve(null);
+            }, (err) =>
+            {
                 console.log("battle1 err:", err);
-            }).timeout(3000, ()=>{
+                reject("error")
+            }).timeout(3000, () =>
+            {
                 console.log("battle1 timeout!");
+                reject("timeout")
             })
         });
     }
 
-    public confirm_round_victory(is_victory:common.BattleVictory) {
-        netSingleton.battleshop.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(()=>{
-        }, ()=>{
+    public confirm_round_victory(is_victory:common.BattleVictory) 
+    {
+        netSingleton.battleshop.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(() =>
+        {
+            console.log("confirm_round_victory succeed!");
+        }, () =>
+        {
             console.log("confirm_round_victory err");
-        }).timeout(3000, ()=>{
+        }).timeout(3000, () =>
+        {
             console.log("confirm_round_victory timeout!");
         })
     }
@@ -226,21 +290,21 @@ export class netGame {
     public cb_start_peak_strength:(_selfBattleData:common.UserBattleData)=>void;
     public start_peak_strength()
     {
-        return new Promise<void>((relolve, reject)=>
+        return new Promise((relolve, reject)=>
         {
             this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_peak_strength().callBack((_match_name,_self)=>
                 {
                     this.match_name=_match_name;
                     this.cb_start_peak_strength(_self);
-                    relolve();
+                    relolve(null);
                 },(_err)=>
                 {
                     console.log("start_peak_strength err :",_err);
-                    reject();
+                    reject("error");
                 }).timeout(3000,()=>
                 {
                     console.log("start_peak_strength timeout!");
-                    reject();
+                    reject("timeout");
                 })
         });
     }
@@ -249,20 +313,20 @@ export class netGame {
     public cb_check_achievement:(achievementReward:common.AchievementReward)=>void;
     public check_achievement(achievement:common.Achievement)
     {
-        return new Promise<void>((relolve, reject)=>
+        return new Promise((relolve, reject)=>
         {
             this.c_player_battle__caller.get_hub(netSingleton.player.player_name).check_achievement(achievement).callBack((achievementReward)=>
                 {
                     this.cb_check_achievement(achievementReward);
-                    relolve();
+                    relolve(null);
                 },(_err)=>
                 {
                     console.log("check_achievement err :",_err);
-                    reject();
+                    reject("error");
                 }).timeout(3000,()=>
                 {
                     console.log("check_achievement timeout!");
-                    reject();
+                    reject("timeout");
                 })
         });
     }
@@ -279,155 +343,195 @@ export class netGame {
     }
 
     //开始pve准备阶段
-    public cb_quest_ready: (events:number[]) => void;
+    public cb_start_quest_ready: (events:number[]) => void;
     public start_quest_ready() 
     {
-        return new Promise<void>((resolve,reject)=>
+        return new Promise((resolve,reject)=>
         {
             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_ready().callBack((events)=>
             {
-                this.cb_quest_ready(events);
-                resolve();
+                this.cb_start_quest_ready(events);
+                resolve(null);
             },(err)=>
             {
                 console.log("start_quest_ready err:", err);
-                reject();
+                reject("error");
             }).timeout(3000,()=>
             {
                 console.log("start_quest_ready timeout");
-                reject();
+                reject("timeout");
             });
         });
-    }
-    
-    //选择随机事件
-    public cb_start_quest_shop: (slef:common.UserBattleData,shop_info:common.ShopData) => void;
-    public start_quest_shop(eventID:number) 
-    {
-        return new Promise<void>((resolve,reject)=>
-        {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop(eventID).callBack((self,shop_info)=>
-            {
-                this.cb_start_quest_shop(self,shop_info);
-                resolve();
-            },(err)=>
-            {
-                console.log("start_quest_shop err:", err);
-                reject();
-            }).timeout(3000,()=>
-            {
-                console.log("start_quest_shop timeout");
-                reject();
-            });
-        });
-        
     }
 
     //开始pve战斗
-    public cb_quest_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
+    public cb_start_quest_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
     public start_quest_battle() 
     {
-        return new Promise<void>((relolve, reject)=>
+        return new Promise((relolve, reject)=>
         {
             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_battle().callBack((self,target)=>
                 {
-                    this.cb_quest_battle(self,target);
-                    relolve();
+                    this.cb_start_quest_battle(self,target);
+                    relolve(null);
                 },(err)=>
                 {
                     console.log("start_quest_battle err:", err);
-                    reject();
+                    reject("error");
                 }).timeout(3000,()=>
                 {
                     console.log("start_quest_battle timeout");
-                    reject();
+                    reject("timeout");
                 });
         });
     }
 
-    public confirm_quest_victory(is_victory:common.BattleVictory) {
-        return this.c_player_quest_caller.get_hub(netSingleton.player.player_name).confirm_quest_victory(is_victory);
-    }
-
-    public get_quest_shop_data() {
-        return new Promise<void>((resolve,reject)=>
+    
+    //获取当前状态
+    public cb_get_quest_shop_data:(self:common.UserBattleData , shop_info:common.ShopData)=>void;
+    public get_quest_shop_data() 
+    {
+        return new Promise((resolve,reject)=>
         {
             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((self,shop_info)=>
             {
-                this.cb_start_quest_shop(self,shop_info);
-                resolve();
+                this.cb_get_quest_shop_data(self,shop_info);
+                resolve(null);
+            },(err)=>
+            {
+                console.log("get_quest_shop_data err:", err);
+                reject("error");
+            }).timeout(3000,()=>
+            {
+                console.log("get_quest_shop_data timeout");
+                reject("timeout");
+            });
+        });
+    }
+
+    
+    //选择随机事件
+    public start_quest_shop(eventID:number) 
+    {
+        return new Promise((resolve,reject)=>
+        {
+            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop(eventID).callBack((self,shop_info)=>
+            {
+                this.cb_get_quest_shop_data(self,shop_info);
+                resolve(null);
             },(err)=>
             {
                 console.log("start_quest_shop err:", err);
-                reject();
+                reject("error");
             }).timeout(3000,()=>
             {
                 console.log("start_quest_shop timeout");
-                reject();
+                reject("timeout");
             });
         });
     }
 
     public cb_quest_battle_info: (battle_info: common.UserBattleData) => void;
     public cb_quest_shop_info: (shop_info: common.ShopData) => void;
+    //购买角色
     public quest_buy(shop_index: common.ShopIndex, index: number, role_index: number)
     {
-        netSingleton.battleshop.buy(netSingleton.player.player_name, shop_index, index, role_index).callBack((battle_info, shop_info) =>
+        return new Promise((resolve, reject) =>
         {
-            this.cb_quest_battle_info.call(null, battle_info);
-            this.cb_quest_shop_info.call(null, shop_info);
-        }, (err) =>
-        {
-            console.log("buy err:", err);
-        }).timeout(3000, () =>
-        {
-            console.log("buy timeout!");
-        })
+            netSingleton.battleshop.buy(netSingleton.player.player_name, shop_index, index, role_index).callBack((battle_info, shop_info) =>
+            {
+                this.cb_quest_battle_info(battle_info);
+                this.cb_quest_shop_info(shop_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("buy err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("buy timeout!");
+                reject("timeout");
+            })
+        });
     }
-
+    //移动角色
     public quest_move(role_index1: number, role_index2: number)
     {
-        netSingleton.battleshop.move(netSingleton.player.player_name, role_index1, role_index2).callBack((battle_info) =>
+        return new Promise((resolve, reject) =>
         {
-            this.cb_quest_battle_info.call(null, battle_info);
-        }, (err) =>
-        {
-            console.log("move err:", err);
-        }).timeout(3000, () =>
-        {
-            console.log("move timeout!");
-        })
+            netSingleton.battleshop.move(netSingleton.player.player_name, role_index1, role_index2).callBack((battle_info) =>
+            {
+                this.cb_quest_battle_info(battle_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("move err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("move timeout!");
+                reject("timeout");
+            });
+        });
     }
-
-    public pve_sale_role(index: number)
+    //出售角色
+    public quest_sale_role(index: number)
     {
-        netSingleton.battleshop.sale_role(netSingleton.player.player_name, index).callBack((battle_info) =>
+        return new Promise((resolve, reject) =>
         {
-            this.cb_quest_battle_info.call(null, battle_info);
-        }, (err) =>
-        {
-            console.log("sale_role err:", err);
-        }).timeout(3000, () =>
-        {
-            console.log("sale_role timeout!");
-        })
+            netSingleton.battleshop.sale_role(netSingleton.player.player_name, index).callBack((battle_info) =>
+            {
+                this.cb_quest_battle_info(battle_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("sale_role err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("sale_role timeout!");
+                reject("timeout");
+            });
+        });
     }
-
+    //刷新商店
     public quest_refresh()
     {
-        return new Promise<void>((resolve) =>
+        return new Promise((resolve, reject) =>
         {
             netSingleton.battleshop.refresh(netSingleton.player.player_name).callBack((shop_info) =>
             {
-                this.cb_quest_shop_info.call(null, shop_info);
-                resolve();
+                this.cb_quest_shop_info(shop_info);
+                resolve(null);
             }, (err) =>
             {
                 console.log("refresh err:", err);
+                reject("error");
             }).timeout(3000, () =>
             {
                 console.log("refresh timeout!");
+                reject("timeout");
             })
+        });
+    }
+    //向服务器发送对战信息
+    public confirm_quest_victory(is_victory:common.BattleVictory) 
+    {
+        return new Promise((resolve,reject)=>
+        {
+            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).confirm_quest_victory(is_victory).callBack((state)=>
+            {
+                console.log("confirm_quest_victory succeed!");
+                resolve(state);
+            },()=>
+            {
+                console.log("confirm_quest_victory err");
+                reject("error");
+            }).timeout(3000,()=>
+            {
+                console.log("confirm_quest_victory timeout");
+                reject("timeout");
+            });
         });
     }
 

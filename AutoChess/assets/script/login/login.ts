@@ -309,7 +309,7 @@ export class login extends Component {
             });
             
         }
-
+        //巅峰战力
         singleton.netSingleton.game.cb_start_peak_strength = (_selfBattleData)=>
         {
             singleton.netSingleton.battle.destory();
@@ -325,6 +325,16 @@ export class login extends Component {
             this._setProgress(this._progress);
             this.wxLogin();
         });
+
+        singleton.netSingleton.game.cb_start_quest_ready=(_events)=>
+        {
+
+        };
+
+        singleton.netSingleton.game.cb_start_quest_battle=(_self,_target)=>
+        {
+
+        };
 
         this.netNode.on("reconnect", () => {
             console.log("on net reconnect!");
