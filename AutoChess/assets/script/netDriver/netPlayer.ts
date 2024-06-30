@@ -21,6 +21,8 @@ export class netPlayer {
 
     private c_rank_cli_service_caller:rank_cli.rank_cli_service_caller;
 
+   
+
     public cb_archive_sync : () => void;
     public cb_battle_victory : () => void;
     public cb_achievement_complete:(achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement)=>void;
@@ -152,7 +154,9 @@ export class netPlayer {
         this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
         {
             this.cb_get_user_data(_userInfo);
-            _onCallBack(_userInfo.guideStep);
+            if (_onCallBack) {
+                _onCallBack(_userInfo.guideStep);
+            }
         },(err)=>
         {
             console.log("get user data error:" + err);

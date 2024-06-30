@@ -73,7 +73,7 @@ namespace Match
             {
                 var _player = Match.battle_Mng.add_player_to_battle(clientUUID, roleList, user_info);
                 _player.PlayerHubName = Hub.Hub._hubs.current_hubproxy.name;
-                rsp.rsp(_player.BattleData, _player.ShopData);
+                rsp.rsp(_player.BattleShopPlayer.BattleData, _player.BattleShopPlayer.ShopData);
             }
             catch (System.Exception e)
             {

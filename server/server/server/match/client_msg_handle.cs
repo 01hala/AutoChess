@@ -107,7 +107,7 @@ namespace Match
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
-                rsp.rsp(_player.BattleData, _player.ShopData, _player.check_fetters());
+                rsp.rsp(_player.BattleShopPlayer.BattleData, _player.BattleShopPlayer.ShopData, _player.BattleShopPlayer.check_fetters());
             }
             catch (System.Exception ex)
             {
@@ -124,9 +124,9 @@ namespace Match
             try
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
-                _player.freeze(shop_index, index, is_freeze);
+                _player.BattleShopPlayer.freeze(shop_index, index, is_freeze);
 
-                rsp.rsp(_player.ShopData);
+                rsp.rsp(_player.BattleShopPlayer.ShopData);
             }
             catch (System.Exception ex)
             {
@@ -143,9 +143,9 @@ namespace Match
             try
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
-                _player.move(role_index1, role_index2);
+                _player.BattleShopPlayer.move(role_index1, role_index2);
 
-                rsp.rsp(_player.BattleData);
+                rsp.rsp(_player.BattleShopPlayer.BattleData);
             }
             catch (System.Exception ex)
             {
@@ -163,41 +163,41 @@ namespace Match
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
-                if (baseCount(_player.BattleData.round) <= countRoleList(_player.BattleData.RoleList))
+                if (baseCount(_player.BattleShopPlayer.BattleData.round) <= countRoleList(_player.BattleShopPlayer.BattleData.RoleList))
                 {
-                    var len = await Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), _player.BattleData);
+                    var len = await Match._redis_handle.PushList(RedisHelp.BuildAutoChessBattleCache(_player.BattleShopPlayer.BattleData.round), _player.BattleShopPlayer.BattleData);
                     if (len > 1100)
                     {
-                        Match._redis_handle.PopList(RedisHelp.BuildAutoChessBattleCache(_player.BattleData.round), 100);
+                        Match._redis_handle.PopList(RedisHelp.BuildAutoChessBattleCache(_player.BattleShopPlayer.BattleData.round), 100);
                     }
                 }
 
-                _player.BattleData.round++;
-                _player.BattleData.stage = (_player.BattleData.round + 1) / 2;
+                _player.BattleShopPlayer.BattleData.round++;
+                _player.BattleShopPlayer.BattleData.stage = (_player.BattleShopPlayer.BattleData.round + 1) / 2;
 
                 if (is_victory == BattleVictory.victory)
                 {
-                    _player.BattleData.victory++;
+                    _player.BattleShopPlayer.BattleData.victory++;
                 }
                 else if (is_victory == BattleVictory.faild)
                 {
-                    _player.BattleData.faild--;
+                    _player.BattleShopPlayer.BattleData.faild--;
                 }
 
                 var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
-                if (_player.BattleData.victory >= 10)
+                if (_player.BattleShopPlayer.BattleData.victory >= 10)
                 {
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
-                    player_proxy.battle_victory(true, _player.BattleData);
+                    player_proxy.battle_victory(true, _player.BattleShopPlayer.BattleData);
 
-                    if (_player.BattleData.round <= 15)
+                    if (_player.BattleShopPlayer.BattleData.round <= 15)
                     {
                         _player.BattleClientCaller.get_client(_player.ClientUUID).replace_peak_strength().callBack(async (isConfirm) =>
                         {
                             if (isConfirm)
                             {
-                                await Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleData);
-                                await Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.BattleData.User.UserGuid), _player.BattleData);
+                                await Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleShopPlayer.BattleData);
+                                await Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.BattleShopPlayer.BattleData.User.UserGuid), _player.BattleShopPlayer.BattleData);
                             }
                         }, () =>
                         {
@@ -210,17 +210,17 @@ namespace Match
                 }
                 else
                 {
-                    if (_player.BattleData.faild <= 0)
+                    if (_player.BattleShopPlayer.BattleData.faild <= 0)
                     {
                         _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(false);
-                        player_proxy.battle_victory(false, _player.BattleData);
+                        player_proxy.battle_victory(false, _player.BattleShopPlayer.BattleData);
                     }
                     else
                     {
-                        _player.start_round();
-                        _player.do_skill();
+                        _player.start_round(_player.baseStage());
+                        _player.BattleShopPlayer.do_skill(_player.baseStage());
 
-                        _player.BattleClientCaller.get_client(_player.ClientUUID).battle_plan_refresh(_player.BattleData, _player.ShopData, _player.check_fetters());
+                        _player.BattleClientCaller.get_client(_player.ClientUUID).battle_plan_refresh(_player.BattleShopPlayer.BattleData, _player.BattleShopPlayer.ShopData, _player.BattleShopPlayer.check_fetters());
                     }
                 }
 
@@ -298,15 +298,15 @@ namespace Match
                 var _player = Match.battle_Mng.get_battle_player(uuid);
 
                 _player.end_round();
-                _player.do_skill();
+                _player.BattleShopPlayer.do_skill(_player.baseStage());
 
-                var target = await getCacheBattleData(_player.BattleData.round);
+                var target = await getCacheBattleData(_player.BattleShopPlayer.BattleData.round);
                 if (target == null)
                 {
-                    target = getRandomBattleData(_player.BattleData.round, targetSetUp);
+                    target = getRandomBattleData(_player.BattleShopPlayer.BattleData.round, targetSetUp);
                 }
 
-                rsp.rsp(_player.BattleData, target);
+                rsp.rsp(_player.BattleShopPlayer.BattleData, target);
             }
             catch (System.Exception ex)
             {
@@ -401,10 +401,10 @@ namespace Match
             try
             {
                 var self = Match.battle_Mng.get_battle_player(uuid);
-                self.refresh();
-                self.do_skill();
+                self.BattleShopPlayer.refresh(self.baseStage());
+                self.BattleShopPlayer.do_skill(self.baseStage());
 
-                rsp.rsp(self.ShopData);
+                rsp.rsp(self.BattleShopPlayer.ShopData);
             }
             catch(System.Exception ex)
             {
@@ -421,10 +421,10 @@ namespace Match
             try
             {
                 var self = Match.battle_Mng.get_battle_player(uuid);
-                if (self.sale_role(index))
+                if (self.BattleShopPlayer.sale_role(index))
                 {
-                    rsp.rsp(self.BattleData);
-                    self.do_skill();
+                    rsp.rsp(self.BattleShopPlayer.BattleData);
+                    self.BattleShopPlayer.do_skill(self.baseStage());
                 }
                 else
                 {
@@ -449,8 +449,8 @@ namespace Match
                 var err = self.buy(shop_index, index, role_index);
                 if (err == em_error.success)
                 {
-                    rsp.rsp(self.BattleData, self.ShopData);
-                    self.do_skill();
+                    rsp.rsp(self.BattleShopPlayer.BattleData, self.BattleShopPlayer.ShopData);
+                    self.BattleShopPlayer.do_skill(self.baseStage());
                 }
                 else
                 {

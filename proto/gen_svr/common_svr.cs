@@ -554,6 +554,7 @@ namespace Abelkhan
         public Int32 gold;
         public Int32 diamond;
         public Int32 score;
+        public Int32 quest;
         public Bag bag;
         public GuideStep guideStep;
         public List<Int32> RoleList;
@@ -571,6 +572,7 @@ namespace Abelkhan
             _protocol.Add("gold", _struct.gold);
             _protocol.Add("diamond", _struct.diamond);
             _protocol.Add("score", _struct.score);
+            _protocol.Add("quest", _struct.quest);
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             _protocol.Add("guideStep", (Int32)_struct.guideStep);
             if (_struct.RoleList != null) {
@@ -616,6 +618,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "score"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.score = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "quest"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.quest = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());

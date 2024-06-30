@@ -1,17 +1,12 @@
 ﻿using Abelkhan;
 using config;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Match
+namespace battle_shop
 {
     public partial class shop_skill_role
     {
-        private void AddProperty(FettersConfig fetters, battle_player _player)
+        private void AddProperty(FettersConfig fetters, battle_shop_player _player)
         {
             var count_index = fetters.ObjCount.Count < fettersLevel ? fetters.ObjCount.Count - 1 : fettersLevel - 1;
             var count = fetters.ObjCount[count_index];
@@ -55,7 +50,7 @@ namespace Match
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
         }
 
-        private void AddCoin(FettersConfig fetters, battle_player _player)
+        private void AddCoin(FettersConfig fetters, battle_shop_player _player)
         {
             var addCoin = 0;
             switch (fettersLevel)
@@ -90,7 +85,7 @@ namespace Match
             is_trigger = true;
         }
 
-        private void RefreshShop(FettersConfig fetters, battle_player _player)
+        private void RefreshShop(FettersConfig fetters, battle_shop_player _player, int stage)
         {
             if (fetters.RefreshItemID != 0 && fetters.RefreshItemNum != 0)
             {
@@ -98,14 +93,14 @@ namespace Match
             }
             else
             {
-                _player.refresh();
+                _player.refresh(stage);
             }
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
             is_trigger = true;
         }
 
-        private void FettersSummonShop(battle_player _player, shop_event trigger_ev)
+        private void FettersSummonShop(battle_shop_player _player, shop_event trigger_ev)
         {
             int summon_index = -1;
             if (_player.BattleData.RoleList[trigger_ev.index] == null)
@@ -134,13 +129,13 @@ namespace Match
             {
                 return;
             }
-            if (_player.add_role(summon_index, fetters.SummonId, fetters.SummonLevel))
+            if (_player.add_role(summon_index, fetters.SummonId, fetters.SummonLevel) != null)
             {
                 _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
             }
         }
 
-        private void AddBuffer(FettersConfig fetters, battle_player _player)
+        private void AddBuffer(FettersConfig fetters, battle_shop_player _player)
         {
             var count_index = fetters.ObjCount.Count < fettersLevel ? fetters.ObjCount.Count - 1 : fettersLevel - 1;
             var count = fetters.ObjCount[count_index];
@@ -151,7 +146,7 @@ namespace Match
             }
         }
 
-        private void AddBuildValue(FettersConfig fetters, battle_player _player)
+        private void AddBuildValue(FettersConfig fetters, battle_shop_player _player)
         {
             var buildValue = 0;
             switch (fettersLevel)
@@ -184,7 +179,7 @@ namespace Match
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
         }
 
-        private void UseFettersSkill(battle_player _player, shop_event trigger_ev)
+        private void UseFettersSkill(battle_shop_player _player, shop_event trigger_ev, int stage)
         {
             if (fettersLevel <= 0)
             {
@@ -213,7 +208,7 @@ namespace Match
 
                 case SkillEffectEM.RefreshShop:
                 {
-                    RefreshShop(fetters, _player);
+                    RefreshShop(fetters, _player, stage);
                 }
                 break;
 

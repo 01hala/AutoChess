@@ -36,6 +36,9 @@ namespace config
         public static Dictionary<int, SkillConfig> SkillConfigs;
         public static Dictionary<string, TaskConfig> TaskConfigs;
         public static Dictionary<int, RankRewardConfig> RankRewardConfigs;
+        public static Dictionary<int, PVEConfig> PVEConfigs;
+        public static Dictionary<int, PVELevelConfig> PVELevelConfigs;
+        public static Dictionary<int, PVEEventConfig> PVEEventConfigs;
 
         public static void Load(string path)
         {
@@ -53,6 +56,9 @@ namespace config
             SkillConfigs = SkillConfig.Load(Path.Combine(path, "Skill.json"));
             TaskConfigs = TaskConfig.Load(Path.Combine(path, "Task.json"));
             RankRewardConfigs = RankRewardConfig.Load(Path.Combine(path, "RankReward.json"));
+            PVEConfigs = PVEConfig.Load(Path.Combine(path, "PVE.json"));
+            PVELevelConfigs = PVELevelConfig.Load(Path.Combine(path, "PVELevel.json"));
+            PVEEventConfigs = PVEEventConfig.Load(Path.Combine(path, "PVEEvent.json"));
         }
     }
 }

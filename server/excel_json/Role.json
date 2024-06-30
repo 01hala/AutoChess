@@ -11,9 +11,12 @@
         "Fetters": 1,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100001",
         "Avatar": "RoleAvatar/Role_100001",
-        "Skel": "RoleSpine/Role_100001/Role_100001"
+        "Skel": "RoleSpine/Role_100001/Role_100001",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100002": {
         "Id": 100002,
@@ -27,9 +30,12 @@
         "Fetters": 2,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100002",
         "Avatar": "RoleAvatar/Role_100002",
-        "Skel": "RoleSpine/Role_100002/Role_100002"
+        "Skel": "RoleSpine/Role_100002/Role_100002",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100003": {
         "Id": 100003,
@@ -43,9 +49,12 @@
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100003",
         "Avatar": "RoleAvatar/Role_100003",
-        "Skel": "RoleSpine/Role_100003/Role_100003"
+        "Skel": "RoleSpine/Role_100003/Role_100003",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100004": {
         "Id": 100004,
@@ -59,9 +68,12 @@
         "Fetters": 4,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100004",
         "Avatar": "RoleAvatar/Role_100004",
-        "Skel": "RoleSpine/Role_100004/Role_100004"
+        "Skel": "RoleSpine/Role_100004/Role_100004",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100005": {
         "Id": 100005,
@@ -75,9 +87,12 @@
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100005",
         "Avatar": "RoleAvatar/Role_100005",
-        "Skel": "RoleSpine/Role_100005/Role_100005"
+        "Skel": "RoleSpine/Role_100005/Role_100005",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100006": {
         "Id": 100006,
@@ -91,9 +106,12 @@
         "Fetters": 5,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100006",
         "Avatar": "RoleAvatar/Role_100006",
-        "Skel": "RoleSpine/Role_100006/Role_100006"
+        "Skel": "RoleSpine/Role_100006/Role_100006",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100007": {
         "Id": 100007,
@@ -107,9 +125,12 @@
         "Fetters": 5,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100007",
         "Avatar": "RoleAvatar/Role_100007",
-        "Skel": "RoleSpine/Role_100007/Role_100007"
+        "Skel": "RoleSpine/Role_100007/Role_100007",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100008": {
         "Id": 100008,
@@ -123,9 +144,12 @@
         "Fetters": 6,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100008",
         "Avatar": "RoleAvatar/Role_100008",
-        "Skel": "RoleSpine/Role_100008/Role_100008"
+        "Skel": "RoleSpine/Role_100008/Role_100008",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100009": {
         "Id": 100009,
@@ -139,9 +163,12 @@
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100009",
         "Avatar": "RoleAvatar/Role_100009",
-        "Skel": "RoleSpine/Role_100009/Role_100009"
+        "Skel": "RoleSpine/Role_100009/Role_100009",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100010": {
         "Id": 100010,
@@ -155,9 +182,12 @@
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100010",
         "Avatar": "RoleAvatar/Role_100010",
-        "Skel": "RoleSpine/Role_100010/Role_100010"
+        "Skel": "RoleSpine/Role_100010/Role_100010",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100011": {
         "Id": 100011,
@@ -171,9 +201,12 @@
         "Fetters": 6,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100011",
         "Avatar": "RoleAvatar/Role_100011",
-        "Skel": "RoleSpine/Role_100011/Role_100011"
+        "Skel": "RoleSpine/Role_100011/Role_100011",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100012": {
         "Id": 100012,
@@ -187,9 +220,12 @@
         "Fetters": 8,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100012",
         "Avatar": "RoleAvatar/Role_100012",
-        "Skel": "RoleSpine/Role_100012/Role_100012"
+        "Skel": "RoleSpine/Role_100012/Role_100012",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100013": {
         "Id": 100013,
@@ -203,9 +239,12 @@
         "Fetters": 9,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100013",
         "Avatar": "RoleAvatar/Role_100013",
-        "Skel": "RoleSpine/Role_100013/gaoshan_wushi"
+        "Skel": "RoleSpine/Role_100013/gaoshan_wushi",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100014": {
         "Id": 100014,
@@ -219,9 +258,12 @@
         "Fetters": 8,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100014",
         "Avatar": "RoleAvatar/Role_100014",
-        "Skel": "RoleSpine/Role_100014/Role_100014"
+        "Skel": "RoleSpine/Role_100014/Role_100014",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100015": {
         "Id": 100015,
@@ -235,9 +277,12 @@
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100015",
         "Avatar": "RoleAvatar/Role_100015",
-        "Skel": "RoleSpine/Role_100015/Role_100015"
+        "Skel": "RoleSpine/Role_100015/Role_100015",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100016": {
         "Id": 100016,
@@ -251,9 +296,12 @@
         "Fetters": 5,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100016",
         "Avatar": "RoleAvatar/Role_100016",
-        "Skel": "RoleSpine/Role_100016/Role_100016"
+        "Skel": "RoleSpine/Role_100016/Role_100016",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100017": {
         "Id": 100017,
@@ -267,9 +315,12 @@
         "Fetters": 10,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100017",
         "Avatar": "RoleAvatar/Role_100017",
-        "Skel": "RoleSpine/Role_100017/Role_100017"
+        "Skel": "RoleSpine/Role_100017/Role_100017",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100018": {
         "Id": 100018,
@@ -283,9 +334,12 @@
         "Fetters": 11,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100018",
         "Avatar": "RoleAvatar/Role_100018",
-        "Skel": "RoleSpine/Role_100018/Role_100018"
+        "Skel": "RoleSpine/Role_100018/Role_100018",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100019": {
         "Id": 100019,
@@ -299,9 +353,12 @@
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100019",
         "Avatar": "RoleAvatar/Role_100019",
-        "Skel": "RoleSpine/Role_100019/Role_100019"
+        "Skel": "RoleSpine/Role_100019/Role_100019",
+        "Sex": "M",
+        "Armor": "H"
     },
     "100020": {
         "Id": 100020,
@@ -315,9 +372,12 @@
         "Fetters": 2,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100020",
         "Avatar": "RoleAvatar/Role_100020",
-        "Skel": "RoleSpine/Role_100020/Role_100020"
+        "Skel": "RoleSpine/Role_100020/Role_100020",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100021": {
         "Id": 100021,
@@ -331,9 +391,12 @@
         "Fetters": 6,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100021",
         "Avatar": "RoleAvatar/Role_100021",
-        "Skel": "RoleSpine/Role_100021/Role_100021"
+        "Skel": "RoleSpine/Role_100021/Role_100021",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100022": {
         "Id": 100022,
@@ -347,9 +410,12 @@
         "Fetters": 4,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100022",
         "Avatar": "RoleAvatar/Role_100022",
-        "Skel": "RoleSpine/Role_100022/Role_100022"
+        "Skel": "RoleSpine/Role_100022/Role_100022",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100023": {
         "Id": 100023,
@@ -363,9 +429,12 @@
         "Fetters": 10,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100023",
         "Avatar": "RoleAvatar/Role_100023",
-        "Skel": "RoleSpine/Role_100023/Role_100023"
+        "Skel": "RoleSpine/Role_100023/Role_100023",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100024": {
         "Id": 100024,
@@ -379,9 +448,12 @@
         "Fetters": 12,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100024",
         "Avatar": "RoleAvatar/Role_100024",
-        "Skel": "RoleSpine/Role_100024/Role_100024"
+        "Skel": "RoleSpine/Role_100024/Role_100024",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100025": {
         "Id": 100025,
@@ -395,9 +467,12 @@
         "Fetters": 10,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100025",
         "Avatar": "RoleAvatar/Role_100025",
-        "Skel": "RoleSpine/Role_100025/Role_100025"
+        "Skel": "RoleSpine/Role_100025/Role_100025",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100026": {
         "Id": 100026,
@@ -411,9 +486,12 @@
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100026",
         "Avatar": "RoleAvatar/Role_100026",
-        "Skel": "RoleSpine/Role_100026/Role_100026"
+        "Skel": "RoleSpine/Role_100026/Role_100026",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100027": {
         "Id": 100027,
@@ -427,9 +505,12 @@
         "Fetters": 9,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100027",
         "Avatar": "RoleAvatar/Role_100027",
-        "Skel": "RoleSpine/Role_100027/Role_100027"
+        "Skel": "RoleSpine/Role_100027/Role_100027",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100028": {
         "Id": 100028,
@@ -443,9 +524,12 @@
         "Fetters": 7,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100028",
         "Avatar": "RoleAvatar/Role_100028",
-        "Skel": "RoleSpine/Role_100028/Role_100028"
+        "Skel": "RoleSpine/Role_100028/Role_100028",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100029": {
         "Id": 100029,
@@ -459,9 +543,12 @@
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100029",
         "Avatar": "RoleAvatar/Role_100029",
-        "Skel": "RoleSpine/Role_100029/Role_100029"
+        "Skel": "RoleSpine/Role_100029/Role_100029",
+        "Sex": "F",
+        "Armor": "H"
     },
     "100030": {
         "Id": 100030,
@@ -475,9 +562,12 @@
         "Fetters": 13,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100030",
         "Avatar": "RoleAvatar/Role_100030",
-        "Skel": "RoleSpine/Role_100030/Role_100030"
+        "Skel": "RoleSpine/Role_100030/Role_100030",
+        "Sex": "F",
+        "Armor": "L"
     },
     "100031": {
         "Id": 100031,
@@ -491,9 +581,12 @@
         "Fetters": 12,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100031",
         "Avatar": "RoleAvatar/Role_100031",
-        "Skel": "RoleSpine/Role_100031/Role_100031"
+        "Skel": "RoleSpine/Role_100031/Role_100031",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100032": {
         "Id": 100032,
@@ -507,9 +600,12 @@
         "Fetters": 3,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100032",
         "Avatar": "RoleAvatar/Role_100032",
-        "Skel": "RoleSpine/Role_100032/Role_100032"
+        "Skel": "RoleSpine/Role_100032/Role_100032",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100033": {
         "Id": 100033,
@@ -523,9 +619,12 @@
         "Fetters": 9,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100033",
         "Avatar": "RoleAvatar/Role_100033",
-        "Skel": "RoleSpine/Role_100033/Role_100033"
+        "Skel": "RoleSpine/Role_100033/Role_100033",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100034": {
         "Id": 100034,
@@ -539,9 +638,12 @@
         "Fetters": 1,
         "Grade": 1,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100034",
         "Avatar": "RoleAvatar/Role_100034",
-        "Skel": "RoleSpine/Role_100034/Role_100034"
+        "Skel": "RoleSpine/Role_100034/Role_100034",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100035": {
         "Id": 100035,
@@ -555,9 +657,12 @@
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100035",
         "Avatar": "RoleAvatar/Role_100035",
-        "Skel": "RoleSpine/Role_100035/Role_100035"
+        "Skel": "RoleSpine/Role_100035/Role_100035",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100036": {
         "Id": 100036,
@@ -571,9 +676,12 @@
         "Fetters": 3,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100036",
         "Avatar": "RoleAvatar/Role_100036",
-        "Skel": "RoleSpine/Role_100036/Role_100036"
+        "Skel": "RoleSpine/Role_100036/Role_100036",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100037": {
         "Id": 100037,
@@ -587,9 +695,12 @@
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100037",
         "Avatar": "RoleAvatar/Role_100037",
-        "Skel": "RoleSpine/Role_100037/Role_100037"
+        "Skel": "RoleSpine/Role_100037/Role_100037",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100038": {
         "Id": 100038,
@@ -603,9 +714,12 @@
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100038",
         "Avatar": "RoleAvatar/Role_100038",
-        "Skel": "RoleSpine/Role_100038/Role_100038"
+        "Skel": "RoleSpine/Role_100038/Role_100038",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100039": {
         "Id": 100039,
@@ -619,9 +733,12 @@
         "Fetters": 11,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100039",
         "Avatar": "RoleAvatar/Role_100039",
-        "Skel": "RoleSpine/Role_100039/Role_100039"
+        "Skel": "RoleSpine/Role_100039/Role_100039",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100040": {
         "Id": 100040,
@@ -635,9 +752,12 @@
         "Fetters": 4,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100040",
         "Avatar": "RoleAvatar/Role_100040",
-        "Skel": "RoleSpine/Role_100040/Role_100040"
+        "Skel": "RoleSpine/Role_100040/Role_100040",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100041": {
         "Id": 100041,
@@ -651,9 +771,12 @@
         "Fetters": 10,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100041",
         "Avatar": "RoleAvatar/Role_100041",
-        "Skel": "RoleSpine/Role_100041/Role_100041"
+        "Skel": "RoleSpine/Role_100041/Role_100041",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100042": {
         "Id": 100042,
@@ -667,9 +790,12 @@
         "Fetters": 2,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100042",
         "Avatar": "RoleAvatar/Role_100042",
-        "Skel": "RoleSpine/Role_100042/Role_100042"
+        "Skel": "RoleSpine/Role_100042/Role_100042",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100043": {
         "Id": 100043,
@@ -683,9 +809,12 @@
         "Fetters": 14,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100043",
         "Avatar": "RoleAvatar/Role_100043",
-        "Skel": "RoleSpine/Role_100043/Role_100043"
+        "Skel": "RoleSpine/Role_100043/Role_100043",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100044": {
         "Id": 100044,
@@ -699,9 +828,12 @@
         "Fetters": 9,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100044",
         "Avatar": "RoleAvatar/Role_100044",
-        "Skel": "RoleSpine/Role_100044/Role_100044"
+        "Skel": "RoleSpine/Role_100044/Role_100044",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100045": {
         "Id": 100045,
@@ -715,9 +847,12 @@
         "Fetters": 2,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100045",
         "Avatar": "RoleAvatar/Role_100045",
-        "Skel": "RoleSpine/Role_100045/Role_100045"
+        "Skel": "RoleSpine/Role_100045/Role_100045",
+        "Sex": "M",
+        "Armor": "N"
     },
     "100046": {
         "Id": 100046,
@@ -731,9 +866,12 @@
         "Fetters": 12,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100046",
         "Avatar": "RoleAvatar/Role_100046",
-        "Skel": "RoleSpine/Role_100046/Role_100046"
+        "Skel": "RoleSpine/Role_100046/Role_100046",
+        "Sex": "",
+        "Armor": ""
     },
     "100047": {
         "Id": 100047,
@@ -747,9 +885,12 @@
         "Fetters": 12,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100047",
         "Avatar": "RoleAvatar/Role_100047",
-        "Skel": "RoleSpine/Role_100047/Role_100047"
+        "Skel": "RoleSpine/Role_100047/Role_100047",
+        "Sex": "",
+        "Armor": ""
     },
     "100048": {
         "Id": 100048,
@@ -763,9 +904,12 @@
         "Fetters": 1,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100048",
         "Avatar": "RoleAvatar/Role_100048",
-        "Skel": "RoleSpine/Role_100048/Role_100048"
+        "Skel": "RoleSpine/Role_100048/Role_100048",
+        "Sex": "F",
+        "Armor": "L"
     },
     "100049": {
         "Id": 100049,
@@ -779,9 +923,12 @@
         "Fetters": 1,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100049",
         "Avatar": "RoleAvatar/Role_100049",
-        "Skel": "RoleSpine/Role_100049/Role_100049"
+        "Skel": "RoleSpine/Role_100049/Role_100049",
+        "Sex": "F",
+        "Armor": "L"
     },
     "100050": {
         "Id": 100050,
@@ -795,9 +942,12 @@
         "Fetters": 5,
         "Grade": 2,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100050",
         "Avatar": "RoleAvatar/Role_100050",
-        "Skel": "RoleSpine/Role_100050/Role_100050"
+        "Skel": "RoleSpine/Role_100050/Role_100050",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100051": {
         "Id": 100051,
@@ -811,9 +961,12 @@
         "Fetters": 11,
         "Grade": 3,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100051",
         "Avatar": "RoleAvatar/Role_100051",
-        "Skel": "RoleSpine/Role_100051/Role_100051"
+        "Skel": "RoleSpine/Role_100051/Role_100051",
+        "Sex": "",
+        "Armor": ""
     },
     "100052": {
         "Id": 100052,
@@ -827,9 +980,12 @@
         "Fetters": 6,
         "Grade": 3,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100052",
         "Avatar": "RoleAvatar/Role_100052",
-        "Skel": "RoleSpine/Role_100052/Role_100052"
+        "Skel": "RoleSpine/Role_100052/Role_100052",
+        "Sex": "F",
+        "Armor": "N"
     },
     "100053": {
         "Id": 100053,
@@ -843,9 +999,12 @@
         "Fetters": 14,
         "Grade": 3,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100053",
         "Avatar": "RoleAvatar/Role_100053",
-        "Skel": "RoleSpine/Role_100053/Role_100053"
+        "Skel": "RoleSpine/Role_100053/Role_100053",
+        "Sex": "M",
+        "Armor": "H"
     },
     "100054": {
         "Id": 100054,
@@ -859,9 +1018,12 @@
         "Fetters": 14,
         "Grade": 3,
         "ActiveState": 1,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_100054",
         "Avatar": "RoleAvatar/Role_100054",
-        "Skel": "RoleSpine/Role_100054/Role_100054"
+        "Skel": "RoleSpine/Role_100054/Role_100054",
+        "Sex": "M",
+        "Armor": "L"
     },
     "200001": {
         "Id": 200001,
@@ -875,9 +1037,12 @@
         "Fetters": 0,
         "Grade": 0,
         "ActiveState": 0,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_200001",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200001/Role_200001"
+        "Skel": "RoleSpine/Role_200001/Role_200001",
+        "Sex": "M",
+        "Armor": "N"
     },
     "200002": {
         "Id": 200002,
@@ -891,9 +1056,12 @@
         "Fetters": 0,
         "Grade": 0,
         "ActiveState": 0,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_200002",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200002/Role_200002"
+        "Skel": "RoleSpine/Role_200002/Role_200002",
+        "Sex": "M",
+        "Armor": "N"
     },
     "200003": {
         "Id": 200003,
@@ -907,9 +1075,12 @@
         "Fetters": 0,
         "Grade": 0,
         "ActiveState": 0,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_200003",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200003/Role_200003"
+        "Skel": "RoleSpine/Role_200003/Role_200003",
+        "Sex": "M",
+        "Armor": "N"
     },
     "200004": {
         "Id": 200004,
@@ -923,9 +1094,12 @@
         "Fetters": 0,
         "Grade": 0,
         "ActiveState": 0,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_200004",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200004/Role_200004"
+        "Skel": "RoleSpine/Role_200004/Role_200004",
+        "Sex": "M",
+        "Armor": "H"
     },
     "200005": {
         "Id": 200005,
@@ -939,9 +1113,12 @@
         "Fetters": 0,
         "Grade": 0,
         "ActiveState": 0,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_200005",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200005/Role_200005"
+        "Skel": "RoleSpine/Role_200005/Role_200005",
+        "Sex": "M",
+        "Armor": "H"
     },
     "200006": {
         "Id": 200006,
@@ -955,8 +1132,11 @@
         "Fetters": 0,
         "Grade": 0,
         "ActiveState": 0,
+        "ActivePrice": 0,
         "Res": "RolesImg/Role_200006",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200006/Role_200006"
+        "Skel": "RoleSpine/Role_200006/Role_200006",
+        "Sex": "M",
+        "Armor": "H"
     }
 }

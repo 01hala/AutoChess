@@ -10,6 +10,7 @@ import { ShopProp, ShopRole } from '../serverSDK/common';
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
 import { EventType } from '../other/enums';
+import * as enmus from '../other/enums';
 const { ccclass, property } = _decorator;
 
 /*
@@ -20,23 +21,20 @@ const { ccclass, property } = _decorator;
 @ccclass('ReadyData')
 export class ReadyData
 {
+    public static roles:common.Role[];
+    //游戏模式
+    public gameMode:enmus.GameMode;
+
     private heath:number;
     private stage:number;
     private props:ShopProp[];
     private shopRoles:ShopRole[];
 
-    private static roles:common.Role[];
     private fetters_info:common.Fetters[];
 
     private coin:number=0;
 
-    //private freezeRoles:Role[]=[];
-
-    private evs:skill.Event[] = [];
-
-    public on_event : ((evs:skill.Event[]) => Promise<void>) = null;
-
-    public constructor(battle_info:common.UserBattleData, self:common.ShopData , fetters_info?:common.Fetters[]) 
+    public constructor(battle_info:common.UserBattleData, self:common.ShopData , gameMode:enmus.GameMode , fetters_info?:common.Fetters[]) 
     {
         this.coin = battle_info.coin;
 
@@ -45,6 +43,7 @@ export class ReadyData
         this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
         this.fetters_info=fetters_info;
+        this.gameMode=gameMode;
 
         //console.log("shopRoles:", this.shopRoles);
         //console.log("props:", this.props);
@@ -204,34 +203,40 @@ export class ReadyData
 
     public async Refresh()
     {
-        await singleton.netSingleton.game.refresh();
+        if(enmus.GameMode.PVP == this.gameMode)
+        {
+            await singleton.netSingleton.game.refresh();
+        }
     }
 
     public async StartBattle()
     {
-        await singleton.netSingleton.game.battle1();
+        if(enmus.GameMode.PVP ==  this.gameMode)
+        {
+            await singleton.netSingleton.game.battle();
+        }
     }
 
     public async Buy(shop_index: common.ShopIndex,index:number,role_index:number)
     {
         console.log(`shop_index:${shop_index}, index:${index}, role_index:${role_index}`);
+        if(enmus.GameMode.PVP == this.gameMode)
+        {
+            await singleton.netSingleton.game.buy(shop_index,index,role_index);
+        }
 
-        await singleton.netSingleton.game.buy(shop_index,index,role_index);
 
-        let ev = new skill.Event();
-        ev.type=EventType.Purchase;
-        ev.value=[];
-        ev.value.push(this.coin);
+        
     }
 
     public async Sale(role_index:number)
     {
         await singleton.netSingleton.game.sale_role(role_index);
 
-        let ev = new skill.Event();
-        ev.type=EventType.Sold;
-        ev.value=[];
-        ev.value.push(this.coin);
+        // let ev = new skill.Event();
+        // ev.type=EventType.Sold;
+        // ev.value=[];
+        // ev.value.push(this.coin);
     }
 
     public async Move(index_befor:number,index_after:number)
