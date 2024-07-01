@@ -1,13 +1,12 @@
-using MongoDB.Libmongocrypt;
 using System.Collections.Generic;
 
 namespace Gate {
 
 	public class hub_svr_msg_handle {
-		private ClientManager _clientmanager;
-		private HubSvrManager _hubsvrmanager;
+		private readonly ClientManager _clientmanager;
+		private readonly HubSvrManager _hubsvrmanager;
 
-		private Abelkhan.hub_call_gate_module _hub_call_gate_module;
+		private readonly Abelkhan.hub_call_gate_module _hub_call_gate_module;
 
 		public hub_svr_msg_handle(ClientManager clientmanager_, HubSvrManager hubsvrmanager_) {
 			_clientmanager = clientmanager_;
@@ -83,18 +82,24 @@ namespace Gate {
 			var ch = _hub_call_gate_module.current_ch.Value;
 			var hub_proxy = _hubsvrmanager.get_hub(ch);
 
+			var clients = new List<ClientProxy>();
 			foreach (var cuuid in cuuids)
 			{
 				var client_proxy = _clientmanager.get_client(cuuid);
 				if (client_proxy != null)
 				{
-					client_proxy.call_client(hub_proxy._hub_name, rpc_argv);
+                    clients.Add(client_proxy);
 				}
 				else
 				{
 					hub_proxy.client_disconnect(cuuid);
 				}
 			}
+
+			foreach (var client_proxy in clients)
+            {
+                client_proxy.call_client(hub_proxy._hub_name, rpc_argv);
+            }
 		}
 
 		public void forward_hub_call_global_client(byte[] rpc_argv) {

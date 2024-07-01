@@ -1,15 +1,10 @@
 using Abelkhan;
 using ENet.Managed;
-using Service;
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Gate {
 
@@ -24,19 +19,18 @@ namespace Gate {
 	    private uint reconn_count;
         private uint tick;
 
-        private Config _root_config;
-        private Config _center_config;
-        private Config _config;
+        private readonly Config _root_config;
+        private readonly Config _center_config;
+        private readonly Config _config;
 
         private Service.Timerservice _timerservice;
         private HubSvrManager _hubsvrmanager;
         private ClientManager _clientmanager;
 
-        private center_msg_handle _center_msg_handle;
-        private hub_svr_msg_handle _hub_svr_msg_handle;
-        private client_msg_handle _client_msg_handle;
-
         private Abelkhan.RedisMQ _hub_redismq_service;
+        private Abelkhan.RedisHandle _redis_handle;
+
+        private Abelkhan.Acceptservice _hub_service;
 
         private CenterProxy _centerproxy;
 
@@ -44,8 +38,8 @@ namespace Gate {
         private Abelkhan.WebsocketAcceptService _websocket_service;
         private Abelkhan.EnetService _enet_service;
 
-        public static List<Abelkhan.Ichannel> add_chs = new();
-        public static List<Abelkhan.Ichannel> remove_chs = new();
+        private static readonly List<Abelkhan.Ichannel> add_chs = new();
+        private static readonly List<Abelkhan.Ichannel> remove_chs = new();
 
         public void on_close_server()
         {
@@ -118,7 +112,6 @@ namespace Gate {
             _clientmanager = new ClientManager(_hubsvrmanager);
             _closehandle = new CloseHandle();
 
-
             var redismq_url = _root_config.get_value_string("redis_for_mq");
             if (!_root_config.has_key("redis_for_mq_pwd"))
             {
@@ -128,13 +121,39 @@ namespace Gate {
             {
                 _hub_redismq_service = new Abelkhan.RedisMQ(_timerservice, redismq_url, _root_config.get_value_string("redis_for_mq_pwd"), gate_name_info.name, 333);
             }
-
-            _center_msg_handle = new center_msg_handle(this, _hubsvrmanager, _timerservice);
-            _hub_svr_msg_handle = new hub_svr_msg_handle(_clientmanager, _hubsvrmanager);
-            _client_msg_handle = new client_msg_handle(_clientmanager, _hubsvrmanager, _timerservice);
+            
+            var redis_for_cache = _root_config.get_value_string("redis_for_cache");
+            if (!_root_config.has_key("redis_for_cache_pwd"))
+            {
+                _redis_handle = new Abelkhan.RedisHandle(redis_for_cache, string.Empty);
+            }
+            else
+            {
+                _redis_handle = new Abelkhan.RedisHandle(redis_for_cache, _root_config.get_value_string("redis_for_cache_pwd"));
+            }
 
             var _center_ch = _hub_redismq_service.connect(_center_config.get_value_string("name"));
             init_center(_center_ch);
+
+            if (_config.has_key("tcp_inside_listen"))
+            {
+                var is_tcp_listen = _config.get_value_bool("tcp_inside_listen");
+                if (is_tcp_listen)
+                {
+                    var tcp_inside_host = _config.get_value_string("tcp_inside_host");
+                    var tcp_inside_port = (ushort)_config.get_value_int("tcp_inside_port");
+                    _hub_service = new Abelkhan.Acceptservice(tcp_inside_port);
+                    Acceptservice.on_connect += (ch) => {
+                        lock (add_chs)
+                        {
+                            add_chs.Add(ch);
+                        }
+                    };
+                    _hub_service.start();
+
+                    heartbeat_flush_host(0);
+                }
+            }
 
             if (_config.has_key("tcp_listen"))
             {
@@ -260,6 +279,10 @@ namespace Gate {
                 _prometheus.Start();
             }
 
+            var _center_msg_handle = new center_msg_handle(this, _timerservice);
+            var _hub_svr_msg_handle = new hub_svr_msg_handle(_clientmanager, _hubsvrmanager);
+            var _client_msg_handle = new client_msg_handle(_clientmanager, _hubsvrmanager);
+
             while (!_closehandle.is_closed)
             {
                 var ticktime = await poll();
@@ -290,6 +313,11 @@ namespace Gate {
         void close_svr()
         {
             _centerproxy.closed();
+
+            if (_hub_service != null)
+            {
+                _hub_service.close();
+            }
 
             if (_client_service != null)
             {
@@ -365,9 +393,12 @@ namespace Gate {
             });
         }
 
-        private void heartbeat_flush_host(GateService _gate_service, long tick)
+        private void heartbeat_flush_host(long tick)
         {
+            var host = $"{_config.get_value_string("tcp_inside_host")}:{_config.get_value_int("tcp_inside_port")}";
+            _redis_handle.SetStrData(gate_name_info.name, host, 60);
 
+            _timerservice.addticktime(40000, heartbeat_flush_host);
         }
 
 };
