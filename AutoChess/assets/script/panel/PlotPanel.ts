@@ -57,8 +57,7 @@ export class PlotPanel extends Component
 
         this.skip.on(Button.EventType.CLICK,()=>
         {
-
-            //this.destroy();
+            this.destroy();
         },this);
     }
 
@@ -73,7 +72,7 @@ export class PlotPanel extends Component
         });
     }
 
-    private OpenPlotPanel(_id:number)
+    public OpenPlotPanel(_id:number)
     {
         this.progress = 1;
         this.LoadPlot(_id);
