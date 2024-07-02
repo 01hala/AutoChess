@@ -13,6 +13,7 @@ import * as Equip_Config from './Equip_config';
 import * as task_config from './task_config';
 import * as SkillIntroduce_config from './SkillIntroduce_config'
 import * as  FetterIntroduceConfig from './FetterIntroduce_config';
+import * as PlotConfig from "./Plot_config";
 
 export class config {
     public static MechanicFetters = 6;
@@ -27,17 +28,20 @@ export class config {
     public static TaskConfig:Map<number,task_config.TaskConfig>;
     public static SkillIntroduceConfig:Map<number,SkillIntroduce_config.SkillIntroduceConfig>;
     public static FetterIntroduceConfig:Map<number,FetterIntroduceConfig.FetterIntroduceConfig>;
+    public static PlotConfig:Map<number,PlotConfig.PlotConfig>;
 
-    public static async load() {
+    public static async load()
+    {
         config.SkillConfig = await skill_config.LoadSkillConfig();
         config.FettersConfig = await fetters.LoadFettersConfig();
         config.BufferConfig = await buffer_config.LoadBufferConfig();
         config.RoleConfig = await role_config.LoadRoleConfig();
-        config.BundleConfig=await bundle_config.LoadBundleConfig();
-        config.FoodConfig=await Food_config.LoadFoodConfig();
-        config.EquipConfig=await Equip_Config.LoadEquipConfig();
-        config.TaskConfig=await task_config.LoadTaskConfig();
-        config.SkillIntroduceConfig=await SkillIntroduce_config.LoadSkillIntroduceConfig();
-        config.FetterIntroduceConfig=await FetterIntroduceConfig.LoadFetterIntroduceConfig();
+        config.BundleConfig = await bundle_config.LoadBundleConfig();
+        config.FoodConfig = await Food_config.LoadFoodConfig();
+        config.EquipConfig = await Equip_Config.LoadEquipConfig();
+        config.TaskConfig = await task_config.LoadTaskConfig();
+        config.SkillIntroduceConfig = await SkillIntroduce_config.LoadSkillIntroduceConfig();
+        config.FetterIntroduceConfig = await FetterIntroduceConfig.LoadFetterIntroduceConfig();
+        config.PlotConfig = await PlotConfig.LoadPlotConfig();
     }
 }
