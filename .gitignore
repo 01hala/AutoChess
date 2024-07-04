@@ -428,3 +428,4 @@ config_node.txt
 /server/start_node.bat
 /AutoChess/assets/scene/scene-2d-001.scene
 /AutoChess/assets/scene/scene-2d-001.scene.meta
+start.bat
