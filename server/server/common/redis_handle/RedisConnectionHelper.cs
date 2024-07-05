@@ -26,6 +26,8 @@ namespace Abelkhan
 
         public RedisConnectionHelper(string conUrl, string conName, string pwd, int db = 0)
         {
+            Log.Log.trace("RedisConnectionHelper pwd:{0}", pwd);
+
             _conUrl = conUrl;
             _conName = conName;
             _pwd = pwd;
@@ -46,7 +48,7 @@ namespace Abelkhan
             }
             catch (StackExchange.Redis.RedisConnectionException ex)
             {
-                Log.Log.err("Can NOT connect to Redis! connectRetry={0}, connectTimeout={1}ms, conex:{2}", connectRetry, connectTimeout, ex);
+                Log.Log.err("Can NOT connect to Redis! connectRetry={0}, connectTimeout={1}ms, conex:{2}, _conf:{3}", connectRetry, connectTimeout, ex, _conf);
                 throw;
             }
         }
@@ -68,7 +70,7 @@ namespace Abelkhan
                 }
                 catch (StackExchange.Redis.RedisConnectionException)
                 {
-                    Log.Log.err("Exit due to Recover-Failure! RecoverCount={0}, connectRetry={1}, connectTimeout={2}ms", _recoverCnt, connectRetry, connectTimeout);
+                    Log.Log.err("Exit due to Recover-Failure! RecoverCount={0}, connectRetry={1}, connectTimeout={2}ms, _conf={3}", _recoverCnt, connectRetry, connectTimeout, _conf);
                     Thread.Sleep(10);
                     Environment.Exit(1);
                 }
