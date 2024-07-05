@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Canvas, instantiate } from 'cc';
+import { _decorator, Component, Node, Canvas, instantiate, sys } from 'cc';
 import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
@@ -20,6 +20,7 @@ import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
 import { Guide } from '../other/Guide';
 import * as enmus from '../other/enums';
+import SdkManager from '../SDK/SdkManager';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -184,6 +185,10 @@ export class login extends Component {
     async start() 
     {  
         this.random_account = `no_author_${Math.floor(Math.random() * 100)}`;
+        if(sys.platform === sys.Platform.WECHAT_GAME)
+        {
+            SdkManager.SetPlatform(enmus.SDK_TYPE.WX)
+        }
 
         await config.config.load();
         console.log("login start!");
@@ -387,8 +392,7 @@ export class login extends Component {
         if (singleton.netSingleton.is_conn_gate) {
             this._progress += 0.1;
             this._setProgress(this._progress);
-            //this.wxLogin();
-            singleton.netSingleton.player.login_player("no_author", this.random_account, this.nick_name, this.avatar_url);
+            this.wxLogin();
         }
     }
 
