@@ -44,7 +44,7 @@ export class Guide extends Component
     {
         this.mask.on(Button.EventType.CLICK, () =>
         {
-            if (this.step >= 3 && this.step <= 7)
+            if (this.step >= 3 && this.step < 7)
             {
                 this.Checkguide();
                 this.step++;
@@ -231,7 +231,7 @@ export class Guide extends Component
         {
             this.mask.getComponent(BlockInputEvents).enabled=false;
             this.mask.active = false;   //此处必须关闭mask中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
-            if(this.step > 7)
+            if(this.step >= 7)
             {
                 this.node.getChildByPath("BG").active=false;
             }
