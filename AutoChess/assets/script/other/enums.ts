@@ -124,3 +124,8 @@ export enum GameMode
     PVE=2
 }
 
+export enum SDK_TYPE 
+{
+    PC = 0,			
+    WX = 1, 		
+}

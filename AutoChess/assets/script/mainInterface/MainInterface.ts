@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, assetManager, Button, Camera, Component, ImageAsset, instantiate, Node, Prefab, RichText, Sprite, SpriteFrame, Texture2D, Toggle, tween, Vec3, Widget } from 'cc';
+import { _decorator, Animation, animation, assetManager, Button, Camera, Component, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
@@ -14,6 +14,7 @@ import { AudioManager } from '../other/AudioManager';
 import * as enums from '../other/enums';
 import { CardEditor } from './CardEditor';
 import { GameManager } from '../other/GameManager';
+import SdkManager from '../SDK/SdkManager';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -173,7 +174,8 @@ export class MainInterface
         try
         {
             let cam=this.father.getChildByPath("Camera");
-            if (wx.getSystemInfoSync().safeArea.height == wx.getSystemInfoSync().screenHeight)
+            
+            if (SdkManager.SDK.getSystemInfo().safeArea.height == SdkManager.SDK.getSystemInfo().screenHeight)
             {
                 return;
             }
@@ -181,9 +183,10 @@ export class MainInterface
             let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, 0, 0));
             this.mainPanel.getChildByPath("BG/Foreground").getComponent(Widget).bottom=outPos.y;
             //顶部物体对齐
-            let bpttomHeigh=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height);
+            let bpttomHeigh=(SdkManager.SDK.getSystemInfo().screenHeight-SdkManager.SDK.getSystemInfo().safeArea.height);
             outPos=cam.getComponent(Camera).screenToWorld(new Vec3(0, bpttomHeigh, 0));
             this.mainPanel.getChildByPath("UiLayer/TopArea").getComponent(Widget).top=outPos.y;
+
         }
         catch(error)
         {

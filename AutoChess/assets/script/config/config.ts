@@ -42,6 +42,6 @@ export class config {
         config.TaskConfig = await task_config.LoadTaskConfig();
         config.SkillIntroduceConfig = await SkillIntroduce_config.LoadSkillIntroduceConfig();
         config.FetterIntroduceConfig = await FetterIntroduceConfig.LoadFetterIntroduceConfig();
-        config.PlotConfig = await PlotConfig.LoadPlotConfig();
+        //config.PlotConfig = await PlotConfig.LoadPlotConfig();
     }
 }
