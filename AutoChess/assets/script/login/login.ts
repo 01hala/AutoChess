@@ -49,6 +49,8 @@ export class login extends Component {
     private nick_name:string = null;
     private avatar_url:string = null;
 
+    private random_account:string = null;
+
     private get_user_info_login(code:string) {
         wx.getUserInfo({ 
             withCredentials:false,
@@ -323,7 +325,10 @@ export class login extends Component {
 
             this._progress += 0.1;
             this._setProgress(this._progress);
-            this.wxLogin();
+            //this.wxLogin();
+
+            this.random_account = `no_author_${Math.floor(Math.random() * 100)}`;
+            singleton.netSingleton.player.login_player("no_author", this.random_account, this.nick_name, this.avatar_url);
         });
 
         singleton.netSingleton.game.cb_start_quest_ready=(_events)=>
@@ -374,7 +379,8 @@ export class login extends Component {
                     this._setProgress(this._progress);
                 }, 800);
 
-                this.wxLogin();
+                //this.wxLogin();
+                singleton.netSingleton.player.login_player("no_author", this.random_account, this.nick_name, this.avatar_url);
             });
         });
 
