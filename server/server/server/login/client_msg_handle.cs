@@ -24,7 +24,7 @@ namespace Login
                 rsp.rsp(_proxy.name, token);
             }, (err) => {
                 rsp.err(err);
-            }).timeout(1000, () => {
+            }).timeout(5000, () => {
                 rsp.err((int)em_error.timeout);
             });
         }

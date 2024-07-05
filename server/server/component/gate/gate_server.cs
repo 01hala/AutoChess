@@ -193,6 +193,16 @@ namespace Gate {
                         {
                             add_chs.Add(ch);
                         }
+
+                        var _client = _clientmanager.reg_client(ch);
+                        if (_client != null)
+                        {
+                            _client.ntf_cuuid();
+                        }
+                        else
+                        {
+                            ch.disconnect();
+                        }
                     };
                 }
             }

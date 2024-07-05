@@ -335,6 +335,7 @@ export class ReadyDis
     //注册PVP回调事件
     private RegPvpCallBack()
     {
+        console.log("RegPvpCallBack begin!");
         //更新玩家游戏信息
         singleton.netSingleton.game.cb_battle_info = (battle_info: common.UserBattleData) =>
         {

@@ -183,6 +183,7 @@ export class login extends Component {
 
     async start() 
     {  
+        this.random_account = `no_author_${Math.floor(Math.random() * 100)}`;
 
         await config.config.load();
         console.log("login start!");
@@ -327,7 +328,6 @@ export class login extends Component {
             this._setProgress(this._progress);
             //this.wxLogin();
 
-            this.random_account = `no_author_${Math.floor(Math.random() * 100)}`;
             singleton.netSingleton.player.login_player("no_author", this.random_account, this.nick_name, this.avatar_url);
         });
 
