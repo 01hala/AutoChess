@@ -4,7 +4,7 @@
  * 2024/03/18
  * 商店界面
  */
-import { _decorator, Button, Component, instantiate, Node, PageView, Prefab, primitives, RichText, Sprite, Toggle } from 'cc';
+import { _decorator, Button, Component, instantiate, Node, PageView, Prefab, primitives, RichText, Sprite, sys, Toggle } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../config/config';
@@ -14,6 +14,7 @@ import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { SendMessage } from '../other/MessageEvent';
 import { AudioManager } from '../other/AudioManager';
+import SdkManager from '../SDK/SdkManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('StorePanel')
@@ -150,7 +151,8 @@ export class StorePanel extends Component
     {
         try
         {
-            let sysinfo=wx.getSystemInfoSync().platform;
+            let sysinfo=SdkManager.SDK.getSystemInfo().platform;
+            
             if(sysinfo === "ios" || sysinfo === "mac")
             {
                 this.ClearPageView();
