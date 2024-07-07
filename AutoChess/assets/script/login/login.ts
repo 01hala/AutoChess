@@ -185,6 +185,7 @@ export class login extends Component {
     async start() 
     {  
         this.random_account = `no_author_${Math.floor(Math.random() * 100)}`;
+
         if(sys.platform === sys.Platform.WECHAT_GAME)
         {
             SdkManager.SetPlatform(enmus.SDK_TYPE.WX)
@@ -392,7 +393,9 @@ export class login extends Component {
         if (singleton.netSingleton.is_conn_gate) {
             this._progress += 0.1;
             this._setProgress(this._progress);
-            this.wxLogin();
+
+            //this.wxLogin();
+            singleton.netSingleton.player.login_player("no_author", this.random_account, this.nick_name, this.avatar_url);
         }
     }
 
