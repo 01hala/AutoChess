@@ -127,5 +127,6 @@ export enum GameMode
 export enum SDK_TYPE 
 {
     PC = 0,			
-    WX = 1, 		
+    WX = 1, 	
+    Default = 2,	
 }
