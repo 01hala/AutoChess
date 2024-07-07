@@ -1,6 +1,6 @@
-import { _decorator, Component, Node } from 'cc';
-import SdkInterface from './SdkInterface';
+import { _decorator, Component, math, Node, Rect, sys } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
+import SdkInterface, { Sysinfo, UserPlatformInfo } from './SdkInterface';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -20,6 +20,9 @@ export default class WxSdk implements SdkInterface
     private banner:any;
     private interstitial:any;
     private costom:any;
+
+    public nick_name:string;
+    public avatar_url:string;
 
     private wxUserInfo(login_res: WechatMinigame.LoginSuccessCallbackResult) 
     {
@@ -47,19 +50,14 @@ export default class WxSdk implements SdkInterface
 
     private get_user_info_login(_callBack: Function, _code: string)
     {
-        let nick_name: string;
-        let avatar_url: string;
         wx.getUserInfo({
             withCredentials: false,
             success: (result) =>
             { 
-                // this._progress += 0.1;
-                // this._setProgress(this._progress);
-
                 let nickName = unicodeToUtf8(result.userInfo.nickName);
-                nick_name = nickName.slice(0, 3);
-                avatar_url = result.userInfo.avatarUrl;
-                singleton.netSingleton.player.login_player("wx", _code, nick_name, avatar_url);
+                this.nick_name = nickName.slice(0, 3);
+                this.avatar_url = result.userInfo.avatarUrl;
+                singleton.netSingleton.player.login_player("wx", _code, this.nick_name, this.avatar_url);
                 _callBack();
             },
             fail: (res) =>
@@ -113,18 +111,14 @@ export default class WxSdk implements SdkInterface
                     success: (res) =>
                     {
                         _callBack();
-                        // this._progress += 0.1;
-                        // this._setProgress(this._progress);
 
                         console.log("authSetting:", JSON.stringify(res));
 
                         if (!res.needAuthorization)
                         {
-                            _callBack();
-                            //this.progressBar.active = true;
                             this.get_user_info_login(() =>
                             {
-
+                                _callBack();
                             }, login_res.code);
                         }
                         else
@@ -187,27 +181,29 @@ export default class WxSdk implements SdkInterface
      */
     getSystemInfo()
     {
-        let info=
-        {
-            safeArea: 
-            {
-                /** 安全区域右下角纵坐标 */
-                bottom: wx.getSystemInfoSync().safeArea.bottom,
-                /** 安全区域的高度，单位逻辑像素 */
-                height: wx.getSystemInfoSync().safeArea.height,
-                /** 安全区域左上角横坐标 */
-                left: wx.getSystemInfoSync().safeArea.left,
-                /** 安全区域右下角横坐标 */
-                right: wx.getSystemInfoSync().safeArea.right,
-                /** 安全区域左上角纵坐标 */
-                top: wx.getSystemInfoSync().safeArea.top,
-                /** 安全区域的宽度，单位逻辑像素 */
-                width: wx.getSystemInfoSync().safeArea.width,
-            },
-            screenHeight : wx.getSystemInfoSync().screenHeight,
-            screenWidth : wx.getSystemInfoSync().screenWidth
-        };
-        return info;
+        let sysInfo:Sysinfo = new Sysinfo();
+        //屏幕安全区域
+        sysInfo.safeArea.bottom = wx.getSystemInfoSync().safeArea.bottom;
+        sysInfo.safeArea.top = wx.getSystemInfoSync().safeArea.top;
+        sysInfo.safeArea.left = wx.getSystemInfoSync().safeArea.left;
+        sysInfo.safeArea.right = wx.getSystemInfoSync().safeArea.right;
+        sysInfo.safeArea.height = wx.getSystemInfoSync().safeArea.height;
+        sysInfo.safeArea.width = wx.getSystemInfoSync().safeArea.width;
+        //屏幕高宽
+        sysInfo.screenHeight = wx.getSystemInfoSync().screenHeight;
+        sysInfo.screenWidth = wx.getSystemInfoSync().screenWidth;
+        //系统平台
+        sysInfo.platform=wx.getSystemInfoSync().platform;
+
+        return sysInfo;
+    }
+
+    getUserInfo()
+    {
+        let userInfo:UserPlatformInfo = new UserPlatformInfo();
+        userInfo.nickName=this.nick_name;
+        userInfo.avatarUrl=this.avatar_url;
+        return userInfo;
     }
 }
 

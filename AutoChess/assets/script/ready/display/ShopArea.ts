@@ -14,6 +14,7 @@ import { PropsType } from '../../other/enums';
 import { AudioManager } from '../../other/AudioManager';
 import { GameManager } from '../../other/GameManager';
 import * as enmus from '../../other/enums';
+import SdkManager from '../../SDK/SdkManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('ShopArea')
@@ -64,11 +65,11 @@ export class ShopArea extends Component
     start() 
     {
         //屏幕适配
-        if(wx.getSystemInfoSync().safeArea.height==wx.getSystemInfoSync().screenHeight)
+        if(SdkManager.SDK.getSystemInfo().safeArea.height == SdkManager.SDK.getSystemInfo().screenHeight)
         {
             return;
         }
-        let bpttomHeigh=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height)/2;
+        let bpttomHeigh=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height)/2;
         let outPos:Vec3=this.cam.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeigh,0));
         this.node.getComponent(Widget).bottom=outPos.y;
     }
