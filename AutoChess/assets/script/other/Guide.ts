@@ -44,7 +44,7 @@ export class Guide extends Component
     {
         this.mask.on(Button.EventType.CLICK, () =>
         {
-            if (this.step >= 3 && this.step <= 7)
+            if (this.step >= 3 && this.step < 7)
             {
                 this.Checkguide();
                 this.step++;
