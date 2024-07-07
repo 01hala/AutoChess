@@ -182,13 +182,17 @@ namespace Gate {
                     var websocket_outside_port = (ushort)_config.get_value_int("websocket_outside_port");
                     var is_ssl = _config.get_value_bool("is_ssl");
                     string pfx = "";
+                    string pwd = "";
                     if (is_ssl)
                     {
                         pfx = _config.get_value_string("pfx");
+                        pwd = _config.get_value_string("pwd");
                     }
-                    _websocket_service = new Abelkhan.WebsocketAcceptService(websocket_outside_port, is_ssl, pfx);
+                    _websocket_service = new Abelkhan.WebsocketAcceptService(websocket_outside_port, is_ssl, pfx, pwd);
                     _websocket_service.on_connect += (ch) =>
                     {
+                        Log.Log.trace("_websocket_service on_connect");
+
                         lock (add_chs)
                         {
                             add_chs.Add(ch);
@@ -197,10 +201,12 @@ namespace Gate {
                         var _client = _clientmanager.reg_client(ch);
                         if (_client != null)
                         {
+                            Log.Log.trace("_websocket_service on_connect ntf_cuuid");
                             _client.ntf_cuuid();
                         }
                         else
                         {
+                            Log.Log.trace("_websocket_service on_connect disconnect");
                             ch.disconnect();
                         }
                     };

@@ -163,8 +163,9 @@ export class login extends Component {
             this._progress += 0.1;
             this._setProgress(this._progress);
             //this.wxLogin();
-            SdkManager.SDK.login((e: boolean) =>
+            SdkManager.SDK.login((e: boolean = true) =>
             {
+                this._loading.progressBar.active = e;
                 this._progress += 0.1;
                 this._setProgress(this._progress);
             }, null);
@@ -221,8 +222,9 @@ export class login extends Component {
                     this._setProgress(this._progress);
                 }, 800);
 
-                SdkManager.SDK.login((e: boolean) =>
+                SdkManager.SDK.login((e: boolean = true) =>
                 {
+                    this._loading.progressBar.active = e;
                     this._progress += 0.1;
                     this._setProgress(this._progress);
                 }, null);
@@ -234,8 +236,9 @@ export class login extends Component {
             this._progress += 0.1;
             this._setProgress(this._progress);
             
-            SdkManager.SDK.login((e: boolean) =>
+            SdkManager.SDK.login((e: boolean = true) =>
             {
+                this._loading.progressBar.active = e;
                 this._progress += 0.1;
                 this._setProgress(this._progress);
             }, null);
