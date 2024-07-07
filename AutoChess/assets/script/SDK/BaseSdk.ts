@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import SdkInterface, { Sysinfo, UserPlatformInfo } from './SdkInterface';
+import * as singleton from '../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
 @ccclass('BaseSdk')
@@ -12,6 +13,9 @@ export class BaseSdk implements SdkInterface
 
     login(_callBack: Function, _target: Object): void
     {
+        let accountName = `no_author_${Math.floor(Math.random() * 100)}`;
+        let userInfo = this.getUserInfo();
+        singleton.netSingleton.player.login_player("no_author", accountName, userInfo.nickName, userInfo.avatarUrl);
         _callBack();
     }
 
@@ -42,7 +46,7 @@ export class BaseSdk implements SdkInterface
 
     getSystemInfo()
     {
-        let sysInfo:Sysinfo;
+        let sysInfo:Sysinfo = new Sysinfo();
         //安全区域矩形大小
         sysInfo.safeArea.bottom = 0;
         sysInfo.safeArea.top = 0;
@@ -61,9 +65,9 @@ export class BaseSdk implements SdkInterface
 
     getUserInfo()
     {
-        let userInfo:UserPlatformInfo;
-        userInfo.nickName=null;
-        userInfo.avatarUrl=null;
+        let userInfo:UserPlatformInfo = new UserPlatformInfo();
+        userInfo.nickName="test";
+        userInfo.avatarUrl="";
         return userInfo;
     }
     

@@ -93,6 +93,9 @@ export class login extends Component {
         {
             SdkManager.SetPlatform(enmus.SDK_TYPE.WX)
         }
+        else {
+            SdkManager.SetPlatform(enmus.SDK_TYPE.Default)
+        }
 
         await config.config.load();
         console.log("login start!");
