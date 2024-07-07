@@ -21,6 +21,7 @@ import { SendMessage } from '../../other/MessageEvent';
 import { RoleDis } from '../../battle/display/RoleDis';
 import { GameManager } from '../../other/GameManager';
 import { AudioManager } from '../../other/AudioManager';
+import SdkManager from '../../SDK/SdkManager';
 
 const { ccclass, property } = _decorator;
 
@@ -199,7 +200,12 @@ export class ReadyDis
 
     private InterfaceAdjust()
     {
-        let bpttomHeight=(wx.getSystemInfoSync().screenHeight-wx.getSystemInfoSync().safeArea.height);
+        if (SdkManager.SDK.getSystemInfo().safeArea.height == SdkManager.SDK.getSystemInfo().screenHeight)
+        {
+            return;
+        }
+
+        let bpttomHeight=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
         let outPos:Vec3=this.cameraNode.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeight,0));
         this.topArea.getComponent(Widget).top=outPos.y;
     }
