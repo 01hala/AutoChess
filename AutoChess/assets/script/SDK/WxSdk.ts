@@ -24,7 +24,7 @@ export default class WxSdk implements SdkInterface
     public nick_name:string;
     public avatar_url:string;
 
-    private wxUserInfo(login_res: WechatMinigame.LoginSuccessCallbackResult) 
+    private wxUserInfo(_callBack: Function, login_res: WechatMinigame.LoginSuccessCallbackResult) 
     {
 
         let wxSize = wx.getSystemInfoSync();
@@ -45,6 +45,15 @@ export default class WxSdk implements SdkInterface
                 fontSize: 16,
                 borderRadius: 4
             }
+        });
+
+        _callBack(false);
+        btn.onTap((res) => {
+            _callBack(true);
+
+            console.log("createUserInfoButton:" + JSON.stringify(res));
+            this.get_user_info_login(_callBack, login_res.code)
+            btn.destroy();
         });
     }
 
@@ -106,7 +115,7 @@ export default class WxSdk implements SdkInterface
                     fail: (res) =>
                     {
                         console.log("authSetting fail:", JSON.stringify(res));
-                        this.wxUserInfo(login_res);
+                        this.wxUserInfo(_callBack, login_res);
                     },
                     success: (res) =>
                     {
@@ -124,7 +133,7 @@ export default class WxSdk implements SdkInterface
                         else
                         {
                             console.log("authSetting RequirePrivacyAuthorize:", JSON.stringify(res));
-                            this.wxUserInfo(login_res);
+                            this.wxUserInfo(_callBack, login_res);
                         }
                     }
                 });
