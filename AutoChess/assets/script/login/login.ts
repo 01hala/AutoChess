@@ -50,99 +50,6 @@ export class login extends Component {
     private nick_name:string = null;
     private avatar_url:string = null;
 
-    private get_user_info_login(code:string) {
-        wx.getUserInfo({ 
-            withCredentials:false,
-            success: (result) => {
-                this._progress += 0.1;
-                this._setProgress(this._progress);
-                
-                let nickName = unicodeToUtf8(result.userInfo.nickName);
-                this.nick_name = nickName.slice(0, 3);
-                this.avatar_url = result.userInfo.avatarUrl;
-                singleton.netSingleton.player.login_player("wx", code, this.nick_name, this.avatar_url);
-            },
-            fail: (res) => {
-                console.log("fail:" + JSON.stringify(res));
-            },
-            complete: (res) => {
-                console.log("complete:" + JSON.stringify(res));
-            }
-        });
-    }
-
-    private wxUserInfo(login_res: WechatMinigame.LoginSuccessCallbackResult) {
-
-        let wxSize = wx.getSystemInfoSync();
-        let btn = wx.createUserInfoButton({
-            type: 'text',
-            text: '点击登录',
-            style: {
-                left: wxSize.screenWidth / 2 - 100,
-                top: wxSize.screenHeight / 2 + 60,
-                width: 200,
-                height: 40,
-                lineHeight: 40,
-                backgroundColor: '#ffffff',
-                borderColor: '#ffffff',
-                borderWidth: 1,
-                color: '#000000',
-                textAlign: 'center',
-                fontSize: 16,
-                borderRadius: 4
-            }
-        });
-
-        btn.onTap((res) => {
-            this._progress += 0.1;
-            this._setProgress(this._progress);
-
-            console.log("createUserInfoButton:" + JSON.stringify(res));
-            this.get_user_info_login(login_res.code)
-            btn.destroy();
-
-            this.progressBar.active = true;
-        });
-    }
-
-    private wxLogin() {
-        wx.login({
-            complete: (res) => {
-                console.log("login complete:" + JSON.stringify(res));
-            },
-            fail: (res) => {
-                console.log("login fail:" + JSON.stringify(res));
-            },
-            success: (login_res) => {
-                console.log("login success:" + JSON.stringify(login_res));
-                wx.getPrivacySetting({
-                    complete: (res) => {
-                        console.log("authSetting complete:", JSON.stringify(res));
-                    },
-                    fail: (res) => {
-                        console.log("authSetting fail:", JSON.stringify(res));
-                        this.wxUserInfo(login_res);
-                    },
-                    success: (res) => {
-                        this._progress += 0.1;
-                        this._setProgress(this._progress);
-
-                        console.log("authSetting:", JSON.stringify(res));
-
-                        if (!res.needAuthorization) {
-                            this.progressBar.active = true;
-                            this.get_user_info_login(login_res.code);
-                        }
-                        else {
-                            console.log("authSetting RequirePrivacyAuthorize:", JSON.stringify(res));
-                            this.wxUserInfo(login_res);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
     private AutoUpdata():Promise<void>
     {
         return new Promise((resolve)=>
@@ -194,7 +101,7 @@ export class login extends Component {
         this._setProgress = this._loading.load(this.bk.node, true);
 
         this.progressBar = this._loading.progressBar;
-        this.progressBar.active = false;
+        this.progressBar.active = true;
 
         this.interval=setInterval(()=>{
             this._progress += 0.01;
@@ -212,20 +119,21 @@ export class login extends Component {
             this._setProgress(this._progress);
 
             console.log("login non_account create role");
-            singleton.netSingleton.player.create_role(this.nick_name, this.nick_name, this.avatar_url);
+            singleton.netSingleton.player.create_role(SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().avatarUrl);
         };
 
-        singleton.netSingleton.player.cb_player_login_sucess = async () => {
+        //登录进入主界面
+        singleton.netSingleton.player.cb_player_login_sucess = async () => 
+        {
             this._progress += 0.3;
             this._setProgress(this._progress);
-            //进入主界面
-            singleton.netSingleton.mainInterface=new MainInterface();
-            
-            await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
+
+            singleton.netSingleton.mainInterface = new MainInterface();
+            await singleton.netSingleton.mainInterface.start(this.bk.node, async (event) =>
             {
                 this._setProgress(1.0);
                 this._loading.done();
-                singleton.netSingleton.player.get_user_data((_step)=>
+                singleton.netSingleton.player.get_user_data((_step) =>
                 {
                     console.log("guide step:", _step);
                     if (common.GuideStep.None == _step)
@@ -234,34 +142,129 @@ export class login extends Component {
                     }
                 });
                 await sleep(100);
-                await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
+                await singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
                 console.log("login sucess!");
                 clearInterval(this.interval);
             });
         }
-        //准备阶段
-        singleton.netSingleton.game.cb_start_battle = async (battle_info:common.UserBattleData, shop_info:common.ShopData , fetters_info:common.Fetters[]) => 
+       
+        //注册回调
+        this.RegGameCallBack();
+       
+        //连接
+        this.netNode.on("connect", (e) =>
         {
-            this._progress=0.1;
+            console.log("on net connect!");
+
+            this._progress += 0.1;
+            this._setProgress(this._progress);
+            //this.wxLogin();
+            SdkManager.SDK.login((e: boolean) =>
+            {
+                this._progress += 0.1;
+                this._setProgress(this._progress);
+            }, null);
+        });
+
+        //重连
+        this.netNode.on("reconnect", () =>
+        {
+            console.log("on net reconnect!");
+
+            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack((info, match_name) =>
+            {
+                singleton.netSingleton.player.UserData = info;
+                if (match_name != "")
+                {
+                    singleton.netSingleton.game.match_name = match_name;
+                    if (singleton.netSingleton.ready)
+                    {
+                        singleton.netSingleton.game.get_battle_data().callBack((battle_info, shop_info, fetters_info) =>
+                        {
+                            singleton.netSingleton.ready.Restore(battle_info);
+                        }, () =>
+                        {
+                            console.log("on net reconnect get_battle_data error!");
+                        }).timeout(3000, () =>
+                        {
+                            console.log("on net reconnect get_battle_data timeout!");
+                        })
+                    }
+                }
+                else
+                {
+                    this.BackMainInterface();
+                }
+            }, (err) =>
+            {
+                if (singleton.netSingleton.ready)
+                {
+                    singleton.netSingleton.ready.destory();
+                    singleton.netSingleton.ready = null;
+                }
+                if (singleton.netSingleton.battle)
+                {
+                    singleton.netSingleton.battle.destory();
+                    singleton.netSingleton.battle = null;
+                }
+
+                this._loading = new load.Loading();
+                this._setProgress = this._loading.load(this.bk.node);
+
+                setInterval(() =>
+                {
+                    this._progress += 0.01;
+                    this._setProgress(this._progress);
+                }, 800);
+
+                SdkManager.SDK.login((e: boolean) =>
+                {
+                    this._progress += 0.1;
+                    this._setProgress(this._progress);
+                }, null);
+            });
+        });
+
+        if (singleton.netSingleton.is_conn_gate)
+        {
+            this._progress += 0.1;
+            this._setProgress(this._progress);
+            
+            SdkManager.SDK.login((e: boolean) =>
+            {
+                this._progress += 0.1;
+                this._setProgress(this._progress);
+            }, null);
+        }
+    }
+
+    private RegGameCallBack()
+    {
+        //pvp准备阶段
+        singleton.netSingleton.game.cb_start_battle = async (battle_info: common.UserBattleData, shop_info: common.ShopData, fetters_info: common.Fetters[]) => 
+        {
+            this._progress = 0.1;
             this._setProgress = this._loading.load(this.bk.node);
 
-            this.interval=setInterval(()=>{
+            this.interval = setInterval(() =>
+            {
                 this._progress += 0.40;
                 this._setProgress(this._progress);
             }, 800);
             singleton.netSingleton.mainInterface.destory();
-            if(null==singleton.netSingleton.ready)
+            if (null == singleton.netSingleton.ready)
             {
-                if (singleton.netSingleton.battle) {
+                if (singleton.netSingleton.battle)
+                {
                     singleton.netSingleton.battle.destory();
                     singleton.netSingleton.battle = null;
                 }
 
                 //新的一局游戏
-                let _readyData = new ReadyData(battle_info, shop_info , enmus.GameMode.PVP ,fetters_info);
-                singleton.netSingleton.ready=new ReadyDis(_readyData);
-                await singleton.netSingleton.ready.start(this.bk.node , battle_info ,async (event)=>
+                let _readyData = new ReadyData(battle_info, shop_info, enmus.GameMode.PVP, fetters_info);
+                singleton.netSingleton.ready = new ReadyDis(_readyData);
+                await singleton.netSingleton.ready.start(this.bk.node, battle_info, async (event) =>
                 {
                     await sleep(2000);
                     this._setProgress(1.0);
@@ -273,35 +276,28 @@ export class login extends Component {
                     clearInterval(this.interval);
                 });
             }
-        }
-        //游戏结束
-        singleton.netSingleton.game.cb_battle_victory = async (is_victory:boolean) => {
-            if (singleton.netSingleton.battle) {
-                await singleton.netSingleton.battle.SetGameVictory(is_victory);
-            }
+        };
 
-            this.BackMainInterface();
-        }
-
-        singleton.netSingleton.player.cb_battle_victory=()=>{};
-        //战斗阶段
-        singleton.netSingleton.game.cb_battle = async (self:common.UserBattleData, target:common.UserBattleData) => {
+        //pvp战斗阶段
+        singleton.netSingleton.game.cb_battle = async (self: common.UserBattleData, target: common.UserBattleData) =>
+        {
             console.log("cb_battle start round!");
 
-            this._progress=0.1;
+            this._progress = 0.1;
             this._setProgress = this._loading.load(this.bk.node);
-            this.interval=setInterval(()=>{
+            this.interval = setInterval(() =>
+            {
                 this._progress += 0.30;
                 this._setProgress(this._progress);
             }, 800);
-            
+
             singleton.netSingleton.ready.destory();
             singleton.netSingleton.ready = null;
-        
+
             let _battle = new Battle(self, target);
             singleton.netSingleton.battle = new BattleDis(_battle);
-            await singleton.netSingleton.battle.Start(this.bk.node,async (event)=>
-            { 
+            await singleton.netSingleton.battle.Start(this.bk.node, async (event) =>
+            {
                 await sleep(3000);
                 this._setProgress(1.0);
                 this._loading.done();
@@ -312,87 +308,44 @@ export class login extends Component {
                 console.log("start_round sucess!");
                 clearInterval(this.interval);
             });
-            
+        };
+
+        //pvp回合结算
+        singleton.netSingleton.player.cb_battle_victory=()=>{};
+
+        //pvp游戏结束
+        singleton.netSingleton.game.cb_battle_victory = async (is_victory: boolean) =>
+        {
+            if (singleton.netSingleton.battle)
+            {
+                await singleton.netSingleton.battle.SetGameVictory(is_victory);
+            }
+
+            this.BackMainInterface();
         }
-        //巅峰战力
-        singleton.netSingleton.game.cb_start_peak_strength = (_selfBattleData)=>
+
+         //巅峰战力
+        singleton.netSingleton.game.cb_start_peak_strength = (_selfBattleData) =>
         {
             singleton.netSingleton.battle.destory();
-            singleton.netSingleton.battle=null;
+            singleton.netSingleton.battle = null;
 
             singleton.netSingleton.game.battle();
         }
 
-        this.netNode.on("connect", (e)=>{
-            console.log("on net connect!");
-
-            this._progress += 0.1;
-            this._setProgress(this._progress);
-            this.wxLogin();
-        });
-
-        singleton.netSingleton.game.cb_start_quest_ready=(_events)=>
+        //pve准备阶段
+        singleton.netSingleton.game.cb_start_quest_ready = (_events) =>
         {
 
         };
 
-        singleton.netSingleton.game.cb_start_quest_battle=(_self,_target)=>
+        //pve战斗阶段
+        singleton.netSingleton.game.cb_start_quest_battle = (_self, _target) =>
         {
 
         };
-
-        this.netNode.on("reconnect", () => {
-            console.log("on net reconnect!");
-
-            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack((info, match_name)=>{
-                singleton.netSingleton.player.UserData = info;
-                if (match_name != "") {
-                    singleton.netSingleton.game.match_name = match_name;
-                    if (singleton.netSingleton.ready) {
-                        singleton.netSingleton.game.get_battle_data().callBack((battle_info, shop_info, fetters_info) => {
-                            singleton.netSingleton.ready.Restore(battle_info);
-                        }, () => {
-                            console.log("on net reconnect get_battle_data error!");
-                        }).timeout(3000, () => {
-                            console.log("on net reconnect get_battle_data timeout!");
-                        })
-                    }
-                }
-                else{
-                    this.BackMainInterface();
-                }
-            }, (err) => {
-                if (singleton.netSingleton.ready) {
-                    singleton.netSingleton.ready.destory();
-                    singleton.netSingleton.ready = null;
-                }
-                if(singleton.netSingleton.battle) {
-                    singleton.netSingleton.battle.destory();
-                    singleton.netSingleton.battle = null;
-                }
-
-                this._loading = new load.Loading();
-                this._setProgress = this._loading.load(this.bk.node);
-
-                setInterval(()=>{
-                    this._progress += 0.01;
-                    this._setProgress(this._progress);
-                }, 800);
-
-                this.wxLogin();
-            });
-        });
-
-        if (singleton.netSingleton.is_conn_gate) {
-            this._progress += 0.1;
-            this._setProgress(this._progress);
-            this.wxLogin();
-        }
     }
-
-    update(deltaTime: number) {
-    }
-
+    
     public async BackMainInterface()
     {
         this._progress=0.1;
