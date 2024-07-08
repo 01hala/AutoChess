@@ -100,7 +100,7 @@ export class netPlayer {
                         this.login_callback(player_name, token, nick_name, avatar_url);
                     }, (err)=>{
                         console.log("login error:" + err);
-                    }).timeout(10000, ()=>{
+                    }).timeout(20000, ()=>{
                         console.log("login timeout");
                     });
                 }
@@ -110,7 +110,7 @@ export class netPlayer {
                         this.login_callback(player_name, token, nick_name, avatar_url);
                     }, (err)=>{
                         console.log("login error:" + err);
-                    }).timeout(10000, ()=>{
+                    }).timeout(20000, ()=>{
                         console.log("login timeout");
                     });
                 }
@@ -119,7 +119,7 @@ export class netPlayer {
                         this.login_callback(player_name, token, nick_name, avatar_url);
                     }, (err)=>{
                         console.log("login error:" + err);
-                    }).timeout(10000, ()=>{
+                    }).timeout(20000, ()=>{
                         console.log("login timeout");
                     });
                 }
