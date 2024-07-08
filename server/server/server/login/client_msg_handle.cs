@@ -101,7 +101,7 @@ namespace Login
                 rsp.rsp(_proxy.name, token);
             }, (err) => {
                 rsp.err(err);
-            }).timeout(1000, () => {
+            }).timeout(10000, () => {
                 rsp.err((int)em_error.timeout);
             });
         }
@@ -201,7 +201,7 @@ namespace Login
                 rsp.rsp(_proxy.name, token);
             }, (err) => {
                 rsp.err(err);
-            }).timeout(1000, () => {
+            }).timeout(10000, () => {
                 rsp.err((int)em_error.timeout);
             });
         }
