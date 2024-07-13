@@ -346,11 +346,12 @@ namespace Abelkhan
             rsp_cb_player_match_handle = rsp_cb_player_match_handle_;
         }
 
-        public player_match_start_battle_cb start_battle(string client_uuid, List<Int32> role_list, UserInformation userInfo){
+        public player_match_start_battle_cb start_battle(BattleMod mod, string client_uuid, List<Int32> role_list, UserInformation userInfo){
             var uuid_21a74a63_a13c_539e_b2bc_ef5069375dba = (UInt64)Interlocked.Increment(ref uuid_f08f93cd_bfea_3bf2_ae83_42be38c1f420);
 
             var _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873 = new ArrayList();
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba);
+            _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add((int)mod);
             _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.Add(client_uuid);
             var _array_03c6cb48_755d_38f0_a566_1b564ef0e78d = new ArrayList();
             foreach(var v_9c7e0c91_5849_58a5_953e_3924ee9819a9 in role_list){
@@ -557,8 +558,9 @@ namespace Abelkhan
             Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_buy_equip", _argv_614a081d_0f9b_3fdd_9f4e_28d56e883756);
         }
 
-        public void battle_victory(bool is_victory, UserBattleData userInfo){
+        public void battle_victory(BattleMod mod, bool is_victory, UserBattleData userInfo){
             var _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5 = new ArrayList();
+            _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add((int)mod);
             _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(is_victory);
             _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(UserBattleData.UserBattleData_to_protcol(userInfo));
             Hub.Hub._hubs.call_hub(hub_name_da7b2c07_3c4d_366b_8def_7fa976df7502, "match_player_battle_victory", _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5);
@@ -666,19 +668,20 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_match_reconnect", reconnect);
         }
 
-        public event Action<string, List<Int32>, UserInformation> on_start_battle;
+        public event Action<BattleMod, string, List<Int32>, UserInformation> on_start_battle;
         public void start_battle(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _client_uuid = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var _mod = (BattleMod)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _client_uuid = ((MsgPack.MessagePackObject)inArray[2]).AsString();
             var _role_list = new List<Int32>();
-            var _protocol_arrayrole_list = ((MsgPack.MessagePackObject)inArray[2]).AsList();
+            var _protocol_arrayrole_list = ((MsgPack.MessagePackObject)inArray[3]).AsList();
             foreach (var v_9797f049_d836_5d18_abd6_91a05cfcd191 in _protocol_arrayrole_list){
                 _role_list.Add(((MsgPack.MessagePackObject)v_9797f049_d836_5d18_abd6_91a05cfcd191).AsInt32());
             }
-            var _userInfo = UserInformation.protcol_to_UserInformation(((MsgPack.MessagePackObject)inArray[3]).AsDictionary());
+            var _userInfo = UserInformation.protcol_to_UserInformation(((MsgPack.MessagePackObject)inArray[4]).AsDictionary());
             rsp = new player_match_start_battle_rsp(Hub.Hub._hubs.current_hubproxy.name, _cb_uuid);
             if (on_start_battle != null){
-                on_start_battle(_client_uuid, _role_list, _userInfo);
+                on_start_battle(_mod, _client_uuid, _role_list, _userInfo);
             }
             rsp = null;
         }
@@ -760,12 +763,13 @@ namespace Abelkhan
             }
         }
 
-        public event Action<bool, UserBattleData> on_battle_victory;
+        public event Action<BattleMod, bool, UserBattleData> on_battle_victory;
         public void battle_victory(IList<MsgPack.MessagePackObject> inArray){
-            var _is_victory = ((MsgPack.MessagePackObject)inArray[0]).AsBoolean();
-            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[1]).AsDictionary());
+            var _mod = (BattleMod)((MsgPack.MessagePackObject)inArray[0]).AsInt32();
+            var _is_victory = ((MsgPack.MessagePackObject)inArray[1]).AsBoolean();
+            var _userInfo = UserBattleData.protcol_to_UserBattleData(((MsgPack.MessagePackObject)inArray[2]).AsDictionary());
             if (on_battle_victory != null){
-                on_battle_victory(_is_victory, _userInfo);
+                on_battle_victory(_mod, _is_victory, _userInfo);
             }
         }
 

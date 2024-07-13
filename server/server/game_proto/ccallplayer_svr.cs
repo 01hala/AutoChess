@@ -425,12 +425,13 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_battle_check_achievement", check_achievement);
         }
 
-        public event Action on_start_battle;
+        public event Action<BattleMod> on_start_battle;
         public void start_battle(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            var _mod = (BattleMod)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
             rsp = new player_battle_start_battle_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_start_battle != null){
-                on_start_battle();
+                on_start_battle(_mod);
             }
             rsp = null;
         }

@@ -23,9 +23,9 @@ namespace Match
             _proxy = proxy;
         }
 
-        public void battle_victory(bool is_victory, UserBattleData user)
+        public void battle_victory(BattleMod mod, bool is_victory, UserBattleData user)
         {
-            _match_player_caller.get_hub(_proxy.name).battle_victory(is_victory, user);
+            _match_player_caller.get_hub(_proxy.name).battle_victory(mod, is_victory, user);
         }
 
         public match_player_peak_strength_victory_cb peak_strength_victory(BattleVictory is_victory, UserBattleData user)

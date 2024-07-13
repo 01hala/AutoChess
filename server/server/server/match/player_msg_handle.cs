@@ -65,13 +65,13 @@ namespace Match
             }
         }
 
-        private void Player_match_Module_on_start_battle(string clientUUID, List<int> roleList, UserInformation user_info)
+        private void Player_match_Module_on_start_battle(BattleMod mod, string clientUUID, List<int> roleList, UserInformation user_info)
         {
             var rsp = player_match_Module.rsp as player_match_start_battle_rsp;
 
             try
             {
-                var _player = Match.battle_Mng.add_player_to_battle(clientUUID, roleList, user_info);
+                var _player = Match.battle_Mng.add_player_to_battle(mod, clientUUID, roleList, user_info);
                 _player.PlayerHubName = Hub.Hub._hubs.current_hubproxy.name;
                 rsp.rsp(_player.BattleShopPlayer.BattleData, _player.BattleShopPlayer.ShopData);
             }

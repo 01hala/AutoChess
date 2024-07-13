@@ -29,7 +29,8 @@ enum BattleVictory {
 
 enum BattleMod {
 	Battle = 1;
-	PeakStrength = 2;
+	RankBattle = 2;
+	PeakStrength = 3;
 }
 
 enum GuideStep {
@@ -110,6 +111,16 @@ struct UserWeekAchievement {
 	int64 timeout;                    // 周成就超时时间
 }
 
+enum UserRank {
+	BlackIron = 1;
+	Bronze = 2;
+	Silver = 3;
+	Gold = 4;
+	Diamond = 5;
+	Master = 6;
+	King = 7;
+}
+
 struct UserData
 {
 	UserInformation User;	     // 用户信息
@@ -119,6 +130,8 @@ struct UserData
 	int32 gold;				     // 金币
 	int32 diamond;			     // 钻石
 	int32 score;			     // 积分
+	UserRank rank;				 // 段位
+	int64 rankTimeTmp;			 // last计算段位时间，每周刷新
 	int32 quest;				 // 主线任务进度
 	Bag bag;				     // 背包
 	GuideStep guideStep;		 // 新手引导进度

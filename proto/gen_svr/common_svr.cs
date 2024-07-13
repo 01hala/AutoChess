@@ -15,7 +15,8 @@ namespace Abelkhan
     }
     public enum BattleMod{
         Battle = 1,
-        PeakStrength = 2
+        RankBattle = 2,
+        PeakStrength = 3
     }
     public enum GuideStep{
         None = 0,
@@ -56,6 +57,15 @@ namespace Abelkhan
         EMNotComplete = 0,
         EMComplete = 1,
         EMRecv = -1
+    }
+    public enum UserRank{
+        BlackIron = 1,
+        Bronze = 2,
+        Silver = 3,
+        Gold = 4,
+        Diamond = 5,
+        Master = 6,
+        King = 7
     }
     public enum Priority{
         Low = 1,
@@ -554,6 +564,8 @@ namespace Abelkhan
         public Int32 gold;
         public Int32 diamond;
         public Int32 score;
+        public UserRank rank;
+        public Int64 rankTimeTmp;
         public Int32 quest;
         public Bag bag;
         public GuideStep guideStep;
@@ -572,6 +584,8 @@ namespace Abelkhan
             _protocol.Add("gold", _struct.gold);
             _protocol.Add("diamond", _struct.diamond);
             _protocol.Add("score", _struct.score);
+            _protocol.Add("rank", (Int32)_struct.rank);
+            _protocol.Add("rankTimeTmp", _struct.rankTimeTmp);
             _protocol.Add("quest", _struct.quest);
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             _protocol.Add("guideStep", (Int32)_struct.guideStep);
@@ -618,6 +632,12 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "score"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.score = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "rank"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.rank = (UserRank)((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "rankTimeTmp"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.rankTimeTmp = ((MsgPack.MessagePackObject)i.Value).AsInt64();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "quest"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.quest = ((MsgPack.MessagePackObject)i.Value).AsInt32();

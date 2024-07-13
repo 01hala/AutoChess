@@ -474,6 +474,61 @@ namespace Player
             return em_error.success;
         }
 
+        public void CheckRank(BattleMod mod, bool is_victory)
+        {
+            if (info.rankTimeTmp < Timerservice.WeekEndTimetmp())
+            {
+                info.score = 0;
+                info.rank = UserRank.BlackIron;
+            }
+            info.rankTimeTmp = Timerservice.Tick;
+
+            if (mod == BattleMod.RankBattle)
+            {
+                if (is_victory)
+                {
+                    info.score += 1;
+                }
+                else
+                {
+                    info.score -= 1;
+                    if (info.score < 0)
+                    {
+                        info.score = 0;
+                    }
+                }
+
+                if (info.score < 5)
+                {
+                    info.rank = UserRank.BlackIron;
+                }
+                else if (info.score < 10)
+                {
+                    info.rank = UserRank.Bronze;
+                }
+                else if (info.score < 25)
+                {
+                    info.rank = UserRank.Silver;
+                }
+                else if (info.score < 30)
+                {
+                    info.rank = UserRank.Gold;
+                }
+                else if (info.score < 35)
+                {
+                    info.rank = UserRank.Diamond;
+                }
+                else if (info.score < 40)
+                {
+                    info.rank = UserRank.Master;
+                }
+                else
+                {
+                    info.rank = UserRank.King;
+                }
+            }
+        }
+
         public void AddStrength(int _strength)
         {
             info.Strength += _strength;
@@ -578,7 +633,7 @@ namespace Player
             for(int i = info.Achiev.battleInfo.Count - 1; i < 0 && i < (info.Achiev.battleInfo.Count - 5); --i)
             {
                 var battleInfo = info.Achiev.battleInfo[i];
-                if (battleInfo.mod == BattleMod.Battle)
+                if (battleInfo.mod == BattleMod.Battle || battleInfo.mod == BattleMod.RankBattle)
                 {
                     if (battleInfo.isVictory != BattleVictory.victory)
                     {

@@ -574,7 +574,7 @@ namespace Player
             }
         }
 
-        private async void Player_battle_Module_on_start_battle()
+        private async void Player_battle_Module_on_start_battle(BattleMod mod)
         {
             Log.Log.trace("on_start_battle begin!");
 
@@ -587,7 +587,7 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _match = Player.match_Proxy_Mng.get_match_proxy();
-                    _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack(async (battle, shop) =>
+                    _match.start_battle(mod, uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack(async (battle, shop) =>
                     {
                         rsp.rsp(_match.name, battle, shop);
 

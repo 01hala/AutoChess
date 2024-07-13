@@ -945,10 +945,11 @@ export class player_battle_hubproxy
         this._client_handle = client_handle_;
     }
 
-    public start_battle(){
+    public start_battle(mod:common.BattleMod){
         let uuid_21a74a63_a13c_539e_b2bc_ef5069375dba = Math.round(this.uuid_4ffbb290_f238_38f6_b774_75ba1cccb192++);
 
         let _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873:any[] = [uuid_21a74a63_a13c_539e_b2bc_ef5069375dba];
+        _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873.push(mod);
         this._client_handle.call_hub(this.hub_name_4ffbb290_f238_38f6_b774_75ba1cccb192, "player_battle_start_battle", _argv_01e120b2_ff3e_35bc_b812_e0d6fa294873);
         let cb_start_battle_obj = new player_battle_start_battle_cb(uuid_21a74a63_a13c_539e_b2bc_ef5069375dba, rsp_cb_player_battle_handle);
         if (rsp_cb_player_battle_handle){
