@@ -108,11 +108,11 @@ export class netGame {
     public match_name:string = "";
     //准备阶段
     public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
-    public start_battle()
+    public start_battle(mod:common.BattleMod)
     {
         return new Promise((relolve, reject) =>
         {
-            this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle().callBack((match_name, battle_info, shop_info) =>
+            this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle(mod).callBack((match_name, battle_info, shop_info) =>
             {
                 this.match_name = match_name;
                 this.cb_start_battle(battle_info, shop_info, null);
