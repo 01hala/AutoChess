@@ -187,7 +187,7 @@ namespace Match
                 var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
                 if (_player.BattleShopPlayer.BattleData.victory >= 10)
                 {
-                    _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(true);
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(_player.mod, true);
                     player_proxy.battle_victory(_player.mod, true, _player.BattleShopPlayer.BattleData);
 
                     if (_player.BattleShopPlayer.BattleData.round <= 15)
@@ -212,7 +212,7 @@ namespace Match
                 {
                     if (_player.BattleShopPlayer.BattleData.faild <= 0)
                     {
-                        _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(false);
+                        _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(_player.mod, false);
                         player_proxy.battle_victory(_player.mod, false, _player.BattleShopPlayer.BattleData);
                     }
                     else

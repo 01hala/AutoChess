@@ -16,7 +16,7 @@ export class netGame {
 
     private match_c : match_c.battle_client_module;
 
-    public cb_battle_victory : (is_victory:boolean) => void;
+    public cb_battle_victory : (mod:common.BattleMod, is_victory:boolean) => void;
     public cb_shop_skill_effect : (effect:match_c.ShopSkillEffect) => void;
     public cb_role_buy_merge : (target_role_index:number, target_role:common.Role, is_update:boolean) => void;
     public cb_role_merge : (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void;
@@ -34,8 +34,8 @@ export class netGame {
         this.c_match_gm = new match.gm_caller(cli.cli_handle);
 
         this.match_c = new match_c.battle_client_module(cli.cli_handle);
-        this.match_c.cb_battle_victory = (is_victory:boolean) => {
-            this.cb_battle_victory.call(null, is_victory);
+        this.match_c.cb_battle_victory = (mod:common.BattleMod, is_victory:boolean) => {
+            this.cb_battle_victory.call(null, mod, is_victory);
         }
         this.match_c.cb_battle_plan_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[]) => {
             this.cb_start_battle.call(null, battle_info, shop_info, fetters_info);
