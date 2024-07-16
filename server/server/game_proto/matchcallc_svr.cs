@@ -193,8 +193,9 @@ namespace Abelkhan
             rsp_cb_battle_client_handle = rsp_cb_battle_client_handle_;
         }
 
-        public void battle_victory(bool is_victory){
+        public void battle_victory(BattleMod mod, bool is_victory){
             var _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5 = new ArrayList();
+            _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add((int)mod);
             _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5.Add(is_victory);
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_battle_victory", _argv_5388fb35_f021_358e_992c_9d18e0f4cfc5);
         }

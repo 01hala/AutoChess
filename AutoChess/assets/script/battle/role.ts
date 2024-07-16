@@ -251,6 +251,8 @@ export class Role {
         return false;
     }
 
+    // 平摊伤害
+    // Role[] 平摊伤害的所有角色
     private getShareDamageArray(battle: battle.Battle) : Role[] {
         if (!this.checkShareDamageBuffer()) {
             return [this];
@@ -267,6 +269,9 @@ export class Role {
         return list;
     }
 
+    // 代替当前被攻击角色受伤害
+    // Role 代替受伤的角色
+    // number 代替受伤的伤害上限
     private getSubstituteDamage(battle: battle.Battle) : [Role,number] {
         let selfTeam = this.selfCamp == enums.Camp.Self ? battle.GetSelfTeam() : battle.GetEnemyTeam();
         let selfIndex = selfTeam.GetRoleIndex(this);
