@@ -113,7 +113,7 @@ export class StartGame extends Component
                 }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 console.log("Normal_Btn start_battle!");
-                await singleton.netSingleton.game.start_battle(BattleMod.Battle);
+                singleton.netSingleton.game.start_battle(BattleMod.Battle);
                 //this.node.parent.active=false;
             },this);
         }

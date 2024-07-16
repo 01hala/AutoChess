@@ -1,6 +1,8 @@
 
-import { _decorator, Animation, assetManager, BlockInputEvents, Button, Component, ImageAsset, Node, Sprite, SpriteFrame, Texture2D } from 'cc';
+import { _decorator, Animation, assetManager, BlockInputEvents, Button, Component, ImageAsset, Label, Node, RichText, Sprite, SpriteFrame, Texture2D } from 'cc';
 import { AudioManager } from '../other/AudioManager';
+import * as singleton from '../netDriver/netSingleton';
+import * as common from "../serverSDK/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('UserInfo')
@@ -39,6 +41,7 @@ export class UserInfo extends Component
             this.node.getComponent(BlockInputEvents).enabled=true;
             this.node.setSiblingIndex(98);
             this.node.active=true;
+            this.ShowUserInfo();
             this.ShowAvatar(_url);
             this.panelNode.getComponent(Animation).play("PanelAppear");
         }
@@ -85,6 +88,28 @@ export class UserInfo extends Component
             console.error('UserInfo 下 ShowAvatar 错误 err: ',error);
         }
         
+    }
+
+    ShowUserInfo()
+    {
+        //用户名
+        this.node.getChildByPath("PanelNode/UserName/Label").getComponent(Label).string=""+singleton.netSingleton.mainInterface.userData.User.UserName;
+        //id
+        this.node.getChildByPath("PanelNode/BasicInfo/UserId/RichText").getComponent(RichText).string=
+            "<color=#f3bb51><outline color=72461f width=3>" +singleton.netSingleton.mainInterface.userData.User.UserGuid + "</outline></color>";
+        //分段
+        let rank;
+        switch(singleton.netSingleton.mainInterface.userData.rank)
+        {
+            case common.UserRank.BlackIron:rank="黑铁";break;
+            case common.UserRank.Bronze:rank="青铜";break;
+            case common.UserRank.Silver:rank="白银";break;
+            case common.UserRank.Gold:rank="黄金";break;
+            case common.UserRank.Diamond:rank="钻石";break;
+            case common.UserRank.Master:rank="大师";break;
+            case common.UserRank.King:rank="王者";break;
+        }
+        this.node.getChildByPath("PanelNode/BasicInfo/Rank/RichText").getComponent(RichText).string="<color=#f3bb51><outline color=72461f width=3>" + rank + "</color>";
     }
 }
 
