@@ -50,6 +50,7 @@ namespace Gate {
 		public void tick_hub_health(uint tick_time) {
 			var hub_proxy = _hubsvrmanager.get_hub(_hub_call_gate_module.current_ch.Value);
 			if (hub_proxy != null) {
+				Log.Log.trace("hub_proxy:{0} tick_time:{1}", hub_proxy._hub_name, tick_time);
 				hub_proxy._tick_time = tick_time;
 			}
 		}

@@ -143,6 +143,7 @@ namespace Gate
 				}
 				if (it.Value._tick_time > 50)
 				{
+					Log.Log.trace("hub_proxy:{0} tick_time:{1}", it.Value._hub_name, it.Value._tick_time);
 					continue;
 				}
 
