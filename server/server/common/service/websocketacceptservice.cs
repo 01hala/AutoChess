@@ -24,9 +24,11 @@ namespace Abelkhan
             }
             else
             {
-                _server = new WebSocketServer(string.Format("wss://0.0.0.0:{0}", port));
-                _server.Certificate = new X509Certificate2(pfx, password);
-                _server.EnabledSslProtocols = SslProtocols.Tls12;
+                _server = new WebSocketServer(string.Format("wss://0.0.0.0:{0}", port))
+                {
+                    Certificate = new X509Certificate2(pfx, password),
+                    EnabledSslProtocols = SslProtocols.Tls12,
+                };
             }
 
             _server.Start(socket =>

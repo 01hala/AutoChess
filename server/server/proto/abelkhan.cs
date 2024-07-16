@@ -102,7 +102,7 @@ namespace Abelkhan
             module_name = _module_name;
             ch = _ch;
 
-            serializer = MessagePackSerializer.Get<ArrayList>();
+            serializer = MessagePackSerializer.Get<List<MsgPack.MessagePackObject>>();
         }
 
         public void reset_ch(Ichannel _ch)
@@ -110,12 +110,12 @@ namespace Abelkhan
             ch = _ch;
         }
 
-        public void call_module_method(string methodname, ArrayList argvs)
+        public void call_module_method(string methodname, List<MsgPack.MessagePackObject> argvs)
         {
-			ArrayList _event = new ArrayList
+            var _event = new List<MsgPack.MessagePackObject>
             {
                 methodname,
-                argvs
+                MsgPack.MessagePackObject.FromObject(argvs)
             };
 
             try
@@ -141,15 +141,15 @@ namespace Abelkhan
 
                 ch.send(buf);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw new Abelkhan.Exception("error argvs");
+                throw new Abelkhan.Exception(string.Format("error argvs:{0}", ex));
             }
         }
 
         private Ichannel ch;
         protected readonly String module_name;
-        private readonly MessagePackSerializer<ArrayList> serializer;
+        private readonly MessagePackSerializer<List<MsgPack.MessagePackObject>> serializer;
     }
 
     public class Response : Icaller{

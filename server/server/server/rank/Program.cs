@@ -31,7 +31,7 @@ namespace RankSvr
 
         static void Main(string[] args)
 		{
-            var _hub = new Hub.Hub(args[0], args[1], "rank");
+            var _hub = new Hub.Hub(args[0], args[1], "rank", "fixed");
 
             _hub.on_hubproxy += on_hubproxy;
             _hub.on_hubproxy_reconn += on_hubproxy;

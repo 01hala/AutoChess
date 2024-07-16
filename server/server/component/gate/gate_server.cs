@@ -168,6 +168,18 @@ namespace Gate {
                         {
                             add_chs.Add(ch);
                         }
+
+                        var _client = _clientmanager.reg_client(ch);
+                        if (_client != null)
+                        {
+                            Log.Log.trace("_client_service on_connect ntf_cuuid");
+                            _client.ntf_cuuid();
+                        }
+                        else
+                        {
+                            Log.Log.trace("_client_service on_connect disconnect");
+                            ch.disconnect();
+                        }
                     };
                     _client_service.start();
                 }
@@ -191,8 +203,6 @@ namespace Gate {
                     _websocket_service = new Abelkhan.WebsocketAcceptService(websocket_outside_port, is_ssl, pfx, pwd);
                     _websocket_service.on_connect += (ch) =>
                     {
-                        Log.Log.trace("_websocket_service on_connect");
-
                         lock (add_chs)
                         {
                             add_chs.Add(ch);
@@ -228,6 +238,18 @@ namespace Gate {
                         lock (add_chs)
                         {
                             add_chs.Add(ch);
+                        }
+
+                        var _client = _clientmanager.reg_client(ch);
+                        if (_client != null)
+                        {
+                            Log.Log.trace("_enet_service on_connect ntf_cuuid");
+                            _client.ntf_cuuid();
+                        }
+                        else
+                        {
+                            Log.Log.trace("_enet_service on_connect disconnect");
+                            ch.disconnect();
                         }
                     };
                     _enet_service.start();
