@@ -145,7 +145,7 @@ export class login extends Component {
                     }
                 });
                 await sleep(100);
-                await singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
+                singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
                 console.log("login sucess!");
                 clearInterval(this.interval);
@@ -357,9 +357,9 @@ export class login extends Component {
         this._progress=0.1;
         this._setProgress = this._loading.load(this.bk.node);
         this.interval=setInterval(()=>{
-            this._progress += 0.15;
+            this._progress += 0.2;
             this._setProgress(this._progress);
-        }, 800);
+        }, 500);
 
         if(singleton.netSingleton.battle)
         {
@@ -373,11 +373,11 @@ export class login extends Component {
         }
         await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
         {
-            await sleep(5000);
+            await sleep(3000);
             this._setProgress(1.0);
             this._loading.done();
-            singleton.netSingleton.player.get_user_data()
-            await singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
+            singleton.netSingleton.player.get_user_data();
+            singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
             this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
             console.log("Back Main Interface!");

@@ -26,11 +26,15 @@ export class UserAccount
     public Achiev : UserAchievement | null = null;//成就
     public wAchiev : UserWeekAchievement | null = null;//周成就（任务）
     public guideStep:common.GuideStep;
+    public rank:common.UserRank;
+    public rankScore:number;
 
     constructor()
     {
         this.money=0;
         this.diamond=0;
+        this.rank = common.UserRank.BlackIron;
+        this.rankScore=0;
         this.playerBag=null;
     }
 }
@@ -68,7 +72,7 @@ export class MainInterface
     private userMoney:Node;
     private userDiamonds:Node;
     private avatarUrl:string;
-    public userData:UserData;
+    public userData:common.UserData;
     //玩家头像
     private userAvatar:Node;
 
