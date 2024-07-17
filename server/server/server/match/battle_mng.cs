@@ -53,8 +53,11 @@ namespace Match
             }
         }
 
-        public battle_player(string _clientUUID, battle_client_caller _caller, List<int> roleList, UserInformation info)
+        public BattleMod mod;
+
+        public battle_player(BattleMod _mod, string _clientUUID, battle_client_caller _caller, List<int> roleList, UserInformation info)
         {
+            mod = _mod;
             clientUUID = _clientUUID;
             caller = _caller;
 
@@ -267,9 +270,9 @@ namespace Match
             Hub.Hub._timer.addticktime(5 * 60 * 1000, tick_clear_timeout_player);
         }
 
-        public battle_player add_player_to_battle(string clientUUID, List<int> roleList, UserInformation user_info)
+        public battle_player add_player_to_battle(BattleMod mod, string clientUUID, List<int> roleList, UserInformation user_info)
         {
-            var _player = new battle_player(clientUUID, _caller, roleList, user_info);
+            var _player = new battle_player(mod, clientUUID, _caller, roleList, user_info);
             battles[clientUUID] = _player;
             return _player;
         }

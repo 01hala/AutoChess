@@ -11,7 +11,7 @@ import { AudioManager } from './AudioManager';
 import { Loading } from '../loading/load';
 import * as enums from '../other/enums';
 import { PopUps } from '../secondaryPanel/PopUps';
-import { Guide } from './Guide';
+import { Guide } from '../panel/Guide';
 import * as common from "../serverSDK/common"
 const { ccclass, property } = _decorator;
 

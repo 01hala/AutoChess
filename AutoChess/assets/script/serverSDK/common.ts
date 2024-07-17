@@ -9,7 +9,8 @@ export enum BattleVictory{
 
 export enum BattleMod{
     Battle = 1,
-    PeakStrength = 2
+    RankBattle = 2,
+    PeakStrength = 3
 }
 
 export enum GuideStep{
@@ -53,6 +54,16 @@ export enum AchievementAwardStatus{
     EMNotComplete = 0,
     EMComplete = 1,
     EMRecv = -1
+}
+
+export enum UserRank{
+    BlackIron = 1,
+    Bronze = 2,
+    Silver = 3,
+    Gold = 4,
+    Diamond = 5,
+    Master = 6,
+    King = 7
 }
 
 export enum Priority{
@@ -465,6 +476,8 @@ export class UserData
     public gold : number = 0;
     public diamond : number = 0;
     public score : number = 0;
+    public rank : UserRank = UserRank.BlackIron;
+    public rankTimeTmp : number = 0;
     public quest : number = 0;
     public bag : Bag | null = null;
     public guideStep : GuideStep = GuideStep.None;
@@ -504,6 +517,12 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "score"){
             _struct.score = val as number;
+        }
+        else if (key === "rank"){
+            _struct.rank = val as UserRank;
+        }
+        else if (key === "rankTimeTmp"){
+            _struct.rankTimeTmp = val as number;
         }
         else if (key === "quest"){
             _struct.quest = val as number;

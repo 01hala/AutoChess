@@ -38,7 +38,7 @@ export class ReadyData
     {
         this.coin = battle_info.coin;
 
-        console.log("Current player stage:"+battle_info.stage);
+        console.log("Current player stage:"+battle_info.stage+" gameMode:"+gameMode);
         this.stage=battle_info.stage;
         this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
@@ -224,9 +224,6 @@ export class ReadyData
         {
             await singleton.netSingleton.game.buy(shop_index,index,role_index);
         }
-
-
-        
     }
 
     public async Sale(role_index:number)

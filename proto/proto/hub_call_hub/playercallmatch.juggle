@@ -1,7 +1,7 @@
 import common
 
 module player_match {
-	start_battle req(string client_uuid, int32[] role_list, UserInformation userInfo) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
+	start_battle req(BattleMod mod, string client_uuid, int32[] role_list, UserInformation userInfo) rsp(UserBattleData battle_info, ShopData shop_info) err(int32 err);
     start_peak_strength req(string client_uuid, int64 guid) rsp(UserBattleData self) err(int32 err);
 
     reconnect req(string old_client_uuid, string new_client_uuid) rsp(bool is_online) err();
@@ -11,6 +11,6 @@ module match_player {
     buy_role ntf(int64 guid, Role roleInfo);
     buy_equip ntf(int64 guid, int32 equipID);
 
-    battle_victory ntf(bool is_victory, UserBattleData userInfo);
+    battle_victory ntf(BattleMod mod, bool is_victory, UserBattleData userInfo);
     peak_strength_victory req(BattleVictory is_victory, UserBattleData userInfo) rsp(UserRankInfo self) err(int32 err);
 }

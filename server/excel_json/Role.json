@@ -1040,7 +1040,7 @@
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200001",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200001/Role_200001",
+        "Skel": "RoleSpine/Role_200001/xkc01",
         "Sex": "M",
         "Armor": "N"
     },
@@ -1059,7 +1059,7 @@
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200002",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200002/Role_200002",
+        "Skel": "RoleSpine/Role_200002/xkc02",
         "Sex": "M",
         "Armor": "N"
     },
@@ -1078,7 +1078,7 @@
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200003",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200003/Role_200003",
+        "Skel": "RoleSpine/Role_200003/xck03",
         "Sex": "M",
         "Armor": "N"
     },
@@ -1097,7 +1097,7 @@
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200004",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200004/Role_200004",
+        "Skel": "RoleSpine/Role_200004/zdjj01",
         "Sex": "M",
         "Armor": "H"
     },
@@ -1116,7 +1116,7 @@
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200005",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200005/Role_200005",
+        "Skel": "RoleSpine/Role_200005/zdjj02",
         "Sex": "M",
         "Armor": "H"
     },
@@ -1135,7 +1135,7 @@
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200006",
         "Avatar": "0",
-        "Skel": "RoleSpine/Role_200006/Role_200006",
+        "Skel": "RoleSpine/Role_200006/zdjj03",
         "Sex": "M",
         "Armor": "H"
     }

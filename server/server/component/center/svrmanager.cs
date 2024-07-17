@@ -116,11 +116,11 @@ namespace Abelkhan
 
             if (!_center._root_cfg.has_key("redis_for_mq_pwd"))
             {
-                _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"), _center._root_cfg.get_value_string("redis_for_mq_pwd"));
+                _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"), string.Empty);
             }
             else
             {
-                _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"), string.Empty);
+                _redis_handle = new RedisHandle(_center._root_cfg.get_value_string("redis_for_cache"), _center._root_cfg.get_value_string("redis_for_mq_pwd"));
             }
 
             dbproxys = new List<SvrProxy>();
@@ -163,15 +163,18 @@ namespace Abelkhan
                         }
                         _svrproxy.on_svr_close += on_svr_close;
 
-                        var _hubproxy = new HubProxy(_ch, _svr_info.hub_type, _svr_info.name);
-                        hubproxys[_ch] = _hubproxy;
-
-                        if (!type_hubproxys.TryGetValue(_svr_info.hub_type, out List<HubProxy> hubproxy_list))
+                        if (_svr_info.type == "hub")
                         {
-                            hubproxy_list = new();
-                            type_hubproxys[_svr_info.hub_type] = hubproxy_list;
+                            var _hubproxy = new HubProxy(_ch, _svr_info.hub_type, _svr_info.name);
+                            hubproxys[_ch] = _hubproxy;
+
+                            if (!type_hubproxys.TryGetValue(_svr_info.hub_type, out List<HubProxy> hubproxy_list))
+                            {
+                                hubproxy_list = new();
+                                type_hubproxys[_svr_info.hub_type] = hubproxy_list;
+                            }
+                            hubproxy_list.Add(_hubproxy);
                         }
-                        hubproxy_list.Add(_hubproxy);
                     }
                 }
             }

@@ -19,7 +19,7 @@ namespace Hub
             Log.Log.err("unhandle exception:{0}", ex.ToString());
         }
 
-        public Hub(string config_file, string _hub_name, string _hub_type)
+        public Hub(string config_file, string _hub_name, string _hub_type, string _router_type)
 		{
             _config = new Abelkhan.Config(config_file);
 			_center_config = _config.get_value_dict("center");
@@ -27,6 +27,7 @@ namespace Hub
             _config = _config.get_value_dict(_hub_name);
             name = $"{_hub_name}_{Guid.NewGuid().ToString("N")}";
             type = _hub_type;
+            router_type = _router_type;
 
             var log_level = _config.get_value_string("log_level");
             if (log_level == "trace")
@@ -82,6 +83,17 @@ namespace Hub
             {
                 _redis_mq_service = new Abelkhan.RedisMQ(_timer, redismq_url, _root_config.get_value_string("redis_for_mq_pwd"), name, 333);
             }
+
+            var redis_for_cache = _root_config.get_value_string("redis_for_cache");
+            if (!_root_config.has_key("redis_for_cache_pwd"))
+            {
+                _redis_handle = new Abelkhan.RedisHandle(redis_for_cache, string.Empty);
+            }
+            else
+            {
+                _redis_handle = new Abelkhan.RedisHandle(redis_for_cache, _root_config.get_value_string("redis_for_cache_pwd"));
+            }
+            
 
             _gates = new GateManager(_redis_mq_service);
 
@@ -172,10 +184,13 @@ namespace Hub
                     websocket_outside_address.port = (ushort)_config.get_value_int("websocket_outside_port");
                     var is_ssl = _config.get_value_bool("is_ssl");
                     string pfx = "";
-                    if (is_ssl) {
+                    string pwd = "";
+                    if (is_ssl)
+                    {
                         pfx = _config.get_value_string("pfx");
+                        pwd = _config.get_value_string("pwd");
                     }
-                    _websocketacceptservice = new Abelkhan.WebsocketAcceptService(websocket_outside_address.port, is_ssl, pfx);
+                    _websocketacceptservice = new Abelkhan.WebsocketAcceptService(websocket_outside_address.port, is_ssl, pfx, pwd);
                     _websocketacceptservice.on_connect += (ch) =>
                     {
                         lock (add_chs)
@@ -191,9 +206,12 @@ namespace Hub
                 var is_enet_listen = _config.get_value_bool("enet_listen");
                 if (is_enet_listen)
                 {
+                    ManagedENet.Startup();
+
                     enet_outside_address = new Addressinfo();
                     enet_outside_address.host = _config.get_value_string("enet_outside_host");
                     enet_outside_address.port = (ushort)_config.get_value_int("enet_outside_port");
+
                     _enetservice = new Abelkhan.EnetService(enet_outside_address.host, enet_outside_address.port);
                     _enetservice.on_connect += (ch) => {
                         lock (add_chs)
@@ -408,7 +426,11 @@ namespace Hub
             }
         }
 
-        private List<Task> wait_task = new ();
+        public static async Task migrate_client(string client_uuid, string src_hub)
+        {
+            await on_migrate_client.Invoke(client_uuid, src_hub);
+        }
+
         private async Task<long> poll()
         {
             
@@ -503,6 +525,7 @@ namespace Hub
 
         public static string name;
         public static string type;
+        public static string router_type;
         public static Addressinfo tcp_outside_address = null;
         public static Addressinfo websocket_outside_address = null;
         public static Addressinfo enet_outside_address = null;
@@ -558,6 +581,8 @@ namespace Hub
         public event Action<string> on_client_msg;
 
         public event Action<string> on_direct_client_disconnect;
+
+        public static event Func<string, string, Task> on_migrate_client;
 
     }
 }

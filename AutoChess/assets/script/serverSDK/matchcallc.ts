@@ -113,10 +113,11 @@ export class battle_client_module extends client_handle.imodule {
 
     }
 
-    public cb_battle_victory : (is_victory:boolean)=>void | null;
+    public cb_battle_victory : (mod:common.BattleMod, is_victory:boolean)=>void | null;
     battle_victory(inArray:any[]){
         let _argv_:any[] = [];
         _argv_.push(inArray[0]);
+        _argv_.push(inArray[1]);
         if (this.cb_battle_victory){
             this.cb_battle_victory.apply(null, _argv_);
         }

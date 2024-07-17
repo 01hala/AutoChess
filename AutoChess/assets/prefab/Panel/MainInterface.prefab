@@ -2227,7 +2227,7 @@
       "__id__": 92
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 94
@@ -2512,7 +2512,7 @@
       "__id__": 105
     },
     "_lineHeight": 100,
-    "_string": "<color=#ffffff>建设中</color>",
+    "_string": "<color=#ffffff></color>娱乐模式",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_fontSize": 100,
@@ -2627,9 +2627,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 107,
-      "g": 107,
-      "b": 107,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "loop": true,
@@ -3117,7 +3117,7 @@
       "__id__": 130
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 132
@@ -3402,7 +3402,7 @@
       "__id__": 143
     },
     "_lineHeight": 100,
-    "_string": "<color=#ffffff>建设中</color>",
+    "_string": "<color=#ffffff>商店</color>",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_fontSize": 100,
@@ -3517,9 +3517,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 107,
-      "g": 107,
-      "b": 107,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "loop": true,
@@ -4274,7 +4274,7 @@
         "__id__": 250
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 274
@@ -6497,7 +6497,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -134.646,
-      "y": 72,
+      "y": 21,
       "z": 0
     },
     "_lrot": {
@@ -6823,7 +6823,7 @@
     "_target": null,
     "_left": 0,
     "_right": 0,
-    "_top": 23,
+    "_top": 74,
     "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
@@ -6889,7 +6889,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 120.419,
-      "y": 72,
+      "y": 21,
       "z": 0
     },
     "_lrot": {
@@ -7348,7 +7348,7 @@
     "_target": null,
     "_left": 0,
     "_right": 0,
-    "_top": 23,
+    "_top": 74,
     "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
@@ -7624,7 +7624,7 @@
         "__id__": 454
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 774
@@ -8442,7 +8442,7 @@
       "__id__": 407
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 409
@@ -8586,7 +8586,7 @@
       "__id__": 407
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 415
@@ -8754,9 +8754,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 107,
-      "g": 107,
-      "b": 107,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_spriteFrame": {

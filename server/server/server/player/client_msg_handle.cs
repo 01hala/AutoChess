@@ -37,12 +37,36 @@ namespace Player
             player_quest_Module.on_start_quest_shop += Player_quest_Module_on_start_quest_shop;
             player_quest_Module.on_start_quest_battle += Player_quest_Module_on_start_quest_battle;
             player_quest_Module.on_confirm_quest_victory += Player_quest_Module_on_confirm_quest_victory;
+            player_quest_Module.on_get_quest_shop_data += Player_quest_Module_on_get_quest_shop_data;
 
             player_shop_Module = new();
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_quest_Module_on_get_quest_shop_data()
+        {
+            Log.Log.trace("on_get_quest_shop_data begin!");
+
+            try
+            {
+                var rsp = player_quest_Module.rsp as player_quest_get_quest_shop_data_rsp;
+                var uuid = Hub.Hub._gates.current_client_uuid;
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                if (_avatar != null)
+                {
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_quest_Module_on_get_quest_shop_data err:{ex}");
+            }
+
+            Log.Log.trace("on_get_quest_shop_data end!");
         }
 
         private async void Player_quest_Module_on_confirm_quest_victory(BattleVictory is_victory)
@@ -60,9 +84,25 @@ namespace Player
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     if (is_victory == BattleVictory.victory)
                     {
-                        _data.Data.Info().quest++;
+                        _data.Data.PVELevelIndex++;
+                        if (_data.Data.PVELevelIndex >= _data.Data.PVECfg.Level.Count)
+                        {
+                            _data.Data.Info().quest++;
+
+                            rsp.rsp(em_quest_state.next_quest);
+                            _data.Data.ClearPVEState();
+                        }
+                        else
+                        {
+                            rsp.rsp(em_quest_state.next_level);
+                            _data.Data.StartPVERound();
+                        }
                     }
-                    rsp.rsp();
+                    else
+                    {
+                        rsp.rsp(em_quest_state.faild);
+                        _data.Data.ClearPVEState();
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -197,6 +237,7 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    _data.Data.EndPVERound();
                     rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.StartQuestBattle());
                 }
             }
@@ -533,7 +574,7 @@ namespace Player
             }
         }
 
-        private async void Player_battle_Module_on_start_battle()
+        private async void Player_battle_Module_on_start_battle(BattleMod mod)
         {
             Log.Log.trace("on_start_battle begin!");
 
@@ -546,7 +587,7 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _match = Player.match_Proxy_Mng.get_match_proxy();
-                    _match.start_battle(uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack(async (battle, shop) =>
+                    _match.start_battle(mod, uuid, _avatar.PlayerInfo().BattleRoleGroup(), _avatar.PlayerInfo().Info().User).callBack(async (battle, shop) =>
                     {
                         rsp.rsp(_match.name, battle, shop);
 

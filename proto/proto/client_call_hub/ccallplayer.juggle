@@ -23,7 +23,7 @@ module player_shop {
 }
 
 module player_battle {
-	start_battle req() rsp(string match_name, UserBattleData battle_info, ShopData shop_info) err(int32 err);
+	start_battle req(BattleMod mod) rsp(string match_name, UserBattleData battle_info, ShopData shop_info) err(int32 err);
 	start_peak_strength req() rsp(string match_name, UserBattleData self) err(int32 err);
 
 	achievement_gold25 ntf();
@@ -31,9 +31,16 @@ module player_battle {
 	check_achievement req(Achievement achievement) rsp(AchievementReward reward) err(int32 err);
 }
 
+enum em_quest_state {
+	next_level = 0;
+	next_quest = 1;
+	faild = 2;
+}
+
 module player_quest {
 	start_quest_ready req() rsp(int32[] events) err(int32 err);
 	start_quest_shop req(int32 eventID) rsp(UserBattleData self, ShopData shop_info) err(int32 err);
+	get_quest_shop_data req() rsp(UserBattleData self, ShopData shop_info) err(int32 err);
 	start_quest_battle req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
-    confirm_quest_victory req(BattleVictory is_victory) rsp() err();
+    confirm_quest_victory req(BattleVictory is_victory) rsp(em_quest_state state) err();
 }

@@ -25,7 +25,7 @@ namespace Hub
         {
             Log.Log.trace("begin connect gate server");
 
-			_hub_call_gate_caller.reg_hub(Hub.name, Hub.type).callBack(() =>
+			_hub_call_gate_caller.reg_hub(Hub.name, Hub.type, Hub.router_type).callBack(() =>
 			{
 				Log.Log.trace("connect gate server sucessed");
 			}, () =>
@@ -40,6 +40,11 @@ namespace Hub
 		public void tick_hub_health()
 		{
 			_hub_call_gate_caller.tick_hub_health(Hub.tick);
+        }
+
+		public void migrate_client_done(string client_uuid, string _src_hub, string _target_hub)
+		{
+			_hub_call_gate_caller.migrate_client_done(client_uuid, _src_hub, _target_hub);
         }
 
 		public Abelkhan.hub_call_gate_reverse_reg_client_hub_cb reverse_reg_client_hub(string client_uuid)

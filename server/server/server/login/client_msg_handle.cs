@@ -24,7 +24,8 @@ namespace Login
                 rsp.rsp(_proxy.name, token);
             }, (err) => {
                 rsp.err(err);
-            }).timeout(1000, () => {
+            }).timeout(20000, () => {
+                Log.Log.trace("try_player_login _proxy.name:{0} timeout!", _proxy.name);
                 rsp.err((int)em_error.timeout);
             });
         }
@@ -100,7 +101,7 @@ namespace Login
                 rsp.rsp(_proxy.name, token);
             }, (err) => {
                 rsp.err(err);
-            }).timeout(1000, () => {
+            }).timeout(10000, () => {
                 rsp.err((int)em_error.timeout);
             });
         }
@@ -200,7 +201,7 @@ namespace Login
                 rsp.rsp(_proxy.name, token);
             }, (err) => {
                 rsp.err(err);
-            }).timeout(1000, () => {
+            }).timeout(10000, () => {
                 rsp.err((int)em_error.timeout);
             });
         }

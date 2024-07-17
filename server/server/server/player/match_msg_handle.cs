@@ -72,18 +72,18 @@ namespace Player
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(user.User.UserGuid);
                 var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
-                if (is_victory == BattleVictory.victory)
-                {
-                    _player_info.Data.Info().score += 5;
-                }
-                else if (is_victory == BattleVictory.tie)
-                {
-                    _player_info.Data.Info().score += 1;
-                }
-                else
-                {
-                    _player_info.Data.Info().score -= 3;
-                }
+                //if (is_victory == BattleVictory.victory)
+                //{
+                //    _player_info.Data.Info().score += 5;
+                //}
+                //else if (is_victory == BattleVictory.tie)
+                //{
+                //    _player_info.Data.Info().score += 1;
+                //}
+                //else
+                //{
+                //    _player_info.Data.Info().score -= 3;
+                //}
 
                 var battleInfo = new BattleInfo
                 {
@@ -113,7 +113,7 @@ namespace Player
             }
         }
 
-        private void Match_Player_Module_on_battle_victory(bool is_victory, UserBattleData user)
+        private void Match_Player_Module_on_battle_victory(BattleMod mod, bool is_victory, UserBattleData user)
         {
             Log.Log.trace("on_battle_victory begin!");
 
@@ -123,7 +123,7 @@ namespace Player
                 var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
                 var battleInfo = new BattleInfo
                 {
-                    mod = BattleMod.PeakStrength,
+                    mod = mod,
                     isVictory = is_victory ? BattleVictory.victory : BattleVictory.faild,
                     isStreakVictory = is_victory && user.faild <= 0,
                     RoleList = user.RoleList,
@@ -132,6 +132,7 @@ namespace Player
                 {
                     client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
                 }
+                _player_info.Data.CheckRank(mod, is_victory);
                 _player_info.write_back();
 
                 client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).battle_victory();
