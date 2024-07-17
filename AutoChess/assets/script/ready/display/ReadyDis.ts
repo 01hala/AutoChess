@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, BlockInputEvents,Camera, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view, Widget } from 'cc';
+import { _decorator, BlockInputEvents,Camera, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view, Widget, Skeleton } from 'cc';
 import { RoleArea } from './RoleArea';
 import { ReadyData } from '../ReadyData';
 import { BundleManager } from '../../bundle/BundleManager';
@@ -40,6 +40,8 @@ export class ReadyDis
     public readyData:ReadyData;
     //动效
     private launchSkillEffect:Node;
+    //羁绊特效
+    private fetterEffect:Node;
     //按钮
     private refreshBtn:Button;
     private startBtn:Button;
@@ -95,6 +97,13 @@ export class ReadyDis
             this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
             this.launchSkillEffect.setSiblingIndex(99);
             this.launchSkillEffect.active=false;
+            //羁绊效果父节点
+            this.fetterEffect=this.panelNode.getChildByName("FetterEffect");
+            this.fetterEffect.active=true;
+            let tList = this.fetterEffect.children;
+            for(let temp of tList){
+                temp.active=false;
+            }
 
             this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
             this.roleInfoNode.active=false;
@@ -365,6 +374,10 @@ export class ReadyDis
                     {
                         this.fetters[i].getChildByName("IconImage").getComponent(Sprite).spriteFrame=sf;             
                     }
+                    //第一次获得羁绊触发动效
+                    if(_battle_info.FettersList[i].fetters_level<=1){
+                        this.ShowFetterEffect(_battle_info.FettersList[i].fetters_id);
+                    }
                     str="IconTexture/Fetters/lv_"+_battle_info.FettersList[i].fetters_level;
                     sf=await loadAssets.LoadImg(str);
                     //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
@@ -396,6 +409,26 @@ export class ReadyDis
         {
             console.error("ReadyDis 里的 UpdatePlayerInfo 错误 err:",error);
         }
+    }
+
+    private ShowFetterEffect(id:number){
+        let effect=this.fetterEffect.getChildByName(""+id);
+        let mask=this.fetterEffect.getChildByName("Mask");
+        //let duration=0;
+        if(effect){
+            effect.active=true;
+            let skeData=effect.getComponent(sp.Skeleton).skeletonData;
+            let anim=skeData.getAnimsEnum();
+            effect.getComponent(sp.Skeleton).setAnimation(0, String(anim[1]), false);
+            //duration=skeData.getRuntimeData().findAnimation( String(anim[1])).duration;
+            //console.log("===============动画播放时长"+duration);
+            mask.active=true;
+        }
+        return this.delay(700,()=>
+        {
+            if(effect) effect.active=false;
+            mask.active=false;
+        });
     }
 
     private UpdateText(_battle_info:common.UserBattleData):Promise<void>

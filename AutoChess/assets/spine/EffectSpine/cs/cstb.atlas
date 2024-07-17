@@ -1,0 +1,83 @@
+
+cstb.png
+size: 1986,1986
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cs_0
+  rotate: true
+  xy: 1247, 1248
+  size: 736, 615
+  orig: 736, 615
+  offset: 0, 0
+  index: -1
+cs_1
+  rotate: false
+  xy: 1036, 258
+  size: 141, 484
+  orig: 141, 484
+  offset: 0, 0
+  index: -1
+cs_2
+  rotate: true
+  xy: 744, 2
+  size: 740, 290
+  orig: 740, 290
+  offset: 0, 0
+  index: -1
+cs_3
+  rotate: false
+  xy: 687, 148
+  size: 52, 55
+  orig: 52, 55
+  offset: 0, 0
+  index: -1
+cs_4
+  rotate: false
+  xy: 1179, 173
+  size: 462, 333
+  orig: 462, 333
+  offset: 0, 0
+  index: -1
+cs_5
+  rotate: false
+  xy: 1036, 161
+  size: 86, 95
+  orig: 86, 95
+  offset: 0, 0
+  index: -1
+cs_6
+  rotate: false
+  xy: 2, 28
+  size: 499, 175
+  orig: 499, 175
+  offset: 0, 0
+  index: -1
+cs_7
+  rotate: false
+  xy: 2, 205
+  size: 740, 537
+  orig: 740, 537
+  offset: 0, 0
+  index: -1
+cs_8
+  rotate: false
+  xy: 503, 82
+  size: 182, 121
+  orig: 182, 121
+  offset: 0, 0
+  index: -1
+cs_bu
+  rotate: true
+  xy: 1247, 508
+  size: 738, 614
+  orig: 738, 614
+  offset: 0, 0
+  index: -1
+diceng
+  rotate: false
+  xy: 2, 744
+  size: 1243, 1240
+  orig: 1243, 1240
+  offset: 0, 0
+  index: -1
