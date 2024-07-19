@@ -7,17 +7,20 @@ namespace Gate
 	public class HubProxy {
 		public string _hub_name;
 		public string _hub_type;
-		public uint _tick_time;
+		public string _router_type;
+
+        public uint _tick_time;
 		public Abelkhan.Ichannel _ch;
 
 		private readonly Abelkhan.gate_call_hub_caller _gate_call_hub_caller;
 
-		public HubProxy(string hub_name, string hub_type, Abelkhan.Ichannel ch) {
+		public HubProxy(string hub_name, string hub_type, string router_type, Abelkhan.Ichannel ch) {
 			_tick_time = 0;
 
 			_hub_name = hub_name;
 			_hub_type = hub_type;
-			_ch = ch;
+            _router_type = router_type;
+            _ch = ch;
 
 			_gate_call_hub_caller = new Abelkhan.gate_call_hub_caller(_ch, Abelkhan.ModuleMgrHandle._modulemng);
 		}
@@ -33,11 +36,21 @@ namespace Gate
 		public void client_call_hub(string client_cuuid, byte[] data) {
 			_gate_call_hub_caller.client_call_hub(client_cuuid, data);
 		}
+
+		public void migrate_client(string client_uuid, string target_hub)
+		{
+			_gate_call_hub_caller.migrate_client(client_uuid, target_hub);
+        }
+
+		public bool check_router_dynamic()
+		{
+			return _router_type == "dynamic";
+		}
 	}
 
 	public class HubSvrManager
 	{
-		private readonly Random rd = new();
+		public readonly Random rd = new();
 		private readonly Dictionary<string, HubProxy> wait_destory_proxy = new();
 		private readonly Dictionary<string, HubProxy> hub_name_proxy = new();
 		private readonly Dictionary<Abelkhan.Ichannel, string> hub_channel_name = new();
@@ -46,9 +59,9 @@ namespace Gate
 		{
 		}
 
-		public HubProxy reg_hub(string hub_name, string hub_type, Abelkhan.Ichannel ch)
+		public HubProxy reg_hub(string hub_name, string hub_type, string router_type, Abelkhan.Ichannel ch)
 		{
-			var _hubproxy = new HubProxy(hub_name, hub_type, ch);
+			var _hubproxy = new HubProxy(hub_name, hub_type, router_type, ch);
 
 			if (hub_name_proxy.TryGetValue(hub_name, out var proxy))
 			{
@@ -94,7 +107,32 @@ namespace Gate
 			return get_hub(proxy_name);
 		}
 
-		public bool get_hub_list(string hub_type, out Abelkhan.hub_info _info)
+		public string hash_hubproxy(string client_uuid, string hub_type)
+		{
+            var hub_list = new List<string>();
+            foreach (var it in hub_name_proxy)
+            {
+                if (it.Value._hub_type != hub_type)
+                {
+                    continue;
+                }
+
+                hub_list.Add(it.Value._hub_name);
+            }
+
+			var hub_name = string.Empty;
+            if (hub_list.Count > 0)
+            {
+                hub_list.Sort();
+
+				var index = client_uuid.GetHashCode() % hub_list.Count;
+                hub_name = hub_list[index];
+            }
+
+            return hub_name;
+        }
+
+		public bool get_hub_list(string client_uuid, string hub_type, out Abelkhan.hub_info _info)
 		{
 			var hub_list = new List<Abelkhan.hub_info>();
 			foreach (var it in hub_name_proxy)
@@ -103,9 +141,19 @@ namespace Gate
 				{
 					continue;
 				}
-				if (it.Value._tick_time > 100)
+				if (it.Value._tick_time > 50)
 				{
+					Log.Log.trace("hub_proxy:{0} tick_time:{1}", it.Value._hub_name, it.Value._tick_time);
 					continue;
+				}
+
+				if (it.Value.check_router_dynamic())
+				{
+                    _info = new Abelkhan.hub_info();
+                    _info.hub_name = hash_hubproxy(client_uuid, hub_type);
+                    _info.hub_type = it.Value._hub_type;
+
+                    return true;
 				}
 
 				var info = new Abelkhan.hub_info();

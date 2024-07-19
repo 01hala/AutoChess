@@ -111,7 +111,7 @@ export class RoleIcon extends Component
             this.originalPos=this.node.getPosition();
             this.roleId=_Id;
             //通过配置文件加载资源
-            await this.LoadOnConfig();
+            await this.LoadOnConfig(); 
             this.freezeLock=_freeze;
             this.freezeSprite.active=_freeze;
             this.visiableArea.active=false;
@@ -224,8 +224,11 @@ export class RoleIcon extends Component
                                     // {
                                     //     this.roleArea.targets.set(this.target.name,this.node);
                                     // }
-                                    await this.shopArea.BuyRole(this.index, this.node, this.isMerge);
                                     this.BuyRole();
+                                    this.Adsorption();
+                                    //这个await延迟太明显了导致购买角色手感很差，需要调整购买效果的执行位置
+                                    await this.shopArea.BuyRole(this.index, this.node, this.isMerge);
+                                    
                                     console.log(`购买时，欲在 ${this.index} 购买位置角色信息：` + this.roleArea.rolesNode[this.tempIndex].name + "是否合并" + this.isMerge);
                                 }
                                 else console.log("purchase failed, there is already a character at the purchase location");
@@ -254,9 +257,9 @@ export class RoleIcon extends Component
                     }
                     //吸附缓动
                     //console.log(`isMerge : ${this.isMerge} ; isBuy : ${this.isBuy}`);
-                    //if (/*!this.isMerge ||*/ !this.isBuy) {
+                    if (!this.isMerge || !this.isBuy) {
                         this.Adsorption();
-                    //}
+                    }
 
                     drag=false;
                 }
@@ -363,6 +366,7 @@ export class RoleIcon extends Component
         .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) })
         .call(()=>
         {
+            AudioManager.Instance.PlayerOnShot("Sound/battle_buy_01");
             if (GameManager.Instance.guide)
             {
                 GameManager.Instance.guide.step++;

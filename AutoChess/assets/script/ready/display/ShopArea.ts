@@ -169,7 +169,6 @@ export class ShopArea extends Component
     async BuyRole(_index:number, _obj:Node ,_isMerge:boolean)
     {
         console.log('buy Role');
-        AudioManager.Instance.PlayerOnShot("Sound/battle_buy_01");
         for(let i=0;i<this.shopRoles.length;i++)
         {
             if(this.shopRoles[i] == _obj)

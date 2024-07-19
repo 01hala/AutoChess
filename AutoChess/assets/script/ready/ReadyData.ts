@@ -224,9 +224,6 @@ export class ReadyData
         {
             await singleton.netSingleton.game.buy(shop_index,index,role_index);
         }
-
-
-        
     }
 
     public async Sale(role_index:number)

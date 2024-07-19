@@ -1,0 +1,27 @@
+
+moshushi.png
+size: 870,141
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bang
+  rotate: true
+  xy: 2, 16
+  size: 123, 607
+  orig: 123, 607
+  offset: 0, 0
+  index: -1
+xing
+  rotate: true
+  xy: 752, 19
+  size: 120, 116
+  orig: 120, 116
+  offset: 0, 0
+  index: -1
+xingxing
+  rotate: false
+  xy: 611, 2
+  size: 139, 137
+  orig: 139, 137
+  offset: 0, 0
+  index: -1

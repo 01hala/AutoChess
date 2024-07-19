@@ -31,16 +31,30 @@ namespace Abelkhan
         }
 
         public void ntf_cuuid(string cuuid){
-            var _argv_edc5d0e5_3fa8_3367_9d68_fa4111673ae1 = new ArrayList();
+            var _argv_edc5d0e5_3fa8_3367_9d68_fa4111673ae1 = new List<MsgPack.MessagePackObject>();
             _argv_edc5d0e5_3fa8_3367_9d68_fa4111673ae1.Add(cuuid);
             call_module_method("gate_call_client_ntf_cuuid", _argv_edc5d0e5_3fa8_3367_9d68_fa4111673ae1);
         }
 
         public void call_client(string hub_name, byte[] rpc_argv){
-            var _argv_623087d1_9b59_38f3_9ea7_54d2c06e5bab = new ArrayList();
+            var _argv_623087d1_9b59_38f3_9ea7_54d2c06e5bab = new List<MsgPack.MessagePackObject>();
             _argv_623087d1_9b59_38f3_9ea7_54d2c06e5bab.Add(hub_name);
             _argv_623087d1_9b59_38f3_9ea7_54d2c06e5bab.Add(rpc_argv);
             call_module_method("gate_call_client_call_client", _argv_623087d1_9b59_38f3_9ea7_54d2c06e5bab);
+        }
+
+        public void migrate_client_start(string src_hub, string target_hub){
+            var _argv_c9d99b35_c1ee_347e_8597_4736a13ac8ee = new List<MsgPack.MessagePackObject>();
+            _argv_c9d99b35_c1ee_347e_8597_4736a13ac8ee.Add(src_hub);
+            _argv_c9d99b35_c1ee_347e_8597_4736a13ac8ee.Add(target_hub);
+            call_module_method("gate_call_client_migrate_client_start", _argv_c9d99b35_c1ee_347e_8597_4736a13ac8ee);
+        }
+
+        public void migrate_client_done(string src_hub, string target_hub){
+            var _argv_7e93ee66_7ffc_3958_b9d8_f5ed2e9be23c = new List<MsgPack.MessagePackObject>();
+            _argv_7e93ee66_7ffc_3958_b9d8_f5ed2e9be23c.Add(src_hub);
+            _argv_7e93ee66_7ffc_3958_b9d8_f5ed2e9be23c.Add(target_hub);
+            call_module_method("gate_call_client_migrate_client_done", _argv_7e93ee66_7ffc_3958_b9d8_f5ed2e9be23c);
         }
 
     }
@@ -52,6 +66,8 @@ namespace Abelkhan
             modules = _modules;
             modules.reg_method("gate_call_client_ntf_cuuid", Tuple.Create<Abelkhan.Imodule, Action<IList<MsgPack.MessagePackObject> > >((Abelkhan.Imodule)this, ntf_cuuid));
             modules.reg_method("gate_call_client_call_client", Tuple.Create<Abelkhan.Imodule, Action<IList<MsgPack.MessagePackObject> > >((Abelkhan.Imodule)this, call_client));
+            modules.reg_method("gate_call_client_migrate_client_start", Tuple.Create<Abelkhan.Imodule, Action<IList<MsgPack.MessagePackObject> > >((Abelkhan.Imodule)this, migrate_client_start));
+            modules.reg_method("gate_call_client_migrate_client_done", Tuple.Create<Abelkhan.Imodule, Action<IList<MsgPack.MessagePackObject> > >((Abelkhan.Imodule)this, migrate_client_done));
         }
 
         public event Action<string> on_ntf_cuuid;
@@ -68,6 +84,24 @@ namespace Abelkhan
             var _rpc_argv = ((MsgPack.MessagePackObject)inArray[1]).AsBinary();
             if (on_call_client != null){
                 on_call_client(_hub_name, _rpc_argv);
+            }
+        }
+
+        public event Action<string, string> on_migrate_client_start;
+        public void migrate_client_start(IList<MsgPack.MessagePackObject> inArray){
+            var _src_hub = ((MsgPack.MessagePackObject)inArray[0]).AsString();
+            var _target_hub = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            if (on_migrate_client_start != null){
+                on_migrate_client_start(_src_hub, _target_hub);
+            }
+        }
+
+        public event Action<string, string> on_migrate_client_done;
+        public void migrate_client_done(IList<MsgPack.MessagePackObject> inArray){
+            var _src_hub = ((MsgPack.MessagePackObject)inArray[0]).AsString();
+            var _target_hub = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            if (on_migrate_client_done != null){
+                on_migrate_client_done(_src_hub, _target_hub);
             }
         }
 

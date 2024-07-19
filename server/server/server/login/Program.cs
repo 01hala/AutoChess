@@ -13,7 +13,7 @@ namespace Login
 
         static void Main(string[] args)
 		{
-            var _hub = new Hub.Hub(args[0], args[1], "login");
+            var _hub = new Hub.Hub(args[0], args[1], "login", "fixed");
 
             if (!Hub.Hub._root_config.has_key("redis_for_mq_pwd"))
             {
