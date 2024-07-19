@@ -128,7 +128,7 @@ export class InfoPanel extends Component
         
     }
 
-    OpenFetterInfo(_id:number,sprite:SpriteFrame,level:number){
+    async OpenFetterInfo(_id:number,spritePath:string,level:number){
         this.simpleBoard.active=false;
         this.detailedBoard.active=false;
         this.propBoard.active=false;
@@ -140,7 +140,8 @@ export class InfoPanel extends Component
 
         let cf=config.FetterIntroduceConfig.get(_id);
 
-        this.fetterBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=sprite;
+        let sp=await loadAssets.LoadImg(spritePath);
+        this.fetterBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=sp;
         this.fetterBoard.getChildByName("FetterName").getComponent(Label).string=cf.FetterName;
         this.fetterBoard.getChildByName("Introduce").getComponent(RichText).string="<color=#000000>"+cf.Introductory+"</color>";
         let content="";
