@@ -1,13 +1,13 @@
 import { _decorator, animation, Animation, BlockInputEvents, Button, Component, Label, Node, RichText, sp, Sprite, SpriteFrame } from 'cc';
 import { PropsType } from '../other/enums';
-import { Team } from '../battle/team';
+import { Team } from '../battle/AutoChessBattle/team';
 import { RoleDis } from '../battle/display/RoleDis';
-import { RoleInfo } from '../battle/skill/skill_base';
-import { config } from '../config/config';
+import { RoleInfo } from '../battle/AutoChessBattle/skill/skill_base';
+import { config } from '../battle/AutoChessBattle/config/config';
 import * as singleton from '../netDriver/netSingleton';
 import { loadAssets } from '../bundle/LoadAsset';
-import { Role } from '../serverSDK/common';
-import { RoleConfig } from '../config/role_config';
+import { Role } from '../battle/AutoChessBattle/common';
+import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;

@@ -1,7 +1,7 @@
 import { _decorator, Component, instantiate, Node, Prefab, Vec2, Vec3 } from 'cc';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
-import * as common from '../../serverSDK/common';
+import * as common from '../../battle/AutoChessBattle/common';
 import { BundleManager } from '../../bundle/BundleManager';
 import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;

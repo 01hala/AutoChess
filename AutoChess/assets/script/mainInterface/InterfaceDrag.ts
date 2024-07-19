@@ -1,5 +1,5 @@
 import { _decorator, Component, EventTouch, Input, input, Node, UITransform, Vec2, view } from 'cc';
-import { EventType } from '../other/enums';
+import { EventType } from '../battle/AutoChessBattle/enum';
 const { ccclass, property } = _decorator;
 
 @ccclass('InterfaceDrag')

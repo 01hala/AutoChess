@@ -3,9 +3,9 @@ import { AudioManager } from '../other/AudioManager';
 import { rank_item } from '../serverSDK/rank_comm';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
-import { Role, UserData, UserRankInfo } from '../serverSDK/common';
+import { Role, UserData, UserRankInfo } from '../battle/AutoChessBattle/common';
 import { loadAssets } from '../bundle/LoadAsset';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 const { ccclass, property } = _decorator;
 
 @ccclass('RankList')

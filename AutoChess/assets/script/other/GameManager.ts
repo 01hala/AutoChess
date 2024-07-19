@@ -12,7 +12,7 @@ import { Loading } from '../loading/load';
 import * as enums from '../other/enums';
 import { PopUps } from '../secondaryPanel/PopUps';
 import { Guide } from '../panel/Guide';
-import * as common from "../serverSDK/common"
+import * as common from "../battle/AutoChessBattle/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')

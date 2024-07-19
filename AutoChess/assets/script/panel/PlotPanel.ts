@@ -1,6 +1,6 @@
 import { _decorator, Button, Component, Label, Node, RichText, sp } from 'cc';
-import { config } from '../config/config';
-import { PlotConfig } from '../config/Plot_config';
+import { config } from '../battle/AutoChessBattle/config/config';
+import { PlotConfig } from '../battle/AutoChessBattle/config/Plot_config';
 import { loadAssets } from '../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 

@@ -5,18 +5,18 @@
  * 角色展示类
  */
 import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color } from 'cc';
-import { Role } from '../../battle/role';
-import { Camp, EventType, Property } from '../../other/enums';
-import { Battle } from '../../battle/battle';
-import * as skill from '../../battle/skill/skill_base'
+import { Role } from '../AutoChessBattle//role';
+import { Camp, EventType, Property } from '../AutoChessBattle/enum';
+import { Battle } from '../AutoChessBattle//battle';
+import * as skill from '../AutoChessBattle//skill/skill_base'
 import { netDriver } from '../../netDriver/netDriver';
 import { netGame } from '../../netDriver/netGame';
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { BundleManager } from '../../bundle/BundleManager';
 import { Bullet } from './Bullet';
 import * as singleton from '../../netDriver/netSingleton';
-import { Fetters } from '../../serverSDK/common';
-import { config } from '../../config/config';
+import { Fetters } from '../AutoChessBattle/common';
+import { config } from '../AutoChessBattle/config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
 import { AudioManager } from '../../other/AudioManager';

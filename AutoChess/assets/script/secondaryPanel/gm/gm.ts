@@ -3,9 +3,9 @@ import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
 
-import * as common from "../../serverSDK/common"
+import * as common from "../../battle/AutoChessBattle/common"
 import * as match from "../../serverSDK/ccallmatch"
-import * as battle from '../../battle/battle'
+import * as battle from '../../battle/AutoChessBattle/battle'
 import * as battleDis from '../../battle/display/BattleDis'
 import * as singleton from '../../netDriver/netSingleton'
 import * as enums from '../../other/enums'
@@ -235,7 +235,10 @@ for(let r of self.RoleList){
         let _father = singleton.netSingleton.battle.father;
         singleton.netSingleton.battle.destory();
         singleton.netSingleton.battle = new battleDis.BattleDis(_battle);
-        await singleton.netSingleton.battle.Start(_father);
+        await singleton.netSingleton.battle.Start(_father,  async (event) =>
+        {
+            event();
+        });
 
         this.node.destroy();
     }

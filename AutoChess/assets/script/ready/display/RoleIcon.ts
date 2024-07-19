@@ -9,15 +9,15 @@ import { _decorator, Asset, Button, Collider, Collider2D, Color, color, Componen
 import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
-import * as role from '../../battle/role'
-import * as common from '../../serverSDK/common';
+import * as role from '../../battle/AutoChessBattle/role'
+import * as common from '../../battle/AutoChessBattle/common';
 import { RoleDis } from '../../battle/display/RoleDis';
 import { ReadyDis } from './ReadyDis';
 import * as singleton from '../../netDriver/netSingleton';
 import { ShopArea } from './ShopArea';
-import { Camp, Property } from '../../other/enums';
+import { Camp, Property } from '../../battle/AutoChessBattle/enum';
 import { InfoPanel } from '../../secondaryPanel/InfoPanel';
-import { config } from '../../config/config';
+import { config } from '../../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { GameManager } from '../../other/GameManager';
 import { SendMessage } from '../../other/MessageEvent';

@@ -1,5 +1,5 @@
 import { _decorator, Animation, animation, Button, CCString, Component, instantiate, Label, Node, Prefab, RichText, Widget } from 'cc';
-import * as enums from '../other//enums'
+import * as enums from '../other/enums'
 import { BundleManager } from '../bundle/BundleManager';
 const { ccclass, property } = _decorator;
 

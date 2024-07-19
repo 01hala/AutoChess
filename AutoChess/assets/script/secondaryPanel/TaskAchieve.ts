@@ -8,10 +8,10 @@ import { _decorator, Animation, BlockInputEvents, Button, Component, EventHandle
 import { PageType } from '../other/enums';
 import { BundleManager } from '../bundle/BundleManager';
 import { AudioManager } from '../other/AudioManager';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 import { TaskLable } from '../part/TaskLable';
 import { UserAccount } from '../mainInterface/MainInterface';
-import { Achievement, AchievementAwardStatus, AchievementData, AchievementReward } from '../serverSDK/common';
+import { Achievement, AchievementAwardStatus, AchievementData, AchievementReward } from '../battle/AutoChessBattle/common';
 const { ccclass, property } = _decorator;
 
 @ccclass('Task & Achieve')

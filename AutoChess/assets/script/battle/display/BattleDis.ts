@@ -6,21 +6,22 @@
  */
 import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, Vec3, sp } from 'cc';
 import { Queue } from './Queue';
-import { Battle } from '../battle';
-import * as skill from '../skill/skill_base'
-import { Camp, EventType } from '../../other/enums';
+import { Battle } from '../AutoChessBattle/battle';
+import * as skill from '../AutoChessBattle/skill/skill_base'
+import { Camp, EventType } from '../AutoChessBattle/enum';
 import { sleep } from '../../other/sleep'
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
-import { Role } from '../../serverSDK/common';
-import { Role as rRole } from '../role';
+import { Role } from '../AutoChessBattle/common';
+import { Role as rRole } from '../AutoChessBattle/role';
 import { netSingleton } from '../../netDriver/netSingleton';
 import * as singleton from '../../netDriver/netSingleton';
-import { BattleVictory } from '../../serverSDK/common';
-import { Team } from '../team';
+import { BattleVictory } from '../AutoChessBattle/common';
+import { Team } from '../AutoChessBattle/team';
 import { GameManager } from '../../other/GameManager';
 import { SendMessage } from '../../other/MessageEvent';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 export class BattleDis 
@@ -56,6 +57,17 @@ export class BattleDis
     public constructor(battle:Battle) 
     {
         this.battleCentre = battle;
+
+        this.battleCentre.onPlaySound = (sound:string) => {
+            AudioManager.Instance.PlaySound(sound);
+        };
+        this.battleCentre.onPlayerOnShot = (sound:string) => {
+            AudioManager.Instance.PlayerOnShot(sound);
+        };
+        this.battleCentre.onKillRole = (r:Role) => {
+            singleton.netSingleton.game.kill_Role_ntf(r);
+        };
+
         this.onEvent();
     }
 

@@ -1,0 +1,3 @@
+[submodule "AutoChess/assets/script/battle/AutoChessBattle"]
+	path = AutoChess/assets/script/battle/AutoChessBattle
+	url = git@github.com:01hala/AutoChessBattle.git

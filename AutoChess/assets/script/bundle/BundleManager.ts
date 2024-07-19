@@ -1,5 +1,5 @@
 import { __private, _decorator, Asset, assetManager, AssetManager, Component, error, ImageAsset, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 const { ccclass, property } = _decorator;
 
 export class BundleManager

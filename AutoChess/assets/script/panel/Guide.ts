@@ -4,7 +4,7 @@ import { GameManager } from '../other/GameManager';
 import { ShopArea } from '../ready/display/ShopArea';
 import { RoleArea } from '../ready/display/RoleArea';
 import { RoleIcon } from '../ready/display/RoleIcon';
-import * as common from "../serverSDK/common"
+import * as common from "../battle/AutoChessBattle/common"
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
 const { ccclass, property } = _decorator;

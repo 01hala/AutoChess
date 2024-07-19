@@ -1,5 +1,5 @@
 import * as cli from "../serverSDK/client_handle"
-import * as common from "../serverSDK/common"
+import * as common from "../battle/AutoChessBattle/common"
 import * as error from "../serverSDK/error"
 
 import * as player_login from "../serverSDK/ccallplayer"

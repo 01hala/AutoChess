@@ -6,7 +6,7 @@
  */
 import { _decorator, Animation, Button, Component, instantiate, Node, Prefab } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
-import * as common from '../serverSDK/common';
+import * as common from '../battle/AutoChessBattle/common';
 import * as singleton from '../netDriver/netSingleton';
 import { RoleToggleList } from '../part/RoleToggleList';
 import { SendMessage } from '../other/MessageEvent';

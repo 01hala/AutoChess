@@ -2,8 +2,8 @@ import { _decorator, Animation, animation, assetManager, Button, Camera, Compone
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
-import * as common from "../serverSDK/common"
-import { Bag, RankReward, RoleCardInfo, UserAchievement, UserData, UserWeekAchievement } from '../serverSDK/common';
+import * as common from "../battle/AutoChessBattle/common"
+import { Bag, RankReward, RoleCardInfo, UserAchievement, UserData, UserWeekAchievement } from '../battle/AutoChessBattle/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { UserInfo } from '../secondaryPanel/UserInfo';

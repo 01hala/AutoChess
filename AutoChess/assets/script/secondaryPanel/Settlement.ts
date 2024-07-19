@@ -5,7 +5,7 @@
  * 2024/03/30
  */
 import { _decorator, Animation, BlockInputEvents, Button, Component, Node, RichText, Sprite, spriteAssembler, SpriteFrame, Toggle } from 'cc';
-import { BattleVictory } from '../serverSDK/common';
+import { BattleVictory } from '../battle/AutoChessBattle/common';
 import { netSingleton } from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;

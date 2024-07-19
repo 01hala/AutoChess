@@ -4,12 +4,12 @@
  * 2023/11/11
  */
 import { _decorator, Component, error, Node } from 'cc';
-import * as skill from '../battle/skill/skill_base'
-import * as common from "../serverSDK/common"
-import { ShopProp, ShopRole } from '../serverSDK/common';
+import * as skill from '../battle/AutoChessBattle/skill/skill_base'
+import * as common from "../battle/AutoChessBattle/common"
+import { ShopProp, ShopRole } from '../battle/AutoChessBattle/common';
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
-import { EventType } from '../other/enums';
+import { EventType } from '../battle/AutoChessBattle/enum';
 import * as enmus from '../other/enums';
 const { ccclass, property } = _decorator;
 

@@ -7,7 +7,7 @@
 import { _decorator, Button, Component, instantiate, Node, PageView, Prefab, primitives, RichText, Sprite, sys, Toggle } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';

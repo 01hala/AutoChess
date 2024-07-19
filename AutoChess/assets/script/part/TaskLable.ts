@@ -1,7 +1,7 @@
 import { _decorator, Button, Component, Label, Node, primitives, RichText, Sprite } from 'cc';
-import { config } from '../config/config';
-import { TaskConfig } from '../config/task_config';
-import { Achievement, AchievementAwardStatus } from '../serverSDK/common';
+import { config } from '../battle/AutoChessBattle/config/config';
+import { TaskConfig } from '../battle/AutoChessBattle/config/task_config';
+import { Achievement, AchievementAwardStatus } from '../battle/AutoChessBattle/common';
 import * as singleton from '../netDriver/netSingleton';
 import { UserAccount } from '../mainInterface/MainInterface';
 const { ccclass, property } = _decorator;

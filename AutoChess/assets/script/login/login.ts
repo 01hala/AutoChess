@@ -3,14 +3,14 @@ import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
 
-import * as common from "../serverSDK/common"
+import * as common from "../battle/AutoChessBattle/common"
 
 import * as singleton from '../netDriver/netSingleton';
 import * as load from '../loading/load';
 
-import { Battle } from '../battle/battle'
+import { Battle } from '../battle/AutoChessBattle/battle'
 import { BattleDis }  from '../battle/display/BattleDis'
-import * as config from '../config/config';
+import * as config from '../battle/AutoChessBattle/config/config';
 import { BundleManager } from '../bundle/BundleManager';
 import { ReadyData } from '../ready/ReadyData';
 import { ReadyDis } from '../ready/display/ReadyDis';
@@ -320,7 +320,7 @@ export class login extends Component {
         singleton.netSingleton.player.cb_battle_victory=()=>{};
 
         //pvp游戏结束
-        singleton.netSingleton.game.cb_battle_victory = async (is_victory: boolean) =>
+        singleton.netSingleton.game.cb_battle_victory = async (mod:common.BattleMod, is_victory: boolean) =>
         {
             if (singleton.netSingleton.battle)
             {

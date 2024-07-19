@@ -5,11 +5,11 @@
  * 牌库复选栏
  */
 import { _decorator, assetManager, CCInteger, Color, color, Component, instantiate, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
-import * as common from '../serverSDK/common';
+import * as common from '../battle/AutoChessBattle/common';
 import { BundleManager } from '../bundle/BundleManager';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../bundle/LoadAsset';
-import { RoleConfig } from '../config/role_config';
+import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { CardEditor } from '../mainInterface/CardEditor';
 const { ccclass, property } = _decorator;
 

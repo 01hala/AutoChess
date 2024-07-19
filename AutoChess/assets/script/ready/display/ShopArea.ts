@@ -4,10 +4,10 @@
  * 2023/11/11
  */
 import { _decorator, Animation, BlockInputEvents, Camera, Canvas, Component, instantiate, Node, Prefab, tween, Tween, UITransform, Vec3, view, Widget } from 'cc';
-import { ShopIndex, ShopProp, ShopRole } from '../../serverSDK/common';
+import { ShopIndex, ShopProp, ShopRole } from '../../battle/AutoChessBattle/common';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
-import * as common from "../../serverSDK/common"
+import * as common from "../../battle/AutoChessBattle/common"
 import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';
@@ -183,7 +183,7 @@ export class ShopArea extends Component
         }
     }
 
-    async BuyProp(_index:number,_obj:Node,_gamemode:enmus.GameMode)
+    async BuyProp(_index:number,_obj:Node)
     {
         for(let i=0;i<this.shopProps.length;i++)
         {

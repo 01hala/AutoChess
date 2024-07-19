@@ -9,10 +9,10 @@ const { ccclass, property } = _decorator;
 
 import * as RoleDis from '../display/RoleDis'
 import { BundleManager } from '../../bundle/BundleManager';
-import * as role from '../role'
-import { Battle } from '../battle';
-import { Role } from '../../serverSDK/common';
-import { RoleInfo } from '../skill/skill_base';
+import * as role from '../AutoChessBattle/role'
+import { Battle } from '../AutoChessBattle/battle';
+import { Role } from '../AutoChessBattle/common';
+import { RoleInfo } from '../AutoChessBattle/skill/skill_base';
 
 @ccclass('Queue')
 export class Queue extends Component 

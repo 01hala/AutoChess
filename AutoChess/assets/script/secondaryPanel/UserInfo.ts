@@ -2,7 +2,7 @@
 import { _decorator, Animation, assetManager, BlockInputEvents, Button, Component, ImageAsset, Label, Node, RichText, Sprite, SpriteFrame, Texture2D } from 'cc';
 import { AudioManager } from '../other/AudioManager';
 import * as singleton from '../netDriver/netSingleton';
-import * as common from "../serverSDK/common"
+import * as common from "../battle/AutoChessBattle/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('UserInfo')

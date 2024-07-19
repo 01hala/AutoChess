@@ -8,7 +8,7 @@ import { _decorator, Animation, assetManager, Button, ccenum, Color, color, Comp
 import * as singleton from '../netDriver/netSingleton';
 import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 import { SendMessage } from '../other/MessageEvent';
 const { ccclass, property } = _decorator;
 

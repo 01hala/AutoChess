@@ -1,5 +1,5 @@
 import { _decorator, Animation, animation, BlockInputEvents, Button, CCFloat, Color, color, Component, instantiate, math, Node, Sprite, SpriteFrame, tween, UIOpacity, UITransform, Vec3 } from 'cc';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 

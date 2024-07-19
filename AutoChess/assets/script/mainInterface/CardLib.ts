@@ -7,7 +7,7 @@
 import { _decorator, Button, Component, EventHandler, instantiate, Node, PageView, Prefab, ScrollView, Toggle, ToggleContainer, UITransform } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { Biomes } from '../other/enums';
-import { config } from '../config/config';
+import { config } from '../battle/AutoChessBattle/config/config';
 import { RoleCard } from '../part/RoleCard';
 import * as singleton from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
