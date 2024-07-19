@@ -15,7 +15,7 @@ export class RoleBattleInfo {
 }
 
 export class Team {
-    private roleList : role.Role[];
+    private roleList : role.Role[]; //下标和站位不是对应的
     private battleData : common.UserBattleData;
     private roleBattleInfo : Map<number,RoleBattleInfo>;//根据站位查找角色在当前回合的战斗相关数据
 
@@ -144,5 +144,20 @@ export class Team {
         console.log("场上不存在空位")
         //返回-1说明加入失败
         return -1;
+    }
+
+    /**
+     * 判断前排是否为空
+     * Editor:Hotaru
+     * 2024/07/19添加
+     */
+    public CheckFront() : boolean
+    {
+        let flag = true;
+        if(this.battleData.RoleList[0] && this.battleData.RoleList[1] && this.battleData.RoleList[2])
+        {
+            flag=false;
+        }
+        return flag;
     }
 }

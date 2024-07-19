@@ -41,15 +41,18 @@ export class Skill_RemoteAtk_3_1 extends SkillBase
     {
         try 
         {
-
-            if(6>=this.numberOfRole && !this.isAll)
+            if(this.attack>0 && this.attack <=1)
             {
-                this.SkillEffect_1(selfInfo,battle,this.attack*(1+selfInfo.properties.get(enums.Property.Attack)),isParallel);
+                if (6 >= this.numberOfRole && !this.isAll)
+                {
+                    this.SkillEffect_1(selfInfo, battle, this.attack * (1 + selfInfo.properties.get(enums.Property.Attack)), isParallel);
+                }
+                else
+                {
+                    console.warn("生效人数不能大于6人");
+                }
             }
-            else
-            {
-                console.warn("生效人数不能大于6人");
-            }
+            
 
             // if(this.isAll)
             // {
