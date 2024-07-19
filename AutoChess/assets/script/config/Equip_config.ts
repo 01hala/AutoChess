@@ -16,6 +16,7 @@ export class EquipConfig {
     public HpBonus:number;
     public Vaule:number[];
     public Res:string;
+    public Introduce:string;
 }
 
 export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
@@ -39,6 +40,7 @@ export async function LoadEquipConfig() : Promise<Map<number, EquipConfig>>
                 equipc.Name = v["Name"];
                 equipc.Price = v["Price"];
                 equipc.Stage = v["Price"];
+                equipc.Introduce=v["Introduce"];
 
                 let effect=v["Effect"];
                 let es:string[]=effect.split('|');

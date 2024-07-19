@@ -8,7 +8,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "1|1",
-        "Res": "Props/battle_icon_3001"
+        "Res": "Props/battle_icon_3001",
+        "Introduce": "死亡后召唤一个1/1的虚空虫"
     },
     "3002": {
         "Id": 3002,
@@ -19,7 +20,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "1",
-        "Res": "Props/battle_icon_3002"
+        "Res": "Props/battle_icon_3002",
+        "Introduce": "带有该装备的角色，每个准备阶段结束时+1生命值"
     },
     "3003": {
         "Id": 3003,
@@ -30,7 +32,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "2",
-        "Res": "Props/battle_icon_3003"
+        "Res": "Props/battle_icon_3003",
+        "Introduce": "每次收到的伤害减少2"
     },
     "3004": {
         "Id": 3004,
@@ -41,7 +44,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "5",
-        "Res": "Props/battle_icon_3004"
+        "Res": "Props/battle_icon_3004",
+        "Introduce": "每次攻击会造成额外5点伤害"
     },
     "3005": {
         "Id": 3005,
@@ -52,7 +56,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "1|1",
-        "Res": "Props/battle_icon_3005"
+        "Res": "Props/battle_icon_3005",
+        "Introduce": "阵亡后变为1/1复活（不改变原技能等级）"
     },
     "3006": {
         "Id": 3006,
@@ -63,7 +68,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "10",
-        "Res": "Props/battle_icon_3006"
+        "Res": "Props/battle_icon_3006",
+        "Introduce": "该角色获得额外十点护甲（额外血量，可高过50点生命值）"
     },
     "3007": {
         "Id": 3007,
@@ -74,7 +80,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "0",
-        "Res": "Props/battle_icon_3007"
+        "Res": "Props/battle_icon_3007",
+        "Introduce": "伤害到敌人后造成即死效果"
     },
     "3008": {
         "Id": 3008,
@@ -85,7 +92,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "1",
-        "Res": "Props/battle_icon_3008"
+        "Res": "Props/battle_icon_3008",
+        "Introduce": "受到致死伤害不会立刻死亡，而是将生命值降为1，然后暂时移除该装备"
     },
     "3009": {
         "Id": 3009,
@@ -96,7 +104,8 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "0",
-        "Res": "Props/battle_icon_3009"
+        "Res": "Props/battle_icon_3009",
+        "Introduce": "首次直接攻击造成双倍伤害"
     },
     "3010": {
         "Id": 3010,
@@ -107,6 +116,7 @@
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "5",
-        "Res": "Props/battle_icon_3010"
+        "Res": "Props/battle_icon_3010",
+        "Introduce": "直接攻击后会对受击单位身后的角色造成5伤害"
     }
 }
