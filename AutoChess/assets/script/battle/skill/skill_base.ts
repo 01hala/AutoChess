@@ -20,7 +20,9 @@ export class RoleInfo {
 
 export class Event {
     public type : enums.EventType;
+    /** 释放效果的对象 */
     public spellcaster : RoleInfo;
+    /** 受到效果的对象 */
     public recipient : RoleInfo[];
     public value : number[];
     public is_trigger_floating : boolean = false;
@@ -33,7 +35,7 @@ export class Event {
 }
 
 export abstract class SkillTriggerBase {
-    abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo): number;
+    abstract CheckSkillTrigger(frameEvent: Event[], selfInfo: RoleInfo , battle?:battle.Battle): number;
 }
 
 export abstract class SkillBase {

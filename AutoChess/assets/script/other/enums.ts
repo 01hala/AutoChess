@@ -34,6 +34,8 @@ export enum EventType {
     Kill=21,
     FrontAtk=22,
     IntensifierExp = 23,
+    SelfFrontNull = 24,
+    EnemyFrontNull=25
 }
 
 export enum ChangePositionType {
