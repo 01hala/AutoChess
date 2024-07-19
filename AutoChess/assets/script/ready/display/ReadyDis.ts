@@ -160,7 +160,7 @@ export class ReadyDis
                 this.RegPveCallBack();
             }
             //羁绊信息框
-            let tNode = this.panelNode.getChildByPath("RoleArea/FetterArea");
+            let tNode = this.panelNode.getChildByPath("ShopArea/FetterBG/FetterArea");
             for (let i = 1; i <= 6; i++)
             {
                 let t = tNode.getChildByName("FettersIcon_" + i);
@@ -458,19 +458,22 @@ export class ReadyDis
                     //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
                     this.fetters[i].getComponent(Sprite).spriteFrame=sf;
                     this.fetters[i].active=true;
-                    this.fetters[i].getChildByName("FetterName").getComponent(RichText).string=
-                        "<color=#00ff00>"+config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Name+"</color>";
-                    let text = this.fetters[i].getChildByPath("Level/Text");
-                    let content="";
-                    for(let j=0;j<fetterLevels.length;j++){
-                        if(_battle_info.FettersList[i].fetters_level>=j+1){
-                            content+="<color=#ffffff>"+fetterLevels[j]+" ";
-                        }
-                        else{
-                            content+="<color=#AAAAAA>"+fetterLevels[j]+" ";
-                        }
-                    }
-                    text.getComponent(RichText).string=content;
+                    
+                    //羁绊的文字信息，最新版UI暂时不用
+                    // this.fetters[i].getChildByName("FetterName").getComponent(RichText).string=
+                    //     "<color=#00ff00>"+config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Name+"</color>";
+                    // let text = this.fetters[i].getChildByPath("Level/Text");
+                    // let content="";
+                    // for(let j=0;j<fetterLevels.length;j++){
+                    //     if(_battle_info.FettersList[i].fetters_level>=j+1){
+                    //         content+="<color=#ffffff>"+fetterLevels[j]+" ";
+                    //     }
+                    //     else{
+                    //         content+="<color=#AAAAAA>"+fetterLevels[j]+" ";
+                    //     }
+                    // }
+                    // text.getComponent(RichText).string=content;
+
                     this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK,()=>{
                         this.fetters[i].getChildByName("Button").
                             dispatchEvent(new SendMessage('OpenFetterInfo',true,
