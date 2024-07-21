@@ -322,11 +322,13 @@ export class login extends Component {
         //pvp游戏结束
         singleton.netSingleton.game.cb_battle_victory = async (mod:common.BattleMod, is_victory: boolean) =>
         {
+            console.log("战斗结束");
             if (singleton.netSingleton.battle)
             {
                 await singleton.netSingleton.battle.SetGameVictory(is_victory);
             }
 
+            console.log("返回主界面");
             this.BackMainInterface();
         }
 
@@ -354,6 +356,8 @@ export class login extends Component {
     
     public async BackMainInterface()
     {
+        console.log("BackMainInterface begin!");
+
         this._progress=0.1;
         this._setProgress = this._loading.load(this.bk.node);
         this.interval=setInterval(()=>{
@@ -383,5 +387,7 @@ export class login extends Component {
             console.log("Back Main Interface!");
             clearInterval(this.interval);
         });
+
+        console.log("BackMainInterface end!");
     }
 }

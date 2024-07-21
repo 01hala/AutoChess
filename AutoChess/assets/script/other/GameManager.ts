@@ -113,6 +113,12 @@ export class GameManager extends Component
             this.rankListBoard=instantiate(t_rankListBoard);
             this.rankListBoard.setParent(this.node);
             this.rankListBoard.active=false;
+
+            this.infoPanel.getComponent(InfoPanel).start();
+            this.settlementBoard.getComponent(Settlement).start();
+            this.userInfoBoard.getComponent(UserInfo).start();
+            this.taskAchieveBoard.getComponent(TaskAchieve).start();
+            this.rankListBoard.getComponent(RankList).start();
         }
         catch(error)
         {
