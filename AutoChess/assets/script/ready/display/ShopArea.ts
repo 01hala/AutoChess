@@ -173,7 +173,7 @@ export class ShopArea extends Component
         {
             if(this.shopRoles[i] == _obj)
             {
-                await singleton.netSingleton.ready.readyData.Buy(ShopIndex.Role, i, _index);
+                singleton.netSingleton.ready.readyData.Buy(ShopIndex.Role, i, _index);
                 if(!_isMerge)
                 {
                     this.roleArea.rolesNode[_index]=_obj;
@@ -189,7 +189,7 @@ export class ShopArea extends Component
         {
             if(this.shopProps[i] == _obj)
             {
-                await singleton.netSingleton.ready.readyData.Buy(ShopIndex.Prop , i , _index);
+                singleton.netSingleton.ready.readyData.Buy(ShopIndex.Prop , i , _index);
                 this.shopProps[i] = null;
             }
         }

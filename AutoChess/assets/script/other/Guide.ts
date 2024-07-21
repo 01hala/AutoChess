@@ -197,22 +197,22 @@ export class Guide extends Component
     
                 default:break;
             }
-            this.tnode=instantiate(t);
             try
             {
+                this.tnode=instantiate(t);
                 this.tnode.getChildByName("Button")?.getComponent(Button).destroy();
                 this.tnode.getComponent(RoleIcon)?.destroy();
+                this.tnode.setParent(this.node);
+                this.tnode.setWorldPosition(t.worldPosition);
+                sleep(100).then(()=>
+                {
+                    this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
+                });
             }
             catch
             {
-
+                console.warn("异常，没有获取到高亮物体，请确认引导是否结束，若已结束请忽略");
             }
-            this.tnode.setParent(this.node);
-            this.tnode.setWorldPosition(t.worldPosition);
-            sleep(100).then(()=>
-            {
-                this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
-            });
         }
         catch(error)
         {
