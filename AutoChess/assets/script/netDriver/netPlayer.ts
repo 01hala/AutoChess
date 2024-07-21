@@ -11,6 +11,7 @@ import * as player_client from "../serverSDK/playercallc"
 import * as singleton from '../netDriver/netSingleton';
 import { rank_item } from "../serverSDK/rank_comm"
 import { decode } from "../serverSDK/@msgpack/msgpack"
+import { log } from "cc"
 
 export class netPlayer {
     private c_login_caller : login.login_caller;
@@ -77,6 +78,7 @@ export class netPlayer {
     private login_callback(code:string, player_name:string, token:string, nick_name:string, avatar_url:string) {
         this.player_name = player_name;
                 
+        console.log("token:" + token + " code:" + code);
         if (token != "") {
             this.c_player_login_caller.get_hub(this.player_name).player_login(token, nick_name, avatar_url).callBack((info)=>{
                 this.UserData = info;
@@ -95,6 +97,7 @@ export class netPlayer {
     public cb_player_login_sucess:() => void;
     public cb_player_login_non_account:(code:string) => void;
     public login_player(login_type:string, code:string, nick_name:string, avatar_url:string) {
+        console.log("login_player code:" + code);
         cli.cli_handle.get_hub_info("login", (login_hub)=>{
             if(login_hub) {
                 if (login_type == "no_author") {
