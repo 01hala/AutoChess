@@ -1529,7 +1529,7 @@ namespace Player
             {
                 throw new LoginException($"invaild token:{token}");
             }
-            avatarMgr.bind_avatar(_avatar.SDKUUID, uuid);
+            avatarMgr.bind_avatar(_avatar, uuid);
 
             var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);
             Player._redis_handle.SetStrData(uuid_key, _avatar.SDKUUID, RedisHelp.PlayerSvrInfoCacheTimeout);
@@ -1540,7 +1540,7 @@ namespace Player
         public async Task<avatar.Avatar> create_player(string uuid, string sdk_uuid, string name, string nick_name, string avatar)
         {
             var _avatar = await avatarMgr.create_avatar(sdk_uuid);
-            avatarMgr.bind_avatar(sdk_uuid, uuid);
+            avatarMgr.bind_avatar(_avatar, uuid);
             var info = _avatar.get_real_hosting_data<PlayerInfo>();
             info.Data.Info().User.UserName = nick_name;
             info.Data.Info().User.UserGuid = _avatar.Guid;
