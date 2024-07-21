@@ -297,10 +297,11 @@ export class player_login_hubproxy
         return cb_player_login_obj;
     }
 
-    public create_role(name:string, nick_name:string, avatar:string){
+    public create_role(account:string, name:string, nick_name:string, avatar:string){
         let uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21 = Math.round(this.uuid_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b++);
 
         let _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d:any[] = [uuid_ef86ed88_4838_5896_8241_9edf3c4b6d21];
+        _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d.push(account);
         _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d.push(name);
         _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d.push(nick_name);
         _argv_30293c4a_8f5b_307e_a08a_ff76e003f95d.push(avatar);

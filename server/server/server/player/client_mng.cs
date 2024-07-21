@@ -1471,46 +1471,56 @@ namespace Player
 
         public async Task<string> token_player_login(string sdk_uuid, string anonymous_sdk_uuid = "")
         {
-            var token = Guid.NewGuid().ToString();
-
-            avatar.Avatar _avatar = null;
-            if (!string.IsNullOrEmpty(anonymous_sdk_uuid))
+            do
             {
-                _avatar = await avatarMgr.load_or_create(anonymous_sdk_uuid, "");
-                if (!string.IsNullOrEmpty(sdk_uuid))
+                avatar.Avatar _avatar = null;
+                if (!string.IsNullOrEmpty(anonymous_sdk_uuid))
                 {
-                    if (!await _avatar.transfer(sdk_uuid))
+                    _avatar = await avatarMgr.load_from_db(anonymous_sdk_uuid);
+                    if (!string.IsNullOrEmpty(sdk_uuid))
                     {
-                        Log.Log.err("_avatar.transfer faild anonymous_sdk_uuid:{0, }sdk_uuid:{1}", anonymous_sdk_uuid, sdk_uuid);
+                        if (!await _avatar.transfer(sdk_uuid))
+                        {
+                            Log.Log.err("_avatar.transfer faild anonymous_sdk_uuid:{0, }sdk_uuid:{1}", anonymous_sdk_uuid, sdk_uuid);
+                        }
                     }
                 }
-            }
-            else
-            {
-                _avatar = await avatarMgr.load_or_create(sdk_uuid, "");
-            }
+                else
+                {
+                    _avatar = await avatarMgr.load_from_db(sdk_uuid);
+                }
 
-            var player_svr_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
-            await Player._redis_handle.SetStrData(player_svr_key, Hub.Hub.name, RedisHelp.PlayerSvrInfoCacheTimeout);
+                if (_avatar != null)
+                {
 
-            _avatar.onDestory += () =>
-            {
-                var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(_avatar.ClientUUID);
-                Player._redis_handle.DelData(uuid_key);
+                    var token = Guid.NewGuid().ToString();
 
-                var player_key = RedisHelp.BuildPlayerSvrCacheKey(_avatar.SDKUUID);
-                Player._redis_handle.DelData(player_key);
+                    var player_svr_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
+                    await Player._redis_handle.SetStrData(player_svr_key, Hub.Hub.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
-                var player_guid_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
-                Player._redis_handle.DelData(player_guid_key);
+                    _avatar.onDestory += () =>
+                    {
+                        var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(_avatar.ClientUUID);
+                        Player._redis_handle.DelData(uuid_key);
 
-                var gate_key = RedisHelp.BuildPlayerGateCacheKey(_avatar.SDKUUID);
-                Player._redis_handle.DelData(gate_key);
-            };
+                        var player_key = RedisHelp.BuildPlayerSvrCacheKey(_avatar.SDKUUID);
+                        Player._redis_handle.DelData(player_key);
 
-            client_token_dict[token] = _avatar;
+                        var player_guid_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
+                        Player._redis_handle.DelData(player_guid_key);
 
-            return token;
+                        var gate_key = RedisHelp.BuildPlayerGateCacheKey(_avatar.SDKUUID);
+                        Player._redis_handle.DelData(gate_key);
+                    };
+
+                    client_token_dict[token] = _avatar;
+
+                    return token;
+                }
+
+            } while (false);
+
+            return string.Empty;
         }
 
         public avatar.Avatar token_get_client_proxy(string uuid, string token)
@@ -1519,7 +1529,7 @@ namespace Player
             {
                 throw new LoginException($"invaild token:{token}");
             }
-            _avatar.ClientUUID = uuid;
+            avatarMgr.bind_avatar(_avatar.SDKUUID, uuid);
 
             var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);
             Player._redis_handle.SetStrData(uuid_key, _avatar.SDKUUID, RedisHelp.PlayerSvrInfoCacheTimeout);
@@ -1527,9 +1537,10 @@ namespace Player
             return _avatar;
         }
 
-        public avatar.Avatar create_player(string uuid, string name, string nick_name, string avatar)
+        public async Task<avatar.Avatar> create_player(string uuid, string sdk_uuid, string name, string nick_name, string avatar)
         {
-            var _avatar = avatarMgr.get_avatar(uuid);
+            var _avatar = await avatarMgr.create_avatar(sdk_uuid);
+            avatarMgr.bind_avatar(sdk_uuid, uuid);
             var info = _avatar.get_real_hosting_data<PlayerInfo>();
             info.Data.Info().User.UserName = nick_name;
             info.Data.Info().User.UserGuid = _avatar.Guid;

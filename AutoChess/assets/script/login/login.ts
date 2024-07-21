@@ -117,12 +117,12 @@ export class login extends Component {
             this._setProgress(this._progress);
         });
 
-        singleton.netSingleton.player.cb_player_login_non_account = () => {
+        singleton.netSingleton.player.cb_player_login_non_account = (code:string) => {
             this._progress += 0.1;
             this._setProgress(this._progress);
 
             console.log("login non_account create role");
-            singleton.netSingleton.player.create_role(SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().avatarUrl);
+            singleton.netSingleton.player.create_role(code, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().avatarUrl);
         };
 
         //登录进入主界面
@@ -377,7 +377,7 @@ export class login extends Component {
             this._setProgress(1.0);
             this._loading.done();
             singleton.netSingleton.player.get_user_data();
-            singleton.netSingleton.mainInterface.ShowAvatar(this.avatar_url);
+            singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
             this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
             console.log("Back Main Interface!");

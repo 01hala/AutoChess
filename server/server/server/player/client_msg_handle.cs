@@ -604,7 +604,7 @@ namespace Player
             }
         }
 
-        private void Player_login_Module_on_create_role(string name, string nick_name, string avatar)
+        private async void Player_login_Module_on_create_role(string sdk_uuid, string name, string nick_name, string avatar)
         {
             Log.Log.trace("on_player_login begin!");
 
@@ -613,7 +613,7 @@ namespace Player
 
             try
             {
-                var _avatar = Player.client_Mng.create_player(uuid, name, nick_name, avatar);
+                var _avatar = await Player.client_Mng.create_player(uuid, sdk_uuid, name, nick_name, avatar);
                 rsp.rsp(_avatar.PlayerInfo().Info());
             }
             catch (LoginException ex)
@@ -702,20 +702,13 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
-                    if (string.IsNullOrEmpty(_data.Data.Info().User.UserName) && _data.Data.Info().User.UserGuid == 0)
-                    {
-                        rsp.err((int)em_error.unregistered_palyer);
-                    }
-                    else
-                    {
-                        _data.Data.Info().User.UserName = name;
-                        _data.Data.Info().User.Avatar = avatar;
-                        _data.write_back();
+                    _data.Data.Info().User.UserName = name;
+                    _data.Data.Info().User.Avatar = avatar;
+                    _data.write_back();
 
-                        rsp.rsp(_avatar.PlayerInfo().Info());
+                    rsp.rsp(_avatar.PlayerInfo().Info());
 
-                        await Player.offline_Msg_Mng.process_offline_msg(_avatar.Guid.ToString());
-                    }
+                    await Player.offline_Msg_Mng.process_offline_msg(_avatar.Guid.ToString());
                 }
                 else
                 {
