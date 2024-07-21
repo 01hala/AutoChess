@@ -83,7 +83,7 @@ export class Settlement extends Component
     public OpenSettlementBoard(_isVictory:BattleVictory,_hpNum:number,_isAddTime:boolean=false)
     {
         console.log("show settlement");
-        this.node.getComponent(BlockInputEvents).enabled=true;
+        //this.node.getComponent(BlockInputEvents).enabled=true;
         this.node.setSiblingIndex(100);
         this.isVictory=_isVictory;
         this.isAddTime=_isAddTime;

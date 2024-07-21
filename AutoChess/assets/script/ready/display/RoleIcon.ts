@@ -431,9 +431,13 @@ export class RoleIcon extends Component
     //点击事件
     private ClickBtn()
     {
-        if (GameManager.Instance.guide)
+        if (GameManager.Instance.guide && this.isBuy)
         {
             GameManager.Instance.guide.step++;
+        }
+        if(GameManager.Instance.guide && GameManager.Instance.guide.step <=7)
+        {
+            return;
         }
         AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
         let roleInfo :RoleDis=null;
