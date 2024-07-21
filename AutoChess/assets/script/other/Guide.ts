@@ -31,6 +31,8 @@ export class Guide extends Component
 
     private interval;
 
+    private lastClickTime:number;
+
     protected onLoad(): void
     {
         this.pointer=this.node.getChildByPath("Pointer");
@@ -52,7 +54,10 @@ export class Guide extends Component
         }, this);
         
         this.mask.on(Node.EventType.TOUCH_END,this.OnTouch,this);
-        this.mask.on(Node.EventType.TOUCH_START,this.OnTouch,this);
+        this.mask.on(Node.EventType.TOUCH_START,(event: EventTouch)=>
+        {
+            
+        },this);
 
         this.skipBtn.on(Button.EventType.CLICK, () =>
         {
@@ -230,10 +235,11 @@ export class Guide extends Component
         if (this.step < 3 || this.step > 6)
         {
             this.mask.getComponent(BlockInputEvents).enabled=false;
-            this.mask.active = false;   //此处必须关闭mask中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
+            //this.mask.active = false;   //此处必须关闭mask中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
             if(this.step >= 7)
             {
                 this.node.getChildByPath("BG").active=false;
+                this.skipBtn.active=false;
             }
         }
         //if(8==this.step)
