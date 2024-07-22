@@ -68,7 +68,7 @@ export class ReadyDis
  * 2024/03/07
  * 让加载更平顺
  */
-    public async start(_father:Node,_value:common.UserBattleData|number[],_callBack:(event?:()=>void)=>void) 
+    public async start(_father:Node,_value:common.UserBattleData, _callBack:(event?:()=>void)=>void) 
     {
         try
         {
@@ -101,30 +101,32 @@ export class ReadyDis
             this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
             this.roleInfoNode.active=false;
 
-            if(_value instanceof common.UserBattleData)
-            {
+            //if(_value instanceof common.UserBattleData)
+            //{
                 if (_value.coin >= 25)
                 {
                     singleton.netSingleton.game.achievement_gold25_ntf();
                 }
-            }
+            //}
             
 
             _callBack(async ()=>
             {
                 await this.Init(_father);
                 //准备开始
-                if(_value instanceof common.UserBattleData)
-                {
+                console.log("battle roles:", JSON.stringify(_value));
+                console.log("_value instanceof common.UserBattleData:", _value instanceof common.UserBattleData);
+                //if(_value instanceof common.UserBattleData)
+                //{
                     if (_value.round > 1)
                     {
                         await this.Restore(_value);
                     }
-                }
-                else if(_value instanceof Float64Array)
-                {
-                    await this.Restore();
-                }
+                //}
+                //else if(_value instanceof Float64Array)
+                //{
+                //    await this.Restore();
+                //}
                 //this.coinText.string=""+this.ready.coin;
                 //await this.RefreshShop()
                 this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(),this.readyData.GetStage());
@@ -406,6 +408,8 @@ export class ReadyDis
         //---------------------------//
         if(null != _battle_info)
         {
+            console.log("battle Restore:", JSON.stringify(_battle_info));
+
             this.UpdatePlayerInfo(_battle_info);
             this.readyData.SetRoles(_battle_info.RoleList);
             await this.roleArea.ResetTeam(_battle_info.RoleList);
@@ -439,7 +443,7 @@ export class ReadyDis
         {
             this.UpdateText(_battle_info);
 
-            //console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
+            console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
             for(let i=0;i<6;i++)
             {
                 this.fetters[i].active=false;

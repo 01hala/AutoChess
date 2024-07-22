@@ -125,6 +125,7 @@ export class RoleArea extends Component
         {
             let r=await BundleManager.Instance.loadAssetsFromBundle("Icons","RoleIcon") as Prefab;
 
+            console.log("ResetTeam _roleList:", JSON.stringify(_roleList));
             for(let i=0;i<_roleList.length;i++)
             {
                 if(_roleList[i]!=null)
