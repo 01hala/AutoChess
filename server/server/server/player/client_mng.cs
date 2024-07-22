@@ -1520,7 +1520,7 @@ namespace Player
 
             } while (false);
 
-            return string.Empty;
+            return "";
         }
 
         public avatar.Avatar token_get_client_proxy(string uuid, string token)

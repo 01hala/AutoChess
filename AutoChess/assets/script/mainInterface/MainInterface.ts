@@ -230,7 +230,7 @@ export class MainInterface
             //打开商店
             this.storeBtn.on(Button.EventType.CLICK,()=>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
+                //AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 this.storePanel.active=true;
                 this.panelNode.active=false;
                 this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);

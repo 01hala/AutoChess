@@ -11,6 +11,7 @@ import * as common from '../../battle/AutoChessBattle/common';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { GameManager } from '../../other/GameManager';
 import { SendMessage } from '../../other/MessageEvent';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PropIcon')
@@ -311,6 +312,7 @@ export class PropIcon extends Component
 
     private ClickBtn()
     {
+        AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
         this.node.dispatchEvent(new SendMessage('OpenInfoBoard',true,{id:this.propId , role:null , isBuy:false , propType:this.propType}));
         //singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.propId,null,false,this.propType);
     }

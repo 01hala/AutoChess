@@ -149,6 +149,7 @@ export class StartGame extends Component
             this.customBoard.active=true;
             this.customBoard.getChildByPath("Board").getComponent(Animation).play("PanelTop2Mid");
             //返回
+            //待修复BUG：每次点击会多次调用下方逻辑，暂未找到原因
             this.customBoard.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_home_return_feedback_01");
