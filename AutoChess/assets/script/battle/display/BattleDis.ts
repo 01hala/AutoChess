@@ -8,7 +8,7 @@ import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, Vec3
 import { Queue } from './Queue';
 import { Battle } from '../AutoChessBattle/battle';
 import * as skill from '../AutoChessBattle/skill/skill_base'
-import { Camp, EventType } from '../AutoChessBattle/enum';
+import * as enums from '../../other/enums';
 import { sleep } from '../../other/sleep'
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
@@ -177,10 +177,10 @@ export class BattleDis
             }
 
             let is_victory = BattleVictory.tie;
-            if (this.battleCentre.GetWinCamp() == Camp.Self) {
+            if (this.battleCentre.GetWinCamp() == enums.Camp.Self) {
                 is_victory = BattleVictory.victory;
             }
-            else if (this.battleCentre.GetWinCamp() == Camp.Enemy) {
+            else if (this.battleCentre.GetWinCamp() == enums.Camp.Enemy) {
                 is_victory = BattleVictory.faild;
             }
 
@@ -288,7 +288,7 @@ export class BattleDis
             for(let ev of evs)
             {
                 //console.log("checkAttackEvent ev:", ev)
-                if (EventType.BattleBegin != ev.type)
+                if (enums.EventType.BattleBegin != ev.type)
                 {
                     continue;
                 }
@@ -330,14 +330,14 @@ export class BattleDis
             let enemyRoleNodeRoleDis:RoleDis = null;
             for(let ev of evs)
             {
-                if (EventType.AttackInjured != ev.type)
+                if (enums.EventType.AttackInjured != ev.type)
                 {
                     continue;
                 }
 
                 evs_floating.push(ev);
 
-                if (Camp.Self == ev.spellcaster.camp)
+                if (enums.Camp.Self == ev.spellcaster.camp)
                 {
                     if (!selfAttack)
                     {
@@ -358,7 +358,7 @@ export class BattleDis
                         }
                     }
                 }
-                else if (Camp.Enemy == ev.spellcaster.camp)
+                else if (enums.Camp.Enemy == ev.spellcaster.camp)
                 {
                     if (!enemyAttack)
                     {
@@ -384,11 +384,11 @@ export class BattleDis
                 allAwait.push(selfRoleNodeRoleDis.Attack(
                     this.selfQueue.readyLocation.position, 
                     this.selfQueue.battleLocation.position, 
-                    Camp.Self));
+                    enums.Camp.Self));
                 allAwait.push(enemyRoleNodeRoleDis.Attack(
                     this.enemyQueue.readyLocation.position, 
                     this.enemyQueue.battleLocation.position, 
-                    Camp.Enemy));
+                    enums.Camp.Enemy));
                 
                 await Promise.all(allAwait);
                 allAwait=[];
@@ -471,7 +471,7 @@ export class BattleDis
             for(let ev of evs)
             {
                 
-                if(EventType.RemoteInjured != ev.type) 
+                if(enums.EventType.RemoteInjured != ev.type) 
                 {
                     continue;
                 }
@@ -480,10 +480,10 @@ export class BattleDis
                     await this.showLaunchSkillEffect();
                 }
 
-                let spList = Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+                let spList = enums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                 for (let element of ev.recipient) {
 
-                    let targetList = Camp.Enemy == element.camp ? this.enemyQueue : this.selfQueue;
+                    let targetList = enums.Camp.Enemy == element.camp ? this.enemyQueue : this.selfQueue;
 
                     let self = spList.roleNodes[ev.spellcaster.index];
                     let target = targetList.roleNodes[element.index];
@@ -500,7 +500,7 @@ export class BattleDis
                             }
                         }
                         else{
-                            if(Camp.Self==ev.spellcaster.camp) 
+                            if(enums.Camp.Self==ev.spellcaster.camp) 
                             {
                                 for(let r of ev.recipient)
                                 {
@@ -541,7 +541,7 @@ export class BattleDis
             for(let ev of evs)
             {
                 
-                if(EventType.Summon != ev.type) 
+                if(enums.EventType.Summon != ev.type) 
                 {
                     continue;
                 }
@@ -553,14 +553,14 @@ export class BattleDis
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
                     tmp = new rRole(null,element.index,element.id, 1,0, element.camp, element.properties,null);
-                    let targetTeam = Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
+                    let targetTeam = enums.Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
-                    let queue = Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
+                    let queue = enums.Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
                     if(!ev.isParallel) {
                         allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
                     }
                     else{
-                        if(Camp.Self == ev.spellcaster.camp) {
+                        if(enums.Camp.Self == ev.spellcaster.camp) {
                             this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
                         }
                         else {
@@ -586,7 +586,7 @@ export class BattleDis
             for(let ev of evs)
             {
                 
-                if(EventType.IntensifierExp != ev.type) 
+                if(enums.EventType.IntensifierExp != ev.type) 
                 {
                     continue;
                 }
@@ -599,7 +599,7 @@ export class BattleDis
                 //受到增益者            
                 ev.recipient.forEach(element=>{
                     
-                    if(Camp.Self==element.camp)
+                    if(enums.Camp.Self==element.camp)
                     {
                         if(this.selfQueue.roleNodes[element.index])
                         {
@@ -633,7 +633,7 @@ export class BattleDis
             for(let ev of evs)
             {
                 
-                if(EventType.IntensifierProperties != ev.type) 
+                if(enums.EventType.IntensifierProperties != ev.type) 
                 {
                     continue;
                 }
@@ -646,7 +646,7 @@ export class BattleDis
                 //受到增益者            
                 ev.recipient.forEach(element=>{
                     
-                    if(Camp.Self==element.camp)
+                    if(enums.Camp.Self==element.camp)
                     {
                         if(this.selfQueue.roleNodes[element.index])
                         {
@@ -687,16 +687,16 @@ export class BattleDis
             let r:Node = null;
             for(let ev of evs)
             {
-                if(EventType.RemoteInjured==ev.type || EventType.IntensifierProperties == ev.type || EventType.AttackInjured==ev.type) 
+                if(enums.EventType.RemoteInjured==ev.type || enums.EventType.IntensifierProperties == ev.type || enums.EventType.AttackInjured==ev.type) 
                 {
                     if (ev.is_trigger_floating) {
                         continue;
                     }
                     ev.is_trigger_floating = true;
 
-                    if(Camp.Self == ev.spellcaster.camp)
+                    if(enums.Camp.Self == ev.spellcaster.camp)
                     {
-                        if(EventType.RemoteInjured==ev.type)
+                        if(enums.EventType.RemoteInjured==ev.type)
                         {
                             for(let t of ev.recipient)
                             {
@@ -721,9 +721,9 @@ export class BattleDis
                             }
                         }
                     }
-                    if(Camp.Enemy==ev.spellcaster.camp)
+                    if(enums.Camp.Enemy==ev.spellcaster.camp)
                     {
-                        if(EventType.RemoteInjured==ev.type)
+                        if(enums.EventType.RemoteInjured==ev.type)
                         {
                             for(let t of ev.recipient)
                             {
@@ -766,16 +766,16 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
-                if(EventType.Exit != ev.type)
+                if(enums.EventType.Exit != ev.type)
                 {
                     continue;
                 }
 
-                if(Camp.Self==ev.spellcaster.camp)
+                if(enums.Camp.Self==ev.spellcaster.camp)
                 {
                     allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
                 }
-                else if(Camp.Enemy==ev.spellcaster.camp)
+                else if(enums.Camp.Enemy==ev.spellcaster.camp)
                 {
                     allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
                 }

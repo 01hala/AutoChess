@@ -6,7 +6,7 @@
  */
 import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color } from 'cc';
 import { Role } from '../AutoChessBattle//role';
-import { Camp, EventType, Property } from '../AutoChessBattle/enum';
+import * as enums from '../../other/enums';
 import { Battle } from '../AutoChessBattle//battle';
 import * as skill from '../AutoChessBattle//skill/skill_base'
 import { netDriver } from '../../netDriver/netDriver';
@@ -172,7 +172,7 @@ export class RoleDis extends Component
         this.originalPos = new Vec3(this.node.position);
     }
 
-    Attack(readyLocation: Vec3, battleLocation: Vec3, camp: Camp ) 
+    Attack(readyLocation: Vec3, battleLocation: Vec3, camp: enums.Camp ) 
     {
         try 
         {
@@ -187,7 +187,7 @@ export class RoleDis extends Component
                 //上面是蓄力效果
                 .to(0.05, { position: battleLocation })
                 .call(() => {
-                    if (Camp.Self == camp) {
+                    if (enums.Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
                         // let roleConfig = config.RoleConfig.get(this.RoleId);
                         // let audioString="Sound/sound_character_hit_MN";
@@ -198,7 +198,7 @@ export class RoleDis extends Component
                     }
                 })
                 .delay(0.1).call(() => {
-                    if (Camp.Self == camp) {
+                    if (enums.Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
                 })
@@ -241,8 +241,8 @@ export class RoleDis extends Component
     {
         try 
         {
-            this.Hp = Math.round(this.roleInfo.GetProperty(Property.HP));
-            this.AtkNum = Math.round(this.roleInfo.GetProperty(Property.Attack));
+            this.Hp = Math.round(this.roleInfo.GetProperty(enums.Property.HP));
+            this.AtkNum = Math.round(this.roleInfo.GetProperty(enums.Property.Attack));
             this.Level=this.roleInfo.level;
 
             if(null==this.hpText && null==this.atkText)
@@ -440,7 +440,7 @@ export class RoleDis extends Component
         });
     }
 
-    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: Camp,callBack?:()=>{}) 
+    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: enums.Camp,callBack?:()=>{}) 
     {
         try 
         {
@@ -469,7 +469,7 @@ export class RoleDis extends Component
             });
             
             let offset=-1000;
-            if(Camp.Self!=this.roleInfo.selfCamp) offset=1000;
+            if(enums.Camp.Self!=this.roleInfo.selfCamp) offset=1000;
             let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
             tween(this.node)
             .call(()=>

@@ -114,16 +114,19 @@ export class ReadyDis
             {
                 await this.Init(_father);
                 //准备开始
-                if(_value instanceof common.UserBattleData)
-                {
-                    if (_value.round > 1)
-                    {
-                        await this.Restore(_value);
-                    }
-                }
-                else if(_value instanceof Float64Array)
+                
+                console.log("_________battledata:",Object.prototype.toString.call(_value).replace(/^\[object (\S+)\]$/, '$1'));
+                if(_value instanceof Float64Array)
                 {
                     await this.Restore();
+                }
+                else
+                {
+                    let battleData=_value as common.UserBattleData;
+                    if(battleData.round>1)
+                    {
+                        await this.Restore(battleData);
+                    }
                 }
                 //this.coinText.string=""+this.ready.coin;
                 //await this.RefreshShop()

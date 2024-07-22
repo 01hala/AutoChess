@@ -120,9 +120,9 @@ export class Guide extends Component
             }
             if(this.step>=this.end)
             {
+                singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
                 GameManager.Instance.guide = null;
                 clearInterval(this.interval);
-                singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
                 this.node.destroy();
             }
         }, 50);
@@ -187,13 +187,20 @@ export class Guide extends Component
                     this.guideText.getComponent(RichText).string="拖拽购买角色";
                     break;
                 case 8:
-                    for(let r of this.node.parent.getChildByPath("ReadyPanel/RoleArea").getComponent(RoleArea).rolesNode)
+                    try
                     {
-                        if(null != r)
-                        {
-                            t=r;
-                            break;
-                        }
+                        for(let r of this.node.parent.getChildByPath("ReadyPanel/RoleArea").getComponent(RoleArea).rolesNode)
+                            {
+                                if(null != r)
+                                {
+                                    t=r;
+                                    break;
+                                }
+                            }
+                    }
+                    catch(error)
+                    {
+                        console.warn("异常");
                     }
                     //this.pointer.setWorldPosition(this.tnode.worldPosition);
                     this.guideText.setPosition(new Vec3(0,-85.498,0));
@@ -204,15 +211,18 @@ export class Guide extends Component
             }
             try
             {
-                this.tnode=instantiate(t);
-                this.tnode.getChildByName("Button")?.getComponent(Button).destroy();
-                this.tnode.getComponent(RoleIcon)?.destroy();
-                this.tnode.setParent(this.node);
-                this.tnode.setWorldPosition(t.worldPosition);
-                sleep(100).then(()=>
+                if(t!=null)
                 {
-                    this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
-                });
+                    this.tnode=instantiate(t);
+                    this.tnode.getChildByName("Button")?.getComponent(Button).destroy();
+                    this.tnode.getComponent(RoleIcon)?.destroy();
+                    this.tnode.setParent(this.node);
+                    this.tnode.setWorldPosition(t.worldPosition);
+                    sleep(100).then(()=>
+                    {
+                        this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
+                    });
+                }
             }
             catch
             {
@@ -221,7 +231,7 @@ export class Guide extends Component
         }
         catch(error)
         {
-            console.error("Guide 下的 OnGuide 错误 err:",error);
+            console.warn("Guide 下的 OnGuide 异常 若已执行完引导请忽略 err:",error);
         }
     }
 
@@ -235,7 +245,6 @@ export class Guide extends Component
         if (this.step < 3 || this.step > 6)
         {
             this.mask.getComponent(BlockInputEvents).enabled=false;
-            //this.mask.active = false;   //此处必须关闭mask中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
             if(this.step >= 7)
             {
                 this.node.getChildByPath("BG").active=false;
