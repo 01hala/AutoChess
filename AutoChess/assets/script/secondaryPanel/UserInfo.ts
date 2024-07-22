@@ -37,7 +37,7 @@ export class UserInfo extends Component
     {
         try
         {
-            AudioManager.Instance.PlayerOnShot("Sound/sound_home_return_feedback_01");
+            //AudioManager.Instance.PlayerOnShot("Sound/sound_home_return_feedback_01");
             this.node.getComponent(BlockInputEvents).enabled=true;
             this.node.setSiblingIndex(98);
             this.node.active=true;

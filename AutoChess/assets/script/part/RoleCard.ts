@@ -10,6 +10,7 @@ import { InfoPanel } from '../secondaryPanel/InfoPanel';
 import { loadAssets } from '../bundle/LoadAsset';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { SendMessage } from '../other/MessageEvent';
+import { AudioManager } from '../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 export enum CardType
@@ -119,6 +120,7 @@ export class RoleCard extends Component
         this.node.on(Button.EventType.CLICK,()=>
         {
             console.log("OpenInfoBoard");
+            AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
             this.node.dispatchEvent(new SendMessage('OpenCardInfo',true,this.roleId));
 
         },this);
