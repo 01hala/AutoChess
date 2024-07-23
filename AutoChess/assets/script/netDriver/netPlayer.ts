@@ -261,6 +261,7 @@ export class netPlayer {
     //发送新手引导执行到的步骤
     public guide_step_ntf(_guideStep : common.GuideStep)
     {
+        console.log("guide_step_ntf player_name:" + this.player_name + " guideStep:" + _guideStep);
         this.c_player_login_caller.get_hub(this.player_name).guide_step(_guideStep);
     }
 

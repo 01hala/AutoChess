@@ -560,13 +560,16 @@ namespace avatar
                 }
             }
 
-            avatar_guid[avatar.Guid] = avatar;
-            avatar_sdk_uuid[sdk_uuid] = avatar;
+            bind_avatar(avatar, client_uuid);
 
-            if (!string.IsNullOrEmpty(client_uuid))
+            return avatar;
+        }
+
+        public async Task<Avatar> load(string sdk_uuid)
+        {
+            if (!avatar_sdk_uuid.TryGetValue(sdk_uuid, out var avatar))
             {
-                avatar.ClientUUID = client_uuid;
-                avatar_client_uuid[client_uuid] = avatar;
+                avatar = await load_from_db(sdk_uuid);
             }
 
             return avatar;
@@ -574,13 +577,12 @@ namespace avatar
 
         public void bind_avatar(Avatar avatar, string client_uuid)
         {
-            avatar.ClientUUID = client_uuid;
-
             avatar_guid[avatar.Guid] = avatar;
             avatar_sdk_uuid[avatar.SDKUUID] = avatar;
 
             if (!string.IsNullOrEmpty(client_uuid))
             {
+                avatar.ClientUUID = client_uuid;
                 avatar_client_uuid[client_uuid] = avatar;
             }
         }
