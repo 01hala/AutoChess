@@ -197,22 +197,20 @@ export class Guide extends Component
     
                 default:break;
             }
-            this.tnode=instantiate(t);
-            try
+
+            if (t != null)
             {
+                this.tnode = instantiate(t);
                 this.tnode.getChildByName("Button")?.getComponent(Button).destroy();
                 this.tnode.getComponent(RoleIcon)?.destroy();
+                this.tnode.setParent(this.node);
+                this.tnode.setWorldPosition(t.worldPosition);
+                sleep(100).then(() =>
+                {
+                    this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
+                });
             }
-            catch
-            {
-
-            }
-            this.tnode.setParent(this.node);
-            this.tnode.setWorldPosition(t.worldPosition);
-            sleep(100).then(()=>
-            {
-                this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
-            });
+            
         }
         catch(error)
         {
@@ -234,6 +232,7 @@ export class Guide extends Component
             if(this.step >= 7)
             {
                 this.node.getChildByPath("BG").active=false;
+                this.skipBtn.active=false;
             }
         }
         //if(8==this.step)
