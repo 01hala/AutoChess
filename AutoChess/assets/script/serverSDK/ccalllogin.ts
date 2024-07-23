@@ -7,7 +7,7 @@ export class login_player_login_no_token_cb{
     private cb_uuid : number;
     private module_rsp_cb : login_rsp_cb;
 
-    public event_player_login_no_token_handle_cb : (player_hub_name:string, token:string)=>void | null;
+    public event_player_login_no_token_handle_cb : (player_hub_name:string, token:string, sdk_uuid:string)=>void | null;
     public event_player_login_no_token_handle_err : (err:number)=>void | null;
     public event_player_login_no_token_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : login_rsp_cb){
@@ -18,7 +18,7 @@ export class login_player_login_no_token_cb{
         this.event_player_login_no_token_handle_timeout = null;
     }
 
-    callBack(_cb:(player_hub_name:string, token:string)=>void, _err:(err:number)=>void)
+    callBack(_cb:(player_hub_name:string, token:string, sdk_uuid:string)=>void, _err:(err:number)=>void)
     {
         this.event_player_login_no_token_handle_cb = _cb;
         this.event_player_login_no_token_handle_err = _err;
@@ -37,7 +37,7 @@ export class login_player_login_wx_cb{
     private cb_uuid : number;
     private module_rsp_cb : login_rsp_cb;
 
-    public event_player_login_wx_handle_cb : (player_hub_name:string, token:string)=>void | null;
+    public event_player_login_wx_handle_cb : (player_hub_name:string, token:string, sdk_uuid:string)=>void | null;
     public event_player_login_wx_handle_err : (err:number)=>void | null;
     public event_player_login_wx_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : login_rsp_cb){
@@ -48,7 +48,7 @@ export class login_player_login_wx_cb{
         this.event_player_login_wx_handle_timeout = null;
     }
 
-    callBack(_cb:(player_hub_name:string, token:string)=>void, _err:(err:number)=>void)
+    callBack(_cb:(player_hub_name:string, token:string, sdk_uuid:string)=>void, _err:(err:number)=>void)
     {
         this.event_player_login_wx_handle_cb = _cb;
         this.event_player_login_wx_handle_err = _err;
@@ -67,7 +67,7 @@ export class login_player_login_dy_cb{
     private cb_uuid : number;
     private module_rsp_cb : login_rsp_cb;
 
-    public event_player_login_dy_handle_cb : (player_hub_name:string, token:string)=>void | null;
+    public event_player_login_dy_handle_cb : (player_hub_name:string, token:string, sdk_uuid:string)=>void | null;
     public event_player_login_dy_handle_err : (err:number)=>void | null;
     public event_player_login_dy_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : login_rsp_cb){
@@ -78,7 +78,7 @@ export class login_player_login_dy_cb{
         this.event_player_login_dy_handle_timeout = null;
     }
 
-    callBack(_cb:(player_hub_name:string, token:string)=>void, _err:(err:number)=>void)
+    callBack(_cb:(player_hub_name:string, token:string, sdk_uuid:string)=>void, _err:(err:number)=>void)
     {
         this.event_player_login_dy_handle_cb = _cb;
         this.event_player_login_dy_handle_err = _err;
@@ -115,6 +115,7 @@ export class login_rsp_cb extends client_handle.imodule {
         let _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf:any[] = [];
         _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf.push(inArray[1]);
         _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf.push(inArray[2]);
+        _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf.push(inArray[3]);
         var rsp = this.try_get_and_del_player_login_no_token_cb(uuid);
         if (rsp && rsp.event_player_login_no_token_handle_cb) {
             rsp.event_player_login_no_token_handle_cb.apply(null, _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf);
@@ -151,6 +152,7 @@ export class login_rsp_cb extends client_handle.imodule {
         let _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d:any[] = [];
         _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.push(inArray[1]);
         _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.push(inArray[2]);
+        _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d.push(inArray[3]);
         var rsp = this.try_get_and_del_player_login_wx_cb(uuid);
         if (rsp && rsp.event_player_login_wx_handle_cb) {
             rsp.event_player_login_wx_handle_cb.apply(null, _argv_f260ea6c_9f00_31da_bd24_7e885d5e027d);
@@ -187,6 +189,7 @@ export class login_rsp_cb extends client_handle.imodule {
         let _argv_71c7fc76_b480_3603_a181_4245a2f78904:any[] = [];
         _argv_71c7fc76_b480_3603_a181_4245a2f78904.push(inArray[1]);
         _argv_71c7fc76_b480_3603_a181_4245a2f78904.push(inArray[2]);
+        _argv_71c7fc76_b480_3603_a181_4245a2f78904.push(inArray[3]);
         var rsp = this.try_get_and_del_player_login_dy_cb(uuid);
         if (rsp && rsp.event_player_login_dy_handle_cb) {
             rsp.event_player_login_dy_handle_cb.apply(null, _argv_71c7fc76_b480_3603_a181_4245a2f78904);

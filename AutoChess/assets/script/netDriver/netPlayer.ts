@@ -11,6 +11,7 @@ import * as player_client from "../serverSDK/playercallc"
 import * as singleton from '../netDriver/netSingleton';
 import { rank_item } from "../serverSDK/rank_comm"
 import { decode } from "../serverSDK/@msgpack/msgpack"
+import { log } from "cc"
 
 export class netPlayer {
     private c_login_caller : login.login_caller;
@@ -74,9 +75,10 @@ export class netPlayer {
         }
     }
 
-    private login_callback(code:string, player_name:string, token:string, nick_name:string, avatar_url:string) {
+    private login_callback(sdk_uuid:string, player_name:string, token:string, nick_name:string, avatar_url:string) {
         this.player_name = player_name;
                 
+        console.log("token:" + token + " sdk_uuid:" + sdk_uuid);
         if (token != "") {
             this.c_player_login_caller.get_hub(this.player_name).player_login(token, nick_name, avatar_url).callBack((info)=>{
                 this.UserData = info;
@@ -88,18 +90,19 @@ export class netPlayer {
             });
         }
         else {
-            this.cb_player_login_non_account.call(null, code);
+            this.cb_player_login_non_account.call(null, sdk_uuid);
         }
     }
 
     public cb_player_login_sucess:() => void;
     public cb_player_login_non_account:(code:string) => void;
     public login_player(login_type:string, code:string, nick_name:string, avatar_url:string) {
+        console.log("login_player code:" + code);
         cli.cli_handle.get_hub_info("login", (login_hub)=>{
             if(login_hub) {
                 if (login_type == "no_author") {
-                    this.c_login_caller.get_hub(login_hub.hub_name).player_login_no_token(code).callBack((player_name, token)=>{
-                        this.login_callback(code, player_name, token, nick_name, avatar_url);
+                    this.c_login_caller.get_hub(login_hub.hub_name).player_login_no_token(code).callBack((player_name, token, sdk_uuid)=>{
+                        this.login_callback(sdk_uuid, player_name, token, nick_name, avatar_url);
                     }, (err)=>{
                         console.log("login error:" + err);
                     }).timeout(20000, ()=>{
@@ -108,8 +111,8 @@ export class netPlayer {
                 }
                 else if (login_type == "wx") {
                     console.log(login_hub);
-                    this.c_login_caller.get_hub(login_hub.hub_name).player_login_wx(code).callBack((player_name, token)=>{
-                        this.login_callback(code, player_name, token, nick_name, avatar_url);
+                    this.c_login_caller.get_hub(login_hub.hub_name).player_login_wx(code).callBack((player_name, token, sdk_uuid)=>{
+                        this.login_callback(sdk_uuid, player_name, token, nick_name, avatar_url);
                     }, (err)=>{
                         console.log("login error:" + err);
                     }).timeout(20000, ()=>{
@@ -117,8 +120,8 @@ export class netPlayer {
                     });
                 }
                 else if (login_type == "dy") {
-                    this.c_login_caller.get_hub(login_hub.hub_name).player_login_dy(code).callBack((player_name, token)=>{
-                        this.login_callback(code, player_name, token, nick_name, avatar_url);
+                    this.c_login_caller.get_hub(login_hub.hub_name).player_login_dy(code).callBack((player_name, token, sdk_uuid)=>{
+                        this.login_callback(sdk_uuid, player_name, token, nick_name, avatar_url);
                     }, (err)=>{
                         console.log("login error:" + err);
                     }).timeout(20000, ()=>{
@@ -258,6 +261,7 @@ export class netPlayer {
     //发送新手引导执行到的步骤
     public guide_step_ntf(_guideStep : common.GuideStep)
     {
+        console.log("guide_step_ntf player_name:" + this.player_name + " guideStep:" + _guideStep);
         this.c_player_login_caller.get_hub(this.player_name).guide_step(_guideStep);
     }
 

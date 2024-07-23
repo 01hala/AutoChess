@@ -21,7 +21,7 @@ namespace Login
             Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login_no_token(account).callBack((token) => {
-                rsp.rsp(_proxy.name, token);
+                rsp.rsp(_proxy.name, token, account);
             }, (err) => {
                 rsp.err(err);
             }).timeout(20000, () => {
@@ -98,7 +98,7 @@ namespace Login
             Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login(code, anonymous_code).callBack((token) => {
-                rsp.rsp(_proxy.name, token);
+                rsp.rsp(_proxy.name, token, account);
             }, (err) => {
                 rsp.err(err);
             }).timeout(10000, () => {
@@ -198,7 +198,7 @@ namespace Login
             Login._redis_handle.SetStrData(key, _proxy.name, RedisHelp.PlayerSvrInfoCacheTimeout);
 
             _proxy.player_login(code, "").callBack((token) => {
-                rsp.rsp(_proxy.name, token);
+                rsp.rsp(_proxy.name, token, account);
             }, (err) => {
                 rsp.err(err);
             }).timeout(10000, () => {

@@ -1476,7 +1476,7 @@ namespace Player
                 avatar.Avatar _avatar = null;
                 if (!string.IsNullOrEmpty(anonymous_sdk_uuid))
                 {
-                    _avatar = await avatarMgr.load_from_db(anonymous_sdk_uuid);
+                    _avatar = await avatarMgr.load(anonymous_sdk_uuid);
                     if (!string.IsNullOrEmpty(sdk_uuid))
                     {
                         if (!await _avatar.transfer(sdk_uuid))
@@ -1487,7 +1487,7 @@ namespace Player
                 }
                 else
                 {
-                    _avatar = await avatarMgr.load_from_db(sdk_uuid);
+                    _avatar = await avatarMgr.load(sdk_uuid);
                 }
 
                 if (_avatar != null)
@@ -1520,7 +1520,7 @@ namespace Player
 
             } while (false);
 
-            return string.Empty;
+            return "";
         }
 
         public avatar.Avatar token_get_client_proxy(string uuid, string token)

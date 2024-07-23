@@ -160,8 +160,8 @@ export class InfoPanel extends Component
         this.simpleBoard.active=true;
         this.detailedBoard.active=false;
         this.propBoard.active=false;
-        this.fetterBoard.active=true;
-        this.node.setSiblingIndex(98);
+        this.fetterBoard.active=false;
+        this.ShowSimpel(_id);
 
         this.simpleBoard.getComponent(Animation).play("PanelAppear");
     }
