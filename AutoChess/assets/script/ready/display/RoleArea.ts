@@ -61,10 +61,8 @@ export class RoleArea extends Component
     async SwitchPos(_selfIndex:number,_selfPosTarget:Node,_switchNode:Node)
     {
         //await this.MovePos(_selfIndex,_switchNode.getComponent(RoleIcon).index);
-        _switchNode.getComponent(RoleIcon).TransPos(_selfPosTarget.worldPosition);
-        _switchNode.getComponent(RoleIcon).target=_selfPosTarget;
-        _switchNode.getComponent(RoleIcon).index=_selfIndex;
-        //this.targets.set(_selfPosTarget.name,_switchNode);
+        console.log("!",_selfPosTarget);
+        _switchNode.getComponent(RoleIcon).TransPos(_selfPosTarget , _selfIndex);
     }
 
     async MovePos(_indexBefor:number,_indexAfter:number,_isMerge:boolean)
@@ -133,10 +131,10 @@ export class RoleArea extends Component
                     let obj = instantiate(r);
                     obj.setParent(this.node.parent);
                     obj.setWorldPosition(this.node.getChildByPath("Node").children[i].worldPosition);
-                    obj.getComponent(RoleIcon).isBuy=true;
                     //obj.getComponent(RoleIcon).roleNode.active=true;
                     obj.getComponent(RoleIcon).index=i;
                     obj.getComponent(RoleIcon).target=this.targets.get("Location_" + i);
+                    obj.getComponent(RoleIcon).isBuy=true;
                     await obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
                     //obj.getComponent(RoleIcon).iconMask.active=false;
                     if (this.rolesNode[i]) {

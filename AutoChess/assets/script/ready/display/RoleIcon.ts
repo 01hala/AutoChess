@@ -609,18 +609,22 @@ export class RoleIcon extends Component
         
     }
     //互相换位
-    public TransPos(Vec3:Vec3)
+    public TransPos(_target:Node , _index:number)
     {
         //this.roleArea.targets.set(this.target.name,null);
-        this.tweenNode=tween(this.node).to(0.1,{worldPosition:Vec3})
+        this.target=_target;
+        this.tempTarget=_target;
+        this.index=_index;
+        this.tempIndex=_index;
+        this.tweenNode=tween(this.node).to(0.1,{worldPosition:_target.worldPosition})
         .call(()=>
         {
-            //this.originalPos=this.node.getPosition();
+            this.originalPos=this.node.getPosition();
             this.tweenNode.stop();
         })
         .start();
         //this.node.setWorldPosition(Vec3);
-        console.log("tarnspos!");
+        console.log(`tarnspos! ${this.target.name}`);
     }
     //合并、升级
     async GetUpgrade(t:common.Role,is_update:boolean)
