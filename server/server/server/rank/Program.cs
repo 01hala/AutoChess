@@ -50,7 +50,7 @@ namespace RankSvr
 
             Log.Log.trace("rank svr start ok");
 
-            _hub.run();
+            _hub.run().Wait();
 
             Rank.RankModule.save_rank();
         }

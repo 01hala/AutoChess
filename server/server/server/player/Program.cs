@@ -66,7 +66,7 @@ namespace Player
 
             Log.Log.trace("player start ok");
 
-            _hub.run();
+            _hub.run().Wait();
         }
 
         private static void tick_set_player_svr_info(long tick_time)

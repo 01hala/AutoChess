@@ -12,7 +12,7 @@ namespace gate_svr
 
             Log.Log.trace("gate_svr start ok");
 
-            _gate.run();
+            _gate.run().Wait();
         }
 	}
 }
