@@ -600,7 +600,7 @@ namespace battle_shop
 
             r.Number += 1;
             var oldLevel = r.Level;
-            r.Level = 1 + (r.Number - 1) / 3;
+            r.Level = 1 + (r.Number - 1) / 2;
             r.HP += 1;
             r.Attack += 1;
 
