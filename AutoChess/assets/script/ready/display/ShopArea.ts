@@ -44,8 +44,6 @@ export class ShopArea extends Component
     private roleArea:RoleArea;
     private freezeArea:Node;
 
-    
-
     protected onLoad(): void 
     {
         for(let t of this.node.getChildByPath("TopArea/Role").children)
