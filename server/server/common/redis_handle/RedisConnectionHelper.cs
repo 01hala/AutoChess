@@ -26,8 +26,6 @@ namespace Abelkhan
 
         public RedisConnectionHelper(string conUrl, string conName, string pwd, int db = 0)
         {
-            Log.Log.trace("RedisConnectionHelper pwd:{0}", pwd);
-
             _conUrl = conUrl;
             _conName = conName;
             _pwd = pwd;

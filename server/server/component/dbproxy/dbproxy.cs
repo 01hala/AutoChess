@@ -170,47 +170,35 @@ namespace DBProxy
             _timer.addticktime(3000, heartbeath_center);
         }
 
-		private async Task<long> poll()
+		private async ValueTask<long> poll()
         {
             long tick_begin = _timer.refresh();
 
-            try
+            while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
             {
-                while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
-                {
-                    Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
-                }
+                Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
+            }
 
-                if (remove_chs.Count > 0)
+            if (remove_chs.Count > 0)
+            {
+                lock (remove_chs)
                 {
-                    lock (remove_chs)
+                    foreach (var ch in remove_chs)
                     {
-                        foreach (var ch in remove_chs)
+                        lock (add_chs)
                         {
-                            lock (add_chs)
-                            {
-                                add_chs.Remove(ch);
-                            }
+                            add_chs.Remove(ch);
                         }
-                        remove_chs.Clear();
                     }
+                    remove_chs.Clear();
                 }
-
-                _ = await _redis_mq_service.sendmsg_mq();
-
-                _timer.poll();
-                Abelkhan.TinyTimer.poll();
-            }
-            catch (Abelkhan.Exception e)
-            {
-                Log.Log.err(e.Message);
-            }
-            catch (System.Exception e)
-            {
-                Log.Log.err("{0}", e);
             }
 
-            tick = (uint)(_timer.refresh() - tick_begin);
+            await _redis_mq_service.sendmsg_mq();
+
+            Abelkhan.TinyTimer.poll();
+            
+            tick = (uint)(_timer.poll() - tick_begin);
             if (tick > 100)
             {
                 is_busy = true;
@@ -225,15 +213,6 @@ namespace DBProxy
 
         private async Task _run()
         {
-            var _hub_msg_handle = new hub_msg_handle(_hubmanager);
-            var _center_msg_handle = new center_msg_handle(_closeHandle, _centerproxy, _hubmanager);
-
-            if (_config.has_key("prometheus_port"))
-            {
-                var _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
-                _prometheus.Start();
-            }
-
             while (!_closeHandle.is_close())
             {
                 var tick = (uint)await poll();
@@ -247,18 +226,40 @@ namespace DBProxy
 
             _redis_mq_service.close();
             Log.Log.close();
-
         }
 
         private readonly object _run_mu = new();
-        public void run()
+        public async Task run()
         {
             if (!Monitor.TryEnter(_run_mu))
             {
                 throw new Abelkhan.Exception("run mast at single thread!");
             }
 
-            _run().Wait();
+            if (_config.has_key("prometheus_port"))
+            {
+                _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
+                _prometheus.Start();
+            }
+
+            _ = new hub_msg_handle(_hubmanager);
+            _ = new center_msg_handle(_closeHandle, _centerproxy, _hubmanager);
+
+            rerun:
+            try
+            {
+                await _run();
+            }
+            catch (Abelkhan.Exception e)
+            {
+                Log.Log.err(e.Message);
+                goto rerun;
+            }
+            catch (System.Exception e)
+            {
+                Log.Log.err("{0}", e);
+                goto rerun;
+            }
 
             Monitor.Exit(_run_mu);
         }
@@ -271,6 +272,7 @@ namespace DBProxy
         public static Service.Timerservice _timer;
         public static Service.Mongodbproxy _mongodbproxy;
         public static Abelkhan.RedisMQ _redis_mq_service;
+        public static Service.PrometheusMetric _prometheus;
 
         public readonly Abelkhan.Config _root_config;
         public readonly Abelkhan.Config _center_config;

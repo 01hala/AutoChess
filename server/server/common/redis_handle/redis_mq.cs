@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Service;
+using System.Linq;
 
 namespace Abelkhan
 {
@@ -55,6 +56,7 @@ namespace Abelkhan
         private bool run_flag = true;
 
         private readonly ConcurrentQueue<string> listen_channel_names;
+        private RedisKey[] ch_names = null;
 
         private readonly ConcurrentDictionary<string, Redischannel> channels;
 
@@ -149,9 +151,8 @@ namespace Abelkhan
             }
         }
 
-        public async Task<long> sendmsg_mq()
+        public async Task sendmsg_mq()
         {
-            var tick_begin = _timer.refresh();
             if (wait_send_data.Count > 0)
             {
                 lock (wait_send_data)
@@ -180,70 +181,89 @@ namespace Abelkhan
                     }
                 }
 
-                foreach (var data in push_data_array) 
+                while (true)
                 {
-                    while (true)
+                    try
                     {
-                        try
-                        {
-                            await database.ListLeftPushAsync(ch_name, data);
-                            break;
-                        }
-                        catch (RedisTimeoutException ex)
-                        {
-                            Log.Log.err("ListLeftPushAsync error:{0}", ex);
-                            Recover(ex);
-                        }
-                        catch (RedisConnectionException ex)
-                        {
-                            Log.Log.err("ListLeftPushAsync error:{0}", ex);
-                            Recover(ex);
-                        }
-                        catch (System.Exception ex)
-                        {
-                            Log.Log.err("sendmsg_mq error:{0}", ex);
-                        }
+                        await database.ListLeftPushAsync(ch_name, push_data_array);
+                        break;
+                    }
+                    catch (RedisTimeoutException ex)
+                    {
+                        Log.Log.err("ListLeftPushAsync error:{0}", ex);
+                        Recover(ex);
+                    }
+                    catch (RedisConnectionException ex)
+                    {
+                        Log.Log.err("ListLeftPushAsync error:{0}", ex);
+                        Recover(ex);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Log.Log.err("sendmsg_mq error:{0}", ex);
                     }
                 }
             }
-
-            return _timer.refresh() - tick_begin;
         }
 
-        private async Task recvmsg_mq_ch(string ch_name)
+        private async Task recvmsg_mq_ch()
         {
-            byte[] pop_data = await database.ListRightPopAsync(ch_name);
-            while (pop_data != null)
+            var count = listen_channel_names.Count;
+            if (ch_names == null || count > ch_names.Length)
             {
-                var _ch_name_size = pop_data[0] | ((uint)pop_data[1] << 8) | ((uint)pop_data[2] << 16) | ((uint)pop_data[3] << 24);
-                var _ch_name = System.Text.Encoding.UTF8.GetString(pop_data, 4, (int)_ch_name_size);
-                var _header_len = 4 + _ch_name_size;
-                var _msg_len = pop_data.Length - _header_len;
-
-                using var _st = MemoryStreamPool.mstMgr.GetStream();
-                _st.Write(pop_data, (int)_header_len, (int)_msg_len);
-                _st.Position = 0;
-
-                if (!channels.TryGetValue(_ch_name, out Redischannel ch))
+                ch_names = new RedisKey[count];
+                for (var index = 0; index < count; index++)
                 {
-                    ch = new Redischannel(_ch_name, this);
-                    channels.TryAdd(_ch_name, ch);
+                    ch_names[index] = listen_channel_names.ElementAt(index);
                 }
-                ch._channel_onrecv.on_recv(_st.ToArray());
+            }
 
-                pop_data = await database.ListRightPopAsync(ch_name);
+            var batch_pop_data = await database.ListRightPopAsync(ch_names, 10);
+            while (!batch_pop_data.IsNull)
+            {
+                foreach (byte[] pop_data in batch_pop_data.Values) {
+                    var _ch_name_size = pop_data[0] | ((uint)pop_data[1] << 8) | ((uint)pop_data[2] << 16) | ((uint)pop_data[3] << 24);
+                    var _ch_name = System.Text.Encoding.UTF8.GetString(pop_data, 4, (int)_ch_name_size);
+                    var _header_len = 4 + _ch_name_size;
+                    var _msg_len = pop_data.Length - _header_len;
+
+                    using var _st = MemoryStreamPool.mstMgr.GetStream();
+                    _st.Write(pop_data, (int)_header_len, (int)_msg_len);
+                    _st.Position = 0;
+
+                    if (!channels.TryGetValue(_ch_name, out Redischannel ch))
+                    {
+                        ch = new Redischannel(_ch_name, this);
+                        channels.TryAdd(_ch_name, ch);
+                    }
+                    ch._channel_onrecv.on_recv(_st.ToArray());
+                }
+
+                batch_pop_data = await database.ListRightPopAsync(ch_names, 10);
             }
         }
 
-        private async Task<long> recvmsg_mq()
+        private async ValueTask<long> recvmsg_mq()
         {
             var tick_begin = _timer.refresh();
 
+            while(run_flag)
+            {
+                await recvmsg_mq_ch();
+            }
+            
+            return _timer.refresh() - tick_begin;
+        }
+
+        private async void th_recv_poll()
+        {
+            rerun:
             try
             {
-                foreach (var listen_channel_name in listen_channel_names)
+                var tick = await recvmsg_mq();
+                if (tick < tick_time)
                 {
-                    await recvmsg_mq_ch(listen_channel_name);
+                    await Task.Delay((int)(tick_time - tick));
                 }
             }
             catch (RedisTimeoutException ex)
@@ -261,18 +281,9 @@ namespace Abelkhan
                 Log.Log.err("recvmsg_mq error:{0}", ex);
             }
 
-            return _timer.refresh() - tick_begin;
-        }
-
-        private async void th_recv_poll()
-        {
-            while (run_flag)
+            if (run_flag)
             {
-                var tick = await recvmsg_mq();
-                if (tick < tick_time)
-                {
-                    await Task.Delay((int)(tick_time - tick));
-                }
+                goto rerun;
             }
         }
     }

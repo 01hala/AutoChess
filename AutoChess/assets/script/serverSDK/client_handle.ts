@@ -118,7 +118,7 @@ class gateproxy {
 
     public timetmp:number = new Date().getTime();
     public onGateTime : (tick:number)=>void = null;
-    //public onGateDisconnect : (ch:abelkhan.Ichannel)=>void = null ;
+    public onGateDisconnect : (ch:abelkhan.Ichannel)=>void = null ;
     public heartbeats() {
         let that = this;
         try {
@@ -153,6 +153,10 @@ class gateproxy {
     public call_hub(hub:string, func:string, argv:any[]) {
         let _event = [func, argv];
         this._client_call_gate_caller.forward_client_call_hub(hub, encode(_event));
+    }
+
+    public migrate_client_confirm() {
+        this._client_call_gate_caller.migrate_client_confirm();
     }
 }
 
@@ -233,9 +237,16 @@ export class client
         this.chs = [];
         this.remove_chs = [];
 
+        setInterval(()=>{
+            this.heartbeats();
+        }, 5 * 1000);
+
         this._gate_call_client_module = new _client.gate_call_client_module(abelkhan._modulemng);
         this._gate_call_client_module.cb_ntf_cuuid = this.ntf_cuuid.bind(this);
         this._gate_call_client_module.cb_call_client = this.gate_call_client.bind(this);
+        this._gate_call_client_module.cb_migrate_client_start = this.migrate_client_start.bind(this);
+        this._gate_call_client_module.cb_migrate_client_done = this.migrate_client_done.bind(this);
+        this._gate_call_client_module.cb_hub_loss = this.hub_loss.bind(this);
 
         this._hub_call_client_module = new hub.hub_call_client_module(abelkhan._modulemng);
         this._hub_call_client_module.cb_call_client = this.hub_call_client.bind(this);
@@ -247,6 +258,27 @@ export class client
 
         if (this.onGateConnect){
             this.onGateConnect();
+        }
+    }
+
+    public onMigrateClientStart:(src_hub:string, target_hub:string)=>void = null;
+    private migrate_client_start(src_hub:string, target_hub:string) {
+        if (this.onMigrateClientStart != null) {
+            this.onMigrateClientStart.call(null, src_hub, target_hub);
+        }
+    }
+
+    public onMigrateClientDone:(src_hub:string, target_hub:string)=>void = null;
+    private migrate_client_done(src_hub:string, target_hub:string) {
+        if (this.onMigrateClientDone != null) {
+            this.onMigrateClientDone.call(null, src_hub, target_hub);
+        }
+    }
+
+    public onHubLoss:(hub_name:string)=>void = null;
+    private hub_loss(hub_name:string) {
+        if (this.onHubLoss != null) {
+            this.onHubLoss.call(null, hub_name);
         }
     }
 
@@ -319,6 +351,10 @@ export class client
         {
             this._gateproxy.call_hub(hub_name, func, argv);
         }
+    }
+
+    public migrate_client_confirm() {
+        this._gateproxy.migrate_client_confirm();
     }
 
     public onGateConnect:()=>void;

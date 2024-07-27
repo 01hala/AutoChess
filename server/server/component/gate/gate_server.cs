@@ -23,23 +23,23 @@ namespace Gate {
         private readonly Config _center_config;
         private readonly Config _config;
 
-        private Service.Timerservice _timerservice;
-        private HubSvrManager _hubsvrmanager;
-        private ClientManager _clientmanager;
+        private readonly Service.Timerservice _timerservice;
+        private readonly HubSvrManager _hubsvrmanager;
+        private readonly ClientManager _clientmanager;
 
-        private Abelkhan.RedisMQ _hub_redismq_service;
-        private Abelkhan.RedisHandle _redis_handle;
-
-        private Abelkhan.Acceptservice _hub_service;
+        private readonly Abelkhan.RedisMQ _hub_redismq_service;
+        private readonly Abelkhan.RedisHandle _redis_handle;
+        private readonly Abelkhan.Acceptservice _hub_service;
 
         private CenterProxy _centerproxy;
 
-        private Abelkhan.CryptAcceptService _client_service;
-        private Abelkhan.WebsocketAcceptService _websocket_service;
-        private Abelkhan.EnetService _enet_service;
+        private readonly Abelkhan.CryptAcceptService _client_service;
+        private readonly Abelkhan.WebsocketAcceptService _websocket_service;
+        private readonly Abelkhan.EnetService _enet_service;
 
         private static readonly List<Abelkhan.Ichannel> add_chs = new();
         private static readonly List<Abelkhan.Ichannel> remove_chs = new();
+        public static Service.PrometheusMetric _prometheus;
 
         public void on_close_server()
         {
@@ -66,11 +66,6 @@ namespace Gate {
             reconn_count = 0;
             tick = 0;
 
-            init();
-        }
-
-        public void init()
-        {
             var log_level = _config.get_value_string("log_level");
             if (log_level == "trace")
             {
@@ -259,48 +254,32 @@ namespace Gate {
             _timerservice.addticktime(10 * 1000, heartbeat_client);
         }
 
-        private async Task<long> poll()
+        private async ValueTask<long> poll()
         {
-
             long tick_begin = _timerservice.refresh();
 
-            try
+            while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
             {
-                _timerservice.poll();
+                Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
+            }
 
-                while (Abelkhan.EventQueue.msgQue.TryDequeue(out Tuple<Abelkhan.Ichannel, ArrayList> _event))
+            if (remove_chs.Count > 0)
+            {
+                lock (remove_chs)
                 {
-                    Abelkhan.ModuleMgrHandle._modulemng.process_event(_event.Item1, _event.Item2);
-                }
-
-                if (remove_chs.Count > 0)
-                {
-                    lock (remove_chs)
+                    foreach (var ch in remove_chs)
                     {
-                        foreach (var ch in remove_chs)
-                        {
-                            add_chs.Remove(ch);
-                        }
-                        remove_chs.Clear();
+                        add_chs.Remove(ch);
                     }
+                    remove_chs.Clear();
                 }
-
-                _ = await _hub_redismq_service.sendmsg_mq();
-
-                Abelkhan.TinyTimer.poll();
-            }
-            catch (Abelkhan.Exception e)
-            {
-                Log.Log.err(e.Message);
-            }
-            catch (System.Exception e)
-            {
-                Log.Log.err("{0}", e);
             }
 
-            long tick_end = _timerservice.refresh();
-            tick = (uint)(tick_end - tick_begin);
+            await _hub_redismq_service.sendmsg_mq();
 
+            Abelkhan.TinyTimer.poll();
+            
+            tick = (uint)(_timerservice.poll() - tick_begin);
             if (tick > 50)
             {
                 Log.Log.trace("poll_tick:{0}", tick);
@@ -311,16 +290,6 @@ namespace Gate {
 
         private async Task _run()
         {
-            if (_config.has_key("prometheus_port"))
-            {
-                var _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
-                _prometheus.Start();
-            }
-
-            var _center_msg_handle = new center_msg_handle(this, _timerservice);
-            var _hub_svr_msg_handle = new hub_svr_msg_handle(_clientmanager, _hubsvrmanager);
-            var _client_msg_handle = new client_msg_handle(_clientmanager, _hubsvrmanager);
-
             while (!_closehandle.is_closed)
             {
                 var ticktime = await poll();
@@ -335,37 +304,49 @@ namespace Gate {
         }
 
         private readonly object _run_mu = new();
-        public void run()
+        public async Task run()
         {
             if (!Monitor.TryEnter(_run_mu))
             {
                 throw new Abelkhan.Exception("run mast at single thread!");
             }
 
-            _run().Wait();
+            if (_config.has_key("prometheus_port"))
+            {
+                _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
+                _prometheus.Start();
+            }
+
+            _ = new center_msg_handle(this, _timerservice);
+            _ = new hub_svr_msg_handle(_clientmanager, _hubsvrmanager);
+            _ = new client_msg_handle(_clientmanager, _hubsvrmanager);
+
+            rerun:
+            try
+            {
+                await _run();
+            }
+            catch (Abelkhan.Exception e)
+            {
+                Log.Log.err(e.Message);
+                goto rerun;
+            }
+            catch (System.Exception e)
+            {
+                Log.Log.err("{0}", e);
+                goto rerun;
+            }
 
             Monitor.Exit(_run_mu);
         }
-
 
         void close_svr()
         {
             _centerproxy.closed();
 
-            if (_hub_service != null)
-            {
-                _hub_service.close();
-            }
-
-            if (_client_service != null)
-            {
-                _client_service.close();
-            }
-
-            if (_hub_redismq_service != null)
-            {
-                _hub_redismq_service.close();
-            }
+            _hub_service?.close();
+            _client_service?.close();
+            _hub_redismq_service?.close();
 
             if (_enet_service != null)
             {
@@ -438,7 +419,5 @@ namespace Gate {
 
             _timerservice.addticktime(40000, heartbeat_flush_host);
         }
-
-};
-
+    }
 }

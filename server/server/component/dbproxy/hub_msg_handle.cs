@@ -40,14 +40,7 @@ namespace DBProxy
             try
             {
                 var guid = await DBProxy._mongodbproxy.get_guid(db, collection);
-                if (guid > 0)
-                {
-                    rsp.rsp(guid);
-                }
-                else
-                {
-                    rsp.err();
-                }
+                rsp.rsp(guid);
             }
             catch (System.Exception ex)
             {
@@ -197,14 +190,10 @@ namespace DBProxy
                     var c = await DBProxy._mongodbproxy.find(db, collection, query_data, _limit, _skip, _sort, _Ascending_);
 
                     var _datalist = new MongoDB.Bson.BsonArray();
-                    if (c == null)
+                    if (c != null)
                     {
-                        _hubproxy.ack_get_object_info(callbackid, new MongoDB.Bson.BsonDocument { { "_list", _datalist } });
-                    }
-                    else
-                    {
-                        int count = 0;
-                        int total_count = 0;
+                        var count = 0;
+                        var total_count = 0;
                         while (c.MoveNext())
                         {
                             var _c = c.Current;
@@ -222,7 +211,7 @@ namespace DBProxy
                                         _hubproxy.ack_get_object_info(callbackid, new MongoDB.Bson.BsonDocument { { "_list", _datalist } });
 
                                         count = 0;
-                                        _datalist = new MongoDB.Bson.BsonArray();
+                                        _datalist.Clear();
                                     }
                                 }
                             }
@@ -232,7 +221,11 @@ namespace DBProxy
                             _hubproxy.ack_get_object_info(callbackid, new MongoDB.Bson.BsonDocument { { "_list", _datalist } });
                         }
                     }
-
+                    else
+                    {
+                        _hubproxy.ack_get_object_info(callbackid, new MongoDB.Bson.BsonDocument { { "_list", _datalist } });
+                    }
+                    
                     _hubproxy.ack_get_object_info_end(callbackid);
                 }
                 catch (System.Exception ex)
@@ -243,7 +236,6 @@ namespace DBProxy
             else
             {
                 Log.Log.err("hubproxy is null");
-                _hubproxy.ack_get_object_info_end(callbackid);
             }
 
             Log.Log.trace("end get_object_info");

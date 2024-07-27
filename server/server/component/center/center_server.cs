@@ -14,6 +14,8 @@ namespace Abelkhan
 {
     public class Center
     {
+        public static Service.PrometheusMetric _prometheus;
+
         private readonly Abelkhan.RedisMQ _redis_mq_service;
         private readonly Acceptservice _accept_gm_service;
         private readonly GMManager _gmmanager;
@@ -113,7 +115,7 @@ namespace Abelkhan
             _accept_gm_service.start();
         }
 
-        private async Task<long> poll()
+        private async ValueTask<long> poll()
         {
             var tick_begin = _timer.refresh();
             try
@@ -137,7 +139,7 @@ namespace Abelkhan
                     }
                 }
 
-                _ = await _redis_mq_service.sendmsg_mq();
+                await _redis_mq_service.sendmsg_mq();
 
                 if (_closeHandle.is_closing && _svrmanager.check_all_hub_closed())
                 {
@@ -169,7 +171,7 @@ namespace Abelkhan
         {
             if (_config.has_key("prometheus_port"))
             {
-                var _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
+                _prometheus = new Service.PrometheusMetric((short)_config.get_value_int("prometheus_port"));
                 _prometheus.Start();
             }
 

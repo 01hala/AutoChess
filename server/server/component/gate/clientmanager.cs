@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gate
 {
@@ -22,18 +23,16 @@ namespace Gate
 		}
 
 		public void conn_hub(HubProxy hub_proxy) {
-			lock (conn_hubproxys)
-			{
-				conn_hubproxys.Add(hub_proxy);
-			}
-		}
+            if (conn_hubproxys.Contains(hub_proxy))
+            {
+                return;
+            }
+            conn_hubproxys.Add(hub_proxy);
+        }
 
 		public void unreg_hub(HubProxy hub_proxy) {
-			lock (conn_hubproxys)
-			{
-				conn_hubproxys.Remove(hub_proxy);
-			}
-		}
+            conn_hubproxys.Remove(hub_proxy);
+        }
 
 		public void ntf_cuuid()
 		{
@@ -53,6 +52,11 @@ namespace Gate
         public void migrate_client_done(string src_hub, string _target_hub)
 		{
             _gate_call_client_caller.migrate_client_done(src_hub, _target_hub);
+        }
+
+		public void hub_loss(string hub_name)
+		{
+			_gate_call_client_caller.hub_loss(hub_name);
         }
 
 		public bool is_xor_key_crypt()
@@ -92,20 +96,20 @@ namespace Gate
 
 			foreach (var _client in remove_client)
 			{
-				foreach (var hubproxy_ in _client.conn_hubproxys)
+				Parallel.ForEach(_client.conn_hubproxys, hubproxy_ =>
 				{
 					hubproxy_.client_disconnect(_client._cuuid);
-				}
+				});
 				unreg_client(_client._ch);
 			}
 
 			foreach (var proxy in exception_client)
 			{
-				foreach (var hubproxy_ in proxy.conn_hubproxys)
-				{
-					hubproxy_.client_exception(proxy._cuuid);
-				}
-			}
+                Parallel.ForEach(proxy.conn_hubproxys, hubproxy_ =>
+                {
+                    hubproxy_.client_exception(proxy._cuuid);
+                });
+            }
 		}
 
 		public ClientProxy reg_client(Abelkhan.Ichannel ch)
@@ -152,26 +156,22 @@ namespace Gate
 			return client_uuid_map.ContainsKey(uuid);
 		}
 
-		public ClientProxy get_client(Abelkhan.Ichannel ch)
+		public bool get_client(Abelkhan.Ichannel ch, out ClientProxy proxy)
 		{
-			client_map.TryGetValue(ch, out var proxy);
-			return proxy;
+			return client_map.TryGetValue(ch, out proxy);
 		}
 
-		public ClientProxy get_client(string cuuid)
+		public bool get_client(string cuuid, out ClientProxy proxy)
 		{
-			client_uuid_map.TryGetValue(cuuid, out var proxy);
-			return proxy;
+            return client_uuid_map.TryGetValue(cuuid, out proxy);
 		}
 
 		public void for_each_client(Action<string, ClientProxy> fn)
 		{
-			foreach (var client in client_uuid_map)
+			Parallel.ForEach(client_uuid_map, client =>
 			{
-				fn(client.Key, client.Value);
-			}
-		}
-
+                fn(client.Key, client.Value);
+            });
+        }
 	}
-
 }
