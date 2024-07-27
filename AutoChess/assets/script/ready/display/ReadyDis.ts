@@ -56,6 +56,8 @@ export class ReadyDis
     //等待界面
     private waitingPanel:Node;
 
+    private shopMask:Node;
+
     public constructor(ready:ReadyData) 
     {
         this.readyData = ready;
@@ -100,6 +102,20 @@ export class ReadyDis
 
             this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
             this.roleInfoNode.active=false;
+
+            this.shopMask=this.panelNode.getChildByPath("ShopMask");
+            //this.shopMask.setPosition(new Vec3(0,this.shopArea.node.position.y+240,0));
+            this.shopMask.setSiblingIndex(100);
+            this.shopMask.active=false;
+
+            if (SdkManager.SDK.getSystemInfo().safeArea.height == SdkManager.SDK.getSystemInfo().screenHeight)
+            {
+                return;
+            }
+            let bpttomHeigh = (SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
+            let cam = _father.getChildByPath("Camera");
+            let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, bpttomHeigh, 0));
+            this.shopMask.getComponent(Widget).bottom = outPos.y-310;
 
             if(_value instanceof common.UserBattleData)
             {
@@ -241,6 +257,21 @@ export class ReadyDis
             this.launchSkillEffect.active=false;
         });
 
+    }
+
+    ShowShopMask(_flag:boolean)
+    {
+        if(_flag)
+        {
+            this.shopMask.setSiblingIndex(100);
+            this.shopMask.active=true;
+            this.shopMask.getComponent(BlockInputEvents).enabled=true;
+        }
+        else
+        {
+            this.shopMask.getComponent(BlockInputEvents).enabled=false;
+            this.shopMask.active=false;
+        }
     }
 
 /*
