@@ -547,7 +547,7 @@ export class RoleDis extends Component
     * 为人物添加装备
     */
    Equipping(equipId:number){
-        this.roleInfo.equip.push(equipId);
+        this.roleInfo.equip=equipId;
    }
 /*
  * 添加

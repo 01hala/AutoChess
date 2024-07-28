@@ -549,7 +549,7 @@ export class BattleDis
                 {
                     this.showLaunchSkillEffect();
                 }
-                
+                console.log("检测到召唤技能！");
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
                     tmp = new rRole(null,element.index,element.id, 1,0, element.camp, element.properties,null);

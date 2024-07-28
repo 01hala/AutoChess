@@ -641,7 +641,7 @@ export class RoleIcon extends Component
         {
             let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
-            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer);
             //console.log('当前等级 ')
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
@@ -686,7 +686,7 @@ export class RoleIcon extends Component
                 }
             }
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
-            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer);
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
             this.upgradeLock=false;
@@ -717,7 +717,7 @@ export class RoleIcon extends Component
                         for(let temp of equipInfo.Vaule){
                             t.additionBuffer.push(temp);
                         }
-                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.additionBuffer);
+                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer);
                         this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                     case 4:break;
@@ -725,13 +725,13 @@ export class RoleIcon extends Component
                     case 6:break;
                     case 7:{
                         //如果召唤的效果等同于id为x的召唤技能，特殊效果值是召唤技能的id，则使用下面的代码
-                        let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
-                        var additionSkill = [];
-                        for(let temp of equipInfo.Vaule){
-                            additionSkill.push(temp);
-                        }
-                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.additionBuffer,additionSkill);
-                        this.roleNode.getComponent(RoleDis).Refresh(r);
+                        // let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
+                        // let additionSkill:number[] =[];
+                        // for(let temp of equipInfo.Vaule){
+                        //     additionSkill.push(temp);
+                        // }
+                        // let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer,additionSkill);
+                        // this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                 }
                 this.roleNode.getComponent(RoleDis).Equipping(equip_id);
