@@ -641,7 +641,7 @@ export class RoleIcon extends Component
         {
             let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
-            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,[-1],t.additionBuffer);
             //console.log('当前等级 ')
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
@@ -686,7 +686,7 @@ export class RoleIcon extends Component
                 }
             }
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
-            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,[-1],t.additionBuffer);
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
             this.upgradeLock=false;
@@ -717,7 +717,7 @@ export class RoleIcon extends Component
                         for(let temp of equipInfo.Vaule){
                             t.additionBuffer.push(temp);
                         }
-                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer);
+                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,[-1],t.additionBuffer);
                         this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                     case 4:break;
