@@ -74,6 +74,8 @@ export class ReadyDis
     {
         try
         {
+            console.log("ReadyDis start!");
+
             this.father=_father;
             //主要界面
             let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
@@ -108,11 +110,11 @@ export class ReadyDis
             this.shopMask.setSiblingIndex(100);
             this.shopMask.active=false;
 
-            if (SdkManager.SDK.getSystemInfo().safeArea.height == SdkManager.SDK.getSystemInfo().screenHeight)
+            let bpttomHeigh = 0;
+            if (SdkManager.SDK.getSystemInfo().safeArea.height != SdkManager.SDK.getSystemInfo().screenHeight)
             {
-                return;
+                bpttomHeigh = (SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
             }
-            let bpttomHeigh = (SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
             let cam = _father.getChildByPath("Camera");
             let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, bpttomHeigh, 0));
             this.shopMask.getComponent(Widget).bottom = outPos.y-310;
@@ -128,7 +130,8 @@ export class ReadyDis
 
             _callBack(async ()=>
             {
-                await this.Init(_father);
+                console.log("ReadyDis start _callBack!");
+                this.Init(_father);
                 //准备开始
                 
                 console.log("_________battledata:",Object.prototype.toString.call(_value).replace(/^\[object (\S+)\]$/, '$1'));
@@ -163,10 +166,11 @@ export class ReadyDis
         }
     }
 
-    async Init(_father:Node)
+    Init(_father:Node)
     {
         try
         {
+            console.log("ReadyDis Init begin!");
             this.InterfaceAdjust();//适配
             //注册回调
             this.RegCallBack();
@@ -210,6 +214,8 @@ export class ReadyDis
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
                 _father.getComponent(login).BackMainInterface();
             }, this);
+
+            console.log("ReadyDis Init end!");
         }
         catch(error)
         {

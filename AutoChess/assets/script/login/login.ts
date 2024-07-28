@@ -250,6 +250,8 @@ export class login extends Component {
         //pvp准备阶段
         singleton.netSingleton.game.cb_start_battle = async (battle_info: common.UserBattleData, shop_info: common.ShopData, fetters_info: common.Fetters[]) => 
         {
+            console.log("cb_start_battle start battle!");
+
             this._progress = 0.1;
             this._setProgress = this._loading.load(this.bk.node);
 
@@ -259,8 +261,10 @@ export class login extends Component {
                 this._setProgress(this._progress);
             }, 800);
             singleton.netSingleton.mainInterface.destory();
+            console.log("cb_start_battle start singleton.netSingleton.ready!");
             if (null == singleton.netSingleton.ready)
             {
+                console.log("cb_start_battle start null == singleton.netSingleton.ready!");
                 if (singleton.netSingleton.battle)
                 {
                     singleton.netSingleton.battle.destory();
@@ -272,11 +276,13 @@ export class login extends Component {
                 singleton.netSingleton.ready = new ReadyDis(_readyData);
                 await singleton.netSingleton.ready.start(this.bk.node, battle_info, async (event) =>
                 {
+                    console.log("Start Ready callback!");
                     await sleep(2000);
                     this._setProgress(1.0);
                     this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
                     await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
                     event();
+                    console.log("Start Ready callback event!");
                     this._loading.done();
                     console.log("Start Ready sucess!");
                     clearInterval(this.interval);

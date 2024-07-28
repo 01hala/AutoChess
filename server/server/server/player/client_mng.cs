@@ -875,63 +875,66 @@ namespace Player
                 }
             }
 
-            switch (roleInfo.FettersSkillID.fetters_id)
+            if (roleInfo.FettersSkillID != null)
             {
-                case 9:
-                    {
-                        a = GetWeekAchievementData(Achievement.EMWeekWizardAnnihilation);
-                        if (a.status != AchievementAwardStatus.EMRecv)
+                switch (roleInfo.FettersSkillID.fetters_id)
+                {
+                    case 9:
                         {
-                            a.count++;
-                            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekWizardAnnihilation), out var task))
-                            {
-                                if (a.count >= task.Value)
-                                {
-                                    a.status = AchievementAwardStatus.EMComplete;
-                                    check = true;
-                                }
-                            }
-                        }
-                    }
-                    break;
-
-                case 2:
-                    {
-                        a = GetWeekAchievementData(Achievement.EMWeekBerserkerAnnihilation);
-                        if (a.status != AchievementAwardStatus.EMRecv)
-                        {
-                            a.count++;
-                            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekBerserkerAnnihilation), out var task))
-                            {
-                                if (a.count >= task.Value)
-                                {
-                                    a.status = AchievementAwardStatus.EMComplete;
-                                    check = true;
-                                }
-                            }
-                        }
-                    }
-                    break;
-
-                case 3:
-                    {
-                        a = GetWeekAchievementData(Achievement.EMWeekCorsairAnnihilation);
-                        if (a.status != AchievementAwardStatus.EMRecv)
-                        {
-                            if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekCorsairAnnihilation), out var task))
+                            a = GetWeekAchievementData(Achievement.EMWeekWizardAnnihilation);
+                            if (a.status != AchievementAwardStatus.EMRecv)
                             {
                                 a.count++;
-                                if (a.count >= task.Value)
+                                if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekWizardAnnihilation), out var task))
                                 {
-                                    a.status = AchievementAwardStatus.EMComplete;
-                                    check = true;
+                                    if (a.count >= task.Value)
+                                    {
+                                        a.status = AchievementAwardStatus.EMComplete;
+                                        check = true;
+                                    }
                                 }
                             }
                         }
-                    }
-                    break;
-            }
+                        break;
 
+                    case 2:
+                        {
+                            a = GetWeekAchievementData(Achievement.EMWeekBerserkerAnnihilation);
+                            if (a.status != AchievementAwardStatus.EMRecv)
+                            {
+                                a.count++;
+                                if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekBerserkerAnnihilation), out var task))
+                                {
+                                    if (a.count >= task.Value)
+                                    {
+                                        a.status = AchievementAwardStatus.EMComplete;
+                                        check = true;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+
+                    case 3:
+                        {
+                            a = GetWeekAchievementData(Achievement.EMWeekCorsairAnnihilation);
+                            if (a.status != AchievementAwardStatus.EMRecv)
+                            {
+                                if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMWeekCorsairAnnihilation), out var task))
+                                {
+                                    a.count++;
+                                    if (a.count >= task.Value)
+                                    {
+                                        a.status = AchievementAwardStatus.EMComplete;
+                                        check = true;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            
             return check;
         }
 
