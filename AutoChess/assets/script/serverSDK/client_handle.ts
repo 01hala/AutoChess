@@ -155,8 +155,8 @@ class gateproxy {
         this._client_call_gate_caller.forward_client_call_hub(hub, encode(_event));
     }
 
-    public migrate_client_confirm() {
-        this._client_call_gate_caller.migrate_client_confirm();
+    public migrate_client_confirm(src_hub:string, target_hub:string) {
+        this._client_call_gate_caller.migrate_client_confirm(src_hub, target_hub);
     }
 }
 
@@ -243,6 +243,7 @@ export class client
 
         this._gate_call_client_module = new _client.gate_call_client_module(abelkhan._modulemng);
         this._gate_call_client_module.cb_ntf_cuuid = this.ntf_cuuid.bind(this);
+        this._gate_call_client_module.cb_kick_off_reason = this.kick_off_reason.bind(this);
         this._gate_call_client_module.cb_call_client = this.gate_call_client.bind(this);
         this._gate_call_client_module.cb_migrate_client_start = this.migrate_client_start.bind(this);
         this._gate_call_client_module.cb_migrate_client_done = this.migrate_client_done.bind(this);
@@ -279,6 +280,13 @@ export class client
     private hub_loss(hub_name:string) {
         if (this.onHubLoss != null) {
             this.onHubLoss.call(null, hub_name);
+        }
+    }
+
+    public onKickOff:(reason:string)=>void = null;
+    private kick_off_reason(reason:string) {
+        if (this.onKickOff != null) {
+            this.onKickOff.call(null, reason);
         }
     }
 
@@ -353,8 +361,8 @@ export class client
         }
     }
 
-    public migrate_client_confirm() {
-        this._gateproxy.migrate_client_confirm();
+    public migrate_client_confirm(src_hub:string, target_hub:string) {
+        this._gateproxy.migrate_client_confirm(src_hub, target_hub);
     }
 
     public onGateConnect:()=>void;

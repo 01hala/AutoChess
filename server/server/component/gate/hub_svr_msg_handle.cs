@@ -8,6 +8,7 @@ namespace Gate {
 	public class hub_svr_msg_handle {
 		private readonly ClientManager _clientmanager;
 		private readonly HubSvrManager _hubsvrmanager;
+		private readonly List<ClientProxy> clients = new ();
 
 		private readonly Abelkhan.hub_call_gate_module _hub_call_gate_module;
 
@@ -73,9 +74,10 @@ namespace Gate {
 			}
 		}
 
-		public void disconnect_client(string cuuid) {
+		public void disconnect_client(string cuuid, string reason) {
 			if (_clientmanager.get_client(cuuid, out var proxy)) {
-				proxy._ch.disconnect();
+                proxy.ntf_reason(reason);
+                proxy._ch.disconnect();
 			}
 		}
 
@@ -99,12 +101,10 @@ namespace Gate {
 			var ch = _hub_call_gate_module.current_ch.Value;
 			if (_hubsvrmanager.get_hub(ch, out var hub_proxy))
 			{
-				var clients = new List<ClientProxy>();
-				foreach (var cuuid in cuuids)
+                foreach (var cuuid in cuuids)
 				{
 					if (_clientmanager.get_client(cuuid, out var client_proxy))
 					{
-						client_proxy.conn_hub(hub_proxy);
 						clients.Add(client_proxy);
 					}
 					else
@@ -113,11 +113,13 @@ namespace Gate {
 					}
 				}
 
-				Parallel.ForEach(clients, client_proxy =>
-				{
-					client_proxy.call_client(hub_proxy._hub_name, rpc_argv);
+				_ = Parallel.ForEach(clients, client_proxy =>
+                {
+                    client_proxy.conn_hub(hub_proxy);
+                    client_proxy.call_client(hub_proxy._hub_name, rpc_argv);
 				});
-			}
+                clients.Clear();
+            }
         }
 
 		public void forward_hub_call_global_client(byte[] rpc_argv) {

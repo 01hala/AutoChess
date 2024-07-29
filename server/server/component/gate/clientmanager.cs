@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,12 +8,11 @@ namespace Gate
 	public class ClientProxy {
 		public long _timetmp = 0;
 		public long _theory_timetmp = 0;
-		public string _cuuid;
 
-		public HashSet<HubProxy> conn_hubproxys;
-
-		public Abelkhan.Ichannel _ch;
-		public Abelkhan.gate_call_client_caller _gate_call_client_caller;
+		public readonly string _cuuid;
+		public readonly HashSet<HubProxy> conn_hubproxys;
+		public readonly Abelkhan.Ichannel _ch;
+		public readonly Abelkhan.gate_call_client_caller _gate_call_client_caller;
 
 		public ClientProxy(string cuuid, Abelkhan.Ichannel ch) {
 			conn_hubproxys = new();
@@ -39,7 +39,12 @@ namespace Gate
 			_gate_call_client_caller.ntf_cuuid(_cuuid);
 		}
 
-		public void call_client(string hub_name, byte[] data)
+		public void ntf_reason(string reason)
+		{
+			_gate_call_client_caller.kick_off_reason(reason);
+        }
+
+        public void call_client(string hub_name, byte[] data)
 		{
 			_gate_call_client_caller.call_client(hub_name, data);
 		}
@@ -168,7 +173,7 @@ namespace Gate
 
 		public void for_each_client(Action<string, ClientProxy> fn)
 		{
-			Parallel.ForEach(client_uuid_map, client =>
+			_ = Parallel.ForEach(client_uuid_map, client =>
 			{
                 fn(client.Key, client.Value);
             });

@@ -1532,6 +1532,12 @@ namespace Player
             {
                 throw new LoginException($"invaild token:{token}");
             }
+
+            if (!string.IsNullOrEmpty(_avatar.ClientUUID))
+            {
+                Hub.Hub._gates.disconnect_client(_avatar.ClientUUID, "others login!");
+            }
+
             avatarMgr.bind_avatar(_avatar, uuid);
 
             var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(uuid);

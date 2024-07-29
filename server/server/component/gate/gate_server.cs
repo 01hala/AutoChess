@@ -269,17 +269,20 @@ namespace Gate {
                 {
                     foreach (var ch in remove_chs)
                     {
-                        add_chs.Remove(ch);
+                        lock(add_chs)
+                        {
+                            add_chs.Remove(ch);
+                        }
                     }
                     remove_chs.Clear();
                 }
             }
 
+            Abelkhan.TinyTimer.poll();
+            _timerservice.poll();
             await _hub_redismq_service.sendmsg_mq();
 
-            Abelkhan.TinyTimer.poll();
-            
-            tick = (uint)(_timerservice.poll() - tick_begin);
+            tick = (uint)(_timerservice.refresh() - tick_begin);
             if (tick > 50)
             {
                 Log.Log.trace("poll_tick:{0}", tick);

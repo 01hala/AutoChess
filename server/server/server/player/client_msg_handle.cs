@@ -619,7 +619,7 @@ namespace Player
             catch (LoginException ex)
             {
                 Log.Log.err(ex.ErrorInfo);
-                Hub.Hub._gates.disconnect_client(uuid);
+                Hub.Hub._gates.disconnect_client(uuid, "system error!");
             }
             catch (System.Exception ex)
             {
@@ -718,7 +718,7 @@ namespace Player
             catch (LoginException ex)
             {
                 Log.Log.err(ex.ErrorInfo);
-                Hub.Hub._gates.disconnect_client(uuid);
+                Hub.Hub._gates.disconnect_client(uuid, "login error!");
 
                 rsp.err((int)em_error.db_error);
             }
