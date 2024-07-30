@@ -91,16 +91,18 @@ namespace battle_shop
 
         public int maxSaleRoleCount(int stage)
         {
-            if (stage < 3)
-            {
-                return 4;
-            }
-            else if (stage < 5)
-            {
-                return 5;
-            }
+            //if (stage < 3)
+            //{
+            //    return 4;
+            //}
+            //else if (stage < 5)
+            //{
+            //    return 5;
+            //}
 
-            return 6;
+            //return 6;
+
+            return 4;
         }
 
         public ShopRole randomShopRole(int stage)
@@ -176,8 +178,23 @@ namespace battle_shop
         {
             Log.Log.trace("_refresh begin!");
 
+            while (shopData.SaleRoleList.Count > 5)
+            {
+                var r = shopData.SaleRoleList[shopData.SaleRoleList.Count - 1];
+                if (r == null || !r.IsFreeze)
+                {
+                    shopData.SaleRoleList.Remove(r);
+                }
+            }
+            
+            var count = maxSaleRoleCount(_stage);
+            if (count < shopData.SaleRoleList.Count)
+            {
+                count = shopData.SaleRoleList.Count;
+            }
+
             var i = 0;
-            for (; i < maxSaleRoleCount(_stage); i++)
+            for (; i < count; i++)
             {
                 if (i < shopData.SaleRoleList.Count)
                 {
@@ -322,7 +339,10 @@ namespace battle_shop
                 {
                     stage = 6;
                 }
-                shopData.SaleRoleList.Add(randomShopRole(stage));
+                if (shopData.SaleRoleList.Count < 6)
+                {
+                    shopData.SaleRoleList.Add(randomShopRole(stage));
+                }
 
                 BattleClientCaller.get_client(ClientUUID).role_update_refresh_shop(shopData);
             }
