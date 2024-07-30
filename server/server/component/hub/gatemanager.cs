@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Hub
 {
@@ -67,7 +68,7 @@ namespace Hub
             Hub._timer.addticktime(10000, heartbeat_client);
         }
 
-        public async void connect_gate(String name)
+        public async void connect_gate(string name)
         {
             Ichannel ch = null;
             if (Hub.OnCheckConnGate != null && Hub.OnCheckConnGate())
@@ -114,12 +115,11 @@ namespace Hub
 
         public string get_client_gate_name(string session_uuid)
         {
-            clients.TryGetValue(session_uuid, out GateProxy _client_gate_proxy);
-            if (_client_gate_proxy != null)
+            if (clients.TryGetValue(session_uuid, out GateProxy _client_gate_proxy))
             {
                 return _client_gate_proxy._name;
             }
-            return null;
+            return string.Empty;
         }
 
         public event Action<string> on_gate_closed;
@@ -179,16 +179,16 @@ namespace Hub
 
         public void client_connect(string client_uuid, Abelkhan.Ichannel gate_ch)
         {
-            if (ch_gateproxys.TryGetValue(gate_ch, out GateProxy _proxy))
+            if (!clients.ContainsKey(client_uuid))
             {
-                if (!clients.ContainsKey(client_uuid))
+                if (ch_gateproxys.TryGetValue(gate_ch, out GateProxy _proxy))
                 {
                     clients.Add(client_uuid, _proxy);
                 }
-            }
-            else
-            {
-                Log.Log.err("invaild gate:{0}, ch_gateproxys.count:{1}", gate_ch, ch_gateproxys.Count);
+                else
+                {
+                    Log.Log.err("invaild gate:{0}, ch_gateproxys.count:{1}", gate_ch, ch_gateproxys.Count);
+                }
             }
 
             Log.Log.trace("client {0} connected", client_uuid);
@@ -212,7 +212,7 @@ namespace Hub
         }
 
         public event Action<string> clientDisconnect;
-        public void client_disconnect(String client_uuid)
+        public void client_disconnect(string client_uuid)
         {
             if (clients.Remove(client_uuid))
             {
@@ -221,12 +221,12 @@ namespace Hub
         }
 
         public event Action<string> clientException;
-        public void client_exception(String client_uuid)
+        public void client_exception(string client_uuid)
         {
             clientException?.Invoke(client_uuid);
         }
 
-        public void direct_client_connect(String client_uuid, Abelkhan.Ichannel direct_ch)
+        public void direct_client_connect(string client_uuid, Abelkhan.Ichannel direct_ch)
         {
             if (direct_clients.Remove(client_uuid, out DirectProxy _directproxy))
             {
@@ -320,7 +320,7 @@ namespace Hub
             }
         }
 
-        public void call_client(String uuid, String func, ArrayList _argvs_list)
+        public void call_client(string uuid, string func, ArrayList _argvs_list)
 		{
             using var st = MemoryStreamPool.mstMgr.GetStream();
             ArrayList _event = new ArrayList
@@ -338,9 +338,9 @@ namespace Hub
             }
             else
             {
-                if (clients.ContainsKey(uuid))
+                if (clients.TryGetValue(uuid, out var _cli))
                 {
-                    clients[uuid].forward_hub_call_client(uuid, _rpc_bin);
+                    _cli.forward_hub_call_client(uuid, _rpc_bin);
                 }
                 else
                 {
@@ -349,7 +349,7 @@ namespace Hub
             }
         }
 
-        public void call_group_client(List<string> uuids, String func, ArrayList _argvs_list)
+        public void call_group_client(List<string> uuids, string func, ArrayList _argvs_list)
         {
             var _direct_clients = new List<Abelkhan.Ichannel>();
             var _direct_clients_crypt = new List<Abelkhan.Ichannel>();
@@ -389,52 +389,65 @@ namespace Hub
             st.Position = 0;
             var _rpc_bin = st.ToArray();
 
-            using var st_event = MemoryStreamPool.mstMgr.GetStream();
-            var _direct_rpc_argv = new ArrayList
+            if (tmp_gates.Count > 0)
             {
-                _rpc_bin
-            };
-            ArrayList _event = new ArrayList
-            {
-                "hub_call_client_call_client",
-                _direct_rpc_argv
-            };
-            _serializer.Pack(st_event, _event);
-            st_event.Position = 0;
-            var data = st_event.ToArray();
-
-            using var st_send = MemoryStreamPool.mstMgr.GetStream();
-            var _tmplenght = data.Length;
-            st_send.WriteByte((byte)(_tmplenght & 0xff));
-            st_send.WriteByte((byte)((_tmplenght >> 8) & 0xff));
-            st_send.WriteByte((byte)((_tmplenght >> 16) & 0xff));
-            st_send.WriteByte((byte)((_tmplenght >> 24) & 0xff));
-            st_send.Write(data, 0, _tmplenght);
-            st_send.Position = 0;
-            var buf = st_send.ToArray();
-
-            using var st_send_crypt = MemoryStreamPool.mstMgr.GetStream();
-            st_send_crypt.Write(st_send.GetBuffer());
-            st_send_crypt.Position = 0;
-            var crypt_buf = st_send_crypt.ToArray();
-            Abelkhan.Crypt.crypt_func_send(crypt_buf);
-
-            foreach (var _client in _direct_clients_crypt)
-            {
-                _client.send(crypt_buf);
-            }
-            foreach (var _client in _direct_clients)
-            {
-                _client.send(buf);
+                _ = Parallel.ForEach(tmp_gates, _proxy =>
+                {
+                    _proxy.Key.forward_hub_call_group_client(_proxy.Value, _rpc_bin);
+                });
             }
 
-            foreach (var _proxy in tmp_gates)
+            if (_direct_clients.Count > 0 || _direct_clients_crypt.Count > 0)
             {
-                _proxy.Key.forward_hub_call_group_client(_proxy.Value, _rpc_bin);
+                using var st_event = MemoryStreamPool.mstMgr.GetStream();
+                var _direct_rpc_argv = new ArrayList
+                {
+                    _rpc_bin
+                };
+                ArrayList _event = new ArrayList
+                {
+                    "hub_call_client_call_client",
+                    _direct_rpc_argv
+                };
+                _serializer.Pack(st_event, _event);
+                st_event.Position = 0;
+                var data = st_event.ToArray();
+
+                using var st_send = MemoryStreamPool.mstMgr.GetStream();
+                var _tmplenght = data.Length;
+                st_send.WriteByte((byte)(_tmplenght & 0xff));
+                st_send.WriteByte((byte)((_tmplenght >> 8) & 0xff));
+                st_send.WriteByte((byte)((_tmplenght >> 16) & 0xff));
+                st_send.WriteByte((byte)((_tmplenght >> 24) & 0xff));
+                st_send.Write(data, 0, _tmplenght);
+                st_send.Position = 0;
+                var buf = st_send.ToArray();
+
+                if (_direct_clients.Count > 0)
+                {
+                    _ = Parallel.ForEach(_direct_clients, _client =>
+                    {
+                        _client.send(buf);
+                    });
+                }
+
+                if (_direct_clients_crypt.Count > 0)
+                {
+                    using var st_send_crypt = MemoryStreamPool.mstMgr.GetStream();
+                    st_send_crypt.Write(st_send.GetBuffer());
+                    st_send_crypt.Position = 0;
+                    var crypt_buf = st_send_crypt.ToArray();
+                    Abelkhan.Crypt.crypt_func_send(crypt_buf);
+
+                    _ = Parallel.ForEach(_direct_clients_crypt, _client =>
+                    {
+                        _client.send(crypt_buf);
+                    });
+                }
             }
         }
 
-		public void call_global_client(String func, ArrayList _argvs_list)
+		public void call_global_client(string func, ArrayList _argvs_list)
 		{
             var st = MemoryStreamPool.mstMgr.GetStream();
             ArrayList _event = new ArrayList
@@ -445,10 +458,10 @@ namespace Hub
             _serializer.Pack(st, _event);
             st.Position = 0;
             var _rpc_bin = st.ToArray();
-            foreach (var _proxy in ch_gateproxys)
-			{
-				_proxy.Value.forward_hub_call_global_client(_rpc_bin);
-			}
+            _ = Parallel.ForEach(ch_gateproxys, _proxy =>
+            {
+                _proxy.Value.forward_hub_call_global_client(_rpc_bin);
+            });
 		}
 	}
 }
