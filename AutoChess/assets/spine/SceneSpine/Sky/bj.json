@@ -1,0 +1,87 @@
+{
+"skeleton": {
+	"hash": "yqY9dNfyGEKy1rvih21wzbV/gdU",
+	"spine": "3.8.75",
+	"x": -1346.57,
+	"y": -355.48,
+	"width": 2693.11,
+	"height": 744.45,
+	"images": "",
+	"audio": "F:/自走棋/竖版主界面/背景/images"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 523.58 },
+	{ "name": "bone2", "parent": "bone", "y": 251.52 },
+	{ "name": "bone3", "parent": "bone", "y": 251.52 }
+],
+"slots": [
+	{ "name": "root", "bone": "root", "attachment": "root" },
+	{ "name": "bj_1", "bone": "bone2", "attachment": "bj_1" },
+	{ "name": "bj_2", "bone": "bone3", "attachment": "bj_1" },
+	{ "name": "bj_0", "bone": "root", "attachment": "bj_0" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"root": {
+				"root": {
+					"type": "clipping",
+					"end": "root",
+					"vertexCount": 4,
+					"vertices": [ -1346.57, 388.94, 1346.53, 388.96, 1346.1, -356.58, -1346.33, -353.04 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"bj_0": {
+				"bj_0": { "y": 0.02, "width": 2694, "height": 711 }
+			},
+			"bj_1": {
+				"bj_1": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 3, 0, 1, 2, 3 ],
+					"vertices": [ 1, 2, 1347, -123, 1, 1, 2, -1347, -123, 1, 1, 2, -1347, 138, 1, 1, 2, 1347, 138, 1 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 2694,
+					"height": 261
+				}
+			},
+			"bj_2": {
+				"bj_1": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 3, 0, 1, 2, 3 ],
+					"vertices": [ 1, 3, 1347, -123, 1, 1, 3, -1347, -123, 1, 1, 3, -1347, 138, 1, 1, 3, 1347, 138, 1 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 2694,
+					"height": 261
+				}
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"bone2": {
+				"translate": [
+					{},
+					{ "time": 1.3333, "x": 1346 },
+					{ "time": 2.6667, "x": 2692 }
+				]
+			},
+			"bone3": {
+				"translate": [
+					{ "x": -2692 },
+					{ "time": 1.3333, "x": -1345.5 },
+					{ "time": 2.6667 }
+				]
+			}
+		}
+	}
+}
+}

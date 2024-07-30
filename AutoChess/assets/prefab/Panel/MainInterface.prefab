@@ -209,8 +209,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 660,
+      "x": 0.015000000000100044,
+      "y": 411.0299999999999,
       "z": 0
     },
     "_lrot": {
@@ -249,63 +249,19 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1031.859,
-      "height": 739
+      "width": 2693.11,
+      "height": 744.45
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0.5000055697687803,
+      "y": 0.477506884276983
     },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "65OAppHu1HyKeUJzF6NOv7"
-  },
-  {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 4
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 8
-    },
-    "_customMaterial": null,
-    "_srcBlendFactor": 2,
-    "_dstBlendFactor": 4,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_spriteFrame": {
-      "__uuid__": "923066f8-4220-4e0b-8139-87df6907d3e0@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "_type": 0,
-    "_fillType": 0,
-    "_sizeMode": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_useGrayscale": false,
-    "_atlas": null,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "83o/DolapP6LcZk2ve/aZI"
   },
   {
     "__type__": "cc.Widget",
@@ -316,13 +272,13 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 10
+      "__id__": 8
     },
     "_alignFlags": 41,
     "_target": null,
-    "_left": -65.92949999999993,
-    "_right": -65.92949999999999,
-    "_top": -229.50000000000006,
+    "_left": -896.555,
+    "_right": -896.5550000000002,
+    "_top": 0,
     "_bottom": 1084.214,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
@@ -341,6 +297,51 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "b2SkzOGuhP/KxKekUe5Hr4"
+  },
+  {
+    "__type__": "sp.Skeleton",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 4
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 10
+    },
+    "_customMaterial": null,
+    "_srcBlendFactor": 2,
+    "_dstBlendFactor": 4,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "loop": true,
+    "_timeScale": 0.1,
+    "_useTint": false,
+    "_preCacheMode": 0,
+    "_cacheMode": 0,
+    "_defaultCacheMode": 0,
+    "_debugBones": false,
+    "_debugSlots": false,
+    "_skeletonData": {
+      "__uuid__": "56758dcf-ed74-4b45-9bbc-6c48f76d3621",
+      "__expectedType__": "sp.SkeletonData"
+    },
+    "_premultipliedAlpha": true,
+    "defaultSkin": "default",
+    "defaultAnimation": "animation",
+    "_enableBatch": false,
+    "_sockets": [],
+    "_debugMesh": false,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "47k20VB7hPJIh//rFKnFCr"
   },
   {
     "__type__": "cc.PrefabInfo",

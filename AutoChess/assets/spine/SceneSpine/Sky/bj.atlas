@@ -1,0 +1,20 @@
+
+bj.png
+size: 2698,976
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bj_0
+  rotate: false
+  xy: 2, 265
+  size: 2692, 709
+  orig: 2694, 711
+  offset: 1, 1
+  index: -1
+bj_1
+  rotate: false
+  xy: 2, 2
+  size: 2694, 261
+  orig: 2694, 261
+  offset: 0, 0
+  index: -1
