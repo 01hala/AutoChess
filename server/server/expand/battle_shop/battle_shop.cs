@@ -178,12 +178,13 @@ namespace battle_shop
         {
             Log.Log.trace("_refresh begin!");
 
-            while (shopData.SaleRoleList.Count > 5)
+            var i = 4;
+            for (; i < shopData.SaleRoleList.Count; i++)
             {
-                var r = shopData.SaleRoleList[shopData.SaleRoleList.Count - 1];
+                var r = shopData.SaleRoleList[i];
                 if (r == null || !r.IsFreeze)
                 {
-                    shopData.SaleRoleList.Remove(r);
+                    shopData.SaleRoleList[i] = null;
                 }
             }
             
@@ -193,7 +194,7 @@ namespace battle_shop
                 count = shopData.SaleRoleList.Count;
             }
 
-            var i = 0;
+            i = 0;
             for (; i < count; i++)
             {
                 if (i < shopData.SaleRoleList.Count)
