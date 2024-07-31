@@ -1,0 +1,20 @@
+
+tree_03.png
+size: 292,210
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+tree_0
+  rotate: true
+  xy: 2, 2
+  size: 206, 213
+  orig: 206, 217
+  offset: 0, 4
+  index: -1
+tree_1
+  rotate: true
+  xy: 217, 120
+  size: 88, 73
+  orig: 88, 73
+  offset: 0, 0
+  index: -1
