@@ -1,0 +1,27 @@
+
+fc.png
+size: 368,145
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fc_0
+  rotate: false
+  xy: 337, 110
+  size: 29, 33
+  orig: 31, 35
+  offset: 1, 1
+  index: -1
+fc_1
+  rotate: true
+  xy: 202, 3
+  size: 140, 133
+  orig: 140, 133
+  offset: 0, 0
+  index: -1
+fc_2
+  rotate: true
+  xy: 2, 2
+  size: 141, 198
+  orig: 143, 200
+  offset: 1, 1
+  index: -1
