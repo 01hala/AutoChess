@@ -91,18 +91,11 @@ namespace battle_shop
 
         public int maxSaleRoleCount(int stage)
         {
-            //if (stage < 3)
-            //{
-            //    return 4;
-            //}
-            //else if (stage < 5)
-            //{
-            //    return 5;
-            //}
-
-            //return 6;
-
-            return 4;
+            if (stage < 3)
+            {
+                return 4;
+            }
+            return 5;
         }
 
         public ShopRole randomShopRole(int stage)
@@ -189,11 +182,6 @@ namespace battle_shop
             }
             
             var count = maxSaleRoleCount(_stage);
-            if (count < shopData.SaleRoleList.Count)
-            {
-                count = shopData.SaleRoleList.Count;
-            }
-
             i = 0;
             for (; i < count; i++)
             {
