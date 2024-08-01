@@ -91,7 +91,7 @@ namespace battle_shop
 
         public int maxSaleRoleCount(int stage)
         {
-            if (stage < 3)
+            if (stage < 4)
             {
                 return 4;
             }
