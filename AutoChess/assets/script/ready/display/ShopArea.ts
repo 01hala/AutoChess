@@ -106,7 +106,7 @@ export class ShopArea extends Component
                 default:tmpCnt=6;
             }
             console.log("roles:", JSON.stringify(roles));
-            for(let i=0;i<roles.length&&tmpCnt>0;i++)
+            for(let i=0;i<roles.length/*&&tmpCnt>0*/;i++)   //暂时不限制格子数
             {
                 if(roles[i])
                 {
