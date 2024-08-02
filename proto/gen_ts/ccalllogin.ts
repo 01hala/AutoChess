@@ -7,7 +7,7 @@ export class login_player_login_no_token_cb{
     private cb_uuid : number;
     private module_rsp_cb : login_rsp_cb;
 
-    public event_player_login_no_token_handle_cb : (player_hub_name:string, token:string, sdk_uuid:string)=>void | null;
+    public event_player_login_no_token_handle_cb : (player_hub_name:string, token:string, is_new:boolean)=>void | null;
     public event_player_login_no_token_handle_err : (err:number)=>void | null;
     public event_player_login_no_token_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : login_rsp_cb){
@@ -18,7 +18,7 @@ export class login_player_login_no_token_cb{
         this.event_player_login_no_token_handle_timeout = null;
     }
 
-    callBack(_cb:(player_hub_name:string, token:string, sdk_uuid:string)=>void, _err:(err:number)=>void)
+    callBack(_cb:(player_hub_name:string, token:string, is_new:boolean)=>void, _err:(err:number)=>void)
     {
         this.event_player_login_no_token_handle_cb = _cb;
         this.event_player_login_no_token_handle_err = _err;
@@ -37,7 +37,7 @@ export class login_player_login_wx_cb{
     private cb_uuid : number;
     private module_rsp_cb : login_rsp_cb;
 
-    public event_player_login_wx_handle_cb : (player_hub_name:string, token:string, sdk_uuid:string)=>void | null;
+    public event_player_login_wx_handle_cb : (player_hub_name:string, token:string, is_new:boolean)=>void | null;
     public event_player_login_wx_handle_err : (err:number)=>void | null;
     public event_player_login_wx_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : login_rsp_cb){
@@ -48,7 +48,7 @@ export class login_player_login_wx_cb{
         this.event_player_login_wx_handle_timeout = null;
     }
 
-    callBack(_cb:(player_hub_name:string, token:string, sdk_uuid:string)=>void, _err:(err:number)=>void)
+    callBack(_cb:(player_hub_name:string, token:string, is_new:boolean)=>void, _err:(err:number)=>void)
     {
         this.event_player_login_wx_handle_cb = _cb;
         this.event_player_login_wx_handle_err = _err;
@@ -67,7 +67,7 @@ export class login_player_login_dy_cb{
     private cb_uuid : number;
     private module_rsp_cb : login_rsp_cb;
 
-    public event_player_login_dy_handle_cb : (player_hub_name:string, token:string, sdk_uuid:string)=>void | null;
+    public event_player_login_dy_handle_cb : (player_hub_name:string, token:string, is_new:boolean)=>void | null;
     public event_player_login_dy_handle_err : (err:number)=>void | null;
     public event_player_login_dy_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : login_rsp_cb){
@@ -78,7 +78,7 @@ export class login_player_login_dy_cb{
         this.event_player_login_dy_handle_timeout = null;
     }
 
-    callBack(_cb:(player_hub_name:string, token:string, sdk_uuid:string)=>void, _err:(err:number)=>void)
+    callBack(_cb:(player_hub_name:string, token:string, is_new:boolean)=>void, _err:(err:number)=>void)
     {
         this.event_player_login_dy_handle_cb = _cb;
         this.event_player_login_dy_handle_err = _err;

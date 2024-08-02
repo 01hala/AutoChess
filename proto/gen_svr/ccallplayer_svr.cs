@@ -153,13 +153,13 @@ namespace Abelkhan
         public event Action<string, string, string, string> on_create_role;
         public void create_role(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            var _account = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var _token = ((MsgPack.MessagePackObject)inArray[1]).AsString();
             var _name = ((MsgPack.MessagePackObject)inArray[2]).AsString();
             var _nick_name = ((MsgPack.MessagePackObject)inArray[3]).AsString();
             var _avatar = ((MsgPack.MessagePackObject)inArray[4]).AsString();
             rsp = new player_login_create_role_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_create_role != null){
-                on_create_role(_account, _name, _nick_name, _avatar);
+                on_create_role(_token, _name, _nick_name, _avatar);
             }
             rsp = null;
         }

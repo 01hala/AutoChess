@@ -23,8 +23,8 @@ namespace Player
 
             try
             { 
-                var token = await Player.client_Mng.token_player_login(account);
-                rsp.rsp(token);
+                var tuple = await Player.client_Mng.token_player_login(account);
+                rsp.rsp(tuple.Item1, tuple.Item2);
             }
             catch (System.Exception ex)
             {
@@ -41,8 +41,8 @@ namespace Player
 
             try
             {
-                var token = await Player.client_Mng.token_player_login(openid, anonymous_openid);
-                rsp.rsp(token);
+                var tuple = await Player.client_Mng.token_player_login(openid, anonymous_openid);
+                rsp.rsp(tuple.Item1, tuple.Item2);
             }
             catch (System.Exception ex)
             {

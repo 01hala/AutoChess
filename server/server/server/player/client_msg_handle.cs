@@ -604,7 +604,7 @@ namespace Player
             }
         }
 
-        private async void Player_login_Module_on_create_role(string sdk_uuid, string name, string nick_name, string avatar)
+        private async void Player_login_Module_on_create_role(string token, string name, string nick_name, string avatar)
         {
             Log.Log.trace("on_player_login begin!");
 
@@ -613,8 +613,15 @@ namespace Player
 
             try
             {
-                var _avatar = await Player.client_Mng.create_player(uuid, sdk_uuid, name, nick_name, avatar);
-                rsp.rsp(_avatar.PlayerInfo().Info());
+                var _avatar = await Player.client_Mng.create_player(uuid, token, name, nick_name, avatar);
+                if (_avatar != null)
+                {
+                    rsp.rsp(_avatar.PlayerInfo().Info());
+                }
+                else
+                {
+                    rsp.err((int)em_error.token_out_time);
+                }
             }
             catch (LoginException ex)
             {

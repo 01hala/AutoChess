@@ -28,7 +28,8 @@ namespace Abelkhan
         peak_strength_no_data = 14,
         peak_strength_end = 15,
         not_complete_achievement = 16,
-        not_exist_quest = 17
+        not_exist_quest = 17,
+        token_out_time = 18
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
 /*this caller code is codegen by abelkhan codegen for c#*/

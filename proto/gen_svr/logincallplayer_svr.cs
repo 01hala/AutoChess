@@ -21,11 +21,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<string> on_player_login_no_token_cb;
+        public event Action<string, bool> on_player_login_no_token_cb;
         public event Action<Int32> on_player_login_no_token_err;
         public event Action on_player_login_no_token_timeout;
 
-        public login_player_player_login_no_token_cb callBack(Action<string> cb, Action<Int32> err)
+        public login_player_player_login_no_token_cb callBack(Action<string, bool> cb, Action<Int32> err)
         {
             on_player_login_no_token_cb += cb;
             on_player_login_no_token_err += err;
@@ -40,11 +40,11 @@ namespace Abelkhan
             on_player_login_no_token_timeout += timeout_cb;
         }
 
-        public void call_cb(string token)
+        public void call_cb(string token, bool is_new)
         {
             if (on_player_login_no_token_cb != null)
             {
-                on_player_login_no_token_cb(token);
+                on_player_login_no_token_cb(token, is_new);
             }
         }
 
@@ -77,11 +77,11 @@ namespace Abelkhan
             module_rsp_cb = _module_rsp_cb;
         }
 
-        public event Action<string> on_player_login_cb;
+        public event Action<string, bool> on_player_login_cb;
         public event Action<Int32> on_player_login_err;
         public event Action on_player_login_timeout;
 
-        public login_player_player_login_cb callBack(Action<string> cb, Action<Int32> err)
+        public login_player_player_login_cb callBack(Action<string, bool> cb, Action<Int32> err)
         {
             on_player_login_cb += cb;
             on_player_login_err += err;
@@ -96,11 +96,11 @@ namespace Abelkhan
             on_player_login_timeout += timeout_cb;
         }
 
-        public void call_cb(string token)
+        public void call_cb(string token, bool is_new)
         {
             if (on_player_login_cb != null)
             {
-                on_player_login_cb(token);
+                on_player_login_cb(token, is_new);
             }
         }
 
@@ -139,10 +139,11 @@ namespace Abelkhan
         public void player_login_no_token_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _token = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var _is_new = ((MsgPack.MessagePackObject)inArray[2]).AsBoolean();
             var rsp = try_get_and_del_player_login_no_token_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_token);
+                rsp.call_cb(_token, _is_new);
             }
         }
 
@@ -177,10 +178,11 @@ namespace Abelkhan
         public void player_login_rsp(IList<MsgPack.MessagePackObject> inArray){
             var uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _token = ((MsgPack.MessagePackObject)inArray[1]).AsString();
+            var _is_new = ((MsgPack.MessagePackObject)inArray[2]).AsBoolean();
             var rsp = try_get_and_del_player_login_cb(uuid);
             if (rsp != null)
             {
-                rsp.call_cb(_token);
+                rsp.call_cb(_token, _is_new);
             }
         }
 
@@ -292,10 +294,11 @@ namespace Abelkhan
             uuid_b295d7ce_3d9c_398f_8f6a_ee7a40f01d25 = _uuid;
         }
 
-        public void rsp(string token_6333efe6_4f25_3c9a_a58e_52c6c889a79e){
+        public void rsp(string token_6333efe6_4f25_3c9a_a58e_52c6c889a79e, bool is_new_5d1e1efe_be90_3292_8472_afb7a7640de8){
             var _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf = new ArrayList();
             _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf.Add(uuid_b295d7ce_3d9c_398f_8f6a_ee7a40f01d25);
             _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf.Add(token_6333efe6_4f25_3c9a_a58e_52c6c889a79e);
+            _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf.Add(is_new_5d1e1efe_be90_3292_8472_afb7a7640de8);
             Hub.Hub._hubs.call_hub(_hub_name_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf, "login_player_rsp_cb_player_login_no_token_rsp", _argv_3e2e7610_1bd3_3053_a6cb_55c17d6b8ebf);
         }
 
@@ -317,10 +320,11 @@ namespace Abelkhan
             uuid_ade41c97_e005_3aac_9b68_925d09412afe = _uuid;
         }
 
-        public void rsp(string token_6333efe6_4f25_3c9a_a58e_52c6c889a79e){
+        public void rsp(string token_6333efe6_4f25_3c9a_a58e_52c6c889a79e, bool is_new_5d1e1efe_be90_3292_8472_afb7a7640de8){
             var _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b = new ArrayList();
             _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(uuid_ade41c97_e005_3aac_9b68_925d09412afe);
             _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(token_6333efe6_4f25_3c9a_a58e_52c6c889a79e);
+            _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b.Add(is_new_5d1e1efe_be90_3292_8472_afb7a7640de8);
             Hub.Hub._hubs.call_hub(_hub_name_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b, "login_player_rsp_cb_player_login_rsp", _argv_803b03c3_eef6_3b5c_a790_4cd13c6c4e4b);
         }
 

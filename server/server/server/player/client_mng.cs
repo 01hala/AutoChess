@@ -1400,6 +1400,7 @@ namespace Player
     public class client_mng
     {
         private readonly Dictionary<string, avatar.Avatar> client_token_dict = new ();
+        private readonly Dictionary<string, string> client_sdk_uuid = new ();
 
         private static readonly player_client_caller player_Client_Caller = new();
         public static player_client_caller PlayerClientCaller
@@ -1472,58 +1473,58 @@ namespace Player
             bag.BagModdule.init(30, avatarMgr);
         }
 
-        public async Task<string> token_player_login(string sdk_uuid, string anonymous_sdk_uuid = "")
+        public async Task<Tuple<string, bool>> token_player_login(string sdk_uuid, string anonymous_sdk_uuid = "")
         {
-            do
+            var token = Guid.NewGuid().ToString();
+
+            avatar.Avatar _avatar = null;
+            if (!string.IsNullOrEmpty(anonymous_sdk_uuid))
             {
-                avatar.Avatar _avatar = null;
-                if (!string.IsNullOrEmpty(anonymous_sdk_uuid))
+                _avatar = await avatarMgr.load(anonymous_sdk_uuid);
+                if (!string.IsNullOrEmpty(sdk_uuid))
                 {
-                    _avatar = await avatarMgr.load(anonymous_sdk_uuid);
-                    if (!string.IsNullOrEmpty(sdk_uuid))
+                    if (!await _avatar.transfer(sdk_uuid))
                     {
-                        if (!await _avatar.transfer(sdk_uuid))
-                        {
-                            Log.Log.err("_avatar.transfer faild anonymous_sdk_uuid:{0, }sdk_uuid:{1}", anonymous_sdk_uuid, sdk_uuid);
-                        }
+                        Log.Log.err("_avatar.transfer faild anonymous_sdk_uuid:{0, }sdk_uuid:{1}", anonymous_sdk_uuid, sdk_uuid);
                     }
                 }
-                else
+            }
+            else
+            {
+                _avatar = await avatarMgr.load(sdk_uuid);
+            }
+
+            if (_avatar != null)
+            {
+
+                var player_svr_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
+                await Player._redis_handle.SetStrData(player_svr_key, Hub.Hub.name, RedisHelp.PlayerSvrInfoCacheTimeout);
+
+                _avatar.onDestory += () =>
                 {
-                    _avatar = await avatarMgr.load(sdk_uuid);
-                }
+                    var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(_avatar.ClientUUID);
+                    Player._redis_handle.DelData(uuid_key);
 
-                if (_avatar != null)
-                {
+                    var player_key = RedisHelp.BuildPlayerSvrCacheKey(_avatar.SDKUUID);
+                    Player._redis_handle.DelData(player_key);
 
-                    var token = Guid.NewGuid().ToString();
+                    var player_guid_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
+                    Player._redis_handle.DelData(player_guid_key);
 
-                    var player_svr_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
-                    await Player._redis_handle.SetStrData(player_svr_key, Hub.Hub.name, RedisHelp.PlayerSvrInfoCacheTimeout);
+                    var gate_key = RedisHelp.BuildPlayerGateCacheKey(_avatar.SDKUUID);
+                    Player._redis_handle.DelData(gate_key);
+                };
 
-                    _avatar.onDestory += () =>
-                    {
-                        var uuid_key = RedisHelp.BuildPlayerSDKUUIDCacheKey(_avatar.ClientUUID);
-                        Player._redis_handle.DelData(uuid_key);
+                client_token_dict[token] = _avatar;
 
-                        var player_key = RedisHelp.BuildPlayerSvrCacheKey(_avatar.SDKUUID);
-                        Player._redis_handle.DelData(player_key);
+                return Tuple.Create(token, false);
+            }
+            else
+            {
+                client_sdk_uuid[token] = sdk_uuid;
+            }
 
-                        var player_guid_key = RedisHelp.BuildPlayerGuidCacheKey(_avatar.Guid);
-                        Player._redis_handle.DelData(player_guid_key);
-
-                        var gate_key = RedisHelp.BuildPlayerGateCacheKey(_avatar.SDKUUID);
-                        Player._redis_handle.DelData(gate_key);
-                    };
-
-                    client_token_dict[token] = _avatar;
-
-                    return token;
-                }
-
-            } while (false);
-
-            return "";
+            return Tuple.Create(token, true);
         }
 
         public avatar.Avatar token_get_client_proxy(string uuid, string token)
@@ -1546,16 +1547,20 @@ namespace Player
             return _avatar;
         }
 
-        public async Task<avatar.Avatar> create_player(string uuid, string sdk_uuid, string name, string nick_name, string avatar)
+        public async Task<avatar.Avatar> create_player(string uuid, string token, string name, string nick_name, string avatar)
         {
-            var _avatar = await avatarMgr.create_avatar(sdk_uuid);
-            avatarMgr.bind_avatar(_avatar, uuid);
-            var info = _avatar.get_real_hosting_data<PlayerInfo>();
-            info.Data.Info().User.UserName = nick_name;
-            info.Data.Info().User.UserGuid = _avatar.Guid;
-            info.Data.Info().User.Avatar = avatar;
+            if (client_sdk_uuid.Remove(token, out var sdk_uuid))
+            {
+                var _avatar = await avatarMgr.create_avatar(sdk_uuid);
+                avatarMgr.bind_avatar(_avatar, uuid);
+                var info = _avatar.get_real_hosting_data<PlayerInfo>();
+                info.Data.Info().User.UserName = nick_name;
+                info.Data.Info().User.UserGuid = _avatar.Guid;
+                info.Data.Info().User.Avatar = avatar;
 
-            return _avatar;
+                return _avatar;
+            }
+            return null;
         }
 
         public async Task<Avatar> uuid_get_client_proxy(string uuid)

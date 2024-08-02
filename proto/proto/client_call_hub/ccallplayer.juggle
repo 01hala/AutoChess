@@ -2,7 +2,7 @@ import common
 
 module player_login {
 	player_login req(string token, string nick_name, string avatar) rsp(UserData info) err(int32 err);
-	create_role req(string account, string name, string nick_name, string avatar) rsp(UserData info) err(int32 err);
+	create_role req(string token, string name, string nick_name, string avatar) rsp(UserData info) err(int32 err);
 
 	reconnect req(int64 guid) rsp(UserData info, string match_name) err(int32 err);
 
