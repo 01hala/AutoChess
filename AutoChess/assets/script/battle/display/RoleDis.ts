@@ -176,6 +176,7 @@ export class RoleDis extends Component
     {
         try 
         {
+            this.node.setSiblingIndex(100);
             this.tAttack = tween(this.node)
                 .to(0.15, { position: readyLocation })
                 //这里做出蓄力效果
