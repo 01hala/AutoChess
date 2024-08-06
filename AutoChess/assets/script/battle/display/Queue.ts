@@ -55,7 +55,8 @@ export class Queue extends Component
             {
                 let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePrefab") as Prefab;
                 let role = instantiate(newNode); 
-                this.node.addChild(role);
+                //this.node.addChild(role);
+                role.setParent(this.node.parent);
 
                 this.roleNodes[r.index] = role;
                 
@@ -148,7 +149,7 @@ export class Queue extends Component
                     console.warn("Queue 下的 InitRole 读取的 role 为空");
                     break;
                 }
-                role.position=new Vec3(this.locationTemp[r[i].index].position);
+                role.worldPosition=new Vec3(this.locationTemp[r[i].index].worldPosition);
             }
            
         }

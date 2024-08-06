@@ -1,6 +1,6 @@
 import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
-import { InfoPanel } from '../secondaryPanel/InfoPanel';
+import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from './MessageEvent';
 import { Settlement } from '../secondaryPanel/Settlement';
 import { UpStage } from '../secondaryPanel/UpStage';
@@ -114,7 +114,7 @@ export class GameManager extends Component
             this.rankListBoard.setParent(this.node);
             this.rankListBoard.active=false;
 
-            this.infoPanel.getComponent(InfoPanel).start();
+            this.infoPanel.getComponent(InfoBoard).start();
             this.settlementBoard.getComponent(Settlement).start();
             this.userInfoBoard.getComponent(UserInfo).start();
             this.taskAchieveBoard.getComponent(TaskAchieve).start();
@@ -141,7 +141,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoPanel).OpenCardInfo(event.detail);
+            this.infoPanel.getComponent(InfoBoard).OpenCardInfo(event.detail);
         },this);
 
         /* 消息来源
@@ -156,7 +156,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoPanel).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
+            this.infoPanel.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
         },this);
 
         /* 消息来源
@@ -171,7 +171,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoPanel).OpenInfoBoard(event.detail.id , event.detail.role , event.detail.isBuy , event.detail.propType);
+            this.infoPanel.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.role , event.detail.isBuy , event.detail.propType);
         },this);
 
         /* 消息来源

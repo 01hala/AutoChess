@@ -3,7 +3,7 @@ import { PropsType } from '../../other/enums';
 import { RoleArea } from './RoleArea';
 import { ShopArea } from './ShopArea';
 import * as singleton from '../../netDriver/netSingleton';
-import { InfoPanel } from '../../secondaryPanel/InfoPanel';
+import { InfoBoard } from '../../secondaryPanel/InfoBoard';
 import { RoleIcon } from './RoleIcon';
 import { config } from '../../battle/AutoChessBattle/config/config';
 import { BundleManager } from '../../bundle/BundleManager';

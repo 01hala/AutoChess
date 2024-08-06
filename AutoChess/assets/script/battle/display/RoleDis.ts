@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color } from 'cc';
+import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color, Event, Button } from 'cc';
 import { Role } from '../AutoChessBattle//role';
 import * as enums from '../AutoChessBattle/enum';
 import { Battle } from '../AutoChessBattle//battle';
@@ -20,6 +20,7 @@ import { config } from '../AutoChessBattle/config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
 import { AudioManager } from '../../other/AudioManager';
+import { SendMessage } from '../../other/MessageEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -114,6 +115,23 @@ export class RoleDis extends Component
                 this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
             }
         }
+
+        if(singleton.netSingleton.battle==null)
+        {
+            this.node.getComponent(Button).enabled=false;
+        }
+        else
+        {
+            this.node.on(Button.EventType.CLICK, () =>
+            {
+                if (singleton.netSingleton.battle)
+                {
+                    singleton.netSingleton.battle.puase = true;
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                    this.node.dispatchEvent(new SendMessage('OpenInfoBoard', true, { id: this.RoleId, role: this, isBuy: true }));
+                }
+            })
+        }
     }
 
     async Refresh(roleInfo: Role,isnew?:boolean) 
@@ -167,6 +185,11 @@ export class RoleDis extends Component
         if(this.roleInfo) return this.roleInfo.skillid;
     }
 
+    GetRoleInfo()
+    {
+        if(this.roleInfo) return this.roleInfo;
+    }
+
     AttackInit() 
     {
         this.originalPos = new Vec3(this.node.position);
@@ -176,17 +199,17 @@ export class RoleDis extends Component
     {
         try 
         {
-            this.node.setSiblingIndex(100);
+            this.node.setSiblingIndex(90);
             this.tAttack = tween(this.node)
-                .to(0.15, { position: readyLocation })
+                .to(0.15, { worldPosition: readyLocation })
                 //这里做出蓄力效果
                 .delay(0.1)
-                .to(0.05,{position:new Vec3(readyLocation.x+15,readyLocation.y,readyLocation.z)})
-                .to(0.05,{position:new Vec3(readyLocation.x-15,readyLocation.y,readyLocation.z)})
-                .to(0.05,{position:new Vec3(readyLocation.x,readyLocation.y+15,readyLocation.z)})
-                .to(0.05,{position:new Vec3(readyLocation.x,readyLocation.y-15,readyLocation.z)}) 
+                .to(0.05,{worldPosition:new Vec3(readyLocation.x+15,readyLocation.y,readyLocation.z)})
+                .to(0.05,{worldPosition:new Vec3(readyLocation.x-15,readyLocation.y,readyLocation.z)})
+                .to(0.05,{worldPosition:new Vec3(readyLocation.x,readyLocation.y+15,readyLocation.z)})
+                .to(0.05,{worldPosition:new Vec3(readyLocation.x,readyLocation.y-15,readyLocation.z)}) 
                 //上面是蓄力效果
-                .to(0.05, { position: battleLocation })
+                .to(0.05, { worldPosition: battleLocation })
                 .call(() => {
                     if (enums.Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
@@ -228,7 +251,7 @@ export class RoleDis extends Component
     //异步执行将对撞角色归位，防止阻碍到后续判断
     async ResetPos(readyLocation: Vec3){
         this.tAttack = tween(this.node)
-        .to(0.1, { position: readyLocation }).start();
+        .to(0.1, { worldPosition: readyLocation }).start();
         return this.delay(100, () => 
         {
             if (this.tAttack) {

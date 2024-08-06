@@ -11,7 +11,7 @@ import { config } from '../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
-import { InfoPanel } from '../secondaryPanel/InfoPanel';
+import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from '../other/MessageEvent';
 import { AudioManager } from '../other/AudioManager';
 import SdkManager from '../SDK/SdkManager';

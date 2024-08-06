@@ -45,7 +45,7 @@ export class BattleDis
 
     private gmBtn:Button;
     private pauseBtn:Button;
-    private puase:boolean = false;
+    public puase:boolean = false;
 
     //所有需要并行执行的事件队列,分己方和敌人方，己方先执行
     private selfParallelList:Promise<void>[]=[]
@@ -296,6 +296,9 @@ export class BattleDis
                 this.selfBeginEffect.active=true;
                 this.enemyBeginEffect.active=true;
 
+                this.selfBeginEffect.setSiblingIndex(100);
+                this.enemyBeginEffect.setSiblingIndex(100);
+
                 this.selfBeginEffect.getChildByPath("BottomImg").getComponent(sp.Skeleton).animation="a2";
                 this.selfBeginEffect.getChildByPath("UserName").getComponent(Label).string="己方队伍";
                 this.selfBeginEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
@@ -382,12 +385,12 @@ export class BattleDis
                 let allAwait:Promise<void>[] = [];
 
                 allAwait.push(selfRoleNodeRoleDis.Attack(
-                    this.selfQueue.readyLocation.position, 
-                    this.selfQueue.battleLocation.position, 
+                    this.selfQueue.readyLocation.worldPosition, 
+                    this.selfQueue.battleLocation.worldPosition, 
                     battleEnums.Camp.Self));
                 allAwait.push(enemyRoleNodeRoleDis.Attack(
-                    this.enemyQueue.readyLocation.position, 
-                    this.enemyQueue.battleLocation.position, 
+                    this.enemyQueue.readyLocation.worldPosition, 
+                    this.enemyQueue.battleLocation.worldPosition, 
                     battleEnums.Camp.Enemy));
                 
                 await Promise.all(allAwait);

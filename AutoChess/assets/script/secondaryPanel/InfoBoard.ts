@@ -10,10 +10,12 @@ import { Role } from '../battle/AutoChessBattle/common';
 import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
+import * as common from "../battle/AutoChessBattle/common"
+import * as battleEnums from '../battle/AutoChessBattle/enum';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
-export class InfoPanel extends Component 
+export class InfoBoard extends Component 
 {
     private exitBtn:Button;
 
@@ -113,7 +115,7 @@ export class InfoPanel extends Component
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
                     
-                    this.ShowDetailed(id);
+                    this.ShowDetailed(id,role);
                 }   
             }
             if (GameManager.Instance.guide)
@@ -186,11 +188,20 @@ export class InfoPanel extends Component
         this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
     }
 
-    private async ShowDetailed(_id:number)
+    private async ShowDetailed(_id:number,_role?:RoleDis)
     {
         try
         {
-            let r = singleton.netSingleton.ready.readyData.GetRole(_id);
+            //let r = singleton.netSingleton.ready.readyData.GetRole(_id);
+            let r:common.Role;
+            if(singleton.netSingleton.ready)
+            {
+                r=singleton.netSingleton.ready.readyData.GetRole(_id);
+            }
+            if(singleton.netSingleton.battle)
+            {
+                r=_role.GetRoleInfo().c_role;
+            }
             let ro=config.RoleConfig.get(_id);
             let imgs = this.LoadRoleImage(r);
             //工具生命等级
@@ -263,6 +274,7 @@ export class InfoPanel extends Component
             });
             this.simpleBoard.getComponent(Animation).play("PanelDisappear");
         }
+
         if(this.propBoard.active)
         {
             this.propBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
@@ -272,15 +284,21 @@ export class InfoPanel extends Component
             });
             this.propBoard.getComponent(Animation).play("PanelDisappear");
         }
+
         if(this.detailedBoard.active)
         {
             this.detailedBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
+                if (singleton.netSingleton.battle)
+                {
+                    singleton.netSingleton.battle.puase = false;
+                }
                 this.node.active=false;
                 this.detailedBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
             });
             this.detailedBoard.getComponent(Animation).play("PanelDisappear");
         }
+
         if(this.fetterBoard.active){
             this.fetterBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
@@ -288,7 +306,7 @@ export class InfoPanel extends Component
                 this.fetterBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
             });
             this.fetterBoard.getComponent(Animation).play("PanelDisappear");
-        }   
+        }  
     }
 
     private async LoadRoleImage(_r:Role)

@@ -6,7 +6,7 @@
  */
 import { _decorator, Animation, assetManager, Button, ccenum, Color, color, Component, debug, enumerableProps, error, Label, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
-import { InfoPanel } from '../secondaryPanel/InfoPanel';
+import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { loadAssets } from '../bundle/LoadAsset';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { SendMessage } from '../other/MessageEvent';
