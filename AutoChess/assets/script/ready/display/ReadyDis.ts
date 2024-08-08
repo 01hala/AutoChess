@@ -199,7 +199,7 @@ export class ReadyDis
                 }
             });
             //退出按钮
-            this.exitBtn = this.panelNode.getChildByPath("TopArea/Exit_Btn").getComponent(Button);
+            this.exitBtn = this.panelNode.getChildByPath("State/TopArea/Exit_Btn").getComponent(Button);
             this.exitBtn.node.on(Button.EventType.CLICK, () =>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
