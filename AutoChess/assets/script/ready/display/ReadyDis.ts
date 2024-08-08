@@ -87,37 +87,28 @@ export class ReadyDis
             this.waitingPanel.setParent(this.panelNode);
             this.waitingPanel.setSiblingIndex(100);
             //操作区域
-            this.shopArea=this.panelNode.getChildByPath("ShopArea").getComponent(ShopArea);
+            this.shopArea=this.panelNode.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
             this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
             //图形适配获取整个区域
             this.cameraNode = this.father.getChildByName('Camera');
-            this.topArea=this.panelNode.getChildByPath("TopArea");
+            this.topArea=this.panelNode.getChildByPath("State/TopArea");
             //文本
-            this.coinText=this.panelNode.getChildByPath("TopArea/CoinInfo/RichText").getComponent(RichText);
-            this.heathText=this.panelNode.getChildByPath("TopArea/HpInfo/RichText").getComponent(RichText);
-            this.roundText=this.panelNode.getChildByPath("TopArea/RoundInfo/RichText").getComponent(RichText);
-            this.trophyText=this.panelNode.getChildByPath("TopArea/TrophyInfo/RichText").getComponent(RichText);
+            this.coinText=this.panelNode.getChildByPath("State/TopArea/CoinInfo/RichText").getComponent(RichText);
+            this.heathText=this.panelNode.getChildByPath("State/TopArea/HpInfo/RichText").getComponent(RichText);
+            this.roundText=this.panelNode.getChildByPath("State/TopArea/RoundInfo/RichText").getComponent(RichText);
+            this.trophyText=this.panelNode.getChildByPath("State/TopArea/TrophyInfo/RichText").getComponent(RichText);
             //技能发动效果
             this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
             this.launchSkillEffect.setSiblingIndex(99);
             this.launchSkillEffect.active=false;
 
-            this.roleInfoNode=this.panelNode.getChildByPath("TopArea/RoleIntroduce");
+            this.roleInfoNode=this.panelNode.getChildByPath("State/TopArea/RoleIntroduce");
             this.roleInfoNode.active=false;
 
-            this.shopMask=this.panelNode.getChildByPath("ShopMask");
+            this.shopMask=this.panelNode.getChildByPath("Shop/ShopMask");
             //this.shopMask.setPosition(new Vec3(0,this.shopArea.node.position.y+240,0));
             this.shopMask.setSiblingIndex(100);
             this.shopMask.active=false;
-
-            let bpttomHeigh = 0;
-            if (SdkManager.SDK.getSystemInfo().safeArea.height != SdkManager.SDK.getSystemInfo().screenHeight)
-            {
-                bpttomHeigh = (SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
-            }
-            let cam = _father.getChildByPath("Camera");
-            let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, bpttomHeigh, 0));
-            this.shopMask.getComponent(Widget).bottom = outPos.y-310;
 
             if(_value instanceof common.UserBattleData)
             {
@@ -183,7 +174,7 @@ export class ReadyDis
                 this.RegPveCallBack();
             }
             //羁绊信息框
-            let tNode = this.panelNode.getChildByPath("ShopArea/FetterBG/FetterArea");
+            let tNode = this.panelNode.getChildByPath("Shop/ShopArea/FetterBG/FetterArea");
             for (let i = 1; i <= 6; i++)
             {
                 let t = tNode.getChildByName("FettersIcon_" + i);
@@ -191,13 +182,13 @@ export class ReadyDis
                 this.fetters.push(t);
             }
             //刷新按钮
-            this.refreshBtn = this.panelNode.getChildByPath("ShopArea/Falsh_Btn").getComponent(Button);
+            this.refreshBtn = this.panelNode.getChildByPath("Shop/ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK, () =>
             {
                 this.RefreshShop();
             }, this);
             //开始按钮
-            this.startBtn = this.panelNode.getChildByPath("ShopArea/Start_Btn").getComponent(Button);
+            this.startBtn = this.panelNode.getChildByPath("Shop/ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () =>
             {
                 if (this.readyData.GetRolesNumber() > 0)
@@ -230,9 +221,15 @@ export class ReadyDis
             return;
         }
 
-        let bpttomHeight=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
-        let outPos:Vec3=this.cameraNode.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeight,0));
-        this.topArea.getComponent(Widget).top=outPos.y;
+        let safeHeight=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
+        // let outPos:Vec3=this.cameraNode.getComponent(Camera).screenToWorld(new Vec3(0,bpttomHeight,0));
+        // this.topArea.getComponent(Widget).top=outPos.y;
+        if (SdkManager.SDK.getSystemInfo().safeArea.height != SdkManager.SDK.getSystemInfo().screenHeight)
+        {
+            safeHeight = (SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
+        }
+        let outPos: Vec3 = this.cameraNode.getComponent(Camera).getComponent(Camera).screenToWorld(new Vec3(0, safeHeight, 0));
+        this.shopMask.getComponent(Widget).bottom = outPos.y - 310;
     }
 
     private delay(ms: number, release: () => void): Promise<void> 
