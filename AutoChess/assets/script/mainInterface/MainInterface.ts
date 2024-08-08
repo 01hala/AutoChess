@@ -188,12 +188,26 @@ export class MainInterface
             this.mainPanel.getChildByPath("BG/Foreground").getComponent(Widget).bottom=outPos.y;
             //顶部物体对齐
             this.mainPanel.getChildByPath("BG/SkyBg").getComponent(Widget).top=outPos.y;
+            let safeHeigh=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
+            if(SdkManager.SDK.getSystemInfo().platform === "android")
+            {
+                safeHeigh*=2;
+            }
+            console.log("screen Height : ",SdkManager.SDK.getSystemInfo().screenHeight);
+            console.log("SafeArea Height : ",SdkManager.SDK.getSystemInfo().safeArea.height);
+            console.log("bpttomHeigh : ",safeHeigh);
             
-            let bpttomHeigh=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
-            outPos=cam.getComponent(Camera).screenToWorld(new Vec3(0, bpttomHeigh, 0));
+            outPos=cam.getComponent(Camera).screenToWorld(new Vec3(0, safeHeigh, 0));
+            console.log("outPos : ",outPos.y);
             this.mainPanel.getChildByPath("UiLayer/TopArea").getComponent(Widget).top=outPos.y;
 
-            
+            // let node = this.mainPanel.getChildByPath("UiLayer/TopArea");
+            // let topHeight = SdkManager.SDK.getSystemInfo().safeArea.top;
+            // outPos = cam.getComponent(Camera).screenToWorld(new Vec3(0, topHeight, 0));
+            // console.log("SafeArea Top : ", outPos.y);
+            // console.log("node pos : ", node.worldPosition.y);
+            // node.setWorldPosition(new Vec3(0, node.worldPosition.y - outPos.y, 0));
+
         }
         catch(error)
         {

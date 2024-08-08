@@ -8,6 +8,7 @@
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "TextTipBar"
+    "syncNodeName": "TextTipBar",
+    "persistent": false
   }
 }
