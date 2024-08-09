@@ -78,7 +78,7 @@ export class RoleIcon extends Component
             this.freezeSprite.active=false;
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.visiableArea=this.panel.getChildByPath("RoleArea/visiable");
-            this.shopArea=this.panel.getChildByPath("ShopArea").getComponent(ShopArea);
+            this.shopArea=this.panel.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
             this.farme=this.node.getChildByPath("Farme");
             this.farme.active=false;
             this.iconMask=this.node.getChildByName("IconMask");

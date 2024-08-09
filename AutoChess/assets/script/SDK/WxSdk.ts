@@ -203,6 +203,13 @@ export default class WxSdk implements SdkInterface
         sysInfo.screenWidth = wx.getSystemInfoSync().screenWidth;
         //系统平台
         sysInfo.platform=wx.getSystemInfoSync().platform;
+        //菜单按钮大小位置
+        sysInfo.menuBtn.bottom=wx.getMenuButtonBoundingClientRect().bottom;
+        sysInfo.menuBtn.height=wx.getMenuButtonBoundingClientRect().height;
+        sysInfo.menuBtn.left=wx.getMenuButtonBoundingClientRect().left;
+        sysInfo.menuBtn.right=wx.getMenuButtonBoundingClientRect().right;
+        sysInfo.menuBtn.top=wx.getMenuButtonBoundingClientRect().top;
+        sysInfo.menuBtn.width=wx.getMenuButtonBoundingClientRect().width;
 
         return sysInfo;
     }

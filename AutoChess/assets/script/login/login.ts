@@ -134,8 +134,6 @@ export class login extends Component {
             singleton.netSingleton.mainInterface = new MainInterface();
             await singleton.netSingleton.mainInterface.start(this.bk.node, async (event) =>
             {
-                this._setProgress(1.0);
-                this._loading.done();
                 singleton.netSingleton.player.get_user_data((_step) =>
                 {
                     console.log("guide step:", _step);
@@ -145,6 +143,8 @@ export class login extends Component {
                     }
                 });
                 await sleep(100);
+                this._setProgress(1.0);
+                this._loading.done();
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
                 console.log("login sucess!");

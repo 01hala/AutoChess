@@ -8,7 +8,6 @@
   "userData": {
     "compressionType": {},
     "isRemoteBundle": {
-      "web-desktop": true,
       "wechatgame": true
     },
     "bundleName": "RolesImg",

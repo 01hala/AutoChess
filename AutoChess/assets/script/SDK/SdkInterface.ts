@@ -25,6 +25,22 @@ export class Sysinfo
     public screenWidth:number;
     /** 系统平台 */
     public platform:any;
+    /** 菜单按钮的布局位置信息 */
+    public menuBtn:
+    {
+        /** 下边界坐标，单位：px */
+        bottom: number
+        /** 高度，单位：px */
+        height: number
+        /** 左边界坐标，单位：px */
+        left: number
+        /** 右边界坐标，单位：px */
+        right: number
+        /** 上边界坐标，单位：px */
+        top: number
+        /** 宽度，单位：px */
+        width: number
+    }
 
     constructor ()
     {
@@ -36,6 +52,14 @@ export class Sysinfo
             top: 0,
             width: 0
         };
+        this.menuBtn={
+            bottom:0,
+            height:0,
+            left:0,
+            right:0,
+            top:0,
+            width:0
+        }
     }
 
 }
