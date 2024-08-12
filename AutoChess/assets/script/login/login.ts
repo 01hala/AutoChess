@@ -38,6 +38,8 @@ export class login extends Component {
     netNode:Node = null;
     @property(Canvas)
     bk:Canvas = null;
+    @property(Canvas)
+    ld:Canvas = null;
 
     private progressBar:Node = null;
 
@@ -49,6 +51,8 @@ export class login extends Component {
 
     private nick_name:string = null;
     private avatar_url:string = null;
+
+    public static panelOnReady:boolean=false;
 
     private AutoUpdata():Promise<void>
     {
@@ -101,7 +105,7 @@ export class login extends Component {
         console.log("login start!");
 
         this._loading = new load.Loading();
-        this._setProgress = this._loading.load(this.bk.node, true);
+        this._setProgress = this._loading.load(this.ld.node, true);
 
         this.progressBar = this._loading.progressBar;
         this.progressBar.active = true;
@@ -134,7 +138,7 @@ export class login extends Component {
             singleton.netSingleton.mainInterface = new MainInterface();
             await singleton.netSingleton.mainInterface.start(this.bk.node, async (event) =>
             {
-                singleton.netSingleton.player.get_user_data((_step) =>
+                singleton.netSingleton.player.get_user_data(true,(_step) =>
                 {
                     console.log("guide step:", _step);
                     if (common.GuideStep.None == _step)
@@ -142,14 +146,28 @@ export class login extends Component {
                         GameManager.Instance.StartGuide(_step);
                     }
                 });
-                await sleep(100);
-                this._setProgress(1.0);
-                this._loading.done();
+                
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
-                console.log("login sucess!");
-                clearInterval(this.interval);
+
+                //await sleep(100);
+                let checkReady = setInterval(() => 
+                {
+                    if (login.panelOnReady)
+                    {
+                        this._setProgress(1.0);
+                        this._loading.done();
+                        login.panelOnReady = false;
+                        console.log("login sucess!");
+                        clearInterval(this.interval);
+                        clearInterval(checkReady);
+                    }
+                }, 100);
+                
+  
             });
+
+            
         }
        
         //注册回调

@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 export class Loading {
     public static loading:Prefab = null;
     public progressBar:Node = null;
-    private _load:Node = null;
+    public _load:Node = null;
 
     public load(father:Node, desc:boolean = false) : (progress:number) => void {
         console.log("Loading load begin!");
