@@ -153,12 +153,12 @@ export class netPlayer {
     }
 
     //更新玩家账户信息
-    public cb_get_user_data:(_userInfo:common.UserData)=>void;
-    public get_user_data(_onCallBack?:(_step:common.GuideStep)=>void)
+    public cb_get_user_data:(_userInfo:common.UserData , _onLoad:boolean)=>void;
+    public get_user_data(_onLoad?:boolean, _onCallBack?:(_step:common.GuideStep)=>void)
     {
         this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
         {
-            this.cb_get_user_data(_userInfo);
+            this.cb_get_user_data(_userInfo , _onLoad);
             if (_onCallBack) {
                 _onCallBack(_userInfo.guideStep);
             }
