@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Canvas, instantiate, sys } from 'cc';
+import { _decorator, Component, Node, Canvas, instantiate, sys, Game } from 'cc';
 import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
@@ -119,6 +119,9 @@ export class login extends Component {
         {
             this._progress += 0.1;
             this._setProgress(this._progress);
+        }).then(()=>
+        {
+            GameManager.Instance.Init();
         });
 
         singleton.netSingleton.player.cb_player_login_non_account = (code:string) => {

@@ -48,14 +48,13 @@ export class GameManager extends Component
     {
         GameManager._instance=this.node.getComponent(GameManager);
         AudioManager.Instance.Init();
-        this.Init();
     }
 
     async start() 
     {
         try
         {
-            this.InitEvent();
+            
         }
         catch(error)
         {
@@ -64,7 +63,7 @@ export class GameManager extends Component
     }
 
     //初始化
-    private async Init()
+    public async Init()
     {
         try
         {
@@ -119,6 +118,8 @@ export class GameManager extends Component
             this.userInfoBoard.getComponent(UserInfo).start();
             this.taskAchieveBoard.getComponent(TaskAchieve).start();
             this.rankListBoard.getComponent(RankList).start();
+
+            this.InitEvent();
         }
         catch(error)
         {
