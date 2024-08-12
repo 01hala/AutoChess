@@ -11,6 +11,7 @@
       "wechatgame": true
     },
     "isBundle": true,
-    "bundleName": "BackGroung"
+    "bundleName": "BackGroung",
+    "priority": 2
   }
 }

@@ -115,6 +115,9 @@ export class login extends Component {
         {
             this._progress += 0.1;
             this._setProgress(this._progress);
+        }).then(()=>
+        {
+            GameManager.Instance.Init();
         });
 
         singleton.netSingleton.player.cb_player_login_non_account = (code:string) => {
@@ -128,7 +131,7 @@ export class login extends Component {
         //登录进入主界面
         singleton.netSingleton.player.cb_player_login_sucess = async () => 
         {
-            this._progress += 0.3;
+            this._progress += 0.25;
             this._setProgress(this._progress);
 
             singleton.netSingleton.mainInterface = new MainInterface();
@@ -142,11 +145,12 @@ export class login extends Component {
                         GameManager.Instance.StartGuide(_step);
                     }
                 });
-                await sleep(100);
-                this._setProgress(1.0);
-                this._loading.done();
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
+
+                await sleep(1000);
+                this._setProgress(1.0);
+                this._loading.done();
                 console.log("login sucess!");
                 clearInterval(this.interval);
             });

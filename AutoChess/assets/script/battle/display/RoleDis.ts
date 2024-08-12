@@ -73,11 +73,13 @@ export class RoleDis extends Component
 
     private typeface: TTFFont;
 
-    protected async onLoad(): Promise<void> {
+    protected async onLoad(): Promise<void> 
+    {
         try {
             this.typeface = (await BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
 
-            this.levelSprite = this.node.getChildByName("LevelSprite");
+            //this.levelSprite = this.node.getChildByName("LevelSprite");
+
             this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
             this.behurtedTextEffect=this.node.getChildByName("BeHertedTextEffect");
@@ -280,13 +282,13 @@ export class RoleDis extends Component
             this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
             this.levelText.string="<color=#7CFC0><outline color=#7FFF00 width=4>"+ this.Level + "</outline></color>";
 
-            let str="lvl_"+this.Level;
-            let lvlsf:SpriteFrame=await this.LoadImg("LvRing",str);
-            if(lvlsf)
-            {   
-                this.levelSprite=this.node.getChildByPath("LevelSprite");
-                this.levelSprite.getComponent(Sprite).spriteFrame=lvlsf;
-            }
+            // let str = "lvl_" + this.Level;
+            // let lvlsf: SpriteFrame = await this.LoadImg("LvRing", str);
+            // if (lvlsf)
+            // {
+            //     this.levelSprite = this.node.getChildByPath("LevelSprite");
+            //     this.levelSprite.getComponent(Sprite).spriteFrame = lvlsf;
+            // }
         }
         catch (err) 
         {

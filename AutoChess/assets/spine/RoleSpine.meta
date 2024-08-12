@@ -13,6 +13,7 @@
       "wechatgame": true,
       "xiaomi-quick-game": true
     },
-    "isBundle": true
+    "isBundle": true,
+    "priority": 2
   }
 }

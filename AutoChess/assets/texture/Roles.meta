@@ -11,6 +11,7 @@
       "wechatgame": true
     },
     "bundleName": "RolesImg",
-    "isBundle": true
+    "isBundle": true,
+    "priority": 2
   }
 }
