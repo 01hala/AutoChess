@@ -15,6 +15,7 @@ import * as enums from '../other/enums';
 import { CardEditor } from './CardEditor';
 import { GameManager } from '../other/GameManager';
 import SdkManager from '../SDK/SdkManager';
+import { login } from '../login/login';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -346,7 +347,7 @@ export class MainInterface
             
         }
         //回调返回用户信息
-        singleton.netSingleton.player.cb_get_user_data=(_userData:common.UserData)=>
+        singleton.netSingleton.player.cb_get_user_data=(_userData:common.UserData , _onLoad:boolean)=>
         {
             this.userData=_userData;
             this.userAccount.money=_userData.gold;
@@ -357,6 +358,10 @@ export class MainInterface
             this.userAccount.Achiev=_userData.Achiev;
             this.userAccount.wAchiev=_userData.wAchiev;
             this.userAccount.guideStep=_userData.guideStep;
+            if(_onLoad)
+            {
+                login.panelOnReady=true;
+            }
         }
         //回调任务成就完成
         singleton.netSingleton.player.cb_achievement_complete=(achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement)=>
