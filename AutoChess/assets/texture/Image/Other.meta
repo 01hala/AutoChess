@@ -12,6 +12,7 @@
       "web-desktop": true
     },
     "bundleName": "OtherImg",
-    "isBundle": true
+    "isBundle": true,
+    "priority": 2
   }
 }

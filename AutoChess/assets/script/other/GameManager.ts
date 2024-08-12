@@ -123,7 +123,7 @@ export class GameManager extends Component
         }
         catch(error)
         {
-            console.error("GameManager 下的 start 错误 error: ",error);
+            console.error("GameManager 下的 init 错误 error: ",error);
         }
     }
 

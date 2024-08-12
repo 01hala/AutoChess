@@ -11,6 +11,7 @@
       "wechatgame": true
     },
     "isBundle": true,
-    "bundleName": "IconTexture"
+    "bundleName": "IconTexture",
+    "priority": 2
   }
 }
