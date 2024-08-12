@@ -555,7 +555,7 @@ export class BattleDis
                 console.log("检测到召唤技能！");
                 ev.recipient.forEach(element=>{
                     let tmp:rRole;
-                    tmp = new rRole(null,element.index,element.id, 1,0, element.camp, element.properties,null);
+                    tmp = new rRole(null,element.index,element.id, 1,0, element.camp, element.properties,null, 0);
                     let targetTeam = battleEnums.Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
                     let queue = battleEnums.Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
