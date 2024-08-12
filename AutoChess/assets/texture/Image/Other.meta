@@ -11,7 +11,7 @@
       "wechatgame": true,
       "web-desktop": true
     },
-    "isBundle": true,
-    "bundleName": "OtherImg"
+    "bundleName": "OtherImg",
+    "isBundle": true
   }
 }
