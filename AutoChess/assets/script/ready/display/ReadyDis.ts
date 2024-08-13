@@ -105,8 +105,9 @@ export class ReadyDis
             this.roleInfoNode=this.panelNode.getChildByPath("State/TopArea/RoleIntroduce");
             this.roleInfoNode.active=false;
 
-            this.shopMask=this.panelNode.getChildByPath("Shop/ShopMask");
+            this.shopMask=this.panelNode.getChildByPath("Mask");
             //this.shopMask.setPosition(new Vec3(0,this.shopArea.node.position.y+240,0));
+            //this.shopMask.getComponent(Widget).bottom=this.shopArea.node.getComponent(Widget).bottom+310;
             this.shopMask.setSiblingIndex(100);
             this.shopMask.active=false;
 
@@ -268,11 +269,11 @@ export class ReadyDis
         {
             this.shopMask.setSiblingIndex(100);
             this.shopMask.active=true;
-            this.shopMask.getComponent(BlockInputEvents).enabled=true;
+            this.shopMask.getChildByPath("ShopMask").getComponent(BlockInputEvents).enabled=true;
         }
         else
         {
-            this.shopMask.getComponent(BlockInputEvents).enabled=false;
+            this.shopMask.getChildByPath("ShopMask").getComponent(BlockInputEvents).enabled=false;
             this.shopMask.active=false;
         }
     }
