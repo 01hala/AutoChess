@@ -55,18 +55,14 @@ namespace Log
             output(new System.Diagnostics.StackFrame(1), Service.Timerservice.Tick, "err", log, agrvs);
         }
 
-        static void output(StackFrame sf, long tmptime, string level, string log, params object[] agrvs)
+        static private void output(StackFrame sf, long tmptime, string level, string log, params object[] agrvs)
         {
-            log = string.Format(log, agrvs);
-
             var startTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            var time = startTime.AddMilliseconds((double)tmptime);
-
-            var strlog = $"[{time}] [{level}] [{sf.GetMethod().DeclaringType.FullName}] [{sf.GetMethod().Name}]:{log}";
+            var time = startTime.AddMilliseconds(tmptime);
 
             lock (logFile)
             {
-                var realLogFile = logPath + "/" + logFile;
+                var realLogFile = $"{logPath}/{logFile}";
                 {
                     if (!System.IO.File.Exists(realLogFile))
                     {
@@ -84,11 +80,11 @@ namespace Log
                             AutoFlush = true
                         };
                     }
-                    System.IO.FileInfo finfo = new System.IO.FileInfo(realLogFile);
+                    System.IO.FileInfo finfo = new(realLogFile);
                     if (finfo.Length > 1024 * 1024 * 32)
                     {
                         fs.Close();
-                        var tmpfile = $"{realLogFile}.{time.ToString("yyyy_MM_dd_h_m_s")}";
+                        var tmpfile = $"{realLogFile}.{time:yyyy_MM_dd_h_m_s}";
                         finfo.MoveTo(tmpfile);
                         var tmp = System.IO.File.Create(realLogFile);
                         tmp.Close();
@@ -98,7 +94,7 @@ namespace Log
                         };
                     }
                 }
-                fs.WriteLine(strlog);
+                fs.WriteLine($"[{time}] [{level}] [{sf.GetMethod().DeclaringType.FullName}] [{sf.GetMethod().Name}]:{log}", agrvs);
             }
         }
 

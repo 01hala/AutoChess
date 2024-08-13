@@ -67,6 +67,8 @@ namespace battle_shop
             }
         }
 
+        public int stage = 1;
+
         public battle_shop_player(string _clientUUID, battle_client_caller _caller, List<int> roleList, UserInformation info)
         {
             battleData = new UserBattleData();
@@ -170,6 +172,8 @@ namespace battle_shop
         public ShopData refresh(int _stage)
         {
             Log.Log.trace("_refresh begin!");
+
+            stage = _stage;
 
             var i = 4;
             for (; i < shopData.SaleRoleList.Count; i++)
@@ -321,16 +325,16 @@ namespace battle_shop
 
             if (!skip_level.Contains(r.Level))
             {
-                skip_level.Add(r.Level);
+                skip_level.Add(stage);
 
-                var stage = r.Level;
-                if (stage > 6)
+                var _stage = stage + 1;
+                if (_stage > 6)
                 {
-                    stage = 6;
+                    _stage = 6;
                 }
                 if (shopData.SaleRoleList.Count < 6)
                 {
-                    shopData.SaleRoleList.Add(randomShopRole(stage));
+                    shopData.SaleRoleList.Add(randomShopRole(_stage));
                 }
 
                 BattleClientCaller.get_client(ClientUUID).role_update_refresh_shop(shopData);
