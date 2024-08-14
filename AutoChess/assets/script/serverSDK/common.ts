@@ -137,7 +137,13 @@ export enum SkillEffectEM{
     SummonShop = 13,
     AddBuffer = 14,
     AddBuildValue = 15,
-    AttackAll = 16
+    AttackAll = 16,
+    AddTmpExp = 17,
+    ItemReduced = 18,
+    CoinsAddProperty = 19,
+    CounterAttack = 20,
+    DeAttGain = 21,
+    ForcedAttack = 22
 }
 
 export enum ShopIndex{
