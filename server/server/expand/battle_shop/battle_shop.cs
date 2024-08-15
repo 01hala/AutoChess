@@ -567,13 +567,15 @@ namespace battle_shop
             return false;
         }
 
-        public Role add_role(int role_index, int role_id, int role_Level)
+        public Role add_role(int role_index, int index, int role_Level)
         {
-            if (config.Config.RoleConfigs.TryGetValue(role_id, out RoleConfig rcfg))
+            var s = ShopData.SaleRoleList[index];
+
+            if (config.Config.RoleConfigs.TryGetValue(s.RoleID, out RoleConfig rcfg))
             {
                 var r = new Role();
 
-                r.RoleID = role_id;
+                r.RoleID = s.RoleID;
                 r.BuyRound = battleData.round;
                 r.Level = role_Level;
                 r.SkillID = rcfg.SkillID;
@@ -594,6 +596,7 @@ namespace battle_shop
                 battleData.RoleList[role_index] = r;
                 check_fetters();
                 shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
+                ShopData.SaleRoleList[index] = null;
 
                 return r;
             }
@@ -649,7 +652,7 @@ namespace battle_shop
 
             if (config.Config.FoodConfigs.TryGetValue(p.PropID, out var foodcfg))
             {
-                var rs = new List<Role>();
+                var rs = new List<Tuple<Role, int>>();
                 if (foodcfg.Count > 1)
                 {
                     var exclude = new List<int>();
@@ -669,7 +672,7 @@ namespace battle_shop
                         var tmpRole = battleData.RoleList[tmp_index];
                         if (tmpRole != null)
                         {
-                            rs.Add(tmpRole);
+                            rs.Add(Tuple.Create(tmpRole, tmp_index));
                         }
                         exclude.Add(tmp_index);
                         i++;
@@ -677,12 +680,12 @@ namespace battle_shop
                 }
                 else
                 {
-                    rs.Add(r);
+                    rs.Add(Tuple.Create(r, role_index));
                 }
 
                 bool is_update = false;
                 bool is_syncope = false;
-                foreach (var _r in rs)
+                foreach (var (_r, _index) in rs)
                 {
                     foreach (var e in foodcfg.Effect)
                     {
@@ -746,7 +749,7 @@ namespace battle_shop
                         }
                     }
 
-                    BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, role_index, _r, is_update, is_syncope);
+                    BattleClientCaller.get_client(ClientUUID).role_eat_food(p.PropID, _index, _r, is_update, is_syncope);
                 }
 
                 evs.Add(new shop_event()
