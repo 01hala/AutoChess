@@ -67,7 +67,7 @@ export class PropIcon extends Component
         this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
         this.shopArea=this.panel.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
         this.iconMask=this.node.getChildByName("IconMask");
-        //this.iconMask.active=false;
+        this.iconMask.active=false;
         this.collider=this.node.getComponent(Collider2D);
         //this.RegBtn(true);
     }

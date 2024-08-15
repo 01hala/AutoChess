@@ -203,7 +203,6 @@ export class InfoBoard extends Component
                 r=_role.GetRoleInfo().c_role;
             }
             let ro=config.RoleConfig.get(_id);
-            let imgs = this.LoadRoleImage(r);
             //工具生命等级
             this.detailedBoard.getChildByPath("RoleArea/Atk/RichText").getComponent(RichText).string="<color=0>"+r.Attack+"</color>";
             this.detailedBoard.getChildByPath("RoleArea/HP/RichText").getComponent(RichText).string="<color=0>"+r.HP+"</color>";

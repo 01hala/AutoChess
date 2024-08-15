@@ -640,7 +640,7 @@ export class RoleIcon extends Component
         try
         {
             let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
-            let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
+            let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP + t.TempHP).set(battleEmums.Property.Attack,t.Attack + t.Attack);
             let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,[-1],t.additionBuffer);
             //console.log('当前等级 ')
             this.roleNode.getComponent(RoleDis).Refresh(r);
@@ -658,7 +658,7 @@ export class RoleIcon extends Component
         
     }
     //玩家吃食物
-    async EatFood(t:common.Role,food_id:number){
+    async EatFood(t:common.Role,food_id:number,is_update: boolean , is_syncope : boolean){
         try
         {
             console.log("人物尝试吃食物");
@@ -666,6 +666,12 @@ export class RoleIcon extends Component
             let foodInfo=config.FoodConfig.get(food_id);
             if(!foodInfo){
                 console.log("can not find config of food:"+food_id);
+                return;
+            }
+            if(is_syncope)
+            {
+                this.roleNode.getComponent(RoleDis).Exit();
+                console.log("角色离场");
                 return;
             }
             let value =[];
@@ -690,6 +696,11 @@ export class RoleIcon extends Component
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
             this.upgradeLock=false;
+
+            if(is_update)
+            {
+                this.GetUpgrade(t,is_update);
+            }
         }
         catch(error)
         {

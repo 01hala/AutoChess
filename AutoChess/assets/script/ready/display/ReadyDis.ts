@@ -108,7 +108,7 @@ export class ReadyDis
             this.shopMask=this.panelNode.getChildByPath("Mask");
             //this.shopMask.setPosition(new Vec3(0,this.shopArea.node.position.y+240,0));
             //this.shopMask.getComponent(Widget).bottom=this.shopArea.node.getComponent(Widget).bottom+310;
-            this.shopMask.setSiblingIndex(100);
+            this.shopMask.setSiblingIndex(90);
             this.shopMask.active=false;
 
             if(_value instanceof common.UserBattleData)
@@ -318,31 +318,33 @@ export class ReadyDis
 
         };
         //使用道具（食物）
-        singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean) =>
+        singleton.netSingleton.game.cb_role_eat_food = (food_id: number, target_role_index: number, target_role: common.Role, is_update: boolean , is_syncope : boolean) =>
         {
             // let str = "Location_" + target_role_index;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
-            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).EatFood(target_role, food_id);
+            this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).EatFood(target_role, food_id , is_update , is_syncope);
         };
         //使用装备
         singleton.netSingleton.game.cb_role_equip = (equip_id: number, target_role_index: number, target_role: common.Role) =>
         {
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).Equipping(target_role, equip_id);
         }
-        //角色技能更新商店
-        singleton.netSingleton.game.cb_role_update_refresh_shop = (shop_info: common.ShopData) =>
+        //角色技能：更新商店
+        singleton.netSingleton.game.cb_role_update_refresh_shop = async (shop_info: common.ShopData) =>
         {
+            await this.showLaunchSkillEffect();
             this.readyData.SetShopData(shop_info);
             this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage());
         };
-        //角色技能增加金币
-        singleton.netSingleton.game.cb_add_coin = (coin: number) =>
+        //角色技能：增加金币
+        singleton.netSingleton.game.cb_add_coin = async (coin: number) =>
         {
+            await this.showLaunchSkillEffect();
             this.readyData.SetCoins(coin);
         };
-        //角色技能升级
+        //角色技能：升级
         singleton.netSingleton.game.cb_role_skill_update = async (role_index: number, _role: common.Role) =>
         {
             await this.showLaunchSkillEffect();
@@ -351,7 +353,7 @@ export class ReadyDis
                 this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role, false);
             }
         };
-        //角色获得属性
+        //角色技能：获得属性
         singleton.netSingleton.game.cb_role_add_property = async (battle_info: common.UserBattleData) =>
         {
             await this.showLaunchSkillEffect();
@@ -363,9 +365,10 @@ export class ReadyDis
                 }
             }
         };
-        //角色召唤技能
-        singleton.netSingleton.game.cb_shop_summon = (role_index: number, _role: common.Role) =>
+        //角色技能：召唤
+        singleton.netSingleton.game.cb_shop_summon = async (role_index: number, _role: common.Role) =>
         {
+            await this.showLaunchSkillEffect();
             this.roleArea.SummonRole(role_index, _role);
         };
     }
