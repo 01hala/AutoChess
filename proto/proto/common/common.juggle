@@ -219,6 +219,11 @@ enum EMSkillEvent
     front_be_hurt = 22;  		//前方伙伴受伤时
     before_attack = 23;  		//攻击前
 	all_mechanic_syncope = 24;  //所有机械师晕厥时
+	after_attack=25;			//攻击后
+    change_self_location=26;	//我方位置改变
+    change_enemy_location=27;	//敌方位置改变
+	self_front_null=28;			//前排为空
+	enemy_front_null=29;		//敌方前排为空
 }
 
 enum SkillEffectEM {
