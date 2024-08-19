@@ -691,7 +691,7 @@ export class RoleIcon extends Component
                     case 6:break;
                 }
             }
-            let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
+            let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP+t.TempHP).set(battleEmums.Property.Attack,t.Attack+t.TempAttack);
             let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,[-1],t.additionBuffer);
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
@@ -724,7 +724,7 @@ export class RoleIcon extends Component
                         await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
                     }break;
                     case 3:{
-                        let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
+                        let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP+t.TempHP).set(battleEmums.Property.Attack,t.Attack+t.TempAttack);
                         for(let temp of equipInfo.Vaule){
                             t.additionBuffer.push(temp);
                         }
