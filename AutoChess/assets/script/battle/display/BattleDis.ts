@@ -653,18 +653,26 @@ export class BattleDis
                     {
                         if(this.selfQueue.roleNodes[element.index])
                         {
-                            if(!ev.isParallel) allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
-                            else{
+                            if (!ev.isParallel) 
+                            {
+                                allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                            }
+                            else
+                            {
                                 this.selfParallelList.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
                             }
                         } 
                     }
-                    else
+                    if(battleEnums.Camp.Enemy == element.camp)
                     {
                         if(this.enemyQueue.roleNodes[element.index])
                         {
-                            if(!ev.isParallel)allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
-                            else{
+                            if (!ev.isParallel)
+                            {
+                                allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                            }
+                            else
+                            {
                                 this.enemyParallelList.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
                             }
                         }
