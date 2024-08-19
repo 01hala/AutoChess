@@ -25,7 +25,7 @@ export class Queue extends Component
     public readyLocation:Node;
     @property(Node)
     public battleLocation:Node;
-    //角色列表
+    //角色列表（站位和下标对应）
     public roleNodes:Node[] = [null, null, null, null, null, null];
 
     start() 
@@ -193,6 +193,23 @@ export class Queue extends Component
         catch (err)
         {
             console.warn("Queue 下的 RemoveRole 错误:", err);
+        }
+    }
+
+    //角色换位
+    async SwitchRolePos(_recipient:RoleInfo[] , _indexValue:number[])
+    {
+        try
+        {
+            for(let i=0;i<_recipient.length;i++)
+                {
+                    await this.roleNodes[_recipient[i].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[i]].position);
+                    this.roleNodes[i].getComponent(RoleDis.RoleDis).AttackInit();
+                }
+        }
+        catch(err)
+        {
+            console.error("Queue 下的 SwitchRolePos 错误:", err);
         }
     }
 }
