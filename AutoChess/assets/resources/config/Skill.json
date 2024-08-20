@@ -490,7 +490,7 @@
         "EffectTime": 8,
         "Effect": 1,
         "ObjCount": 1,
-        "EffectScope": 0,
+        "EffectScope": 1,
         "ObjDirection": 2,
         "Level1Value_1": 2.0,
         "Level1Value_2": 0.0,
