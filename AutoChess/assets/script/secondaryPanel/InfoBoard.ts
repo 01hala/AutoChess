@@ -168,19 +168,14 @@ export class InfoBoard extends Component
         this.simpleBoard.getComponent(Animation).play("PanelAppear");
     }
 
-    private async ShowSimpel(_index:number)
+    private async ShowSimpel(_id:number)
     {
-        let r:common.Role;
-        if (singleton.netSingleton.ready)
-        {
-            r = singleton.netSingleton.ready.readyData.GetRole(_index);
-        }
         //角色名
-        this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _index;
-        let ro = config.RoleConfig.get(_index);
+        this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _id;
+        let ro = config.RoleConfig.get(_id);
         this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = ro.Name;
         //技能介绍
-        let str = config.SkillIntroduceConfig.get(r.SkillID);
+        let str = config.SkillIntroduceConfig.get(_id);
         console.log(str.Id);
         this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = str.Leve1Text;
         this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + str.Timeing_Text + ":</color>";
