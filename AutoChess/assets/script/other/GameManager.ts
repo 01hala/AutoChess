@@ -161,7 +161,7 @@ export class GameManager extends Component
         },this);
 
         /* 消息来源
-         * RoleIcon.ts : 第 345 行 
+         * RoleIcon.ts : 第 453 行 
          * 
          * 
          * 
@@ -172,7 +172,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.role , event.detail.isBuy , event.detail.propType);
+            this.infoPanel.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
         },this);
 
         /* 消息来源

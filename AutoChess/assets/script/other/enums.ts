@@ -60,3 +60,10 @@ export enum SDK_TYPE
     WX = 1, 	
     Default = 2,	
 }
+
+export enum SpecialEffect
+{
+    /** 护盾 */
+    Shields=1,
+    
+}
