@@ -6,7 +6,8 @@
  */
 import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color, Event, Button } from 'cc';
 import { Role } from '../AutoChessBattle//role';
-import * as enums from '../AutoChessBattle/enum';
+import * as BattleEnums from '../AutoChessBattle/enum';
+import * as enums from '../../other/enums';
 import { Battle } from '../AutoChessBattle//battle';
 import * as skill from '../AutoChessBattle//skill/skill_base'
 import { netDriver } from '../../netDriver/netDriver';
@@ -21,6 +22,8 @@ import { loadAssets } from '../../bundle/LoadAsset';
 import { sleep } from '../../other/sleep';
 import { AudioManager } from '../../other/AudioManager';
 import { SendMessage } from '../../other/MessageEvent';
+import * as common from '../../battle/AutoChessBattle/common';
+import { EffectSpine } from './EffectSpine';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -51,8 +54,6 @@ export class RoleDis extends Component
     private hpText: RichText;
     private atkText: RichText;
     private levelText:RichText;
-    //等级光圈
-    private levelSprite: Node;
     //增益提示
     private intensifierText: Node;
     private behurtedTextEffect:Node;
@@ -72,6 +73,8 @@ export class RoleDis extends Component
     private idText:RichText;
 
     private typeface: TTFFont;
+    //特效效果
+    private effectSpine:Node;
 
     protected async onLoad(): Promise<void> 
     {
@@ -85,6 +88,7 @@ export class RoleDis extends Component
             this.behurtedTextEffect=this.node.getChildByName("BeHertedTextEffect");
             this.beHurtedText=this.behurtedTextEffect.getChildByName("BeHurtedText");
             this.hurtedSpine=this.node.getChildByPath("BeHurtedSpine");
+            this.effectSpine=this.node.getChildByPath("EffectSpine");
 
             this.bandage.active = false;
             this.intensifierText.active = false;
@@ -197,7 +201,7 @@ export class RoleDis extends Component
         this.originalPos = new Vec3(this.node.position);
     }
 
-    Attack(readyLocation: Vec3, battleLocation: Vec3, camp: enums.Camp ) 
+    Attack(readyLocation: Vec3, battleLocation: Vec3, camp: BattleEnums.Camp ) 
     {
         try 
         {
@@ -213,7 +217,7 @@ export class RoleDis extends Component
                 //上面是蓄力效果
                 .to(0.05, { worldPosition: battleLocation })
                 .call(() => {
-                    if (enums.Camp.Self == camp) {
+                    if (BattleEnums.Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(true);
                         // let roleConfig = config.RoleConfig.get(this.RoleId);
                         // let audioString="Sound/sound_character_hit_MN";
@@ -224,7 +228,7 @@ export class RoleDis extends Component
                     }
                 })
                 .delay(0.1).call(() => {
-                    if (enums.Camp.Self == camp) {
+                    if (BattleEnums.Camp.Self == camp) {
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
                 })
@@ -267,8 +271,12 @@ export class RoleDis extends Component
     {
         try 
         {
-            this.Hp = Math.round(this.roleInfo.GetProperty(enums.Property.HP));
-            this.AtkNum = Math.round(this.roleInfo.GetProperty(enums.Property.Attack));
+            if(this.roleInfo.getShields())
+            {
+                this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
+            }
+            this.Hp = Math.round(this.roleInfo.GetProperty(BattleEnums.Property.HP));
+            this.AtkNum = Math.round(this.roleInfo.GetProperty(BattleEnums.Property.Attack));
             this.Level=this.roleInfo.level;
 
             if(null==this.hpText && null==this.atkText)
@@ -466,7 +474,7 @@ export class RoleDis extends Component
         });
     }
 
-    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: enums.Camp,callBack?:()=>{}) 
+    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: BattleEnums.Camp,callBack?:()=>{}) 
     {
         try 
         {
@@ -495,7 +503,7 @@ export class RoleDis extends Component
             });
             
             let offset=-1000;
-            if(enums.Camp.Self!=this.roleInfo.selfCamp) offset=1000;
+            if(BattleEnums.Camp.Self!=this.roleInfo.selfCamp) offset=1000;
             let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
             tween(this.node)
             .call(()=>
@@ -546,26 +554,6 @@ export class RoleDis extends Component
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    private LoadImg(_bundle:string,_address:string):Promise<SpriteFrame>
-    {
-        return new Promise(async (resolve)=>
-        {
-            let imgRes=""+_address;
-            let temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
-            if(null==temp)
-            {
-                 console.warn('RoleDis 里的 LoadImg 异常 : bundle中没有此角色图片,替换为默认角色图片');
-                 resolve(null);
-                 //imgRes=""+_address+1001;
-                 //temp=await BundleManager.Instance.LoadImgsFromBundle(_bundle, imgRes);
-            }
-            let texture=new Texture2D();
-            texture.image=temp;
-            let sp=new SpriteFrame();
-            sp.texture=texture;  
-            resolve(sp);
-        });
-    }
     /*
     * 添加
     * author：Guanliu
@@ -575,6 +563,37 @@ export class RoleDis extends Component
    Equipping(equipId:number){
         this.roleInfo.equip[0]=equipId;
    }
+
+  /*
+   * 添加
+   * author：Hotaru
+   * 2024/08/24
+   * 使用技能表现
+  */
+   Useskill(_effect : common.SkillEffectEM)
+   {
+        return new Promise((resolve)=>
+        {
+            
+        });
+   }
+   /*
+    * 添加
+    * author：Hotaru
+    * 2024/08/24
+    * 接收效果表现
+   */
+   ReceptionEffect(_effect : common.SkillEffectEM , _buffid?:number):Promise<void>
+   {
+        return new Promise((resolve)=>
+        {
+            if(common.SkillEffectEM.GainShield == _effect)
+            {
+                this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields);
+            }
+        });
+   }
+
 /*
  * 添加
  * author：Hotaru

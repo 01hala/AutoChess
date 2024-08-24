@@ -152,21 +152,18 @@ export class ReadyData
         }
     }
 /*
- * 修改for函数参数
+ * 修改参数
  * Editor: Hotaru
- * 2024/04/02
+ * 2024/08/24
  */
-    public GetRole(_id:number)
+    public GetRole(_index:number)
     {
         try
         {
             console.log("获取角色信息 GetRole",ReadyData.roles);
-            for(let i=0;i<ReadyData.roles.length;i++)
+            if(ReadyData.roles[_index])
             {
-                if(null!=ReadyData.roles[i] && ReadyData.roles[i].RoleID==_id)
-                {
-                    return ReadyData.roles[i];
-                }
+                return ReadyData.roles[_index];
             }
         }
         catch(error)

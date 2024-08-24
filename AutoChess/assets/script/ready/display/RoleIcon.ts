@@ -450,7 +450,7 @@ export class RoleIcon extends Component
         if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
         
         //singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
-        this.node.dispatchEvent(new SendMessage('OpenInfoBoard',true,{id:this.roleId , role:roleInfo , isBuy:this.isBuy}));
+        this.node.dispatchEvent(new SendMessage('OpenInfoBoard',true,{id:this.roleId , index:this.index , role:roleInfo , isBuy:this.isBuy}));
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/
