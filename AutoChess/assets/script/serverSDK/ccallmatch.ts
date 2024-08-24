@@ -368,6 +368,36 @@ export class plan_start_round1_cb{
 
 }
 
+export class plan_end_round_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : plan_rsp_cb;
+
+    public event_end_round_handle_cb : ()=>void | null;
+    public event_end_round_handle_err : (err:number)=>void | null;
+    public event_end_round_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : plan_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_end_round_handle_cb = null;
+        this.event_end_round_handle_err = null;
+        this.event_end_round_handle_timeout = null;
+    }
+
+    callBack(_cb:()=>void, _err:(err:number)=>void)
+    {
+        this.event_end_round_handle_cb = _cb;
+        this.event_end_round_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.end_round_timeout(this.cb_uuid); }, tick);
+        this.event_end_round_handle_timeout = timeout_cb;
+    }
+
+}
+
 export class plan_confirm_round_victory_cb{
     private cb_uuid : number;
     private module_rsp_cb : plan_rsp_cb;
@@ -437,6 +467,7 @@ export class plan_rsp_cb extends client_handle.imodule {
     public map_freeze:Map<number, plan_freeze_cb>;
     public map_start_round:Map<number, plan_start_round_cb>;
     public map_start_round1:Map<number, plan_start_round1_cb>;
+    public map_end_round:Map<number, plan_end_round_cb>;
     public map_confirm_round_victory:Map<number, plan_confirm_round_victory_cb>;
     public map_get_battle_data:Map<number, plan_get_battle_data_cb>;
     constructor(modules:client_handle.modulemng){
@@ -462,6 +493,9 @@ export class plan_rsp_cb extends client_handle.imodule {
         this.map_start_round1 = new Map<number, plan_start_round1_cb>();
         modules.add_method("plan_rsp_cb_start_round1_rsp", this.start_round1_rsp.bind(this));
         modules.add_method("plan_rsp_cb_start_round1_err", this.start_round1_err.bind(this));
+        this.map_end_round = new Map<number, plan_end_round_cb>();
+        modules.add_method("plan_rsp_cb_end_round_rsp", this.end_round_rsp.bind(this));
+        modules.add_method("plan_rsp_cb_end_round_err", this.end_round_err.bind(this));
         this.map_confirm_round_victory = new Map<number, plan_confirm_round_victory_cb>();
         modules.add_method("plan_rsp_cb_confirm_round_victory_rsp", this.confirm_round_victory_rsp.bind(this));
         modules.add_method("plan_rsp_cb_confirm_round_victory_err", this.confirm_round_victory_err.bind(this));
@@ -717,6 +751,40 @@ export class plan_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public end_round_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_b200ded4_c2df_3318_9e21_eeb40185d01b:any[] = [];
+        var rsp = this.try_get_and_del_end_round_cb(uuid);
+        if (rsp && rsp.event_end_round_handle_cb) {
+            rsp.event_end_round_handle_cb.apply(null, _argv_b200ded4_c2df_3318_9e21_eeb40185d01b);
+        }
+    }
+
+    public end_round_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_b200ded4_c2df_3318_9e21_eeb40185d01b:any[] = [];
+        _argv_b200ded4_c2df_3318_9e21_eeb40185d01b.push(inArray[1]);
+        var rsp = this.try_get_and_del_end_round_cb(uuid);
+        if (rsp && rsp.event_end_round_handle_err) {
+            rsp.event_end_round_handle_err.apply(null, _argv_b200ded4_c2df_3318_9e21_eeb40185d01b);
+        }
+    }
+
+    public end_round_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_end_round_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_end_round_handle_timeout) {
+                rsp.event_end_round_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_end_round_cb(uuid : number){
+        var rsp = this.map_end_round.get(uuid);
+        this.map_end_round.delete(uuid);
+        return rsp;
+    }
+
     public confirm_round_victory_rsp(inArray:any[]){
         let uuid = inArray[0];
         let _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0:any[] = [];
@@ -912,6 +980,18 @@ export class plan_hubproxy
             rsp_cb_plan_handle.map_start_round1.set(uuid_5813c0ea_49f7_594f_866e_a947cbfbb3da, cb_start_round1_obj);
         }
         return cb_start_round1_obj;
+    }
+
+    public end_round(){
+        let uuid_87091b14_67f0_5eef_8f30_e27a4107b7b9 = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
+
+        let _argv_b200ded4_c2df_3318_9e21_eeb40185d01b:any[] = [uuid_87091b14_67f0_5eef_8f30_e27a4107b7b9];
+        this._client_handle.call_hub(this.hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_end_round", _argv_b200ded4_c2df_3318_9e21_eeb40185d01b);
+        let cb_end_round_obj = new plan_end_round_cb(uuid_87091b14_67f0_5eef_8f30_e27a4107b7b9, rsp_cb_plan_handle);
+        if (rsp_cb_plan_handle){
+            rsp_cb_plan_handle.map_end_round.set(uuid_87091b14_67f0_5eef_8f30_e27a4107b7b9, cb_end_round_obj);
+        }
+        return cb_end_round_obj;
     }
 
     public confirm_round_victory(is_victory:common.BattleVictory){
