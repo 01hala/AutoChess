@@ -271,6 +271,30 @@ namespace Abelkhan
 
     }
 
+    public class plan_end_round_rsp : Common.Response {
+        private string _client_uuid_b200ded4_c2df_3318_9e21_eeb40185d01b;
+        private UInt64 uuid_b571a133_858c_38bd_b1b5_9f43b0a9951f;
+        public plan_end_round_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_b200ded4_c2df_3318_9e21_eeb40185d01b = client_uuid;
+            uuid_b571a133_858c_38bd_b1b5_9f43b0a9951f = _uuid;
+        }
+
+        public void rsp(){
+            var _argv_b200ded4_c2df_3318_9e21_eeb40185d01b = new ArrayList();
+            _argv_b200ded4_c2df_3318_9e21_eeb40185d01b.Add(uuid_b571a133_858c_38bd_b1b5_9f43b0a9951f);
+            Hub.Hub._gates.call_client(_client_uuid_b200ded4_c2df_3318_9e21_eeb40185d01b, "plan_rsp_cb_end_round_rsp", _argv_b200ded4_c2df_3318_9e21_eeb40185d01b);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_b200ded4_c2df_3318_9e21_eeb40185d01b = new ArrayList();
+            _argv_b200ded4_c2df_3318_9e21_eeb40185d01b.Add(uuid_b571a133_858c_38bd_b1b5_9f43b0a9951f);
+            _argv_b200ded4_c2df_3318_9e21_eeb40185d01b.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_b200ded4_c2df_3318_9e21_eeb40185d01b, "plan_rsp_cb_end_round_err", _argv_b200ded4_c2df_3318_9e21_eeb40185d01b);
+        }
+
+    }
+
     public class plan_confirm_round_victory_rsp : Common.Response {
         private string _client_uuid_22132c31_7fe4_3f20_affe_f0c3ca2172f0;
         private UInt64 uuid_b097a393_cca0_3faf_84e2_071bbf305285;
@@ -334,6 +358,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("plan_freeze", freeze);
             Hub.Hub._modules.add_mothed("plan_start_round", start_round);
             Hub.Hub._modules.add_mothed("plan_start_round1", start_round1);
+            Hub.Hub._modules.add_mothed("plan_end_round", end_round);
             Hub.Hub._modules.add_mothed("plan_confirm_round_victory", confirm_round_victory);
             Hub.Hub._modules.add_mothed("plan_get_battle_data", get_battle_data);
         }
@@ -413,6 +438,16 @@ namespace Abelkhan
             rsp = new plan_start_round1_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_start_round1 != null){
                 on_start_round1();
+            }
+            rsp = null;
+        }
+
+        public event Action on_end_round;
+        public void end_round(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            rsp = new plan_end_round_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_end_round != null){
+                on_end_round();
             }
             rsp = null;
         }

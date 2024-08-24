@@ -27,11 +27,31 @@ namespace Match
             plan_Module.on_freeze += Plan_Module_on_freeze;
             plan_Module.on_start_round += Plan_Module_on_start_round;
             plan_Module.on_get_battle_data += Plan_Module_on_get_battle_data;
+            plan_Module.on_end_round += Plan_Module_on_end_round;
 
             peak_Strength_Module.on_start_peak_strength += Peak_Strength_Module_on_start_peak_strength;
             peak_Strength_Module.on_confirm_peak_strength_victory += Peak_Strength_Module_on_confirm_peak_strength_victory;
 
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
+        }
+
+        private void Plan_Module_on_end_round()
+        {
+            var rsp = plan_Module.rsp as plan_end_round_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _player = Match.battle_Mng.get_battle_player(uuid);
+                _player.end_round();
+                _player.BattleShopPlayer.do_skill(_player.baseStage());
+                rsp.rsp();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_end_round error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Peak_Strength_Module_on_confirm_peak_strength_victory(BattleVictory is_victory)
@@ -296,9 +316,6 @@ namespace Match
             try
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
-
-                _player.end_round();
-                _player.BattleShopPlayer.do_skill(_player.baseStage());
 
                 var target = await getCacheBattleData(_player.BattleShopPlayer.BattleData.round);
                 if (target == null)

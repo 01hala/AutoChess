@@ -653,18 +653,26 @@ export class BattleDis
                     {
                         if(this.selfQueue.roleNodes[element.index])
                         {
-                            if(!ev.isParallel) allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
-                            else{
+                            if (!ev.isParallel) 
+                            {
+                                allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                            }
+                            else
+                            {
                                 this.selfParallelList.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
                             }
                         } 
                     }
-                    else
+                    if(battleEnums.Camp.Enemy == element.camp)
                     {
                         if(this.enemyQueue.roleNodes[element.index])
                         {
-                            if(!ev.isParallel)allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
-                            else{
+                            if (!ev.isParallel)
+                            {
+                                allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                            }
+                            else
+                            {
                                 this.enemyParallelList.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
                             }
                         }
@@ -790,6 +798,33 @@ export class BattleDis
             console.error("BattleDis 下的 CheckExitEvent 错误 err:", error);
         }
     }
+    
+    async CheckTransPosition(evs:skill.Event[])
+    {
+        try
+        {
+            let allAwait = [];
+            for(let ev of evs)
+            {
+                if(battleEnums.EventType.ChangeLocation == ev.type)
+                {
+                    if (battleEnums.Camp.Self == ev.spellcaster.camp)
+                    {
+                        allAwait.push(this.selfQueue.SwitchRolePos(ev.recipient,ev.value));
+                    }
+                    else if (battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                    {
+                        allAwait.push(this.enemyQueue.SwitchRolePos(ev.recipient,ev.value));
+                    }
+                }
+            }
+            await Promise.all(allAwait);
+        }
+        catch(error) 
+        {
+            console.error("BattleDis 下的 CheckTransPosition 错误 err:", error);
+        }
+    }
 
     onEvent()
     {
@@ -798,6 +833,7 @@ export class BattleDis
             try 
             {
                 await this.CheckBeginBattle(evs);
+                await this.CheckTransPosition(evs);
                 await this.CheckRemoteInjured(evs);
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);

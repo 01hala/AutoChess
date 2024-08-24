@@ -19,6 +19,8 @@ module plan {
     start_round req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
     start_round1 req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
 
+    end_round req() rsp() err(int32 err);
+
     confirm_round_victory req(BattleVictory is_victory) rsp() err();
 
     get_battle_data req() rsp(UserBattleData battle_info, ShopData shop_info, Fetters[] fetters_info) err();

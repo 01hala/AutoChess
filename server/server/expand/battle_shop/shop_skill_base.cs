@@ -42,11 +42,6 @@ namespace battle_shop
 
         public List<skill_execute> Trigger(int stage, List<shop_event> evs, battle_shop_player _player)
         {
-            if (is_trigger)
-            {
-                return null;
-            }
-
             var ret = new List<skill_execute>();
 
             ShopSkillConfig skill;

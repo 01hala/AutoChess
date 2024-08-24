@@ -135,7 +135,7 @@ export class RoleArea extends Component
                     obj.getComponent(RoleIcon).index=i;
                     obj.getComponent(RoleIcon).target=this.targets.get("Location_" + i);
                     obj.getComponent(RoleIcon).isBuy=true;
-                    await obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP,_roleList[i].Attack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
+                    await obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP+_roleList[i].TempHP,_roleList[i].Attack+_roleList[i].TempAttack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
                     //obj.getComponent(RoleIcon).iconMask.active=false;
                     if (this.rolesNode[i]) {
                         this.rolesNode[i].destroy();
@@ -162,7 +162,7 @@ export class RoleArea extends Component
         obj.getComponent(RoleIcon).index=_index;
         obj.getComponent(RoleIcon).target=this.targets.get("Location_" + _index);
 
-        await obj.getComponent(RoleIcon).Init(_role.RoleID,_role.HP,_role.Attack,_role.Level,_role.Number,false,_role.FettersSkillID,_index);
+        await obj.getComponent(RoleIcon).Init(_role.RoleID,_role.HP+_role.TempHP,_role.Attack+_role.TempAttack,_role.Level,_role.Number,false,_role.FettersSkillID,_index);
         this.rolesNode[_index]=obj;
 
     }
