@@ -45,7 +45,7 @@ export class EffectSpine extends Component
                     this.shieldSkele.enabled=true;
                     this.shieldSkele.setCompleteListener((trackEntry)=>
                     {
-                        if(trackEntry.animation.name === this.shieldSkele.animation)
+                        if(trackEntry.animation.name === String(anims[2]))
                         {
                             this.shieldSkele.setAnimation(0, String(anims[1]), true);
                         }
@@ -74,10 +74,7 @@ export class EffectSpine extends Component
                         this.shieldSkele.timeScale=-1;
                         this.shieldSkele.setCompleteListener((trackEntry) =>
                         {
-                            if (trackEntry.animation.name === this.shieldSkele.animation)
-                            {
-                                this.shieldSkele.enabled=false;
-                            }
+                            this.shieldSkele.enabled=false;
                         });
                     }
                     resolve();

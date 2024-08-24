@@ -175,7 +175,7 @@ export class InfoBoard extends Component
         let ro = config.RoleConfig.get(_id);
         this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = ro.Name;
         //技能介绍
-        let str = config.SkillIntroduceConfig.get(_id);
+        let str = config.SkillIntroduceConfig.get(_id%100000);
         console.log(str.Id);
         this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = str.Leve1Text;
         this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + str.Timeing_Text + ":</color>";
@@ -210,7 +210,7 @@ export class InfoBoard extends Component
             //名字
             this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=#b98b00><outline width=5>"+ro.Name+"</outline></color>";
             //技能信息
-            let sk=config.SkillIntroduceConfig.get(_index%100000);
+            let sk=config.SkillIntroduceConfig.get(r.SkillID);
             this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#785d00><outline width=5>"+sk.Timeing_Text+": </outline></color>";
             let str="";
             switch(r.Level)
