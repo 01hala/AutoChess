@@ -4,41 +4,55 @@
         "Name": "护盾",
         "Type": 7,
         "Value": 1,
-        "Round": 1
+        "Round": 1,
+        "Frequency": 0
     },
     "2": {
         "Id": 2,
-        "Name": "减伤",
+        "Name": "抗性",
         "Type": 5,
         "Value": 1,
-        "Round": 1
+        "Round": 1,
+        "Frequency": 0
     },
     "3": {
         "Id": 3,
-        "Name": "攻击力增加",
+        "Name": "力量",
         "Type": 6,
         "Value": 1,
-        "Round": 1
+        "Round": 1,
+        "Frequency": 0
     },
     "4": {
         "Id": 4,
-        "Name": "分摊伤害",
+        "Name": "平均",
         "Type": 2,
         "Value": 1,
-        "Round": 1
+        "Round": 1,
+        "Frequency": 0
     },
     "5": {
         "Id": 5,
         "Name": "虚弱",
-        "Type": 0,
+        "Type": 4,
         "Value": 1,
-        "Round": 1
+        "Round": 1,
+        "Frequency": 0
     },
     "6": {
         "Id": 6,
         "Name": "圣盾",
-        "Type": 0,
+        "Type": 3,
         "Value": 1,
-        "Round": 1
+        "Round": 1,
+        "Frequency": 1
+    },
+    "7": {
+        "Id": 7,
+        "Name": "击破",
+        "Type": 1,
+        "Value": 1,
+        "Round": 1,
+        "Frequency": 1
     }
 }
