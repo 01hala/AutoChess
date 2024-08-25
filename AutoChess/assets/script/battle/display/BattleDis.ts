@@ -887,22 +887,22 @@ export class BattleDis
     {
         try
         {
-            let allAwait = [];
-            for(let ev of evs)
+            for (let ev of evs)
             {
-                if(battleEnums.EventType.ChangeLocation == ev.type)
+                if (battleEnums.EventType.ChangeLocation != ev.type)
                 {
-                    if (battleEnums.Camp.Self == ev.spellcaster.camp)
-                    {
-                        allAwait.push(this.selfQueue.SwitchRolePos(ev.recipient,ev.value));
-                    }
-                    else if (battleEnums.Camp.Enemy == ev.spellcaster.camp)
-                    {
-                        allAwait.push(this.enemyQueue.SwitchRolePos(ev.recipient,ev.value));
-                    }
+                    continue;
+                }
+
+                if (battleEnums.Camp.Self == ev.spellcaster.camp)
+                {
+                    await this.enemyQueue.SwitchRolePos(ev.recipient, ev.value);
+                }
+                if (battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                {
+                    await this.selfQueue.SwitchRolePos(ev.recipient, ev.value);
                 }
             }
-            await Promise.all(allAwait);
         }
         catch(error) 
         {

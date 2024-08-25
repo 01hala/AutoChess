@@ -273,6 +273,10 @@ export class RoleDis extends Component
         {
             if(this.roleInfo.getShields())
             {
+                if(null == this.effectSpine)
+                {
+                    this.effectSpine=this.node.getChildByPath("EffectSpine");
+                }
                 this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
             }
             this.Hp = Math.round(this.roleInfo.GetProperty(BattleEnums.Property.HP));
@@ -461,7 +465,7 @@ export class RoleDis extends Component
     {
         console.log(`shiftPos begin!`);
         //开始缓动
-        this.tShiftpos = tween(this.node).to(0.3, { position: vec }).start();
+        this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).start();
         //返回延迟300ms
         return this.delay(300, () => 
         {
