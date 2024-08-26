@@ -507,13 +507,6 @@ export class BattleDis
                         else{
                             if(battleEnums.Camp.Self==ev.spellcaster.camp) 
                             {
-                                for(let r of ev.recipient)
-                                {
-                                    if(this.battleCentre.GetEnemyTeam().GetRole(r.index).CheckDead())
-                                    {
-                                        // singleton.netSingleton.game.kill_Role_ntf(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
-                                    }
-                                }
                                 let selfRoleDis = self.getComponent(RoleDis);
                                 if (selfRoleDis) {
                                     this.selfParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos,this.father, ev));
@@ -552,7 +545,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    await this.showLaunchSkillEffect();
                 }
                 console.log("检测到召唤技能！");
                 ev.recipient.forEach(element=>{
@@ -597,7 +590,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    await this.showLaunchSkillEffect();
                 }
                 console.log("检测到加临时经验值事件");
                 
@@ -643,7 +636,7 @@ export class BattleDis
                 }
                 else
                 {
-                    this.showLaunchSkillEffect();
+                    await this.showLaunchSkillEffect();
                 }
                 console.log("检测到加属性事件");
                 
@@ -916,6 +909,8 @@ export class BattleDis
         {
             try 
             {
+                console.log("onEvent evs:", evs);
+
                 await this.CheckBeginBattle(evs);
                 await this.CheckTransPosition(evs);
                 await this.CheckRemoteInjured(evs);
