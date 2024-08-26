@@ -22,14 +22,16 @@ export class RoleArea extends Component
         }
     }
 
-    start()
+    destroy(): boolean
     {
-        
-    }
-
-    update(deltaTime: number) 
-    {
-        
+        for (let i = 0; i < this.rolesNode.length; i++)
+        {
+            if (this.rolesNode[i])
+            {
+                this.rolesNode[i].destroy();
+            }
+        }
+        return super.destroy();
     }
 
     GetTargetRole(index:number){

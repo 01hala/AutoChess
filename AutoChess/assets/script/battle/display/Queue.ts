@@ -34,6 +34,17 @@ export class Queue extends Component
 
     }
 
+    destroyRole()
+    {
+        for(let i=0;i<this.roleNodes.length;i++)
+        {
+            if(this.roleNodes[i])
+            {
+                this.roleNodes[i].destroy();
+            }
+        }
+    }
+
     public GetRole(_index)
     {
         if(_index>0 && _index<7)
@@ -197,17 +208,31 @@ export class Queue extends Component
         }
     }
 
-    //角色换位
+    /**
+     * 交换角色位置
+     * @param _recipient 需要交换的角色
+     * @param _indexValue 目标位置
+     * @returns 
+     */
     async SwitchRolePos(_recipient:RoleInfo[] , _indexValue:number[]):Promise<void>
     {
         return new Promise(async (resolve)=>
         {
             try
             {
-                for (let i = 0; i < _recipient.length; i++)
+                let tempRole;
+                if(this.roleNodes[_recipient[0].index])
                 {
-                    await this.roleNodes[_recipient[i].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[i]].worldPosition);
+                    await this.roleNodes[_recipient[0].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[0]].worldPosition);
                 }
+                if(this.roleNodes[_recipient[1].index])
+                {
+                    await this.roleNodes[_recipient[1].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[1]].worldPosition);
+                }
+
+                tempRole = this.roleNodes[_indexValue[0]];
+                this.roleNodes[_indexValue[0]] = this.roleNodes[_indexValue[1]];
+                this.roleNodes[_indexValue[1]] = tempRole;
                 await sleep(500);
                 resolve();
             }

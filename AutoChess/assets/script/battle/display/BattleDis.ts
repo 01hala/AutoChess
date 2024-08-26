@@ -73,7 +73,10 @@ export class BattleDis
         this.onEvent();
     }
 
-    public destory() {
+    public destory() 
+    {
+        this.selfQueue.destroyRole();
+        this.enemyQueue.destroyRole();
         this.panelNode.destroy();
     }
 
@@ -636,10 +639,9 @@ export class BattleDis
                 }
                 else
                 {
-                    await this.showLaunchSkillEffect();
+                    //await this.showLaunchSkillEffect();
                 }
                 console.log("检测到加属性事件");
-                
                 //受到增益者            
                 ev.recipient.forEach(element=>{
                     
@@ -649,7 +651,11 @@ export class BattleDis
                         {
                             if (!ev.isParallel) 
                             {
-                                allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                                allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.selfQueue.roleNodes[element.index],()=>
+                                {
+                                    this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
+                                    this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
+                                }));
                             }
                             else
                             {
@@ -663,7 +669,11 @@ export class BattleDis
                         {
                             if (!ev.isParallel)
                             {
-                                allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                                allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.enemyQueue.roleNodes[element.index],()=>
+                                {
+                                    this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
+                                    this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
+                                }));
                             }
                             else
                             {
@@ -880,6 +890,7 @@ export class BattleDis
     {
         try
         {
+            let allAwait = [];
             for (let ev of evs)
             {
                 if (battleEnums.EventType.ChangeLocation != ev.type)
@@ -889,13 +900,14 @@ export class BattleDis
 
                 if (battleEnums.Camp.Self == ev.spellcaster.camp)
                 {
-                    await this.enemyQueue.SwitchRolePos(ev.recipient, ev.value);
+                    allAwait.push(this.enemyQueue.SwitchRolePos(ev.recipient, ev.value));
                 }
                 if (battleEnums.Camp.Enemy == ev.spellcaster.camp)
                 {
-                    await this.selfQueue.SwitchRolePos(ev.recipient, ev.value);
+                    allAwait.push(this.selfQueue.SwitchRolePos(ev.recipient, ev.value));
                 }
             }
+            await Promise.all(allAwait);
         }
         catch(error) 
         {

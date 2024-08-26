@@ -459,7 +459,10 @@ export class ReadyDis
         }
     }
 
-    public destory() {
+    public destory() 
+    {
+        this.roleArea.destroy();
+        this.shopArea.destroy();
         this.panelNode.destroy();
     }
 

@@ -72,27 +72,46 @@ export class ShopArea extends Component
         // this.node.getComponent(Widget).bottom = outPos.y;
     }
 
-    update(deltaTime: number) 
+    destroy(): boolean
     {
-        
+        for (let i = 0; i < this.shopRoles.length; i++)
+        {
+            if (this.shopRoles[i]) this.shopRoles[i].destroy();
+
+        }
+        for (let i = 0; i < this.shopProps.length; i++)
+        {
+            if (this.shopProps[i]) this.shopProps[i].destroy();
+
+        }
+        return super.destroy();
     }
+
+    // destroyProps()
+    // {
+    //     for (let i = 0; i < this.shopRoles.length; i++)
+    //     {
+    //         if(this.shopRoles[i]) this.shopRoles[i].destroy();
+            
+    //     }
+    //     for (let i = 0; i < this.shopProps.length; i++)
+    //     {
+    //         if(this.shopProps[i]) this.shopProps[i].destroy();
+            
+    //     }
+    // }
 
     Init(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
     {
-        for(let t of this.shopRoles)
+        for (let i = 0; i < this.shopRoles.length; i++)
         {
-            if(t)
-            {
-                t.destroy();
-            }
-            
+            if (this.shopRoles[i]) this.shopRoles[i].destroy();
+
         }
-        for(let t of this.shopProps)
+        for (let i = 0; i < this.shopProps.length; i++)
         {
-            if(t)
-            {
-                t.destroy();
-            }
+            if (this.shopProps[i]) this.shopProps[i].destroy();
+
         }
         this.shopRoles=[];
         this.shopProps=[];

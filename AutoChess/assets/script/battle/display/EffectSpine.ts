@@ -2,6 +2,7 @@ import { _decorator, Component, Node, sp } from 'cc';
 import * as enums from '../../other/enums';
 const { ccclass, property } = _decorator;
 import * as common from '../../battle/AutoChessBattle/common';
+import { loadAssets } from '../../bundle/LoadAsset';
 
 @ccclass('EffectSpine')
 export class EffectSpine extends Component 
@@ -27,9 +28,31 @@ export class EffectSpine extends Component
         
     }
 
-    private LoadSkeleData(_str:string , _effect:enums.SpecialEffect)
+    private LoadEffectData(_str:string)
     {
-        
+        try
+        {
+            loadAssets.LoadSkeletonData(_str, (data) =>
+            {
+                if (data)
+                {
+                    try
+                    {
+                        this.effectSkele.skeletonData = data;
+                        let anims = data.skeletonData.getAnimsEnum();
+                        this.effectSkele.setAnimation(0, String(anims[1]), true);
+                    }
+                    catch (error)
+                    {
+                        console.warn(`子弹光球效果获取失败：`, error);
+                    }
+                }
+            });
+        }
+        catch (error)
+        {
+            console.error(`Bullet 下的 LoadOnConfig 错误 err:${error}`);
+        }
     }
 
     public ShowEffect(_effect:enums.SpecialEffect):Promise<void>
@@ -50,6 +73,23 @@ export class EffectSpine extends Component
                             this.shieldSkele.setAnimation(0, String(anims[1]), true);
                         }
                     });
+                }
+                switch(_effect)
+                {
+                    case enums.SpecialEffect.AddProperty:
+                        {
+                            this.LoadEffectData("EffectSpine/zqsx/attribute");
+                            this.effectSkele.enabled=true;
+                            let anims = this.effectSkele.skeletonData.getAnimsEnum();
+                            this.effectSkele.setCompleteListener((trackEntry) =>
+                            {
+                                if (trackEntry.animation.name === String(anims[1]))
+                                {
+                                    this.effectSkele.enabled=false;
+                                }
+                            });
+                        }
+                        break;
                 }
                 resolve();
             }

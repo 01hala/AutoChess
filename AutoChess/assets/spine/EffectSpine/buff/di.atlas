@@ -1,0 +1,13 @@
+
+di.png
+size: 400,400
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+qiu
+  rotate: false
+  xy: 2, 2
+  size: 396, 396
+  orig: 396, 396
+  offset: 0, 0
+  index: -1

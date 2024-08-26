@@ -93,9 +93,10 @@ export class RoleIcon extends Component
        }
     }
 
-    start() 
+    destroy(): boolean
     {
-    
+        this.roleNode.destroy();
+        return super.destroy();// this._super.call()
     }
 
     //初始化
@@ -363,6 +364,7 @@ export class RoleIcon extends Component
             }
             roleDis.Refresh(r,true);
             resolve(role);
+            this.destroy
         });
     }
     //购买角色时的动画效果

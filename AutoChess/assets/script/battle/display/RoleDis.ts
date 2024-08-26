@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color, Event, Button } from 'cc';
+import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color, Event, Button, UITransform } from 'cc';
 import { Role } from '../AutoChessBattle//role';
 import * as BattleEnums from '../AutoChessBattle/enum';
 import * as enums from '../../other/enums';
@@ -568,34 +568,86 @@ export class RoleDis extends Component
         this.roleInfo.equip[0]=equipId;
    }
 
-  /*
-   * 添加
-   * author：Hotaru
-   * 2024/08/24
-   * 使用技能表现
-  */
-   Useskill(_effect : common.SkillEffectEM)
+   /**
+    * 使用技能表现
+    * @param _effect 效果类型
+    * 
+    * author：Hotaru
+    * 2024/08/24
+    */
+   Useskill(_effect : common.SkillEffectEM):Promise<void>
    {
         return new Promise((resolve)=>
         {
             
         });
    }
-   /*
-    * 添加
-    * author：Hotaru
-    * 2024/08/24
-    * 接收效果表现
+  /**
+   * 接受效果表现
+   * @param _effect 效果类型
+   * @param _buffid buffID
+   * 
+   * author：Hotaru
+   * 2024/08/24
    */
-   ReceptionEffect(_effect : common.SkillEffectEM , _buffid?:number):Promise<void>
+   ReceptionEffect(_effect : common.SkillEffectEM , _buffid?:number)
    {
-        return new Promise((resolve)=>
-        {
-            if(common.SkillEffectEM.GainShield == _effect)
-            {
-                this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields);
-            }
-        });
+       if (common.SkillEffectEM.GainShield == _effect)
+       {
+           this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields);
+       }
+       switch(_effect)
+       {
+            case common.SkillEffectEM.AddProperty:
+                {
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty);
+                }
+                break;
+       }
+       return this.delay(100,()=>{});
+   }
+   /**
+    * 释放效果表现
+    * @param _effect 效果类型
+    * 
+    * author：Hotaru
+    * 2024/08/26
+    */
+   SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>void)
+   {   
+       console.log("释放效果表现");
+       switch (_effect)
+       {
+           case common.SkillEffectEM.AddProperty:
+               {
+
+                   let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
+                   let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
+                   this.DeliveryGain(pos1, pos2);
+                   return this.delay(700, () => { _callBack(); });
+               }
+               break;
+           case common.SkillEffectEM.RecoverHP:
+               {
+
+               }
+               break;
+       }
+       return;
+   }
+   private DeliveryGain(_spellcasterLocation:Vec3 , _targetLocation:Vec3)
+   {
+       try 
+       {
+           let bulletNode = instantiate(this.remoteNode);
+           bulletNode.setPosition(_spellcasterLocation);
+           bulletNode.getComponent(Bullet).Init(_targetLocation , true);
+           singleton.netSingleton.battle.father.addChild(bulletNode)
+       }
+       catch (err) 
+       {
+           console.warn("RoleDis 下的 DeliveryGain 错误 err:" + err);
+       }
    }
 
 /*

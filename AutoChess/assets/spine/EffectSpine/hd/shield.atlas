@@ -153,14 +153,14 @@ particle/particle_00028
   index: -1
 shield_idle_00007
   rotate: false
-  xy: 1699, 1442
+  xy: 1148, 201
   size: 472, 450
   orig: 600, 600
   offset: 64, 80
   index: -1
-shield_idle_00009
+shield_idle_00008
   rotate: false
-  xy: 1148, 201
+  xy: 1699, 1442
   size: 472, 450
   orig: 600, 600
   offset: 64, 80
@@ -527,7 +527,7 @@ shield_idle/shield_idle_00029
   orig: 600, 600
   offset: 64, 82
   index: -1
-shield_idle_00008
+shield_idle_00009
   rotate: false
   xy: 2, 1850
   size: 472, 450

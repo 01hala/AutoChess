@@ -1,0 +1,27 @@
+
+ding.png
+size: 600,600
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+huan
+  rotate: false
+  xy: 2, 26
+  size: 571, 572
+  orig: 571, 572
+  offset: 0, 0
+  index: -1
+ling_1
+  rotate: false
+  xy: 49, 2
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+ling_2
+  rotate: true
+  xy: 2, 3
+  size: 21, 45
+  orig: 21, 45
+  offset: 0, 0
+  index: -1
