@@ -22,7 +22,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_1",
-        "FetterAudio": ""
+        "FetterAudio": "",
+        "": "",
+        "FetterEffect": ""
     },
     "2": {
         "Id": 2,
@@ -47,7 +49,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_2",
-        "FetterAudio": "battle_skill_Berserker"
+        "FetterAudio": "battle_skill_Berserker",
+        "": "",
+        "FetterEffect": ""
     },
     "3": {
         "Id": 3,
@@ -72,7 +76,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_3",
-        "FetterAudio": "battle_skill_Pirate"
+        "FetterAudio": "battle_skill_Pirate",
+        "": "",
+        "FetterEffect": ""
     },
     "4": {
         "Id": 4,
@@ -97,7 +103,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_4",
-        "FetterAudio": ""
+        "FetterAudio": "",
+        "": "",
+        "FetterEffect": ""
     },
     "5": {
         "Id": 5,
@@ -122,7 +130,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_5",
-        "FetterAudio": "battle_skill_Warlock_summon"
+        "FetterAudio": "battle_skill_Warlock_summon",
+        "": "",
+        "FetterEffect": ""
     },
     "6": {
         "Id": 6,
@@ -147,7 +157,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_6",
-        "FetterAudio": "battle_skill_Mech_summon"
+        "FetterAudio": "battle_skill_Mech_summon",
+        "": "",
+        "FetterEffect": ""
     },
     "7": {
         "Id": 7,
@@ -172,7 +184,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_7",
-        "FetterAudio": ""
+        "FetterAudio": "",
+        "": "",
+        "FetterEffect": ""
     },
     "8": {
         "Id": 8,
@@ -197,7 +211,9 @@
         "RefreshItemNum": 2,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_8",
-        "FetterAudio": ""
+        "FetterAudio": "",
+        "": "",
+        "FetterEffect": ""
     },
     "9": {
         "Id": 9,
@@ -222,7 +238,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_9",
-        "FetterAudio": ""
+        "FetterAudio": "",
+        "": "",
+        "FetterEffect": ""
     },
     "10": {
         "Id": 10,
@@ -247,7 +265,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_10",
-        "FetterAudio": "battle_skill_Shaman"
+        "FetterAudio": "battle_skill_Shaman",
+        "": "",
+        "FetterEffect": ""
     },
     "11": {
         "Id": 11,
@@ -272,7 +292,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_11",
-        "FetterAudio": ""
+        "FetterAudio": "",
+        "": "",
+        "FetterEffect": ""
     },
     "12": {
         "Id": 12,
@@ -297,7 +319,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_12",
-        "FetterAudio": "battle_skill_Intermediary"
+        "FetterAudio": "battle_skill_Intermediary",
+        "": "",
+        "FetterEffect": ""
     },
     "13": {
         "Id": 13,
@@ -322,7 +346,9 @@
         "RefreshItemNum": 0,
         "AddBufferID": 4,
         "Res": "IconTexture/Fetters/Fetters_13",
-        "FetterAudio": "battle_skill_Paladin"
+        "FetterAudio": "battle_skill_Paladin",
+        "": "",
+        "FetterEffect": ""
     },
     "14": {
         "Id": 14,
@@ -347,6 +373,8 @@
         "RefreshItemNum": 0,
         "AddBufferID": 0,
         "Res": "IconTexture/Fetters/Fetters_14",
-        "FetterAudio": ""
+        "FetterAudio": "",
+        "": "",
+        "FetterEffect": ""
     }
 }

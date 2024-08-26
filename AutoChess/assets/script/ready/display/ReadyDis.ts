@@ -22,6 +22,7 @@ import { RoleDis } from '../../battle/display/RoleDis';
 import { GameManager } from '../../other/GameManager';
 import { AudioManager } from '../../other/AudioManager';
 import SdkManager from '../../SDK/SdkManager';
+import * as call_c from '../../serverSDK/matchcallc';
 
 const { ccclass, property } = _decorator;
 
@@ -332,31 +333,27 @@ export class ReadyDis
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).Equipping(target_role, equip_id);
         }
         //角色技能：更新商店
-        singleton.netSingleton.game.cb_role_update_refresh_shop = async (shop_info: common.ShopData) =>
+        singleton.netSingleton.game.cb_role_update_refresh_shop = (shop_info: common.ShopData) =>
         {
-            await this.showLaunchSkillEffect();
             this.readyData.SetShopData(shop_info);
             this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage());
         };
         //角色技能：增加金币
-        singleton.netSingleton.game.cb_add_coin = async (coin: number) =>
+        singleton.netSingleton.game.cb_add_coin = (coin: number) =>
         {
-            await this.showLaunchSkillEffect();
             this.readyData.SetCoins(coin);
         };
         //角色技能：升级
-        singleton.netSingleton.game.cb_role_skill_update = async (role_index: number, _role: common.Role) =>
+        singleton.netSingleton.game.cb_role_skill_update = (role_index: number, _role: common.Role) =>
         {
-            await this.showLaunchSkillEffect();
             if (this.roleArea.rolesNode[role_index])
             {
                 this.roleArea.rolesNode[role_index].getComponent(RoleIcon).GetUpgrade(_role, false);
             }
         };
         //角色技能：获得属性
-        singleton.netSingleton.game.cb_role_add_property = async (battle_info: common.UserBattleData) =>
+        singleton.netSingleton.game.cb_role_add_property = (battle_info: common.UserBattleData) =>
         {
-            await this.showLaunchSkillEffect();
             for (let i = 0; i < this.roleArea.rolesNode.length; i++)
             {
                 if (null != this.roleArea.rolesNode[i])
@@ -366,11 +363,16 @@ export class ReadyDis
             }
         };
         //角色技能：召唤
-        singleton.netSingleton.game.cb_shop_summon = async (role_index: number, _role: common.Role) =>
+        singleton.netSingleton.game.cb_shop_summon = (role_index: number, _role: common.Role) =>
         {
-            await this.showLaunchSkillEffect();
             this.roleArea.SummonRole(role_index, _role);
         };
+        //角色技能效果
+        singleton.netSingleton.game.cb_shop_skill_effect = (effect:call_c.ShopSkillEffect)=>
+        {
+            
+        };
+
     }
 
 /*

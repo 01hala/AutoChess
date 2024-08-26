@@ -48,7 +48,7 @@ export class InfoBoard extends Component
         });
     }
     
-    async OpenInfoBoard(id:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
+    async OpenInfoBoard(id:number,index?:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
     {
         try
         {
@@ -115,7 +115,7 @@ export class InfoBoard extends Component
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
                     
-                    this.ShowDetailed(id,role);
+                    this.ShowDetailed(index,role);
                 }   
             }
             if (GameManager.Instance.guide)
@@ -175,7 +175,7 @@ export class InfoBoard extends Component
         let ro = config.RoleConfig.get(_id);
         this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = ro.Name;
         //技能介绍
-        let str = config.SkillIntroduceConfig.get(_id % 100000);
+        let str = config.SkillIntroduceConfig.get(_id%100000);
         console.log(str.Id);
         this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = str.Leve1Text;
         this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + str.Timeing_Text + ":</color>";
@@ -188,7 +188,7 @@ export class InfoBoard extends Component
         this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
     }
 
-    private async ShowDetailed(_id:number,_role?:RoleDis)
+    private async ShowDetailed(_index:number,_role?:RoleDis)
     {
         try
         {
@@ -196,13 +196,13 @@ export class InfoBoard extends Component
             let r:common.Role;
             if(singleton.netSingleton.ready)
             {
-                r=singleton.netSingleton.ready.readyData.GetRole(_id);
+                r=singleton.netSingleton.ready.readyData.GetRole(_index);
             }
             if(singleton.netSingleton.battle)
             {
                 r=_role.GetRoleInfo().c_role;
             }
-            let ro=config.RoleConfig.get(_id);
+            let ro=config.RoleConfig.get(r.RoleID);
             //工具生命等级
             this.detailedBoard.getChildByPath("RoleArea/Atk/RichText").getComponent(RichText).string="<color=0>"+r.Attack+"</color>";
             this.detailedBoard.getChildByPath("RoleArea/HP/RichText").getComponent(RichText).string="<color=0>"+r.HP+"</color>";
@@ -210,7 +210,7 @@ export class InfoBoard extends Component
             //名字
             this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=#b98b00><outline width=5>"+ro.Name+"</outline></color>";
             //技能信息
-            let sk=config.SkillIntroduceConfig.get(_id%100000);
+            let sk=config.SkillIntroduceConfig.get(r.SkillID);
             this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#785d00><outline width=5>"+sk.Timeing_Text+": </outline></color>";
             let str="";
             switch(r.Level)
