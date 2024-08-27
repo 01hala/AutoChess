@@ -74,44 +74,33 @@ export class ShopArea extends Component
 
     destroy(): boolean
     {
-        for (let i = 0; i < this.shopRoles.length; i++)
+        try
         {
-            if (this.shopRoles[i]) this.shopRoles[i].destroy();
-
+            for(let t of this.shopRoles)
+            {
+                if(t) t.destroy();
+            }
+            for(let t of this.shopProps)
+            {
+                if(t) t.destroy();
+            }
         }
-        for (let i = 0; i < this.shopProps.length; i++)
+        catch(err)
         {
-            if (this.shopProps[i]) this.shopProps[i].destroy();
-
+            console.warn("ShopArea 下的 destroy 异常：",err);
         }
-        return super.destroy();
+        return super.destroy();// this._super.call()
     }
-
-    // destroyProps()
-    // {
-    //     for (let i = 0; i < this.shopRoles.length; i++)
-    //     {
-    //         if(this.shopRoles[i]) this.shopRoles[i].destroy();
-            
-    //     }
-    //     for (let i = 0; i < this.shopProps.length; i++)
-    //     {
-    //         if(this.shopProps[i]) this.shopProps[i].destroy();
-            
-    //     }
-    // }
 
     Init(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
     {
-        for (let i = 0; i < this.shopRoles.length; i++)
+        for (let t of this.shopRoles)
         {
-            if (this.shopRoles[i]) this.shopRoles[i].destroy();
-
+            if (t) t.destroy();
         }
-        for (let i = 0; i < this.shopProps.length; i++)
+        for (let t of this.shopProps)
         {
-            if (this.shopProps[i]) this.shopProps[i].destroy();
-
+            if (t) t.destroy();
         }
         this.shopRoles=[];
         this.shopProps=[];

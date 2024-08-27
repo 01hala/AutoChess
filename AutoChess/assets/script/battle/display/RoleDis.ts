@@ -134,7 +134,7 @@ export class RoleDis extends Component
                 {
                     singleton.netSingleton.battle.puase = true;
                     AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                    this.node.dispatchEvent(new SendMessage('OpenInfoBoard', true, { id: this.RoleId, role: this, isBuy: true }));
+                    this.node.dispatchEvent(new SendMessage('OpenInfoBoard', true, { id: this.RoleId, role: this.node.getComponent(RoleDis), isBuy: true }));
                 }
             })
         }
@@ -478,7 +478,7 @@ export class RoleDis extends Component
         });
     }
 
-    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3, father: Node ,camp?: BattleEnums.Camp,callBack?:()=>{}) 
+    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3 ,camp?: BattleEnums.Camp,callBack?:()=>{}) 
     {
         try 
         {
@@ -486,7 +486,7 @@ export class RoleDis extends Component
             bulletNode.setPosition(spellcasterLocation);
             console.log(bulletNode);
             bulletNode.getComponent(Bullet).Init(targetLocation);
-            father.addChild(bulletNode);
+            singleton.netSingleton.battle.panelNode.addChild(bulletNode);
 
             return this.delay(700, () => {});
         }
@@ -642,7 +642,7 @@ export class RoleDis extends Component
            let bulletNode = instantiate(this.remoteNode);
            bulletNode.setPosition(_spellcasterLocation);
            bulletNode.getComponent(Bullet).Init(_targetLocation , true);
-           singleton.netSingleton.battle.father.addChild(bulletNode)
+           singleton.netSingleton.battle.panelNode.addChild(bulletNode);
        }
        catch (err) 
        {

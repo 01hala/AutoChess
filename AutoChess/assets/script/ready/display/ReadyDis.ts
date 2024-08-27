@@ -197,7 +197,6 @@ export class ReadyDis
                 {
                     await this.readyData.StartBattle();
                     this.panelNode.active = false;
-                    this.destory();
                 }
             });
             //退出按钮

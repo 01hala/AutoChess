@@ -24,13 +24,21 @@ export class RoleArea extends Component
 
     destroy(): boolean
     {
-        for (let i = 0; i < this.rolesNode.length; i++)
+        try
         {
-            if (this.rolesNode[i])
+            for(let t of this.rolesNode)
             {
-                this.rolesNode[i].destroy();
+                if(t)
+                {
+                    t.destroy();
+                }
             }
         }
+        catch(err)
+        {
+            console.warn("RoleArea 下的 destroy 异常：",err);
+        }
+        // this._super.call();
         return super.destroy();
     }
 

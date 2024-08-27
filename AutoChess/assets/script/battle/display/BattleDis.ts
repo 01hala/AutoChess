@@ -466,8 +466,8 @@ export class BattleDis
         shake();
     }
 
-    private async showRemoteAttack(selfRoleDis: RoleDis, spellcasterLocation: Vec3, targetLocation: Vec3, father: Node, ev:skill.Event) {
-        await selfRoleDis.RemoteAttack(spellcasterLocation, targetLocation, this.father)
+    private async showRemoteAttack(selfRoleDis: RoleDis, spellcasterLocation: Vec3, targetLocation: Vec3, ev:skill.Event) {
+        await selfRoleDis.RemoteAttack(spellcasterLocation, targetLocation);
         await this.ChangeAttEvent([ev]);
     }
 
@@ -503,7 +503,7 @@ export class BattleDis
                         if(!ev.isParallel){
                             let selfRoleDis = self.getComponent(RoleDis);
                             if (selfRoleDis) {
-                                await selfRoleDis.RemoteAttack(selfpos, targetpos,this.father);
+                                await selfRoleDis.RemoteAttack(selfpos, targetpos);
                                 await this.ChangeAttEvent([ev]);
                             }
                         }
@@ -512,14 +512,14 @@ export class BattleDis
                             {
                                 let selfRoleDis = self.getComponent(RoleDis);
                                 if (selfRoleDis) {
-                                    this.selfParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos,this.father, ev));
+                                    this.selfParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev));
                                 }
                             }
                             else 
                             {
                                 let selfRoleDis = self.getComponent(RoleDis); 
                                 if (selfRoleDis) {
-                                    this.enemyParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos,this.father, ev));
+                                    this.enemyParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev));
                                 }
                             }
                         }
