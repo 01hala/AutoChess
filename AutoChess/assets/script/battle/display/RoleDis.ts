@@ -613,7 +613,7 @@ export class RoleDis extends Component
     * author：Hotaru
     * 2024/08/26
     */
-   SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>void)
+   SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>Promise<void>)
    {   
        console.log("释放效果表现");
        switch (_effect)
@@ -624,7 +624,7 @@ export class RoleDis extends Component
                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
                    this.DeliveryGain(pos1, pos2);
-                   return this.delay(700, () => { _callBack(); });
+                   return this.delay(1100, async () => { await _callBack(); });
                }
                break;
            case common.SkillEffectEM.RecoverHP:

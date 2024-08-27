@@ -651,10 +651,10 @@ export class BattleDis
                         {
                             if (!ev.isParallel) 
                             {
-                                allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.selfQueue.roleNodes[element.index],()=>
+                                allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.selfQueue.roleNodes[element.index], async ()=>
                                 {
-                                    this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
-                                    this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
+                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
+                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
                             else
@@ -669,10 +669,10 @@ export class BattleDis
                         {
                             if (!ev.isParallel)
                             {
-                                allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.enemyQueue.roleNodes[element.index],()=>
+                                allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.enemyQueue.roleNodes[element.index],async ()=>
                                 {
-                                    this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
-                                    this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
+                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
+                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
                             else
