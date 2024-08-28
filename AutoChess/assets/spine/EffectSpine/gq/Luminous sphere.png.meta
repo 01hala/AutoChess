@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "91c3b0e0-a479-43cf-aac6-11289a6ac26a",
+  "uuid": "7d2cc6d1-c911-4ad1-9966-8f3d4dd42c59",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "91c3b0e0-a479-43cf-aac6-11289a6ac26a@6c48a",
+      "uuid": "7d2cc6d1-c911-4ad1-9966-8f3d4dd42c59@6c48a",
       "displayName": "Luminous sphere",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "91c3b0e0-a479-43cf-aac6-11289a6ac26a",
+        "imageUuidOrDatabaseUri": "7d2cc6d1-c911-4ad1-9966-8f3d4dd42c59",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "91c3b0e0-a479-43cf-aac6-11289a6ac26a@f9941",
+      "uuid": "7d2cc6d1-c911-4ad1-9966-8f3d4dd42c59@f9941",
       "displayName": "Luminous sphere",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "91c3b0e0-a479-43cf-aac6-11289a6ac26a@6c48a",
+        "imageUuidOrDatabaseUri": "7d2cc6d1-c911-4ad1-9966-8f3d4dd42c59@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "91c3b0e0-a479-43cf-aac6-11289a6ac26a@f9941"
+    "redirect": "7d2cc6d1-c911-4ad1-9966-8f3d4dd42c59@f9941"
   }
 }

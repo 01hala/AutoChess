@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "29e33544-60e6-4bb4-8dd5-38199df60ae8",
+  "uuid": "aa2f1056-1b47-48e8-ae53-df8925af01b7",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "29e33544-60e6-4bb4-8dd5-38199df60ae8@6c48a",
+      "uuid": "aa2f1056-1b47-48e8-ae53-df8925af01b7@6c48a",
       "displayName": "角色展示台",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "29e33544-60e6-4bb4-8dd5-38199df60ae8",
+        "imageUuidOrDatabaseUri": "aa2f1056-1b47-48e8-ae53-df8925af01b7",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "29e33544-60e6-4bb4-8dd5-38199df60ae8@f9941",
+      "uuid": "aa2f1056-1b47-48e8-ae53-df8925af01b7@f9941",
       "displayName": "角色展示台",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "29e33544-60e6-4bb4-8dd5-38199df60ae8@6c48a",
+        "imageUuidOrDatabaseUri": "aa2f1056-1b47-48e8-ae53-df8925af01b7@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "29e33544-60e6-4bb4-8dd5-38199df60ae8@f9941"
+    "redirect": "aa2f1056-1b47-48e8-ae53-df8925af01b7@f9941"
   }
 }

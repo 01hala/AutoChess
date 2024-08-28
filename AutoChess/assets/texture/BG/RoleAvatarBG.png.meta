@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "65ecc35c-3be6-43a5-9fef-84a857ab69d4",
+  "uuid": "bdc624be-d7c0-48eb-978c-bf71bb26730d",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "65ecc35c-3be6-43a5-9fef-84a857ab69d4@6c48a",
+      "uuid": "bdc624be-d7c0-48eb-978c-bf71bb26730d@6c48a",
       "displayName": "RoleAvatarBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "65ecc35c-3be6-43a5-9fef-84a857ab69d4",
+        "imageUuidOrDatabaseUri": "bdc624be-d7c0-48eb-978c-bf71bb26730d",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "65ecc35c-3be6-43a5-9fef-84a857ab69d4@f9941",
+      "uuid": "bdc624be-d7c0-48eb-978c-bf71bb26730d@f9941",
       "displayName": "RoleAvatarBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "65ecc35c-3be6-43a5-9fef-84a857ab69d4@6c48a",
+        "imageUuidOrDatabaseUri": "bdc624be-d7c0-48eb-978c-bf71bb26730d@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "65ecc35c-3be6-43a5-9fef-84a857ab69d4@f9941"
+    "redirect": "bdc624be-d7c0-48eb-978c-bf71bb26730d@f9941"
   }
 }

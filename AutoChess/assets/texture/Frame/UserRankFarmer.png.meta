@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "26fc863b-43c7-455b-8b87-1ab414e14d34",
+  "uuid": "a27d06a5-877c-4d24-9a6f-0f707df7261d",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "26fc863b-43c7-455b-8b87-1ab414e14d34@6c48a",
+      "uuid": "a27d06a5-877c-4d24-9a6f-0f707df7261d@6c48a",
       "displayName": "UserRankFarmer",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "26fc863b-43c7-455b-8b87-1ab414e14d34",
+        "imageUuidOrDatabaseUri": "a27d06a5-877c-4d24-9a6f-0f707df7261d",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "26fc863b-43c7-455b-8b87-1ab414e14d34@f9941",
+      "uuid": "a27d06a5-877c-4d24-9a6f-0f707df7261d@f9941",
       "displayName": "UserRankFarmer",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "26fc863b-43c7-455b-8b87-1ab414e14d34@6c48a",
+        "imageUuidOrDatabaseUri": "a27d06a5-877c-4d24-9a6f-0f707df7261d@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "26fc863b-43c7-455b-8b87-1ab414e14d34@f9941"
+    "redirect": "a27d06a5-877c-4d24-9a6f-0f707df7261d@f9941"
   }
 }

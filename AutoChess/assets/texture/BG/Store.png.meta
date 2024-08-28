@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "5b50d168-0bfc-4f60-8f50-624dd5286a8b",
+  "uuid": "3947028c-b3ec-461d-8cfc-2197b8fb4cfd",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "5b50d168-0bfc-4f60-8f50-624dd5286a8b@6c48a",
+      "uuid": "3947028c-b3ec-461d-8cfc-2197b8fb4cfd@6c48a",
       "displayName": "Store",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "5b50d168-0bfc-4f60-8f50-624dd5286a8b",
+        "imageUuidOrDatabaseUri": "3947028c-b3ec-461d-8cfc-2197b8fb4cfd",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "5b50d168-0bfc-4f60-8f50-624dd5286a8b@f9941",
+      "uuid": "3947028c-b3ec-461d-8cfc-2197b8fb4cfd@f9941",
       "displayName": "Store",
       "id": "f9941",
       "name": "spriteFrame",
@@ -50,8 +50,8 @@
         "height": 2992,
         "rawWidth": 1500,
         "rawHeight": 2992,
-        "borderTop": 140,
-        "borderBottom": 233,
+        "borderTop": 0,
+        "borderBottom": 0,
         "borderLeft": 0,
         "borderRight": 0,
         "packable": true,
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "5b50d168-0bfc-4f60-8f50-624dd5286a8b@6c48a",
+        "imageUuidOrDatabaseUri": "3947028c-b3ec-461d-8cfc-2197b8fb4cfd@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "5b50d168-0bfc-4f60-8f50-624dd5286a8b@f9941"
+    "redirect": "3947028c-b3ec-461d-8cfc-2197b8fb4cfd@f9941"
   }
 }

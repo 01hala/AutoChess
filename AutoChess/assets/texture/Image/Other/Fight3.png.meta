@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "f971d414-0e87-4902-8732-75c0ac3b3936",
+  "uuid": "fe98d927-94ef-48cf-860f-28396499a5bc",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "f971d414-0e87-4902-8732-75c0ac3b3936@6c48a",
+      "uuid": "fe98d927-94ef-48cf-860f-28396499a5bc@6c48a",
       "displayName": "Fight3",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "f971d414-0e87-4902-8732-75c0ac3b3936",
+        "imageUuidOrDatabaseUri": "fe98d927-94ef-48cf-860f-28396499a5bc",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "f971d414-0e87-4902-8732-75c0ac3b3936@f9941",
+      "uuid": "fe98d927-94ef-48cf-860f-28396499a5bc@f9941",
       "displayName": "Fight3",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "f971d414-0e87-4902-8732-75c0ac3b3936@6c48a",
+        "imageUuidOrDatabaseUri": "fe98d927-94ef-48cf-860f-28396499a5bc@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "f971d414-0e87-4902-8732-75c0ac3b3936@f9941"
+    "redirect": "fe98d927-94ef-48cf-860f-28396499a5bc@f9941"
   }
 }

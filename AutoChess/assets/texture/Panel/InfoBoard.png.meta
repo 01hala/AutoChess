@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af",
+  "uuid": "862ca10f-c6c5-4f34-9ccc-b52719b711ef",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af@6c48a",
+      "uuid": "862ca10f-c6c5-4f34-9ccc-b52719b711ef@6c48a",
       "displayName": "InfoBoard",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af",
+        "imageUuidOrDatabaseUri": "862ca10f-c6c5-4f34-9ccc-b52719b711ef",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af@f9941",
+      "uuid": "862ca10f-c6c5-4f34-9ccc-b52719b711ef@f9941",
       "displayName": "InfoBoard",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af@6c48a",
+        "imageUuidOrDatabaseUri": "862ca10f-c6c5-4f34-9ccc-b52719b711ef@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "74b30dcc-dbf0-4f08-8f58-29cd7d9245af@f9941"
+    "redirect": "862ca10f-c6c5-4f34-9ccc-b52719b711ef@f9941"
   }
 }

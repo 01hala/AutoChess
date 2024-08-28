@@ -2,18 +2,11 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "08b62706-4c22-4cc1-a964-648933fd5894",
+  "uuid": "5862e591-9e6a-470c-a869-dd75a7e4d35c",
   "files": [],
   "subMetas": {},
   "userData": {
-    "compressionType": {
-      "xiaomi-quick-game": "merge_all_json"
-    },
-    "isRemoteBundle": {
-      "wechatgame": true,
-      "xiaomi-quick-game": true
-    },
-    "isBundle": true,
-    "priority": 2
+    "compressionType": {},
+    "isRemoteBundle": {}
   }
 }

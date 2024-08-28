@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "0c8aa1b0-25ff-4c13-935b-08cebeee5c60",
+  "uuid": "85b1fcfd-f748-49ae-a641-a911ccb34469",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "0c8aa1b0-25ff-4c13-935b-08cebeee5c60@6c48a",
+      "uuid": "85b1fcfd-f748-49ae-a641-a911ccb34469@6c48a",
       "displayName": "jinbi",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "0c8aa1b0-25ff-4c13-935b-08cebeee5c60",
+        "imageUuidOrDatabaseUri": "85b1fcfd-f748-49ae-a641-a911ccb34469",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "0c8aa1b0-25ff-4c13-935b-08cebeee5c60@f9941",
+      "uuid": "85b1fcfd-f748-49ae-a641-a911ccb34469@f9941",
       "displayName": "jinbi",
       "id": "f9941",
       "name": "spriteFrame",
@@ -50,10 +50,10 @@
         "height": 145,
         "rawWidth": 292,
         "rawHeight": 145,
-        "borderTop": 70,
-        "borderBottom": 75,
-        "borderLeft": 146,
-        "borderRight": 48,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
         "packable": true,
         "pixelsToUnit": 100,
         "pivotX": 0.5,
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "0c8aa1b0-25ff-4c13-935b-08cebeee5c60@6c48a",
+        "imageUuidOrDatabaseUri": "85b1fcfd-f748-49ae-a641-a911ccb34469@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "0c8aa1b0-25ff-4c13-935b-08cebeee5c60@f9941"
+    "redirect": "85b1fcfd-f748-49ae-a641-a911ccb34469@f9941"
   }
 }
