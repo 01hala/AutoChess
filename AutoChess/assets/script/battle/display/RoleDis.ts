@@ -367,6 +367,8 @@ export class RoleDis extends Component
     {
         try 
         {
+            let ms=0;
+
             if (stack)
             {
                 this.Exp = stack % 3;
@@ -398,10 +400,11 @@ export class RoleDis extends Component
                     
                     anim.play();
                 }
+                ms++;
                 await sleep(750);
             }
            
-            return this.delay(2000,()=>
+            return this.delay(ms * 750,()=>
             {
                 // if(newtween)
                 // {
