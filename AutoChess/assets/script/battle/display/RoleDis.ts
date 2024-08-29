@@ -4,7 +4,7 @@
  * 2023/10/04
  * 角色展示类
  */
-import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color, Event, Button, UITransform } from 'cc';
+import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color, Event, Button, UITransform, game, director } from 'cc';
 import { Role } from '../AutoChessBattle//role';
 import * as BattleEnums from '../AutoChessBattle/enum';
 import * as enums from '../../other/enums';
@@ -40,6 +40,12 @@ export class RoleDis extends Component
         displayName: "子弹预制体"
     })
     public remoteNode: Prefab;
+
+    @property({
+        type: Prefab,
+        displayName: "增益提示"
+    })
+    public intensifierTip:Prefab;
     //血量和攻击
     public Hp: number;
     public AtkNum: number;
@@ -54,8 +60,7 @@ export class RoleDis extends Component
     private hpText: RichText;
     private atkText: RichText;
     private levelText:RichText;
-    //增益提示
-    private intensifierText: Node;
+    //提示字符
     private behurtedTextEffect:Node;
     private beHurtedText:Node;
     //受伤效果
@@ -82,8 +87,6 @@ export class RoleDis extends Component
             this.typeface = (await BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
 
             //this.levelSprite = this.node.getChildByName("LevelSprite");
-
-            this.intensifierText = this.node.getChildByName("IntensifierText");
             this.bandage = this.node.getChildByName("Bandage");
             this.behurtedTextEffect=this.node.getChildByName("BeHertedTextEffect");
             this.beHurtedText=this.behurtedTextEffect.getChildByName("BeHurtedText");
@@ -91,7 +94,6 @@ export class RoleDis extends Component
             this.effectSpine=this.node.getChildByPath("EffectSpine");
 
             this.bandage.active = false;
-            this.intensifierText.active = false;
             this.behurtedTextEffect.active=false;
             this.hurtedSpine.active=false;
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
@@ -110,7 +112,7 @@ export class RoleDis extends Component
     }
     
 
-    start() 
+    async start() 
     {
         if (this.roleInfo) {
             if (this.hpText && this.atkText) {
@@ -122,7 +124,12 @@ export class RoleDis extends Component
             }
         }
 
-        if(singleton.netSingleton.battle==null)
+        if(null == this.intensifierTip)
+        {
+            this.intensifierTip = await BundleManager.Instance.loadAssetsFromBundle("TextTipBar","IntensifierTip") as Prefab;
+        }
+
+        if(null == singleton.netSingleton.battle)
         {
             this.node.getComponent(Button).enabled=false;
         }
@@ -163,7 +170,7 @@ export class RoleDis extends Component
                 await this.LoadOnConfig();
     
             }
-            await this.changeAtt();
+            this.changeAtt();
         }
         catch(error)
         {
@@ -294,15 +301,8 @@ export class RoleDis extends Component
             this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
             this.levelText.string="<color=#7CFC0><outline color=#7FFF00 width=4>"+ this.Level + "</outline></color>";
             
-            console.log("changeAtt RoleDis.roleInfo:", this.roleInfo);
-            console.log("changeAtt RoleDis:", this);
-            // let str = "lvl_" + this.Level;
-            // let lvlsf: SpriteFrame = await this.LoadImg("LvRing", str);
-            // if (lvlsf)
-            // {
-            //     this.levelSprite = this.node.getChildByPath("LevelSprite");
-            //     this.levelSprite.getComponent(Sprite).spriteFrame = lvlsf;
-            // }
+            //console.log("changeAtt RoleDis.roleInfo:", this.roleInfo);
+            //console.log("changeAtt RoleDis:", this);
         }
         catch (err) 
         {
@@ -367,56 +367,47 @@ export class RoleDis extends Component
     {
         try 
         {
-            let anim: Animation = this.intensifierText.getComponent(Animation);
-            anim.on(Animation.EventType.FINISHED, () => 
+            if (stack)
             {
-                anim.stop();
-                this.intensifierText.active = false;
-                anim.resume();
-            }, this);
-
-            if(stack)
-            {
-                this.Exp=stack%3;
+                this.Exp = stack % 3;
             }
-            let newtween:Tween<Node>=tween(this.node).to(0,{}).call(()=>
-            {   
-                if (0 != value[0]) 
-                {
-                    anim.resume();
-                    this.intensifierText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[0] + "</outline></color>";
-                    this.intensifierText.getComponent(RichText).font = this.typeface
-                    this.intensifierText.active = true;
-                    anim.play();
-                    console.log("生命值增加");
-                }
-            }).delay(0.7).call(()=>
-            {
-                if (0 != value[1]) 
-                {
-                    anim.resume();
-                    this.intensifierText.getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[1] + "</outline></color>";
-                    this.intensifierText.getComponent(RichText).font = this.typeface
-                    this.intensifierText.active = true;
-                    anim.play();
-                    console.log("攻击力增加");
-                }
-                
-            }).delay(0.7).call(async ()=>
-            {
-                AudioManager.Instance.PlayerOnShot("battle_Valuechange");
-                await this.changeAtt();
-                anim.stop();
-                this.intensifierText.active = false;
-            }).start();
 
-            return this.delay(1500,()=>
+            await this.changeAtt();
+
+            for(let i = 0;i<value.length;i++)
             {
-                if(newtween)
+                let tip:Node;
+                if (value[i] != 0)
                 {
-                    newtween.stop();
-                    newtween=null;
+                    tip = instantiate(this.intensifierTip);
+                    if(0==i)
+                    {
+                        tip.getChildByPath("RichText").getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[i] + "</outline></color>";
+                    }
+                    else
+                    {
+                        tip.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[i] + "</outline></color>";
+                    }
+                    tip.setParent(this.node);
+                    let anim = tip.getComponent(Animation);
+                    anim.getState("Tips").speed=1.25;
+                    anim.on(Animation.EventType.FINISHED, (event) =>
+                    {
+                        tip.destroy();
+                    });
+                    
+                    anim.play();
                 }
+                await sleep(750);
+            }
+           
+            return this.delay(2000,()=>
+            {
+                // if(newtween)
+                // {
+                //     newtween.stop();
+                //     newtween=null;
+                // }
             })
         }
         catch (err) 

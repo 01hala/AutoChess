@@ -251,7 +251,14 @@ export class RoleIcon extends Component
                     }
                     //console.log(this.isMerge);
                     //冻结角色
-                    if(this.isBuy) this.isFreeze=false;
+                    if(this.isBuy) 
+                    {
+                        this.isFreeze=false;
+                    }
+                    else
+                    {
+                        this.farme.active=true;
+                    }
                     if(this.freezeLock)
                     {
                         this.freezeSprite.active = this.isFreeze;
