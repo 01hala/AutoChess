@@ -181,9 +181,9 @@ export class RoleDis extends Component
     delay(ms: number, release: () => void): Promise<void> 
     {
         return new Promise((resolve) => {
-            setTimeout(() => {
+            setTimeout(async () => {
+                await release();
                 resolve();
-                release();
             }, ms);
         });
     }
@@ -392,19 +392,20 @@ export class RoleDis extends Component
                     }
                     tip.setParent(this.node);
                     let anim = tip.getComponent(Animation);
-                    anim.getState("Tips").speed=1.25;
+                    anim.getState('Tips').speed=1.5;
                     anim.on(Animation.EventType.FINISHED, (event) =>
                     {
                         tip.destroy();
+                        ms+=anim.getState('Tips').time;
                     });
                     
                     anim.play();
                 }
-                ms++;
+                
                 await sleep(750);
             }
            
-            return this.delay(ms * 750,()=>
+            return this.delay(ms,()=>
             {
                 // if(newtween)
                 // {
@@ -612,6 +613,7 @@ export class RoleDis extends Component
    SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>Promise<void>)
    {   
        console.log("释放效果表现");
+       let ms=0;
        switch (_effect)
        {
            case common.SkillEffectEM.AddProperty:
@@ -620,7 +622,7 @@ export class RoleDis extends Component
                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
                    this.DeliveryGain(pos1, pos2);
-                   return this.delay(1100, async () => { await _callBack(); });
+                   ms=700;
                }
                break;
            case common.SkillEffectEM.RecoverHP:
@@ -629,7 +631,7 @@ export class RoleDis extends Component
                }
                break;
        }
-       return;
+       return this.delay(ms, async () => { await _callBack(); });
    }
    private DeliveryGain(_spellcasterLocation:Vec3 , _targetLocation:Vec3)
    {
