@@ -21528,7 +21528,7 @@
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "animation2",
+    "defaultAnimation": "animation",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,

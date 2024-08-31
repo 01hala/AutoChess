@@ -381,6 +381,7 @@ export class ReadyDis
         //角色技能效果
         singleton.netSingleton.game.cb_shop_skill_effect = (effect:call_c.ShopSkillEffect)=>
         {
+            console.log("skilleffect:", effect);
             this.ShowSkillEffect(effect);
         };
 
