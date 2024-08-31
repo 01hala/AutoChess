@@ -58,7 +58,19 @@ export class Bullet extends Component {
             .to(0.7, { position: targetPos }).call(() => 
             { 
                 console.log("销毁子弹");
-                this.node.destroy();
+                if(isGain)
+                {
+                    this.skell.setAnimation(0, String(anims[2]), true);
+                    this.skell.setCompleteListener((trackEntry) =>
+                    {
+                        this.node.destroy();
+                    });
+                }
+                else
+                {
+                    this.node.destroy();
+                }
+                
             }).start();
 
         console.log("初始化子弹完成");

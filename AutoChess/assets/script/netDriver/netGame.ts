@@ -252,7 +252,7 @@ export class netGame {
         });
     }
     //战斗阶段
-    public battle()
+    public start_round()
     {
         return new Promise((relolve, reject) =>
         {
@@ -533,6 +533,27 @@ export class netGame {
                 reject("timeout");
             });
         });
+    }
+
+    //结束当前准备回合
+    public end_round()
+    {
+        return new Promise((resolve , reject)=>
+        {
+            netSingleton.battleshop.c_match.get_hub(this.match_name).end_round().callBack(()=>
+            {
+                this.start_round();
+                resolve("finish");
+            },(err)=>
+            {   
+                console.log("end_round err : ",err);
+                reject("error");
+            }).timeout(3000,()=>
+            {
+                console.log("end_round timeout");
+                reject("timeout");
+            })
+        })
     }
 
 }
