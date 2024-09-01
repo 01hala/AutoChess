@@ -1,4 +1,4 @@
-import { _decorator, animation, Animation, BlockInputEvents, Button, Component, Label, Node, RichText, sp, Sprite, SpriteFrame } from 'cc';
+import { _decorator, animation, Animation, BlockInputEvents, Button, Component, director, game, Label, Node, RichText, sp, Sprite, SpriteFrame } from 'cc';
 import { PropsType } from '../other/enums';
 import { Team } from '../battle/AutoChessBattle/team';
 import { RoleDis } from '../battle/display/RoleDis';
