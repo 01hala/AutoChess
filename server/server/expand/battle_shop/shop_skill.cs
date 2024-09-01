@@ -8,6 +8,8 @@ namespace battle_shop
     {
         private void AddProperty(ShopSkillConfig skill, battle_shop_player _player)
         {
+            Log.Log.trace("AddProperty begin");
+
             var skilleffect = new ShopSkillEffect();
             skilleffect.skill_id = skill.Id;
             skilleffect.spellcaster = index;
@@ -19,7 +21,9 @@ namespace battle_shop
             {
                 if (target_index > 0)
                 {
+                    Log.Log.trace("slill  _player:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(_player));
                     var r = _player.BattleData.RoleList[index];
+                    Log.Log.trace("slill r:{0}", r);
                     switch (r.Level)
                     {
                         case 1:
@@ -52,10 +56,14 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
 
             is_trigger = true;
+
+            Log.Log.trace("AddProperty end");
         }
 
         private void AddCoin(ShopSkillConfig skill, battle_shop_player _player)
         {
+            Log.Log.trace("AddCoin begin");
+
             var addCoin = 0;
             var r = _player.BattleData.RoleList[index];
             switch (r.Level)
@@ -90,10 +98,14 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
             is_trigger = true;
+
+            Log.Log.trace("AddCoin end");
         }
 
         private void UpdateLevel(ShopSkillConfig skill, battle_shop_player _player)
         {
+            Log.Log.trace("UpdateLevel begin");
+
             UpdateLevel(_player);
 
             var r = _player.BattleData.RoleList[index];
@@ -105,10 +117,14 @@ namespace battle_shop
             skilleffect.effect = SkillEffectEM.UpdateLevel;
             skilleffect.value = new List<int>() { r.Level };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+
+            Log.Log.trace("UpdateLevel end");
         }
 
         private void AddBuffer(ShopSkillConfig skill, battle_shop_player _player)
         {
+            Log.Log.trace("AddBuffer begin");
+
             var target_list = GetTargetIndex(_player, skill.ObjectDirection, skill.ObjCount);
             foreach (var target_index in target_list)
             {
@@ -121,15 +137,20 @@ namespace battle_shop
             skilleffect.effect = SkillEffectEM.AddBuffer;
             skilleffect.value = new List<int>() { skill.AddBufferID };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+
+            Log.Log.trace("AddBuffer end");
         }
 
         private void UseSkill(battle_shop_player _player, shop_event trigger_ev, int stage)
         {
+            Log.Log.trace("UseSkill skillID:{0} begin!", skillID);
+
             ShopSkillConfig skill;
             if (!config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
             {
                 return;
             }
+            Log.Log.trace("UseSkill skillID:{0} start!", skillID);
 
             switch (skill.Effect)
             {
@@ -175,6 +196,8 @@ namespace battle_shop
                 }
                 break;
             }
+
+            Log.Log.trace("UseSkill skillID:{0} end!", skillID);
         }
     }
 }

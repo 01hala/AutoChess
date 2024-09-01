@@ -13,6 +13,7 @@ namespace battle_shop
         public int skill_id;
         public int fetters_level;
         public int fetters_id;
+        public Action do_skill_callback;
     }
 
     public class skill_execute
@@ -89,11 +90,13 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.sales && index == ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.sales EMSkillEvent.sales");
                             trigger_ev = ev;
                             return true;
                         }
                         else if (EffectTime == EMSkillEvent.camp_sales && index != ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.sales EMSkillEvent.camp_sales");
                             trigger_ev = ev;
                             return true;
                         }
@@ -103,6 +106,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.buy)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.buy EMSkillEvent.buy");
                             trigger_ev = ev;
                             return true;
                         }
@@ -112,6 +116,7 @@ namespace battle_shop
                     {
                         if (EffectTime ==EMSkillEvent.update)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.update EMSkillEvent.update");
                             trigger_ev = ev;
                             return true;
                         }
@@ -121,11 +126,13 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.eat_food && index == ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.food EMSkillEvent.eat_food");
                             trigger_ev = ev;
                             return true;
                         }
                         else if (EffectTime == EMSkillEvent.camp_eat_food && index != ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.food EMSkillEvent.camp_eat_food");
                             trigger_ev = ev;
                             return true;
                         }
@@ -135,6 +142,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.start_round)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.start_round EMSkillEvent.start_round");
                             trigger_ev = ev;
                             return true;
                         }
@@ -144,6 +152,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.end_round)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.end_round EMSkillEvent.end_round");
                             trigger_ev = ev;
                             return true;
                         }
@@ -153,6 +162,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.syncope && index == ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.syncope EMSkillEvent.syncope");
                             trigger_ev = ev;
                             return true;
                         }
