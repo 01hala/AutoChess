@@ -210,7 +210,7 @@ export class ReadyData
     {
         if(enmus.GameMode.PVP ==  this.gameMode)
         {
-            await singleton.netSingleton.game.battle();
+            await singleton.netSingleton.game.end_round();
         }
     }
 

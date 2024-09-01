@@ -44,11 +44,13 @@ export class Bullet extends Component {
         if(isGain)
         {
             this.skell.enabled=false;
-            await this.LoadOnConfig();
+            this.LoadOnConfig();
         }
-
-        let anims = this.skell.skeletonData.getAnimsEnum();
-        this.skell.setAnimation(0, String(anims[1]), true);
+        else
+        {
+            let anims = this.skell.skeletonData.getAnimsEnum();
+            this.skell.setAnimation(0, String(anims[1]), true);
+        }
         //设置旋转角度
         let dir = new Vec2(targetPos.x -this.node.position.x , targetPos.y - this.node.position.y);
         let angle = dir.signAngle(new Vec2(1,0))*180/Math.PI;
@@ -58,18 +60,30 @@ export class Bullet extends Component {
             .to(0.7, { position: targetPos }).call(() => 
             { 
                 console.log("销毁子弹");
-                this.node.destroy();
+                if(isGain)
+                {
+                    let anims=this.skell.skeletonData.getAnimsEnum();
+                    this.skell.setAnimation(0, String(anims[2]), true);
+                    this.skell.setCompleteListener((trackEntry) =>
+                    {
+                        this.node.destroy();
+                    });
+                }
+                else
+                {
+                    this.node.destroy();
+                }
+                
             }).start();
 
         console.log("初始化子弹完成");
     }
 
-    private async LoadOnConfig()
+    private LoadOnConfig()
     {
         try
         {
-            
-            await loadAssets.LoadSkeletonData("EffectSpine/gq/Luminous sphere",(data)=>
+            loadAssets.LoadSkeletonData("EffectSpine/gq/Luminous sphere",(data)=>
             {
                 if (data)
                 {
@@ -77,6 +91,9 @@ export class Bullet extends Component {
                     {
                         this.skell.skeletonData = data;
                         this.skell.enabled=true;
+                        let anims = data.getAnimsEnum();
+                        this.skell.setAnimation(0, String(anims[1]), true);
+                        
                     }
                     catch (error)
                     {

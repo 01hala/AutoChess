@@ -366,14 +366,8 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_skill_update(index, r);
         }
 
-        private void SummonShop(battle_shop_player _player, shop_event trigger_ev)
+        private void SummonShop(ShopSkillConfig skill, battle_shop_player _player, shop_event trigger_ev)
         {
-            ShopSkillConfig skill;
-            if (!config.Config.ShopSkillConfigs.TryGetValue(trigger_ev.skill_id, out skill))
-            {
-                return;
-            }
-
             foreach (var SummonId in skill.SummonId)
             {
                 int summon_index = -1;
@@ -400,6 +394,14 @@ namespace battle_shop
 
                 if (_player.add_role(summon_index, SummonId, skill.SummonLevel) != null)
                 {
+                    var skilleffect = new ShopSkillEffect();
+                    skilleffect.skill_id = skill.Id;
+                    skilleffect.spellcaster = summon_index;
+                    skilleffect.recipient = new List<int>();
+                    skilleffect.effect = SkillEffectEM.SummonShop;
+                    skilleffect.value = new List<int>() { _player.BattleData.RoleList[summon_index].RoleID};
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+
                     _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
                 }
             }

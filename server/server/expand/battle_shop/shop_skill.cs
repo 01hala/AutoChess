@@ -92,6 +92,21 @@ namespace battle_shop
             is_trigger = true;
         }
 
+        private void UpdateLevel(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            UpdateLevel(_player);
+
+            var r = _player.BattleData.RoleList[index];
+            
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.UpdateLevel;
+            skilleffect.value = new List<int>() { r.Level };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+        }
+
         private void AddBuffer(ShopSkillConfig skill, battle_shop_player _player)
         {
             var target_list = GetTargetIndex(_player, skill.ObjectDirection, skill.ObjCount);
@@ -99,6 +114,13 @@ namespace battle_shop
             {
                 AddBuffer(_player, target_index, skill.EffectScope, skill.AddBufferID);
             }
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = target_list;
+            skilleffect.effect = SkillEffectEM.AddBuffer;
+            skilleffect.value = new List<int>() { skill.AddBufferID };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
         }
 
         private void UseSkill(battle_shop_player _player, shop_event trigger_ev, int stage)
@@ -131,13 +153,13 @@ namespace battle_shop
 
                 case SkillEffectEM.UpdateLevel:
                 {
-                    UpdateLevel(_player);
+                    UpdateLevel(skill, _player);
                 }
                 break;
 
                 case SkillEffectEM.SummonShop:
                 {
-                    SummonShop(_player, trigger_ev);
+                    SummonShop(skill, _player, trigger_ev);
                 }
                 break;
 
