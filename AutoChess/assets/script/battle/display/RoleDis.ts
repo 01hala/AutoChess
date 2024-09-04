@@ -600,6 +600,10 @@ export class RoleDis extends Component
                     this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty);
                 }
                 break;
+            case common.SkillEffectEM.AddBuffer:
+                {
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff , _buffid);
+                }
        }
        return this.delay(100,()=>{});
    }

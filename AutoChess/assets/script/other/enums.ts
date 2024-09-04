@@ -67,5 +67,6 @@ export enum SpecialEffect
     Shields=1,
     /** 加属性 */
     AddProperty=2,
-    
+    /** 加buff */
+    AddBuff=3,
 }
