@@ -1,0 +1,41 @@
+
+magic.png
+size: 982,982
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fazhen_1
+  rotate: false
+  xy: 443, 10
+  size: 431, 431
+  orig: 431, 431
+  offset: 0, 0
+  index: -1
+fazhen_2
+  rotate: true
+  xy: 541, 463
+  size: 265, 244
+  orig: 265, 244
+  offset: 0, 0
+  index: -1
+fazhen_3
+  rotate: false
+  xy: 2, 2
+  size: 439, 439
+  orig: 439, 439
+  offset: 0, 0
+  index: -1
+fazhen_4
+  rotate: false
+  xy: 541, 730
+  size: 272, 250
+  orig: 273, 250
+  offset: 1, 0
+  index: -1
+fazhen_5
+  rotate: false
+  xy: 2, 443
+  size: 537, 537
+  orig: 537, 537
+  offset: 0, 0
+  index: -1

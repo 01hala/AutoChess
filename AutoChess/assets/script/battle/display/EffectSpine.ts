@@ -65,7 +65,9 @@ export class EffectSpine extends Component
         return new Promise((resolve , reject)=>
         {
             try
-            {
+            {   
+                let show=false;
+
                 switch (_effect)
                 {
                     case enums.SpecialEffect.Shields:
@@ -85,23 +87,34 @@ export class EffectSpine extends Component
                     case enums.SpecialEffect.AddProperty:
                         {
                             this.LoadEffectData("EffectSpine/zqsx/attribute");
+                            show=true;
                         }
                         break;
                     case enums.SpecialEffect.AddBuff:
                         {
                             this.LoadBuffSpine(_buffID);
+                            show=true;
+                        }
+                        break;
+                    case enums.SpecialEffect.Summon:
+                        {
+                            this.LoadEffectData("EffectSpine/magic/magic");
+                            show=true
                         }
                         break;
                 }
-                this.effectSkele.enabled = true;
-                let anims = this.effectSkele.skeletonData.getAnimsEnum();
-                this.effectSkele.setCompleteListener((trackEntry) =>
+                if(show)
                 {
-                    if (trackEntry.animation.name === String(anims[1]))
+                    this.effectSkele.enabled = true;
+                    let anims = this.effectSkele.skeletonData.getAnimsEnum();
+                    this.effectSkele.setCompleteListener((trackEntry) =>
                     {
-                        this.effectSkele.enabled = false;
-                    }
-                });
+                        if (trackEntry.animation.name === String(anims[1]))
+                        {
+                            this.effectSkele.enabled = false;
+                        }
+                    });
+                }
                 resolve();
             }
             catch(error)

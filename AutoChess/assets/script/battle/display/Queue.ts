@@ -4,7 +4,7 @@
  * 2023/10/04
  * 队列展示类
  */
-import { _decorator, Component, instantiate, Node, Prefab, resources, tween, Vec2, Vec3 } from 'cc';
+import { _decorator, Component, instantiate, Node, Prefab, resources, Skeleton, sp, tween, Vec2, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 import * as RoleDis from '../display/RoleDis'
@@ -14,6 +14,7 @@ import { Battle } from '../AutoChessBattle/battle';
 import { Role } from '../AutoChessBattle/common';
 import { RoleInfo } from '../AutoChessBattle/skill/skill_base';
 import { sleep } from '../../other/sleep';
+import * as enums from '../../other/enums';
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -108,22 +109,20 @@ export class Queue extends Component
                     console.warn("Queue 下的 SummonRole 读取的 role 为空");
                     break;
                 }
-                // let emptyIndex=-1;
-                // for(let j=0;j<this.roleNodes.length;j++)
-                // {
-                //     if(null==this.roleNodes[j])
-                //     {
-                //         emptyIndex=j;
-                //         break;
-                //     }
-                // }
                 if(-1!=r[i].index)
                 {
-                    console.log("Summon a character with ID "+r[i].id+" at position "+r[i].index);
-                    let roleNode = this.roleNodes[r[i].index];
-                    role.position = roleNode.position;
-                    await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].position,true);
-                    //role.getComponent(RoleDis.RoleDis).AttackInit();
+                    //console.log("Summon a character with ID "+r[i].id+" at position "+r[i].index);
+                    //let roleNode = this.roleNodes[r[i].index];
+                    //role.position = roleNode.position;
+                    this.locationTemp[r[i].index].children[0].active=true;
+                    this.locationTemp[r[i].index].children[0].getComponent(sp.Skeleton).setCompleteListener(()=>
+                    {
+                        this.locationTemp[r[i].index].children[0].active=false;
+                    })
+                    //await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].worldPosition,true);
+                    await role.getComponent(RoleDis.RoleDis).Admission(enums.SpecialEffect.Summon);
+                    role.setWorldPosition(this.locationTemp[r[i].index].worldPosition);
+                    role.getComponent(RoleDis.RoleDis).AttackInit();
                 }
                 else if(-1==r[i].index)
                 {

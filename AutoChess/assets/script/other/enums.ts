@@ -69,4 +69,6 @@ export enum SpecialEffect
     AddProperty=2,
     /** 加buff */
     AddBuff=3,
+    /** 召唤 */
+    Summon=4,
 }
