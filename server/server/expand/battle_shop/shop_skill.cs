@@ -17,12 +17,13 @@ namespace battle_shop
             skilleffect.effect = SkillEffectEM.AddProperty;
 
             var target_list = GetTargetIndex(_player, skill.ObjectDirection, skill.ObjCount);
-            foreach(var target_index in target_list)
+            Log.Log.trace("slill  target_list:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(target_list));
+            foreach (var target_index in target_list)
             {
                 if (target_index > 0)
                 {
                     Log.Log.trace("slill  _player:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(_player));
-                    var r = _player.BattleData.RoleList[index];
+                    var r = _player.BattleData.RoleList[target_index];
                     Log.Log.trace("slill r:{0}", r);
                     switch (r.Level)
                     {
