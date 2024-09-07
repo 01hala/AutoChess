@@ -335,6 +335,10 @@ export class ReadyDis
             // let str = "Location_" + target_role_index;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            if(is_syncope)
+            {
+                this.roleArea.rolesNode[target_role_index]=null;
+            }
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).EatFood(target_role, food_id , is_update , is_syncope);
         };
