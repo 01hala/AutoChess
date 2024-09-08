@@ -1,0 +1,76 @@
+
+magic.png
+size: 972,972
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guan_!
+  rotate: true
+  xy: 2, 9
+  size: 135, 368
+  orig: 135, 377
+  offset: 0, 9
+  index: -1
+guan_2
+  rotate: false
+  xy: 812, 607
+  size: 132, 363
+  orig: 135, 375
+  offset: 3, 0
+  index: -1
+guan_3
+  rotate: true
+  xy: 415, 80
+  size: 181, 345
+  orig: 181, 345
+  offset: 0, 0
+  index: -1
+guan_4
+  rotate: false
+  xy: 762, 111
+  size: 208, 333
+  orig: 208, 333
+  offset: 0, 0
+  index: -1
+guangquan
+  rotate: false
+  xy: 2, 559
+  size: 411, 411
+  orig: 411, 411
+  offset: 0, 0
+  index: -1
+guangquan_1
+  rotate: false
+  xy: 2, 146
+  size: 411, 411
+  orig: 411, 411
+  offset: 0, 0
+  index: -1
+guanling_1
+  rotate: false
+  xy: 415, 576
+  size: 395, 394
+  orig: 403, 402
+  offset: 4, 4
+  index: -1
+guanling_2
+  rotate: false
+  xy: 372, 30
+  size: 404, 48
+  orig: 404, 48
+  offset: 0, 0
+  index: -1
+guanling_3
+  rotate: false
+  xy: 415, 263
+  size: 310, 311
+  orig: 310, 311
+  offset: 0, 0
+  index: -1
+shizi
+  rotate: false
+  xy: 727, 446
+  size: 128, 128
+  orig: 132, 132
+  offset: 2, 2
+  index: -1

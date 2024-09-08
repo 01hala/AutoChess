@@ -335,8 +335,13 @@ export class ReadyDis
             // let str = "Location_" + target_role_index;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).upgradeLock = true;
             // this.roleArea.GetTargetValue(str).getComponent(RoleIcon).GetUpgrade(target_role, is_update);
+            
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).upgradeLock = true;
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).EatFood(target_role, food_id , is_update , is_syncope);
+            if (is_syncope)
+            {
+                this.roleArea.rolesNode[target_role_index] = null;
+            }
         };
         //使用装备
         singleton.netSingleton.game.cb_role_equip = (equip_id: number, target_role_index: number, target_role: common.Role) =>
