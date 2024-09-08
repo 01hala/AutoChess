@@ -600,6 +600,10 @@ export class RoleDis extends Component
                     this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty);
                 }
                 break;
+            case common.SkillEffectEM.AddBuffer:
+                {
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff , _buffid);
+                }
        }
        return this.delay(100,()=>{});
    }
@@ -646,6 +650,32 @@ export class RoleDis extends Component
        {
            console.warn("RoleDis 下的 DeliveryGain 错误 err:" + err);
        }
+   }
+   
+   /**
+    * 入场效果
+    * @param _pos 位置
+    * @param _type 效果类型
+    * 
+    * author：Hotaru
+    * 2024/09/04
+    */
+   public async Admission(_type:enums.SpecialEffect)
+   {
+        this.roleSprite.node.active=false;
+        this.atkText.node.active=false;
+        this.hpText.node.active=false;
+        this.levelText.node.active=false;
+
+        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type);
+
+        return this.delay(200,()=>
+        {
+            this.roleSprite.node.active=true;
+            this.atkText.node.active=true;
+            this.hpText.node.active=true;
+            this.levelText.node.active=true;
+        });
    }
 
 /*

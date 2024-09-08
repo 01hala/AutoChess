@@ -13,6 +13,7 @@ namespace battle_shop
         public int skill_id;
         public int fetters_level;
         public int fetters_id;
+        public Action do_skill_callback;
     }
 
     public class skill_execute
@@ -89,11 +90,13 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.sales && index == ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.sales EMSkillEvent.sales");
                             trigger_ev = ev;
                             return true;
                         }
                         else if (EffectTime == EMSkillEvent.camp_sales && index != ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.sales EMSkillEvent.camp_sales");
                             trigger_ev = ev;
                             return true;
                         }
@@ -103,6 +106,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.buy)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.buy EMSkillEvent.buy");
                             trigger_ev = ev;
                             return true;
                         }
@@ -112,6 +116,7 @@ namespace battle_shop
                     {
                         if (EffectTime ==EMSkillEvent.update)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.update EMSkillEvent.update");
                             trigger_ev = ev;
                             return true;
                         }
@@ -121,11 +126,13 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.eat_food && index == ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.food EMSkillEvent.eat_food");
                             trigger_ev = ev;
                             return true;
                         }
                         else if (EffectTime == EMSkillEvent.camp_eat_food && index != ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.food EMSkillEvent.camp_eat_food");
                             trigger_ev = ev;
                             return true;
                         }
@@ -135,6 +142,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.start_round)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.start_round EMSkillEvent.start_round");
                             trigger_ev = ev;
                             return true;
                         }
@@ -144,6 +152,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.end_round)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.end_round EMSkillEvent.end_round");
                             trigger_ev = ev;
                             return true;
                         }
@@ -153,6 +162,7 @@ namespace battle_shop
                     {
                         if (EffectTime == EMSkillEvent.syncope && index == ev.index)
                         {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.syncope EMSkillEvent.syncope");
                             trigger_ev = ev;
                             return true;
                         }
@@ -208,16 +218,16 @@ namespace battle_shop
                                 break;
                             }
 
-                            target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
-                            if (exclude_list.Contains(target_index))
+                            var _target_index = RandomHelper.RandomInt(_player.BattleData.RoleList.Count);
+                            if (exclude_list.Contains(_target_index))
                             {
                                 continue;
                             }
 
-                            exclude_list.Add(target_index);
-                            if ((_player.BattleData.RoleList[target_index] != null))
+                            exclude_list.Add(_target_index);
+                            if ((_player.BattleData.RoleList[_target_index] != null))
                             {
-                                target_list.Add(target_index);
+                                target_index = _target_index;
                                 break;
                             }
                         }
@@ -366,14 +376,8 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_skill_update(index, r);
         }
 
-        private void SummonShop(battle_shop_player _player, shop_event trigger_ev)
+        private void SummonShop(ShopSkillConfig skill, battle_shop_player _player, shop_event trigger_ev)
         {
-            ShopSkillConfig skill;
-            if (!config.Config.ShopSkillConfigs.TryGetValue(trigger_ev.skill_id, out skill))
-            {
-                return;
-            }
-
             foreach (var SummonId in skill.SummonId)
             {
                 int summon_index = -1;
@@ -400,6 +404,14 @@ namespace battle_shop
 
                 if (_player.add_role(summon_index, SummonId, skill.SummonLevel) != null)
                 {
+                    var skilleffect = new ShopSkillEffect();
+                    skilleffect.skill_id = skill.Id;
+                    skilleffect.spellcaster = summon_index;
+                    skilleffect.recipient = new List<int>();
+                    skilleffect.effect = SkillEffectEM.SummonShop;
+                    skilleffect.value = new List<int>() { _player.BattleData.RoleList[summon_index].RoleID};
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+
                     _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
                 }
             }

@@ -3,6 +3,7 @@ import * as enums from '../../other/enums';
 const { ccclass, property } = _decorator;
 import * as common from '../../battle/AutoChessBattle/common';
 import { loadAssets } from '../../bundle/LoadAsset';
+import { config } from '../AutoChessBattle/config/config';
 
 @ccclass('EffectSpine')
 export class EffectSpine extends Component 
@@ -17,15 +18,6 @@ export class EffectSpine extends Component
 
         this.effectSkele.enabled=false;
         this.shieldSkele.enabled=false;
-    }
-
-    start() 
-    {
-
-    }
-
-    update(deltaTime: number) {
-        
     }
 
     private LoadEffectData(_str:string)
@@ -44,7 +36,7 @@ export class EffectSpine extends Component
                     }
                     catch (error)
                     {
-                        console.warn(`子弹光球效果获取失败：`, error);
+                        console.warn(`效果获取失败：`, error);
                     }
                 }
             });
@@ -55,41 +47,73 @@ export class EffectSpine extends Component
         }
     }
 
-    public ShowEffect(_effect:enums.SpecialEffect):Promise<void>
+    private LoadBuffSpine(_buffID:number)
+    {
+        try
+        {
+            let jconfig=config.BufferConfig.get(_buffID);
+            this.LoadEffectData(jconfig.Skel);
+        }
+        catch(error)
+        {
+            console.error("EffectSpine 下的 LoadBuffSpine 错误：",error);
+        }
+    }
+
+    public ShowEffect(_effect:enums.SpecialEffect , _buffID?:number):Promise<void>
     {
         return new Promise((resolve , reject)=>
         {
             try
-            {
-                if (enums.SpecialEffect.Shields == _effect)
+            {   
+                let show=false;
+
+                switch (_effect)
                 {
-                    let anims = this.shieldSkele.skeletonData.getAnimsEnum();
-                    this.shieldSkele.setAnimation(0, String(anims[2]), true);
-                    this.shieldSkele.enabled=true;
-                    this.shieldSkele.setCompleteListener((trackEntry)=>
-                    {
-                        if(trackEntry.animation.name === String(anims[2]))
+                    case enums.SpecialEffect.Shields:
                         {
-                            this.shieldSkele.setAnimation(0, String(anims[1]), true);
-                        }
-                    });
-                }
-                switch(_effect)
-                {
-                    case enums.SpecialEffect.AddProperty:
-                        {
-                            this.LoadEffectData("EffectSpine/zqsx/attribute");
-                            this.effectSkele.enabled=true;
-                            let anims = this.effectSkele.skeletonData.getAnimsEnum();
-                            this.effectSkele.setCompleteListener((trackEntry) =>
+                            let anims = this.shieldSkele.skeletonData.getAnimsEnum();
+                            this.shieldSkele.setAnimation(0, String(anims[2]), true);
+                            this.shieldSkele.enabled=true;
+                            this.shieldSkele.setCompleteListener((trackEntry)=>
                             {
-                                if (trackEntry.animation.name === String(anims[1]))
+                                if(trackEntry.animation.name === String(anims[2]))
                                 {
-                                    this.effectSkele.enabled=false;
+                                    this.shieldSkele.setAnimation(0, String(anims[1]), true);
                                 }
                             });
                         }
                         break;
+                    case enums.SpecialEffect.AddProperty:
+                        {
+                            this.LoadEffectData("EffectSpine/zqsx/attribute");
+                            show=true;
+                        }
+                        break;
+                    case enums.SpecialEffect.AddBuff:
+                        {
+                            this.LoadBuffSpine(_buffID);
+                            show=true;
+                        }
+                        break;
+                    case enums.SpecialEffect.Summon:
+                        {
+                            this.LoadEffectData("EffectSpine/magic/magic");
+                            show=true
+                        }
+                        break;
+                }
+                if(show)
+                {
+                    this.effectSkele.enabled = true;
+                    let anims = this.effectSkele.skeletonData.getAnimsEnum();
+                    this.effectSkele.setCompleteListener((trackEntry) =>
+                    {
+                        if (trackEntry.animation.name === String(anims[1]))
+                        {
+                            this.effectSkele.enabled = false;
+                        }
+                    });
                 }
                 resolve();
             }

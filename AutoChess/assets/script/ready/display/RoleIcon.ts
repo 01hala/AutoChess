@@ -679,7 +679,8 @@ export class RoleIcon extends Component
             }
             if(is_syncope)
             {
-                this.roleNode.getComponent(RoleDis).Exit();
+                await this.roleNode.getComponent(RoleDis).Exit();
+                this.node.destroy();
                 console.log("角色离场");
                 return;
             }

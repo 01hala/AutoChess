@@ -391,6 +391,11 @@ namespace battle_shop
                     }
                 }
 
+                foreach (var ev in tmp_evs)
+                {
+                    ev.do_skill_callback?.Invoke();
+                }
+
             } while (evs.Count > 0);
         }
 
@@ -539,9 +544,6 @@ namespace battle_shop
             var r = battleData.RoleList[index];
             if (r != null)
             {
-                battleData.RoleList[index] = null;
-                shop_skill_roles[index] = null;
-
                 RoleConfig rcfg;
                 if (config.Config.RoleConfigs.TryGetValue(r.RoleID, out rcfg))
                 {
@@ -555,7 +557,12 @@ namespace battle_shop
                     skill_id = r.SkillID,
                     role_level = r.Level,
                     fetters_id = r.FettersSkillID.fetters_id,
-                    fetters_level = r.FettersSkillID.fetters_level
+                    fetters_level = r.FettersSkillID.fetters_level,
+                    do_skill_callback = () =>
+                    {
+                        battleData.RoleList[index] = null;
+                        shop_skill_roles[index] = null;
+                    }
                 });
 
                 clear_skill_tag();
@@ -732,9 +739,6 @@ namespace battle_shop
 
                             case BufferAndEquipEffect.Syncope:
                                 {
-                                    battleData.RoleList[role_index] = null;
-                                    shop_skill_roles[role_index] = null;
-
                                     evs.Add(new shop_event()
                                     {
                                         ev = EMRoleShopEvent.syncope,
@@ -742,8 +746,15 @@ namespace battle_shop
                                         skill_id = r.SkillID,
                                         role_level = r.Level,
                                         fetters_id = r.FettersSkillID.fetters_id,
-                                        fetters_level = r.FettersSkillID.fetters_level
+                                        fetters_level = r.FettersSkillID.fetters_level,
+                                        do_skill_callback = () =>
+                                        {
+                                            battleData.RoleList[role_index] = null;
+                                            shop_skill_roles[role_index] = null;
+                                        }
                                     });
+
+                                    is_syncope = true;
                                 }
                                 break;
                         }
