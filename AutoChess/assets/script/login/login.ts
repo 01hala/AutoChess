@@ -365,7 +365,7 @@ export class login extends Component {
             singleton.netSingleton.battle.destory();
             singleton.netSingleton.battle = null;
 
-            singleton.netSingleton.game.battle();
+            singleton.netSingleton.game.start_round();
         }
 
         //pve准备阶段

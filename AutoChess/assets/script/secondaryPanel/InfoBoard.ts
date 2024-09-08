@@ -1,4 +1,4 @@
-import { _decorator, animation, Animation, BlockInputEvents, Button, Component, Label, Node, RichText, sp, Sprite, SpriteFrame } from 'cc';
+import { _decorator, animation, Animation, BlockInputEvents, Button, Component, director, game, Label, Node, RichText, sp, Sprite, SpriteFrame } from 'cc';
 import { PropsType } from '../other/enums';
 import { Team } from '../battle/AutoChessBattle/team';
 import { RoleDis } from '../battle/display/RoleDis';
@@ -52,10 +52,8 @@ export class InfoBoard extends Component
     {
         try
         {
-            // if(this.detailedBoard.active)
-            // {
-            //     this.detailedBoard.active=false;
-            // }
+            this.node.setSiblingIndex(100);
+
             this.simpleBoard.active=false;
             this.detailedBoard.active=false;
             this.propBoard.active=false;
@@ -65,7 +63,6 @@ export class InfoBoard extends Component
             {
                 this.propBoard.active=true;
                 this.propBoard.getComponent(Animation).play("PanelAppear");
-                this.node.setSiblingIndex(98);
                 this.node.getComponent(BlockInputEvents).enabled=true;
                 
                 //道具名
@@ -83,39 +80,34 @@ export class InfoBoard extends Component
                 //简介
                 this.propBoard.getChildByName("Introduce").getComponent(Label).string=pn.Introduce;
                
-                // switch(propType)
-                // {
-                //     case PropsType.Food:break;
-                //     case PropsType.Equip:break;
-                // }
             }
             else
             {
                 if(null==role||!isBuy)
                 {
-                    this.simpleBoard.active=true;
-                    this.simpleBoard.getComponent(Animation).play("PanelAppear");
-                    this.node.setSiblingIndex(98);
-                    this.node.getComponent(BlockInputEvents).enabled=true;
                     //立绘
                     let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData = role.roleSprite.skeletonData;
                     tSp.animation = role.roleSprite.animation;
 
-                    this.ShowSimpel(id);
+                    await this.ShowSimpel(id);
+
+                    this.simpleBoard.active=true;
+                    this.simpleBoard.getComponent(Animation).play("PanelAppear");
+                    this.node.getComponent(BlockInputEvents).enabled=true;
                 } 
                 else
                 {
-                    this.detailedBoard.active=true;
-                    this.detailedBoard.getComponent(Animation).play("PanelAppear");
-                    this.node.setSiblingIndex(98);
-                    this.node.getComponent(BlockInputEvents).enabled=true;
                     //立绘  
                     let tSp =this.detailedBoard.getChildByPath("RoleArea/Sculpture/Sprite").getComponent(sp.Skeleton);
                     tSp.skeletonData=role.roleSprite.skeletonData;
                     tSp.animation=role.roleSprite.animation;
                     
-                    this.ShowDetailed(index,role);
+                    await this.ShowDetailed(index,role);
+
+                    this.detailedBoard.active=true;
+                    this.detailedBoard.getComponent(Animation).play("PanelAppear");
+                    this.node.getComponent(BlockInputEvents).enabled=true;
                 }   
             }
             if (GameManager.Instance.guide)
@@ -137,7 +129,7 @@ export class InfoBoard extends Component
         this.fetterBoard.active=true;
 
         this.fetterBoard.getComponent(Animation).play("PanelAppear");
-        this.node.setSiblingIndex(98);
+        this.node.setSiblingIndex(100);
         this.node.getComponent(BlockInputEvents).enabled=true;
 
         let cf=config.FetterIntroduceConfig.get(_id);
@@ -157,7 +149,7 @@ export class InfoBoard extends Component
 
     OpenCardInfo(_id:number)
     {
-        this.node.setSiblingIndex(98);
+        this.node.setSiblingIndex(100);
         this.node.getComponent(BlockInputEvents).enabled=true;
         this.simpleBoard.active=true;
         this.detailedBoard.active=false;

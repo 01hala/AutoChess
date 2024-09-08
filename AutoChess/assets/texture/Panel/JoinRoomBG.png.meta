@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "71591755-a65a-47c8-9814-d649017cfe8c",
+  "uuid": "ba7844f2-785c-40a5-acba-f309763f0abe",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "71591755-a65a-47c8-9814-d649017cfe8c@6c48a",
+      "uuid": "ba7844f2-785c-40a5-acba-f309763f0abe@6c48a",
       "displayName": "JoinRoomBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "71591755-a65a-47c8-9814-d649017cfe8c",
+        "imageUuidOrDatabaseUri": "ba7844f2-785c-40a5-acba-f309763f0abe",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "71591755-a65a-47c8-9814-d649017cfe8c@f9941",
+      "uuid": "ba7844f2-785c-40a5-acba-f309763f0abe@f9941",
       "displayName": "JoinRoomBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "71591755-a65a-47c8-9814-d649017cfe8c@6c48a",
+        "imageUuidOrDatabaseUri": "ba7844f2-785c-40a5-acba-f309763f0abe@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "71591755-a65a-47c8-9814-d649017cfe8c@f9941"
+    "redirect": "ba7844f2-785c-40a5-acba-f309763f0abe@f9941"
   }
 }

@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "212f8eab-c422-4ea8-82e4-4fa72a490411",
+  "uuid": "5736fbec-207f-4ab1-8a7e-8dd127f7bda0",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "212f8eab-c422-4ea8-82e4-4fa72a490411@6c48a",
+      "uuid": "5736fbec-207f-4ab1-8a7e-8dd127f7bda0@6c48a",
       "displayName": "RoleAvatarFarme",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "212f8eab-c422-4ea8-82e4-4fa72a490411",
+        "imageUuidOrDatabaseUri": "5736fbec-207f-4ab1-8a7e-8dd127f7bda0",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "212f8eab-c422-4ea8-82e4-4fa72a490411@f9941",
+      "uuid": "5736fbec-207f-4ab1-8a7e-8dd127f7bda0@f9941",
       "displayName": "RoleAvatarFarme",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "212f8eab-c422-4ea8-82e4-4fa72a490411@6c48a",
+        "imageUuidOrDatabaseUri": "5736fbec-207f-4ab1-8a7e-8dd127f7bda0@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "212f8eab-c422-4ea8-82e4-4fa72a490411@f9941"
+    "redirect": "5736fbec-207f-4ab1-8a7e-8dd127f7bda0@f9941"
   }
 }

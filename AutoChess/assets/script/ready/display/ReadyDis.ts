@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, BlockInputEvents,Camera, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view, Widget, resources } from 'cc';
+import { _decorator, BlockInputEvents,Camera, Button, Component, EventHandler, instantiate, Node, Prefab, RichText, Size, size, sp, Sprite, SpriteFrame, Texture2D, UITransform, Vec3, view, Widget, resources, __private } from 'cc';
 import { RoleArea } from './RoleArea';
 import { ReadyData } from '../ReadyData';
 import { BundleManager } from '../../bundle/BundleManager';
@@ -23,6 +23,7 @@ import { GameManager } from '../../other/GameManager';
 import { AudioManager } from '../../other/AudioManager';
 import SdkManager from '../../SDK/SdkManager';
 import * as call_c from '../../serverSDK/matchcallc';
+import { CoinDrop } from './CoinDrop';
 
 const { ccclass, property } = _decorator;
 
@@ -56,8 +57,10 @@ export class ReadyDis
     private fetters:Node[]=[];
     //等待界面
     private waitingPanel:Node;
-
+    //商店遮罩
     private shopMask:Node;
+    //金币预制体
+    private coinPre:Prefab;
 
     public constructor(ready:ReadyData) 
     {
@@ -87,6 +90,8 @@ export class ReadyDis
             this.waitingPanel=instantiate(panel);
             this.waitingPanel.setParent(this.panelNode);
             this.waitingPanel.setSiblingIndex(100);
+            //金币预制体
+            this.coinPre=await BundleManager.Instance.loadAssetsFromBundle("Parts","CoinPre") as Prefab;
             //操作区域
             this.shopArea=this.panelNode.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
             this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
@@ -99,9 +104,9 @@ export class ReadyDis
             this.roundText=this.panelNode.getChildByPath("State/TopArea/RoundInfo/RichText").getComponent(RichText);
             this.trophyText=this.panelNode.getChildByPath("State/TopArea/TrophyInfo/RichText").getComponent(RichText);
             //技能发动效果
-            this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
-            this.launchSkillEffect.setSiblingIndex(99);
-            this.launchSkillEffect.active=false;
+            // this.launchSkillEffect = this.panelNode.getChildByName("LaunchSkillEffect");
+            // this.launchSkillEffect.setSiblingIndex(99);
+            // this.launchSkillEffect.active = false;
 
             this.roleInfoNode=this.panelNode.getChildByPath("State/TopArea/RoleIntroduce");
             this.roleInfoNode.active=false;
@@ -197,7 +202,6 @@ export class ReadyDis
                 {
                     await this.readyData.StartBattle();
                     this.panelNode.active = false;
-                    this.destory();
                 }
             });
             //退出按钮
@@ -214,6 +218,13 @@ export class ReadyDis
         {
             console.error("ReadyDis 里的 Init 错误 err:",error);
         }
+    }
+
+    public destory() 
+    {
+        this.roleArea.destroy();
+        this.shopArea.destroy();
+        this.panelNode.destroy();
     }
 
     private InterfaceAdjust()
@@ -370,7 +381,8 @@ export class ReadyDis
         //角色技能效果
         singleton.netSingleton.game.cb_shop_skill_effect = (effect:call_c.ShopSkillEffect)=>
         {
-            
+            console.log("skilleffect:", effect);
+            this.ShowSkillEffect(effect);
         };
 
     }
@@ -457,10 +469,6 @@ export class ReadyDis
         {
             singleton.netSingleton.game.get_quest_shop_data();
         }
-    }
-
-    public destory() {
-        this.panelNode.destroy();
     }
 
     Waiting(valve:boolean)
@@ -607,6 +615,62 @@ export class ReadyDis
             }
             resolve(temp);
         });
+    }
+
+    ShowSkillEffect(_effect:call_c.ShopSkillEffect)
+    {
+        switch (_effect.effect)
+        {
+            case common.SkillEffectEM.AddCoin:
+                {
+                    if (24 == _effect.skill_id)
+                    {
+                        this.coinText.node.parent.getChildByPath("CoinEffect").getComponent(sp.Skeleton).enabled = true;
+                        this.coinText.node.parent.getChildByPath("CoinEffect").getComponent(sp.Skeleton).setCompleteListener((trackEntry) =>
+                        {
+                            this.coinText.node.parent.getChildByPath("CoinEffect").getComponent(sp.Skeleton).enabled = false;
+                        });
+                        this.coinText.string = "<color=000000>" + this.readyData.GetCoins() + "</color>";
+                    }
+                    else
+                    {
+                        this.DropCoin(_effect.spellcaster);
+                    }
+                }
+                break;
+            case common.SkillEffectEM.AddProperty:
+                {
+                    for (let i of _effect.recipient)
+                    {
+                        this.roleArea.rolesNode[_effect.spellcaster].getComponent(RoleDis).SpellcastEffect(_effect.effect,this.roleArea.rolesNode[i],async ()=>
+                        {
+                            await this.roleArea.rolesNode[i].getComponent(RoleDis).ReceptionEffect(_effect.effect);
+                            await this.roleArea.rolesNode[i].getComponent(RoleDis).Intensifier(_effect.value);
+                        });
+                    }
+                    
+                    
+                }
+        }
+    }
+
+    DropCoin(_fromIndex:number)
+    {
+        try
+        {
+            let _from = this.roleArea.rolesNode[_fromIndex].worldPosition;
+            let _target = this.topArea.getChildByPath("CoinInfo").worldPosition;
+            let coinNode = instantiate(this.coinPre);
+            coinNode.setParent(this.father);
+            coinNode.getComponent(CoinDrop)?.Drop(_from, _target, () =>
+            {
+                this.coinText.string = "<color=000000>" + this.readyData.GetCoins() + "</color>";
+            });
+        }
+        catch (error)
+        {
+            console.error("ReadyDis 里的 DropCoin 错误 err:", error);
+        }
     }
 
     // onEvent()

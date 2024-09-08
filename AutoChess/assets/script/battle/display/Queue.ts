@@ -13,6 +13,7 @@ import * as role from '../AutoChessBattle/role'
 import { Battle } from '../AutoChessBattle/battle';
 import { Role } from '../AutoChessBattle/common';
 import { RoleInfo } from '../AutoChessBattle/skill/skill_base';
+import { sleep } from '../../other/sleep';
 
 @ccclass('Queue')
 export class Queue extends Component 
@@ -31,6 +32,17 @@ export class Queue extends Component
     start() 
     {
 
+    }
+
+    destroyRole()
+    {
+        for(let i=0;i<this.roleNodes.length;i++)
+        {
+            if(this.roleNodes[i])
+            {
+                this.roleNodes[i].destroy();
+            }
+        }
     }
 
     public GetRole(_index)
@@ -196,21 +208,39 @@ export class Queue extends Component
         }
     }
 
-    //角色换位
-    async SwitchRolePos(_recipient:RoleInfo[] , _indexValue:number[])
+    /**
+     * 交换角色位置
+     * @param _recipient 需要交换的角色
+     * @param _indexValue 目标位置
+     * @returns 
+     */
+    async SwitchRolePos(_recipient:RoleInfo[] , _indexValue:number[]):Promise<void>
     {
-        try
+        return new Promise(async (resolve)=>
         {
-            for(let i=0;i<_recipient.length;i++)
+            try
+            {
+                let tempRole;
+                if(this.roleNodes[_recipient[0].index])
                 {
-                    await this.roleNodes[_recipient[i].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[i]].position);
-                    this.roleNodes[i].getComponent(RoleDis.RoleDis).AttackInit();
+                    await this.roleNodes[_recipient[0].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[0]].worldPosition);
                 }
-        }
-        catch(err)
-        {
-            console.error("Queue 下的 SwitchRolePos 错误:", err);
-        }
+                if(this.roleNodes[_recipient[1].index])
+                {
+                    await this.roleNodes[_recipient[1].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[1]].worldPosition);
+                }
+
+                tempRole = this.roleNodes[_indexValue[0]];
+                this.roleNodes[_indexValue[0]] = this.roleNodes[_indexValue[1]];
+                this.roleNodes[_indexValue[1]] = tempRole;
+                await sleep(500);
+                resolve();
+            }
+            catch(err)
+            {
+                console.error("Queue 下的 SwitchRolePos 错误:", err);
+            }
+        });
     }
 }
 

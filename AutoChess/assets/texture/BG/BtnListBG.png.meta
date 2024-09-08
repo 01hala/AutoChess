@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "38ff0fbc-db7b-4843-809e-c112a2d51c14",
+  "uuid": "133255ff-eb63-44ac-9025-7ae35a5a7ed3",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "38ff0fbc-db7b-4843-809e-c112a2d51c14@6c48a",
+      "uuid": "133255ff-eb63-44ac-9025-7ae35a5a7ed3@6c48a",
       "displayName": "BtnListBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "38ff0fbc-db7b-4843-809e-c112a2d51c14",
+        "imageUuidOrDatabaseUri": "133255ff-eb63-44ac-9025-7ae35a5a7ed3",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "38ff0fbc-db7b-4843-809e-c112a2d51c14@f9941",
+      "uuid": "133255ff-eb63-44ac-9025-7ae35a5a7ed3@f9941",
       "displayName": "BtnListBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -50,8 +50,8 @@
         "height": 1254,
         "rawWidth": 181,
         "rawHeight": 1254,
-        "borderTop": 40,
-        "borderBottom": 40,
+        "borderTop": 0,
+        "borderBottom": 0,
         "borderLeft": 0,
         "borderRight": 0,
         "packable": true,
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "38ff0fbc-db7b-4843-809e-c112a2d51c14@6c48a",
+        "imageUuidOrDatabaseUri": "133255ff-eb63-44ac-9025-7ae35a5a7ed3@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "38ff0fbc-db7b-4843-809e-c112a2d51c14@f9941"
+    "redirect": "133255ff-eb63-44ac-9025-7ae35a5a7ed3@f9941"
   }
 }

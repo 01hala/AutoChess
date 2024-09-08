@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "5c7ca101-9f72-4c8a-b398-d5bc70835662",
+  "uuid": "5e8f3a7f-5b1a-434e-ae8c-709ebc1ed285",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "5c7ca101-9f72-4c8a-b398-d5bc70835662@6c48a",
+      "uuid": "5e8f3a7f-5b1a-434e-ae8c-709ebc1ed285@6c48a",
       "displayName": "CardBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "5c7ca101-9f72-4c8a-b398-d5bc70835662",
+        "imageUuidOrDatabaseUri": "5e8f3a7f-5b1a-434e-ae8c-709ebc1ed285",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "5c7ca101-9f72-4c8a-b398-d5bc70835662@f9941",
+      "uuid": "5e8f3a7f-5b1a-434e-ae8c-709ebc1ed285@f9941",
       "displayName": "CardBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "5c7ca101-9f72-4c8a-b398-d5bc70835662@6c48a",
+        "imageUuidOrDatabaseUri": "5e8f3a7f-5b1a-434e-ae8c-709ebc1ed285@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "5c7ca101-9f72-4c8a-b398-d5bc70835662@f9941"
+    "redirect": "5e8f3a7f-5b1a-434e-ae8c-709ebc1ed285@f9941"
   }
 }

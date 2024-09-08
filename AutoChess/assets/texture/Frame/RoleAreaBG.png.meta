@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "dd33b07e-4d17-40e3-bdb7-16d142b457ca",
+  "uuid": "670d84c2-14ec-422b-b520-038d78a5fcc5",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "dd33b07e-4d17-40e3-bdb7-16d142b457ca@6c48a",
+      "uuid": "670d84c2-14ec-422b-b520-038d78a5fcc5@6c48a",
       "displayName": "RoleAreaBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "dd33b07e-4d17-40e3-bdb7-16d142b457ca",
+        "imageUuidOrDatabaseUri": "670d84c2-14ec-422b-b520-038d78a5fcc5",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "dd33b07e-4d17-40e3-bdb7-16d142b457ca@f9941",
+      "uuid": "670d84c2-14ec-422b-b520-038d78a5fcc5@f9941",
       "displayName": "RoleAreaBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "dd33b07e-4d17-40e3-bdb7-16d142b457ca@6c48a",
+        "imageUuidOrDatabaseUri": "670d84c2-14ec-422b-b520-038d78a5fcc5@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "dd33b07e-4d17-40e3-bdb7-16d142b457ca@f9941"
+    "redirect": "670d84c2-14ec-422b-b520-038d78a5fcc5@f9941"
   }
 }

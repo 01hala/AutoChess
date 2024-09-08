@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "cf9feda1-5fb6-4660-81cb-d4036cd1f2b6",
+  "uuid": "aba3eabc-d895-4cee-8a5d-782127a42377",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "cf9feda1-5fb6-4660-81cb-d4036cd1f2b6@6c48a",
+      "uuid": "aba3eabc-d895-4cee-8a5d-782127a42377@6c48a",
       "displayName": "RankFarme",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "cf9feda1-5fb6-4660-81cb-d4036cd1f2b6",
+        "imageUuidOrDatabaseUri": "aba3eabc-d895-4cee-8a5d-782127a42377",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "cf9feda1-5fb6-4660-81cb-d4036cd1f2b6@f9941",
+      "uuid": "aba3eabc-d895-4cee-8a5d-782127a42377@f9941",
       "displayName": "RankFarme",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "cf9feda1-5fb6-4660-81cb-d4036cd1f2b6@6c48a",
+        "imageUuidOrDatabaseUri": "aba3eabc-d895-4cee-8a5d-782127a42377@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "cf9feda1-5fb6-4660-81cb-d4036cd1f2b6@f9941"
+    "redirect": "aba3eabc-d895-4cee-8a5d-782127a42377@f9941"
   }
 }

@@ -1,0 +1,118 @@
+
+Luminous sphere.png
+size: 1770,1770
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Luminous sphere_00000
+  rotate: false
+  xy: 2, 1328
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00001
+  rotate: false
+  xy: 2, 886
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00002
+  rotate: false
+  xy: 444, 1328
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00003
+  rotate: false
+  xy: 2, 444
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00004
+  rotate: false
+  xy: 444, 886
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00005
+  rotate: false
+  xy: 886, 1328
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00006
+  rotate: false
+  xy: 2, 2
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00007
+  rotate: false
+  xy: 444, 444
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00008
+  rotate: false
+  xy: 886, 886
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00009
+  rotate: false
+  xy: 1328, 1328
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00010
+  rotate: false
+  xy: 444, 2
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00011
+  rotate: false
+  xy: 886, 444
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00012
+  rotate: false
+  xy: 1328, 886
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00013
+  rotate: false
+  xy: 886, 2
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+Luminous sphere_00014
+  rotate: false
+  xy: 1328, 444
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+bo
+  rotate: false
+  xy: 1328, 2
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1

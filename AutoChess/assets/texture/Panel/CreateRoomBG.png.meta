@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "653c471d-825e-4552-9e37-9c8d38e32266",
+  "uuid": "dc73db4a-8f2d-415f-8d72-f25c5738d83b",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "653c471d-825e-4552-9e37-9c8d38e32266@6c48a",
+      "uuid": "dc73db4a-8f2d-415f-8d72-f25c5738d83b@6c48a",
       "displayName": "CreateRoomBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "653c471d-825e-4552-9e37-9c8d38e32266",
+        "imageUuidOrDatabaseUri": "dc73db4a-8f2d-415f-8d72-f25c5738d83b",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "653c471d-825e-4552-9e37-9c8d38e32266@f9941",
+      "uuid": "dc73db4a-8f2d-415f-8d72-f25c5738d83b@f9941",
       "displayName": "CreateRoomBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "653c471d-825e-4552-9e37-9c8d38e32266@6c48a",
+        "imageUuidOrDatabaseUri": "dc73db4a-8f2d-415f-8d72-f25c5738d83b@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "653c471d-825e-4552-9e37-9c8d38e32266@f9941"
+    "redirect": "dc73db4a-8f2d-415f-8d72-f25c5738d83b@f9941"
   }
 }

@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "b46cebad-8356-4cb9-ace7-24d2a52cb169",
+  "uuid": "88e82c75-6894-4844-8185-bb954efe7abf",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b46cebad-8356-4cb9-ace7-24d2a52cb169@6c48a",
+      "uuid": "88e82c75-6894-4844-8185-bb954efe7abf@6c48a",
       "displayName": "DrawRing",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b46cebad-8356-4cb9-ace7-24d2a52cb169",
+        "imageUuidOrDatabaseUri": "88e82c75-6894-4844-8185-bb954efe7abf",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b46cebad-8356-4cb9-ace7-24d2a52cb169@f9941",
+      "uuid": "88e82c75-6894-4844-8185-bb954efe7abf@f9941",
       "displayName": "DrawRing",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b46cebad-8356-4cb9-ace7-24d2a52cb169@6c48a",
+        "imageUuidOrDatabaseUri": "88e82c75-6894-4844-8185-bb954efe7abf@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "b46cebad-8356-4cb9-ace7-24d2a52cb169@f9941"
+    "redirect": "88e82c75-6894-4844-8185-bb954efe7abf@f9941"
   }
 }
