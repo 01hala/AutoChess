@@ -192,7 +192,20 @@ export class InfoBoard extends Component
             }
             if(singleton.netSingleton.battle)
             {
-                r=_role.GetRoleInfo().c_role;
+                r=new common.Role();
+                r.RoleID=_role.GetRoleInfo().id;
+                r.Attack=_role.GetRoleInfo().GetProperty(battleEnums.Property.Attack);
+                r.HP=_role.GetRoleInfo().GetProperty(battleEnums.Property.HP);
+                r.Level=_role.GetRoleInfo().level;
+                r.equipID=_role.GetRoleInfo().equip[0];
+                let buff=[];
+                for(let i of _role.GetRoleInfo().buffer)
+                {
+                    buff.push(i);
+                }
+                r.additionBuffer=buff;
+                r.FettersSkillID=_role.GetRoleInfo().fetter;
+                //r=_role.GetRoleInfo().c_role;
             }
             let ro=config.RoleConfig.get(r.RoleID);
             //工具生命等级
@@ -226,7 +239,14 @@ export class InfoBoard extends Component
             }
             this.detailedBoard.getChildByPath("DetailsArea/Buff/Label").getComponent(Label).string=bustr;
             //购买时的回合
-            this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`<color=#ac8352>--在第${r.BuyRound}回合购买--</color>`;
+            if(singleton.netSingleton.battle)
+            {
+                this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").active=false;
+            }
+            else
+            {
+                this.detailedBoard.getChildByPath("DetailsArea/BuyRound/RichText").getComponent(RichText).string=`<color=#ac8352>--在第${r.BuyRound}回合购买--</color>`;
+            }
             //装备图片
             console.log("角色信息面板装备获取到的id"+r.equipID);
             if(r.equipID)
