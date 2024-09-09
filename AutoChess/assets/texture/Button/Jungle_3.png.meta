@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "f272c038-0f13-4a2b-8802-68ad289e4595",
+  "uuid": "3d15b405-c2bc-478d-b1f7-40fa8315e6be",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "f272c038-0f13-4a2b-8802-68ad289e4595@6c48a",
+      "uuid": "3d15b405-c2bc-478d-b1f7-40fa8315e6be@6c48a",
       "displayName": "Jungle_3",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "f272c038-0f13-4a2b-8802-68ad289e4595",
+        "imageUuidOrDatabaseUri": "3d15b405-c2bc-478d-b1f7-40fa8315e6be",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "f272c038-0f13-4a2b-8802-68ad289e4595@f9941",
+      "uuid": "3d15b405-c2bc-478d-b1f7-40fa8315e6be@f9941",
       "displayName": "Jungle_3",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "f272c038-0f13-4a2b-8802-68ad289e4595@6c48a",
+        "imageUuidOrDatabaseUri": "3d15b405-c2bc-478d-b1f7-40fa8315e6be@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "f272c038-0f13-4a2b-8802-68ad289e4595@f9941"
+    "redirect": "3d15b405-c2bc-478d-b1f7-40fa8315e6be@f9941"
   }
 }

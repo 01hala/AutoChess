@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "c515cd7d-205f-40fb-8ae5-b3f0be73c82b",
+  "uuid": "abc889d6-9ae1-4c62-8579-0c9aaa533f78",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "c515cd7d-205f-40fb-8ae5-b3f0be73c82b@6c48a",
+      "uuid": "abc889d6-9ae1-4c62-8579-0c9aaa533f78@6c48a",
       "displayName": "lan",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "c515cd7d-205f-40fb-8ae5-b3f0be73c82b",
+        "imageUuidOrDatabaseUri": "abc889d6-9ae1-4c62-8579-0c9aaa533f78",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "c515cd7d-205f-40fb-8ae5-b3f0be73c82b@f9941",
+      "uuid": "abc889d6-9ae1-4c62-8579-0c9aaa533f78@f9941",
       "displayName": "lan",
       "id": "f9941",
       "name": "spriteFrame",
@@ -50,10 +50,10 @@
         "height": 212,
         "rawWidth": 212,
         "rawHeight": 212,
-        "borderTop": 48,
-        "borderBottom": 62,
-        "borderLeft": 53,
-        "borderRight": 58,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
         "packable": true,
         "pixelsToUnit": 100,
         "pivotX": 0.5,
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "c515cd7d-205f-40fb-8ae5-b3f0be73c82b@6c48a",
+        "imageUuidOrDatabaseUri": "abc889d6-9ae1-4c62-8579-0c9aaa533f78@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "c515cd7d-205f-40fb-8ae5-b3f0be73c82b@f9941"
+    "redirect": "abc889d6-9ae1-4c62-8579-0c9aaa533f78@f9941"
   }
 }

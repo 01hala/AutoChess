@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "b2ef1d0c-f665-4a56-90c2-5d3946e4a0cd",
+  "uuid": "d318f353-4c1b-424b-b63d-e947d4eea0f2",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b2ef1d0c-f665-4a56-90c2-5d3946e4a0cd@6c48a",
+      "uuid": "d318f353-4c1b-424b-b63d-e947d4eea0f2@6c48a",
       "displayName": "LoseRing",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b2ef1d0c-f665-4a56-90c2-5d3946e4a0cd",
+        "imageUuidOrDatabaseUri": "d318f353-4c1b-424b-b63d-e947d4eea0f2",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b2ef1d0c-f665-4a56-90c2-5d3946e4a0cd@f9941",
+      "uuid": "d318f353-4c1b-424b-b63d-e947d4eea0f2@f9941",
       "displayName": "LoseRing",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b2ef1d0c-f665-4a56-90c2-5d3946e4a0cd@6c48a",
+        "imageUuidOrDatabaseUri": "d318f353-4c1b-424b-b63d-e947d4eea0f2@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "b2ef1d0c-f665-4a56-90c2-5d3946e4a0cd@f9941"
+    "redirect": "d318f353-4c1b-424b-b63d-e947d4eea0f2@f9941"
   }
 }

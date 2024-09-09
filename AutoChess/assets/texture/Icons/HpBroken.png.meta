@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "cd100ee5-6352-4f81-a312-557b990792f6",
+  "uuid": "16c0b65c-f7b5-4bd9-96e6-fb5c6e9e8eb0",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "cd100ee5-6352-4f81-a312-557b990792f6@6c48a",
+      "uuid": "16c0b65c-f7b5-4bd9-96e6-fb5c6e9e8eb0@6c48a",
       "displayName": "HpBroken",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "cd100ee5-6352-4f81-a312-557b990792f6",
+        "imageUuidOrDatabaseUri": "16c0b65c-f7b5-4bd9-96e6-fb5c6e9e8eb0",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "cd100ee5-6352-4f81-a312-557b990792f6@f9941",
+      "uuid": "16c0b65c-f7b5-4bd9-96e6-fb5c6e9e8eb0@f9941",
       "displayName": "HpBroken",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "cd100ee5-6352-4f81-a312-557b990792f6@6c48a",
+        "imageUuidOrDatabaseUri": "16c0b65c-f7b5-4bd9-96e6-fb5c6e9e8eb0@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "cd100ee5-6352-4f81-a312-557b990792f6@f9941"
+    "redirect": "16c0b65c-f7b5-4bd9-96e6-fb5c6e9e8eb0@f9941"
   }
 }

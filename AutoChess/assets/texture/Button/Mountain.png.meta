@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "f8ba1104-907d-4283-bb58-300e382598f8",
+  "uuid": "0cf592fa-a89c-4635-9044-8e3da4710fdc",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "f8ba1104-907d-4283-bb58-300e382598f8@6c48a",
+      "uuid": "0cf592fa-a89c-4635-9044-8e3da4710fdc@6c48a",
       "displayName": "Mountain",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "f8ba1104-907d-4283-bb58-300e382598f8",
+        "imageUuidOrDatabaseUri": "0cf592fa-a89c-4635-9044-8e3da4710fdc",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "f8ba1104-907d-4283-bb58-300e382598f8@f9941",
+      "uuid": "0cf592fa-a89c-4635-9044-8e3da4710fdc@f9941",
       "displayName": "Mountain",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "f8ba1104-907d-4283-bb58-300e382598f8@6c48a",
+        "imageUuidOrDatabaseUri": "0cf592fa-a89c-4635-9044-8e3da4710fdc@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "f8ba1104-907d-4283-bb58-300e382598f8@f9941"
+    "redirect": "0cf592fa-a89c-4635-9044-8e3da4710fdc@f9941"
   }
 }
