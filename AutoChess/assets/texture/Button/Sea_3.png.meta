@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "92238a8a-85e4-48fd-891e-d600161a9654",
+  "uuid": "6ac60cbf-a899-48bd-a315-150a392e4f4e",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "92238a8a-85e4-48fd-891e-d600161a9654@6c48a",
+      "uuid": "6ac60cbf-a899-48bd-a315-150a392e4f4e@6c48a",
       "displayName": "Sea_3",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "92238a8a-85e4-48fd-891e-d600161a9654",
+        "imageUuidOrDatabaseUri": "6ac60cbf-a899-48bd-a315-150a392e4f4e",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "92238a8a-85e4-48fd-891e-d600161a9654@f9941",
+      "uuid": "6ac60cbf-a899-48bd-a315-150a392e4f4e@f9941",
       "displayName": "Sea_3",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "92238a8a-85e4-48fd-891e-d600161a9654@6c48a",
+        "imageUuidOrDatabaseUri": "6ac60cbf-a899-48bd-a315-150a392e4f4e@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "92238a8a-85e4-48fd-891e-d600161a9654@f9941"
+    "redirect": "6ac60cbf-a899-48bd-a315-150a392e4f4e@f9941"
   }
 }

@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "b1922120-d85c-4630-8d5f-600196d7152d",
+  "uuid": "923066f8-4220-4e0b-8139-87df6907d3e0",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b1922120-d85c-4630-8d5f-600196d7152d@6c48a",
+      "uuid": "923066f8-4220-4e0b-8139-87df6907d3e0@6c48a",
       "displayName": "SkyBg",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b1922120-d85c-4630-8d5f-600196d7152d",
+        "imageUuidOrDatabaseUri": "923066f8-4220-4e0b-8139-87df6907d3e0",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b1922120-d85c-4630-8d5f-600196d7152d@f9941",
+      "uuid": "923066f8-4220-4e0b-8139-87df6907d3e0@f9941",
       "displayName": "SkyBg",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b1922120-d85c-4630-8d5f-600196d7152d@6c48a",
+        "imageUuidOrDatabaseUri": "923066f8-4220-4e0b-8139-87df6907d3e0@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "b1922120-d85c-4630-8d5f-600196d7152d@f9941"
+    "redirect": "923066f8-4220-4e0b-8139-87df6907d3e0@f9941"
   }
 }

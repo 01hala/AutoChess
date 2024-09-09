@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "4373ec65-1deb-49ad-8b48-c94568e20c64",
+  "uuid": "70675215-73d7-43b4-87af-dd5b2e3d149f",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "4373ec65-1deb-49ad-8b48-c94568e20c64@6c48a",
+      "uuid": "70675215-73d7-43b4-87af-dd5b2e3d149f@6c48a",
       "displayName": "LightBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "4373ec65-1deb-49ad-8b48-c94568e20c64",
+        "imageUuidOrDatabaseUri": "70675215-73d7-43b4-87af-dd5b2e3d149f",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "4373ec65-1deb-49ad-8b48-c94568e20c64@f9941",
+      "uuid": "70675215-73d7-43b4-87af-dd5b2e3d149f@f9941",
       "displayName": "LightBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "4373ec65-1deb-49ad-8b48-c94568e20c64@6c48a",
+        "imageUuidOrDatabaseUri": "70675215-73d7-43b4-87af-dd5b2e3d149f@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "4373ec65-1deb-49ad-8b48-c94568e20c64@f9941"
+    "redirect": "70675215-73d7-43b4-87af-dd5b2e3d149f@f9941"
   }
 }

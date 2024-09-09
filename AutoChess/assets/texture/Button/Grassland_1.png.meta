@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "982cc40f-bde5-4961-b100-f4a6d233054f",
+  "uuid": "e4163e34-8c8f-4772-9522-cf050c8c64ce",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "982cc40f-bde5-4961-b100-f4a6d233054f@6c48a",
+      "uuid": "e4163e34-8c8f-4772-9522-cf050c8c64ce@6c48a",
       "displayName": "Grassland_1",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "982cc40f-bde5-4961-b100-f4a6d233054f",
+        "imageUuidOrDatabaseUri": "e4163e34-8c8f-4772-9522-cf050c8c64ce",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "982cc40f-bde5-4961-b100-f4a6d233054f@f9941",
+      "uuid": "e4163e34-8c8f-4772-9522-cf050c8c64ce@f9941",
       "displayName": "Grassland_1",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "982cc40f-bde5-4961-b100-f4a6d233054f@6c48a",
+        "imageUuidOrDatabaseUri": "e4163e34-8c8f-4772-9522-cf050c8c64ce@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "982cc40f-bde5-4961-b100-f4a6d233054f@f9941"
+    "redirect": "e4163e34-8c8f-4772-9522-cf050c8c64ce@f9941"
   }
 }

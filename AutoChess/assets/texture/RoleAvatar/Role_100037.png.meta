@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "0ac58f83-3008-4e46-9cb5-3576b10ac61a",
+  "uuid": "2a3f8a14-eb23-4c43-a82c-94aea7a8fd59",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "0ac58f83-3008-4e46-9cb5-3576b10ac61a@6c48a",
+      "uuid": "2a3f8a14-eb23-4c43-a82c-94aea7a8fd59@6c48a",
       "displayName": "Role_100037",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "0ac58f83-3008-4e46-9cb5-3576b10ac61a",
+        "imageUuidOrDatabaseUri": "2a3f8a14-eb23-4c43-a82c-94aea7a8fd59",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "0ac58f83-3008-4e46-9cb5-3576b10ac61a@f9941",
+      "uuid": "2a3f8a14-eb23-4c43-a82c-94aea7a8fd59@f9941",
       "displayName": "Role_100037",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "0ac58f83-3008-4e46-9cb5-3576b10ac61a@6c48a",
+        "imageUuidOrDatabaseUri": "2a3f8a14-eb23-4c43-a82c-94aea7a8fd59@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "0ac58f83-3008-4e46-9cb5-3576b10ac61a@f9941"
+    "redirect": "2a3f8a14-eb23-4c43-a82c-94aea7a8fd59@f9941"
   }
 }

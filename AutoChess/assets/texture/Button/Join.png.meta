@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "29a15ebf-34d6-4399-91ae-69c61ded7fb0",
+  "uuid": "9b613e66-4ea6-4b89-845a-0770f91fe6db",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "29a15ebf-34d6-4399-91ae-69c61ded7fb0@6c48a",
+      "uuid": "9b613e66-4ea6-4b89-845a-0770f91fe6db@6c48a",
       "displayName": "Join",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "29a15ebf-34d6-4399-91ae-69c61ded7fb0",
+        "imageUuidOrDatabaseUri": "9b613e66-4ea6-4b89-845a-0770f91fe6db",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "29a15ebf-34d6-4399-91ae-69c61ded7fb0@f9941",
+      "uuid": "9b613e66-4ea6-4b89-845a-0770f91fe6db@f9941",
       "displayName": "Join",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "29a15ebf-34d6-4399-91ae-69c61ded7fb0@6c48a",
+        "imageUuidOrDatabaseUri": "9b613e66-4ea6-4b89-845a-0770f91fe6db@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "29a15ebf-34d6-4399-91ae-69c61ded7fb0@f9941"
+    "redirect": "9b613e66-4ea6-4b89-845a-0770f91fe6db@f9941"
   }
 }

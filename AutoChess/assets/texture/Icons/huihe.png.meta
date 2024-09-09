@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "3ffa5c71-40b4-4d5c-8517-29974815660a",
+  "uuid": "a443a54d-fef9-4bcd-9b17-6660d7a57104",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "3ffa5c71-40b4-4d5c-8517-29974815660a@6c48a",
+      "uuid": "a443a54d-fef9-4bcd-9b17-6660d7a57104@6c48a",
       "displayName": "huihe",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "3ffa5c71-40b4-4d5c-8517-29974815660a",
+        "imageUuidOrDatabaseUri": "a443a54d-fef9-4bcd-9b17-6660d7a57104",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "3ffa5c71-40b4-4d5c-8517-29974815660a@f9941",
+      "uuid": "a443a54d-fef9-4bcd-9b17-6660d7a57104@f9941",
       "displayName": "huihe",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "3ffa5c71-40b4-4d5c-8517-29974815660a@6c48a",
+        "imageUuidOrDatabaseUri": "a443a54d-fef9-4bcd-9b17-6660d7a57104@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "3ffa5c71-40b4-4d5c-8517-29974815660a@f9941"
+    "redirect": "a443a54d-fef9-4bcd-9b17-6660d7a57104@f9941"
   }
 }

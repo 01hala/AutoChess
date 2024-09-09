@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "a7803c36-98ca-4d65-93fc-b3428ff8d355",
+  "uuid": "3fcfad92-d1d9-4857-8805-23ab42028266",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "a7803c36-98ca-4d65-93fc-b3428ff8d355@6c48a",
+      "uuid": "3fcfad92-d1d9-4857-8805-23ab42028266@6c48a",
       "displayName": "Cave",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "a7803c36-98ca-4d65-93fc-b3428ff8d355",
+        "imageUuidOrDatabaseUri": "3fcfad92-d1d9-4857-8805-23ab42028266",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "a7803c36-98ca-4d65-93fc-b3428ff8d355@f9941",
+      "uuid": "3fcfad92-d1d9-4857-8805-23ab42028266@f9941",
       "displayName": "Cave",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "a7803c36-98ca-4d65-93fc-b3428ff8d355@6c48a",
+        "imageUuidOrDatabaseUri": "3fcfad92-d1d9-4857-8805-23ab42028266@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "a7803c36-98ca-4d65-93fc-b3428ff8d355@f9941"
+    "redirect": "3fcfad92-d1d9-4857-8805-23ab42028266@f9941"
   }
 }

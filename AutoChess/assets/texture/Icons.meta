@@ -2,11 +2,16 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "45a81a59-2685-4df5-be56-a2c8cdefe1aa",
+  "uuid": "9c21e752-e2e2-4ddf-9321-cfd696410ac6",
   "files": [],
   "subMetas": {},
   "userData": {
     "compressionType": {},
-    "isRemoteBundle": {}
+    "isRemoteBundle": {
+      "wechatgame": true
+    },
+    "isBundle": true,
+    "bundleName": "IconTexture",
+    "priority": 2
   }
 }
