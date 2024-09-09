@@ -256,19 +256,31 @@ export class netGame {
     {
         return new Promise((relolve, reject) =>
         {
-            netSingleton.battleshop.c_match.get_hub(this.match_name).start_round1().callBack((self, target) =>
+            netSingleton.battleshop.c_match.get_hub(this.match_name).end_round().callBack(()=>
             {
-                this.cb_battle.call(null, self, target);
-                relolve(null);
-            }, (err) =>
+                netSingleton.battleshop.c_match.get_hub(this.match_name).start_round1().callBack((self, target) =>
+                {
+                    this.cb_battle.call(null, self, target);
+                    relolve(null);
+                }, (err) =>
+                {
+                    console.log("start_round1 err:", err);
+                    reject("error")
+                }).timeout(3000, () =>
+                {
+                    console.log("start_round1 timeout!");
+                    reject("timeout")
+                });
+            },(err)=>
             {
-                console.log("battle1 err:", err);
-                reject("error")
-            }).timeout(3000, () =>
+                console.log("end_round err:", err);
+                reject("error");
+            }).timeout(3000,()=>
             {
-                console.log("battle1 timeout!");
+                console.log("end_round timeout!");
                 reject("timeout")
-            })
+            });
+            
         });
     }
 
