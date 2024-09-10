@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "9b9d9cb8-6a91-4e73-b479-c768445e0337",
+  "uuid": "9db83bc5-4042-4bdd-8cca-a672e3b7b167",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "9b9d9cb8-6a91-4e73-b479-c768445e0337@6c48a",
+      "uuid": "9db83bc5-4042-4bdd-8cca-a672e3b7b167@6c48a",
       "displayName": "StoreMark",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "9b9d9cb8-6a91-4e73-b479-c768445e0337",
+        "imageUuidOrDatabaseUri": "9db83bc5-4042-4bdd-8cca-a672e3b7b167",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "9b9d9cb8-6a91-4e73-b479-c768445e0337@f9941",
+      "uuid": "9db83bc5-4042-4bdd-8cca-a672e3b7b167@f9941",
       "displayName": "StoreMark",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "9b9d9cb8-6a91-4e73-b479-c768445e0337@6c48a",
+        "imageUuidOrDatabaseUri": "9db83bc5-4042-4bdd-8cca-a672e3b7b167@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "9b9d9cb8-6a91-4e73-b479-c768445e0337@f9941"
+    "redirect": "9db83bc5-4042-4bdd-8cca-a672e3b7b167@f9941"
   }
 }

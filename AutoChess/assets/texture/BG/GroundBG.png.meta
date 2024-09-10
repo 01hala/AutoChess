@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "8727c61e-f430-41ed-b3c3-3d38802df6ec",
+  "uuid": "e738a03d-588a-42c4-abb0-f70315161c2d",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "8727c61e-f430-41ed-b3c3-3d38802df6ec@6c48a",
+      "uuid": "e738a03d-588a-42c4-abb0-f70315161c2d@6c48a",
       "displayName": "GroundBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "8727c61e-f430-41ed-b3c3-3d38802df6ec",
+        "imageUuidOrDatabaseUri": "e738a03d-588a-42c4-abb0-f70315161c2d",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "8727c61e-f430-41ed-b3c3-3d38802df6ec@f9941",
+      "uuid": "e738a03d-588a-42c4-abb0-f70315161c2d@f9941",
       "displayName": "GroundBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "8727c61e-f430-41ed-b3c3-3d38802df6ec@6c48a",
+        "imageUuidOrDatabaseUri": "e738a03d-588a-42c4-abb0-f70315161c2d@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "8727c61e-f430-41ed-b3c3-3d38802df6ec@f9941"
+    "redirect": "e738a03d-588a-42c4-abb0-f70315161c2d@f9941"
   }
 }

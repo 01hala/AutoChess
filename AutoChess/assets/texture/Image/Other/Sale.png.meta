@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "895c4956-3131-4b4b-bcb3-1aefe35041a1",
+  "uuid": "ec9435ed-825a-4108-a2c2-51ed66340bc3",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "895c4956-3131-4b4b-bcb3-1aefe35041a1@6c48a",
+      "uuid": "ec9435ed-825a-4108-a2c2-51ed66340bc3@6c48a",
       "displayName": "Sale",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "895c4956-3131-4b4b-bcb3-1aefe35041a1",
+        "imageUuidOrDatabaseUri": "ec9435ed-825a-4108-a2c2-51ed66340bc3",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "895c4956-3131-4b4b-bcb3-1aefe35041a1@f9941",
+      "uuid": "ec9435ed-825a-4108-a2c2-51ed66340bc3@f9941",
       "displayName": "Sale",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "895c4956-3131-4b4b-bcb3-1aefe35041a1@6c48a",
+        "imageUuidOrDatabaseUri": "ec9435ed-825a-4108-a2c2-51ed66340bc3@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "895c4956-3131-4b4b-bcb3-1aefe35041a1@f9941"
+    "redirect": "ec9435ed-825a-4108-a2c2-51ed66340bc3@f9941"
   }
 }

@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "e11a2bc5-6cba-4bbf-8004-7e87e7293ddb",
+  "uuid": "cd045af9-600b-4533-aa63-3495736be672",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "e11a2bc5-6cba-4bbf-8004-7e87e7293ddb@6c48a",
+      "uuid": "cd045af9-600b-4533-aa63-3495736be672@6c48a",
       "displayName": "jiangbei",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "e11a2bc5-6cba-4bbf-8004-7e87e7293ddb",
+        "imageUuidOrDatabaseUri": "cd045af9-600b-4533-aa63-3495736be672",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "e11a2bc5-6cba-4bbf-8004-7e87e7293ddb@f9941",
+      "uuid": "cd045af9-600b-4533-aa63-3495736be672@f9941",
       "displayName": "jiangbei",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "e11a2bc5-6cba-4bbf-8004-7e87e7293ddb@6c48a",
+        "imageUuidOrDatabaseUri": "cd045af9-600b-4533-aa63-3495736be672@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "e11a2bc5-6cba-4bbf-8004-7e87e7293ddb@f9941"
+    "redirect": "cd045af9-600b-4533-aa63-3495736be672@f9941"
   }
 }

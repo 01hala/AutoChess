@@ -71,4 +71,6 @@ export enum SpecialEffect
     AddBuff=3,
     /** 召唤 */
     Summon=4,
+    /** 治疗 */
+    Heath=5,
 }

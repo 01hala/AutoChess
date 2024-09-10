@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "b6691d3b-2996-4611-b783-1d31da963140",
+  "uuid": "ad1be266-d20d-4c7c-a591-a87910b6ecf6",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b6691d3b-2996-4611-b783-1d31da963140@6c48a",
+      "uuid": "ad1be266-d20d-4c7c-a591-a87910b6ecf6@6c48a",
       "displayName": "Farme",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b6691d3b-2996-4611-b783-1d31da963140",
+        "imageUuidOrDatabaseUri": "ad1be266-d20d-4c7c-a591-a87910b6ecf6",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b6691d3b-2996-4611-b783-1d31da963140@f9941",
+      "uuid": "ad1be266-d20d-4c7c-a591-a87910b6ecf6@f9941",
       "displayName": "Farme",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b6691d3b-2996-4611-b783-1d31da963140@6c48a",
+        "imageUuidOrDatabaseUri": "ad1be266-d20d-4c7c-a591-a87910b6ecf6@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "b6691d3b-2996-4611-b783-1d31da963140@f9941"
+    "redirect": "ad1be266-d20d-4c7c-a591-a87910b6ecf6@f9941"
   }
 }

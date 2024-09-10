@@ -636,29 +636,35 @@ export class BattleDis
                 {
                     continue;
                 }
-                else
-                {
-                    //await this.showLaunchSkillEffect();
-                }
+                
                 console.log("检测到加属性事件");
                 //受到增益者            
-                ev.recipient.forEach(element=>{
-                    
+                ev.recipient.forEach(element=>
+                {
+                    let effectEm:common.SkillEffectEM = common.SkillEffectEM.AddProperty;
+                    if(1 == ev.effectScope)
+                    {
+                        effectEm=common.SkillEffectEM.RecoverHP;
+                    }
                     if(battleEnums.Camp.Self==element.camp)
                     {
                         if(this.selfQueue.roleNodes[element.index])
                         {
                             if (!ev.isParallel) 
                             {
-                                allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.selfQueue.roleNodes[element.index], async ()=>
+                                allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.selfQueue.roleNodes[element.index], async ()=>
                                 {
-                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
+                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
                                     await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
                             else
                             {
-                                this.selfParallelList.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                                this.selfParallelList.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.selfQueue.roleNodes[element.index], async ()=>
+                                {
+                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
+                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
+                                }));
                             }
                         } 
                     }
@@ -668,15 +674,19 @@ export class BattleDis
                         {
                             if (!ev.isParallel)
                             {
-                                allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddProperty,this.enemyQueue.roleNodes[element.index],async ()=>
+                                allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.enemyQueue.roleNodes[element.index],async ()=>
                                 {
-                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty);
+                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
                                     await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
                             else
                             {
-                                this.enemyParallelList.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                                this.enemyParallelList.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.enemyQueue.roleNodes[element.index],async ()=>
+                                {
+                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
+                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
+                                }));
                             }
                         }
                         

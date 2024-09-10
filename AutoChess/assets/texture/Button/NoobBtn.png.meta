@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "4113ed9a-e6ab-4a01-9c15-cd6f1ab15f22",
+  "uuid": "a45ef33b-ea74-4123-8367-612dbf52f88a",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "4113ed9a-e6ab-4a01-9c15-cd6f1ab15f22@6c48a",
+      "uuid": "a45ef33b-ea74-4123-8367-612dbf52f88a@6c48a",
       "displayName": "NoobBtn",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "4113ed9a-e6ab-4a01-9c15-cd6f1ab15f22",
+        "imageUuidOrDatabaseUri": "a45ef33b-ea74-4123-8367-612dbf52f88a",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "4113ed9a-e6ab-4a01-9c15-cd6f1ab15f22@f9941",
+      "uuid": "a45ef33b-ea74-4123-8367-612dbf52f88a@f9941",
       "displayName": "NoobBtn",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "4113ed9a-e6ab-4a01-9c15-cd6f1ab15f22@6c48a",
+        "imageUuidOrDatabaseUri": "a45ef33b-ea74-4123-8367-612dbf52f88a@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "4113ed9a-e6ab-4a01-9c15-cd6f1ab15f22@f9941"
+    "redirect": "a45ef33b-ea74-4123-8367-612dbf52f88a@f9941"
   }
 }

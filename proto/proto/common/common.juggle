@@ -177,6 +177,7 @@ enum Direction
     Left = 4;
     Self = 5;
 	Cross = 6;
+	Summon=7;
 }
 
 enum BufferAndEquipEffect
@@ -201,7 +202,7 @@ enum EMSkillEvent
     buy = 4;             		//购买时
     sales = 5;           		//出售时
     camp_sales = 6;      		//友方出售时
-    update = 7;          		//升级后
+    upgrade = 7;          		//升级后
     syncope = 8;         		//晕厥时
     camp_syncope = 9;    		//伙伴晕厥时
     strengthen = 10;     		//受到强化时

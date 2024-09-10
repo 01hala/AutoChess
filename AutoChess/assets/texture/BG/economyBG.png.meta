@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "2fcaf384-e1d9-4b0e-b091-f70c139d0c4f",
+  "uuid": "95178f1d-57a1-4db0-b358-fa85e2761b4d",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "2fcaf384-e1d9-4b0e-b091-f70c139d0c4f@6c48a",
+      "uuid": "95178f1d-57a1-4db0-b358-fa85e2761b4d@6c48a",
       "displayName": "economyBG",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "2fcaf384-e1d9-4b0e-b091-f70c139d0c4f",
+        "imageUuidOrDatabaseUri": "95178f1d-57a1-4db0-b358-fa85e2761b4d",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "2fcaf384-e1d9-4b0e-b091-f70c139d0c4f@f9941",
+      "uuid": "95178f1d-57a1-4db0-b358-fa85e2761b4d@f9941",
       "displayName": "economyBG",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "2fcaf384-e1d9-4b0e-b091-f70c139d0c4f@6c48a",
+        "imageUuidOrDatabaseUri": "95178f1d-57a1-4db0-b358-fa85e2761b4d@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "2fcaf384-e1d9-4b0e-b091-f70c139d0c4f@f9941"
+    "redirect": "95178f1d-57a1-4db0-b358-fa85e2761b4d@f9941"
   }
 }

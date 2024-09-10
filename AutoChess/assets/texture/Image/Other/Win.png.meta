@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "1df6852c-7aa6-4924-8d95-0e82af9862af",
+  "uuid": "b17ff096-c1c3-4290-8b49-9c829fddc5e0",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "1df6852c-7aa6-4924-8d95-0e82af9862af@6c48a",
+      "uuid": "b17ff096-c1c3-4290-8b49-9c829fddc5e0@6c48a",
       "displayName": "Win",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "1df6852c-7aa6-4924-8d95-0e82af9862af",
+        "imageUuidOrDatabaseUri": "b17ff096-c1c3-4290-8b49-9c829fddc5e0",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "1df6852c-7aa6-4924-8d95-0e82af9862af@f9941",
+      "uuid": "b17ff096-c1c3-4290-8b49-9c829fddc5e0@f9941",
       "displayName": "Win",
       "id": "f9941",
       "name": "spriteFrame",
@@ -57,7 +57,7 @@
         "packable": true,
         "pixelsToUnit": 100,
         "pivotX": 0.5,
-        "pivotY": 0.5,
+        "pivotY": 0.4,
         "meshType": 0,
         "vertices": {
           "rawPosition": [
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "1df6852c-7aa6-4924-8d95-0e82af9862af@6c48a",
+        "imageUuidOrDatabaseUri": "b17ff096-c1c3-4290-8b49-9c829fddc5e0@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "1df6852c-7aa6-4924-8d95-0e82af9862af@f9941"
+    "redirect": "b17ff096-c1c3-4290-8b49-9c829fddc5e0@f9941"
   }
 }

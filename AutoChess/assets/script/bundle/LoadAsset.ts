@@ -61,12 +61,14 @@ export class loadAssets
                         if(data)
                         {
                             _callBack(data);
+                            resolve();
                         }
                         else
                         {
                             console.warn(`loadAssets 里的 LoadSkeletonData 异常 : 路径${_address}下没有相对应资源,替换为默认`);
                             //temp=await BundleManager.Instance.loadAssetsFromBundle("RoleSpine", "Role_100004/kuangfeng_moshushi.skel") as sp.SkeletonData;
                             _callBack(null);
+                            resolve();
                         }
                     });
                 }
@@ -75,7 +77,6 @@ export class loadAssets
             {
                 console.error('loadAssets 下 LoadSkeletonData 错误 err: ', error);
             }
-            resolve();
         });
     }
 

@@ -579,6 +579,7 @@ export class RoleDis extends Component
             
         });
    }
+
   /**
    * 接受效果表现
    * @param _effect 效果类型
@@ -603,6 +604,10 @@ export class RoleDis extends Component
             case common.SkillEffectEM.AddBuffer:
                 {
                     this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff , _buffid);
+                }
+            case common.SkillEffectEM.RecoverHP:
+                {
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Heath);
                 }
        }
        return this.delay(100,()=>{});
@@ -631,12 +636,24 @@ export class RoleDis extends Component
                break;
            case common.SkillEffectEM.RecoverHP:
                {
-
+                   let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
+                   let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
+                   this.DeliveryGain(pos1, pos2);
+                   ms = 700;
                }
                break;
        }
        return this.delay(ms, async () => { await _callBack(); });
    }
+
+   /**
+    * 增益球
+    * @param _spellcasterLocation 出发位置
+    * @param _targetLocation 目标位置
+    * 
+    * author：Hotaru
+    * 2024/08/26
+    */
    private DeliveryGain(_spellcasterLocation:Vec3 , _targetLocation:Vec3)
    {
        try 

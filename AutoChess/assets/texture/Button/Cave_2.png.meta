@@ -2,7 +2,7 @@
   "ver": "1.0.25",
   "importer": "image",
   "imported": true,
-  "uuid": "f034f75e-1dbc-434f-beb8-4aec684358cb",
+  "uuid": "294df735-26f8-4f4c-8d46-8a2d7c0b4862",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "f034f75e-1dbc-434f-beb8-4aec684358cb@6c48a",
+      "uuid": "294df735-26f8-4f4c-8d46-8a2d7c0b4862@6c48a",
       "displayName": "Cave_2",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "f034f75e-1dbc-434f-beb8-4aec684358cb",
+        "imageUuidOrDatabaseUri": "294df735-26f8-4f4c-8d46-8a2d7c0b4862",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "f034f75e-1dbc-434f-beb8-4aec684358cb@f9941",
+      "uuid": "294df735-26f8-4f4c-8d46-8a2d7c0b4862@f9941",
       "displayName": "Cave_2",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "f034f75e-1dbc-434f-beb8-4aec684358cb@6c48a",
+        "imageUuidOrDatabaseUri": "294df735-26f8-4f4c-8d46-8a2d7c0b4862@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "f034f75e-1dbc-434f-beb8-4aec684358cb@f9941"
+    "redirect": "294df735-26f8-4f4c-8d46-8a2d7c0b4862@f9941"
   }
 }
