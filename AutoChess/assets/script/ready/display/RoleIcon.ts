@@ -150,7 +150,7 @@ export class RoleIcon extends Component
     //拖拽取消
             this.myTouch.on(Input.EventType.TOUCH_CANCEL, () => 
             {
-                this.node.setSiblingIndex(98);
+                //this.node.setSiblingIndex(90);
                 this.OffTirrger();
                 singleton.netSingleton.ready.HideRoleInfo();
                 //隐藏人物放置可视化区域
@@ -168,7 +168,7 @@ export class RoleIcon extends Component
             {
                 try
                 {
-                    this.node.setSiblingIndex(98);
+                    //this.node.setSiblingIndex(90);
                     this.OffTirrger();
                     singleton.netSingleton.ready.HideRoleInfo();
                     //隐藏人物放置可视化区域                                                                  // 修改函数

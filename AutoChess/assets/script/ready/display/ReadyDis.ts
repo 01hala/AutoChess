@@ -102,6 +102,7 @@ export class ReadyDis
             this.cameraNode = this.father.getChildByName('Camera');
             this.topArea=this.panelNode.getChildByPath("State/TopArea");
             //文本
+            this.panelNode.getChildByPath("State").setSiblingIndex(100);
             this.coinText=this.panelNode.getChildByPath("State/TopArea/CoinInfo/RichText").getComponent(RichText);
             this.heathText=this.panelNode.getChildByPath("State/TopArea/HpInfo/RichText").getComponent(RichText);
             this.roundText=this.panelNode.getChildByPath("State/TopArea/RoundInfo/RichText").getComponent(RichText);
@@ -284,7 +285,7 @@ export class ReadyDis
     {
         if(_flag)
         {
-            this.shopMask.setSiblingIndex(100);
+            this.shopMask.setSiblingIndex(97);
             this.shopMask.active=true;
             this.shopMask.getChildByPath("ShopMask").getComponent(BlockInputEvents).enabled=true;
         }
@@ -582,7 +583,7 @@ export class ReadyDis
             return;
         }
         this.roleInfoNode.active=true;
-        this.topArea.setSiblingIndex(98);
+        this.panelNode.getChildByPath("State").setSiblingIndex(100);
 
         let roleSkillInfo=config.SkillIntroduceConfig.get(roleInfo.SkillID);
         if(roleSkillInfo){
