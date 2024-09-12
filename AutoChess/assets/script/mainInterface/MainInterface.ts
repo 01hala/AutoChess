@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, assetManager, Button, Camera, Component, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
+import { _decorator, Animation, animation, assetManager, Button, Camera, Component, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, System, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
@@ -186,9 +186,10 @@ export class MainInterface
             }
             //底部物体对齐
             let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, 0, 0));
-            this.mainPanel.getChildByPath("BG/Foreground").getComponent(Widget).bottom=outPos.y;
+            this.mainPanel.getChildByPath("UiLayer/Foreground").getComponent(Widget).bottom=outPos.y;
+            console.log("屏幕大小",view.getVisibleSize());
             //顶部物体对齐
-            this.mainPanel.getChildByPath("BG/SkyBg").getComponent(Widget).top=outPos.y;
+            //this.mainPanel.getChildByPath("BG/SkyBg").getComponent(Widget).top=outPos.y;
             
             let safeHeigh=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
             if(SdkManager.SDK.getSystemInfo().platform === "android")

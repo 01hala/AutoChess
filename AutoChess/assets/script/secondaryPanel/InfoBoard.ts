@@ -198,6 +198,7 @@ export class InfoBoard extends Component
                 r.HP=_role.GetRoleInfo().GetProperty(battleEnums.Property.HP);
                 r.Level=_role.GetRoleInfo().level;
                 r.equipID=_role.GetRoleInfo().equip[0];
+                r.SkillID=_role.GetRoleSkillID();
                 let buff=[];
                 for(let i of _role.GetRoleInfo().buffer)
                 {

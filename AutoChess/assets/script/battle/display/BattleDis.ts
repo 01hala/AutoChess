@@ -483,10 +483,6 @@ export class BattleDis
                 {
                     continue;
                 }
-                else
-                {
-                    
-                }
 
                 let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                 for (let element of ev.recipient) {
