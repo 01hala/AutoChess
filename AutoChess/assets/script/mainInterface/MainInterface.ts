@@ -185,9 +185,8 @@ export class MainInterface
                 return;
             }
             //底部物体对齐
-            let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, 0, 0));
-            this.mainPanel.getChildByPath("UiLayer/Foreground").getComponent(Widget).bottom=outPos.y;
-            console.log("屏幕大小",view.getVisibleSize());
+            //let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, 0, 0));
+            //this.mainPanel.getChildByPath("UiLayer/Foreground").getComponent(Widget).bottom=outPos.y;
             //顶部物体对齐
             //this.mainPanel.getChildByPath("BG/SkyBg").getComponent(Widget).top=outPos.y;
             

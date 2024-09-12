@@ -37,7 +37,7 @@ export class ReadyDis
     //操作界面
     public roleArea:RoleArea;
     public shopArea:ShopArea;
-    private PauseBoard:Pause;
+    private PauseBoard:Node;
     //界面适配
     public cameraNode:Node;
     public topArea:Node;
@@ -97,7 +97,7 @@ export class ReadyDis
             //操作区域
             this.shopArea=this.panelNode.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
             this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
-            this.PauseBoard=this.panelNode.getChildByPath("Pause").getComponent(Pause);
+            this.PauseBoard=this.panelNode.getChildByPath("Pause");
             //图形适配获取整个区域
             this.cameraNode = this.father.getChildByName('Camera');
             this.topArea=this.panelNode.getChildByPath("State/TopArea");
@@ -211,7 +211,8 @@ export class ReadyDis
             this.setBtn = this.panelNode.getChildByPath("State/TopArea/Set_Btn").getComponent(Button);
             this.setBtn.node.on(Button.EventType.CLICK, () =>
             {
-                this.PauseBoard.Open();
+                this.PauseBoard.active=true;
+                this.PauseBoard.getComponent(Pause).Open();
                 //AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
                 //_father.getComponent(login).BackMainInterface();
             }, this);

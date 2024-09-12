@@ -29,14 +29,12 @@ export class Pause extends Component
 
     start() 
     {
-       this.node.active=false;
-       this.board.active=false;
+       
     }
 
    public Open()
    {    
         this.node.setSiblingIndex(110);
-        this.node.active=true;
         this.board.active=true;
         this.board.getComponent(Animation).play("PanelTop2Mid");
    }
