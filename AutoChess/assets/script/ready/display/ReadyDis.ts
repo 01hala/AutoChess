@@ -24,6 +24,7 @@ import { AudioManager } from '../../other/AudioManager';
 import SdkManager from '../../SDK/SdkManager';
 import * as call_c from '../../serverSDK/matchcallc';
 import { CoinDrop } from './CoinDrop';
+import { Pause } from './Pause';
 
 const { ccclass, property } = _decorator;
 
@@ -36,6 +37,7 @@ export class ReadyDis
     //操作界面
     public roleArea:RoleArea;
     public shopArea:ShopArea;
+    private PauseBoard:Pause;
     //界面适配
     public cameraNode:Node;
     public topArea:Node;
@@ -46,7 +48,7 @@ export class ReadyDis
     //按钮
     private refreshBtn:Button;
     private startBtn:Button;
-    private exitBtn:Button;
+    private setBtn:Button;
     //文本
     private heathText:RichText;
     private coinText:RichText;
@@ -95,6 +97,7 @@ export class ReadyDis
             //操作区域
             this.shopArea=this.panelNode.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
             this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
+            this.PauseBoard=this.panelNode.getChildByPath("Pause").getComponent(Pause);
             //图形适配获取整个区域
             this.cameraNode = this.father.getChildByName('Camera');
             this.topArea=this.panelNode.getChildByPath("State/TopArea");
@@ -204,12 +207,13 @@ export class ReadyDis
                     this.panelNode.active = false;
                 }
             });
-            //退出按钮
-            this.exitBtn = this.panelNode.getChildByPath("State/TopArea/Exit_Btn").getComponent(Button);
-            this.exitBtn.node.on(Button.EventType.CLICK, () =>
+            //选项按钮
+            this.setBtn = this.panelNode.getChildByPath("State/TopArea/Set_Btn").getComponent(Button);
+            this.setBtn.node.on(Button.EventType.CLICK, () =>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
-                _father.getComponent(login).BackMainInterface();
+                this.PauseBoard.Open();
+                //AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
+                //_father.getComponent(login).BackMainInterface();
             }, this);
 
             console.log("ReadyDis Init end!");
