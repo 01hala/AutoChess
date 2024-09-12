@@ -178,30 +178,35 @@ export class MainInterface
     {
         try
         {
-            let cam=this.father.getChildByPath("Camera");
+            //let cam=this.father.getChildByPath("Camera");
             
-            if (SdkManager.SDK.getSystemInfo().safeArea.height == SdkManager.SDK.getSystemInfo().screenHeight)
-            {
-                return;
-            }
+            //if (SdkManager.SDK.getSystemInfo().safeArea.height == SdkManager.SDK.getSystemInfo().screenHeight)
+            //{
+            //    return;
+            //}
             //底部物体对齐
             //let outPos: Vec3 = cam.getComponent(Camera).screenToWorld(new Vec3(0, 0, 0));
             //this.mainPanel.getChildByPath("UiLayer/Foreground").getComponent(Widget).bottom=outPos.y;
             //顶部物体对齐
             //this.mainPanel.getChildByPath("BG/SkyBg").getComponent(Widget).top=outPos.y;
             
-            let safeHeigh=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
-            if(SdkManager.SDK.getSystemInfo().platform === "android")
-            {
-                safeHeigh*=2;
-            }
-            console.log("screen Height : ",SdkManager.SDK.getSystemInfo().screenHeight);
-            console.log("SafeArea Height : ",SdkManager.SDK.getSystemInfo().safeArea.height);
-            console.log("bpttomHeigh : ",safeHeigh);
+            //let safeHeigh=(SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
+            //if(SdkManager.SDK.getSystemInfo().platform === "android")
+            //{
+            //    safeHeigh*=2;
+            //}
+            //console.log("screen Height : ",SdkManager.SDK.getSystemInfo().screenHeight);
+            //console.log("SafeArea Height : ",SdkManager.SDK.getSystemInfo().safeArea.height);
+            //console.log("bpttomHeigh : ",safeHeigh);
             
             // outPos=cam.getComponent(Camera).screenToWorld(new Vec3(0, safeHeigh, 0));
             // console.log("outPos : ",outPos.y);
             // this.mainPanel.getChildByPath("UiLayer/TopArea").getComponent(Widget).top=outPos.y;
+
+            let safeHeigh = SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height;
+            let menuBtnHeight = SdkManager.SDK.getSystemInfo().menuBtn.bottom;
+            let top = safeHeigh > menuBtnHeight ? safeHeigh : menuBtnHeight;
+            this.mainPanel.getChildByPath("UiLayer/TopArea").getComponent(Widget).top = top + 10;
 
             // let node = this.mainPanel.getChildByPath("UiLayer/TopArea");
             // let topHeight = SdkManager.SDK.getSystemInfo().safeArea.top;

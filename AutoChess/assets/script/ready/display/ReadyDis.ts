@@ -101,6 +101,11 @@ export class ReadyDis
             //图形适配获取整个区域
             this.cameraNode = this.father.getChildByName('Camera');
             this.topArea=this.panelNode.getChildByPath("State/TopArea");
+            let safeHeigh = SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height;
+            let menuBtnHeight = SdkManager.SDK.getSystemInfo().menuBtn.bottom;
+            let top = safeHeigh > menuBtnHeight ? safeHeigh : menuBtnHeight;
+            this.topArea.getComponent(Widget).top = top + 40;
+
             //文本
             this.panelNode.getChildByPath("State").setSiblingIndex(100);
             this.coinText=this.panelNode.getChildByPath("State/TopArea/CoinInfo/RichText").getComponent(RichText);
