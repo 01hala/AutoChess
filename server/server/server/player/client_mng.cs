@@ -1238,7 +1238,7 @@ namespace Player
                         r.Attack = rInfo.RoleAttack;
                         r.TempHP = 0;
                         r.TempAttack = 0;
-                        r.additionBuffer = new();
+                        r.additionBuffer = rInfo.RoleBuff;
                         r.TempAdditionBuffer = new();
                         r.FettersSkillID = new Fetters()
                         {

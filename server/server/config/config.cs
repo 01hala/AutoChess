@@ -57,7 +57,7 @@ namespace config
             TaskConfigs = TaskConfig.Load(Path.Combine(path, "Task.json"));
             RankRewardConfigs = RankRewardConfig.Load(Path.Combine(path, "RankReward.json"));
             PVEConfigs = PVEConfig.Load(Path.Combine(path, "PVE.json"));
-            PVELevelConfigs = PVELevelConfig.Load(Path.Combine(path, "PVELevel.json"));
+            PVELevelConfigs = PVELevelConfig.Load(Path.Combine(path, "PVELevel.json"), Path.Combine(path, "PVERole.json"));
             PVEEventConfigs = PVEEventConfig.Load(Path.Combine(path, "PVEEvent.json"));
         }
     }
