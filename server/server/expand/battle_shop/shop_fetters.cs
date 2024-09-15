@@ -87,9 +87,9 @@ namespace battle_shop
 
         private void RefreshShop(FettersConfig fetters, battle_shop_player _player, int stage)
         {
-            if (fetters.RefreshItemID != 0 && fetters.RefreshItemNum != 0)
+            if (fetters.RefreshItemID[0] != 0 && fetters.RefreshItemNum != 0)
             {
-                _player.add_shop_item(fetters.RefreshItemID, fetters.RefreshItemNum);
+                _player.add_shop_item(fetters.RefreshItemID[0], fetters.RefreshItemNum);
             }
             else
             {
@@ -179,6 +179,31 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
         }
 
+        private void AddEquipment(FettersConfig fetters, battle_shop_player _player)
+        {
+            if (fetters.RefreshItemID.Count > 0)
+            {
+                var index = RandomHelper.RandomInt(fetters.RefreshItemID.Count);
+                var item = fetters.RefreshItemID[index];
+                foreach (var prop in _player.ShopData.SalePropList)
+                {
+                    if (prop.PropID > 3001 && prop.PropID < 3999)
+                    {
+                        _player.ShopData.SalePropList.Remove(prop);
+                        break;
+                    }
+                }
+                _player.ShopData.SalePropList.Add(new ShopProp()
+                {
+                    PropID = item,
+                    IsFreeze = false,
+                });
+            }
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+
+            is_trigger = true;
+        }
+
         private void UseFettersSkill(battle_shop_player _player, shop_event trigger_ev, int stage)
         {
             if (fettersLevel <= 0)
@@ -238,7 +263,7 @@ namespace battle_shop
 
                 case SkillEffectEM.AddEquipment:
                 {
-
+                    AddEquipment(fetters, _player);
                 }
                 break;
             }

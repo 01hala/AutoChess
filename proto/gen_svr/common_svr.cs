@@ -79,7 +79,8 @@ namespace Abelkhan
         Rigiht = 3,
         Left = 4,
         Self = 5,
-        Cross = 6
+        Cross = 6,
+        Summon = 7
     }
     public enum BufferAndEquipEffect{
         AddHP = 1,
@@ -98,7 +99,7 @@ namespace Abelkhan
         buy = 4,
         sales = 5,
         camp_sales = 6,
-        update = 7,
+        upgrade = 7,
         syncope = 8,
         camp_syncope = 9,
         strengthen = 10,
@@ -144,7 +145,8 @@ namespace Abelkhan
         CoinsAddProperty = 19,
         CounterAttack = 20,
         DeAttGain = 21,
-        ForcedAttack = 22
+        ForcedAttack = 22,
+        RefreshEquipment = 23
     }
     public enum ShopIndex{
         Role = 0,

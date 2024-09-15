@@ -79,7 +79,8 @@ export enum Direction{
     Rigiht = 3,
     Left = 4,
     Self = 5,
-    Cross = 6
+    Cross = 6,
+    Summon = 7
 }
 
 export enum BufferAndEquipEffect{
@@ -101,7 +102,7 @@ export enum EMSkillEvent{
     buy = 4,
     sales = 5,
     camp_sales = 6,
-    update = 7,
+    upgrade = 7,
     syncope = 8,
     camp_syncope = 9,
     strengthen = 10,
@@ -148,7 +149,8 @@ export enum SkillEffectEM{
     CoinsAddProperty = 19,
     CounterAttack = 20,
     DeAttGain = 21,
-    ForcedAttack = 22
+    ForcedAttack = 22,
+    RefreshEquipment = 23
 }
 
 export enum ShopIndex{

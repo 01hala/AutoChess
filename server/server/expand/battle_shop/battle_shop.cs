@@ -513,21 +513,18 @@ namespace battle_shop
 
             foreach (var fetters in fetters_info)
             {
-                if (fetters.fetters_level > 0)
+                for (var i = 0; i < battleData.RoleList.Count; i++)
                 {
-                    for (var i = 0; i < battleData.RoleList.Count; i++)
+                    var r = battleData.RoleList[i];
+                    if (r != null && r.FettersSkillID.fetters_id == fetters.fetters_id)
                     {
-                        var r = battleData.RoleList[i];
-                        if (r != null && r.FettersSkillID.fetters_id == fetters.fetters_id)
-                        {
-                            r.FettersSkillID.fetters_level = fetters.fetters_level;
+                        r.FettersSkillID.fetters_level = fetters.fetters_level;
 
-                            var shop_r = shop_skill_roles[i];
-                            if (shop_r != null)
-                            {
-                                shop_r.fettersSkillID = fetters.fetters_id;
-                                shop_r.fettersLevel = fetters.fetters_level;
-                            }
+                        var shop_r = shop_skill_roles[i];
+                        if (shop_r != null)
+                        {
+                            shop_r.fettersSkillID = fetters.fetters_id;
+                            shop_r.fettersLevel = fetters.fetters_level;
                         }
                     }
                 }

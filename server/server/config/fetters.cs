@@ -27,7 +27,7 @@ namespace config
         public int Stage4value_2;
         public int SummonId;
         public int SummonLevel;
-        public int RefreshItemID;
+        public List<int> RefreshItemID;
         public int RefreshItemNum;
         public int AddBufferID;
 
@@ -86,7 +86,11 @@ namespace config
                 fettersc.Stage4value_2 = (int)o["Stage4value_2"];
                 fettersc.SummonId = (int)o["SummonId"];
                 fettersc.SummonLevel = (int)o["SummonLevel"];
-                fettersc.RefreshItemID = (int)o["RefreshItemID"];
+                var RefreshItemID = (string)o["RefreshItemID"];
+                if (!string.IsNullOrEmpty(RefreshItemID))
+                {
+                    fettersc.RefreshItemID = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(RefreshItemID);
+                }
                 fettersc.RefreshItemNum = (int)o["RefreshItemNum"];
                 fettersc.AddBufferID = (int)o["AddBufferID"]; 
 

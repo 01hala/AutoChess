@@ -114,7 +114,7 @@ namespace battle_shop
                     break;
                     case EMRoleShopEvent.update:
                     {
-                        if (EffectTime ==EMSkillEvent.update)
+                        if (EffectTime == EMSkillEvent.upgrade)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.update EMSkillEvent.update");
                             trigger_ev = ev;

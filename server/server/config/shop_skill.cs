@@ -67,7 +67,10 @@ namespace config
                 skillc.Level3Value_2 = (int)o["Level3Value_2"];
 
                 var SummonId = (string)o["SummonId"];
-                skillc.SummonId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(SummonId);
+                if (!string.IsNullOrEmpty(SummonId))
+                {
+                    skillc.SummonId = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(SummonId);
+                }
 
                 skillc.SummonLevel = (int)o["SummonLevel"];
                 skillc.AddBufferID = (int)o["AddBufferID"];

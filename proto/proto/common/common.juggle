@@ -250,6 +250,7 @@ enum SkillEffectEM {
 	CounterAttack = 20;
 	DeAttGain = 21;
 	ForcedAttack = 22;
+	RefreshEquipment = 23;
 }
 
 struct UserBattleData
