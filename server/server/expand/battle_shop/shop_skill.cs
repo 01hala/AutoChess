@@ -142,6 +142,40 @@ namespace battle_shop
             Log.Log.trace("AddBuffer end");
         }
 
+        private void AddEquipment(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            var PropID = 3007;
+            _player.BattleData.RoleList[index].equipID = PropID;
+
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.effect = SkillEffectEM.AddEquipment;
+            skilleffect.value = new List<int>() { PropID };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+
+            is_trigger = true;
+        }
+
+        private void ItemReduced(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            foreach (var prop in _player.ShopData.SalePropList)
+            {
+                if (prop.PropID > 1001 && prop.PropID < 1999)
+                {
+                    prop.Price -= 1;
+                }
+            }
+
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.effect = SkillEffectEM.ItemReduced;
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+        }
+
         private void UseSkill(battle_shop_player _player, shop_event trigger_ev, int stage)
         {
             Log.Log.trace("UseSkill skillID:{0} begin!", skillID);
@@ -185,6 +219,12 @@ namespace battle_shop
                 }
                 break;
 
+                case SkillEffectEM.ItemReduced:
+                {
+                    ItemReduced(skill, _player);
+                }
+                break;
+
                 case SkillEffectEM.AddBuffer:
                 {
                     AddBuffer(skill, _player);
@@ -193,7 +233,7 @@ namespace battle_shop
 
                 case SkillEffectEM.AddEquipment:
                 {
-
+                    AddEquipment(skill, _player);
                 }
                 break;
             }

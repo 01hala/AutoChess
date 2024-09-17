@@ -355,7 +355,7 @@
         "Name": "铁匠",
         "Priority": "Low",
         "EffectTime": 1,
-        "Effect": 17,
+        "Effect": 23,
         "RoleNum": "3",
         "ObjCount": "",
         "EffectScope": 1,

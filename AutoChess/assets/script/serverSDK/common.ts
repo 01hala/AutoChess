@@ -124,7 +124,8 @@ export enum EMSkillEvent{
     change_self_location = 26,
     change_enemy_location = 27,
     self_front_null = 28,
-    enemy_front_null = 29
+    enemy_front_null = 29,
+    start_round_vacancy = 30
 }
 
 export enum SkillEffectEM{
@@ -813,6 +814,7 @@ export function protcol_to_ShopRole(_protocol:any){
 export class ShopProp
 {
     public PropID : number = 0;
+    public Price : number = 0;
     public IsFreeze : boolean = false;
 
 }
@@ -830,6 +832,9 @@ export function protcol_to_ShopProp(_protocol:any){
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "PropID"){
             _struct.PropID = val as number;
+        }
+        else if (key === "Price"){
+            _struct.Price = val as number;
         }
         else if (key === "IsFreeze"){
             _struct.IsFreeze = val as boolean;

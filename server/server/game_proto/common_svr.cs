@@ -121,7 +121,8 @@ namespace Abelkhan
         change_self_location = 26,
         change_enemy_location = 27,
         self_front_null = 28,
-        enemy_front_null = 29
+        enemy_front_null = 29,
+        start_round_vacancy = 30
     }
     public enum SkillEffectEM{
         AddProperty = 1,
@@ -1003,6 +1004,7 @@ namespace Abelkhan
     public class ShopProp
     {
         public Int32 PropID;
+        public Int32 Price;
         public bool IsFreeze;
         public static MsgPack.MessagePackObjectDictionary ShopProp_to_protcol(ShopProp _struct){
         if (_struct == null) {
@@ -1011,6 +1013,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("PropID", _struct.PropID);
+            _protocol.Add("Price", _struct.Price);
             _protocol.Add("IsFreeze", _struct.IsFreeze);
             return _protocol;
         }
@@ -1023,6 +1026,9 @@ namespace Abelkhan
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "PropID"){
                     _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c.PropID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Price"){
+                    _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c.Price = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "IsFreeze"){
                     _struct85ac80e5_1b8a_301b_9a55_6a2f3a93421c.IsFreeze = ((MsgPack.MessagePackObject)i.Value).AsBoolean();

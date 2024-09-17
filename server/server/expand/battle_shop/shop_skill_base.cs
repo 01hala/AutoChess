@@ -48,7 +48,7 @@ namespace battle_shop
             ShopSkillConfig skill;
             if (config.Config.ShopSkillConfigs.TryGetValue(skillID, out skill))
             {
-                if (TriggerSkill(evs, skill.EffectTime, out var ev))
+                if (TriggerSkill(evs, skill.EffectTime, _player, out var ev))
                 {
                     ret.Add(new skill_execute()
                     {
@@ -64,7 +64,7 @@ namespace battle_shop
             FettersConfig fettersc;
             if (config.Config.FettersConfigs.TryGetValue(fettersSkillID, out fettersc))
             {
-                if (TriggerSkill(evs, fettersc.EffectTime, out var ev))
+                if (TriggerSkill(evs, fettersc.EffectTime, _player, out var ev))
                 {
                     ret.Add(new skill_execute()
                     {
@@ -80,7 +80,7 @@ namespace battle_shop
             return ret;
         }
 
-        private bool TriggerSkill(List<shop_event> evs, EMSkillEvent EffectTime, out shop_event trigger_ev)
+        private bool TriggerSkill(List<shop_event> evs, EMSkillEvent EffectTime, battle_shop_player _player, out shop_event trigger_ev)
         {
             foreach(var ev in evs)
             {
@@ -143,6 +143,12 @@ namespace battle_shop
                         if (EffectTime == EMSkillEvent.start_round)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.start_round EMSkillEvent.start_round");
+                            trigger_ev = ev;
+                            return true;
+                        }
+                        else if (EffectTime == EMSkillEvent.start_round_vacancy && _player.BattleData.RoleList.Count < 6)
+                        {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.start_round EMSkillEvent.start_round_vacancy");
                             trigger_ev = ev;
                             return true;
                         }

@@ -225,6 +225,7 @@ enum EMSkillEvent
     change_enemy_location=27;	//敌方位置改变
 	self_front_null=28;			//前排为空
 	enemy_front_null=29;		//敌方前排为空
+	start_round_vacancy = 30;   //休整开始时有空位
 }
 
 enum SkillEffectEM {
@@ -289,6 +290,7 @@ struct ShopRole {
 
 struct ShopProp {
 	int32 PropID;
+	int32 Price;
 	bool IsFreeze;
 }
 

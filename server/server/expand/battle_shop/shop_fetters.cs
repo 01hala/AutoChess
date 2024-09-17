@@ -228,7 +228,7 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
         }
 
-        private void AddEquipment(FettersConfig fetters, battle_shop_player _player)
+        private void RefreshEquipment(FettersConfig fetters, battle_shop_player _player)
         {
             var PropID = 0;
             if (fetters.RefreshItemID.Count > 0)
@@ -252,7 +252,7 @@ namespace battle_shop
             var skilleffect = new ShopSkillEffect();
             skilleffect.skill_id = fetters.Id;
             skilleffect.spellcaster = index;
-            skilleffect.effect = SkillEffectEM.AddEquipment;
+            skilleffect.effect = SkillEffectEM.RefreshEquipment;
             skilleffect.value = new List<int>() { PropID };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
@@ -317,9 +317,9 @@ namespace battle_shop
                 }
                 break;
 
-                case SkillEffectEM.AddEquipment:
+                case SkillEffectEM.RefreshEquipment:
                 {
-                    AddEquipment(fetters, _player);
+                    RefreshEquipment(fetters, _player);
                 }
                 break;
             }
