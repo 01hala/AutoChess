@@ -218,6 +218,12 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_shop_skill_effect", _argv_c0363c29_389e_36d3_b41f_f37d9a21bfc8);
         }
 
+        public void shop_fetters_effect(ShopSkillEffect effect){
+            var _argv_d8f262cf_19af_3fb7_81db_2fb60fbcc6e8 = new ArrayList();
+            _argv_d8f262cf_19af_3fb7_81db_2fb60fbcc6e8.Add(ShopSkillEffect.ShopSkillEffect_to_protcol(effect));
+            Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_shop_fetters_effect", _argv_d8f262cf_19af_3fb7_81db_2fb60fbcc6e8);
+        }
+
         public void refresh(UserBattleData battle_info, ShopData info){
             var _argv_97f4163d_22be_334a_ad37_ab1f786ceb46 = new ArrayList();
             _argv_97f4163d_22be_334a_ad37_ab1f786ceb46.Add(UserBattleData.UserBattleData_to_protcol(battle_info));
@@ -252,9 +258,9 @@ namespace Abelkhan
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_eat_food", _argv_9752e987_da9a_3510_b580_1a5c8a9dd457);
         }
 
-        public void role_equip(Int32 quip_id, Int32 target_role_index, Role target_role){
+        public void role_equip(Int32 equip_id, Int32 target_role_index, Role target_role){
             var _argv_4b650459_29d5_3513_85a8_fa715a8e14a7 = new ArrayList();
-            _argv_4b650459_29d5_3513_85a8_fa715a8e14a7.Add(quip_id);
+            _argv_4b650459_29d5_3513_85a8_fa715a8e14a7.Add(equip_id);
             _argv_4b650459_29d5_3513_85a8_fa715a8e14a7.Add(target_role_index);
             _argv_4b650459_29d5_3513_85a8_fa715a8e14a7.Add(Role.Role_to_protcol(target_role));
             Hub.Hub._gates.call_client(client_uuid_268d2967_7c6f_34d2_80c7_77a6da2f6124, "battle_client_role_equip", _argv_4b650459_29d5_3513_85a8_fa715a8e14a7);

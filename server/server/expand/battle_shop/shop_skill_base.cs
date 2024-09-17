@@ -410,8 +410,8 @@ namespace battle_shop
                     skilleffect.recipient = new List<int>();
                     skilleffect.effect = SkillEffectEM.SummonShop;
                     skilleffect.value = new List<int>() { _player.BattleData.RoleList[summon_index].RoleID};
-                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
 
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
                     _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
                 }
             }

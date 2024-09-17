@@ -13,12 +13,13 @@ module battle_client {
     battle_plan_refresh ntf(UserBattleData battle_info, ShopData shop_info, Fetters[] fetters_info);
 
     shop_skill_effect ntf(ShopSkillEffect effect);
+    shop_fetters_effect ntf(ShopSkillEffect effect);
     refresh ntf(UserBattleData battle_info, ShopData info);
 
     role_buy_merge ntf(int32 target_role_index, Role target_role, bool is_update);
     role_merge ntf(int32 source_role_index, int32 target_role_index, Role target_role, bool is_update);
     role_eat_food ntf(int32 food_id, int32 target_role_index, Role target_role, bool is_update, bool is_syncope);
-    role_equip ntf(int32 quip_id, int32 target_role_index, Role target_role);
+    role_equip ntf(int32 equip_id, int32 target_role_index, Role target_role);
     role_update_refresh_shop ntf(ShopData info);
     fetters_info ntf(Fetters[] info);
 	

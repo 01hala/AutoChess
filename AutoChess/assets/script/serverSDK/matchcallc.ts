@@ -82,6 +82,7 @@ export class battle_client_module extends client_handle.imodule {
         this._client_handle._modulemng.add_method("battle_client_battle_victory", this.battle_victory.bind(this));
         this._client_handle._modulemng.add_method("battle_client_battle_plan_refresh", this.battle_plan_refresh.bind(this));
         this._client_handle._modulemng.add_method("battle_client_shop_skill_effect", this.shop_skill_effect.bind(this));
+        this._client_handle._modulemng.add_method("battle_client_shop_fetters_effect", this.shop_fetters_effect.bind(this));
         this._client_handle._modulemng.add_method("battle_client_refresh", this.refresh.bind(this));
         this._client_handle._modulemng.add_method("battle_client_role_buy_merge", this.role_buy_merge.bind(this));
         this._client_handle._modulemng.add_method("battle_client_role_merge", this.role_merge.bind(this));
@@ -98,6 +99,7 @@ export class battle_client_module extends client_handle.imodule {
         this.cb_battle_victory = null;
         this.cb_battle_plan_refresh = null;
         this.cb_shop_skill_effect = null;
+        this.cb_shop_fetters_effect = null;
         this.cb_refresh = null;
         this.cb_role_buy_merge = null;
         this.cb_role_merge = null;
@@ -147,6 +149,15 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
+    public cb_shop_fetters_effect : (effect:ShopSkillEffect)=>void | null;
+    shop_fetters_effect(inArray:any[]){
+        let _argv_:any[] = [];
+        _argv_.push(protcol_to_ShopSkillEffect(inArray[0]));
+        if (this.cb_shop_fetters_effect){
+            this.cb_shop_fetters_effect.apply(null, _argv_);
+        }
+    }
+
     public cb_refresh : (battle_info:common.UserBattleData, info:common.ShopData)=>void | null;
     refresh(inArray:any[]){
         let _argv_:any[] = [];
@@ -193,7 +204,7 @@ export class battle_client_module extends client_handle.imodule {
         }
     }
 
-    public cb_role_equip : (quip_id:number, target_role_index:number, target_role:common.Role)=>void | null;
+    public cb_role_equip : (equip_id:number, target_role_index:number, target_role:common.Role)=>void | null;
     role_equip(inArray:any[]){
         let _argv_:any[] = [];
         _argv_.push(inArray[0]);

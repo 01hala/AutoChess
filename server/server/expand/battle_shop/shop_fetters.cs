@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using config;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace battle_shop
@@ -8,6 +9,12 @@ namespace battle_shop
     {
         private void AddProperty(FettersConfig fetters, battle_shop_player _player)
         {
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = fetters.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.AddProperty;
+
             var count_index = fetters.ObjCount.Count < fettersLevel ? fetters.ObjCount.Count - 1 : fettersLevel - 1;
             var count = fetters.ObjCount[count_index];
             var target_list = GetTargetIndex(_player, 0, count);
@@ -20,24 +27,28 @@ namespace battle_shop
                         case 1:
                         {
                             AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage1value_1, fetters.Stage1value_2);
+                            skilleffect.value = new List<int>() { fetters.Stage1value_1, fetters.Stage1value_2 };
                         }
                         break;
 
                         case 2:
                         {
                             AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage2value_1, fetters.Stage2value_2);
+                            skilleffect.value = new List<int>() { fetters.Stage2value_1, fetters.Stage2value_2 };
                         }
                         break;
 
                         case 3:
                         {
                             AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage3value_1, fetters.Stage3value_2);
+                            skilleffect.value = new List<int>() { fetters.Stage3value_1, fetters.Stage3value_2 };
                         }
                         break;
 
                         case 4:
                         {
                             AddProperty(_player, target_index, fetters.EffectScope, fetters.Stage4value_1, fetters.Stage4value_2);
+                            skilleffect.value = new List<int>() { fetters.Stage4value_1, fetters.Stage4value_2 };
                         }
                         break;
                     }
@@ -46,6 +57,7 @@ namespace battle_shop
                 }
             }
 
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
         }
@@ -80,6 +92,14 @@ namespace battle_shop
                 break;
             }
             AddCoin(_player, addCoin);
+            
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = fetters.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.AddCoin;
+            skilleffect.value = new List<int>() { addCoin };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
             is_trigger = true;
@@ -95,6 +115,13 @@ namespace battle_shop
             {
                 _player.refresh(stage);
             }
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = fetters.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.RefreshShop;
+            skilleffect.value = new List<int>();
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
             is_trigger = true;
@@ -131,6 +158,14 @@ namespace battle_shop
             }
             if (_player.add_role(summon_index, fetters.SummonId, fetters.SummonLevel) != null)
             {
+                var skilleffect = new ShopSkillEffect();
+                skilleffect.skill_id = fetters.Id;
+                skilleffect.spellcaster = summon_index;
+                skilleffect.recipient = new List<int>();
+                skilleffect.effect = SkillEffectEM.SummonShop;
+                skilleffect.value = new List<int>() { _player.BattleData.RoleList[summon_index].RoleID };
+
+                _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
                 _player.BattleClientCaller.get_client(_player.ClientUUID).shop_summon(summon_index, _player.BattleData.RoleList[summon_index]);
             }
         }
@@ -144,6 +179,13 @@ namespace battle_shop
             {
                 AddBuffer(_player, target_index, fetters.EffectScope, fetters.AddBufferID);
             }
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = fetters.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = target_list;
+            skilleffect.effect = SkillEffectEM.AddBuffer;
+            skilleffect.value = new List<int>() { fetters.AddBufferID };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
         }
 
         private void AddBuildValue(FettersConfig fetters, battle_shop_player _player)
@@ -176,15 +218,23 @@ namespace battle_shop
                 break;
             }
             _player.BattleData.buildValue += buildValue;
+
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = fetters.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.effect = SkillEffectEM.AddBuildValue;
+            skilleffect.value = new List<int>() { buildValue };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
         }
 
         private void AddEquipment(FettersConfig fetters, battle_shop_player _player)
         {
+            var PropID = 0;
             if (fetters.RefreshItemID.Count > 0)
             {
                 var index = RandomHelper.RandomInt(fetters.RefreshItemID.Count);
-                var item = fetters.RefreshItemID[index];
+                PropID = fetters.RefreshItemID[index];
                 foreach (var prop in _player.ShopData.SalePropList)
                 {
                     if (prop.PropID > 3001 && prop.PropID < 3999)
@@ -195,10 +245,16 @@ namespace battle_shop
                 }
                 _player.ShopData.SalePropList.Add(new ShopProp()
                 {
-                    PropID = item,
+                    PropID = PropID,
                     IsFreeze = false,
                 });
             }
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = fetters.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.effect = SkillEffectEM.AddEquipment;
+            skilleffect.value = new List<int>() { PropID };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
             is_trigger = true;
