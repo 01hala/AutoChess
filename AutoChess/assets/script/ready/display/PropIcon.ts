@@ -210,7 +210,7 @@ export class PropIcon extends Component
                 {
                     try{
                         console.log("成功通过购买道具时的人物、下标和金币检测");
-                        if(!this.target.getComponent(RoleIcon).upgradeLock)
+                        if(!this.target.getComponent(RoleIcon).upgradeLock && !this.target.getComponent(RoleIcon).hastask)
                         {
                             console.log("人物不存在锁，购买成功");
                             this.freezeSprite.active=false;

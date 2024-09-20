@@ -68,6 +68,7 @@ export class RoleIcon extends Component
     //锁存，防止使用食物过快,导致bug
     public upgradeLock:boolean=false;
     public freezeLock:boolean=false;
+    public hastask:boolean=false;
 
     protected async onLoad()
     {
@@ -650,7 +651,7 @@ export class RoleIcon extends Component
         {
             let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP + t.TempHP).set(battleEmums.Property.Attack,t.Attack + t.TempAttack);
-            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,[-1],t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.equipID,t.additionBuffer);
             //console.log('当前等级 ')
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
@@ -697,12 +698,16 @@ export class RoleIcon extends Component
                     break;
                     case 3:break;
                     case 4:break;
-                    case 5:break;
+                    case 5:
+                        {
+                            this.hastask=true;
+                        }
+                        break;
                     case 6:break;
                 }
             }
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP+t.TempHP).set(battleEmums.Property.Attack,t.Attack+t.TempAttack);
-            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,[-1],t.additionBuffer);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.equipID,t.additionBuffer);
             this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,t.Number);
             this.upgradeLock=false;

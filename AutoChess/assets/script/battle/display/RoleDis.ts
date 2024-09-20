@@ -359,7 +359,9 @@ export class RoleDis extends Component
         }
     }
 
-    async IntensifierExp(value: number[]){
+    async IntensifierExp(value: number[])
+    {
+        
         console.log("Assign temporary experience points to characters");
     }
 
