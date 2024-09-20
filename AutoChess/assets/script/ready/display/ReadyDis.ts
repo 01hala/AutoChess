@@ -400,7 +400,11 @@ export class ReadyDis
             console.log("skilleffect:", effect);
             this.ShowSkillEffect(effect);
         };
-
+        singleton.netSingleton.game.cb_shop_fetters_effect = (effect:call_c.ShopSkillEffect)=>
+        {
+            console.log("fettersffect:", effect);
+            this.ShowSkillEffect(effect);
+        }
     }
 
 /*

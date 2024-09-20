@@ -18,6 +18,7 @@ export class netGame {
 
     public cb_battle_victory : (mod:common.BattleMod, is_victory:boolean) => void;
     public cb_shop_skill_effect : (effect:match_c.ShopSkillEffect) => void;
+    public cb_shop_fetters_effect : (effect:match_c.ShopSkillEffect)=>void;
     public cb_role_buy_merge : (target_role_index:number, target_role:common.Role, is_update:boolean) => void;
     public cb_role_merge : (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean)=>void;
     public cb_role_eat_food : (food_id:number, target_role_index:number, target_role:common.Role, is_update:boolean, is_syncope:boolean)=>void;
@@ -47,6 +48,13 @@ export class netGame {
         this.match_c.cb_shop_skill_effect = (effect:match_c.ShopSkillEffect) => {
             if (this.cb_shop_skill_effect) {
                 this.cb_shop_skill_effect.call(null, effect);
+            }
+        }
+        this.match_c.cb_shop_fetters_effect=(effect:match_c.ShopSkillEffect)=>
+        {
+            if(this.cb_shop_fetters_effect)
+            {
+                this.cb_shop_fetters_effect.call(null,effect);
             }
         }
         this.match_c.cb_role_buy_merge = (target_role_index:number, target_role:common.Role, is_update:boolean) => {
