@@ -68,6 +68,7 @@ namespace battle_shop
         }
 
         public int stage = 1;
+        public int bankCpin = 0;
 
         public battle_shop_player(string _clientUUID, battle_client_caller _caller, List<int> roleList, UserInformation info)
         {
@@ -599,7 +600,7 @@ namespace battle_shop
 
                 battleData.RoleList[role_index] = r;
                 check_fetters();
-                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
+                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, battleData.round);
                 ShopData.SaleRoleList[index] = null;
 
                 return r;

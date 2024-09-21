@@ -1,6 +1,8 @@
 ﻿using Abelkhan;
 using config;
+using System.Collections;
 using System.Collections.Generic;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace battle_shop
 {
@@ -23,7 +25,7 @@ namespace battle_shop
                 if (target_index > 0)
                 {
                     Log.Log.trace("slill  _player:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(_player));
-                    var r = _player.BattleData.RoleList[target_index];
+                    var r = _player.BattleData.RoleList[index];
                     Log.Log.trace("slill r:{0}", r);
                     switch (r.Level)
                     {
@@ -59,6 +61,164 @@ namespace battle_shop
             is_trigger = true;
 
             Log.Log.trace("AddProperty end");
+        }
+
+        private void AddAllPropertyByBattleRound(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            Log.Log.trace("AddAllPropertyByBattleRound begin");
+
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.AddAllPropertyByBattleRound;
+
+            var count = _player.BattleData.round - spawnRound;
+            var v1 = skill.Level1Value_1;
+            var v2 = skill.Level1Value_2;
+            var r = _player.BattleData.RoleList[index];
+            switch (r.Level)
+            {
+                case 1:
+                    {
+                        v1 = skill.Level1Value_1;
+                        v2 = skill.Level1Value_2;
+                    }
+                    break;
+
+                case 2:
+                    {
+                        v1 = skill.Level2Value_1;
+                        v2 = skill.Level2Value_2;
+                    }
+                    break;
+
+                case 3:
+                    {
+                        v1 = skill.Level2Value_1;
+                        v2 = skill.Level2Value_2;
+                    }
+                    break;
+            }
+            skilleffect.value = new List<int>() { count, v1, v2 };
+
+            foreach (var target_r in _player.BattleData.RoleList)
+            {
+                if (target_r != null)
+                {
+                    if (skill.EffectScope == EffectScope.SingleBattle)
+                    {
+                        target_r.TempHP += v1;
+                        target_r.TempAttack += v2;
+                    }
+                    else if (skill.EffectScope == EffectScope.WholeGame)
+                    {
+                        target_r.HP += v1;
+                        target_r.Attack += v2;
+                    }
+                }
+            }
+
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
+
+            is_trigger = true;
+
+            Log.Log.trace("AddAllPropertyByBattleRound end");
+        }
+
+        private void AddPropertyShopLeft(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            Log.Log.trace("AddPropertyShopLeft begin");
+
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.AddPropertyShopLeft;
+
+            var v1 = skill.Level1Value_1;
+            var v2 = skill.Level1Value_2;
+            var r = _player.BattleData.RoleList[index];
+            switch (r.Level)
+            {
+                case 1:
+                    {
+                        v1 = skill.Level1Value_1;
+                        v2 = skill.Level1Value_2;
+                    }
+                    break;
+
+                case 2:
+                    {
+                        v1 = skill.Level2Value_1;
+                        v2 = skill.Level2Value_2;
+                    }
+                    break;
+
+                case 3:
+                    {
+                        v1 = skill.Level2Value_1;
+                        v2 = skill.Level2Value_2;
+                    }
+                    break;
+            }
+            skilleffect.value = new List<int>() { v1, v2 };
+
+            var _s_r = _player.ShopData.SaleRoleList[0];
+            _s_r.HP += v1;
+            _s_r.Attack += v2;
+            _s_r = _player.ShopData.SaleRoleList[2];
+            _s_r.HP += v1;
+            _s_r.Attack += v2;
+
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+
+            Log.Log.trace("AddPropertyShopLeft end");
+        }
+
+        private void BankCoin(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            Log.Log.trace("AddPropertyShopLeft begin");
+
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.BankCoin;
+
+            var v1 = skill.Level1Value_1;
+            var r = _player.BattleData.RoleList[index];
+            switch (r.Level)
+            {
+                case 1:
+                    {
+                        v1 = skill.Level1Value_1;
+                    }
+                    break;
+
+                case 2:
+                    {
+                        v1 = skill.Level2Value_1;
+                    }
+                    break;
+
+                case 3:
+                    {
+                        v1 = skill.Level2Value_1;
+                    }
+                    break;
+            }
+            skilleffect.value = new List<int>() { v1 };
+
+            _player.bankCpin = _player.BattleData.coin < v1 ? _player.BattleData.coin : v1;
+
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+
+            Log.Log.trace("AddPropertyShopLeft end");
         }
 
         private void AddCoin(ShopSkillConfig skill, battle_shop_player _player)
@@ -192,6 +352,24 @@ namespace battle_shop
                 case SkillEffectEM.AddProperty:
                 {
                     AddProperty(skill, _player);
+                }
+                break;
+
+                case SkillEffectEM.AddAllPropertyByBattleRound:
+                {
+                    AddAllPropertyByBattleRound(skill, _player);
+                }
+                break;
+
+                case SkillEffectEM.AddPropertyShopLeft:
+                {
+                    AddPropertyShopLeft(skill, _player);
+                }
+                break;
+
+                case SkillEffectEM.BankCoin:
+                {
+                    BankCoin(skill, _player);
                 }
                 break;
 

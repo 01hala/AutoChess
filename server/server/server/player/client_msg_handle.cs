@@ -1,5 +1,9 @@
 ﻿using Abelkhan;
+using avatar;
+using battle_shop;
+using config;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Player
 {
@@ -17,7 +21,10 @@ namespace Player
             plan_Module.on_buy += Plan_Module_on_buy; ;
             plan_Module.on_sale_role += Plan_Module_on_sale_role; ;
             plan_Module.on_move += Plan_Module_on_move; ;
-            plan_Module.on_refresh += Plan_Module_on_refresh; ;
+            plan_Module.on_refresh += Plan_Module_on_refresh;
+            plan_Module.on_freeze += Plan_Module_on_freeze;
+            plan_Module.on_get_battle_data += Plan_Module_on_get_battle_data;
+            plan_Module.on_end_round += Plan_Module_on_end_round;
 
             player_login_Module = new();
             player_login_Module.on_player_login += Login_Player_Module_on_player_login;
@@ -44,6 +51,71 @@ namespace Player
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Plan_Module_on_end_round()
+        {
+            var rsp = plan_Module.rsp as plan_end_round_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+
+                _data.Data.BattleShopPlayer.evs.Add(new shop_event()
+                {
+                    ev = EMRoleShopEvent.end_round
+                });
+                _data.Data.BattleShopPlayer.clear_skill_tag();
+                _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
+
+                rsp.rsp();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_end_round error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
+        }
+
+        private async void Plan_Module_on_get_battle_data()
+        {
+            var rsp = plan_Module.rsp as plan_get_battle_data_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+
+                rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, _data.Data.BattleShopPlayer.check_fetters());
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_get_battle_data error:{0}", ex);
+                rsp.err();
+            }
+        }
+
+        private async void Plan_Module_on_freeze(ShopIndex shop_index, int index, bool is_freeze)
+        {
+            var rsp = plan_Module.rsp as plan_freeze_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                _data.Data.BattleShopPlayer.freeze(shop_index, index, is_freeze);
+
+                rsp.rsp(_data.Data.BattleShopPlayer.ShopData);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Plan_Module_on_freeze error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Player_quest_Module_on_get_quest_shop_data()

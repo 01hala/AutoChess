@@ -30,15 +30,17 @@ namespace battle_shop
         public int skillID;
         public int fettersSkillID;
         public int fettersLevel;
+        public int spawnRound;
         public bool is_trigger = false;
 
-        public shop_skill_role(int _index, int _roleID, int _skillID, int _fettersSkillID, int _fettersLevel)
+        public shop_skill_role(int _index, int _roleID, int _skillID, int _fettersSkillID, int _fettersLevel, int _spawnRound)
         {
             index = _index;
             roleID = _roleID;
             skillID = _skillID;
             fettersSkillID = _fettersSkillID;
             fettersLevel = _fettersLevel;
+            spawnRound = _spawnRound;
         }
 
         public List<skill_execute> Trigger(int stage, List<shop_event> evs, battle_shop_player _player)

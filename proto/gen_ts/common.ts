@@ -151,7 +151,10 @@ export enum SkillEffectEM{
     CounterAttack = 20,
     DeAttGain = 21,
     ForcedAttack = 22,
-    RefreshEquipment = 23
+    RefreshEquipment = 23,
+    AddAllPropertyByBattleRound = 24,
+    AddPropertyShopLeft = 25,
+    BankCoin = 26
 }
 
 export enum ShopIndex{

@@ -252,6 +252,9 @@ enum SkillEffectEM {
 	DeAttGain = 21;
 	ForcedAttack = 22;
 	RefreshEquipment = 23;
+	AddAllPropertyByBattleRound = 24;
+	AddPropertyShopLeft = 25;
+	BankCoin = 26;
 }
 
 struct UserBattleData

@@ -1148,7 +1148,7 @@ namespace Player
 
             if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
             {
-                BattleShopPlayer.BattleData.coin = cfg.Gold;
+                BattleShopPlayer.BattleData.coin = cfg.Gold + BattleShopPlayer.bankCpin;
             }
 
             BattleShopPlayer.evs.Add(new shop_event()
@@ -1213,7 +1213,7 @@ namespace Player
 
                         BattleShopPlayer.BattleData.RoleList[5] = r;
                         BattleShopPlayer.check_fetters();
-                        BattleShopPlayer.ShopSkillRoles[5] = new shop_skill_role(5, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level);
+                        BattleShopPlayer.ShopSkillRoles[5] = new shop_skill_role(5, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, BattleShopPlayer.BattleData.round);
                     }
                 }
             }
