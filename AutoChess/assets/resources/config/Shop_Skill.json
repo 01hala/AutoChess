@@ -351,7 +351,7 @@
         "Priority": "Normal",
         "desc": "休整结束时\t如果场上拥有3级的角色，其获得+2攻击力和+2生命值",
         "EffectTime": 2,
-        "Effect": 1,
+        "Effect": 27,
         "ObjCount": 6,
         "ObjDirection": 0,
         "EffectScope": 2,

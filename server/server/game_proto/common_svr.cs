@@ -150,7 +150,8 @@ namespace Abelkhan
         RefreshEquipment = 23,
         AddAllPropertyByBattleRound = 24,
         AddPropertyShopLeft = 25,
-        BankCoin = 26
+        BankCoin = 26,
+        AddPropertyLevel3 = 27
     }
     public enum ShopIndex{
         Role = 0,
