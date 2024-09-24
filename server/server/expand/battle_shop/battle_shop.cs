@@ -69,6 +69,7 @@ namespace battle_shop
 
         public int stage = 1;
         public int bankCpin = 0;
+        public BattleVictory lastBattleResults = BattleVictory.faild;
 
         public battle_shop_player(string _clientUUID, battle_client_caller _caller, List<int> roleList, UserInformation info)
         {

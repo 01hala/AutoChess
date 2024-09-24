@@ -386,6 +386,53 @@ namespace battle_shop
             is_trigger = true;
         }
 
+        private void CopySkill(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.effect = SkillEffectEM.CopySkill;
+            skilleffect.value = new List<int>() { };
+
+            var r = _player.BattleData.RoleList[index];
+            var front = index - 3;
+            if (front >= 0)
+            {
+                var copy = _player.BattleData.RoleList[front];
+
+                var level = 1;
+                switch (r.Level)
+                {
+                    case 1:
+                    {
+                        level = skill.Level1Value_1;
+                    }
+                    break;
+
+                    case 2:
+                    {
+                        level = skill.Level2Value_1;
+                    }
+                    break;
+
+                    case 3:
+                    {
+                        level = skill.Level3Value_1;
+                    }
+                    break;
+                }
+
+                r.TempSkillID = copy.SkillID;
+                r.TempSkillLevel = level;
+
+                skilleffect.value.Add(r.TempSkillID);
+                skilleffect.value.Add(r.TempSkillLevel);
+            }
+
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+        }
+
         private void ItemReduced(ShopSkillConfig skill, battle_shop_player _player)
         {
             foreach (var prop in _player.ShopData.SalePropList)
@@ -486,6 +533,12 @@ namespace battle_shop
                 case SkillEffectEM.AddEquipment:
                 {
                     AddEquipment(skill, _player);
+                }
+                break;
+
+                case SkillEffectEM.CopySkill:
+                {
+                    CopySkill(skill, _player);
                 }
                 break;
             }

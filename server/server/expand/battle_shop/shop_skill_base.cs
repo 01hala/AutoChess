@@ -154,6 +154,12 @@ namespace battle_shop
                             trigger_ev = ev;
                             return true;
                         }
+                        else if (EffectTime == EMSkillEvent.start_round_victory && _player.lastBattleResults == BattleVictory.victory)
+                        {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.start_round EMSkillEvent.start_round_victory");
+                            trigger_ev = ev;
+                            return true;
+                        }
                     }
                     break;
                     case EMRoleShopEvent.end_round:

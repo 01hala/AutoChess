@@ -154,6 +154,7 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    _data.Data.BattleShopPlayer.lastBattleResults = is_victory;
                     if (is_victory == BattleVictory.victory)
                     {
                         _data.Data.PVELevelIndex++;

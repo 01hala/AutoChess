@@ -192,6 +192,7 @@ namespace Match
                     }
                 }
 
+                _player.BattleShopPlayer.lastBattleResults = is_victory;
                 _player.BattleShopPlayer.BattleData.round++;
                 _player.BattleShopPlayer.BattleData.stage = (_player.BattleShopPlayer.BattleData.round + 1) / 2;
 
