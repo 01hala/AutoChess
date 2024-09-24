@@ -125,7 +125,8 @@ export enum EMSkillEvent{
     change_enemy_location = 27,
     self_front_null = 28,
     enemy_front_null = 29,
-    start_round_vacancy = 30
+    start_round_vacancy = 30,
+    start_round_victory = 31
 }
 
 export enum SkillEffectEM{
@@ -155,7 +156,8 @@ export enum SkillEffectEM{
     AddAllPropertyByBattleRound = 24,
     AddPropertyShopLeft = 25,
     BankCoin = 26,
-    AddPropertyLevel3 = 27
+    AddPropertyLevel3 = 27,
+    CopySkill = 28
 }
 
 export enum ShopIndex{
@@ -605,6 +607,8 @@ export class Role
     public BuyRound : number = 0;
     public Level : number = 0;
     public SkillID : number = 0;
+    public TempSkillID : number = 0;
+    public TempSkillLevel : number = 0;
     public FettersSkillID : Fetters | null = null;
     public equipID : number = 0;
     public Number : number = 0;
@@ -639,6 +643,12 @@ export function protcol_to_Role(_protocol:any){
         }
         else if (key === "SkillID"){
             _struct.SkillID = val as number;
+        }
+        else if (key === "TempSkillID"){
+            _struct.TempSkillID = val as number;
+        }
+        else if (key === "TempSkillLevel"){
+            _struct.TempSkillLevel = val as number;
         }
         else if (key === "FettersSkillID"){
             _struct.FettersSkillID = protcol_to_Fetters(val);

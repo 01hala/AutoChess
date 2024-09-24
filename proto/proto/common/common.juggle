@@ -150,6 +150,8 @@ struct Role {
 	int32 BuyRound;
 	int32 Level;
 	int32 SkillID;
+	int32 TempSkillID;
+	int32 TempSkillLevel;
 	Fetters FettersSkillID;
 	int32 equipID;
 	int32 Number;
@@ -226,6 +228,7 @@ enum EMSkillEvent
 	self_front_null=28;			//前排为空
 	enemy_front_null=29;		//敌方前排为空
 	start_round_vacancy = 30;   //休整开始时有空位
+	start_round_victory = 31;	//休整开始时上局战斗胜利
 }
 
 enum SkillEffectEM {
@@ -256,6 +259,7 @@ enum SkillEffectEM {
 	AddPropertyShopLeft = 25;
 	BankCoin = 26;
 	AddPropertyLevel3 = 27;
+	CopySkill = 28;
 }
 
 struct UserBattleData

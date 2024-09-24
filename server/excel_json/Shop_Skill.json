@@ -29,7 +29,7 @@
         "Priority": "Low",
         "desc": "休整结束时\t复制前方角色的1级能力，直到下次休整开始",
         "EffectTime": 2,
-        "Effect": 6,
+        "Effect": 28,
         "ObjCount": 0,
         "ObjDirection": 5,
         "EffectScope": 1,

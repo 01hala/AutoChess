@@ -122,7 +122,8 @@ namespace Abelkhan
         change_enemy_location = 27,
         self_front_null = 28,
         enemy_front_null = 29,
-        start_round_vacancy = 30
+        start_round_vacancy = 30,
+        start_round_victory = 31
     }
     public enum SkillEffectEM{
         AddProperty = 1,
@@ -151,7 +152,8 @@ namespace Abelkhan
         AddAllPropertyByBattleRound = 24,
         AddPropertyShopLeft = 25,
         BankCoin = 26,
-        AddPropertyLevel3 = 27
+        AddPropertyLevel3 = 27,
+        CopySkill = 28
     }
     public enum ShopIndex{
         Role = 0,
@@ -728,6 +730,8 @@ namespace Abelkhan
         public Int32 BuyRound;
         public Int32 Level;
         public Int32 SkillID;
+        public Int32 TempSkillID;
+        public Int32 TempSkillLevel;
         public Fetters FettersSkillID;
         public Int32 equipID;
         public Int32 Number;
@@ -747,6 +751,8 @@ namespace Abelkhan
             _protocol.Add("BuyRound", _struct.BuyRound);
             _protocol.Add("Level", _struct.Level);
             _protocol.Add("SkillID", _struct.SkillID);
+            _protocol.Add("TempSkillID", _struct.TempSkillID);
+            _protocol.Add("TempSkillLevel", _struct.TempSkillLevel);
             _protocol.Add("FettersSkillID", new MsgPack.MessagePackObject(Fetters.Fetters_to_protcol(_struct.FettersSkillID)));
             _protocol.Add("equipID", _struct.equipID);
             _protocol.Add("Number", _struct.Number);
@@ -788,6 +794,12 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkillID"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.SkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TempSkillID"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.TempSkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "TempSkillLevel"){
+                    _structe15dab07_4671_3806_9f26_9880fe20019d.TempSkillLevel = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "FettersSkillID"){
                     _structe15dab07_4671_3806_9f26_9880fe20019d.FettersSkillID = Fetters.protcol_to_Fetters(((MsgPack.MessagePackObject)i.Value).AsDictionary());
