@@ -644,13 +644,13 @@ export class BattleDis
                     }
                     if(battleEnums.Camp.Self==element.camp)
                     {
-                        if(this.selfQueue.roleNodes[element.index])
+                        if(this.selfQueue.roleNodes[element.index] && element.index != ev.spellcaster.index)
                         {
                             if (!ev.isParallel) 
                             {
                                 allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.selfQueue.roleNodes[element.index], async ()=>
                                 {
-                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
+                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
                                     await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
@@ -658,21 +658,27 @@ export class BattleDis
                             {
                                 this.selfParallelList.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.selfQueue.roleNodes[element.index], async ()=>
                                 {
-                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
+                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
                                     await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
                         } 
+                        if(element.index == ev.spellcaster.index)
+                        {
+                            allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel));
+                            allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                        }
                     }
+
                     if(battleEnums.Camp.Enemy == element.camp)
                     {
-                        if(this.enemyQueue.roleNodes[element.index])
+                        if(this.enemyQueue.roleNodes[element.index] && element.index != ev.spellcaster.index)
                         {
                             if (!ev.isParallel)
                             {
                                 allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.enemyQueue.roleNodes[element.index],async ()=>
                                 {
-                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
+                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
                                     await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
@@ -680,12 +686,16 @@ export class BattleDis
                             {
                                 this.enemyParallelList.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.enemyQueue.roleNodes[element.index],async ()=>
                                 {
-                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm);
+                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
                                     await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
                                 }));
                             }
                         }
-                        
+                        if(element.index == ev.spellcaster.index)
+                        {
+                            allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel));
+                            allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                        }
                     }            
                 });
             }
@@ -725,11 +735,11 @@ export class BattleDis
                         {
                             if (!ev.isParallel) 
                             {
-                                allAwait.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem , ev.value[0]));
+                                allAwait.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem ,ev.isParallel, ev.value[0]));
                             }
                             else
                             {
-                                this.selfParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.value[0]));
+                                this.selfParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem,ev.isParallel, ev.value[0]));
                             }
                         }
                     }
@@ -739,11 +749,11 @@ export class BattleDis
                         {
                             if (!ev.isParallel)
                             {
-                                allAwait.push(this.enemyQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.value[0]));
+                                allAwait.push(this.enemyQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem,ev.isParallel, ev.value[0]));
                             }
                             else
                             {
-                                this.enemyParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.value[0]));
+                                this.enemyParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem,ev.isParallel, ev.value[0]));
                             }
                         }
                     }
@@ -867,6 +877,7 @@ export class BattleDis
         }
     }
     
+    //换位
     async CheckTransPosition(evs:skill.Event[])
     {
         try
@@ -893,6 +904,52 @@ export class BattleDis
         catch(error) 
         {
             console.error("BattleDis 下的 CheckTransPosition 错误 err:", error);
+        }
+    }
+
+    //属性交换
+    async CheckSwapProperties(evs:skill.Event[])
+    {
+        try
+        {
+            let allAwait = [];
+            for(let ev of evs)
+            {
+                if(battleEnums.EventType.SwapProperties != ev.type)
+                {
+                    continue;
+                }
+
+                let queue:Queue = this.selfQueue;
+                if(battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                {
+                    queue = this.enemyQueue;
+                }
+                switch (ev.value[0])
+                {
+                    case battleEnums.SwapPropertiesType.HpSwap:
+                        {
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty, false));
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([0, ev.value[1]]));
+                        }
+                        break;
+                    case battleEnums.SwapPropertiesType.AttackSwap:
+                        {
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty, false));
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([ev.value[1]]));
+                        }
+                        break;
+                    case battleEnums.SwapPropertiesType.SelfSwap:
+                        {
+
+                        }
+                }
+            }
+            await Promise.all(allAwait);
+        }
+        catch(error)
+        {
+            console.error("BattleDis 下的 CheckSwapProperties 错误 err:", error);
         }
     }
 

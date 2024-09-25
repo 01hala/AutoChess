@@ -590,26 +590,32 @@ export class RoleDis extends Component
    * author：Hotaru
    * 2024/08/24
    */
-   ReceptionEffect(_effect : common.SkillEffectEM , _buffid?:number)
+   ReceptionEffect(_effect : common.SkillEffectEM ,_isParallel:boolean, _buffid?:number , _style?:number)
    {
        if (common.SkillEffectEM.GainShield == _effect)
        {
-           this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields);
+           this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields, _isParallel);
        }
        switch(_effect)
        {
             case common.SkillEffectEM.AddProperty:
                 {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty);
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty , _isParallel);
                 }
                 break;
             case common.SkillEffectEM.AddBuffer:
                 {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff , _buffid);
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff , _isParallel, _buffid);
                 }
+                break;
             case common.SkillEffectEM.RecoverHP:
                 {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Heath);
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Heath, _isParallel);
+                }
+                break;
+            case common.SkillEffectEM.ExchangeProperty:
+                {
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel , _style);
                 }
        }
        return this.delay(100,()=>{});
@@ -686,7 +692,7 @@ export class RoleDis extends Component
         this.hpText.node.active=false;
         this.levelText.node.active=false;
 
-        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type);
+        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false);
 
         return this.delay(200,()=>
         {

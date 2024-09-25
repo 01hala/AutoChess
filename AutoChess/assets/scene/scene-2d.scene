@@ -21490,8 +21490,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0,
+      "y": 0
     },
     "_id": "6dQq1asLRB7awTaoNAIqMV"
   },
@@ -21523,12 +21523,12 @@
     "_debugBones": false,
     "_debugSlots": false,
     "_skeletonData": {
-      "__uuid__": "ce738e4a-863b-4de0-836c-1564c75c7671",
+      "__uuid__": "07159ddb-bb09-45de-9492-7c9570ff66f3",
       "__expectedType__": "sp.SkeletonData"
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "animation",
+    "defaultAnimation": 1,
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,

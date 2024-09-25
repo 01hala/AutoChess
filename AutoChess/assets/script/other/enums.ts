@@ -73,4 +73,6 @@ export enum SpecialEffect
     Summon=4,
     /** 治疗 */
     Heath=5,
+    /** 交换属性 */
+    SwapProperties=6,
 }

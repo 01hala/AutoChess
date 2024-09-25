@@ -20,7 +20,7 @@ export class EffectSpine extends Component
         this.shieldSkele.node.active=false;
     }
 
-    private async LoadEffectData(_str:string)
+    private async LoadEffectData(_str:string , _style:number)
     {
         try
         {
@@ -32,7 +32,7 @@ export class EffectSpine extends Component
                     {
                         this.effectSkele.skeletonData = data;
                         let anims = data.getAnimsEnum();
-                        this.effectSkele.setAnimation(0, String(anims[1]), true);
+                        this.effectSkele.setAnimation(0, String(anims[_style]), true);
                     }
                     catch (error)
                     {
@@ -52,7 +52,7 @@ export class EffectSpine extends Component
         try
         {
             let jconfig=config.BufferConfig.get(_buffID);
-            await this.LoadEffectData(jconfig.Skel);
+            await this.LoadEffectData(jconfig.Skel , 1);
         }
         catch(error)
         {
@@ -60,7 +60,7 @@ export class EffectSpine extends Component
         }
     }
 
-    public ShowEffect(_effect:enums.SpecialEffect , _buffID?:number):Promise<void>
+    public ShowEffect(_effect:enums.SpecialEffect ,_isParallel:boolean, _style:number = 1 , _buffID?:number):Promise<void>
     {
         return new Promise(async (resolve , reject)=>
         {
@@ -85,7 +85,14 @@ export class EffectSpine extends Component
                         break;
                     case enums.SpecialEffect.AddProperty:
                         {
-                            await this.LoadEffectData("EffectSpine/zqsx/attribute");
+                            if(!_isParallel)
+                            {
+                                await this.LoadEffectData("EffectSpine/zqsx/level up" ,_style);
+                            }
+                            else
+                            {
+                                await this.LoadEffectData("EffectSpine/zqsx/attribute",_style);
+                            }
                             show=true;
                         }
                         break;
@@ -97,15 +104,22 @@ export class EffectSpine extends Component
                         break;
                     case enums.SpecialEffect.Summon:
                         {
-                            await this.LoadEffectData("EffectSpine/magic/magic");
+                            await this.LoadEffectData("EffectSpine/magic/magic",_style);
                             show=true
                         }
                         break;
                     case enums.SpecialEffect.Heath:
                         {
-                            await this.LoadEffectData("EffectSpine/hs/hushi");
+                            await this.LoadEffectData("EffectSpine/hs/hushi",_style);
                             show=true;
                         }
+                        break;
+                    case enums.SpecialEffect.SwapProperties:
+                        {
+                            await this.LoadEffectData("EffectSpine/jhsx/change",_style);
+                            show=true;
+                        }
+                        break;
                 }
                 if(show)
                 {
