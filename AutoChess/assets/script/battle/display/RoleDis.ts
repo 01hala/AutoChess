@@ -286,8 +286,8 @@ export class RoleDis extends Component
                 }
                 this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
             }
-            this.Hp = Math.round(this.roleInfo.GetProperty(BattleEnums.Property.HP));
-            this.AtkNum = Math.round(this.roleInfo.GetProperty(BattleEnums.Property.Attack));
+            
+            
             this.Level=this.roleInfo.level;
 
             if(null==this.hpText && null==this.atkText)
@@ -296,10 +296,34 @@ export class RoleDis extends Component
                 this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
                 this.levelText=this.node.getChildByPath("Level/LevelText").getComponent(RichText);
             }
-           
-            this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
-            this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-            this.levelText.string="<color=#7CFC0><outline color=#7FFF00 width=4>"+ this.Level + "</outline></color>";
+
+            let _hp=Math.round(this.roleInfo.GetProperty(BattleEnums.Property.HP));
+            if(this.Hp!=_hp)
+            {
+                tween(this.hpText.node).to(0.2, { scale: new Vec3(0, 0, 0) }).call(() =>
+                {
+                    this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + _hp + "</outline></color>";
+                    this.Hp = _hp;
+                }).by(0.2,{scale: new Vec3(1,1,1)}).start();
+               
+            }
+            let _atk=Math.round(this.roleInfo.GetProperty(BattleEnums.Property.Attack));
+            if(this.AtkNum!=_atk)
+            {
+                tween(this.atkText.node).to(0.2, { scale: new Vec3(0, 0, 0) }).call(() =>
+                {
+                    this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + _atk + "</outline></color>";
+                    this.AtkNum = _atk
+                }).by(0.2,{scale: new Vec3(1,1,1)}).start();
+            }
+            if(this.Level != this.roleInfo.level)
+            {
+                tween(this.levelText.node).to(0.2, { scale: new Vec3(0, 0, 0) }).call(() =>
+                {
+                    this.levelText.string = "<color=#7CFC0><outline color=#7FFF00 width=4>" + this.roleInfo.level + "</outline></color>";
+                    this.Level = this.roleInfo.level;
+                }).by(0.2, { scale: new Vec3(1, 1, 1) }).start();
+            }
             
             //console.log("changeAtt RoleDis.roleInfo:", this.roleInfo);
             //console.log("changeAtt RoleDis:", this);

@@ -970,6 +970,7 @@ export class BattleDis
                 await this.CheckAddBuff(evs);
                 await this.CheckAttGainEvent(evs);
                 await this.CheckAttExpEvent(evs);
+                await this.CheckSwapProperties(evs);
                 if(this.selfParallelList.length > 0 || this.enemyParallelList.length > 0){
                     await Promise.all(this.selfParallelList);
                     await Promise.all(this.enemyParallelList);
