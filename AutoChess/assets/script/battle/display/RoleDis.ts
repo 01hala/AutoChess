@@ -304,7 +304,7 @@ export class RoleDis extends Component
                 {
                     this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + _hp + "</outline></color>";
                     this.Hp = _hp;
-                }).by(0.2,{scale: new Vec3(1,1,1)}).start();
+                }).by(0.2,{scale: new Vec3(0.5,0.5,0.5)}).start();
                
             }
             let _atk=Math.round(this.roleInfo.GetProperty(BattleEnums.Property.Attack));
@@ -314,7 +314,7 @@ export class RoleDis extends Component
                 {
                     this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + _atk + "</outline></color>";
                     this.AtkNum = _atk
-                }).by(0.2,{scale: new Vec3(1,1,1)}).start();
+                }).by(0.2,{scale: new Vec3(0.5,0.5,0.5)}).start();
             }
             if(this.Level != this.roleInfo.level)
             {
@@ -322,7 +322,7 @@ export class RoleDis extends Component
                 {
                     this.levelText.string = "<color=#7CFC0><outline color=#7FFF00 width=4>" + this.roleInfo.level + "</outline></color>";
                     this.Level = this.roleInfo.level;
-                }).by(0.2, { scale: new Vec3(1, 1, 1) }).start();
+                }).by(0.2, { scale: new Vec3(0.5,0.5,0.5) }).start();
             }
             
             //console.log("changeAtt RoleDis.roleInfo:", this.roleInfo);
