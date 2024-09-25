@@ -585,7 +585,9 @@ export class RoleDis extends Component
   /**
    * 接受效果表现
    * @param _effect 效果类型
+   * @param _isParallel 是否是并发效果
    * @param _buffid buffID
+   * @param _style 样式
    * 
    * author：Hotaru
    * 2024/08/24

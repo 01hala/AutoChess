@@ -941,8 +941,10 @@ export class BattleDis
                         break;
                     case battleEnums.SwapPropertiesType.SelfSwap:
                         {
-
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false , null , 2));
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
                         }
+                        break;
                 }
             }
             await Promise.all(allAwait);

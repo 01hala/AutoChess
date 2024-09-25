@@ -60,6 +60,14 @@ export class EffectSpine extends Component
         }
     }
 
+    /**
+     * 显示特效
+     * @param _effect 效果类型
+     * @param _isParallel 是否是并发效果
+     * @param _style 样式
+     * @param _buffID buff
+     * 
+     */
     public ShowEffect(_effect:enums.SpecialEffect ,_isParallel:boolean, _style:number = 1 , _buffID?:number):Promise<void>
     {
         return new Promise(async (resolve , reject)=>
