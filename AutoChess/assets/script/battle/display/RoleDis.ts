@@ -274,7 +274,7 @@ export class RoleDis extends Component
         });
     }
 
-    async changeAtt() 
+    async changeAtt(_ms?:number) 
     {
         try 
         {
@@ -286,9 +286,6 @@ export class RoleDis extends Component
                 }
                 this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
             }
-            
-            
-            this.Level=this.roleInfo.level;
 
             if(null==this.hpText && null==this.atkText)
             {
@@ -300,7 +297,7 @@ export class RoleDis extends Component
             let _hp=Math.round(this.roleInfo.GetProperty(BattleEnums.Property.HP));
             if(this.Hp!=_hp)
             {
-                tween(this.hpText.node).to(0.2, { scale: new Vec3(0, 0, 0) }).call(() =>
+                tween(this.hpText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
                     this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + _hp + "</outline></color>";
                     this.Hp = _hp;
@@ -310,7 +307,7 @@ export class RoleDis extends Component
             let _atk=Math.round(this.roleInfo.GetProperty(BattleEnums.Property.Attack));
             if(this.AtkNum!=_atk)
             {
-                tween(this.atkText.node).to(0.2, { scale: new Vec3(0, 0, 0) }).call(() =>
+                tween(this.atkText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
                     this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + _atk + "</outline></color>";
                     this.AtkNum = _atk
@@ -318,7 +315,7 @@ export class RoleDis extends Component
             }
             if(this.Level != this.roleInfo.level)
             {
-                tween(this.levelText.node).to(0.2, { scale: new Vec3(0, 0, 0) }).call(() =>
+                tween(this.levelText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
                     this.levelText.string = "<color=#7CFC0><outline color=#7FFF00 width=4>" + this.roleInfo.level + "</outline></color>";
                     this.Level = this.roleInfo.level;
@@ -333,7 +330,7 @@ export class RoleDis extends Component
             console.error("RoleDis 下的 changeAtt 错误 err:" + err);
         }
 
-        return this.delay(100, () => { });
+        return this.delay(_ms?_ms:100, () => { });
     }
 
     async BeHurted(_value:number)
@@ -612,6 +609,7 @@ export class RoleDis extends Component
    * @param _isParallel 是否是并发效果
    * @param _buffid buffID
    * @param _style 样式
+   * @returns deleay
    * 
    * author：Hotaru
    * 2024/08/24

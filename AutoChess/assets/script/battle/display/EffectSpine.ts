@@ -125,6 +125,7 @@ export class EffectSpine extends Component
                     case enums.SpecialEffect.SwapProperties:
                         {
                             await this.LoadEffectData("EffectSpine/jhsx/change",_style);
+                            this.effectSkele.timeScale=2;
                             show=true;
                         }
                         break;
@@ -137,6 +138,7 @@ export class EffectSpine extends Component
                     {
                         if (trackEntry.animation.name === String(anims[1]))
                         {
+                            this.effectSkele.timeScale=1;
                             this.effectSkele.enabled = false;
                         }
                     });

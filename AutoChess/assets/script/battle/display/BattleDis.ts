@@ -931,20 +931,22 @@ export class BattleDis
                 {
                     case battleEnums.SwapPropertiesType.HpSwap:
                         {
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty, false));
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([0, ev.value[1]]));
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false ,null ,1));
+                            //allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([0, ev.value[1]]));
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt(1000));
                         }
                         break;
                     case battleEnums.SwapPropertiesType.AttackSwap:
                         {
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddProperty, false));
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([ev.value[1]]));
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false , null ,1));
+                            //allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([ev.value[1]]));
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt(1000));
                         }
                         break;
                     case battleEnums.SwapPropertiesType.SelfSwap:
                         {
                             allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false , null , 2));
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt());
+                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt(1000));
                         }
                         break;
                 }
@@ -966,13 +968,13 @@ export class BattleDis
                 console.log("onEvent evs:", evs);
 
                 await this.CheckBeginBattle(evs);
+                await this.CheckSwapProperties(evs);
                 await this.CheckTransPosition(evs);
-                await this.CheckRemoteInjured(evs);
-                await this.CheckSummonEvent(evs);
                 await this.CheckAddBuff(evs);
+                await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
                 await this.CheckAttExpEvent(evs);
-                await this.CheckSwapProperties(evs);
+                await this.CheckRemoteInjured(evs);
                 if(this.selfParallelList.length > 0 || this.enemyParallelList.length > 0){
                     await Promise.all(this.selfParallelList);
                     await Promise.all(this.enemyParallelList);
