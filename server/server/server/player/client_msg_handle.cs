@@ -310,7 +310,6 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    _data.Data.EndPVERound();
                     rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.StartQuestBattle());
                 }
             }

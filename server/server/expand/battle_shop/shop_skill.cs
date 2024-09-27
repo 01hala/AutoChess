@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using config;
+using Microsoft.AspNetCore.Routing.Tree;
 using System.Collections;
 using System.Collections.Generic;
 using static System.Formats.Asn1.AsnWriter;
@@ -8,7 +9,7 @@ namespace battle_shop
 {
     public partial class shop_skill_role
     {
-        private void AddProperty(ShopSkillConfig skill, battle_shop_player _player)
+        private void AddProperty(ShopSkillConfig skill, battle_shop_player _player, shop_event trigger_ev)
         {
             Log.Log.trace("AddProperty begin");
 
@@ -26,8 +27,13 @@ namespace battle_shop
                 {
                     Log.Log.trace("slill  _player:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(_player));
                     var r = _player.BattleData.RoleList[index];
+                    var Level = r.Level;
                     Log.Log.trace("slill r:{0}", r);
-                    switch (r.Level)
+                    if (trigger_ev.ev == EMRoleShopEvent.update)
+                    {
+                        Level -= 1;
+                    }
+                    switch (Level)
                     {
                         case 1:
                         {
@@ -466,7 +472,7 @@ namespace battle_shop
             {
                 case SkillEffectEM.AddProperty:
                 {
-                    AddProperty(skill, _player);
+                    AddProperty(skill, _player, trigger_ev);
                 }
                 break;
 

@@ -106,7 +106,7 @@ namespace battle_shop
                     break;
                     case EMRoleShopEvent.buy:
                     {
-                        if (EffectTime == EMSkillEvent.buy)
+                        if (EffectTime == EMSkillEvent.buy && skillID == ev.skill_id && index == ev.index)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.buy EMSkillEvent.buy");
                             trigger_ev = ev;

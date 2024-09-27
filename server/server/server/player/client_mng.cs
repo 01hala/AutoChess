@@ -1377,11 +1377,6 @@ namespace Player
                 return em_error.db_error;
             }
 
-            BattleShopPlayer.evs.Add(new shop_event()
-            {
-                ev = EMRoleShopEvent.buy,
-            });
-
             BattleShopPlayer.clear_skill_tag();
 
             return em_error.success;

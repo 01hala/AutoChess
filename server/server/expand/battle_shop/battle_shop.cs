@@ -585,7 +585,7 @@ namespace battle_shop
                 r.BuyRound = battleData.round;
                 r.Level = role_Level;
                 r.SkillID = rcfg.SkillID;
-                r.Number = (r.Level - 1) * 3 + 1;
+                r.Number = (r.Level - 1) * 2 + 1;
                 r.HP = rcfg.Hp + r.Number - 1;
                 r.Attack = rcfg.Attack + r.Number - 1;
                 r.TempHP = 0;
@@ -603,6 +603,16 @@ namespace battle_shop
                 check_fetters();
                 shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, battleData.round);
                 ShopData.SaleRoleList[index] = null;
+
+                evs.Add(new shop_event()
+                {
+                    ev = EMRoleShopEvent.buy,
+                    index = index,
+                    skill_id = r.SkillID,
+                    role_level = r.Level,
+                    fetters_id = r.FettersSkillID.fetters_id,
+                    fetters_level = r.FettersSkillID.fetters_level,
+                });
 
                 return r;
             }
@@ -623,6 +633,10 @@ namespace battle_shop
             r.Number += 1;
             var oldLevel = r.Level;
             r.Level = 1 + (r.Number - 1) / 2;
+            if (r.Level > 3)
+            {
+                r.Level = 3; 
+            }
             r.HP += 1;
             r.Attack += 1;
 
@@ -643,6 +657,16 @@ namespace battle_shop
             {
                 check_update_skip_level(role_index);
             }
+
+            evs.Add(new shop_event()
+            {
+                ev = EMRoleShopEvent.buy,
+                index = index,
+                skill_id = r.SkillID,
+                role_level = r.Level,
+                fetters_id = r.FettersSkillID.fetters_id,
+                fetters_level = r.FettersSkillID.fetters_level,
+            });
 
             return em_error.success;
         }
