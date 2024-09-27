@@ -544,7 +544,7 @@ export class BattleDis
                 }
                 else
                 {
-                    await this.showLaunchSkillEffect();
+                    //await this.showLaunchSkillEffect();
                 }
                 console.log("检测到召唤技能！");
                 ev.recipient.forEach(element=>{
@@ -553,7 +553,8 @@ export class BattleDis
                     let targetTeam = battleEnums.Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
                     targetTeam.AddRole(tmp);
                     let queue = battleEnums.Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
-                    if(!ev.isParallel) {
+                    if(!ev.isParallel) 
+                    {
                         allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
                     }
                     else{
@@ -561,6 +562,7 @@ export class BattleDis
                             this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
                         }
                         else {
+
                             this.enemyParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
                         }
                     }
