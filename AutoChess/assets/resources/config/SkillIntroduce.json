@@ -358,7 +358,7 @@
     },
     "52": {
         "Id": 52,
-        "Timeing_Text": "攻击后",
+        "Timeing_Text": "战斗开始时",
         "Leve1_Text": "使攻击等于生命+1",
         "Leve2_Text": "使攻击等于生命+2",
         "Leve3_Text": "使攻击等于生命+3"

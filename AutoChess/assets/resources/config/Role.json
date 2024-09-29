@@ -1025,8 +1025,8 @@
         "Sex": "M",
         "Armor": "L"
     },
-    "100055": {
-        "Id": 100055,
+    "200001": {
+        "Id": 200001,
         "Name": "暂无",
         "Skill": 0,
         "Stage": 0,
@@ -1036,7 +1036,7 @@
         "Biomes": 0,
         "Fetters": 0,
         "Grade": 0,
-        "ActiveState": 0,
+        "ActiveState": -1,
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200001",
         "Avatar": "0",
@@ -1044,18 +1044,18 @@
         "Sex": "M",
         "Armor": "N"
     },
-    "100056": {
-        "Id": 100056,
+    "200002": {
+        "Id": 200002,
         "Name": "暂无",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,
-        "Attack": 0,
-        "Hp": 0,
+        "Attack": 2,
+        "Hp": 2,
         "Biomes": 0,
         "Fetters": 0,
         "Grade": 0,
-        "ActiveState": 0,
+        "ActiveState": -1,
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200002",
         "Avatar": "0",
@@ -1063,18 +1063,18 @@
         "Sex": "M",
         "Armor": "N"
     },
-    "100057": {
-        "Id": 100057,
+    "200003": {
+        "Id": 200003,
         "Name": "暂无",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,
-        "Attack": 0,
-        "Hp": 0,
+        "Attack": 4,
+        "Hp": 4,
         "Biomes": 0,
         "Fetters": 0,
         "Grade": 0,
-        "ActiveState": 0,
+        "ActiveState": -1,
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200003",
         "Avatar": "0",
@@ -1082,8 +1082,8 @@
         "Sex": "M",
         "Armor": "N"
     },
-    "100058": {
-        "Id": 100058,
+    "200004": {
+        "Id": 200004,
         "Name": "暂无",
         "Skill": 0,
         "Stage": 0,
@@ -1093,7 +1093,7 @@
         "Biomes": 0,
         "Fetters": 0,
         "Grade": 0,
-        "ActiveState": 0,
+        "ActiveState": -1,
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200004",
         "Avatar": "0",
@@ -1101,8 +1101,8 @@
         "Sex": "M",
         "Armor": "H"
     },
-    "100059": {
-        "Id": 100059,
+    "200005": {
+        "Id": 200005,
         "Name": "暂无",
         "Skill": 0,
         "Stage": 0,
@@ -1112,7 +1112,7 @@
         "Biomes": 0,
         "Fetters": 0,
         "Grade": 0,
-        "ActiveState": 0,
+        "ActiveState": -1,
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200005",
         "Avatar": "0",
@@ -1120,8 +1120,8 @@
         "Sex": "M",
         "Armor": "H"
     },
-    "100060": {
-        "Id": 100060,
+    "200006": {
+        "Id": 200006,
         "Name": "暂无",
         "Skill": 0,
         "Stage": 0,
@@ -1131,7 +1131,7 @@
         "Biomes": 0,
         "Fetters": 0,
         "Grade": 0,
-        "ActiveState": 0,
+        "ActiveState": -1,
         "ActivePrice": 0,
         "Res": "RolesImg/Role_200006",
         "Avatar": "0",
