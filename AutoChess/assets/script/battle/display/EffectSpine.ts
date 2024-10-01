@@ -79,9 +79,9 @@ export class EffectSpine extends Component
                 {
                     case enums.SpecialEffect.Shields:
                         {
+                            this.shieldSkele.node.active=true;
                             let anims = this.shieldSkele.skeletonData.getAnimsEnum();
                             this.shieldSkele.setAnimation(0, String(anims[2]), true);
-                            this.shieldSkele.node.active=true;
                             this.shieldSkele.setCompleteListener((trackEntry)=>
                             {
                                 if(trackEntry.animation.name === String(anims[2]))
@@ -159,7 +159,7 @@ export class EffectSpine extends Component
             {
                 try
                 {
-                    if (enums.SpecialEffect.Shields == _effect)
+                    if (enums.SpecialEffect.Shields == _effect && this.shieldSkele.node.active)
                     {
                         let anims = this.shieldSkele.skeletonData.getAnimsEnum();
                         this.shieldSkele.setAnimation(0, String(anims[2]), true);

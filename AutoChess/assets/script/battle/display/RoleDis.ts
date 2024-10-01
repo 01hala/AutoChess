@@ -330,7 +330,12 @@ export class RoleDis extends Component
             console.error("RoleDis 下的 changeAtt 错误 err:" + err);
         }
 
-        return this.delay(_ms?_ms:100, () => { });
+        let ms=100;
+        if(_ms!=null)
+        {
+            ms=_ms;
+        }
+        return this.delay(ms, () => { });
     }
 
     async BeHurted(_value:number)

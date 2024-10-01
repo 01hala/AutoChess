@@ -590,7 +590,7 @@ export class BattleDis
                 }
                 else
                 {
-                    await this.showLaunchSkillEffect();
+                    //await this.showLaunchSkillEffect();
                 }
                 console.log("检测到加临时经验值事件");
                 
@@ -710,60 +710,60 @@ export class BattleDis
     }
 
     //加buff或者护盾
-    private async CheckAddBuff(evs:skill.Event[])
+    private async CheckAddBuff(evs: skill.Event[])
     {
         try
         {
             let allAwait = [];
             for (let ev of evs)
             {
-                if(battleEnums.EventType.GiveShields != ev.type && battleEnums.EventType.AddBuff != ev.type) 
+                if (battleEnums.EventType.GiveShields == ev.type || battleEnums.EventType.AddBuff == ev.type) 
                 {
-                    continue;
-                }
-                
-                let skilleffectem;
-                switch (ev.type)
-                {
-                    case battleEnums.EventType.GiveShields: skilleffectem = common.SkillEffectEM.GainShield; break;
-                    case battleEnums.EventType.AddBuff: skilleffectem = common.SkillEffectEM.AddBuffer; break;
-                }
-
-                for (let r of ev.recipient)
-                {
-                    if (battleEnums.Camp.Self == r.camp)
+                    let skilleffectem;
+                    switch (ev.type)
                     {
-                        if (this.selfQueue.roleNodes[r.index])
+                        case battleEnums.EventType.GiveShields: skilleffectem = common.SkillEffectEM.GainShield; break;
+                        case battleEnums.EventType.AddBuff: skilleffectem = common.SkillEffectEM.AddBuffer; break;
+                    }
+
+                    for (let r of ev.recipient)
+                    {
+                        if (battleEnums.Camp.Self == r.camp)
                         {
-                            if (!ev.isParallel) 
+                            if (this.selfQueue.roleNodes[r.index])
                             {
-                                allAwait.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem ,ev.isParallel, ev.value[0]));
-                            }
-                            else
-                            {
-                                this.selfParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem,ev.isParallel, ev.value[0]));
+                                if (!ev.isParallel) 
+                                {
+                                    allAwait.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
+                                }
+                                else
+                                {
+                                    this.selfParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
+                                }
                             }
                         }
-                    }
-                    if (battleEnums.Camp.Enemy == r.camp)
-                    {
-                        if (this.enemyQueue.roleNodes[r.index])
+                        if (battleEnums.Camp.Enemy == r.camp)
                         {
-                            if (!ev.isParallel)
+                            if (this.enemyQueue.roleNodes[r.index])
                             {
-                                allAwait.push(this.enemyQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem,ev.isParallel, ev.value[0]));
-                            }
-                            else
-                            {
-                                this.enemyParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem,ev.isParallel, ev.value[0]));
+                                if (!ev.isParallel)
+                                {
+                                    allAwait.push(this.enemyQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
+                                }
+                                else
+                                {
+                                    this.enemyParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
+                                }
                             }
                         }
                     }
                 }
             }
+
+
             await Promise.all(allAwait);
         }
-        catch(error)
+        catch (error)
         {
             console.error("BattleDis 下的 CheckAddBuff 错误 err:", error);
         }
