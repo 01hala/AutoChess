@@ -8,3 +8,15 @@ export function sleep(ms: number): Promise<void>
         }, ms);
     });
 }
+
+export function delay(ms: number, release: () => void): Promise<void> 
+{
+    return new Promise((resolve) =>
+    {
+        setTimeout(async () =>
+        {
+            await release();
+            resolve();
+        }, ms);
+    });
+}

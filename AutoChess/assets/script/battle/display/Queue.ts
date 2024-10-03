@@ -13,7 +13,7 @@ import * as role from '../AutoChessBattle/role'
 import { Battle } from '../AutoChessBattle/battle';
 import { Role } from '../AutoChessBattle/common';
 import { RoleInfo } from '../AutoChessBattle/skill/skill_base';
-import { sleep } from '../../other/sleep';
+import { delay, sleep } from '../../other/sleep';
 import * as enums from '../../other/enums';
 
 @ccclass('Queue')
@@ -119,16 +119,17 @@ export class Queue extends Component
                     {
                         this.locationTemp[r[i].index].children[0].active=false;
                     })
-                    //await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].worldPosition,true);
-                    await role.getComponent(RoleDis.RoleDis).Admission(enums.SpecialEffect.Summon);
                     role.setWorldPosition(this.locationTemp[r[i].index].worldPosition);
                     role.getComponent(RoleDis.RoleDis).AttackInit();
+                    //await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].worldPosition,true);
+                    await role.getComponent(RoleDis.RoleDis).Admission(enums.SpecialEffect.Summon);
                 }
                 else if(-1==r[i].index)
                 {
                     await role.getComponent(RoleDis.RoleDis).Exit();
                 }
             }
+            return delay(1000,()=>{});
         }
         catch(error)
         {

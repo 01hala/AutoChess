@@ -15,7 +15,7 @@ import { login } from '../../login/login';
 import { RoleIcon } from './RoleIcon';
 import { config } from '../../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
-import { sleep } from '../../other/sleep';
+import { delay, sleep } from '../../other/sleep';
 import * as enmus from '../../other/enums';
 import { SendMessage } from '../../other/MessageEvent';
 import { RoleDis } from '../../battle/display/RoleDis';
@@ -256,17 +256,6 @@ export class ReadyDis
         this.shopMask.getComponent(Widget).bottom = outPos.y - 310;
     }
 
-    private delay(ms: number, release: () => void): Promise<void> 
-    {
-        return new Promise(async (resolve) =>
-        {
-            await setTimeout(() =>
-            {
-                release();
-                resolve();
-            }, ms);
-        });
-    }
     //技能发动效果
     private showLaunchSkillEffect()
     {
@@ -279,7 +268,7 @@ export class ReadyDis
 
         //await sleep(2000);
 
-        return this.delay(2000,()=>
+        return delay(2000,()=>
         {
             this.launchSkillEffect.active=false;
         });

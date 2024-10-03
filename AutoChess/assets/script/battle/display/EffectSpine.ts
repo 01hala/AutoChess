@@ -68,7 +68,7 @@ export class EffectSpine extends Component
      * @param _buffID buff
      * 
      */
-    public ShowEffect(_effect:enums.SpecialEffect ,_isParallel:boolean, _style:number = 1 , _buffID?:number):Promise<void>
+    public ShowEffect(_effect:enums.SpecialEffect ,_isParallel:boolean, _style:number = 1 , _buffID?:number):Promise<number>
     {
         return new Promise(async (resolve , reject)=>
         {
@@ -130,6 +130,11 @@ export class EffectSpine extends Component
                         }
                         break;
                 }
+                let ms=0;
+                let interval=setInterval(()=>
+                {
+                    ms++;
+                },1);
                 if(show)
                 {
                     this.effectSkele.node.active = true;
@@ -140,15 +145,16 @@ export class EffectSpine extends Component
                         {
                             this.effectSkele.timeScale=1;
                             this.effectSkele.enabled = false;
+                            clearInterval(interval);
+                            resolve(ms);
                         }
                     });
                 }
-                resolve();
             }
             catch(error)
             {
                 console.error("EffectSpine 下的 ShowEffect 错误：",error);
-                reject();
+                reject(0);
             }
         });
     }

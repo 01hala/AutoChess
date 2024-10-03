@@ -19,7 +19,7 @@ import * as singleton from '../../netDriver/netSingleton';
 import { Fetters } from '../AutoChessBattle/common';
 import { config } from '../AutoChessBattle/config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
-import { sleep } from '../../other/sleep';
+import { delay, sleep } from '../../other/sleep';
 import { AudioManager } from '../../other/AudioManager';
 import { SendMessage } from '../../other/MessageEvent';
 import * as common from '../../battle/AutoChessBattle/common';
@@ -178,16 +178,6 @@ export class RoleDis extends Component
         }
     }
 
-    delay(ms: number, release: () => void): Promise<void> 
-    {
-        return new Promise((resolve) => {
-            setTimeout(async () => {
-                await release();
-                resolve();
-            }, ms);
-        });
-    }
-
     GetRoleFetter():Fetters
     {
         if(this.roleInfo) return this.roleInfo.fetter;
@@ -246,7 +236,7 @@ export class RoleDis extends Component
                 // .to(0.1, { position: readyLocation })
                 .start();
 
-            return this.delay(450, () => 
+            return delay(450, () => 
             {
                 // if (this.tAttack) {
                 //     this.tAttack.stop();
@@ -265,7 +255,7 @@ export class RoleDis extends Component
     async ResetPos(readyLocation: Vec3){
         this.tAttack = tween(this.node)
         .to(0.1, { worldPosition: readyLocation }).start();
-        return this.delay(100, () => 
+        return delay(100, () => 
         {
             if (this.tAttack) {
                 this.tAttack.stop();
@@ -274,68 +264,67 @@ export class RoleDis extends Component
         });
     }
 
-    async changeAtt(_ms?:number) 
+    async changeAtt(_ms?: number) 
     {
         try 
         {
-            if(this.roleInfo.getShields())
+            if (this.roleInfo.getShields())
             {
-                if(null == this.effectSpine)
+                if (null == this.effectSpine)
                 {
-                    this.effectSpine=this.node.getChildByPath("EffectSpine");
+                    this.effectSpine = this.node.getChildByPath("EffectSpine");
                 }
                 this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
             }
 
-            if(null==this.hpText && null==this.atkText)
+            if (null == this.hpText && null == this.atkText)
             {
                 this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
                 this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
-                this.levelText=this.node.getChildByPath("Level/LevelText").getComponent(RichText);
+                this.levelText = this.node.getChildByPath("Level/LevelText").getComponent(RichText);
             }
 
-            let _hp=Math.round(this.roleInfo.GetProperty(BattleEnums.Property.HP));
-            if(this.Hp!=_hp)
+            let _hp = Math.round(this.roleInfo.GetProperty(BattleEnums.Property.HP));
+            if (this.Hp != _hp)
             {
                 tween(this.hpText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
                     this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + _hp + "</outline></color>";
                     this.Hp = _hp;
-                }).by(0.2,{scale: new Vec3(0.5,0.5,0.5)}).start();
-               
+                }).by(0.2, { scale: new Vec3(0.5, 0.5, 0.5) }).start();
+
             }
-            let _atk=Math.round(this.roleInfo.GetProperty(BattleEnums.Property.Attack));
-            if(this.AtkNum!=_atk)
+            let _atk = Math.round(this.roleInfo.GetProperty(BattleEnums.Property.Attack));
+            if (this.AtkNum != _atk)
             {
                 tween(this.atkText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
                     this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + _atk + "</outline></color>";
                     this.AtkNum = _atk
-                }).by(0.2,{scale: new Vec3(0.5,0.5,0.5)}).start();
+                }).by(0.2, { scale: new Vec3(0.5, 0.5, 0.5) }).start();
             }
-            if(this.Level != this.roleInfo.level)
+            if (this.Level != this.roleInfo.level)
             {
                 tween(this.levelText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
                     this.levelText.string = "<color=#7CFC0><outline color=#7FFF00 width=4>" + this.roleInfo.level + "</outline></color>";
                     this.Level = this.roleInfo.level;
-                }).by(0.2, { scale: new Vec3(0.5,0.5,0.5) }).start();
+                }).by(0.2, { scale: new Vec3(0.5, 0.5, 0.5) }).start();
             }
-            
+
             //console.log("changeAtt RoleDis.roleInfo:", this.roleInfo);
             //console.log("changeAtt RoleDis:", this);
+            let ms = 100;
+            if (_ms != null)
+            {
+                ms = _ms;
+            }
+            return delay(ms, () => { });
         }
         catch (err) 
         {
             console.error("RoleDis 下的 changeAtt 错误 err:" + err);
         }
-
-        let ms=100;
-        if(_ms!=null)
-        {
-            ms=_ms;
-        }
-        return this.delay(ms, () => { });
     }
 
     async BeHurted(_value:number)
@@ -374,7 +363,7 @@ export class RoleDis extends Component
                 this.hurtedSpine.active=false;
             }).start();
 
-            return this.delay(700,()=>
+            return delay(700,()=>
             {
                 
             });
@@ -433,7 +422,7 @@ export class RoleDis extends Component
                 await sleep(750);
             }
            
-            return this.delay(ms,()=>
+            return delay(ms,()=>
             {
                 // if(newtween)
                 // {
@@ -474,7 +463,7 @@ export class RoleDis extends Component
                 })
             .start();
 
-            return this.delay(300,()=>
+            return delay(300,()=>
             {
                 
             })
@@ -492,7 +481,7 @@ export class RoleDis extends Component
         //开始缓动
         this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).start();
         //返回延迟300ms
-        return this.delay(300, () => 
+        return delay(300, () => 
         {
             if (this.tShiftpos) {
                 this.tShiftpos.stop();
@@ -513,7 +502,7 @@ export class RoleDis extends Component
             bulletNode.getComponent(Bullet).Init(targetLocation);
             singleton.netSingleton.battle.panelNode.addChild(bulletNode);
 
-            return this.delay(700, () => {});
+            return delay(700, () => {});
         }
         catch (err) 
         {
@@ -557,7 +546,7 @@ export class RoleDis extends Component
                 this.node.destroy();
             })
             .start();
-            return this.delay(200, () => {});
+            return delay(200, () => {});
         }
         catch (err) 
         {
@@ -571,16 +560,13 @@ export class RoleDis extends Component
         let rotationSpeed=4.0;
         try{
             while (!this.isDead) {
-                await this.Delay(0); // 让出控制权，以便游戏引擎处理其他事务
+                await delay(0,()=>{}); // 让出控制权，以便游戏引擎处理其他事务
                 const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
                 this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
             }
         }catch{
             console.log("角色停止旋转，人物已被销毁");
         }
-    }
-    Delay(ms: number): Promise<void> {
-        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     /*
@@ -647,7 +633,7 @@ export class RoleDis extends Component
                     this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel , _style);
                 }
        }
-       return this.delay(100,()=>{});
+       return delay(100,()=>{});
    }
    /**
     * 释放效果表现
@@ -680,7 +666,7 @@ export class RoleDis extends Component
                }
                break;
        }
-       return this.delay(ms, async () => { await _callBack(); });
+       return delay(ms, async () => { await _callBack(); });
    }
 
    /**
@@ -720,15 +706,20 @@ export class RoleDis extends Component
         this.atkText.node.active=false;
         this.hpText.node.active=false;
         this.levelText.node.active=false;
-
-        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false);
-
-        return this.delay(200,()=>
+        if(this.effectSpine==null)
         {
-            this.roleSprite.node.active=true;
-            this.atkText.node.active=true;
-            this.hpText.node.active=true;
-            this.levelText.node.active=true;
+            this.effectSpine=this.node.getChildByPath("EffectSpine");
+        }
+
+        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false).then((_ms)=>
+        {
+            setTimeout(()=>
+            {
+                this.roleSprite.node.active=true;
+                this.atkText.node.active=true;
+                this.hpText.node.active=true;
+                this.levelText.node.active=true;
+            },_ms);
         });
    }
 

@@ -9,7 +9,7 @@ import { Queue } from './Queue';
 import { Battle } from '../AutoChessBattle/battle';
 import * as skill from '../AutoChessBattle/skill/skill_base'
 import * as battleEnums from '../AutoChessBattle/enum';
-import { sleep } from '../../other/sleep'
+import { delay, sleep } from '../../other/sleep'
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
@@ -80,15 +80,6 @@ export class BattleDis
         this.panelNode.destroy();
     }
 
-    private delay(ms: number, release: () => void): Promise<void> 
-    {
-        return new Promise(async (resolve) => {
-            await setTimeout(() => {
-                resolve();
-                release();
-            }, ms);
-        });
-    }
 /*
  * 修改start
  * author：Hotaru
@@ -259,7 +250,7 @@ export class BattleDis
     private showLaunchSkillEffect(isShow:boolean=false)
     {
         if(!isShow){
-            return this.delay(0,()=>{});
+            return delay(0,()=>{});
         }
         this.launchSkillEffect.active=true;
 
@@ -267,7 +258,7 @@ export class BattleDis
         this.launchSkillEffect.getChildByPath("RoleImg").getComponent(sp.Skeleton).animation="a";
         this.launchSkillEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
 
-        return this.delay(2000,()=>
+        return delay(2000,()=>
         {
             this.launchSkillEffect.active=false;
         });
@@ -276,7 +267,7 @@ export class BattleDis
 
     private showLaunchFettersEffect()
     {
-        return this.delay(2000,()=>
+        return delay(2000,()=>
         {
             this.launchSkillEffect.active=false;
         })
@@ -312,7 +303,7 @@ export class BattleDis
                 this.enemyBeginEffect.getChildByPath("UserName").getComponent(Label).string="敌方队伍";
                 this.enemyBeginEffect.getChildByPath("TopImg").getComponent(sp.Skeleton).animation="a";
 
-                return this.delay(1000,()=>
+                return delay(1000,()=>
                 {
                     this.selfBeginEffect.active=false;
                     this.enemyBeginEffect.active=false;
@@ -412,7 +403,7 @@ export class BattleDis
                     }
                 }
                 this.shakeScreen(0.5,10);
-                await this.ChangeAttEvent(evs_floating);
+                await this.CheckBehurted(evs_floating);
                 //角色回到准备战斗位置，手动调用，使得角色在执行到这里、回到原位之前的部分就执行受伤效果展示，即时性更强
                 // {
                 //     allAwait.push(selfRoleNodeRoleDis.ResetPos(
@@ -468,7 +459,7 @@ export class BattleDis
 
     private async showRemoteAttack(selfRoleDis: RoleDis, spellcasterLocation: Vec3, targetLocation: Vec3, ev:skill.Event) {
         await selfRoleDis.RemoteAttack(spellcasterLocation, targetLocation);
-        await this.ChangeAttEvent([ev]);
+        await this.CheckBehurted([ev]);
     }
 
     //远程攻击技能
@@ -476,6 +467,7 @@ export class BattleDis
     {
         try 
         {
+            let allAwait = [];
             for(let ev of evs)
             {
                 
@@ -496,14 +488,18 @@ export class BattleDis
                     {                
                         let selfpos = this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos = this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());   
-                        if(!ev.isParallel){
+                        if(!ev.isParallel)
+                        {
                             let selfRoleDis = self.getComponent(RoleDis);
-                            if (selfRoleDis) {
-                                await selfRoleDis.RemoteAttack(selfpos, targetpos);
-                                await this.ChangeAttEvent([ev]);
+                            if (selfRoleDis) 
+                            {
+                                //allAwait.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev))
+                                //await selfRoleDis.RemoteAttack(selfpos, targetpos);
+                                //await this.ChangeAttEvent([ev]);
                             }
                         }
-                        else{
+                        else
+                        {
                             if(battleEnums.Camp.Self==ev.spellcaster.camp) 
                             {
                                 let selfRoleDis = self.getComponent(RoleDis);
@@ -522,6 +518,7 @@ export class BattleDis
                     }
                 };
             }
+            await Promise.all(allAwait);
         }
         catch(error) 
         {
@@ -770,7 +767,7 @@ export class BattleDis
     }
 
     //属性改变
-    private async ChangeAttEvent(evs:skill.Event[])
+    private async CheckBehurted(evs:skill.Event[])
     {
         try 
         {
@@ -927,29 +924,24 @@ export class BattleDis
                 {
                     queue = this.enemyQueue;
                 }
+                let style;
                 switch (ev.value[0])
                 {
                     case battleEnums.SwapPropertiesType.HpSwap:
-                        {
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false ,null ,1));
-                            //allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([0, ev.value[1]]));
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt(1000));
-                        }
-                        break;
                     case battleEnums.SwapPropertiesType.AttackSwap:
                         {
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false , null ,1));
-                            //allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([ev.value[1]]));
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt(1000));
+                            style = 1;
                         }
                         break;
                     case battleEnums.SwapPropertiesType.SelfSwap:
                         {
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false , null , 2));
-                            allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).changeAtt(1000));
+                            style = 2;
                         }
                         break;
                 }
+                allAwait.push(queue.GetRole(ev.spellcaster.index).getComponent(RoleDis).changeAtt(2000));
+                allAwait.push(queue.GetRole(ev.spellcaster.index).getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false, null, style));
+                //allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([0, ev.value[1]]));
             }
             await Promise.all(allAwait);
         }
@@ -969,11 +961,11 @@ export class BattleDis
 
                 await this.CheckBeginBattle(evs);
                 await this.CheckSwapProperties(evs);
-                await this.CheckTransPosition(evs);
                 await this.CheckAddBuff(evs);
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
                 await this.CheckAttExpEvent(evs);
+                await this.CheckTransPosition(evs);
                 await this.CheckRemoteInjured(evs);
                 if(this.selfParallelList.length > 0 || this.enemyParallelList.length > 0){
                     await Promise.all(this.selfParallelList);
