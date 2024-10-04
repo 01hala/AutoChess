@@ -974,7 +974,7 @@ export class BattleDis
                 this.selfParallelList=[];
                 this.enemyParallelList=[];
                 await this.CheckAttackEvent(evs);  
-                await this.CheckExitEvent(evs);           
+                await this.CheckExitEvent(evs);      
             }
             catch(error) 
             {
