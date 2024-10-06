@@ -166,12 +166,6 @@ export class BattleDis
                 }
             }
 
-            //await this.battleCentre.TickBattle();
-            //while (!this.battleCentre.CheckEndBattle()) 
-            //{
-            //    await this.battleCentre.TickBattle();
-            //}
-
             let is_victory = BattleVictory.tie;
             if (this.battleCentre.GetWinCamp() == battleEnums.Camp.Self) {
                 is_victory = BattleVictory.victory;
