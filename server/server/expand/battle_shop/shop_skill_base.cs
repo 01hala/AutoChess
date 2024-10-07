@@ -259,7 +259,7 @@ namespace battle_shop
                     {
                         if (index == 3)
                         {
-                            target_index = 1;
+                            target_index = 0;
                         }
                         else if (index == 4)
                         {
