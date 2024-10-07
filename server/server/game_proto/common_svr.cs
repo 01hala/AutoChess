@@ -124,7 +124,8 @@ namespace Abelkhan
         self_front_null = 28,
         enemy_front_null = 29,
         start_round_vacancy = 30,
-        start_round_victory = 31
+        start_round_victory = 31,
+        self_upgrade = 32
     }
     public enum SkillEffectEM{
         AddProperty = 1,

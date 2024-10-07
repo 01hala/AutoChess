@@ -116,7 +116,7 @@ namespace battle_shop
                     break;
                     case EMRoleShopEvent.update:
                     {
-                        if (EffectTime == EMSkillEvent.upgrade && index == ev.index)
+                        if (EffectTime == EMSkillEvent.self_upgrade && index == ev.index)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.food EMSkillEvent.eat_food");
                             trigger_ev = ev;
@@ -155,7 +155,7 @@ namespace battle_shop
                             trigger_ev = ev;
                             return true;
                         }
-                        else if (EffectTime == EMSkillEvent.start_round_vacancy && _player.BattleData.RoleList.Count < 6)
+                        else if (EffectTime == EMSkillEvent.start_round_vacancy && _player.RoleListCount() < 6)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.start_round EMSkillEvent.start_round_vacancy");
                             trigger_ev = ev;

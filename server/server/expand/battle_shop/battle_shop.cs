@@ -93,6 +93,19 @@ namespace battle_shop
             shopData.SalePropList = new List<ShopProp>();
         }
 
+        public int RoleListCount()
+        {
+            var count = 0;
+            foreach(var r in battleData.RoleList)
+            {
+                if (r != null)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         public int maxSaleRoleCount(int stage)
         {
             if (stage < 4)
