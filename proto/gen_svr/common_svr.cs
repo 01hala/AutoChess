@@ -80,7 +80,8 @@ namespace Abelkhan
         Left = 4,
         Self = 5,
         Cross = 6,
-        Summon = 7
+        Summon = 7,
+        Trigger = 8
     }
     public enum BufferAndEquipEffect{
         AddHP = 1,
@@ -123,7 +124,8 @@ namespace Abelkhan
         self_front_null = 28,
         enemy_front_null = 29,
         start_round_vacancy = 30,
-        start_round_victory = 31
+        start_round_victory = 31,
+        self_upgrade = 32
     }
     public enum SkillEffectEM{
         AddProperty = 1,
@@ -153,7 +155,8 @@ namespace Abelkhan
         AddPropertyShopLeft = 25,
         BankCoin = 26,
         AddPropertyLevel3 = 27,
-        CopySkill = 28
+        CopySkill = 28,
+        NextRoundCoin = 29
     }
     public enum ShopIndex{
         Role = 0,

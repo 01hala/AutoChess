@@ -1149,6 +1149,7 @@ namespace Player
             if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
             {
                 BattleShopPlayer.BattleData.coin = cfg.Gold + BattleShopPlayer.bankCpin;
+                BattleShopPlayer.bankCpin = 0;
             }
 
             BattleShopPlayer.evs.Add(new shop_event()

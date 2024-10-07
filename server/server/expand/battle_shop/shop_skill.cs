@@ -19,7 +19,11 @@ namespace battle_shop
             skilleffect.recipient = new List<int>();
             skilleffect.effect = SkillEffectEM.AddProperty;
 
-            var target_list = GetTargetIndex(_player, skill.ObjectDirection, skill.ObjCount);
+            var target_list = GetTargetIndex(_player, skill.ObjectDirection, skill.ObjCount); 
+            if ((int)skill.ObjectDirection == 8)
+            {
+                target_list = new List<int>() { trigger_ev.index };
+            }
             Log.Log.trace("slill  target_list:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(target_list));
             foreach (var target_index in target_list)
             {
@@ -56,7 +60,6 @@ namespace battle_shop
                         }
                         break;
                     }
-
                 }
             }
 
@@ -287,7 +290,8 @@ namespace battle_shop
             }
             skilleffect.value = new List<int>() { v1 };
 
-            _player.bankCpin = _player.BattleData.coin < v1 ? _player.BattleData.coin : v1;
+            var bankCpin = _player.BattleData.coin < v1 ? _player.BattleData.coin : v1;
+            _player.bankCpin += bankCpin;
 
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
@@ -335,6 +339,48 @@ namespace battle_shop
             is_trigger = true;
 
             Log.Log.trace("AddCoin end");
+        }
+
+        private void NextRoundCoin(ShopSkillConfig skill, battle_shop_player _player)
+        {
+            Log.Log.trace("NextRoundCoin begin");
+
+            var addCoin = 0;
+            var r = _player.BattleData.RoleList[index];
+            switch (r.Level)
+            {
+                case 1:
+                    {
+                        addCoin = skill.Level1Value_1;
+                    }
+                    break;
+
+                case 2:
+                    {
+                        addCoin = skill.Level2Value_1;
+                    }
+                    break;
+
+                case 3:
+                    {
+                        addCoin = skill.Level3Value_1;
+                    }
+                    break;
+            }
+            _player.bankCpin += addCoin;
+
+            var skilleffect = new ShopSkillEffect();
+            skilleffect.skill_id = skill.Id;
+            skilleffect.spellcaster = index;
+            skilleffect.recipient = new List<int>();
+            skilleffect.effect = SkillEffectEM.NextRoundCoin;
+            skilleffect.value = new List<int>() { addCoin };
+            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+
+            is_trigger = true;
+
+            Log.Log.trace("NextRoundCoin end");
         }
 
         private void UpdateLevel(ShopSkillConfig skill, battle_shop_player _player)
@@ -503,6 +549,12 @@ namespace battle_shop
                 case SkillEffectEM.AddCoin:
                 {
                     AddCoin(skill, _player);
+                }
+                break;
+
+                case SkillEffectEM.NextRoundCoin:
+                {
+                    NextRoundCoin(skill, _player);
                 }
                 break;
 

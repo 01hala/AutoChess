@@ -116,7 +116,13 @@ namespace battle_shop
                     break;
                     case EMRoleShopEvent.update:
                     {
-                        if (EffectTime == EMSkillEvent.upgrade)
+                        if (EffectTime == EMSkillEvent.upgrade && index == ev.index)
+                        {
+                            Log.Log.trace("TriggerSkill EMRoleShopEvent.food EMSkillEvent.eat_food");
+                            trigger_ev = ev;
+                            return true;
+                        }
+                        else if(EffectTime == EMSkillEvent.upgrade)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.update EMSkillEvent.update");
                             trigger_ev = ev;
@@ -142,6 +148,7 @@ namespace battle_shop
                     break;
                     case EMRoleShopEvent.start_round:
                     {
+                        Log.Log.trace($"TriggerSkill EMRoleShopEvent.start_round EffectTime:{EffectTime}"); 
                         if (EffectTime == EMSkillEvent.start_round)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.start_round EMSkillEvent.start_round");
@@ -250,39 +257,60 @@ namespace battle_shop
 
                     case 1:
                     {
-                        if (index == 4)
-                        {
-                            target_index = 2;
-                        }
-                        else if (index == 5)
+                        if (index == 3)
                         {
                             target_index = 1;
                         }
-                        else if (index == 6)
+                        else if (index == 4)
                         {
-                            target_index = 3;
+                            target_index = 1;
+                        }
+                        else if (index == 5)
+                        {
+                            target_index = 2;
                         }
                     }
                     break;
 
                     case 2:
                     {
-                        if (index == 1)
+                        if (index == 0)
                         {
-                            target_index = 5;
+                            target_index = 3;
                         }
-                        else if (index == 2)
+                        else if (index == 1)
                         {
                             target_index = 4;
                         }
-                        else if (index == 3)
+                        else if (index == 2)
                         {
-                            target_index = 6;
+                            target_index = 5;
                         }
                     }
                     break;
 
                     case 3:
+                    {
+                        if (index == 0)
+                        {
+                            target_index = 1;
+                        }
+                        else if (index == 1)
+                        {
+                            target_index = 2;
+                        }
+                        else if (index == 3)
+                        {
+                            target_index = 4;
+                        }
+                        else if (index == 4)
+                        {
+                            target_index = 5;
+                        }
+                    }
+                    break;
+
+                    case 4:
                     {
                         if (index == 2)
                         {
@@ -290,36 +318,15 @@ namespace battle_shop
                         }
                         else if (index == 1)
                         {
-                            target_index = 3;
-                        }
-                        else if (index == 4)
-                        {
-                            target_index = 5;
-                        }
-                        else if (index == 5)
-                        {
-                            target_index = 6;
-                        }
-                    }
-                    break;
-
-                    case 4:
-                    {
-                        if (index == 3)
-                        {
-                            target_index = 1;
-                        }
-                        else if (index == 1)
-                        {
-                            target_index = 2;
-                        }
-                        else if (index == 6)
-                        {
-                            target_index = 5;
+                            target_index = 0;
                         }
                         else if (index == 5)
                         {
                             target_index = 4;
+                        }
+                        else if (index == 4)
+                        {
+                            target_index = 3;
                         }
                     }
                     break;

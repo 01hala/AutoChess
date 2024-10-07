@@ -180,6 +180,7 @@ enum Direction
     Self = 5;
 	Cross = 6;
 	Summon=7;
+	Trigger = 8;
 }
 
 enum BufferAndEquipEffect
@@ -229,6 +230,7 @@ enum EMSkillEvent
 	enemy_front_null=29;		//敌方前排为空
 	start_round_vacancy = 30;   //休整开始时有空位
 	start_round_victory = 31;	//休整开始时上局战斗胜利
+	self_upgrade = 32;          //自己升级后
 }
 
 enum SkillEffectEM {
@@ -260,6 +262,7 @@ enum SkillEffectEM {
 	BankCoin = 26;
 	AddPropertyLevel3 = 27;
 	CopySkill = 28;
+	NextRoundCoin = 29;
 }
 
 struct UserBattleData

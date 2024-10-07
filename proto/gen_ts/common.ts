@@ -80,7 +80,8 @@ export enum Direction{
     Left = 4,
     Self = 5,
     Cross = 6,
-    Summon = 7
+    Summon = 7,
+    Trigger = 8
 }
 
 export enum BufferAndEquipEffect{
@@ -126,7 +127,8 @@ export enum EMSkillEvent{
     self_front_null = 28,
     enemy_front_null = 29,
     start_round_vacancy = 30,
-    start_round_victory = 31
+    start_round_victory = 31,
+    self_upgrade = 32
 }
 
 export enum SkillEffectEM{
@@ -157,7 +159,8 @@ export enum SkillEffectEM{
     AddPropertyShopLeft = 25,
     BankCoin = 26,
     AddPropertyLevel3 = 27,
-    CopySkill = 28
+    CopySkill = 28,
+    NextRoundCoin = 29
 }
 
 export enum ShopIndex{

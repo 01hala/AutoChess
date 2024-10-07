@@ -87,6 +87,7 @@ namespace Match
         public void start_round(int stage)
         {
             BattleShopPlayer.BattleData.coin = 10 + BattleShopPlayer.bankCpin;
+            BattleShopPlayer.bankCpin = 0;
 
             _reset();
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(stage);
