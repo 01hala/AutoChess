@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, Prefab, Vec2, Vec3 } from 'cc';
+import { _decorator, Component, instantiate, Node, Prefab, sp, Vec2, Vec3 } from 'cc';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
 import * as common from '../../battle/AutoChessBattle/common';
@@ -172,9 +172,14 @@ export class RoleArea extends Component
         obj.getComponent(RoleIcon).index=_index;
         obj.getComponent(RoleIcon).target=this.targets.get("Location_" + _index);
 
-        await obj.getComponent(RoleIcon).Init(_role.RoleID,_role.HP+_role.TempHP,_role.Attack+_role.TempAttack,_role.Level,_role.Number,false,_role.FettersSkillID,_index);
-        this.rolesNode[_index]=obj;
+        this.node.getChildByPath("Node").children[_index].children[0].active=true;
+        this.node.getChildByPath("Node").children[_index].children[0]?.getComponent(sp.Skeleton).setCompleteListener(() =>
+        {
+            this.node.getChildByPath("Node").children[_index].children[0].active=false;
+        })
 
+        await obj.getComponent(RoleIcon).Summon(_role.RoleID,_role.HP,_role.Attack,_role.Level,_role.Number,_role.FettersSkillID,_index);
+        this.rolesNode[_index]=obj;
     }
 
 }

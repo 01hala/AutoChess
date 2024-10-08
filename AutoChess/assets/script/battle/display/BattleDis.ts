@@ -592,7 +592,11 @@ export class BattleDis
                     {
                         if(this.selfQueue.roleNodes[element.index])
                         {
-                            allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value));
+                            allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddTmpExp, this.selfQueue.roleNodes[element.index], async () =>
+                            {
+                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddTmpExp, ev.isParallel);
+                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value[0]);
+                            }));
                         }
                         
                     }
@@ -600,7 +604,11 @@ export class BattleDis
                     {
                         if(this.enemyQueue.roleNodes[element.index])
                         {
-                            allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value));
+                            allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddTmpExp, this.selfQueue.roleNodes[element.index], async () =>
+                            {
+                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddTmpExp, ev.isParallel);
+                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value[0]);
+                            }));
                         }
                         
                     }            

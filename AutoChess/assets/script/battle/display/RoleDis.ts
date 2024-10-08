@@ -374,10 +374,22 @@ export class RoleDis extends Component
         }
     }
 
-    async IntensifierExp(value: number[])
+    async IntensifierExp(value: number)
     {
-        
-        console.log("Assign temporary experience points to characters");
+        let exp=this.Exp+value;
+        if(exp<3)
+        {
+            this.Exp=exp;
+        }
+        else
+        {
+            this.Exp=exp%3;
+            this.Level+=exp%3;
+        }
+
+        await this.changeAtt();
+
+        return delay(100,()=>{});
     }
 
     async Intensifier(value: number[],stack?:number) 
@@ -614,6 +626,7 @@ export class RoleDis extends Component
        switch(_effect)
        {
             case common.SkillEffectEM.AddProperty:
+            case common.SkillEffectEM.AddTmpExp:
                 {
                     this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty , _isParallel);
                 }
@@ -648,6 +661,7 @@ export class RoleDis extends Component
        let ms=0;
        switch (_effect)
        {
+           case common.SkillEffectEM.AddTmpExp:
            case common.SkillEffectEM.AddProperty:
                {
 

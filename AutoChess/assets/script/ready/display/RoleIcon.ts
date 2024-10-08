@@ -22,6 +22,7 @@ import { loadAssets } from '../../bundle/LoadAsset';
 import { GameManager } from '../../other/GameManager';
 import { SendMessage } from '../../other/MessageEvent';
 import { AudioManager } from '../../other/AudioManager';
+import * as enums from '../../other/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleIcon')
@@ -101,13 +102,13 @@ export class RoleIcon extends Component
     }
 
     //初始化
-    async Init(_Id:number , _Hp:number , _Atk:number , _level:number , _stack:number , _freeze:boolean, _fetters:common.Fetters=null , _teamindex:number=-1)
+    async Init(_Id:number , _Hp:number , _Atk:number , _level:number , _exp:number , _freeze:boolean, _fetters:common.Fetters=null , _teamindex:number=-1)
     {
         try
         {
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,_Hp).set(battleEmums.Property.Attack,_Atk);
             console.log("new role");
-            let r=new role.Role(null,_teamindex, _Id, _level, _stack, battleEmums.Camp.Self, map, _fetters , -1);
+            let r=new role.Role(null,_teamindex, _Id, _level, _exp, battleEmums.Camp.Self, map, _fetters , -1);
             console.log('RoleIcon spawn role: ',_Id);
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
@@ -668,7 +669,7 @@ export class RoleIcon extends Component
         
     }
     //玩家吃食物
-    async EatFood(t:common.Role,food_id:number,is_update: boolean , is_syncope : boolean){
+    public async EatFood(t:common.Role,food_id:number,is_update: boolean , is_syncope : boolean){
         try
         {
             console.log("人物尝试吃食物");
@@ -723,7 +724,7 @@ export class RoleIcon extends Component
         }
     }
     //玩家装备上购买的装备
-    async Equipping(t:common.Role,equip_id:number){
+    public async Equipping(t:common.Role,equip_id:number){
         try
         {
             console.log("人物尝试装备");
@@ -769,6 +770,27 @@ export class RoleIcon extends Component
         {
             console.error('RoleIcon 下 Equipping 错误 err: ',error);
         }
+    }
+
+    public async Summon(_Id:number , _Hp:number , _Atk:number , _level:number , _exp:number ,_fetters:common.Fetters=null, _teamindex:number=-1)
+    {
+        let map = new Map<battleEmums.Property, number>().set(battleEmums.Property.HP, _Hp).set(battleEmums.Property.Attack, _Atk);
+        console.log("new role");
+        let r = new role.Role(null, _teamindex, _Id, _level, _exp, battleEmums.Camp.Self, map, _fetters, -1);
+        this.roleNode=await this.SpawnRole(r);
+        this.roleNode.getComponent(RoleDis).Admission(enums.SpecialEffect.Summon);
+
+        this.freezeSprite.active=false;
+        this.visiableArea.active=false;
+
+        this.iconMask.active=false;
+        this.farme.active=false;
+
+
+        this.DragEvent();
+        this.roleNode.setScale(new Vec3(1.2,1.2,1));
+        this.tempIndex=this.index;
+
     }
 
     // async GetIntensifier(value :number[])

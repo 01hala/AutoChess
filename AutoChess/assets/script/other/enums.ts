@@ -75,4 +75,6 @@ export enum SpecialEffect
     Heath=5,
     /** 交换属性 */
     SwapProperties=6,
+    /** 加经验 */
+    AddExp=7,
 }
