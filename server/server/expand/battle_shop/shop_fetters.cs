@@ -130,25 +130,18 @@ namespace battle_shop
         private void FettersSummonShop(battle_shop_player _player, shop_event trigger_ev)
         {
             int summon_index = -1;
-            if (_player.BattleData.RoleList[trigger_ev.index] == null)
+            for (int i = 0; i < _player.BattleData.RoleList.Count; i++)
             {
-                summon_index = trigger_ev.index;
-            }
-            else
-            {
-                for (int i = 0; i < _player.BattleData.RoleList.Count; i++)
+                if (_player.BattleData.RoleList[i] == null)
                 {
-                    if (_player.BattleData.RoleList[i] == null)
-                    {
-                        summon_index = i;
-                        break;
-                    }
+                    summon_index = i;
+                    break;
                 }
             }
-
-            if (summon_index < 0)
+            if (summon_index == -1)
             {
-                return;
+                trigger_ev.do_skill_callback = null;
+                summon_index = trigger_ev.index;
             }
 
             FettersConfig fetters;
@@ -156,7 +149,34 @@ namespace battle_shop
             {
                 return;
             }
-            if (_player.add_role(summon_index, fetters.SummonId, fetters.SummonLevel) != null)
+            var v1 = fetters.Stage1value_1;
+            var v2 = fetters.Stage1value_2;
+            var r = _player.BattleData.RoleList[index];
+            switch (r.Level)
+            {
+                case 1:
+                {
+                    v1 = fetters.Stage1value_1;
+                    v2 = fetters.Stage1value_2;
+                }
+                break;
+
+                case 2:
+                {
+                    v1 = fetters.Stage2value_1;
+                    v2 = fetters.Stage2value_2;
+                }
+                break;
+
+                case 3:
+                {
+                    v1 = fetters.Stage3value_1;
+                    v2 = fetters.Stage3value_2;
+                }
+                break;
+            }
+
+            if (_player.summon_role(summon_index, fetters.SummonId, fetters.SummonLevel, v1, v2))
             {
                 var skilleffect = new ShopSkillEffect();
                 skilleffect.skill_id = fetters.Id;

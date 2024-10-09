@@ -586,6 +586,54 @@ namespace battle_shop
             return false;
         }
 
+        public bool summon_role(int role_index, int SummonId, int role_Level, int hp, int attack)
+        {
+            if (config.Config.RoleConfigs.TryGetValue(SummonId, out RoleConfig rcfg))
+            {
+                var r = new Role();
+
+                r.RoleID = rcfg.Id;
+                r.BuyRound = battleData.round;
+                r.Level = role_Level;
+                r.SkillID = rcfg.SkillID;
+                r.Number = (r.Level - 1) * 2 + 1;
+                if (hp > 0)
+                {
+                    r.HP = hp;
+                }
+                else
+                {
+                    r.HP = rcfg.Hp + r.Number - 1;
+                }
+                if (attack > 0)
+                {
+                    r.Attack = attack;
+                }
+                else
+                {
+                    r.Attack = rcfg.Attack + r.Number - 1;
+                }
+                r.TempHP = 0;
+                r.TempAttack = 0;
+                r.additionBuffer = new();
+                r.TempAdditionBuffer = new();
+                r.FettersSkillID = new Fetters()
+                {
+                    fetters_id = rcfg.Fetters,
+                    fetters_level = 0,
+                    number = 1
+                };
+
+                battleData.RoleList[role_index] = r;
+                check_fetters();
+                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, battleData.round);
+
+                return true;
+            }
+
+            return false;
+        }
+
         public Role add_role(int role_index, int index, int role_Level)
         {
             var s = ShopData.SaleRoleList[index];

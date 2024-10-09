@@ -89,25 +89,25 @@ namespace battle_shop
             switch (r.Level)
             {
                 case 1:
-                    {
-                        v1 = skill.Level1Value_1;
-                        v2 = skill.Level1Value_2;
-                    }
-                    break;
+                {
+                    v1 = skill.Level1Value_1;
+                    v2 = skill.Level1Value_2;
+                }
+                break;
 
                 case 2:
-                    {
-                        v1 = skill.Level2Value_1;
-                        v2 = skill.Level2Value_2;
-                    }
-                    break;
+                {
+                    v1 = skill.Level2Value_1;
+                    v2 = skill.Level2Value_2;
+                }
+                break;
 
                 case 3:
-                    {
-                        v1 = skill.Level2Value_1;
-                        v2 = skill.Level2Value_2;
-                    }
-                    break;
+                {
+                    v1 = skill.Level2Value_1;
+                    v2 = skill.Level2Value_2;
+                }
+                break;
             }
             skilleffect.value = new List<int>() { count, v1, v2 };
 
