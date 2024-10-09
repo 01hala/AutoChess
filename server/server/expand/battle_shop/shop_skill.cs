@@ -570,7 +570,7 @@ namespace battle_shop
                 }
                 break;
 
-                case SkillEffectEM.SummonShop:
+                case SkillEffectEM.SummonBattle:
                 {
                     SummonShop(skill, _player, trigger_ev);
                 }
