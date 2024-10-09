@@ -77,4 +77,6 @@ export enum SpecialEffect
     SwapProperties=6,
     /** 加经验 */
     AddExp=7,
+    /** 抗伤并减伤 */
+    SubstituteDamage=8,
 }

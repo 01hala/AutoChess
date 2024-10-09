@@ -129,6 +129,12 @@ export class EffectSpine extends Component
                             show=true;
                         }
                         break;
+                    case enums.SpecialEffect.SubstituteDamage:
+                        {
+                            await this.LoadEffectData("EffectSpine/jingji/Thorns",_style);
+                            show=true;
+                        }
+                        break;
                 }
                 let ms=0;
                 let interval=setInterval(()=>

@@ -1,0 +1,314 @@
+
+Thorns.png
+size: 2186,2186
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Thorns_00001
+  rotate: false
+  xy: 805, 176
+  size: 316, 284
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00002
+  rotate: true
+  xy: 518, 44
+  size: 319, 285
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00003
+  rotate: false
+  xy: 1547, 782
+  size: 320, 285
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00004
+  rotate: false
+  xy: 806, 462
+  size: 341, 285
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00005
+  rotate: false
+  xy: 1208, 1132
+  size: 342, 286
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00006
+  rotate: false
+  xy: 1610, 1609
+  size: 342, 286
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00007
+  rotate: false
+  xy: 806, 749
+  size: 343, 286
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00008
+  rotate: false
+  xy: 404, 365
+  size: 344, 287
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00009
+  rotate: false
+  xy: 1610, 1897
+  size: 346, 287
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00010
+  rotate: false
+  xy: 1610, 1331
+  size: 343, 276
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00011
+  rotate: false
+  xy: 1552, 1069
+  size: 343, 260
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00012
+  rotate: false
+  xy: 1208, 870
+  size: 337, 260
+  orig: 400, 400
+  offset: 7, 0
+  index: -1
+Thorns_00013
+  rotate: false
+  xy: 1151, 607
+  size: 306, 261
+  orig: 400, 400
+  offset: 37, 0
+  index: -1
+Thorns_00014
+  rotate: true
+  xy: 1695, 261
+  size: 252, 263
+  orig: 400, 400
+  offset: 95, 0
+  index: -1
+Thorns_00015
+  rotate: true
+  xy: 1425, 258
+  size: 256, 268
+  orig: 400, 400
+  offset: 87, 0
+  index: -1
+Thorns_00016
+  rotate: true
+  xy: 1123, 78
+  size: 261, 271
+  orig: 400, 400
+  offset: 84, 0
+  index: -1
+Thorns_00017
+  rotate: true
+  xy: 1459, 516
+  size: 264, 271
+  orig: 400, 400
+  offset: 79, 0
+  index: -1
+Thorns_00018
+  rotate: false
+  xy: 252, 4
+  size: 264, 265
+  orig: 400, 400
+  offset: 79, 6
+  index: -1
+Thorns_00019
+  rotate: true
+  xy: 1149, 341
+  size: 264, 274
+  orig: 400, 400
+  offset: 82, 17
+  index: -1
+Thorns_00020
+  rotate: false
+  xy: 2, 1803
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00021
+  rotate: false
+  xy: 2, 1420
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00022
+  rotate: false
+  xy: 404, 1803
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00023
+  rotate: false
+  xy: 2, 1037
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00024
+  rotate: false
+  xy: 404, 1420
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00025
+  rotate: false
+  xy: 806, 1803
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00026
+  rotate: false
+  xy: 2, 654
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00027
+  rotate: false
+  xy: 404, 1037
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00028
+  rotate: false
+  xy: 806, 1420
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00029
+  rotate: false
+  xy: 1208, 1803
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00030
+  rotate: false
+  xy: 2, 271
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00031
+  rotate: false
+  xy: 404, 654
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00032
+  rotate: false
+  xy: 806, 1037
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00033
+  rotate: false
+  xy: 1208, 1420
+  size: 400, 381
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Thorns_00034
+  rotate: false
+  xy: 1732, 515
+  size: 259, 265
+  orig: 400, 400
+  offset: 52, 55
+  index: -1
+Thorns_00035
+  rotate: true
+  xy: 1396, 15
+  size: 241, 268
+  orig: 400, 400
+  offset: 70, 55
+  index: -1
+Thorns_00036
+  rotate: false
+  xy: 1955, 1270
+  size: 227, 209
+  orig: 400, 400
+  offset: 83, 56
+  index: -1
+Thorns_00037
+  rotate: true
+  xy: 1960, 286
+  size: 227, 215
+  orig: 400, 400
+  offset: 83, 56
+  index: -1
+Thorns_00038
+  rotate: false
+  xy: 1958, 1718
+  size: 226, 219
+  orig: 400, 400
+  offset: 84, 57
+  index: -1
+Thorns_00039
+  rotate: true
+  xy: 1666, 44
+  size: 212, 209
+  orig: 400, 400
+  offset: 86, 72
+  index: -1
+Thorns_00040
+  rotate: false
+  xy: 1869, 806
+  size: 223, 221
+  orig: 400, 400
+  offset: 81, 66
+  index: -1
+Thorns_00041
+  rotate: true
+  xy: 1955, 1481
+  size: 235, 214
+  orig: 400, 400
+  offset: 75, 60
+  index: -1
+Thorns_00042
+  rotate: false
+  xy: 1958, 1939
+  size: 226, 245
+  orig: 400, 400
+  offset: 91, 54
+  index: -1
+Thorns_00043
+  rotate: false
+  xy: 1897, 1029
+  size: 260, 239
+  orig: 400, 400
+  offset: 63, 65
+  index: -1
+Thorns_00044
+  rotate: false
+  xy: 2, 2
+  size: 248, 267
+  orig: 400, 400
+  offset: 57, 42
+  index: -1

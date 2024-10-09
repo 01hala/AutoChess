@@ -645,6 +645,12 @@ export class RoleDis extends Component
                 {
                     this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel , _style);
                 }
+                break;
+            case common.SkillEffectEM.ReductionHurt:
+                {
+                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel , _style);
+                }
+                break;
        }
        return delay(100,()=>{});
    }

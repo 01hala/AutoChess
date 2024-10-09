@@ -777,7 +777,7 @@ export class BattleDis
             let r:Node = null;
             for(let ev of evs)
             {
-                if(battleEnums.EventType.RemoteInjured==ev.type || battleEnums.EventType.IntensifierProperties == ev.type || battleEnums.EventType.AttackInjured==ev.type) 
+                if(battleEnums.EventType.RemoteInjured==ev.type || battleEnums.EventType.IntensifierProperties == ev.type || battleEnums.EventType.AttackInjured==ev.type || battleEnums.EventType.TransferInjured == ev.type) 
                 {
                     if (ev.is_trigger_floating) {
                         continue;
@@ -953,6 +953,35 @@ export class BattleDis
         }
     }
 
+    async CheckSubstitute(evs:skill.Event[])
+    {
+        try
+        {
+            let allAwait=[];
+            let evs_floating:skill.Event[] = [];
+            for(let ev of evs)
+            {
+                if(battleEnums.EventType.SubstituteDamage != ev.type)
+                {
+                    continue;
+                }
+                let queue:Queue = this.selfQueue;
+                if(battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                {
+                    queue = this.enemyQueue;
+                }
+                allAwait.push(queue.GetRole(ev.recipient[0]).getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ReductionHurt,false));
+                evs_floating.push(ev);
+            }
+            await Promise.all(allAwait);
+            await this.CheckBehurted(evs_floating);
+        }
+        catch(error)
+        {
+            console.error("BattleDis 下的 CheckSubstitute 错误 err:", error);
+        }
+    }
+
     onEvent()
     {
         this.battleCentre.on_event = async (evs) => 
@@ -976,6 +1005,7 @@ export class BattleDis
                 this.selfParallelList=[];
                 this.enemyParallelList=[];
                 await this.CheckAttackEvent(evs);  
+                await this.CheckSubstitute(evs);
                 await this.CheckExitEvent(evs);
             }
             catch(error) 
