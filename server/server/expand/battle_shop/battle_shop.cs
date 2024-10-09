@@ -44,6 +44,7 @@ namespace battle_shop
 
         public List<shop_event> evs = new ();
         public List<int> skip_level = new ();
+        public List<int> skip_stage = new();
 
         private string clientUUID;
         public string ClientUUID
@@ -338,9 +339,10 @@ namespace battle_shop
                 fetters_level = r.FettersSkillID.fetters_level
             });
 
-            if (!skip_level.Contains(r.Level))
+            if (!skip_level.Contains(r.Level) && !skip_stage.Contains(stage))
             {
-                skip_level.Add(stage);
+                skip_level.Add(r.Level);
+                skip_stage.Add(stage);
 
                 var _stage = stage + 1;
                 if (_stage > 6)
