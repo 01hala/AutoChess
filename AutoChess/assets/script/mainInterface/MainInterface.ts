@@ -55,7 +55,8 @@ export class MainInterface
     //牌库界面
     private cardLibPanel:Node;
     //卡组编辑界面
-    private cardEditorPanel:Node
+    private cardEditorPanel:Node;
+    private challengePanel:Node;
     //各区域按钮
     private startBtn:Node;//匹配按钮
     private storeBtn:Node;//商店按钮
@@ -64,6 +65,7 @@ export class MainInterface
     private taskAchieveBtn:Node;//任务按钮
     private rankListBtn:Node;//排行榜按钮
     private cardEditor:Node;//卡组编辑按钮
+    private challengeBtn:Node;//挑战模式按钮（pve）
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -94,12 +96,14 @@ export class MainInterface
         let StorePanelmPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel");
         let CardLibPromise=BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary");
         let CardEditorPromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "CardEditor");
+        let ChallengePromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "ChallengePanel");
 
         let awaitResult= await Promise.all([
             MainInterfacePromise, 
             StorePanelmPromise,
             CardLibPromise,
-            CardEditorPromise
+            CardEditorPromise,
+            ChallengePromise
         ]);;
 
         return awaitResult;
@@ -121,6 +125,7 @@ export class MainInterface
             let StorePanel=assets[1] as Prefab;
             let CardLib=assets[2] as Prefab;
             let CardEditor=assets [3] as Prefab;
+            let challenge=assets [4] as Prefab;
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
             //商店界面
@@ -131,10 +136,14 @@ export class MainInterface
             this.cardLibPanel=instantiate(CardLib);
             this.cardLibPanel.setParent(_father);
             this.cardLibPanel.active=false;
-            //
+            //卡组编辑
             this.cardEditorPanel=instantiate(CardEditor);
             this.cardEditorPanel.setParent(_father);
             this.cardEditorPanel.active=false;
+            //挑战模式
+            this.challengePanel=instantiate(challenge);
+            this.challengePanel.setParent(_father);
+            this.challengePanel.active=false;
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePanel=this.panelNode.getChildByPath("StartGamePanel");
@@ -144,6 +153,7 @@ export class MainInterface
             this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");//娱乐
             this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");//牌库
             this.rankListBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/RankList/Rank_Btn");//排行
+            this.challengeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Challenge/Button");//挑战模式
             //下拉按钮列表
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
             this.cardEditor=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
@@ -168,6 +178,8 @@ export class MainInterface
     public destory() {
         this.panelNode.destroy();
     }
+
+
 /*
  * 添加Adaptation
  * author：Hotaru
@@ -317,6 +329,14 @@ export class MainInterface
                 this.panelNode.active=false;
                 this.cardEditorPanel.getComponent(CardEditor).OpenCardEditor();
 
+            },this);
+            //打开挑战模式界面
+            this.challengeBtn.on(Button.EventType.CLICK,()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                this.challengePanel.active=true;
+                this.panelNode.active=false;
+                
             },this);
         }
         catch(error)

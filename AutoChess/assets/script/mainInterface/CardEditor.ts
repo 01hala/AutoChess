@@ -24,12 +24,12 @@ export class CardEditor extends Component
     //牌组信息
     public roleGroup:common.RoleGroup;
     //保存并关闭按钮
-    private backBtn:Node;
+    private exitBtn:Node;
 
     protected async onLoad(): Promise<void>
     {
         this.pageContent=this.node.getChildByPath("PageView/view/content");
-        this.backBtn=this.node.getChildByPath("Close_Btn");
+        this.exitBtn=this.node.getChildByPath("Close_Btn");
         this.framePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggleFarme")as Prefab;
     }
 
@@ -38,7 +38,7 @@ export class CardEditor extends Component
         try
         {
             this.roleGroup=singleton.netSingleton.mainInterface.userData.roleGroup[0];
-            this.backBtn.on(Button.EventType.CLICK,()=>
+            this.exitBtn.on(Button.EventType.CLICK,()=>
             {
                 try
                 {
