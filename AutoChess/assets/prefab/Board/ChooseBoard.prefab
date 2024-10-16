@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "RgChoose",
+    "_name": "ChooseBoard",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "RgChoose",
+    "_name": "ChooseBoard",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -27,11 +27,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 262
+        "__id__": 264
+      },
+      {
+        "__id__": 266
       }
     ],
     "_prefab": {
-      "__id__": 264
+      "__id__": 268
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -217,7 +220,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Panel",
+    "_name": "Board",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -234,10 +237,13 @@
       },
       {
         "__id__": 259
+      },
+      {
+        "__id__": 261
       }
     ],
     "_prefab": {
-      "__id__": 261
+      "__id__": 263
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -2079,7 +2085,10 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": null,
+    "_normalSprite": {
+      "__uuid__": "2d942457-67a3-405c-8ca0-72afc1a23d77@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -5816,6 +5825,38 @@
     "fileId": "09/P15JAlIiJSjzRc82rH0"
   },
   {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 10
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 262
+    },
+    "playOnLoad": false,
+    "_clips": [
+      {
+        "__uuid__": "7b0d903d-f862-4af3-9120-bdf10bf9706f",
+        "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "b45d64db-c27c-41ad-afba-b5f44635fbce",
+        "__expectedType__": "cc.AnimationClip"
+      }
+    ],
+    "_defaultClip": {
+      "__uuid__": "7b0d903d-f862-4af3-9120-bdf10bf9706f",
+      "__expectedType__": "cc.AnimationClip"
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "23ivjukgJJRIXs2ZlZkHXg"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -5837,7 +5878,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 263
+      "__id__": 265
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -5856,6 +5897,23 @@
     "fileId": "c2mpeesddGj5Y6AE1iYutJ"
   },
   {
+    "__type__": "1e3fcnw/EVOy4ksB1VdQ7w9",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 267
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "b2avYdvENOxo+oHDjg0k3k"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -5864,6 +5922,7 @@
       "__id__": 0
     },
     "fileId": "a0gfbCsqxLu59e9m+pr3YY",
+    "instance": null,
     "targetOverrides": null
   }
 ]

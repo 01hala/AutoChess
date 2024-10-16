@@ -13,6 +13,7 @@ import * as enums from '../other/enums';
 import { PopUps } from '../secondaryPanel/PopUps';
 import { Guide } from '../panel/Guide';
 import * as common from "../battle/AutoChessBattle/common"
+import { ChooseTag } from '../secondaryPanel/ChooseTag';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -292,6 +293,20 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.OpenPopUps(event.detail.type , event.detail.title , event.detail.subheading , event.detail.items , event.callBack)
+        },this);
+
+        /** 消息来源
+         * 
+         * 
+         */
+        this.node.on('OpenChooseBoard',async (event:SendMessage)=>
+        {
+            event.propagationStopped=true;
+            let cb = await BundleManager.Instance.loadAssetsFromBundle("Board", "ChooseBoard") as Prefab;
+            let board = instantiate(cb);
+            board.setParent(this.node);
+            board.getComponent(ChooseTag).Open();
+
         },this);
     }
 

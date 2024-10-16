@@ -56,7 +56,7 @@ export class MainInterface
     private cardLibPanel:Node;
     //卡组编辑界面
     private cardEditorPanel:Node;
-    private challengePanel:Node;
+    private venturePanel:Node;
     //各区域按钮
     private startBtn:Node;//匹配按钮
     private storeBtn:Node;//商店按钮
@@ -96,14 +96,14 @@ export class MainInterface
         let StorePanelmPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel");
         let CardLibPromise=BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary");
         let CardEditorPromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "CardEditor");
-        let ChallengePromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "ChallengePanel");
+        let VenturePromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel");
 
         let awaitResult= await Promise.all([
             MainInterfacePromise, 
             StorePanelmPromise,
             CardLibPromise,
             CardEditorPromise,
-            ChallengePromise
+            VenturePromise
         ]);;
 
         return awaitResult;
@@ -141,9 +141,9 @@ export class MainInterface
             this.cardEditorPanel.setParent(_father);
             this.cardEditorPanel.active=false;
             //挑战模式
-            this.challengePanel=instantiate(challenge);
-            this.challengePanel.setParent(_father);
-            this.challengePanel.active=false;
+            this.venturePanel=instantiate(challenge);
+            this.venturePanel.setParent(_father);
+            this.venturePanel.active=false;
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePanel=this.panelNode.getChildByPath("StartGamePanel");
@@ -334,7 +334,7 @@ export class MainInterface
             this.challengeBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                this.challengePanel.active=true;
+                this.venturePanel.active=true;
                 this.panelNode.active=false;
                 
             },this);

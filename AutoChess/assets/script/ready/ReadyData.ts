@@ -243,6 +243,11 @@ export class ReadyData
         await singleton.netSingleton.game.freeze(shop_index,index, _isFreeze);
     }
 
+    public ChooseTag(_tag:number)
+    {
+        
+    }
+
 }
 
 

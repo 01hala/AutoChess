@@ -3,8 +3,8 @@ import { AudioManager } from '../other/AudioManager';
 import * as singleton from '../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
-@ccclass('ChallengePanel')
-export class ChallengePanel extends Component 
+@ccclass('VenturePanel')
+export class VenturePanel extends Component 
 {
     //退出返回按钮
     private exitBtn:Node;
