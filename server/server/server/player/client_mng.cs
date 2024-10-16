@@ -346,6 +346,16 @@ namespace Player
             return info;
         }
 
+        public bool CheckFinishPVELevel()
+        {
+            if (config.Config.PVEConfigs.TryGetValue(info.quest, out _))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public List<int> BattleRoleGroup()
         {
             foreach(var roleGroup in info.roleGroup)

@@ -11,7 +11,8 @@ namespace Abelkhan
     public enum em_quest_state{
         next_level = 0,
         next_quest = 1,
-        faild = 2
+        faild = 2,
+        finish_pve_level = 3
     }
 /*this struct code is codegen by abelkhan codegen for c#*/
     public class CardPacket
@@ -605,6 +606,31 @@ namespace Abelkhan
 
     }
 
+    public class player_quest_check_finish_pve_level_rsp : Common.Response {
+        private string _client_uuid_28bf6496_0906_369a_811c_1f0a68d667c0;
+        private UInt64 uuid_b8ca4c50_5962_3f12_a61b_29c46ec14628;
+        public player_quest_check_finish_pve_level_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_28bf6496_0906_369a_811c_1f0a68d667c0 = client_uuid;
+            uuid_b8ca4c50_5962_3f12_a61b_29c46ec14628 = _uuid;
+        }
+
+        public void rsp(bool is_finish_pve_level_f0600108_95ed_3a2b_8c62_5379e85a687a){
+            var _argv_28bf6496_0906_369a_811c_1f0a68d667c0 = new ArrayList();
+            _argv_28bf6496_0906_369a_811c_1f0a68d667c0.Add(uuid_b8ca4c50_5962_3f12_a61b_29c46ec14628);
+            _argv_28bf6496_0906_369a_811c_1f0a68d667c0.Add(is_finish_pve_level_f0600108_95ed_3a2b_8c62_5379e85a687a);
+            Hub.Hub._gates.call_client(_client_uuid_28bf6496_0906_369a_811c_1f0a68d667c0, "player_quest_rsp_cb_check_finish_pve_level_rsp", _argv_28bf6496_0906_369a_811c_1f0a68d667c0);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_28bf6496_0906_369a_811c_1f0a68d667c0 = new ArrayList();
+            _argv_28bf6496_0906_369a_811c_1f0a68d667c0.Add(uuid_b8ca4c50_5962_3f12_a61b_29c46ec14628);
+            _argv_28bf6496_0906_369a_811c_1f0a68d667c0.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_28bf6496_0906_369a_811c_1f0a68d667c0, "player_quest_rsp_cb_check_finish_pve_level_err", _argv_28bf6496_0906_369a_811c_1f0a68d667c0);
+        }
+
+    }
+
     public class player_quest_module : Common.IModule {
         public player_quest_module()
         {
@@ -613,6 +639,7 @@ namespace Abelkhan
             Hub.Hub._modules.add_mothed("player_quest_get_quest_shop_data", get_quest_shop_data);
             Hub.Hub._modules.add_mothed("player_quest_start_quest_battle", start_quest_battle);
             Hub.Hub._modules.add_mothed("player_quest_confirm_quest_victory", confirm_quest_victory);
+            Hub.Hub._modules.add_mothed("player_quest_check_finish_pve_level", check_finish_pve_level);
         }
 
         public event Action on_start_quest_ready;
@@ -663,6 +690,16 @@ namespace Abelkhan
             rsp = new player_quest_confirm_quest_victory_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_confirm_quest_victory != null){
                 on_confirm_quest_victory(_is_victory);
+            }
+            rsp = null;
+        }
+
+        public event Action on_check_finish_pve_level;
+        public void check_finish_pve_level(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            rsp = new player_quest_check_finish_pve_level_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_check_finish_pve_level != null){
+                on_check_finish_pve_level();
             }
             rsp = null;
         }

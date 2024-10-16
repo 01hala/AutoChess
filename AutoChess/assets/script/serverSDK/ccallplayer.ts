@@ -5,7 +5,8 @@ import * as common from "./common";
 export enum em_quest_state{
     next_level = 0,
     next_quest = 1,
-    faild = 2
+    faild = 2,
+    finish_pve_level = 3
 }
 
 /*this struct code is codegen by abelkhan codegen for typescript*/
@@ -1146,6 +1147,36 @@ export class player_quest_confirm_quest_victory_cb{
 
 }
 
+export class player_quest_check_finish_pve_level_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : player_quest_rsp_cb;
+
+    public event_check_finish_pve_level_handle_cb : (is_finish_pve_level:boolean)=>void | null;
+    public event_check_finish_pve_level_handle_err : (err:number)=>void | null;
+    public event_check_finish_pve_level_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : player_quest_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_check_finish_pve_level_handle_cb = null;
+        this.event_check_finish_pve_level_handle_err = null;
+        this.event_check_finish_pve_level_handle_timeout = null;
+    }
+
+    callBack(_cb:(is_finish_pve_level:boolean)=>void, _err:(err:number)=>void)
+    {
+        this.event_check_finish_pve_level_handle_cb = _cb;
+        this.event_check_finish_pve_level_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.check_finish_pve_level_timeout(this.cb_uuid); }, tick);
+        this.event_check_finish_pve_level_handle_timeout = timeout_cb;
+    }
+
+}
+
 /*this cb code is codegen by abelkhan for ts*/
 export class player_quest_rsp_cb extends client_handle.imodule {
     public map_start_quest_ready:Map<number, player_quest_start_quest_ready_cb>;
@@ -1153,6 +1184,7 @@ export class player_quest_rsp_cb extends client_handle.imodule {
     public map_get_quest_shop_data:Map<number, player_quest_get_quest_shop_data_cb>;
     public map_start_quest_battle:Map<number, player_quest_start_quest_battle_cb>;
     public map_confirm_quest_victory:Map<number, player_quest_confirm_quest_victory_cb>;
+    public map_check_finish_pve_level:Map<number, player_quest_check_finish_pve_level_cb>;
     constructor(modules:client_handle.modulemng){
         super();
         this.map_start_quest_ready = new Map<number, player_quest_start_quest_ready_cb>();
@@ -1170,6 +1202,9 @@ export class player_quest_rsp_cb extends client_handle.imodule {
         this.map_confirm_quest_victory = new Map<number, player_quest_confirm_quest_victory_cb>();
         modules.add_method("player_quest_rsp_cb_confirm_quest_victory_rsp", this.confirm_quest_victory_rsp.bind(this));
         modules.add_method("player_quest_rsp_cb_confirm_quest_victory_err", this.confirm_quest_victory_err.bind(this));
+        this.map_check_finish_pve_level = new Map<number, player_quest_check_finish_pve_level_cb>();
+        modules.add_method("player_quest_rsp_cb_check_finish_pve_level_rsp", this.check_finish_pve_level_rsp.bind(this));
+        modules.add_method("player_quest_rsp_cb_check_finish_pve_level_err", this.check_finish_pve_level_err.bind(this));
     }
     public start_quest_ready_rsp(inArray:any[]){
         let uuid = inArray[0];
@@ -1351,6 +1386,41 @@ export class player_quest_rsp_cb extends client_handle.imodule {
         return rsp;
     }
 
+    public check_finish_pve_level_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_28bf6496_0906_369a_811c_1f0a68d667c0:any[] = [];
+        _argv_28bf6496_0906_369a_811c_1f0a68d667c0.push(inArray[1]);
+        var rsp = this.try_get_and_del_check_finish_pve_level_cb(uuid);
+        if (rsp && rsp.event_check_finish_pve_level_handle_cb) {
+            rsp.event_check_finish_pve_level_handle_cb.apply(null, _argv_28bf6496_0906_369a_811c_1f0a68d667c0);
+        }
+    }
+
+    public check_finish_pve_level_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_28bf6496_0906_369a_811c_1f0a68d667c0:any[] = [];
+        _argv_28bf6496_0906_369a_811c_1f0a68d667c0.push(inArray[1]);
+        var rsp = this.try_get_and_del_check_finish_pve_level_cb(uuid);
+        if (rsp && rsp.event_check_finish_pve_level_handle_err) {
+            rsp.event_check_finish_pve_level_handle_err.apply(null, _argv_28bf6496_0906_369a_811c_1f0a68d667c0);
+        }
+    }
+
+    public check_finish_pve_level_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_check_finish_pve_level_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_check_finish_pve_level_handle_timeout) {
+                rsp.event_check_finish_pve_level_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_check_finish_pve_level_cb(uuid : number){
+        var rsp = this.map_check_finish_pve_level.get(uuid);
+        this.map_check_finish_pve_level.delete(uuid);
+        return rsp;
+    }
+
 }
 
 let rsp_cb_player_quest_handle : player_quest_rsp_cb | null = null;
@@ -1443,6 +1513,18 @@ export class player_quest_hubproxy
             rsp_cb_player_quest_handle.map_confirm_quest_victory.set(uuid_874935e4_2123_57e0_9c8b_252cc28d4e7c, cb_confirm_quest_victory_obj);
         }
         return cb_confirm_quest_victory_obj;
+    }
+
+    public check_finish_pve_level(){
+        let uuid_9ba19111_d29c_552e_bcdb_823dac553964 = Math.round(this.uuid_9d8491d3_2061_3c89_a7c5_ff8692e778c5++);
+
+        let _argv_28bf6496_0906_369a_811c_1f0a68d667c0:any[] = [uuid_9ba19111_d29c_552e_bcdb_823dac553964];
+        this._client_handle.call_hub(this.hub_name_9d8491d3_2061_3c89_a7c5_ff8692e778c5, "player_quest_check_finish_pve_level", _argv_28bf6496_0906_369a_811c_1f0a68d667c0);
+        let cb_check_finish_pve_level_obj = new player_quest_check_finish_pve_level_cb(uuid_9ba19111_d29c_552e_bcdb_823dac553964, rsp_cb_player_quest_handle);
+        if (rsp_cb_player_quest_handle){
+            rsp_cb_player_quest_handle.map_check_finish_pve_level.set(uuid_9ba19111_d29c_552e_bcdb_823dac553964, cb_check_finish_pve_level_obj);
+        }
+        return cb_check_finish_pve_level_obj;
     }
 
 }

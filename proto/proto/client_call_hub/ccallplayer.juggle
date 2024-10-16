@@ -35,6 +35,7 @@ enum em_quest_state {
 	next_level = 0;
 	next_quest = 1;
 	faild = 2;
+	finish_pve_level = 3;
 }
 
 module player_quest {
@@ -43,4 +44,5 @@ module player_quest {
 	get_quest_shop_data req() rsp(UserBattleData self, ShopData shop_info) err(int32 err);
 	start_quest_battle req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
     confirm_quest_victory req(BattleVictory is_victory) rsp(em_quest_state state) err();
+	check_finish_pve_level req() rsp(bool is_finish_pve_level) err(int32 err);
 }

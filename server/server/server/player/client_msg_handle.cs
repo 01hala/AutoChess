@@ -45,12 +45,34 @@ namespace Player
             player_quest_Module.on_start_quest_battle += Player_quest_Module_on_start_quest_battle;
             player_quest_Module.on_confirm_quest_victory += Player_quest_Module_on_confirm_quest_victory;
             player_quest_Module.on_get_quest_shop_data += Player_quest_Module_on_get_quest_shop_data;
+            player_quest_Module.on_check_finish_pve_level += Player_quest_Module_on_check_finish_pve_level;
 
             player_shop_Module = new();
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_quest_Module_on_check_finish_pve_level()
+        {
+            var rsp = player_quest_Module.rsp as player_quest_check_finish_pve_level_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                if (_avatar != null)
+                {
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    rsp.rsp(_data.Data.CheckFinishPVELevel());
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Player_quest_Module_on_check_finish_pve_level error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Plan_Module_on_end_round()
@@ -147,7 +169,7 @@ namespace Player
 
             try
             {
-                var rsp = plan_Module.rsp as player_quest_confirm_quest_victory_rsp;
+                var rsp = player_quest_Module.rsp as player_quest_confirm_quest_victory_rsp;
                 var uuid = Hub.Hub._gates.current_client_uuid;
 
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
@@ -162,7 +184,14 @@ namespace Player
                         {
                             _data.Data.Info().quest++;
 
-                            rsp.rsp(em_quest_state.next_quest);
+                            if (!_data.Data.CheckFinishPVELevel())
+                            {
+                                rsp.rsp(em_quest_state.next_quest);
+                            }
+                            else
+                            {
+                                rsp.rsp(em_quest_state.finish_pve_level);
+                            }
                             _data.Data.ClearPVEState();
                         }
                         else
