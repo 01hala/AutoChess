@@ -103,7 +103,7 @@ export class StartGame extends Component
             this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
-                singleton.netSingleton.game.start_battle(BattleMod.RankBattle);
+                singleton.netSingleton.game.start_match_battle_ready(BattleMod.RankBattle);
             },this);
             //匹配
             this.athleticsWindow.getChildByPath("Normal/Button").on(Button.EventType.CLICK, async ()=>
@@ -114,7 +114,7 @@ export class StartGame extends Component
                 }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 console.log("Normal_Btn start_battle!");
-                singleton.netSingleton.game.start_battle(BattleMod.Battle);
+                singleton.netSingleton.game.start_match_battle_ready(BattleMod.Battle);
                 //this.node.parent.active=false;
             },this);
         }

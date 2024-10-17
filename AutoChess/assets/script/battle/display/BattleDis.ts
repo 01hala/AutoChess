@@ -195,7 +195,7 @@ export class BattleDis
             if(!settlement)
             {
                 await sleep(500);
-                netSingleton.game.confirm_round_victory(is_victory);
+                netSingleton.game.confirm_match_round_victory(is_victory);
             }
             
         }
