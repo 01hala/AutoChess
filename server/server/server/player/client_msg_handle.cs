@@ -40,8 +40,8 @@ namespace Player
             player_battle_Module.on_check_achievement += Player_battle_Module_on_check_achievement;
 
             player_quest_Module = new();
-            player_quest_Module.on_start_quest_ready += Player_quest_Module_on_start_quest_ready;
-            player_quest_Module.on_start_quest_shop += Player_quest_Module_on_start_quest_shop;
+            player_quest_Module.on_start_quest_shop_ready += Player_quest_Module_on_start_quest_shop_ready;
+            player_quest_Module.on_select_quest_event += Player_quest_Module_on_select_quest_event;
             player_quest_Module.on_start_quest_battle += Player_quest_Module_on_start_quest_battle;
             player_quest_Module.on_confirm_quest_victory += Player_quest_Module_on_confirm_quest_victory;
             player_quest_Module.on_get_quest_shop_data += Player_quest_Module_on_get_quest_shop_data;
@@ -350,13 +350,13 @@ namespace Player
             Log.Log.trace("on_start_quest_battle end!");
         }
 
-        private async void Player_quest_Module_on_start_quest_shop(int event_id)
+        private async void Player_quest_Module_on_select_quest_event(int event_id)
         {
             Log.Log.trace("on_start_quest_shop begin!");
             
             try
             {
-                var rsp = player_quest_Module.rsp as player_quest_start_quest_shop_rsp;
+                var rsp = player_quest_Module.rsp as player_quest_select_quest_event_rsp;
                 var uuid = Hub.Hub._gates.current_client_uuid;
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 if (_avatar != null)
@@ -374,22 +374,22 @@ namespace Player
             Log.Log.trace("on_start_quest_shop end!");
         }
 
-        private async void Player_quest_Module_on_start_quest_ready()
+        private async void Player_quest_Module_on_start_quest_shop_ready()
         {
             Log.Log.trace("on_start_quest_ready begin!");
 
             try
             {
-                var rsp = player_quest_Module.rsp as player_quest_start_quest_ready_rsp;
+                var rsp = player_quest_Module.rsp as player_quest_start_quest_shop_ready_rsp;
                 var uuid = Hub.Hub._gates.current_client_uuid;
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    var (err, roleList) = _data.Data.StartQuestReady(uuid, client_mng.BattleClientCaller);
+                    var (err, eventIdList) = _data.Data.StartQuestReady(uuid, client_mng.BattleClientCaller);
                     if (err)
                     {
-                        rsp.rsp(roleList);
+                        rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, eventIdList);
                     }
                     else
                     {
