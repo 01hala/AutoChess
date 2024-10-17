@@ -475,57 +475,59 @@ namespace Abelkhan
         }
 
     }
-    public class player_quest_start_quest_ready_rsp : Common.Response {
-        private string _client_uuid_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b;
-        private UInt64 uuid_a7865cbc_363d_3b70_b792_6e94bfe98aca;
-        public player_quest_start_quest_ready_rsp(string client_uuid, UInt64 _uuid)
+    public class player_quest_start_quest_shop_ready_rsp : Common.Response {
+        private string _client_uuid_9bc7ea11_a152_3fb5_89af_a66808b2c9cd;
+        private UInt64 uuid_d508d326_fb33_3f17_9d53_3c2fa5eebd10;
+        public player_quest_start_quest_shop_ready_rsp(string client_uuid, UInt64 _uuid)
         {
-            _client_uuid_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b = client_uuid;
-            uuid_a7865cbc_363d_3b70_b792_6e94bfe98aca = _uuid;
+            _client_uuid_9bc7ea11_a152_3fb5_89af_a66808b2c9cd = client_uuid;
+            uuid_d508d326_fb33_3f17_9d53_3c2fa5eebd10 = _uuid;
         }
 
-        public void rsp(List<Int32> events_e0cace91_80f9_3ae4_bb79_75bdf64da782){
-            var _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b = new ArrayList();
-            _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b.Add(uuid_a7865cbc_363d_3b70_b792_6e94bfe98aca);
+        public void rsp(UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef, ShopData shop_info_6355a923_2126_3fd5_b568_e5edf6bd36d0, List<Int32> events_e0cace91_80f9_3ae4_bb79_75bdf64da782){
+            var _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd = new ArrayList();
+            _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.Add(uuid_d508d326_fb33_3f17_9d53_3c2fa5eebd10);
+            _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
+            _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.Add(ShopData.ShopData_to_protcol(shop_info_6355a923_2126_3fd5_b568_e5edf6bd36d0));
             var _array_e0cace91_80f9_3ae4_bb79_75bdf64da782 = new ArrayList();
             foreach(var v_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9 in events_e0cace91_80f9_3ae4_bb79_75bdf64da782){
                 _array_e0cace91_80f9_3ae4_bb79_75bdf64da782.Add(v_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9);
             }
-            _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b.Add(_array_e0cace91_80f9_3ae4_bb79_75bdf64da782);
-            Hub.Hub._gates.call_client(_client_uuid_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b, "player_quest_rsp_cb_start_quest_ready_rsp", _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b);
+            _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.Add(_array_e0cace91_80f9_3ae4_bb79_75bdf64da782);
+            Hub.Hub._gates.call_client(_client_uuid_9bc7ea11_a152_3fb5_89af_a66808b2c9cd, "player_quest_rsp_cb_start_quest_shop_ready_rsp", _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd);
         }
 
         public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
-            var _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b = new ArrayList();
-            _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b.Add(uuid_a7865cbc_363d_3b70_b792_6e94bfe98aca);
-            _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
-            Hub.Hub._gates.call_client(_client_uuid_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b, "player_quest_rsp_cb_start_quest_ready_err", _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b);
+            var _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd = new ArrayList();
+            _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.Add(uuid_d508d326_fb33_3f17_9d53_3c2fa5eebd10);
+            _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_9bc7ea11_a152_3fb5_89af_a66808b2c9cd, "player_quest_rsp_cb_start_quest_shop_ready_err", _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd);
         }
 
     }
 
-    public class player_quest_start_quest_shop_rsp : Common.Response {
-        private string _client_uuid_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594;
-        private UInt64 uuid_afce1b7b_ebaa_30ba_8547_b23d235e474c;
-        public player_quest_start_quest_shop_rsp(string client_uuid, UInt64 _uuid)
+    public class player_quest_select_quest_event_rsp : Common.Response {
+        private string _client_uuid_26847650_8c7f_37ec_9669_f20286b7035a;
+        private UInt64 uuid_ef5f7c4f_9961_317a_8013_773cd0363411;
+        public player_quest_select_quest_event_rsp(string client_uuid, UInt64 _uuid)
         {
-            _client_uuid_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594 = client_uuid;
-            uuid_afce1b7b_ebaa_30ba_8547_b23d235e474c = _uuid;
+            _client_uuid_26847650_8c7f_37ec_9669_f20286b7035a = client_uuid;
+            uuid_ef5f7c4f_9961_317a_8013_773cd0363411 = _uuid;
         }
 
         public void rsp(UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef, ShopData shop_info_6355a923_2126_3fd5_b568_e5edf6bd36d0){
-            var _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594 = new ArrayList();
-            _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.Add(uuid_afce1b7b_ebaa_30ba_8547_b23d235e474c);
-            _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
-            _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.Add(ShopData.ShopData_to_protcol(shop_info_6355a923_2126_3fd5_b568_e5edf6bd36d0));
-            Hub.Hub._gates.call_client(_client_uuid_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594, "player_quest_rsp_cb_start_quest_shop_rsp", _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594);
+            var _argv_26847650_8c7f_37ec_9669_f20286b7035a = new ArrayList();
+            _argv_26847650_8c7f_37ec_9669_f20286b7035a.Add(uuid_ef5f7c4f_9961_317a_8013_773cd0363411);
+            _argv_26847650_8c7f_37ec_9669_f20286b7035a.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
+            _argv_26847650_8c7f_37ec_9669_f20286b7035a.Add(ShopData.ShopData_to_protcol(shop_info_6355a923_2126_3fd5_b568_e5edf6bd36d0));
+            Hub.Hub._gates.call_client(_client_uuid_26847650_8c7f_37ec_9669_f20286b7035a, "player_quest_rsp_cb_select_quest_event_rsp", _argv_26847650_8c7f_37ec_9669_f20286b7035a);
         }
 
         public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
-            var _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594 = new ArrayList();
-            _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.Add(uuid_afce1b7b_ebaa_30ba_8547_b23d235e474c);
-            _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
-            Hub.Hub._gates.call_client(_client_uuid_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594, "player_quest_rsp_cb_start_quest_shop_err", _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594);
+            var _argv_26847650_8c7f_37ec_9669_f20286b7035a = new ArrayList();
+            _argv_26847650_8c7f_37ec_9669_f20286b7035a.Add(uuid_ef5f7c4f_9961_317a_8013_773cd0363411);
+            _argv_26847650_8c7f_37ec_9669_f20286b7035a.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_26847650_8c7f_37ec_9669_f20286b7035a, "player_quest_rsp_cb_select_quest_event_err", _argv_26847650_8c7f_37ec_9669_f20286b7035a);
         }
 
     }
@@ -634,31 +636,31 @@ namespace Abelkhan
     public class player_quest_module : Common.IModule {
         public player_quest_module()
         {
-            Hub.Hub._modules.add_mothed("player_quest_start_quest_ready", start_quest_ready);
-            Hub.Hub._modules.add_mothed("player_quest_start_quest_shop", start_quest_shop);
+            Hub.Hub._modules.add_mothed("player_quest_start_quest_shop_ready", start_quest_shop_ready);
+            Hub.Hub._modules.add_mothed("player_quest_select_quest_event", select_quest_event);
             Hub.Hub._modules.add_mothed("player_quest_get_quest_shop_data", get_quest_shop_data);
             Hub.Hub._modules.add_mothed("player_quest_start_quest_battle", start_quest_battle);
             Hub.Hub._modules.add_mothed("player_quest_confirm_quest_victory", confirm_quest_victory);
             Hub.Hub._modules.add_mothed("player_quest_check_finish_pve_level", check_finish_pve_level);
         }
 
-        public event Action on_start_quest_ready;
-        public void start_quest_ready(IList<MsgPack.MessagePackObject> inArray){
+        public event Action on_start_quest_shop_ready;
+        public void start_quest_shop_ready(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
-            rsp = new player_quest_start_quest_ready_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
-            if (on_start_quest_ready != null){
-                on_start_quest_ready();
+            rsp = new player_quest_start_quest_shop_ready_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_start_quest_shop_ready != null){
+                on_start_quest_shop_ready();
             }
             rsp = null;
         }
 
-        public event Action<Int32> on_start_quest_shop;
-        public void start_quest_shop(IList<MsgPack.MessagePackObject> inArray){
+        public event Action<Int32> on_select_quest_event;
+        public void select_quest_event(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _eventID = ((MsgPack.MessagePackObject)inArray[1]).AsInt32();
-            rsp = new player_quest_start_quest_shop_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
-            if (on_start_quest_shop != null){
-                on_start_quest_shop(_eventID);
+            rsp = new player_quest_select_quest_event_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_select_quest_event != null){
+                on_select_quest_event(_eventID);
             }
             rsp = null;
         }

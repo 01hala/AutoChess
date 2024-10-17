@@ -997,62 +997,62 @@ export class player_battle_hubproxy
     }
 
 }
-export class player_quest_start_quest_ready_cb{
+export class player_quest_start_quest_shop_ready_cb{
     private cb_uuid : number;
     private module_rsp_cb : player_quest_rsp_cb;
 
-    public event_start_quest_ready_handle_cb : (events:number[])=>void | null;
-    public event_start_quest_ready_handle_err : (err:number)=>void | null;
-    public event_start_quest_ready_handle_timeout : ()=>void | null;
+    public event_start_quest_shop_ready_handle_cb : (self:common.UserBattleData, shop_info:common.ShopData, events:number[])=>void | null;
+    public event_start_quest_shop_ready_handle_err : (err:number)=>void | null;
+    public event_start_quest_shop_ready_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : player_quest_rsp_cb){
         this.cb_uuid = _cb_uuid;
         this.module_rsp_cb = _module_rsp_cb;
-        this.event_start_quest_ready_handle_cb = null;
-        this.event_start_quest_ready_handle_err = null;
-        this.event_start_quest_ready_handle_timeout = null;
+        this.event_start_quest_shop_ready_handle_cb = null;
+        this.event_start_quest_shop_ready_handle_err = null;
+        this.event_start_quest_shop_ready_handle_timeout = null;
     }
 
-    callBack(_cb:(events:number[])=>void, _err:(err:number)=>void)
+    callBack(_cb:(self:common.UserBattleData, shop_info:common.ShopData, events:number[])=>void, _err:(err:number)=>void)
     {
-        this.event_start_quest_ready_handle_cb = _cb;
-        this.event_start_quest_ready_handle_err = _err;
+        this.event_start_quest_shop_ready_handle_cb = _cb;
+        this.event_start_quest_shop_ready_handle_err = _err;
         return this;
     }
 
     timeout(tick:number, timeout_cb:()=>void)
     {
-        setTimeout(()=>{ this.module_rsp_cb.start_quest_ready_timeout(this.cb_uuid); }, tick);
-        this.event_start_quest_ready_handle_timeout = timeout_cb;
+        setTimeout(()=>{ this.module_rsp_cb.start_quest_shop_ready_timeout(this.cb_uuid); }, tick);
+        this.event_start_quest_shop_ready_handle_timeout = timeout_cb;
     }
 
 }
 
-export class player_quest_start_quest_shop_cb{
+export class player_quest_select_quest_event_cb{
     private cb_uuid : number;
     private module_rsp_cb : player_quest_rsp_cb;
 
-    public event_start_quest_shop_handle_cb : (self:common.UserBattleData, shop_info:common.ShopData)=>void | null;
-    public event_start_quest_shop_handle_err : (err:number)=>void | null;
-    public event_start_quest_shop_handle_timeout : ()=>void | null;
+    public event_select_quest_event_handle_cb : (self:common.UserBattleData, shop_info:common.ShopData)=>void | null;
+    public event_select_quest_event_handle_err : (err:number)=>void | null;
+    public event_select_quest_event_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : player_quest_rsp_cb){
         this.cb_uuid = _cb_uuid;
         this.module_rsp_cb = _module_rsp_cb;
-        this.event_start_quest_shop_handle_cb = null;
-        this.event_start_quest_shop_handle_err = null;
-        this.event_start_quest_shop_handle_timeout = null;
+        this.event_select_quest_event_handle_cb = null;
+        this.event_select_quest_event_handle_err = null;
+        this.event_select_quest_event_handle_timeout = null;
     }
 
     callBack(_cb:(self:common.UserBattleData, shop_info:common.ShopData)=>void, _err:(err:number)=>void)
     {
-        this.event_start_quest_shop_handle_cb = _cb;
-        this.event_start_quest_shop_handle_err = _err;
+        this.event_select_quest_event_handle_cb = _cb;
+        this.event_select_quest_event_handle_err = _err;
         return this;
     }
 
     timeout(tick:number, timeout_cb:()=>void)
     {
-        setTimeout(()=>{ this.module_rsp_cb.start_quest_shop_timeout(this.cb_uuid); }, tick);
-        this.event_start_quest_shop_handle_timeout = timeout_cb;
+        setTimeout(()=>{ this.module_rsp_cb.select_quest_event_timeout(this.cb_uuid); }, tick);
+        this.event_select_quest_event_handle_timeout = timeout_cb;
     }
 
 }
@@ -1179,20 +1179,20 @@ export class player_quest_check_finish_pve_level_cb{
 
 /*this cb code is codegen by abelkhan for ts*/
 export class player_quest_rsp_cb extends client_handle.imodule {
-    public map_start_quest_ready:Map<number, player_quest_start_quest_ready_cb>;
-    public map_start_quest_shop:Map<number, player_quest_start_quest_shop_cb>;
+    public map_start_quest_shop_ready:Map<number, player_quest_start_quest_shop_ready_cb>;
+    public map_select_quest_event:Map<number, player_quest_select_quest_event_cb>;
     public map_get_quest_shop_data:Map<number, player_quest_get_quest_shop_data_cb>;
     public map_start_quest_battle:Map<number, player_quest_start_quest_battle_cb>;
     public map_confirm_quest_victory:Map<number, player_quest_confirm_quest_victory_cb>;
     public map_check_finish_pve_level:Map<number, player_quest_check_finish_pve_level_cb>;
     constructor(modules:client_handle.modulemng){
         super();
-        this.map_start_quest_ready = new Map<number, player_quest_start_quest_ready_cb>();
-        modules.add_method("player_quest_rsp_cb_start_quest_ready_rsp", this.start_quest_ready_rsp.bind(this));
-        modules.add_method("player_quest_rsp_cb_start_quest_ready_err", this.start_quest_ready_err.bind(this));
-        this.map_start_quest_shop = new Map<number, player_quest_start_quest_shop_cb>();
-        modules.add_method("player_quest_rsp_cb_start_quest_shop_rsp", this.start_quest_shop_rsp.bind(this));
-        modules.add_method("player_quest_rsp_cb_start_quest_shop_err", this.start_quest_shop_err.bind(this));
+        this.map_start_quest_shop_ready = new Map<number, player_quest_start_quest_shop_ready_cb>();
+        modules.add_method("player_quest_rsp_cb_start_quest_shop_ready_rsp", this.start_quest_shop_ready_rsp.bind(this));
+        modules.add_method("player_quest_rsp_cb_start_quest_shop_ready_err", this.start_quest_shop_ready_err.bind(this));
+        this.map_select_quest_event = new Map<number, player_quest_select_quest_event_cb>();
+        modules.add_method("player_quest_rsp_cb_select_quest_event_rsp", this.select_quest_event_rsp.bind(this));
+        modules.add_method("player_quest_rsp_cb_select_quest_event_err", this.select_quest_event_err.bind(this));
         this.map_get_quest_shop_data = new Map<number, player_quest_get_quest_shop_data_cb>();
         modules.add_method("player_quest_rsp_cb_get_quest_shop_data_rsp", this.get_quest_shop_data_rsp.bind(this));
         modules.add_method("player_quest_rsp_cb_get_quest_shop_data_err", this.get_quest_shop_data_err.bind(this));
@@ -1206,77 +1206,79 @@ export class player_quest_rsp_cb extends client_handle.imodule {
         modules.add_method("player_quest_rsp_cb_check_finish_pve_level_rsp", this.check_finish_pve_level_rsp.bind(this));
         modules.add_method("player_quest_rsp_cb_check_finish_pve_level_err", this.check_finish_pve_level_err.bind(this));
     }
-    public start_quest_ready_rsp(inArray:any[]){
+    public start_quest_shop_ready_rsp(inArray:any[]){
         let uuid = inArray[0];
-        let _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b:any[] = [];
-        let _array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9:any[] = [];        for(let v_b8b9e66f_efd2_571e_966f_1eef7598c1d5 of inArray[1]){
+        let _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd:any[] = [];
+        _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.push(common.protcol_to_UserBattleData(inArray[1]));
+        _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.push(common.protcol_to_ShopData(inArray[2]));
+        let _array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9:any[] = [];        for(let v_b8b9e66f_efd2_571e_966f_1eef7598c1d5 of inArray[3]){
             _array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9.push(v_b8b9e66f_efd2_571e_966f_1eef7598c1d5);
         }
-        _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b.push(_array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9);
-        var rsp = this.try_get_and_del_start_quest_ready_cb(uuid);
-        if (rsp && rsp.event_start_quest_ready_handle_cb) {
-            rsp.event_start_quest_ready_handle_cb.apply(null, _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b);
+        _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.push(_array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9);
+        var rsp = this.try_get_and_del_start_quest_shop_ready_cb(uuid);
+        if (rsp && rsp.event_start_quest_shop_ready_handle_cb) {
+            rsp.event_start_quest_shop_ready_handle_cb.apply(null, _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd);
         }
     }
 
-    public start_quest_ready_err(inArray:any[]){
+    public start_quest_shop_ready_err(inArray:any[]){
         let uuid = inArray[0];
-        let _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b:any[] = [];
-        _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b.push(inArray[1]);
-        var rsp = this.try_get_and_del_start_quest_ready_cb(uuid);
-        if (rsp && rsp.event_start_quest_ready_handle_err) {
-            rsp.event_start_quest_ready_handle_err.apply(null, _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b);
+        let _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd:any[] = [];
+        _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd.push(inArray[1]);
+        var rsp = this.try_get_and_del_start_quest_shop_ready_cb(uuid);
+        if (rsp && rsp.event_start_quest_shop_ready_handle_err) {
+            rsp.event_start_quest_shop_ready_handle_err.apply(null, _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd);
         }
     }
 
-    public start_quest_ready_timeout(cb_uuid : number){
-        let rsp = this.try_get_and_del_start_quest_ready_cb(cb_uuid);
+    public start_quest_shop_ready_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_start_quest_shop_ready_cb(cb_uuid);
         if (rsp){
-            if (rsp.event_start_quest_ready_handle_timeout) {
-                rsp.event_start_quest_ready_handle_timeout.apply(null);
+            if (rsp.event_start_quest_shop_ready_handle_timeout) {
+                rsp.event_start_quest_shop_ready_handle_timeout.apply(null);
             }
         }
     }
 
-    private try_get_and_del_start_quest_ready_cb(uuid : number){
-        var rsp = this.map_start_quest_ready.get(uuid);
-        this.map_start_quest_ready.delete(uuid);
+    private try_get_and_del_start_quest_shop_ready_cb(uuid : number){
+        var rsp = this.map_start_quest_shop_ready.get(uuid);
+        this.map_start_quest_shop_ready.delete(uuid);
         return rsp;
     }
 
-    public start_quest_shop_rsp(inArray:any[]){
+    public select_quest_event_rsp(inArray:any[]){
         let uuid = inArray[0];
-        let _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594:any[] = [];
-        _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.push(common.protcol_to_UserBattleData(inArray[1]));
-        _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.push(common.protcol_to_ShopData(inArray[2]));
-        var rsp = this.try_get_and_del_start_quest_shop_cb(uuid);
-        if (rsp && rsp.event_start_quest_shop_handle_cb) {
-            rsp.event_start_quest_shop_handle_cb.apply(null, _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594);
+        let _argv_26847650_8c7f_37ec_9669_f20286b7035a:any[] = [];
+        _argv_26847650_8c7f_37ec_9669_f20286b7035a.push(common.protcol_to_UserBattleData(inArray[1]));
+        _argv_26847650_8c7f_37ec_9669_f20286b7035a.push(common.protcol_to_ShopData(inArray[2]));
+        var rsp = this.try_get_and_del_select_quest_event_cb(uuid);
+        if (rsp && rsp.event_select_quest_event_handle_cb) {
+            rsp.event_select_quest_event_handle_cb.apply(null, _argv_26847650_8c7f_37ec_9669_f20286b7035a);
         }
     }
 
-    public start_quest_shop_err(inArray:any[]){
+    public select_quest_event_err(inArray:any[]){
         let uuid = inArray[0];
-        let _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594:any[] = [];
-        _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.push(inArray[1]);
-        var rsp = this.try_get_and_del_start_quest_shop_cb(uuid);
-        if (rsp && rsp.event_start_quest_shop_handle_err) {
-            rsp.event_start_quest_shop_handle_err.apply(null, _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594);
+        let _argv_26847650_8c7f_37ec_9669_f20286b7035a:any[] = [];
+        _argv_26847650_8c7f_37ec_9669_f20286b7035a.push(inArray[1]);
+        var rsp = this.try_get_and_del_select_quest_event_cb(uuid);
+        if (rsp && rsp.event_select_quest_event_handle_err) {
+            rsp.event_select_quest_event_handle_err.apply(null, _argv_26847650_8c7f_37ec_9669_f20286b7035a);
         }
     }
 
-    public start_quest_shop_timeout(cb_uuid : number){
-        let rsp = this.try_get_and_del_start_quest_shop_cb(cb_uuid);
+    public select_quest_event_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_select_quest_event_cb(cb_uuid);
         if (rsp){
-            if (rsp.event_start_quest_shop_handle_timeout) {
-                rsp.event_start_quest_shop_handle_timeout.apply(null);
+            if (rsp.event_select_quest_event_handle_timeout) {
+                rsp.event_select_quest_event_handle_timeout.apply(null);
             }
         }
     }
 
-    private try_get_and_del_start_quest_shop_cb(uuid : number){
-        var rsp = this.map_start_quest_shop.get(uuid);
-        this.map_start_quest_shop.delete(uuid);
+    private try_get_and_del_select_quest_event_cb(uuid : number){
+        var rsp = this.map_select_quest_event.get(uuid);
+        this.map_select_quest_event.delete(uuid);
         return rsp;
     }
 
@@ -1453,29 +1455,29 @@ export class player_quest_hubproxy
         this._client_handle = client_handle_;
     }
 
-    public start_quest_ready(){
-        let uuid_4faab574_3520_56a4_ab9e_8c1e9b23fa02 = Math.round(this.uuid_9d8491d3_2061_3c89_a7c5_ff8692e778c5++);
+    public start_quest_shop_ready(){
+        let uuid_62a864a6_f1ca_5093_b4e0_f4af944ae864 = Math.round(this.uuid_9d8491d3_2061_3c89_a7c5_ff8692e778c5++);
 
-        let _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b:any[] = [uuid_4faab574_3520_56a4_ab9e_8c1e9b23fa02];
-        this._client_handle.call_hub(this.hub_name_9d8491d3_2061_3c89_a7c5_ff8692e778c5, "player_quest_start_quest_ready", _argv_fdbc8fd7_e589_3423_b79a_8dc3cdc89d1b);
-        let cb_start_quest_ready_obj = new player_quest_start_quest_ready_cb(uuid_4faab574_3520_56a4_ab9e_8c1e9b23fa02, rsp_cb_player_quest_handle);
+        let _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd:any[] = [uuid_62a864a6_f1ca_5093_b4e0_f4af944ae864];
+        this._client_handle.call_hub(this.hub_name_9d8491d3_2061_3c89_a7c5_ff8692e778c5, "player_quest_start_quest_shop_ready", _argv_9bc7ea11_a152_3fb5_89af_a66808b2c9cd);
+        let cb_start_quest_shop_ready_obj = new player_quest_start_quest_shop_ready_cb(uuid_62a864a6_f1ca_5093_b4e0_f4af944ae864, rsp_cb_player_quest_handle);
         if (rsp_cb_player_quest_handle){
-            rsp_cb_player_quest_handle.map_start_quest_ready.set(uuid_4faab574_3520_56a4_ab9e_8c1e9b23fa02, cb_start_quest_ready_obj);
+            rsp_cb_player_quest_handle.map_start_quest_shop_ready.set(uuid_62a864a6_f1ca_5093_b4e0_f4af944ae864, cb_start_quest_shop_ready_obj);
         }
-        return cb_start_quest_ready_obj;
+        return cb_start_quest_shop_ready_obj;
     }
 
-    public start_quest_shop(eventID:number){
-        let uuid_dfe82999_8d37_588f_8590_c22ea36588c2 = Math.round(this.uuid_9d8491d3_2061_3c89_a7c5_ff8692e778c5++);
+    public select_quest_event(eventID:number){
+        let uuid_ba919d00_e9bf_5938_9ff3_de4aa0132a04 = Math.round(this.uuid_9d8491d3_2061_3c89_a7c5_ff8692e778c5++);
 
-        let _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594:any[] = [uuid_dfe82999_8d37_588f_8590_c22ea36588c2];
-        _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594.push(eventID);
-        this._client_handle.call_hub(this.hub_name_9d8491d3_2061_3c89_a7c5_ff8692e778c5, "player_quest_start_quest_shop", _argv_1189f0f2_e919_3cdb_a92f_0e4ae9ee6594);
-        let cb_start_quest_shop_obj = new player_quest_start_quest_shop_cb(uuid_dfe82999_8d37_588f_8590_c22ea36588c2, rsp_cb_player_quest_handle);
+        let _argv_26847650_8c7f_37ec_9669_f20286b7035a:any[] = [uuid_ba919d00_e9bf_5938_9ff3_de4aa0132a04];
+        _argv_26847650_8c7f_37ec_9669_f20286b7035a.push(eventID);
+        this._client_handle.call_hub(this.hub_name_9d8491d3_2061_3c89_a7c5_ff8692e778c5, "player_quest_select_quest_event", _argv_26847650_8c7f_37ec_9669_f20286b7035a);
+        let cb_select_quest_event_obj = new player_quest_select_quest_event_cb(uuid_ba919d00_e9bf_5938_9ff3_de4aa0132a04, rsp_cb_player_quest_handle);
         if (rsp_cb_player_quest_handle){
-            rsp_cb_player_quest_handle.map_start_quest_shop.set(uuid_dfe82999_8d37_588f_8590_c22ea36588c2, cb_start_quest_shop_obj);
+            rsp_cb_player_quest_handle.map_select_quest_event.set(uuid_ba919d00_e9bf_5938_9ff3_de4aa0132a04, cb_select_quest_event_obj);
         }
-        return cb_start_quest_shop_obj;
+        return cb_select_quest_event_obj;
     }
 
     public get_quest_shop_data(){

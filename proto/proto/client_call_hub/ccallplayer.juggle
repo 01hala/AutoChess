@@ -39,8 +39,8 @@ enum em_quest_state {
 }
 
 module player_quest {
-	start_quest_ready req() rsp(int32[] events) err(int32 err);
-	start_quest_shop req(int32 eventID) rsp(UserBattleData self, ShopData shop_info) err(int32 err);
+	start_quest_shop_ready req() rsp(UserBattleData self, ShopData shop_info, int32[] events) err(int32 err);
+	select_quest_event req(int32 eventID) rsp(UserBattleData self, ShopData shop_info) err(int32 err);
 	get_quest_shop_data req() rsp(UserBattleData self, ShopData shop_info) err(int32 err);
 	start_quest_battle req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
     confirm_quest_victory req(BattleVictory is_victory) rsp(em_quest_state state) err();
