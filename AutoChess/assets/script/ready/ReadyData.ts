@@ -196,15 +196,7 @@ export class ReadyData
             this.shopRoles=data.SaleRoleList;
             this.props=data.SalePropList;
         }
-    }
-
-    public async Refresh()
-    {
-        if(enmus.GameMode.PVP == this.gameMode)
-        {
-            await singleton.netSingleton.game.refresh();
-        }
-    }
+    } 
 
     public async StartBattle()
     {
@@ -219,13 +211,24 @@ export class ReadyData
         console.log(`shop_index:${shop_index}, index:${index}, role_index:${role_index}`);
         if(enmus.GameMode.PVP == this.gameMode)
         {
-            await singleton.netSingleton.game.buy(shop_index,index,role_index);
+            await singleton.netSingleton.game.match_buy(shop_index,index,role_index);
+        }
+        if(enmus.GameMode.PVE == this.gameMode)
+        {
+            await singleton.netSingleton.game.quest_buy(shop_index,index,role_index);
         }
     }
 
     public async Sale(role_index:number)
     {
-        await singleton.netSingleton.game.sale_role(role_index);
+        if(enmus.GameMode.PVP == this.gameMode)
+        {
+            await singleton.netSingleton.game.match_sale_role(role_index);
+        }
+        if (enmus.GameMode.PVE == this.gameMode)
+        {
+            await singleton.netSingleton.game.quest_sale_role(role_index);
+        }
 
         // let ev = new skill.Event();
         // ev.type=EventType.Sold;
@@ -233,14 +236,40 @@ export class ReadyData
         // ev.value.push(this.coin);
     }
 
+    public async Refresh()
+    {
+        if(enmus.GameMode.PVP == this.gameMode)
+        {
+            await singleton.netSingleton.game.match_refresh();
+        }
+        if(enmus.GameMode.PVE == this.gameMode)
+        {
+            await singleton.netSingleton.game.quest_refresh();
+        }
+    }
+
     public async Move(index_befor:number,index_after:number)
     {
-        await singleton.netSingleton.game.move(index_befor,index_after);
+        if(enmus.GameMode.PVP == this.gameMode)
+        {
+            await singleton.netSingleton.game.match_move(index_befor,index_after);
+        }
+        if (enmus.GameMode.PVE == this.gameMode)
+        {
+            await singleton.netSingleton.game.quest_move(index_befor,index_after);
+        }
     }
 
     public async Freeze(shop_index: common.ShopIndex,index:number,_isFreeze:boolean)
     {
-        await singleton.netSingleton.game.freeze(shop_index,index, _isFreeze);
+        if(enmus.GameMode.PVP == this.gameMode)
+        {
+            await singleton.netSingleton.game.match_freeze(shop_index,index, _isFreeze);
+        }
+        if (enmus.GameMode.PVE == this.gameMode)
+        {
+            await singleton.netSingleton.game.quest_freeze(shop_index,index, _isFreeze);
+        }
     }
 
     public ChooseTag(_tag:number)

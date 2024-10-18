@@ -39,11 +39,11 @@ export class netGame {
             this.cb_battle_victory.call(null, mod, is_victory);
         }
         this.match_c.cb_battle_plan_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info:common.Fetters[]) => {
-            this.cb_start_battle.call(null, battle_info, shop_info, fetters_info);
+            this.cb_start_match_battle_ready.call(null, battle_info, shop_info, fetters_info);
         }
         this.match_c.cb_refresh = (battle_info:common.UserBattleData, shop_info:common.ShopData) => {
-            this.cb_battle_info.call(null, battle_info);
-            this.cb_shop_info.call(null, shop_info);
+            this.cb_match_battle_info.call(null, battle_info);
+            this.cb_match_shop_info.call(null, shop_info);
         }
         this.match_c.cb_shop_skill_effect = (effect:match_c.ShopSkillEffect) => {
             if (this.cb_shop_skill_effect) {
@@ -115,15 +115,15 @@ export class netGame {
 
     public match_name:string = "";
     //准备阶段
-    public cb_start_battle : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
-    public start_battle(mod:common.BattleMod)
+    public cb_start_match_battle_ready : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
+    public start_match_battle_ready(mod:common.BattleMod)
     {
         return new Promise((relolve, reject) =>
         {
             this.c_player_battle__caller.get_hub(netSingleton.player.player_name).start_battle(mod).callBack((match_name, battle_info, shop_info) =>
             {
                 this.match_name = match_name;
-                this.cb_start_battle(battle_info, shop_info, null);
+                this.cb_start_match_battle_ready(battle_info, shop_info, null);
                 relolve(null);
             }, (err) =>
             {
@@ -137,120 +137,17 @@ export class netGame {
         });
     }
 
-    public get_battle_data() {
+    public get_match_battle_data() {
         return netSingleton.battleshop.c_match.get_hub(this.match_name).get_battle_data();
     }
-
-    public freeze(shop_index: common.ShopIndex, index: number, is_freeze: boolean)
-    {
-        return new Promise((resolve, reject) =>
-        {
-            netSingleton.battleshop.c_match.get_hub(this.match_name).freeze(shop_index, index, is_freeze).callBack((data: common.ShopData) =>
-            {
-                this.cb_shop_info(data);
-                resolve(null);
-            }, (err) =>
-            {
-                console.log("freeze err:", err);
-                reject("error");
-            }).timeout(3000, () =>
-            {
-                console.log("freeze timeout!");
-                reject("timeout");
-            })
-        });
-    }
-
-    public cb_battle_info: (battle_info:common.UserBattleData) => void;
-    public cb_shop_info: (shop_info:common.ShopData) => void;
-    public buy(shop_index: common.ShopIndex, index: number, role_index: number)
-    {
-        return new Promise((resolve, reject) =>
-        {
-            netSingleton.battleshop.buy(this.match_name, shop_index, index, role_index).callBack((battle_info, shop_info) =>
-            {
-                this.cb_battle_info(battle_info);
-                this.cb_shop_info(shop_info);
-                resolve(null);
-            }, (err) =>
-            {
-                console.log("buy err:", err);
-                reject("error");
-            }).timeout(3000, () =>
-            {
-                console.log("buy timeout!");
-                reject("timeout");
-            });
-        });
-    }
-
-    public move(role_index1: number, role_index2: number)
-    {
-        return new Promise((resolve, reject) =>
-        {
-            netSingleton.battleshop.move(this.match_name, role_index1, role_index2).callBack((battle_info) =>
-            {
-                this.cb_battle_info(battle_info);
-                resolve(null);
-            }, (err) =>
-            {
-                console.log("move err:", err);
-                reject("error");
-            }).timeout(3000, () =>
-            {
-                console.log("move timeout!");
-                reject("timeout");
-            });
-        });
-    }
-
-    public sale_role(index: number)
-    {
-        return new Promise((resolve, reject) =>
-        {
-            netSingleton.battleshop.sale_role(this.match_name, index).callBack((battle_info) =>
-                {
-                    this.cb_battle_info(battle_info);
-                    resolve(null);
-                }, (err) =>
-                {
-                    console.log("sale_role err:", err);
-                    reject("error");
-                }).timeout(3000, () =>
-                {
-                    console.log("sale_role timeout!");
-                    reject("timeout");
-                });
-        });
-    }
     
-    public refresh()
-    {
-        return new Promise((resolve, reject) =>
-        {
-            netSingleton.battleshop.refresh(this.match_name).callBack((shop_info) =>
-            {
-                this.cb_shop_info.call(null, shop_info);
-                resolve(null);
-            }, (err) =>
-            {
-                console.log("refresh err:", err);
-                reject("error");
-            }).timeout(3000, () =>
-            {
-                console.log("refresh timeout!");
-                reject("timeout");
-            })
-        });
-    }
-    
-    public cb_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
+    public cb_start_match_battle: (self:common.UserBattleData, target:common.UserBattleData) => void;
     //战斗阶段(测试用)
     public battle_test()
     {
         netSingleton.battleshop.c_match.get_hub(this.match_name).start_round().callBack((self, target) =>
         {
-            this.cb_battle.call(null, self, target);
+            this.cb_start_match_battle.call(null, self, target);
         }, (err) =>
         {
             console.log("battle err:", err);
@@ -260,7 +157,7 @@ export class netGame {
         });
     }
     //战斗阶段
-    public start_round()
+    public start_match_battle()
     {
         return new Promise((relolve, reject) =>
         {
@@ -268,7 +165,7 @@ export class netGame {
             {
                 netSingleton.battleshop.c_match.get_hub(this.match_name).start_round1().callBack((self, target) =>
                 {
-                    this.cb_battle.call(null, self, target);
+                    this.cb_start_match_battle.call(null, self, target);
                     relolve(null);
                 }, (err) =>
                 {
@@ -292,7 +189,110 @@ export class netGame {
         });
     }
 
-    public confirm_round_victory(is_victory:common.BattleVictory) 
+    public cb_match_battle_info: (battle_info:common.UserBattleData) => void;
+    public cb_match_shop_info: (shop_info:common.ShopData) => void;
+    public match_buy(shop_index: common.ShopIndex, index: number, role_index: number)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.buy(this.match_name, shop_index, index, role_index).callBack((battle_info, shop_info) =>
+            {
+                this.cb_match_battle_info(battle_info);
+                this.cb_match_shop_info(shop_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("buy err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("buy timeout!");
+                reject("timeout");
+            });
+        });
+    }
+
+    public match_move(role_index1: number, role_index2: number)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.move(this.match_name, role_index1, role_index2).callBack((battle_info) =>
+            {
+                this.cb_match_battle_info(battle_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("move err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("move timeout!");
+                reject("timeout");
+            });
+        });
+    }
+
+    public match_sale_role(index: number)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.sale_role(this.match_name, index).callBack((battle_info) =>
+                {
+                    this.cb_match_battle_info(battle_info);
+                    resolve(null);
+                }, (err) =>
+                {
+                    console.log("sale_role err:", err);
+                    reject("error");
+                }).timeout(3000, () =>
+                {
+                    console.log("sale_role timeout!");
+                    reject("timeout");
+                });
+        });
+    }
+    
+    public match_refresh()
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.refresh(this.match_name).callBack((shop_info) =>
+            {
+                this.cb_match_shop_info.call(null, shop_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("refresh err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("refresh timeout!");
+                reject("timeout");
+            })
+        });
+    }
+
+    public match_freeze(shop_index: common.ShopIndex, index: number, is_freeze: boolean)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.c_match.get_hub(this.match_name).freeze(shop_index, index, is_freeze).callBack((data: common.ShopData) =>
+            {
+                this.cb_match_shop_info(data);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("freeze err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("freeze timeout!");
+                reject("timeout");
+            })
+        });
+    }
+
+    public confirm_match_round_victory(is_victory:common.BattleVictory) 
     {
         netSingleton.battleshop.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(() =>
         {
@@ -362,15 +362,15 @@ export class netGame {
         this.c_player_battle__caller.get_hub(netSingleton.player.player_name).achievement_gold25();
     }
 
-    //开始pve准备阶段
-    public cb_start_quest_ready: (events:number[]) => void;
-    public start_quest_ready() 
+    //pve事件
+    public cb_get_quest_event: (events:number[]) => void;
+    public get_quest_event() 
     {
         return new Promise((resolve,reject)=>
         {
             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_ready().callBack((events)=>
             {
-                this.cb_start_quest_ready(events);
+                this.cb_get_quest_event(events);
                 resolve(null);
             },(err)=>
             {
@@ -379,6 +379,51 @@ export class netGame {
             }).timeout(3000,()=>
             {
                 console.log("start_quest_ready timeout");
+                reject("timeout");
+            });
+        });
+    }
+
+     //获取当前状态
+     public cb_get_quest_shop_data:(self:common.UserBattleData , shop_info:common.ShopData)=>void;
+     public get_quest_shop_data() 
+     {
+         return new Promise((resolve,reject)=>
+         {
+             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((self,shop_info)=>
+             {
+                 this.cb_get_quest_shop_data(self,shop_info);
+                 resolve(null);
+             },(err)=>
+             {
+                 console.log("get_quest_shop_data err:", err);
+                 reject("error");
+             }).timeout(3000,()=>
+             {
+                 console.log("get_quest_shop_data timeout");
+                 reject("timeout");
+             });
+         });
+     }
+ 
+
+    //pve准备阶段
+    public cb_start_quest_battle_ready : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
+    public start_quest_ready(eventID: number) 
+    {
+        return new Promise((resolve, reject) =>
+        {
+            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop(eventID).callBack((self, shop_info) =>
+            {
+                this.cb_get_quest_shop_data(self, shop_info);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("start_quest_shop err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("start_quest_shop timeout");
                 reject("timeout");
             });
         });
@@ -403,51 +448,6 @@ export class netGame {
                     console.log("start_quest_battle timeout");
                     reject("timeout");
                 });
-        });
-    }
-
-    
-    //获取当前状态
-    public cb_get_quest_shop_data:(self:common.UserBattleData , shop_info:common.ShopData)=>void;
-    public get_quest_shop_data() 
-    {
-        return new Promise((resolve,reject)=>
-        {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((self,shop_info)=>
-            {
-                this.cb_get_quest_shop_data(self,shop_info);
-                resolve(null);
-            },(err)=>
-            {
-                console.log("get_quest_shop_data err:", err);
-                reject("error");
-            }).timeout(3000,()=>
-            {
-                console.log("get_quest_shop_data timeout");
-                reject("timeout");
-            });
-        });
-    }
-
-    
-    //选择随机事件
-    public start_quest_shop(eventID:number) 
-    {
-        return new Promise((resolve,reject)=>
-        {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop(eventID).callBack((self,shop_info)=>
-            {
-                this.cb_get_quest_shop_data(self,shop_info);
-                resolve(null);
-            },(err)=>
-            {
-                console.log("start_quest_shop err:", err);
-                reject("error");
-            }).timeout(3000,()=>
-            {
-                console.log("start_quest_shop timeout");
-                reject("timeout");
-            });
         });
     }
 
@@ -534,6 +534,26 @@ export class netGame {
             })
         });
     }
+
+    public quest_freeze(shop_index: common.ShopIndex, index: number, is_freeze: boolean)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            netSingleton.battleshop.c_match.get_hub(netSingleton.player.player_name).freeze(shop_index, index, is_freeze).callBack((data: common.ShopData) =>
+            {
+                this.cb_quest_shop_info(data);
+                resolve(null);
+            }, (err) =>
+            {
+                console.log("freeze err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("freeze timeout!");
+                reject("timeout");
+            })
+        });
+    }
     //向服务器发送对战信息
     public confirm_quest_victory(is_victory:common.BattleVictory) 
     {
@@ -562,7 +582,7 @@ export class netGame {
         {
             netSingleton.battleshop.c_match.get_hub(this.match_name).end_round().callBack(()=>
             {
-                this.start_round();
+                this.start_match_battle();
                 resolve("finish");
             },(err)=>
             {   

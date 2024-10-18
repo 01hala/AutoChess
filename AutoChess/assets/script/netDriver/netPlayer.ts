@@ -25,7 +25,7 @@ export class netPlayer {
    
 
     public cb_archive_sync : () => void;
-    public cb_battle_victory : () => void;
+    public cb_match_settlement : () => void;
     public cb_achievement_complete:(achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement)=>void;
     public cb_rank_reward:(reward:common.RankReward , timeDifference:number)=>void;
     private player_client_module : player_client.player_client_module;
@@ -46,7 +46,7 @@ export class netPlayer {
             }
         }
         this.player_client_module.cb_battle_victory = () => {
-            this.cb_battle_victory.call(null);
+            this.cb_match_settlement.call(null);
         }
 
         this.player_client_module.cb_achievement_complete = (achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement )=>

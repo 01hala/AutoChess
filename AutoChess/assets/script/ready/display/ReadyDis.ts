@@ -407,7 +407,7 @@ export class ReadyDis
     {
         console.log("RegPvpCallBack begin!");
         //更新玩家游戏信息
-        singleton.netSingleton.game.cb_battle_info = (battle_info: common.UserBattleData) =>
+        singleton.netSingleton.game.cb_match_battle_info = (battle_info: common.UserBattleData) =>
         {
             this.readyData.SetCoins(battle_info.coin);
             console.log(`roleList: ${battle_info.RoleList}`);
@@ -418,7 +418,7 @@ export class ReadyDis
             this.UpdatePlayerInfo(battle_info);
         };
         //更新商店信息
-        singleton.netSingleton.game.cb_shop_info = (shop_info: common.ShopData) =>
+        singleton.netSingleton.game.cb_match_shop_info = (shop_info: common.ShopData) =>
         {
             console.log("shop_info:", shop_info);
             this.readyData.SetShopData(shop_info);
@@ -438,17 +438,19 @@ export class ReadyDis
         //更新当前状态
         singleton.netSingleton.game.cb_get_quest_shop_data = async (_battle_info,_shop_info)=>
         {
-            this.readyData.SetCoins(_battle_info.coin);
-            this.readyData.SetRoles(_battle_info.RoleList);
-            this.readyData.SetShopData(_shop_info);
-            await this.roleArea.ResetTeam(_battle_info.RoleList);
-            this.UpdatePlayerInfo(_battle_info);
+            // this.readyData.SetCoins(_battle_info.coin);
+            // this.readyData.SetRoles(_battle_info.RoleList);
+            // this.readyData.SetShopData(_shop_info);
+            // await this.roleArea.ResetTeam(_battle_info.RoleList);
+            // this.UpdatePlayerInfo(_battle_info);
         }
         //更新信息
         singleton.netSingleton.game.cb_quest_battle_info=(_battle_info)=>
         {
             this.readyData.SetCoins(_battle_info.coin);
             this.readyData.SetRoles(_battle_info.RoleList);
+            this.readyData.SetHeath(_battle_info.faild);
+            this.readyData.SetStage(_battle_info.stage);
             this.UpdatePlayerInfo(_battle_info);
         };
         //更新商店信息

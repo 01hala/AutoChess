@@ -205,7 +205,7 @@ export class login extends Component {
                     singleton.netSingleton.game.match_name = match_name;
                     if (singleton.netSingleton.ready)
                     {
-                        singleton.netSingleton.game.get_battle_data().callBack((battle_info, shop_info, fetters_info) =>
+                        singleton.netSingleton.game.get_match_battle_data().callBack((battle_info, shop_info, fetters_info) =>
                         {
                             singleton.netSingleton.ready.Restore(battle_info);
                         }, () =>
@@ -269,82 +269,19 @@ export class login extends Component {
     private RegGameCallBack()
     {
         //pvp准备阶段
-        singleton.netSingleton.game.cb_start_battle = async (battle_info: common.UserBattleData, shop_info: common.ShopData, fetters_info: common.Fetters[]) => 
+        singleton.netSingleton.game.cb_start_match_battle_ready = (battle_info: common.UserBattleData, shop_info: common.ShopData, fetters_info: common.Fetters[]) => 
         {
-            console.log("cb_start_battle start battle!");
-
-            this._progress = 0.1;
-            this._setProgress = this._loading.load(this.bk.node);
-
-            this.interval = setInterval(() =>
-            {
-                this._progress += 0.40;
-                this._setProgress(this._progress);
-            }, 800);
-            singleton.netSingleton.mainInterface.destory();
-            console.log("cb_start_battle start singleton.netSingleton.ready!");
-            if (null == singleton.netSingleton.ready)
-            {
-                console.log("cb_start_battle start null == singleton.netSingleton.ready!");
-                if (singleton.netSingleton.battle)
-                {
-                    singleton.netSingleton.battle.destory();
-                    singleton.netSingleton.battle = null;
-                }
-
-                //新的一局游戏
-                let _readyData = new ReadyData(battle_info, shop_info, enmus.GameMode.PVP, fetters_info);
-                singleton.netSingleton.ready = new ReadyDis(_readyData);
-                await singleton.netSingleton.ready.start(this.bk.node, battle_info, async (event) =>
-                {
-                    console.log("Start Ready callback!");
-                    await sleep(2000);
-                    this._setProgress(1.0);
-                    this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
-                    await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
-                    event();
-                    console.log("Start Ready callback event!");
-                    this._loading.done();
-                    console.log("Start Ready sucess!");
-                    clearInterval(this.interval);
-                });
-            }
+            this.GameStart(enmus.GameMode.PVP, battle_info, shop_info, fetters_info);
         };
 
         //pvp战斗阶段
-        singleton.netSingleton.game.cb_battle = async (self: common.UserBattleData, target: common.UserBattleData) =>
+        singleton.netSingleton.game.cb_start_match_battle = (self: common.UserBattleData, target: common.UserBattleData) =>
         {
-            console.log("cb_battle start round!");
-
-            this._progress = 0.1;
-            this._setProgress = this._loading.load(this.bk.node);
-            this.interval = setInterval(() =>
-            {
-                this._progress += 0.30;
-                this._setProgress(this._progress);
-            }, 800);
-
-            singleton.netSingleton.ready.destory();
-            singleton.netSingleton.ready = null;
-
-            let _battle = new Battle(self, target);
-            singleton.netSingleton.battle = new BattleDis(_battle);
-            await singleton.netSingleton.battle.Start(this.bk.node, async (event) =>
-            {
-                await sleep(3000);
-                this._setProgress(1.0);
-                this._loading.done();
-                this.bk.node.addChild(singleton.netSingleton.battle.panelNode);
-                singleton.netSingleton.battle.battleCentre.StartBattle();
-                event();
-
-                console.log("start_round sucess!");
-                clearInterval(this.interval);
-            });
+            this.BattleStart(self,target,enmus.GameMode.PVP);
         };
 
-        //pvp回合结算
-        singleton.netSingleton.player.cb_battle_victory=()=>{};
+        //pvp结算
+        singleton.netSingleton.player.cb_match_settlement=()=>{};
 
         //pvp游戏结束
         singleton.netSingleton.game.cb_battle_victory = async (mod:common.BattleMod, is_victory: boolean) =>
@@ -365,20 +302,94 @@ export class login extends Component {
             singleton.netSingleton.battle.destory();
             singleton.netSingleton.battle = null;
 
-            singleton.netSingleton.game.start_round();
+            singleton.netSingleton.game.start_match_battle();
         }
 
         //pve准备阶段
-        singleton.netSingleton.game.cb_start_quest_ready = (_events) =>
+        singleton.netSingleton.game.cb_start_quest_battle_ready = (battle_info,shop_info,fetters_info) =>
         {
-
+            this.GameStart(enmus.GameMode.PVE,battle_info,shop_info,fetters_info);
         };
 
         //pve战斗阶段
         singleton.netSingleton.game.cb_start_quest_battle = (_self, _target) =>
         {
-
+            this.BattleStart(_self,_target ,enmus.GameMode.PVE);
         };
+    }
+
+    private async GameStart(_gamemode:enmus.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[])
+    {
+        console.log("start game!");
+        this._progress = 0.1;
+        this._setProgress = this._loading.load(this.bk.node);
+
+        this.interval = setInterval(() =>
+        {
+            this._progress += 0.40;
+            this._setProgress(this._progress);
+        }, 800);
+        singleton.netSingleton.mainInterface.destory();
+        console.log("start singleton.netSingleton.ready!");
+        if (null == singleton.netSingleton.ready)
+        {
+            if (singleton.netSingleton.battle)
+            {
+                singleton.netSingleton.battle.destory();
+                singleton.netSingleton.battle = null;
+            }
+            console.log("null == singleton.netSingleton.ready!");
+            //新的一局游戏
+            let _readyData = new ReadyData(_battle_info, _shop_info, _gamemode, _fetters_info);
+            singleton.netSingleton.ready = new ReadyDis(_readyData);
+            await singleton.netSingleton.ready.start(this.bk.node, _battle_info, async (event) =>
+            {
+                console.log("Start Ready callback!");
+                await sleep(2000);
+                this._setProgress(1.0);
+                this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
+                await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
+                event();
+                console.log("Start Ready sucess!");
+                this._loading.done();
+                clearInterval(this.interval);
+                if(enmus.GameMode.PVE == _gamemode)
+                {
+                    singleton.netSingleton.game.get_quest_event();
+                }
+            });
+        }
+    }
+
+    private async BattleStart(_self: common.UserBattleData, _target: common.UserBattleData , _gamemode:enmus.GameMode)
+    {
+        console.log("cb_battle start round!");
+
+        this._progress = 0.1;
+        this._setProgress = this._loading.load(this.bk.node);
+        this.interval = setInterval(() =>
+        {
+            this._progress += 0.30;
+            this._setProgress(this._progress);
+        }, 800);
+
+        singleton.netSingleton.ready.destory();
+        singleton.netSingleton.ready = null;
+
+        let _battle = new Battle(_self, _target , _gamemode);
+        singleton.netSingleton.battle = new BattleDis(_battle);
+        await singleton.netSingleton.battle.Start(this.bk.node, async (event) =>
+        {
+            await sleep(3000);
+            this._setProgress(1.0);
+            this._loading.done();
+            this.bk.node.addChild(singleton.netSingleton.battle.panelNode);
+            singleton.netSingleton.battle.battleCentre.StartBattle();
+            event();
+
+            console.log("start_round sucess!");
+            clearInterval(this.interval);
+        });
     }
     
     public async BackMainInterface()

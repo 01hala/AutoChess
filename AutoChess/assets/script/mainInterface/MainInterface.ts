@@ -65,7 +65,7 @@ export class MainInterface
     private taskAchieveBtn:Node;//任务按钮
     private rankListBtn:Node;//排行榜按钮
     private cardEditor:Node;//卡组编辑按钮
-    private challengeBtn:Node;//挑战模式按钮（pve）
+    private ventureBtn:Node;//挑战模式按钮（pve）
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -125,7 +125,7 @@ export class MainInterface
             let StorePanel=assets[1] as Prefab;
             let CardLib=assets[2] as Prefab;
             let CardEditor=assets [3] as Prefab;
-            let challenge=assets [4] as Prefab;
+            let venture=assets [4] as Prefab;
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
             //商店界面
@@ -141,7 +141,7 @@ export class MainInterface
             this.cardEditorPanel.setParent(_father);
             this.cardEditorPanel.active=false;
             //挑战模式
-            this.venturePanel=instantiate(challenge);
+            this.venturePanel=instantiate(venture);
             this.venturePanel.setParent(_father);
             this.venturePanel.active=false;
             //各区域面板
@@ -153,7 +153,7 @@ export class MainInterface
             this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");//娱乐
             this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");//牌库
             this.rankListBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/RankList/Rank_Btn");//排行
-            this.challengeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Challenge/Button");//挑战模式
+            this.ventureBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Venture/Venture_Btn");//挑战模式
             //下拉按钮列表
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
             this.cardEditor=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
@@ -331,7 +331,7 @@ export class MainInterface
 
             },this);
             //打开挑战模式界面
-            this.challengeBtn.on(Button.EventType.CLICK,()=>
+            this.ventureBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.venturePanel.active=true;

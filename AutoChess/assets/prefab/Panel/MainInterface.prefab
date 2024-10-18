@@ -6841,7 +6841,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Challenge",
+    "_name": "Venture",
     "_objFlags": 0,
     "_parent": {
       "__id__": 235
@@ -6900,7 +6900,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Button",
+    "_name": "Venture_Btn",
     "_objFlags": 0,
     "_parent": {
       "__id__": 302
