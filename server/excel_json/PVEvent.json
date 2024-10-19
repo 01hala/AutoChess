@@ -1,0 +1,72 @@
+{
+    "400001": {
+        "ID": 400001,
+        "type": 0,
+        "PropID": 0,
+        "RoleID": 330003,
+        "RoleAttack": 12,
+        "RoleHP": 12,
+        "RoleLevel": 0,
+        "RoleEquip": 3003
+    },
+    "400002": {
+        "ID": 400002,
+        "type": 0,
+        "PropID": 0,
+        "RoleID": 320018,
+        "RoleAttack": 6,
+        "RoleHP": 8,
+        "RoleLevel": 0,
+        "RoleEquip": 0
+    },
+    "400003": {
+        "ID": 400003,
+        "type": 0,
+        "PropID": 0,
+        "RoleID": 310019,
+        "RoleAttack": 4,
+        "RoleHP": 15,
+        "RoleLevel": 0,
+        "RoleEquip": 0
+    },
+    "400004": {
+        "ID": 400004,
+        "type": 0,
+        "PropID": 0,
+        "RoleID": 0,
+        "RoleAttack": 0,
+        "RoleHP": 0,
+        "RoleLevel": 0,
+        "RoleEquip": 0
+    },
+    "400005": {
+        "ID": 400005,
+        "type": 0,
+        "PropID": 0,
+        "RoleID": 0,
+        "RoleAttack": 0,
+        "RoleHP": 0,
+        "RoleLevel": 0,
+        "RoleEquip": 0
+    },
+    "400006": {
+        "ID": 400006,
+        "type": 0,
+        "PropID": 0,
+        "RoleID": 0,
+        "RoleAttack": 0,
+        "RoleHP": 0,
+        "RoleLevel": 0,
+        "RoleEquip": 0
+    },
+    "400007": {
+        "ID": 400007,
+        "type": 0,
+        "PropID": 0,
+        "RoleID": 0,
+        "RoleAttack": 0,
+        "RoleHP": 0,
+        "RoleLevel": 0,
+        "RoleEquip": 0
+    }
+}

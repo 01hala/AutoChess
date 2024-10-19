@@ -49,7 +49,7 @@ namespace Player
         public long PeakStrengthID = 0;
 
         public battle_shop_player BattleShopPlayer;
-        public PVEConfig PVECfg;
+        public PVELevelConfig PVELevelCfg;
         public int PVELevelIndex = 0;
 
         public static string Type()
@@ -348,7 +348,7 @@ namespace Player
 
         public bool CheckFinishPVELevel()
         {
-            if (config.Config.PVEConfigs.TryGetValue(info.quest, out _))
+            if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out _))
             {
                 return false;
             }
@@ -1127,7 +1127,7 @@ namespace Player
 
         public int GetStage()
         {
-            if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
             {
                 return cfg.Stage;
             }
@@ -1138,7 +1138,7 @@ namespace Player
         public void ClearPVEState()
         {
             BattleShopPlayer = null;
-            PVECfg = null;
+            PVELevelCfg = null;
             PVELevelIndex = 0;
         }
 
@@ -1156,7 +1156,7 @@ namespace Player
 
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(GetStage());
 
-            if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
             {
                 BattleShopPlayer.BattleData.coin = cfg.Gold + BattleShopPlayer.bankCpin;
                 BattleShopPlayer.bankCpin = 0;
@@ -1186,9 +1186,9 @@ namespace Player
         {
             BattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
 
-            if (config.Config.PVEConfigs.TryGetValue(info.quest, out var cfg))
+            if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
             {
-                PVECfg = cfg;
+                PVELevelCfg = cfg;
                 return Tuple.Create(true, cfg.EventID);
             }
 
@@ -1234,9 +1234,9 @@ namespace Player
         {
             var target = new UserBattleData();
 
-            if (config.Config.PVELevelConfigs.TryGetValue(PVECfg.Level[PVELevelIndex], out var cfg))
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
             {
-                foreach(var rInfo in cfg.Roles)
+                foreach(var rInfo in cfg.Enemys)
                 {
                     if (config.Config.RoleConfigs.TryGetValue(rInfo.RoleID, out RoleConfig rcfg))
                     {
@@ -1249,7 +1249,6 @@ namespace Player
                         r.Attack = rInfo.RoleAttack;
                         r.TempHP = 0;
                         r.TempAttack = 0;
-                        r.additionBuffer = rInfo.RoleBuff;
                         r.TempAdditionBuffer = new();
                         r.FettersSkillID = new Fetters()
                         {
