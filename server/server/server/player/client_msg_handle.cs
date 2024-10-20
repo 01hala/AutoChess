@@ -180,7 +180,7 @@ namespace Player
                     if (is_victory == BattleVictory.victory)
                     {
                         _data.Data.PVELevelIndex++;
-                        if (_data.Data.PVELevelIndex >= _data.Data.PVECfg.Level.Count)
+                        if (_data.Data.PVELevelIndex >= _data.Data.PVELevelCfg.Level.Count)
                         {
                             _data.Data.Info().quest++;
 
