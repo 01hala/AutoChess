@@ -306,9 +306,9 @@ export class login extends Component {
         }
 
         //pve准备阶段
-        singleton.netSingleton.game.cb_start_quest_battle_ready = (battle_info,shop_info,fetters_info) =>
+        singleton.netSingleton.game.cb_start_quest_battle_ready = (battle_info,shop_info,events,fetters_info) =>
         {
-            this.GameStart(enmus.GameMode.PVE,battle_info,shop_info,fetters_info);
+            this.GameStart(enmus.GameMode.PVE,battle_info,shop_info,fetters_info,events);
         };
 
         //pve战斗阶段
@@ -318,7 +318,7 @@ export class login extends Component {
         };
     }
 
-    private async GameStart(_gamemode:enmus.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[])
+    private async GameStart(_gamemode:enmus.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[],events?:number[])
     {
         console.log("start game!");
         this._progress = 0.1;
@@ -353,10 +353,6 @@ export class login extends Component {
                 console.log("Start Ready sucess!");
                 this._loading.done();
                 clearInterval(this.interval);
-                if(enmus.GameMode.PVE == _gamemode)
-                {
-                    singleton.netSingleton.game.get_quest_event();
-                }
             });
         }
     }

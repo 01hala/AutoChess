@@ -11,6 +11,8 @@ export class ChooseTag extends Component
     private tag_2:Node;
     private tag_3:Node;
 
+    private tags:number[]=[];
+
     protected onLoad(): void
     {
         this.board=this.node.getChildByPath("Board");
@@ -23,35 +25,42 @@ export class ChooseTag extends Component
     start() 
     {
         this.board.active=false;
+    }
 
+    Init()
+    {
         this.tag_1.on(Button.EventType.CLICK, () =>
         {
-            singleton.netSingleton.ready.readyData.ChooseTag(1);
+            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[1]);
             this.Exit();
         }, this);
         this.tag_2.on(Button.EventType.CLICK, () =>
         {
-            singleton.netSingleton.ready.readyData.ChooseTag(2);
+            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[2]);
             this.Exit();
         }, this);
         this.tag_3.on(Button.EventType.CLICK, () =>
         {
-            singleton.netSingleton.ready.readyData.ChooseTag(3);
+            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[3]);
             this.Exit();
         }, this);
     }
 
-    Open()
+    Open(_events:number[])
     {   
         this.board.active=true;
         this.board.getComponent(Animation).play("PanelAppear");
         
-        this.SetTags();
+        this.SetTags(_events);
+        this.Init();
     }
 
-    SetTags()
+    SetTags(_events:number[])
     {
-
+        for(let e of _events)
+        {
+            this.tags.push(e);
+        }
     }
 
     Exit()

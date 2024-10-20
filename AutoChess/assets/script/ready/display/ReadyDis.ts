@@ -164,6 +164,10 @@ export class ReadyDis
                 {
                     GameManager.Instance.guide.step++;
                 }
+                if(this.readyData.evnets && enmus.GameMode.PVE ==  this.readyData.gameMode)
+                {
+                    this.panelNode.dispatchEvent(new SendMessage('OpenChooseTag',true,{events:this.readyData.evnets}));
+                }
             });
             
         }
@@ -478,7 +482,7 @@ export class ReadyDis
         }
         else
         {
-            singleton.netSingleton.game.get_quest_shop_data();
+            //singleton.netSingleton.game.get_quest_shop_data();
         }
     }
 

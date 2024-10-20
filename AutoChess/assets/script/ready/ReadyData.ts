@@ -24,6 +24,8 @@ export class ReadyData
     public static roles:common.Role[];
     //游戏模式
     public gameMode:enmus.GameMode;
+    //pve事件
+    public evnets:number[];
 
     private heath:number;
     private stage:number;
@@ -34,7 +36,7 @@ export class ReadyData
 
     private coin:number=0;
 
-    public constructor(battle_info:common.UserBattleData, self:common.ShopData , gameMode:enmus.GameMode , fetters_info?:common.Fetters[]) 
+    public constructor(battle_info:common.UserBattleData, self:common.ShopData , gameMode:enmus.GameMode , fetters_info?:common.Fetters[] , events?:number[]) 
     {
         this.coin = battle_info.coin;
 
@@ -42,9 +44,15 @@ export class ReadyData
         this.stage=battle_info.stage;
         this.shopRoles=self.SaleRoleList;
         this.props=self.SalePropList;
-        this.fetters_info=fetters_info;
         this.gameMode=gameMode;
-
+        if(fetters_info)
+        {
+            this.fetters_info=fetters_info;
+        }
+        if(events)
+        {
+            this.evnets=events;
+        }
         //console.log("shopRoles:", this.shopRoles);
         //console.log("props:", this.props);
         //console.log("battle_info.RoleList:", battle_info.RoleList);

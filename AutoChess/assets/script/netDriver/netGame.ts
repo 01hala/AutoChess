@@ -362,27 +362,6 @@ export class netGame {
         this.c_player_battle__caller.get_hub(netSingleton.player.player_name).achievement_gold25();
     }
 
-    //pve事件
-    public cb_get_quest_event: (events:number[]) => void;
-    public get_quest_event() 
-    {
-        return new Promise((resolve,reject)=>
-        {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_ready().callBack((events)=>
-            {
-                this.cb_get_quest_event(events);
-                resolve(null);
-            },(err)=>
-            {
-                console.log("start_quest_ready err:", err);
-                reject("error");
-            }).timeout(3000,()=>
-            {
-                console.log("start_quest_ready timeout");
-                reject("timeout");
-            });
-        });
-    }
 
      //获取当前状态
      public cb_get_quest_shop_data:(self:common.UserBattleData , shop_info:common.ShopData)=>void;
@@ -408,15 +387,15 @@ export class netGame {
  
 
     //pve准备阶段
-    public cb_start_quest_battle_ready : (battle_info:common.UserBattleData, shop_info:common.ShopData, fetters_info?:common.Fetters[]) => void;
-    public start_quest_ready(eventID: number) 
+    public cb_start_quest_battle_ready : (battle_info:common.UserBattleData, shop_info:common.ShopData, events:number[] ,fetters_info?:common.Fetters[]) => void;
+    public start_quest_ready() 
     {
         return new Promise((resolve, reject) =>
         {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop(eventID).callBack((self, shop_info) =>
+            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop_ready().callBack((self, shop_info , events) =>
             {
-                this.cb_get_quest_shop_data(self, shop_info);
-                resolve(null);
+                this.cb_start_quest_battle_ready(self, shop_info , events);
+                resolve("finish");
             }, (err) =>
             {
                 console.log("start_quest_shop err:", err);
@@ -438,7 +417,7 @@ export class netGame {
             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_battle().callBack((self,target)=>
                 {
                     this.cb_start_quest_battle(self,target);
-                    relolve(null);
+                    relolve("finish");
                 },(err)=>
                 {
                     console.log("start_quest_battle err:", err);
@@ -453,6 +432,29 @@ export class netGame {
 
     public cb_quest_battle_info: (battle_info: common.UserBattleData) => void;
     public cb_quest_shop_info: (shop_info: common.ShopData) => void;
+
+    //选择事件
+    public select_quest_event(event:number) 
+    {
+        return new Promise((resolve, reject) =>
+        {
+            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).select_quest_event(event).callBack((self,shop_info) =>
+            {
+                this.cb_quest_battle_info(self);
+                this.cb_quest_shop_info(shop_info);
+                resolve("finish");
+            }, (err) =>
+            {
+                console.log("start_quest_ready err:", err);
+                reject("error");
+            }).timeout(3000, () =>
+            {
+                console.log("start_quest_ready timeout");
+                reject("timeout");
+            });
+        });
+    }
+   
     //购买角色
     public quest_buy(shop_index: common.ShopIndex, index: number, role_index: number)
     {
@@ -462,7 +464,7 @@ export class netGame {
             {
                 this.cb_quest_battle_info(battle_info);
                 this.cb_quest_shop_info(shop_info);
-                resolve(null);
+                resolve("finish");
             }, (err) =>
             {
                 console.log("buy err:", err);
@@ -482,7 +484,7 @@ export class netGame {
             netSingleton.battleshop.move(netSingleton.player.player_name, role_index1, role_index2).callBack((battle_info) =>
             {
                 this.cb_quest_battle_info(battle_info);
-                resolve(null);
+                resolve("finish");
             }, (err) =>
             {
                 console.log("move err:", err);
@@ -502,7 +504,7 @@ export class netGame {
             netSingleton.battleshop.sale_role(netSingleton.player.player_name, index).callBack((battle_info) =>
             {
                 this.cb_quest_battle_info(battle_info);
-                resolve(null);
+                resolve("finish");
             }, (err) =>
             {
                 console.log("sale_role err:", err);
@@ -522,7 +524,7 @@ export class netGame {
             netSingleton.battleshop.refresh(netSingleton.player.player_name).callBack((shop_info) =>
             {
                 this.cb_quest_shop_info(shop_info);
-                resolve(null);
+                resolve("finish");
             }, (err) =>
             {
                 console.log("refresh err:", err);
@@ -542,7 +544,7 @@ export class netGame {
             netSingleton.battleshop.c_match.get_hub(netSingleton.player.player_name).freeze(shop_index, index, is_freeze).callBack((data: common.ShopData) =>
             {
                 this.cb_quest_shop_info(data);
-                resolve(null);
+                resolve("finish");
             }, (err) =>
             {
                 console.log("freeze err:", err);
@@ -555,6 +557,7 @@ export class netGame {
         });
     }
     //向服务器发送对战信息
+    public cb_confirm_quest_victory:(state:player_login.em_quest_state) => void;
     public confirm_quest_victory(is_victory:common.BattleVictory) 
     {
         return new Promise((resolve,reject)=>
@@ -562,7 +565,8 @@ export class netGame {
             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).confirm_quest_victory(is_victory).callBack((state)=>
             {
                 console.log("confirm_quest_victory succeed!");
-                resolve(state);
+                this.cb_confirm_quest_victory(state);
+                resolve("finish");
             },()=>
             {
                 console.log("confirm_quest_victory err");

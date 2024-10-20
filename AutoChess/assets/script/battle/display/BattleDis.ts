@@ -195,7 +195,14 @@ export class BattleDis
             if(!settlement)
             {
                 await sleep(500);
-                netSingleton.game.confirm_match_round_victory(is_victory);
+                if(enums.GameMode.PVP == this.battleCentre.gamemode)
+                {
+                    netSingleton.game.confirm_match_round_victory(is_victory);
+                }
+                else
+                {
+                    netSingleton.game.confirm_quest_victory(is_victory);
+                }
             }
             
         }

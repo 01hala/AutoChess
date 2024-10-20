@@ -296,17 +296,17 @@ export class GameManager extends Component
         },this);
 
         /** 消息来源
+         * ReadyDis.ts ：第169行
          * 
          * 
          */
-        this.node.on('OpenChooseBoard',async (event:SendMessage)=>
+        this.node.on('OpenChooseTag',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let cb = await BundleManager.Instance.loadAssetsFromBundle("Board", "ChooseBoard") as Prefab;
-            let board = instantiate(cb);
+            let ct = await BundleManager.Instance.loadAssetsFromBundle("Board", "ChooseTag") as Prefab;
+            let board = instantiate(ct);
             board.setParent(this.node);
-            board.getComponent(ChooseTag).Open();
-
+            board.getComponent(ChooseTag).Open(event.detail.events);
         },this);
     }
 
