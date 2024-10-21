@@ -14,6 +14,7 @@ import { PopUps } from '../secondaryPanel/PopUps';
 import { Guide } from '../panel/Guide';
 import * as common from "../battle/AutoChessBattle/common"
 import { ChooseTag } from '../secondaryPanel/ChooseTag';
+import { sleep } from './sleep';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -302,10 +303,12 @@ export class GameManager extends Component
          */
         this.node.on('OpenChooseTag',async (event:SendMessage)=>
         {
+            console.log("on message OpenChooseTag");
             event.propagationStopped=true;
-            let ct = await BundleManager.Instance.loadAssetsFromBundle("Board", "ChooseTag") as Prefab;
+            let ct = await BundleManager.Instance.loadAssetsFromBundle("Board", "ChooseTagBoard") as Prefab;
             let board = instantiate(ct);
             board.setParent(this.node);
+            await sleep(50);
             board.getComponent(ChooseTag).Open(event.detail.events);
         },this);
     }

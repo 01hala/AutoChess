@@ -164,8 +164,9 @@ export class ReadyDis
                 {
                     GameManager.Instance.guide.step++;
                 }
-                if(this.readyData.evnets && enmus.GameMode.PVE ==  this.readyData.gameMode)
+                if(enmus.GameMode.PVE ==  this.readyData.gameMode)
                 {
+                    console.log("OpenChooseTag");
                     this.panelNode.dispatchEvent(new SendMessage('OpenChooseTag',true,{events:this.readyData.evnets}));
                 }
             });
@@ -442,11 +443,11 @@ export class ReadyDis
         //更新当前状态
         singleton.netSingleton.game.cb_get_quest_shop_data = async (_battle_info,_shop_info)=>
         {
-            // this.readyData.SetCoins(_battle_info.coin);
-            // this.readyData.SetRoles(_battle_info.RoleList);
-            // this.readyData.SetShopData(_shop_info);
-            // await this.roleArea.ResetTeam(_battle_info.RoleList);
-            // this.UpdatePlayerInfo(_battle_info);
+            //this.readyData.SetCoins(_battle_info.coin);
+            //this.readyData.SetRoles(_battle_info.RoleList);
+            //this.readyData.SetShopData(_shop_info);
+            await this.roleArea.ResetTeam(_battle_info.RoleList);
+            this.UpdatePlayerInfo(_battle_info);
         }
         //更新信息
         singleton.netSingleton.game.cb_quest_battle_info=(_battle_info)=>
@@ -482,7 +483,7 @@ export class ReadyDis
         }
         else
         {
-            //singleton.netSingleton.game.get_quest_shop_data();
+            singleton.netSingleton.game.get_quest_shop_data();
         }
     }
 

@@ -364,7 +364,7 @@ export class login extends Component {
             }
             console.log("null == singleton.netSingleton.ready!");
             //新的一局游戏
-            let _readyData = new ReadyData(_battle_info, _shop_info, _gamemode, _fetters_info);
+            let _readyData = new ReadyData(_battle_info, _shop_info, _gamemode, _fetters_info,events);
             singleton.netSingleton.ready = new ReadyDis(_readyData);
             await singleton.netSingleton.ready.start(this.bk.node, _battle_info, async (event) =>
             {

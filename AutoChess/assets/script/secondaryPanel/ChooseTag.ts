@@ -49,6 +49,9 @@ export class ChooseTag extends Component
     Open(_events:number[])
     {   
         this.board.active=true;
+        console.log("open ChooseTag")
+        this.node.setSiblingIndex(100);
+
         this.board.getComponent(Animation).play("PanelAppear");
         
         this.SetTags(_events);
@@ -67,7 +70,7 @@ export class ChooseTag extends Component
     {
         this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
         {
-            this.destroy();
+            this.node.destroy();
         })
         this.board.getComponent(Animation).play("PanelDisappear");
     }

@@ -282,7 +282,7 @@ export class ReadyData
 
     public ChooseTag(_tag:number)
     {
-        
+        singleton.netSingleton.game.select_quest_event(_tag);
     }
 
 }
