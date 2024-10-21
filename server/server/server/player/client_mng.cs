@@ -104,7 +104,7 @@ namespace Player
                     gold = 100,
                     diamond = 10,
                     score = 0,
-                    quest = 1,
+                    quest = 10001,
                     bag = new Abelkhan.Bag() { ItemList = new() },
                     guideStep = 0,
                     RoleList = new List<int>(roleList),
@@ -234,7 +234,7 @@ namespace Player
             }
             else
             {
-                info.info.quest = 1;
+                info.info.quest = 10001;
             }
 
             if (data.Contains("score"))
