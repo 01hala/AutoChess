@@ -9,9 +9,13 @@ export class VenturePanel extends Component
     //退出返回按钮
     private exitBtn:Node;
 
+    private levelBtn:Node;
+
     protected onLoad(): void
     {
         this.exitBtn=this.node.getChildByPath("Exit_Btn");
+        this.levelBtn=this.node.getChildByPath("WorldMap/view/content/Map/Continent/Button");
+        //this.levelBtn=this.node.getChildByPath("Button");
     }
 
     start() 
@@ -22,11 +26,14 @@ export class VenturePanel extends Component
             this.node.active = false;
             singleton.netSingleton.mainInterface.panelNode.active = true;
         })
+
+        this.levelBtn.on(Button.EventType.CLICK,()=>
+        {
+            console.log("start pve");
+            singleton.netSingleton.game.start_quest_battle_ready();
+        });
     }
 
-    update(deltaTime: number) {
-        
-    }
 }
 
 

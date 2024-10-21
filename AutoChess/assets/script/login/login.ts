@@ -21,6 +21,7 @@ import { GameManager } from '../other/GameManager';
 import { Guide } from '../other/Guide';
 import * as enmus from '../other/enums';
 import SdkManager from '../SDK/SdkManager';
+import * as player_login from "../serverSDK/ccallplayer"
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -316,6 +317,29 @@ export class login extends Component {
         {
             this.BattleStart(_self,_target ,enmus.GameMode.PVE);
         };
+
+        singleton.netSingleton.game.cb_confirm_quest_victory=async (state)=>
+        {
+            if(player_login.em_quest_state.faild == state)
+            {
+                if (singleton.netSingleton.battle)
+                {
+                    await singleton.netSingleton.battle.SetGameVictory(false);
+                }
+                console.log("返回主界面");
+                this.BackMainInterface();
+            }
+            if(player_login.em_quest_state.next_quest == state)
+            {
+                if (singleton.netSingleton.battle)
+                {
+                    await singleton.netSingleton.battle.SetGameVictory(true);
+                }
+
+                console.log("返回主界面");
+                this.BackMainInterface();
+            }
+        }
     }
 
     private async GameStart(_gamemode:enmus.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[],events?:number[])

@@ -388,23 +388,32 @@ export class netGame {
 
     //pve准备阶段
     public cb_start_quest_battle_ready : (battle_info:common.UserBattleData, shop_info:common.ShopData, events:number[] ,fetters_info?:common.Fetters[]) => void;
-    public start_quest_ready() 
+    public start_quest_battle_ready() 
     {
         return new Promise((resolve, reject) =>
         {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop_ready().callBack((self, shop_info , events) =>
+            try
             {
-                this.cb_start_quest_battle_ready(self, shop_info , events);
-                resolve("finish");
-            }, (err) =>
+                this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop_ready().callBack((self, shop_info , events) =>
+                    {
+                        this.cb_start_quest_battle_ready(self, shop_info , events);
+                        resolve("finish");
+                    }, (err) =>
+                    {
+                        console.log("start_quest_shop err:", err);
+                        reject("error");
+                    }).timeout(3000, () =>
+                    {
+                        console.log("start_quest_shop timeout");
+                        reject("timeout");
+                    });
+            }
+            catch(error)
             {
-                console.log("start_quest_shop err:", err);
-                reject("error");
-            }).timeout(3000, () =>
-            {
-                console.log("start_quest_shop timeout");
-                reject("timeout");
-            });
+                console.error("start_quest_shop Program err:", error);
+                reject("Program error");
+            }
+           
         });
     }
 
