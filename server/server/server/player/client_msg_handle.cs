@@ -2,6 +2,7 @@
 using avatar;
 using battle_shop;
 using config;
+using MongoDB.Bson;
 using System;
 using System.Text.RegularExpressions;
 
@@ -389,6 +390,7 @@ namespace Player
                     var (err, eventIdList) = _data.Data.StartQuestReady(uuid, client_mng.BattleClientCaller);
                     if (err)
                     {
+                        Log.Log.trace("on_start_quest_ready eventId List:{0}", eventIdList.ToJson());
                         rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, eventIdList);
                     }
                     else

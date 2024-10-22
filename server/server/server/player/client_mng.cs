@@ -230,7 +230,7 @@ namespace Player
 
             if (data.Contains("quest"))
             {
-                info.info.diamond = data.GetValue("quest").AsInt32;
+                info.info.quest = data.GetValue("quest").AsInt32;
             }
             else
             {
@@ -239,7 +239,7 @@ namespace Player
 
             if (data.Contains("score"))
             {
-                info.info.diamond = data.GetValue("score").AsInt32;
+                info.info.score = data.GetValue("score").AsInt32;
             }
             else
             {
@@ -1189,6 +1189,7 @@ namespace Player
             if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
             {
                 PVELevelCfg = cfg;
+                StartPVERound();
                 return Tuple.Create(true, cfg.EventID);
             }
 
