@@ -638,6 +638,8 @@ namespace battle_shop
 
         public Role add_role(int role_index, int index, int role_Level)
         {
+            Log.Log.trace("add_role begin! role_index:{0}, index:{1}, role_Level:{2}!", role_index, index, role_Level);
+
             var s = ShopData.SaleRoleList[index];
 
             if (config.Config.RoleConfigs.TryGetValue(s.RoleID, out RoleConfig rcfg))

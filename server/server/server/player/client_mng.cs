@@ -1198,6 +1198,7 @@ namespace Player
 
         public void StartQuestShop(int eventid)
         {
+            Log.Log.trace("StartQuestShop eventid:{0}", eventid);
             if (eventid > 0)
             {
                 if (config.Config.PVEEventConfigs.TryGetValue(eventid, out var cfg))
@@ -1269,9 +1270,9 @@ namespace Player
             return target;
         }
 
-        public bool add_role(string ClientUUID, int role_index, int role_id, int role_Level)
+        public bool add_role(string ClientUUID, int role_index, int index, int role_Level)
         {
-            var r = BattleShopPlayer.add_role(role_index, role_id, role_Level);
+            var r = BattleShopPlayer.add_role(role_index, index, role_Level);
             if (r != null)
             {
                 if (CheckBuyRole(r))
@@ -1298,7 +1299,7 @@ namespace Player
 
             if (r == null)
             {
-                if (!add_role(ClientUUID, role_index, s.RoleID, 1))
+                if (!add_role(ClientUUID, role_index, index, 1))
                 {
                     return em_error.db_error;
                 }
