@@ -8,6 +8,7 @@ import * as match from "../serverSDK/ccallmatch"
 import * as match_c from "../serverSDK/matchcallc"
 
 import { netSingleton } from "./netSingleton"
+import * as enums from "../../script/other/enums"
 
 export class netGame {
     private c_player_battle__caller : player_login.player_battle_caller;
@@ -442,7 +443,7 @@ export class netGame {
 
     public cb_quest_battle_info: (battle_info: common.UserBattleData) => void;
     public cb_quest_shop_info: (shop_info: common.ShopData) => void;
-
+    public cb_select_quest_event:()=>void;
     //选择事件
     public select_quest_event(event:number) 
     {
@@ -452,6 +453,7 @@ export class netGame {
             {
                 this.cb_quest_battle_info(self);
                 this.cb_quest_shop_info(shop_info);
+                this.cb_select_quest_event();
                 resolve("finish");
             }, (err) =>
             {
@@ -590,13 +592,20 @@ export class netGame {
     }
 
     //结束当前准备回合
-    public end_round()
+    public end_round(gameMode:enums.GameMode)
     {
         return new Promise((resolve , reject)=>
         {
             netSingleton.battleshop.c_match.get_hub(this.match_name).end_round().callBack(()=>
             {
-                this.start_match_battle();
+                if(enums.GameMode.PVP==gameMode)
+                {
+                    this.start_match_battle();
+                }
+                if(enums.GameMode.PVE == gameMode)
+                {
+                    this.start_quest_battle();
+                }
                 resolve("finish");
             },(err)=>
             {   

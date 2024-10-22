@@ -463,6 +463,10 @@ export class ReadyDis
         {
             this.readyData.SetShopData(_shop_info);
         };
+        singleton.netSingleton.game.cb_select_quest_event=()=>
+        {
+            this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage());
+        }
     }
 
 /*

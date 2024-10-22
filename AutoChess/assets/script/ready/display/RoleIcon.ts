@@ -15,7 +15,7 @@ import { RoleDis } from '../../battle/display/RoleDis';
 import { ReadyDis } from './ReadyDis';
 import * as singleton from '../../netDriver/netSingleton';
 import { ShopArea } from './ShopArea';
-import * as battleEmums from '../../battle/AutoChessBattle/enum';
+import * as battleEmums from '../../battle/AutoChessBattle/BattleEnums';
 import { InfoBoard } from '../../secondaryPanel/InfoBoard';
 import { config } from '../../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../../bundle/LoadAsset';
