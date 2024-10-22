@@ -396,6 +396,7 @@ export class netGame {
             {
                 this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop_ready().callBack((self, shop_info , events) =>
                     {
+                        console.log("pve events:",events);
                         this.cb_start_quest_battle_ready(self, shop_info , events);
                         resolve("finish");
                     }, (err) =>
