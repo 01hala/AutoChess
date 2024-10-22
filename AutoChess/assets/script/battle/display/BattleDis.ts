@@ -8,7 +8,7 @@ import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, Vec3
 import { Queue } from './Queue';
 import { Battle } from '../AutoChessBattle/battle';
 import * as skill from '../AutoChessBattle/skill/skill_base'
-import * as battleEnums from '../AutoChessBattle/enum';
+import * as battleEnums from '../AutoChessBattle/BattleEnums';
 import { delay, sleep } from '../../other/sleep'
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'

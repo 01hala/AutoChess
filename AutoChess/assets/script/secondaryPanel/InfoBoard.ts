@@ -11,7 +11,7 @@ import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
 import * as common from "../battle/AutoChessBattle/common"
-import * as battleEnums from '../battle/AutoChessBattle/enum';
+import * as battleEnums from '../battle/AutoChessBattle/BattleEnums';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')

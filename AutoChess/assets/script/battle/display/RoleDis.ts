@@ -6,7 +6,7 @@
  */
 import { _decorator, animation, CCInteger, TTFFont, Component, Sprite, tween, Node, Vec3, Animation, SpriteFrame, AnimationComponent, Prefab, instantiate, find, RichText, settings, Tween, math, Texture2D, sp, Skeleton, Quat, color, Event, Button, UITransform, game, director } from 'cc';
 import { Role } from '../AutoChessBattle//role';
-import * as BattleEnums from '../AutoChessBattle/enum';
+import * as BattleEnums from '../AutoChessBattle/BattleEnums';
 import * as enums from '../../other/enums';
 import { Battle } from '../AutoChessBattle//battle';
 import * as skill from '../AutoChessBattle//skill/skill_base'

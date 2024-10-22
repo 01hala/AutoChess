@@ -208,10 +208,7 @@ export class ReadyData
 
     public async StartBattle()
     {
-        if(enmus.GameMode.PVP ==  this.gameMode)
-        {
-            await singleton.netSingleton.game.end_round();
-        }
+        await singleton.netSingleton.game.end_round(this.gameMode);
     }
 
     public async Buy(shop_index: common.ShopIndex,index:number,role_index:number)
