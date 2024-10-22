@@ -1203,30 +1203,33 @@ namespace Player
             {
                 if (config.Config.PVEEventConfigs.TryGetValue(eventid, out var cfg))
                 {
-                    if (config.Config.RoleConfigs.TryGetValue(cfg.RoleID, out RoleConfig rcfg))
+                    if (config.Config.PVEEnemyConfigs.TryGetValue(cfg.RoleID, out PVEEnemyConfig ecfg))
                     {
-                        var r = new Role();
+                        if (config.Config.RoleConfigs.TryGetValue(ecfg.RoleID, out RoleConfig rcfg))
+                        { 
+                            var r = new Role();
 
-                        r.RoleID = cfg.RoleID;
-                        r.Level = cfg.RoleLevel;
-                        r.SkillID = rcfg.SkillID;
-                        r.HP = rcfg.Hp;
-                        r.Attack = rcfg.Attack;
-                        r.TempHP = 0;
-                        r.TempAttack = 0;
-                        r.additionBuffer = new();
-                        r.TempAdditionBuffer = new();
-                        r.FettersSkillID = new Fetters()
-                        {
-                            fetters_id = rcfg.Fetters,
-                            fetters_level = 0,
-                            number = 1
-                        };
-                        r.equipID = cfg.RoleEquip;
+                            r.RoleID = ecfg.RoleID;
+                            r.Level = cfg.RoleLevel;
+                            r.SkillID = rcfg.SkillID;
+                            r.HP = ecfg.RoleHP;
+                            r.Attack = ecfg.RoleAttack;
+                            r.TempHP = 0;
+                            r.TempAttack = 0;
+                            r.additionBuffer = new();
+                            r.TempAdditionBuffer = new();
+                            r.FettersSkillID = new Fetters()
+                            {
+                                fetters_id = rcfg.Fetters,
+                                fetters_level = 0,
+                                number = 1
+                            };
+                            r.equipID = cfg.RoleEquip;
 
-                        BattleShopPlayer.BattleData.RoleList[5] = r;
-                        BattleShopPlayer.check_fetters();
-                        BattleShopPlayer.ShopSkillRoles[5] = new shop_skill_role(5, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, BattleShopPlayer.BattleData.round);
+                            BattleShopPlayer.BattleData.RoleList[5] = r;
+                            BattleShopPlayer.check_fetters();
+                            BattleShopPlayer.ShopSkillRoles[5] = new shop_skill_role(5, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, BattleShopPlayer.BattleData.round);
+                        }
                     }
                 }
             }

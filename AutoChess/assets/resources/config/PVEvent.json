@@ -6,7 +6,7 @@
         "RoleID": 330003,
         "RoleAttack": 12,
         "RoleHP": 12,
-        "RoleLevel": 0,
+        "RoleLevel": 1,
         "RoleEquip": 3003
     },
     "400002": {
@@ -16,7 +16,7 @@
         "RoleID": 320018,
         "RoleAttack": 6,
         "RoleHP": 8,
-        "RoleLevel": 0,
+        "RoleLevel": 1,
         "RoleEquip": 0
     },
     "400003": {
@@ -26,7 +26,7 @@
         "RoleID": 310019,
         "RoleAttack": 4,
         "RoleHP": 15,
-        "RoleLevel": 0,
+        "RoleLevel": 1,
         "RoleEquip": 0
     },
     "400004": {

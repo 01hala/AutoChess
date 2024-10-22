@@ -74,7 +74,9 @@ namespace config
 
                 int read = fs.Read(data, offset, remaining);
                 if (read <= 0)
+                {
                     throw new EndOfStreamException("file read at" + read.ToString() + " failed");
+                }
 
                 remaining -= read;
                 offset += read;

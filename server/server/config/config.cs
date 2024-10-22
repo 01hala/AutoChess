@@ -39,6 +39,7 @@ namespace config
         public static Dictionary<int, PVELevelConfig> PVELevelConfigs;
         public static Dictionary<int, PVERoundConfig> PVERoundConfigs;
         public static Dictionary<int, PVEEventConfig> PVEEventConfigs;
+        public static Dictionary<int, PVEEnemyConfig> PVEEnemyConfigs;
 
         public static void Load(string path)
         {
@@ -59,6 +60,7 @@ namespace config
             PVELevelConfigs = PVELevelConfig.Load(Path.Combine(path, "PVELevel.json"));
             PVERoundConfigs = PVERoundConfig.Load(Path.Combine(path, "PVERound.json"), Path.Combine(path, "PVEnemy.json"));
             PVEEventConfigs = PVEEventConfig.Load(Path.Combine(path, "PVEvent.json"));
+            PVEEnemyConfigs = PVEEnemyConfig.Load(Path.Combine(path, "PVEnemy.json"));
         }
     }
 }
