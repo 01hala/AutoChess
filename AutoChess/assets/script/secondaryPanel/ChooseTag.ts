@@ -36,17 +36,20 @@ export class ChooseTag extends Component
     {
         this.tag_1.on(Button.EventType.CLICK, () =>
         {
-            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[1]);
+            console.log(" On ChooseTag：",this.tags[0]);
+            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[0]);
             this.Exit();
         }, this);
         this.tag_2.on(Button.EventType.CLICK, () =>
         {
-            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[2]);
+            console.log(" On ChooseTag：",this.tags[1]);
+            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[1]);
             this.Exit();
         }, this);
         this.tag_3.on(Button.EventType.CLICK, () =>
         {
-            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[3]);
+            console.log(" On ChooseTag：",this.tags[2]);
+            singleton.netSingleton.ready.readyData.ChooseTag(this.tags[2]);
             this.Exit();
         }, this);
     }
