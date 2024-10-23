@@ -308,7 +308,8 @@ export class GameManager extends Component
             let ct = await BundleManager.Instance.loadAssetsFromBundle("Board", "ChooseTagBoard") as Prefab;
             let board = instantiate(ct);
             board.setParent(this.node);
-            await sleep(50);
+            await sleep(100);
+            console.log("ChooseTags：",event.detail.events);
             board.getComponent(ChooseTag).Open(event.detail.events);
         },this);
     }
