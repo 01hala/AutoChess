@@ -979,6 +979,8 @@ namespace Abelkhan
         public Int32 SkillID;
         public Int32 HP;
         public Int32 Attack;
+        public Int32 Level;
+        public Int32 equipID;
         public bool IsFreeze;
         public static MsgPack.MessagePackObjectDictionary ShopRole_to_protcol(ShopRole _struct){
         if (_struct == null) {
@@ -990,6 +992,8 @@ namespace Abelkhan
             _protocol.Add("SkillID", _struct.SkillID);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
+            _protocol.Add("Level", _struct.Level);
+            _protocol.Add("equipID", _struct.equipID);
             _protocol.Add("IsFreeze", _struct.IsFreeze);
             return _protocol;
         }
@@ -1011,6 +1015,12 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Attack"){
                     _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.Attack = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Level"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.Level = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "equipID"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.equipID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "IsFreeze"){
                     _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.IsFreeze = ((MsgPack.MessagePackObject)i.Value).AsBoolean();

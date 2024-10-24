@@ -115,9 +115,9 @@ namespace Match
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(stage);
         }
 
-        public bool add_role(int role_index, int shop_index, int role_Level)
+        public bool add_role(int role_index, int shop_index)
         {
-            var r = BattleShopPlayer.add_role(role_index, shop_index, role_Level);
+            var r = BattleShopPlayer.add_role(role_index, shop_index);
             if (r != null)
             {
                 var player_proxy = Match._player_proxy_mng.get_player(PlayerHubName);
@@ -142,7 +142,7 @@ namespace Match
 
             if (r == null)
             {
-                if (!add_role(role_index, index, 1))
+                if (!add_role(role_index, index))
                 {
                     return em_error.db_error;
                 }

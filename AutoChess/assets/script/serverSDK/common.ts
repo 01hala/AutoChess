@@ -794,6 +794,8 @@ export class ShopRole
     public SkillID : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
+    public Level : number = 0;
+    public equipID : number = 0;
     public IsFreeze : boolean = false;
 
 }
@@ -820,6 +822,12 @@ export function protcol_to_ShopRole(_protocol:any){
         }
         else if (key === "Attack"){
             _struct.Attack = val as number;
+        }
+        else if (key === "Level"){
+            _struct.Level = val as number;
+        }
+        else if (key === "equipID"){
+            _struct.equipID = val as number;
         }
         else if (key === "IsFreeze"){
             _struct.IsFreeze = val as boolean;

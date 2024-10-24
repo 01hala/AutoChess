@@ -296,6 +296,8 @@ struct ShopRole {
 	int32 SkillID;
 	int32 HP;
 	int32 Attack;
+	int32 Level;
+	int32 equipID;
 	bool IsFreeze;
 }
 

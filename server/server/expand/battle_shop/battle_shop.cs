@@ -90,7 +90,7 @@ namespace battle_shop
             caller = _caller;
 
             shopData = new ShopData();
-            shopData.SaleRoleList = new List<ShopRole>();
+            shopData.SaleRoleList = new List<ShopRole>() { null, null, null, null, null, null };
             shopData.SalePropList = new List<ShopProp>();
         }
 
@@ -636,9 +636,9 @@ namespace battle_shop
             return false;
         }
 
-        public Role add_role(int role_index, int index, int role_Level)
+        public Role add_role(int role_index, int index)
         {
-            Log.Log.trace("add_role begin! role_index:{0}, index:{1}, role_Level:{2}!", role_index, index, role_Level);
+            Log.Log.trace("add_role begin! role_index:{0}, index:{1}!", role_index, index);
 
             var s = ShopData.SaleRoleList[index];
 
@@ -648,11 +648,11 @@ namespace battle_shop
 
                 r.RoleID = s.RoleID;
                 r.BuyRound = battleData.round;
-                r.Level = role_Level;
+                r.Level = s.Level;
                 r.SkillID = rcfg.SkillID;
                 r.Number = (r.Level - 1) * 2 + 1;
-                r.HP = rcfg.Hp + r.Number - 1;
-                r.Attack = rcfg.Attack + r.Number - 1;
+                r.HP = s.HP + r.Number - 1;
+                r.Attack = s.Attack + r.Number - 1;
                 r.TempHP = 0;
                 r.TempAttack = 0;
                 r.additionBuffer = new();
@@ -663,6 +663,7 @@ namespace battle_shop
                     fetters_level = 0,
                     number = 1
                 };
+                r.equipID = s.equipID;
 
                 battleData.RoleList[role_index] = r;
                 check_fetters();

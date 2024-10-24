@@ -1207,28 +1207,16 @@ namespace Player
                     {
                         if (config.Config.RoleConfigs.TryGetValue(ecfg.RoleID, out RoleConfig rcfg))
                         { 
-                            var r = new Role();
+                            var r = new ShopRole();
 
                             r.RoleID = ecfg.RoleID;
-                            r.Level = cfg.RoleLevel;
+                            r.Level = ecfg.RoleLevel;
                             r.SkillID = rcfg.SkillID;
                             r.HP = ecfg.RoleHP;
                             r.Attack = ecfg.RoleAttack;
-                            r.TempHP = 0;
-                            r.TempAttack = 0;
-                            r.additionBuffer = new();
-                            r.TempAdditionBuffer = new();
-                            r.FettersSkillID = new Fetters()
-                            {
-                                fetters_id = rcfg.Fetters,
-                                fetters_level = 0,
-                                number = 1
-                            };
                             r.equipID = cfg.RoleEquip;
 
-                            BattleShopPlayer.BattleData.RoleList[5] = r;
-                            BattleShopPlayer.check_fetters();
-                            BattleShopPlayer.ShopSkillRoles[5] = new shop_skill_role(5, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, BattleShopPlayer.BattleData.round);
+                            BattleShopPlayer.ShopData.SaleRoleList[5] = r;
                         }
                     }
                 }
@@ -1273,9 +1261,9 @@ namespace Player
             return target;
         }
 
-        public bool add_role(string ClientUUID, int role_index, int index, int role_Level)
+        public bool add_role(string ClientUUID, int role_index, int index)
         {
-            var r = BattleShopPlayer.add_role(role_index, index, role_Level);
+            var r = BattleShopPlayer.add_role(role_index, index);
             if (r != null)
             {
                 if (CheckBuyRole(r))
@@ -1302,7 +1290,7 @@ namespace Player
 
             if (r == null)
             {
-                if (!add_role(ClientUUID, role_index, index, 1))
+                if (!add_role(ClientUUID, role_index, index))
                 {
                     return em_error.db_error;
                 }
