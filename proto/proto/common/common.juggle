@@ -293,6 +293,7 @@ enum ShopIndex {
 
 struct ShopRole {
 	int32 RoleID;
+	int32 Price;
 	int32 SkillID;
 	int32 HP;
 	int32 Attack;

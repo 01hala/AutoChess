@@ -1226,6 +1226,7 @@ namespace Player
         public UserBattleData StartQuestBattle()
         {
             var target = new UserBattleData();
+            target.RoleList = new List<Role>();
 
             if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
             {
@@ -1282,11 +1283,16 @@ namespace Player
             var r = BattleShopPlayer.BattleData.RoleList[role_index];
             var s = BattleShopPlayer.ShopData.SaleRoleList[index];
 
-
             if (s == null)
             {
                 return em_error.db_error;
             }
+
+            if (BattleShopPlayer.BattleData.coin < s.Price)
+            {
+                return em_error.no_enough_coin;
+            }
+            BattleShopPlayer.BattleData.coin -= s.Price;
 
             if (r == null)
             {
@@ -1330,12 +1336,6 @@ namespace Player
 
         public em_error buy(string ClientUUID, ShopIndex shop_index, int index, int role_index)
         {
-            if (BattleShopPlayer.BattleData.coin < 3)
-            {
-                return em_error.no_enough_coin;
-            }
-            BattleShopPlayer.BattleData.coin -= 3;
-
             if (shop_index == ShopIndex.Role)
             {
                 var result = buy_role(ClientUUID, index, role_index);
@@ -1351,6 +1351,12 @@ namespace Player
                 {
                     return em_error.db_error;
                 }
+
+                if (BattleShopPlayer.BattleData.coin < p.Price)
+                {
+                    return em_error.no_enough_coin;
+                }
+                BattleShopPlayer.BattleData.coin -= p.Price;
 
                 if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
                 {

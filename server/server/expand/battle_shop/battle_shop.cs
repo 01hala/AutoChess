@@ -745,7 +745,6 @@ namespace battle_shop
                 return em_error.db_error;
             }
 
-
             if (config.Config.FoodConfigs.TryGetValue(p.PropID, out var foodcfg))
             {
                 var rs = new List<Tuple<Role, int>>();

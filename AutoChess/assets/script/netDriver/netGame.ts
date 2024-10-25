@@ -596,7 +596,13 @@ export class netGame {
     {
         return new Promise((resolve , reject)=>
         {
-            netSingleton.battleshop.c_match.get_hub(this.match_name).end_round().callBack(()=>
+            let hub_Name = this.match_name;
+            if(enums.GameMode.PVE == gameMode)
+            {
+                hub_Name = netSingleton.player.player_name;
+            }
+
+            netSingleton.battleshop.c_match.get_hub(hub_Name).end_round().callBack(()=>
             {
                 if(enums.GameMode.PVP==gameMode)
                 {

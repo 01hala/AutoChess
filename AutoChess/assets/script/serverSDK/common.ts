@@ -791,6 +791,7 @@ export function protcol_to_UserRankInfo(_protocol:any){
 export class ShopRole
 {
     public RoleID : number = 0;
+    public Price : number = 0;
     public SkillID : number = 0;
     public HP : number = 0;
     public Attack : number = 0;
@@ -813,6 +814,9 @@ export function protcol_to_ShopRole(_protocol:any){
     for (const [key, val] of Object.entries(_protocol)) {
         if (key === "RoleID"){
             _struct.RoleID = val as number;
+        }
+        else if (key === "Price"){
+            _struct.Price = val as number;
         }
         else if (key === "SkillID"){
             _struct.SkillID = val as number;

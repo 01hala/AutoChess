@@ -976,6 +976,7 @@ namespace Abelkhan
     public class ShopRole
     {
         public Int32 RoleID;
+        public Int32 Price;
         public Int32 SkillID;
         public Int32 HP;
         public Int32 Attack;
@@ -989,6 +990,7 @@ namespace Abelkhan
 
             var _protocol = new MsgPack.MessagePackObjectDictionary();
             _protocol.Add("RoleID", _struct.RoleID);
+            _protocol.Add("Price", _struct.Price);
             _protocol.Add("SkillID", _struct.SkillID);
             _protocol.Add("HP", _struct.HP);
             _protocol.Add("Attack", _struct.Attack);
@@ -1006,6 +1008,9 @@ namespace Abelkhan
             foreach (var i in _protocol){
                 if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleID"){
                     _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.RoleID = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "Price"){
+                    _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.Price = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "SkillID"){
                     _structf3e63b72_4a28_3460_a200_49dfcc0ed2c2.SkillID = ((MsgPack.MessagePackObject)i.Value).AsInt32();

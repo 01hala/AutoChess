@@ -318,7 +318,6 @@ namespace Player
                     var err = _data.Data.buy(_avatar.ClientUUID, shop_index, index, role_index);
                     rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData);
                 }
-
             }
             catch (System.Exception ex)
             {

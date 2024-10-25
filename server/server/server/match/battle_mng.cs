@@ -134,11 +134,16 @@ namespace Match
             var r = BattleShopPlayer.BattleData.RoleList[role_index];
             var s = BattleShopPlayer.ShopData.SaleRoleList[index];
 
-
             if (s == null)
             {
                 return em_error.db_error;
             }
+
+            if (BattleShopPlayer.BattleData.coin < s.Price)
+            {
+                return em_error.no_enough_coin;
+            }
+            BattleShopPlayer.BattleData.coin -= s.Price;
 
             if (r == null)
             {
@@ -178,12 +183,6 @@ namespace Match
 
         public em_error buy(ShopIndex shop_index, int index, int role_index)
         {
-            if (BattleShopPlayer.BattleData.coin < 3)
-            {
-                return em_error.no_enough_coin;
-            }
-            BattleShopPlayer.BattleData.coin -= 3;
-
             if (shop_index == ShopIndex.Role)
             {
                 var result = buy_role(index, role_index);
@@ -199,6 +198,12 @@ namespace Match
                 {
                     return em_error.db_error;
                 }
+
+                if (BattleShopPlayer.BattleData.coin < p.Price)
+                {
+                    return em_error.no_enough_coin;
+                }
+                BattleShopPlayer.BattleData.coin -= p.Price;
 
                 if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
                 {
