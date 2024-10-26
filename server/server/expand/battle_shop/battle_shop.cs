@@ -138,6 +138,7 @@ namespace battle_shop
                 {
                     var r = new ShopRole();
                     r.RoleID = roleConfig.Id;
+                    r.Price = roleConfig.Price;
                     r.SkillID = roleConfig.SkillID;
                     r.HP = roleConfig.Hp;
                     r.Attack = roleConfig.Attack;
@@ -158,6 +159,7 @@ namespace battle_shop
                 {
                     var p = new ShopProp();
                     p.PropID = foodConfig.Id;
+                    p.Price = foodConfig.Price;
                     p.IsFreeze = false;
 
                     return p;
@@ -176,6 +178,7 @@ namespace battle_shop
                 {
                     var p = new ShopProp();
                     p.PropID = equipConfig.Id;
+                    p.Price = equipConfig.Price;
                     p.IsFreeze = false;
 
                     return p;
