@@ -203,7 +203,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
             this.settlementBoard.active=true;
-            this.settlementBoard.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome , event.detail.hpNum , event.detail.isAddTime);
+            this.settlementBoard.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.hpNum, event.detail.isAddTime);
         },this);
 
         /* 消息来源

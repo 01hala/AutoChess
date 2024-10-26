@@ -8,6 +8,7 @@ import { _decorator, Animation, BlockInputEvents, Button, Component, Node, RichT
 import { BattleVictory } from '../battle/AutoChessBattle/common';
 import { netSingleton } from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
+import * as enums from '../other/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('Settlement')
@@ -48,6 +49,7 @@ export class Settlement extends Component
     private addTimeBoard:Node;
 
     private isVictory:BattleVictory;
+    private GameMode:enums.GameMode;
     private isAddTime:boolean;
 
     protected onLoad(): void 
@@ -80,12 +82,13 @@ export class Settlement extends Component
         }
     }
 
-    public OpenSettlementBoard(_isVictory:BattleVictory,_hpNum:number,_isAddTime:boolean=false)
+    public OpenSettlementBoard(_isVictory:BattleVictory, GameMode:enums.GameMode, _hpNum:number,_isAddTime:boolean=false)
     {
         console.log("show settlement");
         //this.node.getComponent(BlockInputEvents).enabled=true;
         this.node.setSiblingIndex(100);
         this.isVictory=_isVictory;
+        this.GameMode = GameMode;
         this.isAddTime=_isAddTime;
         this.midArea.active=true;
         console.log(_hpNum);
@@ -167,7 +170,14 @@ export class Settlement extends Component
             else
             {
                 //返回准备界面代码写这
-                netSingleton.game.confirm_round_victory(this.isVictory);
+                if(enums.GameMode.PVP == this.GameMode)
+                {
+                    netSingleton.game.confirm_match_round_victory(this.isVictory);
+                }
+                else
+                {
+                    netSingleton.game.confirm_quest_victory(this.isVictory);
+                }
             }
             
         });

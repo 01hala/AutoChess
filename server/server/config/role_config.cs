@@ -12,7 +12,6 @@ namespace config
         public string Name;
         public int SkillID;
         public int Stage;
-        public int Level;
         public int Price;
         public int Attack;
         public int Hp;

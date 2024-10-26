@@ -139,6 +139,7 @@ namespace battle_shop
                     var r = new ShopRole();
                     r.RoleID = roleConfig.Id;
                     r.Price = roleConfig.Price;
+                    r.Level = 1;
                     r.SkillID = roleConfig.SkillID;
                     r.HP = roleConfig.Hp;
                     r.Attack = roleConfig.Attack;
