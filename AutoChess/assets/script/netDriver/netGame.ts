@@ -365,7 +365,10 @@ export class netGame {
 
 
      //获取当前状态
-     public cb_get_quest_shop_data:(self:common.UserBattleData , shop_info:common.ShopData)=>void;
+     public cb_get_quest_shop_data(self:common.UserBattleData , shop_info:common.ShopData)
+     {
+        this.cb_start_quest_battle_ready(self,shop_info,null);
+     }
      public get_quest_shop_data() 
      {
          return new Promise((resolve,reject)=>
@@ -577,7 +580,19 @@ export class netGame {
             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).confirm_quest_victory(is_victory).callBack((state)=>
             {
                 console.log("confirm_quest_victory succeed!");
-                this.cb_confirm_quest_victory(state);
+
+                switch(state)
+                {
+                    case player_login.em_quest_state.faild:
+                    case player_login.em_quest_state.next_quest:
+                        {
+                            this.cb_confirm_quest_victory(state);
+                        }
+                    case player_login.em_quest_state.next_level:
+                        {
+                            this.get_quest_shop_data();
+                        }
+                }
                 resolve("finish");
             },()=>
             {

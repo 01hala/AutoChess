@@ -441,14 +441,14 @@ export class ReadyDis
     private RegPveCallBack()
     {
         //更新当前状态
-        singleton.netSingleton.game.cb_get_quest_shop_data = async (_battle_info,_shop_info)=>
-        {
-            //this.readyData.SetCoins(_battle_info.coin);
-            //this.readyData.SetRoles(_battle_info.RoleList);
-            //this.readyData.SetShopData(_shop_info);
-            await this.roleArea.ResetTeam(_battle_info.RoleList);
-            this.UpdatePlayerInfo(_battle_info);
-        }
+        // singleton.netSingleton.game.cb_get_quest_shop_data = async (_battle_info,_shop_info)=>
+        // {
+        //     //this.readyData.SetCoins(_battle_info.coin);
+        //     //this.readyData.SetRoles(_battle_info.RoleList);
+        //     //this.readyData.SetShopData(_shop_info);
+        //     await this.roleArea.ResetTeam(_battle_info.RoleList);
+        //     this.UpdatePlayerInfo(_battle_info);
+        // }
         //更新信息
         singleton.netSingleton.game.cb_quest_battle_info=(_battle_info)=>
         {
