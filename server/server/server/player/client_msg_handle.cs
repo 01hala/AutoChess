@@ -153,7 +153,10 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData);
+                    if (config.Config.PVERoundConfigs.TryGetValue(_data.Data.PVELevelCfg.Level[_data.Data.PVELevelIndex], out var rcfg))
+                    {
+                        rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, rcfg.EventID);
+                    }
                 }
             }
             catch (System.Exception ex)

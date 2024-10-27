@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Abelkhan;
+using System.Linq;
 
 namespace config
 {
@@ -55,6 +56,7 @@ namespace config
     public class PVERoundConfig
     {
         public int ID;
+        public List<int> EventID;
         public int Stage;
         public int Gold;
         public List<PVEEnemyConfig> Enemys;
@@ -90,6 +92,16 @@ namespace config
                 pvec.Stage = (int)o["Stage"];
                 pvec.Gold = (int)o["Gold"];
                 pvec.Enemys = new List<PVEEnemyConfig>();
+
+                var eventIDs = (string)o["EventID"];
+                if (!string.IsNullOrEmpty(eventIDs))
+                {
+                    pvec.EventID = eventIDs.Split(';').Select(int.Parse).ToList();
+                }
+                else
+                {
+                    pvec.EventID = new List<int>();
+                }
 
                 if (PVERoleInfoCfg.TryGetValue((int)o["Locat_1"], out var e))
                 {

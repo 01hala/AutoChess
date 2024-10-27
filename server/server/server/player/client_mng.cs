@@ -274,6 +274,11 @@ namespace Player
                 info.PeakStrengthID = data.GetValue("peakStrengthID").AsInt64;
             }
 
+            if (data.Contains("PVELevelIndex"))
+            {
+                info.PVELevelIndex = data.GetValue("PVELevelIndex").AsInt32;
+            }
+
             return info;
         }
 
@@ -336,7 +341,8 @@ namespace Player
                 { "guideSteps", tmpGuideSteps },
                 { "lastTickStrengthTime", lastTickStrengthTime },
                 { "currentRolrGroup", currentRolrGroup },
-                { "peakStrengthID", PeakStrengthID }
+                { "peakStrengthID", PeakStrengthID },
+                { "PVELevelIndex", PVELevelIndex },
             };
             return doc;
         }
@@ -1190,7 +1196,11 @@ namespace Player
             {
                 PVELevelCfg = cfg;
                 StartPVERound();
-                return Tuple.Create(true, cfg.EventID);
+
+                if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var rcfg))
+                {
+                    return Tuple.Create(true, rcfg.EventID);
+                }
             }
 
             return Tuple.Create(false, new List<int>());

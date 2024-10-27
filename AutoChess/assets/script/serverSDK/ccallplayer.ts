@@ -1061,7 +1061,7 @@ export class player_quest_get_quest_shop_data_cb{
     private cb_uuid : number;
     private module_rsp_cb : player_quest_rsp_cb;
 
-    public event_get_quest_shop_data_handle_cb : (self:common.UserBattleData, shop_info:common.ShopData)=>void | null;
+    public event_get_quest_shop_data_handle_cb : (self:common.UserBattleData, shop_info:common.ShopData, events:number[])=>void | null;
     public event_get_quest_shop_data_handle_err : (err:number)=>void | null;
     public event_get_quest_shop_data_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : player_quest_rsp_cb){
@@ -1072,7 +1072,7 @@ export class player_quest_get_quest_shop_data_cb{
         this.event_get_quest_shop_data_handle_timeout = null;
     }
 
-    callBack(_cb:(self:common.UserBattleData, shop_info:common.ShopData)=>void, _err:(err:number)=>void)
+    callBack(_cb:(self:common.UserBattleData, shop_info:common.ShopData, events:number[])=>void, _err:(err:number)=>void)
     {
         this.event_get_quest_shop_data_handle_cb = _cb;
         this.event_get_quest_shop_data_handle_err = _err;
@@ -1287,6 +1287,10 @@ export class player_quest_rsp_cb extends client_handle.imodule {
         let _argv_de916e71_7fdb_3c5f_9033_9a7783aa8d83:any[] = [];
         _argv_de916e71_7fdb_3c5f_9033_9a7783aa8d83.push(common.protcol_to_UserBattleData(inArray[1]));
         _argv_de916e71_7fdb_3c5f_9033_9a7783aa8d83.push(common.protcol_to_ShopData(inArray[2]));
+        let _array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9:any[] = [];        for(let v_b8b9e66f_efd2_571e_966f_1eef7598c1d5 of inArray[3]){
+            _array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9.push(v_b8b9e66f_efd2_571e_966f_1eef7598c1d5);
+        }
+        _argv_de916e71_7fdb_3c5f_9033_9a7783aa8d83.push(_array_b978d29b_f3bd_5d44_83cd_e1f7a947c9e9);
         var rsp = this.try_get_and_del_get_quest_shop_data_cb(uuid);
         if (rsp && rsp.event_get_quest_shop_data_handle_cb) {
             rsp.event_get_quest_shop_data_handle_cb.apply(null, _argv_de916e71_7fdb_3c5f_9033_9a7783aa8d83);

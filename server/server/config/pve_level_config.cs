@@ -10,7 +10,6 @@ namespace config
     public class PVELevelConfig
     {
         public int ID;
-        public List<int> EventID;
         public List<int> Level;
 
         public static Dictionary<int, PVELevelConfig> Load(string path)
@@ -37,15 +36,6 @@ namespace config
             {
                 var pec = new PVELevelConfig();
                 pec.ID = (int)o["ID"];
-                var eventIDs = (string)o["EventID"];
-                if (!string.IsNullOrEmpty(eventIDs))
-                {
-                    pec.EventID = eventIDs.Split(';').Select(int.Parse).ToList();
-                }
-                else
-                {
-                    pec.EventID = new List<int>();
-                }
                 var levels = (string)o["Level"];
                 if ( (!string.IsNullOrEmpty(levels)))
                 {
