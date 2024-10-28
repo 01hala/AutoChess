@@ -1213,21 +1213,18 @@ namespace Player
             {
                 if (config.Config.PVEEventConfigs.TryGetValue(eventid, out var cfg))
                 {
-                    if (config.Config.PVEEnemyConfigs.TryGetValue(cfg.RoleID, out PVEEnemyConfig ecfg))
-                    {
-                        if (config.Config.RoleConfigs.TryGetValue(ecfg.RoleID, out RoleConfig rcfg))
-                        { 
-                            var r = new ShopRole();
+                    if (config.Config.RoleConfigs.TryGetValue(cfg.RoleID, out RoleConfig rcfg))
+                    { 
+                        var r = new ShopRole();
 
-                            r.RoleID = ecfg.RoleID;
-                            r.Level = ecfg.RoleLevel;
-                            r.SkillID = rcfg.SkillID;
-                            r.HP = ecfg.RoleHP;
-                            r.Attack = ecfg.RoleAttack;
-                            r.equipID = cfg.RoleEquip;
+                        r.RoleID = cfg.RoleID;
+                        r.Level = cfg.RoleLevel;
+                        r.SkillID = rcfg.SkillID;
+                        r.HP = cfg.RoleHP;
+                        r.Attack = cfg.RoleAttack;
+                        r.equipID = cfg.RoleEquip;
 
-                            BattleShopPlayer.ShopData.SaleRoleList[5] = r;
-                        }
+                        BattleShopPlayer.ShopData.SaleRoleList[5] = r;
                     }
                 }
             }
