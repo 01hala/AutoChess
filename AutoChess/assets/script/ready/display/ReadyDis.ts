@@ -164,7 +164,7 @@ export class ReadyDis
                 {
                     GameManager.Instance.guide.step++;
                 }
-                if(enmus.GameMode.PVE ==  this.readyData.gameMode)
+                if(enmus.GameMode.PVE == this.readyData.gameMode && this.readyData.evnets)
                 {
                     console.log("OpenChooseTag");
                     this.panelNode.dispatchEvent(new SendMessage('OpenChooseTag',true,{events:this.readyData.evnets}));

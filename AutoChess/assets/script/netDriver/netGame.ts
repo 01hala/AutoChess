@@ -365,17 +365,17 @@ export class netGame {
 
 
      //获取当前状态
-     public cb_get_quest_shop_data(self:common.UserBattleData , shop_info:common.ShopData)
+     public cb_get_quest_shop_data(self:common.UserBattleData , shop_info:common.ShopData , events:number[])
      {
-        this.cb_start_quest_battle_ready(self,shop_info,null);
+        this.cb_start_quest_battle_ready(self,shop_info,events);
      }
      public get_quest_shop_data() 
      {
          return new Promise((resolve,reject)=>
          {
-             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((self,shop_info)=>
+             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((self,shop_info,events)=>
              {
-                 this.cb_get_quest_shop_data(self,shop_info);
+                 this.cb_get_quest_shop_data(self,shop_info,events);
                  resolve(null);
              },(err)=>
              {
