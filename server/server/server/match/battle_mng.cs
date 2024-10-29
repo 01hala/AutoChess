@@ -84,9 +84,9 @@ namespace Match
             }
         }
 
-        public void start_round(int stage)
+        public void start_round(int stage, int addCoin)
         {
-            BattleShopPlayer.BattleData.coin = 10 + BattleShopPlayer.bankCpin;
+            BattleShopPlayer.BattleData.coin = 10 + BattleShopPlayer.bankCpin + addCoin;
             BattleShopPlayer.bankCpin = 0;
 
             _reset();

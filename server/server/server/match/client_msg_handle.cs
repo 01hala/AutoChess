@@ -54,7 +54,7 @@ namespace Match
             }
         }
 
-        private async void Peak_Strength_Module_on_confirm_peak_strength_victory(BattleVictory is_victory)
+        private async void Peak_Strength_Module_on_confirm_peak_strength_victory(BattleVictory is_victory, int addCoin)
         {
             var rsp = peak_Strength_Module.rsp as peak_strength_confirm_peak_strength_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -174,7 +174,7 @@ namespace Match
             }
         }
 
-        private async void Plan_Module_on_confirm_round_victory(BattleVictory is_victory)
+        private async void Plan_Module_on_confirm_round_victory(BattleVictory is_victory, int addCoin)
         {
             var rsp = plan_Module.rsp as plan_confirm_round_victory_rsp;
             var uuid = Hub.Hub._gates.current_client_uuid;
@@ -238,7 +238,7 @@ namespace Match
                     }
                     else
                     {
-                        _player.start_round(_player.baseStage());
+                        _player.start_round(_player.baseStage(), addCoin);
                         _player.BattleShopPlayer.do_skill(_player.baseStage());
 
                         _player.BattleClientCaller.get_client(_player.ClientUUID).battle_plan_refresh(_player.BattleShopPlayer.BattleData, _player.BattleShopPlayer.ShopData, _player.BattleShopPlayer.check_fetters());

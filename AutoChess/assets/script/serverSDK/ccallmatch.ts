@@ -994,11 +994,12 @@ export class plan_hubproxy
         return cb_end_round_obj;
     }
 
-    public confirm_round_victory(is_victory:common.BattleVictory){
+    public confirm_round_victory(is_victory:common.BattleVictory, addCoin:number){
         let uuid_e5597e65_791a_5923_ac90_94a6aa039d4f = Math.round(this.uuid_d9e0c25f_1008_3739_9ff9_86e6a3421324++);
 
         let _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0:any[] = [uuid_e5597e65_791a_5923_ac90_94a6aa039d4f];
         _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0.push(is_victory);
+        _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0.push(addCoin);
         this._client_handle.call_hub(this.hub_name_d9e0c25f_1008_3739_9ff9_86e6a3421324, "plan_confirm_round_victory", _argv_22132c31_7fe4_3f20_affe_f0c3ca2172f0);
         let cb_confirm_round_victory_obj = new plan_confirm_round_victory_cb(uuid_e5597e65_791a_5923_ac90_94a6aa039d4f, rsp_cb_plan_handle);
         if (rsp_cb_plan_handle){
@@ -1206,11 +1207,12 @@ export class peak_strength_hubproxy
         return cb_start_peak_strength_obj;
     }
 
-    public confirm_peak_strength_victory(is_victory:common.BattleVictory){
+    public confirm_peak_strength_victory(is_victory:common.BattleVictory, addCoin:number){
         let uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8 = Math.round(this.uuid_0e1cc942_2dde_33a7_af7d_c329c48de74b++);
 
         let _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9:any[] = [uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8];
         _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9.push(is_victory);
+        _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9.push(addCoin);
         this._client_handle.call_hub(this.hub_name_0e1cc942_2dde_33a7_af7d_c329c48de74b, "peak_strength_confirm_peak_strength_victory", _argv_cd0e12ec_961a_34c5_9b39_4941f3e29bc9);
         let cb_confirm_peak_strength_victory_obj = new peak_strength_confirm_peak_strength_victory_cb(uuid_3a6fe6e2_1f35_5171_8b27_a700195b35c8, rsp_cb_peak_strength_handle);
         if (rsp_cb_peak_strength_handle){

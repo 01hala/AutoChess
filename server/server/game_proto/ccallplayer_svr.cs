@@ -690,13 +690,14 @@ namespace Abelkhan
             rsp = null;
         }
 
-        public event Action<BattleVictory> on_confirm_quest_victory;
+        public event Action<BattleVictory, Int32> on_confirm_quest_victory;
         public void confirm_quest_victory(IList<MsgPack.MessagePackObject> inArray){
             var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
             var _is_victory = (BattleVictory)((MsgPack.MessagePackObject)inArray[1]).AsInt32();
+            var _addCoin = ((MsgPack.MessagePackObject)inArray[2]).AsInt32();
             rsp = new player_quest_confirm_quest_victory_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
             if (on_confirm_quest_victory != null){
-                on_confirm_quest_victory(_is_victory);
+                on_confirm_quest_victory(_is_victory, _addCoin);
             }
             rsp = null;
         }

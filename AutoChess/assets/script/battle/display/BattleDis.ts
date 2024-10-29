@@ -197,12 +197,13 @@ export class BattleDis
                 await sleep(500);
                 if(enums.GameMode.PVP == this.battleCentre.gamemode)
                 {
-                    netSingleton.game.confirm_match_round_victory(is_victory);
+                    netSingleton.game.confirm_match_round_victory(is_victory, this.battleCentre.addCoin);
                 }
                 else
                 {
-                    netSingleton.game.confirm_quest_victory(is_victory);
+                    netSingleton.game.confirm_quest_victory(is_victory, this.battleCentre.addCoin);
                 }
+                this.battleCentre.addCoin = 0;
             }
             
         }

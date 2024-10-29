@@ -462,7 +462,7 @@
         "desc": "攻击前\t下一个休整开始时，获得+1金币。每场战斗最多生效2次",
         "Priority": "Hight",
         "EffectTime": 23,
-        "Effect": 5,
+        "Effect": 30,
         "ObjCount": 0,
         "EffectScope": 0,
         "ObjDirection": 0,

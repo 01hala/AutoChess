@@ -293,9 +293,9 @@ export class netGame {
         });
     }
 
-    public confirm_match_round_victory(is_victory:common.BattleVictory) 
+    public confirm_match_round_victory(is_victory:common.BattleVictory, addCoin:number) 
     {
-        netSingleton.battleshop.c_match.get_hub(this.match_name).confirm_round_victory(is_victory).callBack(() =>
+        netSingleton.battleshop.c_match.get_hub(this.match_name).confirm_round_victory(is_victory, addCoin).callBack(() =>
         {
             console.log("confirm_round_victory succeed!");
         }, () =>
@@ -573,11 +573,11 @@ export class netGame {
     }
     //向服务器发送对战信息
     public cb_confirm_quest_victory:(state:player_login.em_quest_state) => void;
-    public confirm_quest_victory(is_victory:common.BattleVictory) 
+    public confirm_quest_victory(is_victory:common.BattleVictory, addCoin:number) 
     {
         return new Promise((resolve,reject)=>
         {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).confirm_quest_victory(is_victory).callBack((state)=>
+            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).confirm_quest_victory(is_victory, addCoin).callBack((state)=>
             {
                 console.log("confirm_quest_victory succeed!");
 

@@ -1148,7 +1148,7 @@ namespace Player
             PVELevelIndex = 0;
         }
 
-        public void StartPVERound()
+        public void StartPVERound(int addCoin)
         {
             foreach (var r in BattleShopPlayer.BattleData.RoleList)
             {
@@ -1164,7 +1164,7 @@ namespace Player
 
             if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
             {
-                BattleShopPlayer.BattleData.coin = cfg.Gold + BattleShopPlayer.bankCpin;
+                BattleShopPlayer.BattleData.coin = cfg.Gold + BattleShopPlayer.bankCpin + addCoin;
                 BattleShopPlayer.bankCpin = 0;
             }
 
@@ -1195,7 +1195,7 @@ namespace Player
             if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
             {
                 PVELevelCfg = cfg;
-                StartPVERound();
+                StartPVERound(0);
 
                 if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var rcfg))
                 {

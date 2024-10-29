@@ -167,7 +167,7 @@ namespace Player
             Log.Log.trace("on_get_quest_shop_data end!");
         }
 
-        private async void Player_quest_Module_on_confirm_quest_victory(BattleVictory is_victory)
+        private async void Player_quest_Module_on_confirm_quest_victory(BattleVictory is_victory, int addCoin)
         {
             Log.Log.trace("on_confirm_quest_victory begin!");
 
@@ -201,7 +201,7 @@ namespace Player
                         else
                         {
                             rsp.rsp(em_quest_state.next_level);
-                            _data.Data.StartPVERound();
+                            _data.Data.StartPVERound(addCoin);
                         }
                     }
                     else

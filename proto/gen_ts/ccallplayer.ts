@@ -1508,11 +1508,12 @@ export class player_quest_hubproxy
         return cb_start_quest_battle_obj;
     }
 
-    public confirm_quest_victory(is_victory:common.BattleVictory){
+    public confirm_quest_victory(is_victory:common.BattleVictory, addCoin:number){
         let uuid_874935e4_2123_57e0_9c8b_252cc28d4e7c = Math.round(this.uuid_9d8491d3_2061_3c89_a7c5_ff8692e778c5++);
 
         let _argv_198411f5_7bbd_3504_8bea_49ff5f26c069:any[] = [uuid_874935e4_2123_57e0_9c8b_252cc28d4e7c];
         _argv_198411f5_7bbd_3504_8bea_49ff5f26c069.push(is_victory);
+        _argv_198411f5_7bbd_3504_8bea_49ff5f26c069.push(addCoin);
         this._client_handle.call_hub(this.hub_name_9d8491d3_2061_3c89_a7c5_ff8692e778c5, "player_quest_confirm_quest_victory", _argv_198411f5_7bbd_3504_8bea_49ff5f26c069);
         let cb_confirm_quest_victory_obj = new player_quest_confirm_quest_victory_cb(uuid_874935e4_2123_57e0_9c8b_252cc28d4e7c, rsp_cb_player_quest_handle);
         if (rsp_cb_player_quest_handle){
