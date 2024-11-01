@@ -327,7 +327,7 @@ export class login extends Component {
                     await singleton.netSingleton.battle.SetGameVictory(false);
                 }
                 console.log("返回主界面");
-                this.BackMainInterface();
+                this.BackMainInterface("VenturePanel");
             }
             if(player_login.em_quest_state.next_quest == state)
             {
@@ -335,9 +335,8 @@ export class login extends Component {
                 {
                     await singleton.netSingleton.battle.SetGameVictory(true);
                 }
-
                 console.log("返回主界面");
-                this.BackMainInterface();
+                this.BackMainInterface("VenturePanel");
             }
         }
     }
@@ -412,7 +411,7 @@ export class login extends Component {
         });
     }
     
-    public async BackMainInterface()
+    public async BackMainInterface(panelName?:string)
     {
         console.log("BackMainInterface begin!");
 
@@ -441,6 +440,21 @@ export class login extends Component {
             singleton.netSingleton.player.get_user_data();
             singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
             this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
+
+            // if ("VenturePanel" === panelName)
+            // {
+
+            // }
+
+            switch(panelName)
+            {
+                case "VenturePanel":
+                    {
+                        singleton.netSingleton.mainInterface.venturePanel.active=true;
+                        singleton.netSingleton.mainInterface.panelNode.active=false;
+                    }
+                    break;
+            }
 
             console.log("Back Main Interface!");
             clearInterval(this.interval);

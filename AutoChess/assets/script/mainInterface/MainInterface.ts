@@ -51,12 +51,13 @@ export class MainInterface
     //开始界面
     public startGamePanel:Node;
     //商店界面
-    private storePanel:Node;
+    public storePanel:Node;
     //牌库界面
-    private cardLibPanel:Node;
+    public cardLibPanel:Node;
     //卡组编辑界面
-    private cardEditorPanel:Node;
-    private venturePanel:Node;
+    public cardEditorPanel:Node;
+    //冒险模式界面
+    public venturePanel:Node;
     //各区域按钮
     private startBtn:Node;//匹配按钮
     private storeBtn:Node;//商店按钮

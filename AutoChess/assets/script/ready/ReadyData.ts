@@ -9,7 +9,6 @@ import * as common from "../battle/AutoChessBattle/common"
 import { ShopProp, ShopRole } from '../battle/AutoChessBattle/common';
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
-import * as enums from '../other/enums';
 import * as enmus from '../other/enums';
 const { ccclass, property } = _decorator;
 
