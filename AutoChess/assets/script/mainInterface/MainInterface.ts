@@ -176,7 +176,13 @@ export class MainInterface
         
     }
 
-    public destory() {
+    public destory() 
+    {
+        this.startGamePanel.destroy();
+        this.storePanel.destroy();
+        this.cardLibPanel.destroy();
+        this.cardEditorPanel.destroy();
+        this.venturePanel.destroy();
         this.panelNode.destroy();
     }
 

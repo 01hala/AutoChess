@@ -37,6 +37,7 @@ export class ReadyData
 
     public constructor(battle_info:common.UserBattleData, self:common.ShopData , gameMode:enmus.GameMode , fetters_info?:common.Fetters[] , events?:number[]) 
     {
+        ReadyData.roles=[];
         this.coin = battle_info.coin;
 
         console.log("Current player stage:"+battle_info.stage+" gameMode:"+gameMode);

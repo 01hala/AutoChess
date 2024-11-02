@@ -171,15 +171,22 @@ export class EffectSpine extends Component
             {
                 try
                 {
-                    if (enums.SpecialEffect.Shields == _effect && this.shieldSkele.node.active)
+                    if (enums.SpecialEffect.Shields == _effect)
                     {
-                        let anims = this.shieldSkele.skeletonData.getAnimsEnum();
-                        this.shieldSkele.setAnimation(0, String(anims[2]), true);
-                        this.shieldSkele.timeScale=-1;
-                        this.shieldSkele.setCompleteListener((trackEntry) =>
+                        if(null == this.shieldSkele.node)
                         {
-                            this.shieldSkele.node.active=false;
-                        });
+                            this.shieldSkele=this.node.getChildByPath("Shield").getComponent(sp.Skeleton);
+                        }
+                        if(this.shieldSkele.node.active)
+                        {
+                            let anims = this.shieldSkele.skeletonData.getAnimsEnum();
+                            this.shieldSkele.setAnimation(0, String(anims[2]), true);
+                            this.shieldSkele.timeScale=-1;
+                            this.shieldSkele.setCompleteListener((trackEntry) =>
+                            {
+                                this.shieldSkele.node.active=false;
+                            });
+                        }
                     }
                     resolve();
                 }

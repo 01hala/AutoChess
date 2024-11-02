@@ -371,17 +371,19 @@ export class netGame {
      }
      public get_quest_shop_data() 
      {
-         return new Promise((resolve,reject)=>
+         return new Promise((resolve, reject) =>
          {
-             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((self,shop_info,events)=>
+             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((battle_info, shop_info, events) =>
              {
-                 this.cb_get_quest_shop_data(self,shop_info,events);
+                 this.cb_quest_shop_info(shop_info);
+                 this.cb_quest_battle_info(battle_info);
+                 this.cb_get_quest_shop_data(battle_info, shop_info, events);
                  resolve(null);
-             },(err)=>
+             }, (err) =>
              {
                  console.log("get_quest_shop_data err:", err);
                  reject("error");
-             }).timeout(3000,()=>
+             }).timeout(3000, () =>
              {
                  console.log("get_quest_shop_data timeout");
                  reject("timeout");
@@ -398,10 +400,10 @@ export class netGame {
         {
             try
             {
-                this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop_ready().callBack((self, shop_info , events) =>
+                this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop_ready().callBack((battle_info, shop_info , events) =>
                     {
                         console.log("pve events:",events);
-                        this.cb_start_quest_battle_ready(self, shop_info , events);
+                        this.cb_start_quest_battle_ready(battle_info, shop_info , events);
                         resolve("finish");
                     }, (err) =>
                     {

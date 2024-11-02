@@ -76,7 +76,7 @@ export class ReadyDis
  * 2024/03/07
  * 让加载更平顺
  */
-    public async start(_father:Node,_value:common.UserBattleData|number[],_callBack:(event?:()=>void)=>void) 
+    public async start(_father:Node,_data:common.UserBattleData|number[],_callBack:(event?:()=>void)=>void) 
     {
         try
         {
@@ -126,9 +126,9 @@ export class ReadyDis
             this.shopMask.setSiblingIndex(90);
             this.shopMask.active=false;
 
-            if(_value instanceof common.UserBattleData)
+            if(_data instanceof common.UserBattleData)
             {
-                if (_value.coin >= 25)
+                if (_data.coin >= 25)
                 {
                     singleton.netSingleton.game.achievement_gold25_ntf();
                 }
@@ -141,14 +141,16 @@ export class ReadyDis
                 this.Init(_father);
                 //准备开始
                 
-                console.log("_________battledata:",Object.prototype.toString.call(_value).replace(/^\[object (\S+)\]$/, '$1'));
-                if(_value instanceof Float64Array)
+                console.log("_________battledata:",Object.prototype.toString.call(_data).replace(/^\[object (\S+)\]$/, '$1'));
+                if(_data instanceof Float64Array)
                 {
+                    console.log("_battleData is Array");
                     await this.Restore();
                 }
                 else
                 {
-                    let battleData=_value as common.UserBattleData;
+                    let battleData=_data as common.UserBattleData;
+                    console.log("_battleData:",battleData.RoleList);
                     if(battleData.round>1)
                     {
                         await this.Restore(battleData);
