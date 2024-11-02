@@ -184,12 +184,12 @@ export class BattleDis
             {
                 let heath=(is_victory == BattleVictory.victory) ? this.battleCentre.faild : this.battleCentre.faild-1;
                 settlement=true;
-                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory, GameMode:this.battleCentre.gamemode, hpNum: heath , isAddTime : addTime}));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory, GameMode:this.battleCentre.gamemode, addCoin:this.battleCentre.addCoin, hpNum: heath , isAddTime : addTime}));
             }
             else if (is_victory == BattleVictory.tie) 
             {
                 settlement=true;
-                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory, GameMode:this.battleCentre.gamemode, hpNum: this.battleCentre.faild , isAddTime : addTime}));
+                this.panelNode.dispatchEvent(new SendMessage('OpenSettlement',true,{outcome:is_victory, GameMode:this.battleCentre.gamemode, addCoin:this.battleCentre.addCoin, hpNum: this.battleCentre.faild , isAddTime : addTime}));
             }
 
             if(!settlement)

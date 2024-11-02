@@ -153,9 +153,16 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    if (config.Config.PVERoundConfigs.TryGetValue(_data.Data.PVELevelCfg.Level[_data.Data.PVELevelIndex], out var rcfg))
+                    if (_data.Data.PVELevelIndex < _data.Data.PVELevelCfg.Level.Count)
                     {
-                        rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, rcfg.EventID);
+                        if (config.Config.PVERoundConfigs.TryGetValue(_data.Data.PVELevelCfg.Level[_data.Data.PVELevelIndex], out var rcfg))
+                        {
+                            rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, rcfg.EventID);
+                        }
+                    }
+                    else
+                    {
+                        rsp.err((int)em_error.not_exist_quest_level);
                     }
                 }
             }

@@ -51,6 +51,7 @@ export class Settlement extends Component
     private isVictory:BattleVictory;
     private GameMode:enums.GameMode;
     private isAddTime:boolean;
+    private addCoin:number;
 
     protected onLoad(): void 
     {
@@ -82,7 +83,7 @@ export class Settlement extends Component
         }
     }
 
-    public OpenSettlementBoard(_isVictory:BattleVictory, GameMode:enums.GameMode, _hpNum:number,_isAddTime:boolean=false)
+    public OpenSettlementBoard(_isVictory:BattleVictory, GameMode:enums.GameMode, addCoin:number, _hpNum:number,_isAddTime:boolean=false)
     {
         console.log("show settlement");
         //this.node.getComponent(BlockInputEvents).enabled=true;
@@ -90,6 +91,7 @@ export class Settlement extends Component
         this.isVictory=_isVictory;
         this.GameMode = GameMode;
         this.isAddTime=_isAddTime;
+        this.addCoin = addCoin;
         this.midArea.active=true;
         console.log(_hpNum);
         for(let i=0;i<_hpNum;i++)
@@ -172,11 +174,11 @@ export class Settlement extends Component
                 //返回准备界面代码写这
                 if(enums.GameMode.PVP == this.GameMode)
                 {
-                    netSingleton.game.confirm_match_round_victory(this.isVictory);
+                    netSingleton.game.confirm_match_round_victory(this.isVictory, this.addCoin);
                 }
                 else
                 {
-                    netSingleton.game.confirm_quest_victory(this.isVictory);
+                    netSingleton.game.confirm_quest_victory(this.isVictory, this.addCoin);
                 }
             }
             
