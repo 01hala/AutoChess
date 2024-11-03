@@ -133,6 +133,7 @@ struct UserData
 	UserRank rank;				 // 段位
 	int64 rankTimeTmp;			 // last计算段位时间，每周刷新
 	int32 quest;				 // 主线任务进度
+	int32 PVELevelIndex;		 // 任务关卡进度
 	Bag bag;				     // 背包
 	GuideStep guideStep;		 // 新手引导进度
 	int32[] RoleList; 		     // 已有角色列表

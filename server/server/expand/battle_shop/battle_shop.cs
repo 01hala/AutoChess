@@ -14,6 +14,10 @@ namespace battle_shop
         private UserBattleData battleData;
         public UserBattleData BattleData
         {
+            set
+            {
+                battleData = value;
+            }
             get
             {
                 return battleData;
@@ -62,6 +66,10 @@ namespace battle_shop
         private battle_client_caller caller;
         public battle_client_caller BattleClientCaller
         {
+            set
+            {
+                caller = value;
+            }
             get
             {
                 return caller;

@@ -503,6 +503,7 @@ export class UserData
     public rank : UserRank = UserRank.BlackIron;
     public rankTimeTmp : number = 0;
     public quest : number = 0;
+    public PVELevelIndex : number = 0;
     public bag : Bag | null = null;
     public guideStep : GuideStep = GuideStep.None;
     public RoleList : number[] = [];
@@ -550,6 +551,9 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "quest"){
             _struct.quest = val as number;
+        }
+        else if (key === "PVELevelIndex"){
+            _struct.PVELevelIndex = val as number;
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);
