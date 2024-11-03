@@ -371,25 +371,22 @@ export class netGame {
      }
      public get_quest_shop_data() 
      {
-        return new Promise((resolve, reject) =>
-        {
-            this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((battle_info, shop_info, events) =>
-            {
-                console.log("get_quest_shop_data battle_info:", JSON.stringify(battle_info));
-                this.cb_quest_shop_info(shop_info);
-                this.cb_quest_battle_info(battle_info);
-                this.cb_get_quest_shop_data(battle_info, shop_info, events);
-                resolve(null);
-            }, (err) =>
-            {
-                console.log("get_quest_shop_data err:", err);
-                reject("error");
-            }).timeout(3000, () =>
-            {
-                console.log("get_quest_shop_data timeout");
-                reject("timeout");
-            });
-        });
+         return new Promise((resolve, reject) =>
+         {
+             this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((battle_info, shop_info, events) =>
+             {
+                 this.cb_get_quest_shop_data(battle_info, shop_info, events);
+                 resolve(null);
+             }, (err) =>
+             {
+                 console.log("get_quest_shop_data err:", err);
+                 reject("error");
+             }).timeout(3000, () =>
+             {
+                 console.log("get_quest_shop_data timeout");
+                 reject("timeout");
+             });
+         });
      }
  
 
