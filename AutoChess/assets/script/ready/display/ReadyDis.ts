@@ -150,11 +150,12 @@ export class ReadyDis
                 else
                 {
                     let battleData=_data as common.UserBattleData;
-                    console.log("_battleData:",battleData.RoleList);
-                    if(battleData.round>1)
-                    {
-                        await this.Restore(battleData);
-                    }
+                    console.log(battleData.RoleList);
+                    await this.Restore(battleData);
+                    // if (battleData.round > 1)
+                    // {
+                    //     await this.Restore(battleData);
+                    // }
                 }
                 //this.coinText.string=""+this.ready.coin;
                 //await this.RefreshShop()
@@ -489,7 +490,7 @@ export class ReadyDis
         }
         else
         {
-            singleton.netSingleton.game.get_quest_shop_data();
+            //singleton.netSingleton.game.get_quest_shop_data();
         }
     }
 

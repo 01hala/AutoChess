@@ -375,8 +375,6 @@ export class netGame {
          {
              this.c_player_quest_caller.get_hub(netSingleton.player.player_name).get_quest_shop_data().callBack((battle_info, shop_info, events) =>
              {
-                 this.cb_quest_shop_info(shop_info);
-                 this.cb_quest_battle_info(battle_info);
                  this.cb_get_quest_shop_data(battle_info, shop_info, events);
                  resolve(null);
              }, (err) =>
