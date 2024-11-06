@@ -76,71 +76,28 @@ export class ReadyDis
  * 2024/03/07
  * 让加载更平顺
  */
-    public async start(_father:Node,_data:common.UserBattleData|number[],_callBack:(event?:()=>void)=>void) 
+    public async start(_father:Node,_data:common.UserBattleData|number[],_callBack:(_event?:()=>void)=>void) 
     {
         try
         {
             console.log("ReadyDis start!");
-
             this.father=_father;
-            //主要界面
-            let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
-            this.panelNode = instantiate(panel);
-            //father.addChild(this.panelNode);
-            //等待界面
-            panel=await BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting") as Prefab;
-            this.waitingPanel=instantiate(panel);
-            this.waitingPanel.setParent(this.panelNode);
-            this.waitingPanel.setSiblingIndex(100);
-            //金币预制体
-            this.coinPre=await BundleManager.Instance.loadAssetsFromBundle("Parts","CoinPre") as Prefab;
-            //操作区域
-            this.shopArea=this.panelNode.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
-            this.roleArea=this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
-            this.PauseBoard=this.panelNode.getChildByPath("Pause");
-            //图形适配获取整个区域
-            this.cameraNode = this.father.getChildByName('Camera');
-            this.topArea=this.panelNode.getChildByPath("State/TopArea");
-            let safeHeigh = SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height;
-            let menuBtnHeight = SdkManager.SDK.getSystemInfo().menuBtn.bottom;
-            let top = safeHeigh > menuBtnHeight ? safeHeigh : menuBtnHeight;
-            this.topArea.getComponent(Widget).top = top + 40;
-
-            //文本
-            this.panelNode.getChildByPath("State").setSiblingIndex(100);
-            this.coinText=this.panelNode.getChildByPath("State/TopArea/CoinInfo/RichText").getComponent(RichText);
-            this.heathText=this.panelNode.getChildByPath("State/TopArea/HpInfo/RichText").getComponent(RichText);
-            this.roundText=this.panelNode.getChildByPath("State/TopArea/RoundInfo/RichText").getComponent(RichText);
-            this.trophyText=this.panelNode.getChildByPath("State/TopArea/TrophyInfo/RichText").getComponent(RichText);
-            //技能发动效果
-            // this.launchSkillEffect = this.panelNode.getChildByName("LaunchSkillEffect");
-            // this.launchSkillEffect.setSiblingIndex(99);
-            // this.launchSkillEffect.active = false;
-
-            this.roleInfoNode=this.panelNode.getChildByPath("State/TopArea/RoleIntroduce");
-            this.roleInfoNode.active=false;
-
-            this.shopMask=this.panelNode.getChildByPath("Mask");
-            //this.shopMask.setPosition(new Vec3(0,this.shopArea.node.position.y+240,0));
-            //this.shopMask.getComponent(Widget).bottom=this.shopArea.node.getComponent(Widget).bottom+310;
-            this.shopMask.setSiblingIndex(90);
-            this.shopMask.active=false;
-
-            if(_data instanceof common.UserBattleData)
+            await this.load();
+            this.InterfaceAdjust();//适配
+            //注册回调
+            this.RegCallBack();
+            if (enmus.GameMode.PVP == this.readyData.gameMode)
             {
-                if (_data.coin >= 25)
-                {
-                    singleton.netSingleton.game.achievement_gold25_ntf();
-                }
+                this.RegPvpCallBack();
             }
-            
-
-            _callBack(async ()=>
+            else if (enmus.GameMode.PVE == this.readyData.gameMode)
+            {
+                this.RegPveCallBack();
+            }
+            await _callBack(async ()=>
             {
                 console.log("ReadyDis start _callBack!");
-                this.Init(_father);
                 //准备开始
-                
                 console.log("_________battledata:",Object.prototype.toString.call(_data).replace(/^\[object (\S+)\]$/, '$1'));
                 if(_data instanceof Float64Array)
                 {
@@ -152,32 +109,86 @@ export class ReadyDis
                     let battleData=_data as common.UserBattleData;
                     console.log(battleData.RoleList);
                     await this.Restore(battleData);
-                    // if (battleData.round > 1)
-                    // {
-                    //     await this.Restore(battleData);
-                    // }
                 }
-                //this.coinText.string=""+this.ready.coin;
-                //await this.RefreshShop()
                 this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(),this.readyData.GetStage());
                 //隐藏等待界面
-                this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
-                this.waitingPanel.active = false;
+                //this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
+                //this.waitingPanel.active = false;
                 if (GameManager.Instance.guide)
                 {
                     GameManager.Instance.guide.step++;
                 }
-                if(enmus.GameMode.PVE == this.readyData.gameMode && this.readyData.evnets.length > 0)
-                {
-                    console.log("OpenChooseTag");
-                    this.panelNode.dispatchEvent(new SendMessage('OpenChooseTag',true,{events:this.readyData.evnets}));
-                }
+                login.panelOnReady=true;
+                this.Init(_father);
             });
-            
+
+            if (this.readyData.GetCoins() > 25)
+            {
+                singleton.netSingleton.game.achievement_gold25_ntf();
+            }
+
+            if (enmus.GameMode.PVE == this.readyData.gameMode && this.readyData.evnets.length > 0)
+            {
+                console.log("OpenChooseTag");
+                this.panelNode.dispatchEvent(new SendMessage('OpenChooseTag', true, { events: this.readyData.evnets }));
+            }
         }
         catch(error)
         {
             console.error("ReadyDis 里的 start 错误 err:",error);
+        }
+    }
+
+    async load()
+    {
+        //主要界面
+        let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
+        this.panelNode = instantiate(panel);
+        //等待界面
+        // panel = await BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting") as Prefab;
+        // this.waitingPanel = instantiate(panel);
+        // this.waitingPanel.setParent(this.panelNode);
+        // this.waitingPanel.setSiblingIndex(100);
+        //金币预制体
+        this.coinPre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "CoinPre") as Prefab;
+        //操作区域
+        this.shopArea = this.panelNode.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
+        this.roleArea = this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
+        this.PauseBoard = this.panelNode.getChildByPath("Pause");
+        //图形适配获取整个区域
+        this.cameraNode = this.father.getChildByName('Camera');
+        this.topArea = this.panelNode.getChildByPath("State/TopArea");
+        let safeHeigh = SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height;
+        let menuBtnHeight = SdkManager.SDK.getSystemInfo().menuBtn.bottom;
+        let top = safeHeigh > menuBtnHeight ? safeHeigh : menuBtnHeight;
+        this.topArea.getComponent(Widget).top = top + 40;
+        //文本
+        this.panelNode.getChildByPath("State").setSiblingIndex(100);
+        this.coinText = this.panelNode.getChildByPath("State/TopArea/CoinInfo/RichText").getComponent(RichText);
+        this.heathText = this.panelNode.getChildByPath("State/TopArea/HpInfo/RichText").getComponent(RichText);
+        this.roundText = this.panelNode.getChildByPath("State/TopArea/RoundInfo/RichText").getComponent(RichText);
+        this.trophyText = this.panelNode.getChildByPath("State/TopArea/TrophyInfo/RichText").getComponent(RichText);
+        //技能发动效果
+        // this.launchSkillEffect = this.panelNode.getChildByName("LaunchSkillEffect");
+        // this.launchSkillEffect.setSiblingIndex(99);
+        // this.launchSkillEffect.active = false;
+        //信息面板
+        this.roleInfoNode = this.panelNode.getChildByPath("State/TopArea/RoleIntroduce");
+        this.roleInfoNode.active = false;
+        //商店遮罩
+        this.shopMask = this.panelNode.getChildByPath("Mask");
+        //this.shopMask.setPosition(new Vec3(0,this.shopArea.node.position.y+240,0));
+        //this.shopMask.getComponent(Widget).bottom=this.shopArea.node.getComponent(Widget).bottom+310;
+        this.shopMask.setSiblingIndex(90);
+        this.shopMask.active = false;
+
+        //羁绊信息框
+        let tNode = this.panelNode.getChildByPath("Shop/ShopArea/FetterBG/FetterArea");
+        for (let i = 1; i <= 6; i++)
+        {
+            let t = tNode.getChildByName("FettersIcon_" + i);
+            t.active = false;
+            this.fetters.push(t);
         }
     }
 
@@ -186,25 +197,6 @@ export class ReadyDis
         try
         {
             console.log("ReadyDis Init begin!");
-            this.InterfaceAdjust();//适配
-            //注册回调
-            this.RegCallBack();
-            if(enmus.GameMode.PVP == this.readyData.gameMode)
-            {
-                this.RegPvpCallBack();
-            }
-            else if(enmus.GameMode.PVE == this.readyData.gameMode)
-            {
-                this.RegPveCallBack();
-            }
-            //羁绊信息框
-            let tNode = this.panelNode.getChildByPath("Shop/ShopArea/FetterBG/FetterArea");
-            for (let i = 1; i <= 6; i++)
-            {
-                let t = tNode.getChildByName("FettersIcon_" + i);
-                t.active = false;
-                this.fetters.push(t);
-            }
             //刷新按钮
             this.refreshBtn = this.panelNode.getChildByPath("Shop/ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK, () =>
@@ -356,11 +348,11 @@ export class ReadyDis
         {
             this.roleArea.rolesNode[target_role_index].getComponent(RoleIcon).Equipping(target_role, equip_id);
         }
-        //角色技能：更新商店
+        //跳本刷新角色
         singleton.netSingleton.game.cb_role_update_refresh_shop = (shop_info: common.ShopData) =>
         {
             this.readyData.SetShopData(shop_info);
-            this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage());
+            this.shopArea.AddItems(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage());
         };
         //角色技能：增加金币
         singleton.netSingleton.game.cb_add_coin = (coin: number) =>
@@ -468,7 +460,7 @@ export class ReadyDis
         };
         singleton.netSingleton.game.cb_select_quest_event=()=>
         {
-            this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage());
+            this.shopArea.AddItems(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage());
         }
     }
 

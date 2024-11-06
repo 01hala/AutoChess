@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Canvas, instantiate, sys, Game } from 'cc';
+import { _decorator, Component, Node, Canvas, instantiate, sys, Game, math, randomRange } from 'cc';
 import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
@@ -112,9 +112,9 @@ export class login extends Component {
         this.progressBar.active = true;
 
         this.interval=setInterval(()=>{
-            this._progress += 0.01;
+            this._progress += randomRange(0.01 , 0.1);
             this._setProgress(this._progress);
-        }, 800);
+        }, 300);
 
         await BundleManager.Instance.Preloading(()=>
         {
@@ -136,7 +136,7 @@ export class login extends Component {
         //登录进入主界面
         singleton.netSingleton.player.cb_player_login_sucess = async () => 
         {
-            this._progress += 0.3;
+            this._progress += 0.1;
             this._setProgress(this._progress);
 
             singleton.netSingleton.mainInterface = new MainInterface();
@@ -154,7 +154,6 @@ export class login extends Component {
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
-                //await sleep(100);
                 let checkReady = setInterval(() => 
                 {
                     if (login.panelOnReady)
@@ -168,7 +167,6 @@ export class login extends Component {
                     }
                 }, 100);
                 
-  
             });
 
             
@@ -236,7 +234,7 @@ export class login extends Component {
                 }
 
                 this._loading = new load.Loading();
-                this._setProgress = this._loading.load(this.bk.node);
+                this._setProgress = this._loading.load(this.ld.node);
 
                 setInterval(() =>
                 {
@@ -345,13 +343,13 @@ export class login extends Component {
     {
         console.log("start game!");
         this._progress = 0.1;
-        this._setProgress = this._loading.load(this.bk.node);
+        this._setProgress = this._loading.load(this.ld.node);
 
         this.interval = setInterval(() =>
         {
-            this._progress += 0.40;
+            this._progress += randomRange(0.01 , 0.1);
             this._setProgress(this._progress);
-        }, 800);
+        }, 100);
         singleton.netSingleton.mainInterface.destory();
         console.log("start singleton.netSingleton.ready!");
         if (null == singleton.netSingleton.ready)
@@ -365,17 +363,28 @@ export class login extends Component {
             //新的一局游戏
             let _readyData = new ReadyData(_battle_info, _shop_info, _gamemode, _fetters_info,events);
             singleton.netSingleton.ready = new ReadyDis(_readyData);
-            await singleton.netSingleton.ready.start(this.bk.node, _battle_info, async (event) =>
+            await singleton.netSingleton.ready.start(this.bk.node, _battle_info, async (_event) =>
             {
                 console.log("Start Ready callback!");
-                await sleep(2000);
-                this._setProgress(1.0);
                 this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
                 await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
-                event();
-                console.log("Start Ready sucess!");
-                this._loading.done();
-                clearInterval(this.interval);
+                await _event();
+                await sleep(2000);
+                let checkReady = setInterval(() => 
+                {
+                    if (login.panelOnReady)
+                    {
+                        this._setProgress(1.0);
+                        this._loading.done();
+                        login.panelOnReady = false;
+                        console.log("Ready!");
+                        clearInterval(this.interval);
+                        clearInterval(checkReady);
+                    }
+                }, 100);
+                // console.log("Start Ready sucess!");
+                // this._loading.done();
+                // clearInterval(this.interval);
             });
         }
     }
@@ -385,7 +394,7 @@ export class login extends Component {
         console.log("cb_battle start round!");
 
         this._progress = 0.1;
-        this._setProgress = this._loading.load(this.bk.node);
+        this._setProgress = this._loading.load(this.ld.node);
         this.interval = setInterval(() =>
         {
             this._progress += 0.30;
@@ -416,11 +425,11 @@ export class login extends Component {
         console.log("BackMainInterface begin!");
 
         this._progress=0.1;
-        this._setProgress = this._loading.load(this.bk.node);
+        this._setProgress = this._loading.load(this.ld.node);
         this.interval=setInterval(()=>{
-            this._progress += 0.2;
+            this._progress += randomRange(0.01 , 0.1);
             this._setProgress(this._progress);
-        }, 500);
+        }, 100);
 
         if(singleton.netSingleton.battle)
         {
@@ -434,17 +443,9 @@ export class login extends Component {
         }
         await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
         {
-            await sleep(3000);
-            this._setProgress(1.0);
-            this._loading.done();
-            singleton.netSingleton.player.get_user_data();
+            singleton.netSingleton.player.get_user_data(true);
             singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
             this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
-
-            // if ("VenturePanel" === panelName)
-            // {
-
-            // }
 
             switch(panelName)
             {
@@ -456,8 +457,20 @@ export class login extends Component {
                     break;
             }
 
-            console.log("Back Main Interface!");
-            clearInterval(this.interval);
+            await sleep(3000);
+
+            let checkReady = setInterval(() => 
+                {
+                    if (login.panelOnReady)
+                    {
+                        this._setProgress(1.0);
+                        this._loading.done();
+                        login.panelOnReady = false;
+                        console.log("Back Main Interface!");
+                        clearInterval(this.interval);
+                        clearInterval(checkReady);
+                    }
+                }, 100);
         });
 
         console.log("BackMainInterface end!");
