@@ -214,7 +214,7 @@ namespace Player
                     else
                     {
                         rsp.rsp(em_quest_state.faild);
-                        _data.Data.ClearPVEState();
+                        //_data.Data.ClearPVEState();
                     }
                 }
             }
@@ -457,7 +457,7 @@ namespace Player
             }
             catch (System.Exception ex)
             {
-                Log.Log.err($"Player_shop_Module_on_get_user_data err:{ex}");
+                Log.Log.err($"on_kill_role err:{ex}");
             }
 
             Log.Log.trace("on_kill_role end!");

@@ -207,7 +207,7 @@ export class ShopArea extends Component
                     newNode.setParent(this.panel);
                     newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
                     newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, roles[i].Level, 1, roles[i].IsFreeze);
-                    this.shopRoleNodes.push(newNode);
+                    this.shopRoleNodes[i] = newNode;
                 }
             }
         }
@@ -252,7 +252,7 @@ export class ShopArea extends Component
 
     async BuyRole(_index:number, _obj:Node ,_isMerge:boolean)
     {
-        console.log('buy Role');
+        console.log('buy Role this.shopRoleNodes:', this.shopRoleNodes);
         for(let i=0;i<this.shopRoleNodes.length;i++)
         {
             if(this.shopRoleNodes[i] == _obj)
