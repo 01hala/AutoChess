@@ -182,7 +182,7 @@ export class Guide extends Component
                     //this.pointer.active=true;
                     //this.pointer.setWorldPosition(this.tnode.worldPosition);
                     //this.tween=tween(this.pointer).to(1,{position:this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_0").worldPosition}).repeatForever().start();
-                    t=this.node.parent.getChildByPath("ReadyPanel/ShopArea").getComponent(ShopArea).shopRoles[0];
+                    t=this.node.parent.getChildByPath("ReadyPanel/ShopArea").getComponent(ShopArea).shopRoleNodes[0];
                     this.guideText.setPosition(new Vec3(0,-637.995,0));
                     this.guideText.getComponent(RichText).string="拖拽购买角色";
                     break;
