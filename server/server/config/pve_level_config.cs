@@ -11,6 +11,7 @@ namespace config
     {
         public int ID;
         public List<int> Level;
+        public int Hp;
 
         public static Dictionary<int, PVELevelConfig> Load(string path)
         {
@@ -36,6 +37,7 @@ namespace config
             {
                 var pec = new PVELevelConfig();
                 pec.ID = (int)o["ID"];
+                pec.Hp = (int)o["Hp"];
                 var levels = (string)o["Level"];
                 if ( (!string.IsNullOrEmpty(levels)))
                 {

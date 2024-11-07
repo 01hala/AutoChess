@@ -188,7 +188,12 @@ namespace Player
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     _data.Data.BattleShopPlayer.lastBattleResults = is_victory;
-                    if (is_victory == BattleVictory.victory)
+                    if (is_victory == BattleVictory.faild)
+                    {
+                        _data.Data.BattleShopPlayer.BattleData.faild--;
+                    }
+
+                    if (_data.Data.BattleShopPlayer.BattleData.faild > 0)
                     {
                         _data.Data.Info().PVELevelIndex++;
                         if (_data.Data.Info().PVELevelIndex >= _data.Data.PVELevelCfg.Level.Count)
@@ -214,7 +219,7 @@ namespace Player
                     else
                     {
                         rsp.rsp(em_quest_state.faild);
-                        //_data.Data.ClearPVEState();
+                        _data.Data.ClearPVEState();
                     }
                 }
             }

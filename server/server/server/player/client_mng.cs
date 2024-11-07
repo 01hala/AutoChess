@@ -1082,7 +1082,7 @@ namespace Player
 
         private void RefreshWeekAchiev()
         {
-            if (info.wAchiev.timeout < Timerservice.Tick)
+            if (info.wAchiev != null && info.wAchiev.timeout < Timerservice.Tick)
             {
                 info.wAchiev = NewUserWeekAchievement();
             }
@@ -1215,6 +1215,7 @@ namespace Player
             if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
             {
                 PVELevelCfg = cfg;
+                BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
                 StartPVERound(0);
 
                 if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var rcfg))
