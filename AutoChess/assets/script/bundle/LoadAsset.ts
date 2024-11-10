@@ -48,7 +48,7 @@ export class loadAssets
     
     public static LoadSkeletonData(_address:string,_callBack:(data)=>void):Promise<void>
     {
-        return new Promise(async(resolve)=>
+        return new Promise((resolve)=>
         {
             try
             {

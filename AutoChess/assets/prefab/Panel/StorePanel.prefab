@@ -1965,7 +1965,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -390,
-      "y": -740,
+      "y": 707.925,
       "z": 0
     },
     "_lrot": {
@@ -2142,12 +2142,12 @@
     "__prefab": {
       "__id__": 93
     },
-    "_alignFlags": 12,
+    "_alignFlags": 9,
     "_target": null,
     "_left": 0,
     "_right": 0,
-    "_top": 0,
-    "_bottom": 0,
+    "_top": 32.075000000000045,
+    "_bottom": 1447.925,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -2157,7 +2157,7 @@
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
     "_originalWidth": 0,
-    "_originalHeight": 0,
+    "_originalHeight": 120,
     "_alignMode": 2,
     "_lockFlags": 0,
     "_id": ""
@@ -2217,7 +2217,7 @@
     "__prefab": {
       "__id__": 98
     },
-    "_alignFlags": 45,
+    "_alignFlags": 42,
     "_target": null,
     "_left": 0,
     "_right": 0,
@@ -2267,6 +2267,7 @@
       "__id__": 0
     },
     "fileId": "f8vN/2AtpF86ZKMBhWKk42",
+    "instance": null,
     "targetOverrides": null
   }
 ]

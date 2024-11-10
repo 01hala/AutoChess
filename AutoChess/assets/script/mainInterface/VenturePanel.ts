@@ -23,15 +23,22 @@ export class VenturePanel extends Component
         this.exitBtn.on(Button.EventType.CLICK,()=>
         {
             AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
-            this.node.active = false;
+            //this.node.active = false;
             singleton.netSingleton.mainInterface.panelNode.active = true;
+            this.Exit();
         })
 
         this.levelBtn.on(Button.EventType.CLICK,()=>
         {
             console.log("start pve");
             singleton.netSingleton.game.start_quest_battle_ready();
+            this.Exit();
         });
+    }
+
+    public Exit()
+    {
+        this.node.destroy();
     }
 
 }

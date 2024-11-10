@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from './MessageEvent';
@@ -27,22 +27,8 @@ export class GameManager extends Component
         return this._instance;
     }
     private typeface: TTFFont;
-    //提示飘字
-    private textTipNodePre:Prefab;
-    //弹窗
-    private upsBoard:Prefab;
-    //角色、道具信息界面
-    private infoPanel:Node;
-    //战斗结算界面
-    private settlementBoard:Node;
     //升阶界面
     private upStageBoard:Node;
-    //用户信息面板
-    private userInfoBoard:Node;
-    //任务、成就界面
-    private taskAchieveBoard:Node;
-    //排行榜
-    private rankListBoard:Node;
     //新手引导
     public guide:Guide;
     
@@ -69,57 +55,10 @@ export class GameManager extends Component
     {
         try
         {
-            let tt = BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar");
             let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
-            let ip = BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard");
-            let sl = BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard");
-            let us = BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard")
-            let up = BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard");
-            let ta = BundleManager.Instance.loadAssetsFromBundle("Board","TaskAchieveBoard");
-            let rk = BundleManager.Instance.loadAssetsFromBundle("Board","RankListBoard");
-            let ups = BundleManager.Instance.loadAssetsFromBundle("Board","PopUpsBoard");
             //加载
-            let awaitResult = await Promise.all([tt,tf,ip,sl,us,up,ta,rk,ups]);
-            this.textTipNodePre = awaitResult[0] as Prefab;
-            this.typeface = awaitResult[1] as TTFFont;
-            this.upsBoard=awaitResult[8] as Prefab;
-
-            let t_infoPanel = awaitResult[2] as Prefab;
-            let t_settlementBoard = awaitResult[3] as Prefab;
-            let t_userinfo = awaitResult[4] as Prefab;
-            let t_UpStageBoard = awaitResult [5] as Prefab;
-            let t_taskBoard=awaitResult[6] as Prefab;
-            let t_rankListBoard=awaitResult[7] as Prefab;
-    
-            this.infoPanel=instantiate(t_infoPanel);
-            this.infoPanel.setParent(this.node);
-            this.infoPanel.active=false;
-    
-            this.settlementBoard=instantiate(t_settlementBoard);
-            this.settlementBoard.setParent(this.node);
-            this.settlementBoard.active=false;
-
-            this.userInfoBoard=instantiate(t_userinfo);
-            this.userInfoBoard.setParent(this.node);
-            this.userInfoBoard.active=false;
-
-            this.upStageBoard=instantiate(t_UpStageBoard);
-            this.upStageBoard.setParent(this.node);
-            this.upStageBoard.active=false;
-
-            this.taskAchieveBoard=instantiate(t_taskBoard);
-            this.taskAchieveBoard.setParent(this.node);
-            this.taskAchieveBoard.active=false;
-
-            this.rankListBoard=instantiate(t_rankListBoard);
-            this.rankListBoard.setParent(this.node);
-            this.rankListBoard.active=false;
-
-            this.infoPanel.getComponent(InfoBoard).start();
-            this.settlementBoard.getComponent(Settlement).start();
-            this.userInfoBoard.getComponent(UserInfo).start();
-            this.taskAchieveBoard.getComponent(TaskAchieve).start();
-            this.rankListBoard.getComponent(RankList).start();
+            let awaitResult = await Promise.all([tf]);
+            this.typeface = awaitResult[0] as TTFFont;
 
             this.InitEvent();
         }
@@ -140,11 +79,14 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenCardInfo',(event:SendMessage)=>
+        this.node.on('OpenCardInfo',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoBoard).OpenCardInfo(event.detail);
+            let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
+            let board=instantiate(ib);
+            board.setParent(this.node);
+            board.getComponent(InfoBoard).OpenCardInfo(event.detail);
+
         },this);
 
         /* 消息来源
@@ -155,11 +97,13 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenFetterInfo',(event:SendMessage)=>
+        this.node.on('OpenFetterInfo',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
+            let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
+            let board=instantiate(ib);
+            board.setParent(this.node);
+            board.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
         },this);
 
         /* 消息来源
@@ -170,11 +114,13 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenInfoBoard',(event:SendMessage)=>
+        this.node.on('OpenInfoBoard',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.infoPanel.active=true;
-            this.infoPanel.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
+            let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
+            let board=instantiate(ib);
+            board.setParent(this.node);
+            board.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
         },this);
 
         /* 消息来源
@@ -199,11 +145,13 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenSettlement',(event:SendMessage)=>
+        this.node.on('OpenSettlement',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.settlementBoard.active=true;
-            this.settlementBoard.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
+            let st=await BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard") as Prefab;
+            let board = instantiate(st);
+            board.setParent(this.node);
+            board.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
         },this);
 
         /* 消息来源
@@ -214,12 +162,14 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenUpStageBoard',(event:SendMessage)=>
+        this.node.on('OpenUpStageBoard',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.upStageBoard.active=true;
-            this.upStageBoard.getComponent(UpStage).OpenUpStageBoard(event.detail);
 
+            let up = await BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard") as Prefab;
+            let board=instantiate(up);
+            board.setParent(this.node);
+            board.getComponent(UpStage).OpenUpStageBoard(event.detail);
         },this);
 
         /* 消息来源
@@ -230,11 +180,14 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenUserInfoBoard',(event:SendMessage)=>
+        this.node.on('OpenUserInfoBoard',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.userInfoBoard.active=true;
-            this.userInfoBoard.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
+
+            let us = await BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard") as Prefab;
+            let board=instantiate(us);
+            board.setParent(this.node);
+            board.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
         },this);
 
         /* 消息来源
@@ -245,11 +198,14 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenTaskAchieveBoard',(event:SendMessage)=>
+        this.node.on('OpenTaskAchieveBoard',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.taskAchieveBoard.active=true;
-            this.taskAchieveBoard.getComponent(TaskAchieve).OpenTaskAchieveBoard(event.detail);
+
+            let ta = await BundleManager.Instance.loadAssetsFromBundle("Board","TaskAchieveBoard") as Prefab;
+            let board=instantiate(ta);
+            board.setParent(this.node);
+            board.getComponent(TaskAchieve).OpenTaskAchieveBoard(event.detail);
         },this);
 
         /* 消息来源
@@ -260,10 +216,13 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('RefreshTaskAchieveBoard',(event:SendMessage)=>{
+        this.node.on('RefreshTaskAchieveBoard',(event:SendMessage)=>
+        {
             event.propagationStopped=true;
-            if(true==this.taskAchieveBoard.activeInHierarchy){
-                this.taskAchieveBoard.getComponent(TaskAchieve).RefreshList(event.detail);
+            let board=this.node.getChildByName("TaskAchieveBoard");
+            if(null!= board && true == board.activeInHierarchy)
+            {
+                board.getComponent(TaskAchieve).RefreshList(event.detail);
             }
         },this);
 
@@ -275,11 +234,14 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenRankListBoard',(event:SendMessage)=>
+        this.node.on('OpenRankListBoard',async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            this.rankListBoard.active=true;
-            this.rankListBoard.getComponent(RankList).OpenRankListBoard(event.detail);
+
+            let rk = await BundleManager.Instance.loadAssetsFromBundle("Board","RankListBoard") as Prefab;
+            let board = instantiate(rk);
+            board.setParent(this.node);
+            board.getComponent(RankList).OpenRankListBoard(event.detail);
         },this);
 
         /* 消息来源
@@ -315,12 +277,12 @@ export class GameManager extends Component
     }
 
     //显示提示信息
-    private ShowTip(_msg:string)
+    private async ShowTip(_msg:string)
     {
         try
         {
-            console.log(this.textTipNodePre);
-            let tip=instantiate(this.textTipNodePre);
+            let tt = await BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar") as Prefab;
+            let tip=instantiate(tt);
             console.log("获取richtext");
             tip.getChildByPath("RichText").getComponent(RichText).string=_msg;
             tip.getChildByPath("RichText").getComponent(RichText).font = this.typeface;
@@ -341,17 +303,16 @@ export class GameManager extends Component
         }
     }
 
-    private OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number> ,  _callBack?:(e?:boolean)=>void)
+    private async OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number> ,  _callBack?:(e?:boolean)=>void)
     {
         console.log("弹窗类型：",_type);
-        let ups=instantiate(this.upsBoard);
-        ups.setParent(this.node);
-        ups.getComponent(PopUps).title=_title;
-        ups.getComponent(PopUps).subheading=_subheading;
-        ups.getComponent(PopUps).OpenBoard(_type , _items , _callBack);
+        let ups = await BundleManager.Instance.loadAssetsFromBundle("Board","PopUpsBoard") as Prefab;
+        let board=instantiate(ups);
+        board.setParent(this.node);
+        board.getComponent(PopUps).title=_title;
+        board.getComponent(PopUps).subheading=_subheading;
+        board.getComponent(PopUps).OpenBoard(_type , _items , _callBack);
     }
-
-    
 
     public async StartGuide(_step:common.GuideStep)
     {
@@ -363,8 +324,6 @@ export class GameManager extends Component
 
         this.guide.Init(_step);
     }
-
-    
 }
 
 
