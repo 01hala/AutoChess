@@ -39,24 +39,9 @@ export class CardLib extends Component
     {
         try
         {
-            //let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage");
-            //let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
-
-            let rp = BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePainting");
-            let cb = BundleManager.Instance.loadAssetsFromBundle("Parts", "CardBooth");
-
-            let awaitResult=await Promise.all(
-            [
-                rp,
-                cb
-            ]);
-
-            this.rolePaintingPre=awaitResult[0] as Prefab;
-            this.cardBoothPre=awaitResult[1] as Prefab;
-
-            this.backBtn=this.node.getChildByPath("Back_Btn");
+            this.backBtn=this.node.getChildByPath("UI/Back_Btn");
             //this.pageView=this.node.getChildByPath("CardArea/PageView").getComponent(PageView);
-            this.toggleBar=this.node.getChildByPath("ToggleBar");
+            this.toggleBar=this.node.getChildByPath("UI/ToggleBar");
 
             this.cardContent=this.node.getChildByPath("CardView/view/content");
             this.scroll=this.node.getChildByPath("CardView").getComponent(ScrollView);
@@ -74,12 +59,8 @@ export class CardLib extends Component
             this.backBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
-                this.node.active=false;
                 singleton.netSingleton.mainInterface.panelNode.active=true;
-                //this.pageView.removeAllPages();
-                this.RemoveAllBooth();
-                this.toggleBar.getComponent(ToggleContainer).checkEvents.splice(0,this.toggleBar.getComponent(ToggleContainer).checkEvents.length);
-    
+                this.Exit();
             },this);
 
             this.Init();
@@ -88,6 +69,13 @@ export class CardLib extends Component
         {
             console.error("CardLibPanel 下的 start 错误：",error);
         }
+    }
+
+    public Exit()
+    {
+        this.RemoveAllBooth();
+        this.toggleBar.getComponent(ToggleContainer).checkEvents.splice(0,this.toggleBar.getComponent(ToggleContainer).checkEvents.length);
+        this.node.destroy();
     }
 
     private Init()
@@ -107,17 +95,19 @@ export class CardLib extends Component
         }
     }
 
-    public OpenCardLib()
+    public async OpenCardLib()
     {
         try
         {
             this.toggleBar.getChildByPath("Mountain").getComponent(Toggle).isChecked=true;
             this.toggleBar.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
+            this.rolePaintingPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePainting") as Prefab;
+            this.cardBoothPre=await BundleManager.Instance.loadAssetsFromBundle("Parts", "CardBooth") as Prefab;
             this.LoadCard(Biomes.Mountain);
         }
         catch(error)
         {
-            console.error("CardLibPanel 下的 Open 错误：",error);
+            console.error("CardLibPanel 下的 OpenCardLib 错误：",error);
         }
     }
 
@@ -248,6 +238,7 @@ export class CardLib extends Component
             t.destroy();
         }
     }
+
 }
 
 

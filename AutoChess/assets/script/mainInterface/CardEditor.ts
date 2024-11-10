@@ -30,7 +30,6 @@ export class CardEditor extends Component
     {
         this.pageContent=this.node.getChildByPath("PageView/view/content");
         this.exitBtn=this.node.getChildByPath("Close_Btn");
-        this.framePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggleFarme")as Prefab;
     }
 
     start() 
@@ -57,7 +56,7 @@ export class CardEditor extends Component
                         {
                             singleton.netSingleton.player.edit_role_group(this.roleGroup);
                         }
-                        this.CloseCardEditor();
+                        this.Exit();
                     }));
                 }
                 catch(error)
@@ -73,10 +72,21 @@ export class CardEditor extends Component
         }
     }
 
-    public OpenCardEditor()
+    public Exit()
+    {
+        for (let t of this.pageContent.children)
+        {
+            t.destroy();
+        }
+
+        this.node.destroy();
+    }
+
+    public async OpenCardEditor()
     {
         try
         {
+            this.framePre = await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggleFarme")as Prefab;
             this.LoadGroup();
         }
         catch(error)
@@ -103,13 +113,6 @@ export class CardEditor extends Component
         }
     }
 
-    private CloseCardEditor()
-    {
-        for (let t of this.pageContent.children)
-        {
-            t.destroy();
-        }
-    }
 }
 
 

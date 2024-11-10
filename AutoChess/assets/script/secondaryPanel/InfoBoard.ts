@@ -47,6 +47,59 @@ export class InfoBoard extends Component
             this.Exit();
         });
     }
+
+    Exit()
+    {
+        //this.simpleBoard.active=false;
+        //this.detailedBoard.active=false;
+        this.node.getComponent(BlockInputEvents).enabled=false;
+        if(this.simpleBoard.active)
+        {
+            this.simpleBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                //this.node.active=false;
+                this.simpleBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.destroy();
+            });
+            this.simpleBoard.getComponent(Animation).play("PanelDisappear");
+        }
+
+        if(this.propBoard.active)
+        {
+            this.propBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                //this.node.active=false;
+                this.propBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.destroy();
+            });
+            this.propBoard.getComponent(Animation).play("PanelDisappear");
+        }
+
+        if(this.detailedBoard.active)
+        {
+            this.detailedBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                if (singleton.netSingleton.battle)
+                {
+                    singleton.netSingleton.battle.puase = false;
+                }
+                //this.node.active=false;
+                this.detailedBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.destroy();
+            });
+            this.detailedBoard.getComponent(Animation).play("PanelDisappear");
+        }
+
+        if(this.fetterBoard.active){
+            this.fetterBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                //this.node.active=false;
+                this.fetterBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.destroy();
+            });
+            this.fetterBoard.getComponent(Animation).play("PanelDisappear");
+        } 
+    }
     
     async OpenInfoBoard(id:number,index?:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
     {
@@ -270,55 +323,6 @@ export class InfoBoard extends Component
             console.error('InfoPanel 下 ShowDetailed 错误 err: ',error);
         }
         
-    }
-
-    Exit()
-    {
-        //this.simpleBoard.active=false;
-        //this.detailedBoard.active=false;
-        this.node.getComponent(BlockInputEvents).enabled=false;
-        if(this.simpleBoard.active)
-        {
-            this.simpleBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
-            {
-                this.node.active=false;
-                this.simpleBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-            });
-            this.simpleBoard.getComponent(Animation).play("PanelDisappear");
-        }
-
-        if(this.propBoard.active)
-        {
-            this.propBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
-            {
-                this.node.active=false;
-                this.propBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-            });
-            this.propBoard.getComponent(Animation).play("PanelDisappear");
-        }
-
-        if(this.detailedBoard.active)
-        {
-            this.detailedBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
-            {
-                if (singleton.netSingleton.battle)
-                {
-                    singleton.netSingleton.battle.puase = false;
-                }
-                this.node.active=false;
-                this.detailedBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-            });
-            this.detailedBoard.getComponent(Animation).play("PanelDisappear");
-        }
-
-        if(this.fetterBoard.active){
-            this.fetterBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
-            {
-                this.node.active=false;
-                this.fetterBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-            });
-            this.fetterBoard.getComponent(Animation).play("PanelDisappear");
-        }  
     }
 
     private async LoadRoleImage(_r:Role)

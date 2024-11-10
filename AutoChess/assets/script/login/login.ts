@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Canvas, instantiate, sys, Game, math, randomRange } from 'cc';
+import { _decorator, Component, Node, Canvas, instantiate, sys, Game, math, randomRange, Prefab } from 'cc';
 import 'minigame-api-typings';
 
 const { ccclass, property } = _decorator;
@@ -451,7 +451,9 @@ export class login extends Component {
             {
                 case "VenturePanel":
                     {
-                        singleton.netSingleton.mainInterface.venturePanel.active=true;
+                        let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel") as Prefab;
+                        let panel=instantiate(vt);
+                        panel.setParent(this.node);
                         singleton.netSingleton.mainInterface.panelNode.active=false;
                     }
                     break;

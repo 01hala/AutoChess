@@ -38,37 +38,18 @@ export class StorePanel extends Component
     //卡牌列表
     private cards:Node[]=[];
 
-    private Init()
+    onLoad()
     {
-        this.backBtn=this.node.getChildByPath("Back_Btn");
-        this.pageView=this.node.getChildByPath("StoreArea/PageView").getComponent(PageView);
-        this.toggleGroup=this.node.getChildByPath("ToggleGroup");
-    }
-
-    async onLoad()
-    {
-        this.Init();
-
-        let storePagePrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "StorePage");
-        let cardListPrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage");
-        let rechargePrePromise=BundleManager.Instance.loadAssetsFromBundle("Parts", "RechargePage");
-        let roleCardPrePromise=BundleManager.Instance.loadAssetsFromBundle("Roles", "RoleCard");
-        //let StorePromptPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Board", "StorePromptPanel");
-        
-        let awaitResult=await Promise.all(
-            [
-                storePagePrePromise,
-                cardListPrePromise,
-                rechargePrePromise,
-                roleCardPrePromise, 
-                //StorePromptPanelPromise
-        ]);
-
-        this.storePagePre=awaitResult[0] as Prefab;
-        this.cardListPre=awaitResult[1] as Prefab;
-        this.rechargePre=awaitResult[2] as Prefab;
-        this.roleCardPre=awaitResult[3] as Prefab;
-        //let StorePromptPanelpanel = awaitResult[4] as Prefab;
+        try
+        {
+            this.backBtn=this.node.getChildByPath("Back_Btn");
+            this.pageView=this.node.getChildByPath("StoreArea/PageView").getComponent(PageView);
+            this.toggleGroup=this.node.getChildByPath("ToggleGroup");
+        }
+        catch(error)
+        {
+            console.error("StorePanel 下的 onLoad 错误：",error);
+        }
 
         //二级信息界面
         // this.infoPanel=instantiate(Informationpanel);
@@ -83,17 +64,30 @@ export class StorePanel extends Component
 
     start() 
     {
-        this.backBtn.on(Button.EventType.CLICK,()=>
+        try
         {
-            AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
-            this.node.active=false;
-            singleton.netSingleton.mainInterface.panelNode.active=true;
-            this.ClearPageView();
-
-        },this);     
+            this.backBtn.on(Button.EventType.CLICK,()=>
+                {
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
+                    //this.node.active=false;
+                    singleton.netSingleton.mainInterface.panelNode.active=true;
+                    //this.ClearPageView();
+                    this.Exit();
+                },this);    
+        }
+        catch(error)
+        {
+            console.error("StorePanel 下的 start 错误：",error);
+        }
     }
 
-    async CheckStoreToggle(_fromBtn?:boolean)
+    public Exit()
+    {
+        this.ClearPageView();
+        this.node.destroy();
+    }
+
+    public async CheckStoreToggle(_fromBtn?:boolean)
     {
         try
         {
@@ -106,7 +100,7 @@ export class StorePanel extends Component
                 this.ClearPageView();
                 if (!this.storePagePre) 
                 {
-                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Page", "StorePage") as Prefab;
+                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "StorePage") as Prefab;
                 }
                 this.storePage = instantiate(this.storePagePre);
                 this.pageView.addPage(this.storePage);
@@ -122,7 +116,7 @@ export class StorePanel extends Component
         
     }
 
-    async CheckCardListToggle()
+    public async CheckCardListToggle()
     {
         try
         {
@@ -133,7 +127,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.cardListPre) {
-                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Page", "CardPage") as Prefab;
+                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage") as Prefab;
                 }
                 this.cardListPage = instantiate(this.cardListPre);
                 this.pageView.addPage(this.cardListPage);
@@ -147,7 +141,7 @@ export class StorePanel extends Component
         }
     }
 
-    async CheckRechargeToggle()
+    public async CheckRechargeToggle()
     {
         try
         {
@@ -165,7 +159,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.rechargePre) {
-                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Page", "RechargePage") as Prefab;
+                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "RechargePage") as Prefab;
                 }
                 this.rechargePage = instantiate(this.rechargePre);
                 this.pageView.addPage(this.rechargePage);
@@ -181,7 +175,8 @@ export class StorePanel extends Component
 
     private ClearPageView()
     {
-        for (let node of this.pageView.node.getChildByPath("view/content").children) {
+        for (let node of this.pageView.node.getChildByPath("view/content").children) 
+        {
             node.destroy();
         }
     }
@@ -255,6 +250,7 @@ export class StorePanel extends Component
     {
         //this.storePrompt.getComponent(StorePrompt).ShowPacketItem(_cardPacketInfo);
     }
+
 }
 
 

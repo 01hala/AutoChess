@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, assetManager, Button, Camera, Component, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, System, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
+import { _decorator, Animation, animation, assetManager, Button, Camera, Component, find, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, System, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from './StorePanel';
@@ -43,21 +43,13 @@ export class UserAccount
 export class MainInterface 
 {
     //父节点
-    public father:Node;
+    public fatherNode:Node;
     //主体
     public panelNode:Node;
     //主界面
     public mainPanel:Node
-    //开始界面
-    public startGamePanel:Node;
-    //商店界面
-    public storePanel:Node;
-    //牌库界面
-    public cardLibPanel:Node;
-    //卡组编辑界面
-    public cardEditorPanel:Node;
-    //冒险模式界面
-    public venturePanel:Node;
+    //开始游戏 
+    public startGamePart:Node;
     //各区域按钮
     private startBtn:Node;//匹配按钮
     private storeBtn:Node;//商店按钮
@@ -65,8 +57,8 @@ export class MainInterface
     private cardlibraryBtn:Node;//牌库按钮
     private taskAchieveBtn:Node;//任务按钮
     private rankListBtn:Node;//排行榜按钮
-    private cardEditor:Node;//卡组编辑按钮
-    private ventureBtn:Node;//挑战模式按钮（pve）
+    private cardEditorBtn:Node;//卡组编辑按钮
+    private ventureBtn:Node;//冒险模式按钮（pve）
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -94,17 +86,8 @@ export class MainInterface
     private async Load()
     {
         let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface");
-        let StorePanelmPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel");
-        let CardLibPromise=BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary");
-        let CardEditorPromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "CardEditor");
-        let VenturePromise = BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel");
-
         let awaitResult= await Promise.all([
-            MainInterfacePromise, 
-            StorePanelmPromise,
-            CardLibPromise,
-            CardEditorPromise,
-            VenturePromise
+            MainInterfacePromise
         ]);;
 
         return awaitResult;
@@ -119,35 +102,15 @@ export class MainInterface
     {
         try
         {
-            this.father=_father;
+            this.fatherNode=_father;
             //加载
             let assets = await this.Load();
             let MainInterfacepanel = assets[0] as Prefab;
-            let StorePanel=assets[1] as Prefab;
-            let CardLib=assets[2] as Prefab;
-            let CardEditor=assets [3] as Prefab;
-            let venture=assets [4] as Prefab;
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
-            //商店界面
-            this.storePanel=instantiate(StorePanel);
-            this.storePanel.setParent(_father);
-            this.storePanel.active=false;
-            //牌库界面
-            this.cardLibPanel=instantiate(CardLib);
-            this.cardLibPanel.setParent(_father);
-            this.cardLibPanel.active=false;
-            //卡组编辑
-            this.cardEditorPanel=instantiate(CardEditor);
-            this.cardEditorPanel.setParent(_father);
-            this.cardEditorPanel.active=false;
-            //挑战模式
-            this.venturePanel=instantiate(venture);
-            this.venturePanel.setParent(_father);
-            this.venturePanel.active=false;
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
-            this.startGamePanel=this.panelNode.getChildByPath("StartGamePanel");
+            this.startGamePart=this.panelNode.getChildByPath("StartGamePanel");
             //各区域按钮
             this.startBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Button");//匹配
             this.storeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");//商店
@@ -157,7 +120,7 @@ export class MainInterface
             this.ventureBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Venture/Venture_Btn");//挑战模式
             //下拉按钮列表
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
-            this.cardEditor=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
+            this.cardEditorBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
             this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Task_Btn");//任务
             //玩家信息
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserMoney");
@@ -178,11 +141,6 @@ export class MainInterface
 
     public destory() 
     {
-        this.startGamePanel.destroy();
-        this.storePanel.destroy();
-        this.cardLibPanel.destroy();
-        this.cardEditorPanel.destroy();
-        this.venturePanel.destroy();
         this.panelNode.destroy();
     }
 
@@ -246,8 +204,7 @@ export class MainInterface
     {
         try
         {
-            this.startGamePanel.active=false;
-            this.storePanel.active=false;
+            this.startGamePart.active=false;
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
@@ -257,8 +214,8 @@ export class MainInterface
                 }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 console.log("startBtn OpenAthleticsWindow!");
-                this.startGamePanel.active=true;
-                this.startGamePanel.getComponent(StartGame).OpenAthleticsWindow();
+                this.startGamePart.active=true;
+                this.startGamePart.getComponent(StartGame).OpenAthleticsWindow();
                 //this.mainPanel.active=false;
                 
     
@@ -267,25 +224,49 @@ export class MainInterface
             this.amusementBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                this.startGamePanel.active=true;
-                this.startGamePanel.getComponent(StartGame).OpenAmusementWindow();
+                this.startGamePart.active=true;
+                this.startGamePart.getComponent(StartGame).OpenAmusementWindow();
             },this);
-            //打开商店
-            this.storeBtn.on(Button.EventType.CLICK,()=>
-            {
-                //AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                this.storePanel.active=true;
-                this.panelNode.active=false;
-                this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
-                this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked=true;
-            },this);
-            //打开牌库界面
-            this.cardlibraryBtn.on(Button.EventType.CLICK,()=>
+            //打开商店界面
+            this.storeBtn.on(Button.EventType.CLICK,async ()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                this.cardLibPanel.active=true;
+                let st = await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel") as Prefab;
+                let panel =instantiate(st);
+                panel.setParent(this.fatherNode);
+                panel.getComponent(StorePanel).CheckStoreToggle(true);
+                panel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked = true;
+                this.panelNode.active = false;
+            },this);
+            //打开牌库界面
+            this.cardlibraryBtn.on(Button.EventType.CLICK,async ()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
+                let cl = await BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary") as Prefab;
+                let panel = instantiate(cl);
+                panel.setParent(this.fatherNode);
+                panel.getComponent(CardLib).OpenCardLib();
                 this.panelNode.active=false;
-                this.cardLibPanel.getComponent(CardLib).OpenCardLib();
+            },this);
+            //打开卡组编辑界面
+            this.cardEditorBtn.on(Button.EventType.CLICK,async ()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                let ce = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "CardEditor") as Prefab;
+                let panel = instantiate(ce);
+                panel.setParent(this.fatherNode);
+                panel.getComponent(CardEditor).OpenCardEditor();
+                this.panelNode.active=false;
+            },this);
+            //打开冒险模式界面
+            this.ventureBtn.on(Button.EventType.CLICK,async ()=>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel") as Prefab;
+                let panel=instantiate(vt);
+                panel.setParent(this.fatherNode);
+                this.panelNode.active = false;
+                
             },this);
             //按钮条切换
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
@@ -310,13 +291,13 @@ export class MainInterface
                 }).start();
     
             },this);
-            //打开用户信息界面
+            //打开用户信息
             this.userAvatar.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenUserInfoBoard',true,this.avatarUrl));
             },this);
-            //打开任务、成就界面
+            //打开任务、成就
             this.taskAchieveBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
@@ -328,23 +309,7 @@ export class MainInterface
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,this.userData));
             },this);
-            //打开卡组编辑界面
-            this.cardEditor.on(Button.EventType.CLICK,()=>
-            {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                this.cardEditorPanel.active=true;
-                this.panelNode.active=false;
-                this.cardEditorPanel.getComponent(CardEditor).OpenCardEditor();
-
-            },this);
-            //打开挑战模式界面
-            this.ventureBtn.on(Button.EventType.CLICK,()=>
-            {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                this.venturePanel.active=true;
-                this.panelNode.active=false;
-                
-            },this);
+            
         }
         catch(error)
         {
@@ -365,7 +330,8 @@ export class MainInterface
             if(_bagInfo && _cardPacketInfo)
             {
                 this.userAccount.playerBag=_bagInfo;
-                this.storePanel.getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
+                let panel=this.fatherNode.getChildByName("StorePanel").getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
+                //this.storePanel.getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
             }
         };
         //回调合并碎片后获得卡牌
