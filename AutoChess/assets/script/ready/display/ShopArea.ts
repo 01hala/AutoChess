@@ -181,14 +181,14 @@ export class ShopArea extends Component
     {
         try
         {
-            this.tempRoles=roles.slice();
-            this.tempProps=props.slice();
+            //this.tempRoles=roles.slice();
+            //this.tempProps=props.slice();
             if (roles)
             {
                 //console.log("tempRole:", this.tempRoles);
                 for (let i = 0; i < roles.length; i++)
                 {
-                    if (this.tempRoles[i] != null)
+                    if (this.tempRoles[i] != null && roles[i] != null)
                     {
                         if (this.tempRoles[i].RoleID == roles[i].RoleID &&
                             this.tempRoles[i].Level == roles[i].Level &&
