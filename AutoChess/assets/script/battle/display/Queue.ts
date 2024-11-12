@@ -119,6 +119,7 @@ export class Queue extends Component
                     {
                         this.locationTemp[r[i].index].children[0].active=false;
                     })
+                    this.locationTemp[r[i].index].children[0].getComponent(sp.Skeleton).setAnimation(0,"animate",false);
                     role.setWorldPosition(this.locationTemp[r[i].index].worldPosition);
                     role.getComponent(RoleDis.RoleDis).AttackInit();
                     //await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].worldPosition,true);

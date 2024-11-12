@@ -13,10 +13,14 @@ export class Pause extends Component
     protected onLoad(): void
     {
         this.board=this.node.getChildByPath("Board");
-        this.board.getChildByPath("Exit_Btn").on(Button.EventType.CLICK,()=>
+    }
+
+    start() 
+    {
+        this.board.getChildByPath("Exit_Btn").on(Button.EventType.CLICK, () =>
         {
             AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
-            if(enmus.GameMode.PVE == singleton.netSingleton.ready.readyData.gameMode)
+            if (enmus.GameMode.PVE == singleton.netSingleton.ready.readyData.gameMode)
             {
                 singleton.netSingleton.ready.father.getComponent(login).BackMainInterface("VenturePanel");
             }
@@ -24,23 +28,19 @@ export class Pause extends Component
             {
                 singleton.netSingleton.ready.father.getComponent(login).BackMainInterface();
             }
-            
+
         });
-        this.board.getChildByPath("Back_Btn").on(Button.EventType.CLICK,()=>
+        this.board.getChildByPath("Back_Btn").on(Button.EventType.CLICK, () =>
         {
             this.board.getComponent(Animation).on(Animation.EventType.FINISHED, () =>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 this.board.active = false;
                 this.node.active = false;
                 this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
             })
             this.board.getComponent(Animation).play("PanelMid2Bottom");
         });
-    }
-
-    start() 
-    {
-       
     }
 
    public Open()

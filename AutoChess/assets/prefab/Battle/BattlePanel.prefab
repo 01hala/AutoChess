@@ -635,7 +635,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -861,7 +861,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -1087,7 +1087,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -1313,7 +1313,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -1539,7 +1539,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -1765,7 +1765,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -2467,7 +2467,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -2741,7 +2741,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -3015,7 +3015,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -3289,7 +3289,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -3563,7 +3563,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,
@@ -3837,7 +3837,7 @@
       "b": 255,
       "a": 255
     },
-    "loop": true,
+    "loop": false,
     "_timeScale": 1,
     "_useTint": false,
     "_preCacheMode": 0,

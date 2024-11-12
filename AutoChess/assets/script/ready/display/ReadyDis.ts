@@ -219,6 +219,7 @@ export class ReadyDis
             this.setBtn = this.panelNode.getChildByPath("State/TopArea/Set_Btn").getComponent(Button);
             this.setBtn.node.on(Button.EventType.CLICK, () =>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 this.PauseBoard.active=true;
                 this.PauseBoard.getComponent(Pause).Open();
                 //AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
