@@ -201,12 +201,14 @@ export class ReadyDis
             this.refreshBtn = this.panelNode.getChildByPath("Shop/ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK, () =>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 this.RefreshShop();
             }, this);
             //开始按钮
             this.startBtn = this.panelNode.getChildByPath("Shop/ShopArea/Start_Btn").getComponent(Button);
             this.startBtn.node.on(Button.EventType.CLICK, async () =>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_round_start_01");
                 if (this.readyData.GetRolesNumber() > 0)
                 {
                     await this.readyData.StartBattle();

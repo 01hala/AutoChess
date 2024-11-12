@@ -179,80 +179,89 @@ export class ShopArea extends Component
 
     AddItems(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
     {
-        if(roles)
+        try
         {
-            console.log("tempRole:",this.tempRoles);
-            for (let i = 0; i < roles.length; i++)
+            this.tempRoles=roles.slice();
+            this.tempProps=props.slice();
+            if (roles)
             {
-                if (this.tempRoles[i] != null)
+                //console.log("tempRole:", this.tempRoles);
+                for (let i = 0; i < roles.length; i++)
                 {
-                    
-                    if (this.tempRoles[i].RoleID == roles[i].RoleID &&
-                        this.tempRoles[i].Level == roles[i].Level &&
-                        this.tempRoles[i].HP == roles[i].HP &&
-                        this.tempRoles[i].Attack == roles[i].Attack)
+                    if (this.tempRoles[i] != null)
                     {
-                        continue;
+                        if (this.tempRoles[i].RoleID == roles[i].RoleID &&
+                            this.tempRoles[i].Level == roles[i].Level &&
+                            this.tempRoles[i].HP == roles[i].HP &&
+                            this.tempRoles[i].Attack == roles[i].Attack)
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (roles[i] != null)
+                    {
+                        this.tempRoles.splice(i, 1, roles[i]);
+                        if (this.shopRoleNodes[i])
+                        {
+                            this.shopRoleNodes[i].destroy();
+                        }
+                        let newNode = instantiate(this.roleIcon);
+                        newNode.setParent(this.panel);
+                        newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
+                        newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, roles[i].Level, 1, roles[i].IsFreeze);
+                        this.shopRoleNodes.push(newNode);
                     }
                 }
-                
-                if (roles[i] != null)
+            }
+            if (props)
+            {
+                for (let i = 0; i < props.length; i++)
                 {
-                    this.tempRoles.splice(i, 1, roles[i]);
-                    if (this.shopRoleNodes[i])
+                    if (this.tempRoles[i] != null)
                     {
-                        this.shopRoleNodes[i].destroy();
+                        if (this.tempProps[i].PropID == props[i].PropID)
+                        {
+                            continue;
+                        }
                     }
-                    let newNode = instantiate(this.roleIcon);
-                    newNode.setParent(this.panel);
-                    newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, roles[i].Level, 1, roles[i].IsFreeze);
-                    this.shopRoleNodes.push(newNode);
+
+                    if (props[i] != null)
+                    {
+                        this.tempProps.splice(i, 1, props[i]);
+                        if (this.shopPropNodes[i])
+                        {
+                            this.shopPropNodes[i].destroy();
+                        }
+                        let newNode = instantiate(this.propIcon);
+                        newNode.setParent(this.panel);
+                        if (props[i].PropID >= 1001 && props[i].PropID <= 1999/*&&tmpFoodCnt>0*/)
+                        {
+                            newNode.setWorldPosition(this.FoodSquare[i].worldPosition);
+                            //tmpFoodCnt--;
+                        }
+                        else if (props[i].PropID >= 3001 && props[i].PropID <= 3999/*&&tmpEquipCnt>0*/)
+                        {
+                            newNode.setWorldPosition(this.EquipSquare.worldPosition);
+                            //tmpEquipCnt--;
+                        }
+                        newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
+                        this.shopPropNodes.push(newNode);
+                        newNode.setParent(this.panel);
+                    }
                 }
             }
         }
-        if(props)
+        catch(error)
         {
-            for (let i = 0; i < props.length; i++)
-            {
-                if(this.tempRoles[i]!=null)
-                {
-                    if (this.tempProps[i].PropID == props[i].PropID)
-                    {
-                        continue;
-                    }
-                }
-               
-                if(props[i]!=null)
-                {
-                    this.tempProps.splice(i, 1, props[i]);
-                    if (this.shopPropNodes[i])
-                    {
-                        this.shopPropNodes[i].destroy();
-                    }
-                    let newNode = instantiate(this.propIcon);
-                    newNode.setParent(this.panel);
-                    if (props[i].PropID >= 1001 && props[i].PropID <= 1999/*&&tmpFoodCnt>0*/)
-                    {
-                        newNode.setWorldPosition(this.FoodSquare[i].worldPosition);
-                        //tmpFoodCnt--;
-                    }
-                    else if (props[i].PropID >= 3001 && props[i].PropID <= 3999/*&&tmpEquipCnt>0*/)
-                    {
-                        newNode.setWorldPosition(this.EquipSquare.worldPosition);
-                        //tmpEquipCnt--;
-                    }
-                    newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
-                    this.shopPropNodes.push(newNode);                        
-                    newNode.setParent(this.panel);
-                }
-            }
+            console.error("ShopArea 下的 AddItem 错误: ",error);
         }
     }
 
     async BuyRole(_index:number, _obj:Node ,_isMerge:boolean)
     {
         console.log('buy Role');
+        AudioManager.Instance.PlayerOnShot("Sound/battle_buy_01");
         for(let i=0;i<this.shopRoleNodes.length;i++)
         {
             if(this.shopRoleNodes[i] == _obj)
@@ -262,6 +271,10 @@ export class ShopArea extends Component
                 {
                     this.roleArea.rolesNode[_index]=_obj;
                 }
+                else
+                {
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_herolvup_01");
+                }
                 this.shopRoleNodes[i] = null;
             }
         }
@@ -269,6 +282,21 @@ export class ShopArea extends Component
 
     async BuyProp(_index:number,_obj:Node)
     {
+        
+        let propType=_obj.getComponent(PropIcon).propType;
+        switch(propType)
+        {
+            case PropsType.Food:
+                {
+                    AudioManager.Instance.PlayerOnShot("Sound/battle_eatfood");
+                }
+                break;
+            case PropsType.Equip:
+                {
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_hero_01");
+                }
+                break;
+        }
         for(let i=0;i<this.shopPropNodes.length;i++)
         {
             if(this.shopPropNodes[i] == _obj)

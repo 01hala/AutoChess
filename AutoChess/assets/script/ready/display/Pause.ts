@@ -2,6 +2,7 @@ import { _decorator, Animation, Button, Component, Node } from 'cc';
 import * as singleton from '../../netDriver/netSingleton';
 import { login } from '../../login/login';
 import * as enmus from '../../other/enums';
+import { AudioManager } from '../../other/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('Pause')
@@ -14,6 +15,7 @@ export class Pause extends Component
         this.board=this.node.getChildByPath("Board");
         this.board.getChildByPath("Exit_Btn").on(Button.EventType.CLICK,()=>
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
             if(enmus.GameMode.PVE == singleton.netSingleton.ready.readyData.gameMode)
             {
                 singleton.netSingleton.ready.father.getComponent(login).BackMainInterface("VenturePanel");

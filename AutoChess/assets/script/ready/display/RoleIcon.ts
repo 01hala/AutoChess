@@ -297,7 +297,9 @@ export class RoleIcon extends Component
                 {
                     if(!drag)   //只触发一次
                     {
-                        AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
+                        //AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
+                        AudioManager.Instance.PlayerOnShot("Sound/sound_hero_01");
+                        
                         if (!this.isBuy) 
                         {
                             //如果角色未被购买则缩小角色图标，静止动画
@@ -377,13 +379,13 @@ export class RoleIcon extends Component
         });
     }
     //购买角色时的动画效果
-    private async BuyRole(){
+    private async BuyRole()
+    {
         this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=1;
         tween(this.roleNode)
         .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) })
         .call(()=>
         {
-            AudioManager.Instance.PlayerOnShot("Sound/battle_buy_01");
             if (GameManager.Instance.guide)
             {
                 GameManager.Instance.guide.step++;
@@ -456,7 +458,8 @@ export class RoleIcon extends Component
         {
             return;
         }
-        AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+        //AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+        AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
         let roleInfo :RoleDis=null;
         if(null!=this.roleNode) roleInfo=this.roleNode.getComponent(RoleDis);
         
