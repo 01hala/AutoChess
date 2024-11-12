@@ -495,7 +495,7 @@ export class BattleDis
                             let selfRoleDis = self.getComponent(RoleDis);
                             if (selfRoleDis) 
                             {
-                                //allAwait.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev))
+                                allAwait.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev))
                                 //await selfRoleDis.RemoteAttack(selfpos, targetpos);
                                 //await this.ChangeAttEvent([ev]);
                             }

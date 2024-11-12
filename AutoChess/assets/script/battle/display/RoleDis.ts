@@ -673,7 +673,7 @@ export class RoleDis extends Component
 
                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-                   this.DeliveryGain(pos1, pos2);
+                   this.DeliveryGainBall(pos1, pos2);
                    ms=700;
                }
                break;
@@ -681,7 +681,7 @@ export class RoleDis extends Component
                {
                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-                   this.DeliveryGain(pos1, pos2);
+                   this.DeliveryGainBall(pos1, pos2);
                    ms = 700;
                }
                break;
@@ -697,7 +697,7 @@ export class RoleDis extends Component
     * author：Hotaru
     * 2024/08/26
     */
-   private DeliveryGain(_spellcasterLocation:Vec3 , _targetLocation:Vec3)
+   private DeliveryGainBall(_spellcasterLocation:Vec3 , _targetLocation:Vec3)
    {
        try 
        {
@@ -722,25 +722,24 @@ export class RoleDis extends Component
     */
    public async Admission(_type:enums.SpecialEffect)
    {
-        this.roleSprite.node.active=false;
-        this.atkText.node.active=false;
-        this.hpText.node.active=false;
-        this.levelText.node.active=false;
+        this.roleSprite.node.active=true;
+        this.atkText.node.active=true;
+        this.hpText.node.active=true;
+        this.levelText.node.active=true;
+        
         if(this.effectSpine==null)
         {
             this.effectSpine=this.node.getChildByPath("EffectSpine");
         }
 
-        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false).then((_ms)=>
-        {
-            setTimeout(()=>
-            {
-                this.roleSprite.node.active=true;
-                this.atkText.node.active=true;
-                this.hpText.node.active=true;
-                this.levelText.node.active=true;
-            },_ms);
-        });
+        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false);
+        // .then((_ms)=>
+        // {
+        //     this.roleSprite.node.active=true;
+        //     this.atkText.node.active=true;
+        //     this.hpText.node.active=true;
+        //     this.levelText.node.active=true;
+        // });
    }
 
 /*

@@ -276,7 +276,7 @@ export class PropIcon extends Component
             this.myTouch.on(Input.EventType.TOUCH_START, (event: EventTouch) => 
             {
                 this.lastClickTime=Date.now();
-                
+                this.node.setSiblingIndex(99);
                 this.Ontirrger();
                 //触摸到的对象
                 let node: Node = event.currentTarget;
