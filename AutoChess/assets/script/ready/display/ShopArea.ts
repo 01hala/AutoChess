@@ -181,14 +181,16 @@ export class ShopArea extends Component
     {
         try
         {
-            //this.tempRoles=roles.slice();
-            //this.tempProps=props.slice();
             if (roles)
             {
                 //console.log("tempRole:", this.tempRoles);
                 for (let i = 0; i < roles.length; i++)
                 {
-                    if (this.tempRoles[i] != null && roles[i] != null)
+                    if(null == roles[i])
+                    {
+                        continue;
+                    }
+                    if (this.tempRoles[i] != null)
                     {
                         if (this.tempRoles[i].RoleID == roles[i].RoleID &&
                             this.tempRoles[i].Level == roles[i].Level &&
@@ -220,6 +222,10 @@ export class ShopArea extends Component
                 {
                     if (this.tempRoles[i] != null)
                     {
+                        if(null==props[i])
+                        {
+                            continue;
+                        }
                         if (this.tempProps[i].PropID == props[i].PropID)
                         {
                             continue;
@@ -251,6 +257,8 @@ export class ShopArea extends Component
                     }
                 }
             }
+            this.tempRoles=roles.slice();
+            this.tempProps=props.slice();
         }
         catch(error)
         {
