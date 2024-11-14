@@ -215,6 +215,14 @@
         "Attack": 8,
         "Equip": 0
     },
+    "": {
+        "ID": 0,
+        "RoleID": 0,
+        "Level": 0,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
     "310010": {
         "ID": 310010,
         "RoleID": 100001,
@@ -507,144 +515,808 @@
         "ID": 320019,
         "RoleID": 100004,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 6,
+        "Attack": 10,
         "Equip": 0
     },
     "320020": {
         "ID": 320020,
         "RoleID": 100009,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 5,
+        "Attack": 8,
         "Equip": 0
     },
     "320021": {
         "ID": 320021,
         "RoleID": 100012,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 8,
+        "Attack": 14,
         "Equip": 0
     },
     "320022": {
         "ID": 320022,
         "RoleID": 100019,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 9,
+        "Attack": 9,
         "Equip": 0
     },
     "320023": {
         "ID": 320023,
         "RoleID": 100026,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 7,
+        "Attack": 11,
         "Equip": 0
     },
     "320024": {
         "ID": 320024,
         "RoleID": 100027,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 7,
+        "Attack": 10,
         "Equip": 0
     },
     "320025": {
         "ID": 320025,
         "RoleID": 100029,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 8,
+        "Attack": 12,
         "Equip": 0
     },
     "320026": {
         "ID": 320026,
         "RoleID": 100047,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 8,
+        "Attack": 7,
         "Equip": 0
     },
     "320027": {
         "ID": 320027,
         "RoleID": 100048,
         "Level": 2,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 8,
+        "Attack": 10,
         "Equip": 0
     },
     "330019": {
         "ID": 330019,
         "RoleID": 100004,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 11,
+        "Attack": 15,
         "Equip": 0
     },
     "330020": {
         "ID": 330020,
         "RoleID": 100009,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 10,
+        "Attack": 14,
         "Equip": 0
     },
     "330021": {
         "ID": 330021,
         "RoleID": 100012,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 14,
+        "Attack": 20,
         "Equip": 0
     },
     "330022": {
         "ID": 330022,
         "RoleID": 100019,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 15,
+        "Attack": 15,
         "Equip": 0
     },
     "330023": {
         "ID": 330023,
         "RoleID": 100026,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 12,
+        "Attack": 16,
         "Equip": 0
     },
     "330024": {
         "ID": 330024,
         "RoleID": 100027,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 13,
+        "Attack": 15,
         "Equip": 0
     },
     "330025": {
         "ID": 330025,
         "RoleID": 100029,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 14,
+        "Attack": 16,
         "Equip": 0
     },
     "330026": {
         "ID": 330026,
         "RoleID": 100047,
         "Level": 3,
-        "HP": 0,
-        "Attack": 0,
+        "HP": 16,
+        "Attack": 14,
         "Equip": 0
     },
     "330027": {
         "ID": 330027,
         "RoleID": 100048,
         "Level": 3,
+        "HP": 14,
+        "Attack": 15,
+        "Equip": 0
+    },
+    "310028": {
+        "ID": 310028,
+        "RoleID": 100007,
+        "Level": 1,
+        "HP": 1,
+        "Attack": 1,
+        "Equip": 0
+    },
+    "310029": {
+        "ID": 310029,
+        "RoleID": 100015,
+        "Level": 1,
+        "HP": 1,
+        "Attack": 7,
+        "Equip": 0
+    },
+    "310030": {
+        "ID": 310030,
+        "RoleID": 100017,
+        "Level": 1,
+        "HP": 3,
+        "Attack": 5,
+        "Equip": 0
+    },
+    "310031": {
+        "ID": 310031,
+        "RoleID": 100022,
+        "Level": 1,
+        "HP": 2,
+        "Attack": 2,
+        "Equip": 0
+    },
+    "310032": {
+        "ID": 310032,
+        "RoleID": 100038,
+        "Level": 1,
+        "HP": 3,
+        "Attack": 8,
+        "Equip": 0
+    },
+    "310033": {
+        "ID": 310033,
+        "RoleID": 100040,
+        "Level": 1,
+        "HP": 4,
+        "Attack": 7,
+        "Equip": 0
+    },
+    "310034": {
+        "ID": 310034,
+        "RoleID": 100043,
+        "Level": 1,
+        "HP": 4,
+        "Attack": 4,
+        "Equip": 0
+    },
+    "310035": {
+        "ID": 310035,
+        "RoleID": 100049,
+        "Level": 1,
+        "HP": 2,
+        "Attack": 2,
+        "Equip": 0
+    },
+    "310036": {
+        "ID": 310036,
+        "RoleID": 100054,
+        "Level": 1,
+        "HP": 5,
+        "Attack": 6,
+        "Equip": 0
+    },
+    "320028": {
+        "ID": 320028,
+        "RoleID": 100007,
+        "Level": 2,
+        "HP": 5,
+        "Attack": 5,
+        "Equip": 0
+    },
+    "320029": {
+        "ID": 320029,
+        "RoleID": 100015,
+        "Level": 2,
+        "HP": 5,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "320030": {
+        "ID": 320030,
+        "RoleID": 100017,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 9,
+        "Equip": 0
+    },
+    "320031": {
+        "ID": 320031,
+        "RoleID": 100022,
+        "Level": 2,
+        "HP": 6,
+        "Attack": 6,
+        "Equip": 0
+    },
+    "320032": {
+        "ID": 320032,
+        "RoleID": 100038,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "320033": {
+        "ID": 320033,
+        "RoleID": 100040,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "320034": {
+        "ID": 320034,
+        "RoleID": 100043,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 8,
+        "Equip": 0
+    },
+    "320035": {
+        "ID": 320035,
+        "RoleID": 100049,
+        "Level": 2,
+        "HP": 6,
+        "Attack": 6,
+        "Equip": 0
+    },
+    "320036": {
+        "ID": 320036,
+        "RoleID": 100054,
+        "Level": 2,
+        "HP": 9,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "330028": {
+        "ID": 330028,
+        "RoleID": 100007,
+        "Level": 3,
+        "HP": 10,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "330029": {
+        "ID": 330029,
+        "RoleID": 100015,
+        "Level": 3,
+        "HP": 10,
+        "Attack": 18,
+        "Equip": 0
+    },
+    "330030": {
+        "ID": 330030,
+        "RoleID": 100017,
+        "Level": 3,
+        "HP": 15,
+        "Attack": 16,
+        "Equip": 0
+    },
+    "330031": {
+        "ID": 330031,
+        "RoleID": 100022,
+        "Level": 3,
+        "HP": 11,
+        "Attack": 11,
+        "Equip": 0
+    },
+    "330032": {
+        "ID": 330032,
+        "RoleID": 100038,
+        "Level": 3,
+        "HP": 14,
+        "Attack": 18,
+        "Equip": 0
+    },
+    "330033": {
+        "ID": 330033,
+        "RoleID": 100040,
+        "Level": 3,
+        "HP": 13,
+        "Attack": 15,
+        "Equip": 0
+    },
+    "330034": {
+        "ID": 330034,
+        "RoleID": 100043,
+        "Level": 3,
+        "HP": 15,
+        "Attack": 15,
+        "Equip": 0
+    },
+    "330035": {
+        "ID": 330035,
+        "RoleID": 100049,
+        "Level": 3,
+        "HP": 11,
+        "Attack": 11,
+        "Equip": 0
+    },
+    "330036": {
+        "ID": 330036,
+        "RoleID": 100054,
+        "Level": 3,
+        "HP": 15,
+        "Attack": 16,
+        "Equip": 0
+    },
+    "310037": {
+        "ID": 310037,
+        "RoleID": 100008,
+        "Level": 1,
+        "HP": 4,
+        "Attack": 2,
+        "Equip": 0
+    },
+    "310038": {
+        "ID": 310038,
+        "RoleID": 100020,
+        "Level": 1,
+        "HP": 6,
+        "Attack": 6,
+        "Equip": 0
+    },
+    "310039": {
+        "ID": 310039,
+        "RoleID": 100025,
+        "Level": 1,
+        "HP": 4,
+        "Attack": 8,
+        "Equip": 0
+    },
+    "310040": {
+        "ID": 310040,
+        "RoleID": 100028,
+        "Level": 1,
+        "HP": 3,
+        "Attack": 3,
+        "Equip": 0
+    },
+    "310041": {
+        "ID": 310041,
+        "RoleID": 100030,
+        "Level": 1,
+        "HP": 5,
+        "Attack": 5,
+        "Equip": 0
+    },
+    "310042": {
+        "ID": 310042,
+        "RoleID": 100031,
+        "Level": 1,
+        "HP": 4,
+        "Attack": 3,
+        "Equip": 0
+    },
+    "310043": {
+        "ID": 310043,
+        "RoleID": 100035,
+        "Level": 1,
+        "HP": 2,
+        "Attack": 2,
+        "Equip": 0
+    },
+    "310044": {
+        "ID": 310044,
+        "RoleID": 100036,
+        "Level": 1,
+        "HP": 5,
+        "Attack": 7,
+        "Equip": 0
+    },
+    "310045": {
+        "ID": 310045,
+        "RoleID": 100050,
+        "Level": 1,
+        "HP": 2,
+        "Attack": 3,
+        "Equip": 0
+    },
+    "320037": {
+        "ID": 320037,
+        "RoleID": 100008,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 6,
+        "Equip": 0
+    },
+    "320038": {
+        "ID": 320038,
+        "RoleID": 100020,
+        "Level": 2,
+        "HP": 10,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "320039": {
+        "ID": 320039,
+        "RoleID": 100025,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "320040": {
+        "ID": 320040,
+        "RoleID": 100028,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 8,
+        "Equip": 0
+    },
+    "320041": {
+        "ID": 320041,
+        "RoleID": 100030,
+        "Level": 2,
+        "HP": 9,
+        "Attack": 9,
+        "Equip": 0
+    },
+    "320042": {
+        "ID": 320042,
+        "RoleID": 100031,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 8,
+        "Equip": 0
+    },
+    "320043": {
+        "ID": 320043,
+        "RoleID": 100035,
+        "Level": 2,
+        "HP": 6,
+        "Attack": 6,
+        "Equip": 0
+    },
+    "320044": {
+        "ID": 320044,
+        "RoleID": 100036,
+        "Level": 2,
+        "HP": 9,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "320045": {
+        "ID": 320045,
+        "RoleID": 100050,
+        "Level": 2,
+        "HP": 6,
+        "Attack": 7,
+        "Equip": 0
+    },
+    "330037": {
+        "ID": 330037,
+        "RoleID": 100008,
+        "Level": 3,
+        "HP": 15,
+        "Attack": 11,
+        "Equip": 0
+    },
+    "330038": {
+        "ID": 330038,
+        "RoleID": 100020,
+        "Level": 3,
+        "HP": 14,
+        "Attack": 14,
+        "Equip": 0
+    },
+    "330039": {
+        "ID": 330039,
+        "RoleID": 100025,
+        "Level": 3,
+        "HP": 13,
+        "Attack": 17,
+        "Equip": 0
+    },
+    "330040": {
+        "ID": 330040,
+        "RoleID": 100028,
+        "Level": 3,
+        "HP": 14,
+        "Attack": 14,
+        "Equip": 0
+    },
+    "330041": {
+        "ID": 330041,
+        "RoleID": 100030,
+        "Level": 3,
+        "HP": 14,
+        "Attack": 16,
+        "Equip": 0
+    },
+    "330042": {
+        "ID": 330042,
+        "RoleID": 100031,
+        "Level": 3,
+        "HP": 15,
+        "Attack": 15,
+        "Equip": 0
+    },
+    "330043": {
+        "ID": 330043,
+        "RoleID": 100035,
+        "Level": 3,
+        "HP": 12,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "330044": {
+        "ID": 330044,
+        "RoleID": 100036,
+        "Level": 3,
+        "HP": 14,
+        "Attack": 16,
+        "Equip": 0
+    },
+    "330045": {
+        "ID": 330045,
+        "RoleID": 100050,
+        "Level": 3,
+        "HP": 11,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "310046": {
+        "ID": 310046,
+        "RoleID": 100002,
+        "Level": 1,
+        "HP": 10,
+        "Attack": 6,
+        "Equip": 0
+    },
+    "310047": {
+        "ID": 310047,
+        "RoleID": 100005,
+        "Level": 1,
+        "HP": 8,
+        "Attack": 4,
+        "Equip": 0
+    },
+    "310048": {
+        "ID": 310048,
+        "RoleID": 100013,
+        "Level": 1,
+        "HP": 7,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "310049": {
+        "ID": 310049,
+        "RoleID": 100014,
+        "Level": 1,
+        "HP": 4,
+        "Attack": 5,
+        "Equip": 0
+    },
+    "310050": {
+        "ID": 310050,
+        "RoleID": 100016,
+        "Level": 1,
+        "HP": 3,
+        "Attack": 4,
+        "Equip": 0
+    },
+    "310051": {
+        "ID": 310051,
+        "RoleID": 100021,
+        "Level": 1,
+        "HP": 1,
+        "Attack": 1,
+        "Equip": 0
+    },
+    "310052": {
+        "ID": 310052,
+        "RoleID": 100046,
+        "Level": 1,
+        "HP": 1,
+        "Attack": 8,
+        "Equip": 0
+    },
+    "310053": {
+        "ID": 310053,
+        "RoleID": 100051,
+        "Level": 1,
+        "HP": 6,
+        "Attack": 4,
+        "Equip": 0
+    },
+    "310054": {
+        "ID": 310054,
+        "RoleID": 100053,
+        "Level": 1,
+        "HP": 4,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "320046": {
+        "ID": 320046,
+        "RoleID": 100002,
+        "Level": 2,
+        "HP": 15,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "320047": {
+        "ID": 320047,
+        "RoleID": 100005,
+        "Level": 2,
+        "HP": 14,
+        "Attack": 8,
+        "Equip": 0
+    },
+    "320048": {
+        "ID": 320048,
+        "RoleID": 100013,
+        "Level": 2,
+        "HP": 12,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "320049": {
+        "ID": 320049,
+        "RoleID": 100014,
+        "Level": 2,
+        "HP": 9,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "320050": {
+        "ID": 320050,
+        "RoleID": 100016,
+        "Level": 2,
+        "HP": 8,
+        "Attack": 9,
+        "Equip": 0
+    },
+    "320051": {
+        "ID": 320051,
+        "RoleID": 100021,
+        "Level": 2,
+        "HP": 10,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "320052": {
+        "ID": 320052,
+        "RoleID": 100046,
+        "Level": 2,
+        "HP": 6,
+        "Attack": 10,
+        "Equip": 0
+    },
+    "320053": {
+        "ID": 320053,
+        "RoleID": 100051,
+        "Level": 2,
+        "HP": 12,
+        "Attack": 12,
+        "Equip": 0
+    },
+    "320054": {
+        "ID": 320054,
+        "RoleID": 100053,
+        "Level": 2,
+        "HP": 16,
+        "Attack": 20,
+        "Equip": 0
+    },
+    "330046": {
+        "ID": 330046,
+        "RoleID": 100002,
+        "Level": 3,
         "HP": 0,
         "Attack": 0,
+        "Equip": 0
+    },
+    "330047": {
+        "ID": 330047,
+        "RoleID": 100005,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "330048": {
+        "ID": 330048,
+        "RoleID": 100013,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "330049": {
+        "ID": 330049,
+        "RoleID": 100014,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "330050": {
+        "ID": 330050,
+        "RoleID": 100016,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "330051": {
+        "ID": 330051,
+        "RoleID": 100021,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "330052": {
+        "ID": 330052,
+        "RoleID": 100046,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "330053": {
+        "ID": 330053,
+        "RoleID": 100051,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "330054": {
+        "ID": 330054,
+        "RoleID": 100053,
+        "Level": 3,
+        "HP": 0,
+        "Attack": 0,
+        "Equip": 0
+    },
+    "340011": {
+        "ID": 340011,
+        "RoleID": 100006,
+        "Level": 3,
+        "HP": 15,
+        "Attack": 15,
+        "Equip": 0
+    },
+    "340014": {
+        "ID": 340014,
+        "RoleID": 100032,
+        "Level": 3,
+        "HP": 20,
+        "Attack": 20,
         "Equip": 0
     }
 }

@@ -9,32 +9,32 @@
     },
     "10002": {
         "ID": 10002,
-        "Level": "",
-        "Hp": 0,
+        "Level": "200004;200005;200006",
+        "Hp": 1,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
     },
     "10003": {
         "ID": 10003,
-        "Level": "",
-        "Hp": 0,
+        "Level": "200007;200008;200009",
+        "Hp": 1,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
     },
     "10004": {
         "ID": 10004,
-        "Level": "",
-        "Hp": 0,
+        "Level": "200010;200011;200012",
+        "Hp": 1,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
     },
     "10005": {
         "ID": 10005,
-        "Level": "",
-        "Hp": 0,
+        "Level": "200001;200004;200011;200016;200014",
+        "Hp": 2,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
