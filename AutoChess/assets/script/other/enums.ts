@@ -80,3 +80,19 @@ export enum SpecialEffect
     /** 抗伤并减伤 */
     SubstituteDamage=8,
 }
+
+export enum SendMseeageType
+{
+    OpenCardInfo="OpenCardInfo",
+    OpenFetterInfo="OpenFetterInfo",
+    OpenInfoBoard="OpenInfoBoard",
+    ShowTip = "ShowTip",
+    OpenSettlement="OpenSettlement",
+    OpenUpStageBoard="OpenUpStageBoard",
+    OpenUserInfoBoard="OpenUserInfoBoard",
+    OpenTaskAchieveBoard="OpenTaskAchieveBoard",
+    RefreshTaskAchieveBoard="RefreshTaskAchieveBoard",
+    OpenRankListBoard="OpenRankListBoard",
+    OpenPopUps="OpenPopUps",
+    OpenChooseTag="OpenChooseTag",
+}

@@ -7,7 +7,7 @@ import { Bag, RankReward, RoleCardInfo, UserAchievement, UserData, UserWeekAchie
 import { CardPacket } from '../serverSDK/ccallplayer';
 import { StorePrompt } from '../secondaryPanel/StorePrompt';
 import { UserInfo } from '../secondaryPanel/UserInfo';
-import { CardLib } from './CardLib';
+import { CardLibrary } from './CardLibrary';
 import { SendMessage } from '../other/MessageEvent';
 import { StartGame } from './StartGame';
 import { AudioManager } from '../other/AudioManager';
@@ -16,6 +16,7 @@ import { CardEditor } from './CardEditor';
 import { GameManager } from '../other/GameManager';
 import SdkManager from '../SDK/SdkManager';
 import { login } from '../login/login';
+import { AchievePanel } from '../panel/AchievePanel';
 const { ccclass, property } = _decorator;
 
 //玩家账户信息
@@ -55,7 +56,7 @@ export class MainInterface
     private storeBtn:Node;//商店按钮
     private amusementBtn:Node;//娱乐模式按钮
     private cardlibraryBtn:Node;//牌库按钮
-    private taskAchieveBtn:Node;//任务按钮
+    private achieveBtn:Node;//成就按钮
     private rankListBtn:Node;//排行榜按钮
     private cardEditorBtn:Node;//卡组编辑按钮
     private ventureBtn:Node;//冒险模式按钮（pve）
@@ -71,6 +72,11 @@ export class MainInterface
     public userData:common.UserData;
     //玩家头像
     private userAvatar:Node;
+
+    public cardEditPanel:Node;
+    public storePanel:Node;
+    public cardLibraryPanel:Node;
+    public achievePanel:Node;
 
     constructor()
     {
@@ -121,7 +127,7 @@ export class MainInterface
             //下拉按钮列表
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
             this.cardEditorBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
-            this.taskAchieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Task_Btn");//任务
+            this.achieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Task_Btn");//任务
             //玩家信息
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserMoney");
             this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserDiamonds");
@@ -216,9 +222,6 @@ export class MainInterface
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePart.active=true;
                 this.startGamePart.getComponent(StartGame).OpenAthleticsWindow();
-                //this.mainPanel.active=false;
-                
-    
             },this);
             //打开自定义模式
             this.amusementBtn.on(Button.EventType.CLICK,()=>
@@ -232,10 +235,10 @@ export class MainInterface
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 let st = await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel") as Prefab;
-                let panel =instantiate(st);
-                panel.setParent(this.fatherNode);
-                panel.getComponent(StorePanel).CheckStoreToggle(true);
-                panel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked = true;
+                this.storePanel =instantiate(st);
+                this.storePanel.setParent(this.fatherNode);
+                this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
+                this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked = true;
                 this.panelNode.active = false;
             },this);
             //打开牌库界面
@@ -243,9 +246,9 @@ export class MainInterface
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 let cl = await BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary") as Prefab;
-                let panel = instantiate(cl);
-                panel.setParent(this.fatherNode);
-                panel.getComponent(CardLib).OpenCardLib();
+                this.cardLibraryPanel = instantiate(cl);
+                this.cardLibraryPanel.setParent(this.fatherNode);
+                this.cardLibraryPanel.getComponent(CardLibrary).OpenCardLib();
                 this.panelNode.active=false;
             },this);
             //打开卡组编辑界面
@@ -253,9 +256,9 @@ export class MainInterface
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 let ce = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "CardEditor") as Prefab;
-                let panel = instantiate(ce);
-                panel.setParent(this.fatherNode);
-                panel.getComponent(CardEditor).OpenCardEditor();
+                this.cardEditPanel = instantiate(ce);
+                this.cardEditPanel.setParent(this.fatherNode);
+                this.cardEditPanel.getComponent(CardEditor).OpenCardEditor();
                 this.panelNode.active=false;
             },this);
             //打开冒险模式界面
@@ -268,6 +271,17 @@ export class MainInterface
                 this.panelNode.active = false;
                 
             },this);
+            //打开任务、成就
+            this.achieveBtn.on(Button.EventType.CLICK, async () =>
+            {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                //this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true,this.userAccount));
+                let ap = await BundleManager.Instance.loadAssetsFromBundle("Panel", "AchievePanel") as Prefab;
+                this.achievePanel = instantiate(ap);
+                this.achievePanel.setParent(this.fatherNode);
+                this.achievePanel.getComponent(AchievePanel).Open(this.userAccount);
+                this.panelNode.active = false;
+            }, this);
             //按钮条切换
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
             {
@@ -297,19 +311,12 @@ export class MainInterface
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenUserInfoBoard',true,this.avatarUrl));
             },this);
-            //打开任务、成就
-            this.taskAchieveBtn.on(Button.EventType.CLICK,()=>
-            {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true,this.userAccount));
-            },this);
             //打开排行榜
             this.rankListBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,this.userData));
             },this);
-            
         }
         catch(error)
         {
@@ -342,7 +349,10 @@ export class MainInterface
         //回调编辑卡组
         singleton.netSingleton.player.cb_edit_role_group=(_userInfo:common.UserData)=>
         {
-            
+            if(this.cardEditPanel)
+            {
+                this.panelNode.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip , true ,"<outline color=black width=4>保 存 成 功</outline>"));
+            }
         }
         //回调返回用户信息
         singleton.netSingleton.player.cb_get_user_data=(_userData:common.UserData , _onLoad:boolean)=>

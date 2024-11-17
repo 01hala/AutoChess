@@ -24,12 +24,15 @@ export class CardEditor extends Component
     //牌组信息
     public roleGroup:common.RoleGroup;
     //保存并关闭按钮
-    private exitBtn:Node;
+    private exitBtn:Node;   
+    //保存按钮
+    private saveBtn:Node;
 
     protected async onLoad(): Promise<void>
     {
         this.pageContent=this.node.getChildByPath("PageView/view/content");
         this.exitBtn=this.node.getChildByPath("Close_Btn");
+        this.saveBtn=this.node.getChildByPath("Save_Btn");
     }
 
     start() 
@@ -41,7 +44,7 @@ export class CardEditor extends Component
             {
                 try
                 {
-                    this.node.dispatchEvent(new SendMessage('OpenPopUps', true,
+                    this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.OpenPopUps, true,
                     {
                         type: enums.PopUpsType.ConfirmBoard,
                         title: "提 醒",
@@ -65,6 +68,12 @@ export class CardEditor extends Component
                 }
                 
             },this);
+
+            this.saveBtn.on(Button.EventType.CLICK,()=>
+            {
+                singleton.netSingleton.player.edit_role_group(this.roleGroup);
+            },this);
+
         }
         catch(error)
         {

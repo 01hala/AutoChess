@@ -4,7 +4,7 @@
  * 2024/05/16
  * 牌库复选栏
  */
-import { _decorator, assetManager, CCInteger, Color, color, Component, instantiate, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
+import { _decorator, assetManager, CCInteger, Color, color, Component, instantiate, Label, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
 import * as common from '../battle/AutoChessBattle/common';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../battle/AutoChessBattle/config/config';
@@ -23,23 +23,23 @@ export class RoleToggleList extends Component
     //选中的toggle列表
     private confirmToggles:Node[]=[];
     //等阶文本
-    private stageLvText:RichText;
+    private stageLvText:Label;
     //父节点组件
     private cardEditor:CardEditor;
 
     start() 
     {
-
+        
     }
 
     public async Init(_roleGroup:common.RoleGroup , _stageLv:number , _father:Node)
     {
         try
         {
-            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggel") as Prefab; 
-            this.stageLvText=this.node.parent.getChildByPath("RichText").getComponent(RichText);
+            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggel") as Prefab;
+            this.stageLvText=this.node.parent.getChildByPath("Label").getComponent(Label);
 
-            this.stageLvText.string="<color=#ffffff>"+_stageLv+"阶角色</color>";
+            this.stageLvText.string=+_stageLv+"阶角色";
             this.stageLv=_stageLv;
             this.cardEditor=_father.getComponent(CardEditor);
             let i=100001;   //角色id
@@ -77,7 +77,7 @@ export class RoleToggleList extends Component
         }
         catch(error)
         {
-            console.log("RoleToggleList 下的 Init 错误:",error);
+            console.error("RoleToggleList 下的 Init 错误:",error);
         }
     }
 

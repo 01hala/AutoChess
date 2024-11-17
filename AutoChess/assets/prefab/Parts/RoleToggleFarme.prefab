@@ -76,7 +76,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "RichText",
+    "_name": "Label",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -96,8 +96,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -184.15700000000004,
-      "y": 3.552713678800501e-15,
+      "x": -301.728,
+      "y": 20.000000000000007,
       "z": 0
     },
     "_lrot": {
@@ -109,8 +109,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -136,8 +136,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 400,
-      "height": 50.4
+      "width": 320,
+      "height": 100.8
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -148,10 +148,10 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "b3Y/UUbRpGbK22SuF0VJwi"
+    "fileId": "95gcRNGM1L0KakSeylObzf"
   },
   {
-    "__type__": "cc.RichText",
+    "__type__": "cc.Label",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -161,30 +161,41 @@
     "__prefab": {
       "__id__": 6
     },
-    "_lineHeight": 40,
-    "_string": "<color=#ffffff>1阶角色</color>",
-    "_horizontalAlign": 0,
-    "_verticalAlign": 0,
-    "_fontSize": 40,
-    "_maxWidth": 400,
+    "_customMaterial": null,
+    "_srcBlendFactor": 2,
+    "_dstBlendFactor": 4,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 216,
+      "g": 166,
+      "b": 166,
+      "a": 255
+    },
+    "_string": "一阶角色",
+    "_horizontalAlign": 1,
+    "_verticalAlign": 1,
+    "_actualFontSize": 80,
+    "_fontSize": 80,
     "_fontFamily": "Arial",
+    "_lineHeight": 80,
+    "_overflow": 0,
+    "_enableWrapText": true,
     "_font": {
       "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
-    "_userDefinedFont": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
-      "__expectedType__": "cc.TTFFont"
-    },
+    "_spacingX": 0,
+    "_isItalic": false,
+    "_isBold": false,
+    "_isUnderline": false,
+    "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_imageAtlas": null,
-    "_handleTouchEvent": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "54c6lD+ddM/psYOWUXuBXh"
+    "fileId": "61CFsI51ZKdbQ0m2abyrK/"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -194,7 +205,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "598zd13x9HZ71/fxR1BNVd",
+    "fileId": "e6WelZnvZLn76LbioG1Yf9",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -228,7 +239,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -25.199999999999996,
+      "y": -30.39999999999999,
       "z": 0
     },
     "_lrot": {
@@ -397,7 +408,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 900,
-      "height": 150.4
+      "height": 160.8
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -432,7 +443,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "4ee6bf5c-dea7-42a2-ad56-edb82c55b1a7@f9941",
+      "__uuid__": "212b858f-8623-412b-b7d0-b9bf8314bb77@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -475,7 +486,7 @@
     "_startAxis": 0,
     "_paddingLeft": 0,
     "_paddingRight": 0,
-    "_paddingTop": 50,
+    "_paddingTop": 10,
     "_paddingBottom": 50,
     "_spacingX": 0,
     "_spacingY": 0,

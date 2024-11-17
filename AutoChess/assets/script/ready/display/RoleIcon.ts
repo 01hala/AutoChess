@@ -247,7 +247,7 @@ export class RoleIcon extends Component
                         }
                         else if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() < 3) 
                         {
-                            this.node.dispatchEvent(new SendMessage('ShowTip',true,"<outline color=black width=4>金 币 不 足</outline>"));
+                            this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip,true,"<outline color=black width=4>金 币 不 足</outline>"));
                             //GameManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                         }
                     }

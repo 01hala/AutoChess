@@ -71,6 +71,7 @@ export class GameManager extends Component
     //消息监听
     private InitEvent()
     {
+        //打开角色卡信息
         /* 消息来源
          * RoleCard.ts : 第 78 行 
          * 
@@ -79,7 +80,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenCardInfo',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenCardInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
             let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
@@ -89,6 +90,7 @@ export class GameManager extends Component
 
         },this);
 
+        //打开羁绊信息
         /* 消息来源
          * ReadyDis.ts : 第 334 行 
          * 
@@ -97,7 +99,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenFetterInfo',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenFetterInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
             let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
@@ -114,7 +116,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenInfoBoard',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenInfoBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
             let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
@@ -123,20 +125,22 @@ export class GameManager extends Component
             board.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
         },this);
 
+        //消息提示
         /* 消息来源
          * RoleIcon.ts : 第 215 行 
-         * 
+         * MainInterface.ts : 第 349 行
          * 
          * 
          * 
          * 
          */
-        this.node.on('ShowTip',(event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.ShowTip,(event:SendMessage)=>
         {
             event.propagationStopped=true;
             this.ShowTip(event.detail);
         },this);
 
+        //打开结算面板
         /* 消息来源
          * BattleDis.ts : 第 175、179 行 
          * 
@@ -145,7 +149,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenSettlement',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenSettlement,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
             let st=await BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard") as Prefab;
@@ -154,6 +158,7 @@ export class GameManager extends Component
             board.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
         },this);
 
+        //打开升阶面板
         /* 消息来源
          *  
          * 
@@ -162,7 +167,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenUpStageBoard',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenUpStageBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
 
@@ -172,6 +177,7 @@ export class GameManager extends Component
             board.getComponent(UpStage).OpenUpStageBoard(event.detail);
         },this);
 
+        //打开用户信息面板+
         /* 消息来源
          *  MainInterface.ts : 第 203 行
          * 
@@ -180,7 +186,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenUserInfoBoard',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenUserInfoBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
 
@@ -198,7 +204,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenTaskAchieveBoard',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenTaskAchieveBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
 
@@ -216,7 +222,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('RefreshTaskAchieveBoard',(event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.RefreshTaskAchieveBoard,(event:SendMessage)=>
         {
             event.propagationStopped=true;
             let board=this.node.getChildByName("TaskAchieveBoard");
@@ -234,7 +240,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenRankListBoard',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenRankListBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
 
@@ -252,7 +258,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenPopUps',(event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenPopUps,(event:SendMessage)=>
         {
             event.propagationStopped=true;
             this.OpenPopUps(event.detail.type , event.detail.title , event.detail.subheading , event.detail.items , event.callBack)
@@ -263,7 +269,7 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on('OpenChooseTag',async (event:SendMessage)=>
+        this.node.on(enums.SendMseeageType.OpenChooseTag,async (event:SendMessage)=>
         {
             console.log("on message OpenChooseTag");
             event.propagationStopped=true;

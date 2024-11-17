@@ -140,6 +140,7 @@ export class RoleCard extends Component
         {
             try
             {
+                this.node.getChildByPath("Info").active=false;
                 this.roleId=_id;
                 if (CardType.Card == this.type)
                 {
@@ -170,6 +171,7 @@ export class RoleCard extends Component
                         }
                         if(this.node)
                         {
+                            this.node.getChildByPath("Info").active=true;
                             this.painting.node.active=true;
                             this.node.getComponent(Animation).play();
                         }

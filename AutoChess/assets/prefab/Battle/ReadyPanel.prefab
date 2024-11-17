@@ -13400,7 +13400,7 @@
         "__id__": 695
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 823
@@ -14760,6 +14760,8 @@
       "__id__": 0
     },
     "fileId": "38j2ake9FBDJWd0LUi1YEV",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {

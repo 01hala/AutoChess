@@ -11,27 +11,25 @@ import { config } from '../battle/AutoChessBattle/config/config';
 import { RoleCard } from '../part/RoleCard';
 import * as singleton from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
+import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
+import { sleep } from '../other/sleep';
 const { ccclass, property } = _decorator;
 
-@ccclass('CardLib')
-export class CardLib extends Component 
+@ccclass('CardLibrary')
+export class CardLibrary extends Component 
 {
     private backBtn:Node;
-
-    private pageView:PageView;
-    private cardListPre:Prefab;
-    private roleCardPre:Prefab;
-
+    //预制体
     private cardBoothPre:Prefab;
     private rolePaintingPre:Prefab;
-
-    private cardListPage:Node;
-
+    //标签栏
     public toggleBar:Node;
     //角色立绘展示区域
     private cardContent:Node;
     //滑动组件
     private scroll:ScrollView;
+    //临时数组
+    private cardCfgs:RoleConfig[] = [];
 
     private containerEventHandler:EventHandler;
 
@@ -43,7 +41,6 @@ export class CardLib extends Component
             //this.pageView=this.node.getChildByPath("CardArea/PageView").getComponent(PageView);
             this.toggleBar=this.node.getChildByPath("UI/ToggleBar");
 
-            this.cardContent=this.node.getChildByPath("CardView/view/content");
             this.scroll=this.node.getChildByPath("CardView").getComponent(ScrollView);
         }
         catch(error)
@@ -63,7 +60,12 @@ export class CardLib extends Component
                 this.Exit();
             },this);
 
-            this.Init();
+            this.containerEventHandler = new EventHandler();
+            this.containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
+            this.containerEventHandler.component = 'CardLibrary';// 这个是脚本类名
+            this.containerEventHandler.handler = 'OnCheckToggleEvent';
+
+            this.toggleBar.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
         }
         catch(error)
         {
@@ -73,35 +75,18 @@ export class CardLib extends Component
 
     public Exit()
     {
-        this.RemoveAllBooth();
+        this.RemoveAll();
         this.toggleBar.getComponent(ToggleContainer).checkEvents.splice(0,this.toggleBar.getComponent(ToggleContainer).checkEvents.length);
         this.node.destroy();
-    }
-
-    private Init()
-    {
-        try
-        {
-            this.containerEventHandler = new EventHandler();
-            this.containerEventHandler.target = this.node; // 这个 node 节点是你的事件处理代码组件所属的节点
-            this.containerEventHandler.component = 'CardLib';// 这个是脚本类名
-            this.containerEventHandler.handler = 'OnCheckToggleEvent';
-
-            this.toggleBar.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
-        }
-        catch(error)
-        {
-            console.error("CardLibPanel 下的 Init 错误：",error);
-        }
     }
 
     public async OpenCardLib()
     {
         try
         {
+            this.cardContent=this.node.getChildByPath("CardView/view/content");
             this.toggleBar.getChildByPath("Mountain").getComponent(Toggle).isChecked=true;
             this.toggleBar.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
-            this.rolePaintingPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePainting") as Prefab;
             this.cardBoothPre=await BundleManager.Instance.loadAssetsFromBundle("Parts", "CardBooth") as Prefab;
             this.LoadCard(Biomes.Mountain);
         }
@@ -118,7 +103,7 @@ export class CardLib extends Component
             AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
             console.log("check");
             //this.pageView.removeAllPages();
-            this.RemoveAllBooth();
+            this.RemoveAll();
             if(this.toggleBar.getChildByPath("Sea").getComponent(Toggle).isChecked)
             {
                 this.LoadCard(Biomes.Sea);
@@ -150,85 +135,96 @@ export class CardLib extends Component
         }
     }
 
-    private LoadCard(_biomes:Biomes)
+    //显示底图
+    private ShowBooth(_biomes: Biomes)
+    {
+        let i = 100001;   //角色id
+        let jconfig = null;
+        let num = 0;
+        let tnode:Node;
+        tnode = instantiate(this.cardBoothPre);
+        tnode.setParent(this.cardContent);
+        do
+        {
+            jconfig = config.RoleConfig.get(i);
+            if (jconfig != null)
+            {
+                if (_biomes == jconfig.Biomes)
+                {
+                    this.cardCfgs.push(jconfig);
+                    num++;
+
+                    if (num % 3 == 0)
+                    {
+                        tnode = instantiate(this.cardBoothPre);
+                        tnode.setParent(this.cardContent);
+                        console.log("instantiate booth");
+                    }
+                }
+                i++;
+            }
+        }
+        while (jconfig != null)
+    }
+
+    //加载立绘
+    private async LoadCard(_biomes: Biomes)
     {
         try
         {
-            //this.cardListPage=instantiate(this.cardListPre);
-            //this.pageView.addPage(this.cardListPage);
-
-            let tnode=instantiate(this.cardBoothPre);
-            tnode.setParent(this.cardContent);
+            this.ShowBooth(_biomes);
+            this.rolePaintingPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePainting") as Prefab;
             console.log("LoadCard!!!");
-            let jconfig=null;
-            let i=100001;   //角色id
-            let j=0;        //背包里物品下标
-
-            let num=0;      //页面里的card数量
-            let promise=[];
-            do
+            let boothNum = 0;
+            for(let j=0;j<this.cardCfgs.length;j++)
             {
-                //console.log("id: "+i);
-                jconfig=config.RoleConfig.get(i);
-                if(jconfig!=null)
+                let card = instantiate(this.rolePaintingPre);
+                await card.getComponent(RoleCard).Init(this.cardCfgs[j].Id, this.cardCfgs[j].Skel);
+                card.getComponent(RoleCard).Stage = this.cardCfgs[j].Stage;
+                card.getComponent(RoleCard).Name = this.cardCfgs[j].Name;
+                card.setParent(this.cardContent.children[boothNum].getChildByPath("Layout"));
+                try
                 {
-                    if(_biomes == jconfig.Biomes)
+                    if (singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
                     {
-                        let card=instantiate(this.rolePaintingPre);
-                        tnode.getChildByPath("Layout").addChild(card);
-                        card.getComponent(RoleCard).Init(i,jconfig.Skel);
-                        card.getComponent(RoleCard).Stage=jconfig.Stage;
-                        card.getComponent(RoleCard).Name=jconfig.Name;
-                        try
-                        {
-                            if(singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
-                            {
-                                card.getComponent(RoleCard).Lock=true;
-                                card.getComponent(RoleCard).SetNumber
-                                    (
-                                        singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number, 8
-                                    );
-                            }
-                            else
-                            {
-                                card.getComponent(RoleCard).Lock=false;
-                            }
-                        }
-                        catch(error)
-                        {
-                            console.warn('StorePanel 下 LoadCard 无法读取到玩家数据 err: ',error);
-                        }
-                        //this.cards.push(card);
-                        num++;
-                        if(num%3 == 0)
-                        {
-                            //this.cardListPage=instantiate(this.cardListPre);
-                            //this.pageView.addPage(this.cardListPage);
-                            tnode=instantiate(this.cardBoothPre);
-                            tnode.setParent(this.cardContent);
-                        }
+                        card.getComponent(RoleCard).Lock = true;
+                        card.getComponent(RoleCard).SetNumber
+                            (
+                                singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number, 8
+                            );
                     }
-                    
-                    //card.getComponent(RoleCard).storePanel=this.node;
-                    
-                    i++;j++;
+                    else
+                    {
+                        card.getComponent(RoleCard).Lock = false;
+                    }
                 }
+                catch (error)
+                {
+                    console.warn('StorePanel 下 LoadCard 无法读取到玩家数据 err: ', error);
+                }
+
+                if ((j + 1) % 3 == 0)
+                {
+                    boothNum++;
+                }
+                await sleep(30);
             }
-            while(jconfig!=null);
-            if((this.cardContent.getComponent(UITransform).contentSize.y-400) < this.cardContent.parent.getComponent(UITransform).contentSize.y)
+
+            if ((this.cardContent.getComponent(UITransform).contentSize.y - 400) < this.cardContent.parent.getComponent(UITransform).contentSize.y)
             {
-                this.scroll.enabled=false;
+                this.scroll.enabled = false;
             }
             console.log("LoadCard done!!!");
         }
-        catch(error)
+        catch (error)
         {
-            console.error("CardLibPanel 下的 LoadCard 错误：",error);
+            console.error("CardLibPanel 下的 LoadCard 错误：", error);
         }
     }
 
-    private RemoveAllBooth()
+    private RemoveAll()
     {
+        this.cardCfgs.splice(0,this.cardCfgs.length);
         for(let t of this.cardContent.children)
         {
             for(let tt of t.children)
