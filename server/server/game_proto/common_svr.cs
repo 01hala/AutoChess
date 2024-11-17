@@ -591,6 +591,7 @@ namespace Abelkhan
         public UserRank rank;
         public Int64 rankTimeTmp;
         public Int32 quest;
+        public Int32 PVELevelIndex;
         public Bag bag;
         public GuideStep guideStep;
         public List<Int32> RoleList;
@@ -611,6 +612,7 @@ namespace Abelkhan
             _protocol.Add("rank", (Int32)_struct.rank);
             _protocol.Add("rankTimeTmp", _struct.rankTimeTmp);
             _protocol.Add("quest", _struct.quest);
+            _protocol.Add("PVELevelIndex", _struct.PVELevelIndex);
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
             _protocol.Add("guideStep", (Int32)_struct.guideStep);
             if (_struct.RoleList != null) {
@@ -665,6 +667,9 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "quest"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.quest = ((MsgPack.MessagePackObject)i.Value).AsInt32();
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "PVELevelIndex"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.PVELevelIndex = ((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());

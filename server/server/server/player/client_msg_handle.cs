@@ -153,9 +153,9 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    if (_data.Data.PVELevelIndex < _data.Data.PVELevelCfg.Level.Count)
+                    if (_data.Data.Info().PVELevelIndex < _data.Data.PVELevelCfg.Level.Count)
                     {
-                        if (config.Config.PVERoundConfigs.TryGetValue(_data.Data.PVELevelCfg.Level[_data.Data.PVELevelIndex], out var rcfg))
+                        if (config.Config.PVERoundConfigs.TryGetValue(_data.Data.PVELevelCfg.Level[_data.Data.Info().PVELevelIndex], out var rcfg))
                         {
                             rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, rcfg.EventID);
                         }
@@ -188,10 +188,15 @@ namespace Player
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     _data.Data.BattleShopPlayer.lastBattleResults = is_victory;
-                    if (is_victory == BattleVictory.victory)
+                    if (is_victory == BattleVictory.faild)
                     {
-                        _data.Data.PVELevelIndex++;
-                        if (_data.Data.PVELevelIndex >= _data.Data.PVELevelCfg.Level.Count)
+                        _data.Data.BattleShopPlayer.BattleData.faild--;
+                    }
+
+                    if (_data.Data.BattleShopPlayer.BattleData.faild > 0)
+                    {
+                        _data.Data.Info().PVELevelIndex++;
+                        if (_data.Data.Info().PVELevelIndex >= _data.Data.PVELevelCfg.Level.Count)
                         {
                             _data.Data.Info().quest++;
 
@@ -457,7 +462,7 @@ namespace Player
             }
             catch (System.Exception ex)
             {
-                Log.Log.err($"Player_shop_Module_on_get_user_data err:{ex}");
+                Log.Log.err($"on_kill_role err:{ex}");
             }
 
             Log.Log.trace("on_kill_role end!");

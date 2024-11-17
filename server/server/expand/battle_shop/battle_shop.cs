@@ -14,6 +14,10 @@ namespace battle_shop
         private UserBattleData battleData;
         public UserBattleData BattleData
         {
+            set
+            {
+                battleData = value;
+            }
             get
             {
                 return battleData;
@@ -62,6 +66,10 @@ namespace battle_shop
         private battle_client_caller caller;
         public battle_client_caller BattleClientCaller
         {
+            set
+            {
+                caller = value;
+            }
             get
             {
                 return caller;
@@ -353,9 +361,13 @@ namespace battle_shop
                 {
                     _stage = 6;
                 }
-                if (shopData.SaleRoleList.Count < 6)
+                if (shopData.SaleRoleList[4] == null)
                 {
-                    shopData.SaleRoleList.Add(randomShopRole(_stage));
+                    shopData.SaleRoleList[4] = randomShopRole(_stage);
+                }
+                else if (shopData.SaleRoleList[5] == null)
+                {
+                    shopData.SaleRoleList[5] = randomShopRole(_stage);
                 }
 
                 BattleClientCaller.get_client(ClientUUID).role_update_refresh_shop(shopData);

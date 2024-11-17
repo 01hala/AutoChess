@@ -504,6 +504,7 @@ export class ReadyDis
     //更新玩家信息
     private async UpdatePlayerInfo(_battle_info:common.UserBattleData)
     {
+        console.log("UpdatePlayerInfo _battle_info:", JSON.stringify(_battle_info));
         try
         {
             this.UpdateText(_battle_info);
@@ -577,7 +578,7 @@ export class ReadyDis
             }
             catch(error)
             {
-                console.warn("引擎bug，还是会有极小概率richtext报空函数，可以忽略");
+                console.warn("引擎bug,还是会有极小概率richtext报空函数,可以忽略 err:", error);
                 relolve();
             }
         });

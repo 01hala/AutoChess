@@ -2,34 +2,39 @@
     "10001": {
         "ID": 10001,
         "Level": "200001;200002;200003",
+        "Hp": 1,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
     },
     "10002": {
         "ID": 10002,
-        "Level": "",
+        "Level": "200004;200005;200006",
+        "Hp": 1,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
     },
     "10003": {
         "ID": 10003,
-        "Level": "",
+        "Level": "200007;200008;200009",
+        "Hp": 1,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
     },
     "10004": {
         "ID": 10004,
-        "Level": "",
+        "Level": "200010;200011;200012",
+        "Hp": 1,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
     },
     "10005": {
         "ID": 10005,
-        "Level": "",
+        "Level": "200001;200004;200011;200016;200014",
+        "Hp": 2,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -37,6 +42,7 @@
     "10006": {
         "ID": 10006,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -44,6 +50,7 @@
     "10007": {
         "ID": 10007,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -51,6 +58,7 @@
     "10008": {
         "ID": 10008,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -58,6 +66,7 @@
     "10009": {
         "ID": 10009,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -65,6 +74,7 @@
     "10010": {
         "ID": 10010,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -72,6 +82,7 @@
     "10011": {
         "ID": 10011,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -79,6 +90,7 @@
     "10012": {
         "ID": 10012,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -86,6 +98,7 @@
     "10013": {
         "ID": 10013,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -93,6 +106,7 @@
     "10014": {
         "ID": 10014,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -100,6 +114,7 @@
     "10015": {
         "ID": 10015,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -107,6 +122,7 @@
     "10016": {
         "ID": 10016,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0
@@ -114,6 +130,7 @@
     "10017": {
         "ID": 10017,
         "Level": "",
+        "Hp": 0,
         "Qualified": 0,
         "Normal": 0,
         "Perfect": 0

@@ -212,7 +212,7 @@ export class ShopArea extends Component
                         newNode.setParent(this.panel);
                         newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
                         newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, roles[i].Level, 1, roles[i].IsFreeze);
-                        this.shopRoleNodes.push(newNode);
+                        this.shopRoleNodes[i] = newNode;
                     }
                 }
             }

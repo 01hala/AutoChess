@@ -50,7 +50,6 @@ namespace Player
 
         public battle_shop_player BattleShopPlayer;
         public PVELevelConfig PVELevelCfg;
-        public int PVELevelIndex = 0;
 
         public static string Type()
         {
@@ -237,6 +236,11 @@ namespace Player
                 info.info.quest = 10001;
             }
 
+            if (data.Contains("PVELevelIndex"))
+            {
+                info.info.PVELevelIndex = data.GetValue("PVELevelIndex").AsInt32;
+            }
+
             if (data.Contains("score"))
             {
                 info.info.score = data.GetValue("score").AsInt32;
@@ -274,9 +278,11 @@ namespace Player
                 info.PeakStrengthID = data.GetValue("peakStrengthID").AsInt64;
             }
 
-            if (data.Contains("PVELevelIndex"))
+            if (data.Contains("BattleData"))
             {
-                info.PVELevelIndex = data.GetValue("PVELevelIndex").AsInt32;
+                var BattleData = data.GetValue("BattleData").AsBsonDocument;
+                info.BattleShopPlayer = new battle_shop_player(null, null, info.BattleRoleGroup(), info.info.User);
+                info.BattleShopPlayer.BattleData = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserBattleData>(BattleData);
             }
 
             return info;
@@ -342,8 +348,14 @@ namespace Player
                 { "lastTickStrengthTime", lastTickStrengthTime },
                 { "currentRolrGroup", currentRolrGroup },
                 { "peakStrengthID", PeakStrengthID },
-                { "PVELevelIndex", PVELevelIndex },
+                { "PVELevelIndex", info.PVELevelIndex },
             };
+
+            if (BattleShopPlayer != null)
+            {
+                doc.Add("BattleData", BattleShopPlayer.BattleData.ToBsonDocument());
+            }
+
             return doc;
         }
 
@@ -1070,7 +1082,7 @@ namespace Player
 
         private void RefreshWeekAchiev()
         {
-            if (info.wAchiev.timeout < Timerservice.Tick)
+            if (info.wAchiev != null && info.wAchiev.timeout < Timerservice.Tick)
             {
                 info.wAchiev = NewUserWeekAchievement();
             }
@@ -1133,7 +1145,7 @@ namespace Player
 
         public int GetStage()
         {
-            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var cfg))
             {
                 return cfg.Stage;
             }
@@ -1145,7 +1157,7 @@ namespace Player
         {
             BattleShopPlayer = null;
             PVELevelCfg = null;
-            PVELevelIndex = 0;
+            info.PVELevelIndex = 0;
         }
 
         public void StartPVERound(int addCoin)
@@ -1162,7 +1174,7 @@ namespace Player
 
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(GetStage());
 
-            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var cfg))
             {
                 BattleShopPlayer.BattleData.coin = cfg.Gold + BattleShopPlayer.bankCpin + addCoin;
                 BattleShopPlayer.bankCpin = 0;
@@ -1190,14 +1202,23 @@ namespace Player
 
         public Tuple<bool, List<int>> StartQuestReady(string _clientUUID, battle_client_caller battleClientCaller)
         {
-            BattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
+            if (BattleShopPlayer == null)
+            {
+                BattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
+            }
+            else
+            {
+                BattleShopPlayer.ClientUUID = _clientUUID;
+                BattleShopPlayer.BattleClientCaller = battleClientCaller;
+            }
 
             if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
             {
                 PVELevelCfg = cfg;
+                BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
                 StartPVERound(0);
 
-                if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var rcfg))
+                if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var rcfg))
                 {
                     return Tuple.Create(true, rcfg.EventID);
                 }
@@ -1235,7 +1256,7 @@ namespace Player
             var target = new UserBattleData();
             target.RoleList = new List<Role>();
 
-            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[PVELevelIndex], out var cfg))
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var cfg))
             {
                 foreach(var rInfo in cfg.Enemys)
                 {
