@@ -15,6 +15,7 @@ import { Guide } from '../panel/Guide';
 import * as common from "../battle/AutoChessBattle/common"
 import { ChooseTag } from '../secondaryPanel/ChooseTag';
 import { sleep } from './sleep';
+import { LevelInfo } from '../secondaryPanel/LevelInfo';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -280,6 +281,18 @@ export class GameManager extends Component
             console.log("ChooseTags：",event.detail.events);
             board.getComponent(ChooseTag).Open(event.detail.events);
         },this);
+
+        /**打开关卡信息面板 消息来源：
+         * VenturePanel.ts ：第 46 行
+         */
+        this.node.on(enums.SendMseeageType.OpenLevelInfo ,async (event:SendMessage)=>
+        {
+            event.propagationStopped = true;
+            let ct = await BundleManager.Instance.loadAssetsFromBundle("Board", "LevelInfoBoard") as Prefab;
+            let board = instantiate(ct);
+            board.setParent(this.node);
+            board.getComponent(LevelInfo).Open(event.detail.levelId, event.callBack);
+        })
     }
 
     //显示提示信息
@@ -317,7 +330,7 @@ export class GameManager extends Component
         board.setParent(this.node);
         board.getComponent(PopUps).title=_title;
         board.getComponent(PopUps).subheading=_subheading;
-        board.getComponent(PopUps).OpenBoard(_type , _items , _callBack);
+        board.getComponent(PopUps).Open(_type , _items , _callBack);
     }
 
     public async StartGuide(_step:common.GuideStep)

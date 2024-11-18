@@ -2,12 +2,12 @@
   "ver": "1.1.43",
   "importer": "prefab",
   "imported": true,
-  "uuid": "efcefe83-844e-466d-a6e4-628896953933",
+  "uuid": "5433d9c1-c9ed-445e-a648-0582b73e7e87",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "RoleFarme"
+    "syncNodeName": "LevelInfoBoard"
   }
 }

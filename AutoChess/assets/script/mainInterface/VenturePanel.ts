@@ -1,6 +1,8 @@
 import { _decorator, Button, Component, Node } from 'cc';
 import { AudioManager } from '../other/AudioManager';
 import * as singleton from '../netDriver/netSingleton';
+import { SendMessage } from '../other/MessageEvent';
+import * as enums from '../other/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('VenturePanel')
@@ -28,18 +30,43 @@ export class VenturePanel extends Component
             this.Exit();
         })
 
-        this.levelBtn.on(Button.EventType.CLICK,()=>
-        {
-            console.log("start pve");
-            singleton.netSingleton.game.start_quest_battle_ready();
-            this.Exit();
-        });
+        // this.levelBtn.on(Button.EventType.CLICK,()=>
+        // {
+        //     console.log("start pve");
+        //     singleton.netSingleton.game.start_quest_battle_ready();
+        //     this.Exit();
+        // });
     }
 
     public Exit()
     {
         this.node.destroy();
     }
+
+    public OnLevelBtnClick(_event,_data)
+    {
+        let levelId = parseInt(_data);
+        //singleton.netSingleton.game.start_quest_battle_ready();
+        //this.Exit();
+        this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.OpenLevelInfo, true,
+            {
+                levelId: levelId
+            },
+            (flag) =>
+            {
+                if (flag)
+                {
+                    this.Exit();
+                }
+            }
+        ));
+    }
+
+    Open()
+    {
+        
+    }
+    
 
 }
 

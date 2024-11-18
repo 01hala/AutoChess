@@ -51,7 +51,7 @@ export class PopUps extends Component
         {
             this.node.getChildByPath("BG").on(Button.EventType.CLICK, () =>
             {
-                this.CloseBoard();
+                this.Close();
             }, this);
         }
         catch (error)
@@ -60,7 +60,24 @@ export class PopUps extends Component
         }
     }
 
-    public async OpenBoard(_type:enums.PopUpsType , _items:Map<string,number> , _callBack?:(e?:boolean)=>void)
+    Close()
+    {
+        try
+        {
+            this.board.getComponent(Animation).on(Animation.EventType.FINISHED, () =>
+            {
+                this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.destroy();
+            });
+            this.board.getComponent(Animation).play("PanelDisappear");
+        }
+        catch(error)
+        {
+            console.log("PopUps 下的 CloseBoard 错误:",error);
+        }
+    }
+
+    public async Open(_type:enums.PopUpsType , _items:Map<string,number> , _callBack?:(e?:boolean)=>void)
     {
         try
         {
@@ -91,7 +108,7 @@ export class PopUps extends Component
                 {
                     if (_callBack)
                     {
-                        this.CloseBoard();
+                        this.Close();
                         _callBack(true);
                     }
                 });
@@ -99,7 +116,7 @@ export class PopUps extends Component
                 {
                     if (_callBack)
                     {
-                        this.CloseBoard();
+                        this.Close();
                         _callBack(false);
                     }
                 });
@@ -112,22 +129,6 @@ export class PopUps extends Component
         }
     }
 
-    private CloseBoard()
-    {
-        try
-        {
-            this.board.getComponent(Animation).on(Animation.EventType.FINISHED, () =>
-            {
-                this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.node.destroy();
-            });
-            this.board.getComponent(Animation).play("PanelDisappear");
-        }
-        catch(error)
-        {
-            console.log("PopUps 下的 CloseBoard 错误:",error);
-        }
-    }
 }
 
 

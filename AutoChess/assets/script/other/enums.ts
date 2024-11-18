@@ -95,4 +95,5 @@ export enum SendMseeageType
     OpenRankListBoard="OpenRankListBoard",
     OpenPopUps="OpenPopUps",
     OpenChooseTag="OpenChooseTag",
+    OpenLevelInfo="OpenLevelInfo"
 }
