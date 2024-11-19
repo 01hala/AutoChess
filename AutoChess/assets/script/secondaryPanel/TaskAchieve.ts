@@ -10,8 +10,9 @@ import { BundleManager } from '../bundle/BundleManager';
 import { AudioManager } from '../other/AudioManager';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { TaskLable } from '../part/TaskLable';
-import { UserAccount } from '../mainInterface/MainInterface';
 import { Achievement, AchievementAwardStatus, AchievementData, AchievementReward } from '../battle/AutoChessBattle/common';
+import * as common from "../battle/AutoChessBattle/common"
+import { User } from '../login/User';
 const { ccclass, property } = _decorator;
 
 @ccclass('Task & Achieve')
@@ -26,8 +27,6 @@ export class TaskAchieve extends Component
     private toggleGroup:Node;
     private scrollView:Node;
 
-    //用户数据，切换页表标签的时候保存用
-    private _userAccount:UserAccount;
     //map保存lable列表方便刷新
     private lableList:Map<number,Node>;
     private taskCompletePanel:Node;
@@ -81,15 +80,15 @@ export class TaskAchieve extends Component
         }
     }
 
-    public OpenTaskAchieveBoard(_userAccount:UserAccount)
+    public OpenTaskAchieveBoard()
     {
         try
         {
             this.node.getComponent(BlockInputEvents).enabled=true;
             this.node.setSiblingIndex(100);
             this.board.active=true;
-            this._userAccount=_userAccount;
-            this.ShowLabels(PageType.Task,this._userAccount);
+
+            this.ShowLabels(PageType.Task);
             this.board.getComponent(Animation).play("PanelAppear");
         }
         catch(error)
@@ -106,11 +105,11 @@ export class TaskAchieve extends Component
             this.RemoveAllLables();
             if(this.toggleGroup.getChildByPath("TaskList").getComponent(Toggle).isChecked)
             {
-                this.ShowLabels(PageType.Task,this._userAccount);
+                this.ShowLabels(PageType.Task);
             }
             if(this.toggleGroup.getChildByPath("AchieveList").getComponent(Toggle).isChecked)
             {
-                this.ShowLabels(PageType.Achieve,this._userAccount);
+                this.ShowLabels(PageType.Achieve);
             }
         }
         catch(error)
@@ -119,7 +118,7 @@ export class TaskAchieve extends Component
         }
     }
 
-    private async ShowLabels(_flag:PageType,_user?:UserAccount)
+    private async ShowLabels(_flag:PageType)
     {
         let jconfig = null;
         let i;
@@ -130,11 +129,11 @@ export class TaskAchieve extends Component
         {
             case PageType.Task:{
                 i=1001;
-                achieveList=_user.wAchiev.wAchievData;
+                achieveList=User.UserData.wAchiev.wAchievData;
             }break;
             case PageType.Achieve:{
                 i=2001;
-                achieveList=_user.Achiev.achievData;
+                achieveList=User.UserData.Achiev.achievData;
             }break;
         }
         this.lableList.clear();
@@ -169,11 +168,11 @@ export class TaskAchieve extends Component
         this.taskCompletePanel.getChildByPath("ShowBG/Lable").getComponent(RichText).string=_lable;
     }
 
-    public async RefreshList(_user?:UserAccount){
+    public async RefreshList(){
         if(this.toggleGroup.getChildByPath("TaskList").getComponent(Toggle).isChecked)
         {
-            this._userAccount=_user;
-            for(let t of this._userAccount.wAchiev.wAchievData){
+            
+            for(let t of User.UserData.wAchiev.wAchievData){
                 let temp=this.lableList.get(t.emAchievement)
                 if(temp){
                     temp.getComponent(TaskLable).RefreshLable(t.count,t.status);
@@ -182,8 +181,8 @@ export class TaskAchieve extends Component
         }
         if(this.toggleGroup.getChildByPath("AchieveList").getComponent(Toggle).isChecked)
         {
-            this._userAccount=_user;
-            for(let t of this._userAccount.Achiev.achievData){
+            
+            for(let t of User.UserData.Achiev.achievData){
                 let temp=this.lableList.get(t.emAchievement)
                 if(temp){
                     temp.getComponent(TaskLable).RefreshLable(t.count,t.status);

@@ -13,6 +13,7 @@ import * as singleton from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
 import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { sleep } from '../other/sleep';
+import { User } from '../login/User';
 const { ccclass, property } = _decorator;
 
 @ccclass('CardLibrary')
@@ -185,12 +186,12 @@ export class CardLibrary extends Component
                 card.setParent(this.cardContent.children[boothNum].getChildByPath("Layout"));
                 try
                 {
-                    if (singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].isTatter)
+                    if (User.UserData.bag.ItemList[j].isTatter)
                     {
                         card.getComponent(RoleCard).Lock = true;
                         card.getComponent(RoleCard).SetNumber
                             (
-                                singleton.netSingleton.mainInterface.userAccount.playerBag.ItemList[j].Number, 8
+                                User.UserData.bag.ItemList[j].Number, 8
                             );
                     }
                     else

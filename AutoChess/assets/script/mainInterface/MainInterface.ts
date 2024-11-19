@@ -1,45 +1,22 @@
 import { _decorator, Animation, animation, assetManager, Button, Camera, Component, find, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, System, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
-import { StorePanel } from './StorePanel';
+import { StorePanel } from '../panel/StorePanel';
 import * as common from "../battle/AutoChessBattle/common"
-import { Bag, RankReward, RoleCardInfo, UserAchievement, UserData, UserWeekAchievement } from '../battle/AutoChessBattle/common';
 import { CardPacket } from '../serverSDK/ccallplayer';
-import { StorePrompt } from '../secondaryPanel/StorePrompt';
-import { UserInfo } from '../secondaryPanel/UserInfo';
-import { CardLibrary } from './CardLibrary';
+import { CardLibrary } from '../panel/CardLibrary';
 import { SendMessage } from '../other/MessageEvent';
 import { StartGame } from './StartGame';
 import { AudioManager } from '../other/AudioManager';
 import * as enums from '../other/enums';
-import { CardEditor } from './CardEditor';
+import { CardEditor } from '../panel/CardEditor';
 import { GameManager } from '../other/GameManager';
 import SdkManager from '../SDK/SdkManager';
 import { login } from '../login/login';
 import { AchievePanel } from '../panel/AchievePanel';
+import { User } from '../login/User';
+import { VenturePanel } from '../panel/VenturePanel';
 const { ccclass, property } = _decorator;
-
-//玩家账户信息
-export class UserAccount
-{
-    public money:number;//金币
-    public diamond:number;//钻石
-    public playerBag:Bag;//背包
-    public Achiev : UserAchievement | null = null;//成就
-    public wAchiev : UserWeekAchievement | null = null;//周成就（任务）
-    public guideStep:common.GuideStep;
-    public rank:common.UserRank;
-    public rankScore:number;
-
-    constructor()
-    {
-        this.money=0;
-        this.diamond=0;
-        this.rank = common.UserRank.BlackIron;
-        this.rankScore=0;
-        this.playerBag=null;
-    }
-}
 
 export class MainInterface 
 {
@@ -65,7 +42,6 @@ export class MainInterface
     //伸缩按钮区切换开关
     private btnListSwitch:boolean=false;
     //玩家信息
-    public userAccount:UserAccount;
     private userMoney:Node;
     private userDiamonds:Node;
     private avatarUrl:string;
@@ -81,7 +57,6 @@ export class MainInterface
     constructor()
     {
         this.RegCallBack();
-        this.userAccount=new UserAccount();
     }
 /*
  * 添加Load
@@ -268,6 +243,7 @@ export class MainInterface
                 let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel") as Prefab;
                 let panel=instantiate(vt);
                 panel.setParent(this.fatherNode);
+                panel.getComponent(VenturePanel).Open();
                 this.panelNode.active = false;
                 
             },this);
@@ -279,7 +255,7 @@ export class MainInterface
                 let ap = await BundleManager.Instance.loadAssetsFromBundle("Panel", "AchievePanel") as Prefab;
                 this.achievePanel = instantiate(ap);
                 this.achievePanel.setParent(this.fatherNode);
-                this.achievePanel.getComponent(AchievePanel).Open(this.userAccount);
+                this.achievePanel.getComponent(AchievePanel).Open();
                 this.panelNode.active = false;
             }, this);
             //按钮条切换
@@ -315,7 +291,7 @@ export class MainInterface
             this.rankListBtn.on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
-                this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,this.userData));
+                this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,User.UserData));
             },this);
         }
         catch(error)
@@ -336,7 +312,7 @@ export class MainInterface
         {
             if(_bagInfo && _cardPacketInfo)
             {
-                this.userAccount.playerBag=_bagInfo;
+                User.UserData.bag=_bagInfo;
                 let panel=this.fatherNode.getChildByName("StorePanel").getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
                 //this.storePanel.getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
             }
@@ -357,15 +333,9 @@ export class MainInterface
         //回调返回用户信息
         singleton.netSingleton.player.cb_get_user_data=(_userData:common.UserData , _onLoad:boolean)=>
         {
-            this.userData=_userData;
-            this.userAccount.money=_userData.gold;
-            this.userAccount.playerBag=_userData.bag;
-            this.userAccount.diamond=_userData.diamond;
+            User.UserData=_userData;
             this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+_userData.gold;
             this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+_userData.diamond;
-            this.userAccount.Achiev=_userData.Achiev;
-            this.userAccount.wAchiev=_userData.wAchiev;
-            this.userAccount.guideStep=_userData.guideStep;
             if(_onLoad)
             {
                 login.panelOnReady=true;
@@ -374,23 +344,25 @@ export class MainInterface
         //回调任务成就完成
         singleton.netSingleton.player.cb_achievement_complete=(achieve:common.UserAchievement , wAchieve:common.UserWeekAchievement)=>
         {
-            this.userAccount.money=this.userData.gold;
-            this.userAccount.playerBag=this.userData.bag;
-            this.userAccount.diamond=this.userData.diamond;
-            this.userAccount.Achiev=achieve;
-            this.userAccount.wAchiev=wAchieve;
+            User.UserData.Achiev=achieve;
+            User.UserData.wAchiev=wAchieve;
+            // this.userAccount.money=this.userData.gold;
+            // this.userAccount.playerBag=this.userData.bag;
+            // this.userAccount.diamond=this.userData.diamond;
+            // this.userAccount.Achiev=achieve;
+            // this.userAccount.wAchiev=wAchieve;
 
             //不在战斗中,说明在主界面（？
             if(null != singleton.netSingleton.battle){
                 //this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.gold;
                 //this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.diamond;
-                this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true,this.userAccount));
+                this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true));
             }
         }
         //回调领取任务奖励
         singleton.netSingleton.game.cb_check_achievement=(_achievementReward:common.AchievementReward)=>
         {
-            this.userAccount.money+=_achievementReward.gold;
+            //this.userAccount.money+=_achievementReward.gold;
         }
         //回调排行榜周结算奖励
         singleton.netSingleton.player.cb_rank_reward=(_reward:common.RankReward , _timeDiff)=>

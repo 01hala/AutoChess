@@ -212,7 +212,7 @@ export class GameManager extends Component
             let ta = await BundleManager.Instance.loadAssetsFromBundle("Board","TaskAchieveBoard") as Prefab;
             let board=instantiate(ta);
             board.setParent(this.node);
-            board.getComponent(TaskAchieve).OpenTaskAchieveBoard(event.detail);
+            board.getComponent(TaskAchieve).OpenTaskAchieveBoard();
         },this);
 
         /* 消息来源
@@ -229,7 +229,7 @@ export class GameManager extends Component
             let board=this.node.getChildByName("TaskAchieveBoard");
             if(null!= board && true == board.activeInHierarchy)
             {
-                board.getComponent(TaskAchieve).RefreshList(event.detail);
+                board.getComponent(TaskAchieve).RefreshList();
             }
         },this);
 

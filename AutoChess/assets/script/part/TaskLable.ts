@@ -3,7 +3,6 @@ import { config } from '../battle/AutoChessBattle/config/config';
 import { TaskConfig } from '../battle/AutoChessBattle/config/task_config';
 import { Achievement, AchievementAwardStatus } from '../battle/AutoChessBattle/common';
 import * as singleton from '../netDriver/netSingleton';
-import { UserAccount } from '../mainInterface/MainInterface';
 import { loadAssets } from '../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 

@@ -3,6 +3,7 @@ import { _decorator, Animation, assetManager, BlockInputEvents, Button, Componen
 import { AudioManager } from '../other/AudioManager';
 import * as singleton from '../netDriver/netSingleton';
 import * as common from "../battle/AutoChessBattle/common"
+import { User } from '../login/User';
 const { ccclass, property } = _decorator;
 
 @ccclass('UserInfo')
@@ -93,13 +94,13 @@ export class UserInfo extends Component
     ShowUserInfo()
     {
         //用户名
-        this.node.getChildByPath("PanelNode/UserName/Label").getComponent(Label).string=""+singleton.netSingleton.mainInterface.userData.User.UserName;
+        this.node.getChildByPath("PanelNode/UserName/Label").getComponent(Label).string=""+User.UserData.User.UserName;
         //id
         this.node.getChildByPath("PanelNode/BasicInfo/UserId/RichText").getComponent(RichText).string=
-            "<color=#f3bb51><outline color=72461f width=3>" +singleton.netSingleton.mainInterface.userData.User.UserGuid + "</outline></color>";
+            "<color=#f3bb51><outline color=72461f width=3>" +User.UserData.User.UserGuid + "</outline></color>";
         //分段
         let rank;
-        switch(singleton.netSingleton.mainInterface.userData.rank)
+        switch(User.UserData.rank)
         {
             case common.UserRank.BlackIron:rank="黑铁";break;
             case common.UserRank.Bronze:rank="青铜";break;

@@ -12,6 +12,7 @@ import { RoleToggleList } from '../part/RoleToggleList';
 import { SendMessage } from '../other/MessageEvent';
 import * as enums from '../other/enums';
 import { AudioManager } from '../other/AudioManager';
+import { User } from '../login/User';
 const { ccclass, property } = _decorator;
 
 @ccclass('CardEditor')
@@ -39,7 +40,7 @@ export class CardEditor extends Component
     {
         try
         {
-            this.roleGroup=singleton.netSingleton.mainInterface.userData.roleGroup[0];
+            this.roleGroup=User.UserData.roleGroup[0];
             this.exitBtn.on(Button.EventType.CLICK,()=>
             {
                 try
@@ -108,7 +109,7 @@ export class CardEditor extends Component
     {
         try
         {
-            this.roleGroup=singleton.netSingleton.mainInterface.userData.roleGroup[0];
+            this.roleGroup=User.UserData.roleGroup[0];
             for (let i = 1; i <= 6; i++)
             {
                 let t_node = instantiate(this.framePre);

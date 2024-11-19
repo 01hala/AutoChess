@@ -1,11 +1,12 @@
 import { _decorator, Button, Component, instantiate, Node, Prefab, RichText, ScrollView } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
-import { UserAccount } from '../mainInterface/MainInterface';
 import { AchievementAwardStatus, AchievementData } from '../serverSDK/common';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { TaskLable } from '../part/TaskLable';
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
+import { User } from '../login/User';
+import * as common from "../battle/AutoChessBattle/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('AchievePanel')
@@ -14,9 +15,6 @@ export class AchievePanel extends Component
     //map保存lable列表方便刷新
     private lableList:Map<number,Node>;
     private taskCompletePanel:Node;
-
-    //用户数据
-    private userAccount:UserAccount;
 
     //标签
     private lablePre:Prefab;
@@ -51,15 +49,14 @@ export class AchievePanel extends Component
         this.node.destroy();
     }
 
-    async Open(_userAccount:UserAccount)
+    async Open()
     {
         await this.Load();
         this.lableList=new Map<number,Node>();
-        this.userAccount=_userAccount;
-        this.ShowLabels(this.userAccount);
+        this.ShowLabels();
     }
 
-    private async ShowLabels(_user:UserAccount)
+    private async ShowLabels()
     {
         try
         {
@@ -68,7 +65,7 @@ export class AchievePanel extends Component
     
             this.scrollView.getComponent(ScrollView).scrollToTop(0.1);
             let achieveList:AchievementData[];
-            achieveList=_user.Achiev.achievData;
+            achieveList=User.UserData.Achiev.achievData;
             if(this.lableList.size > 0)
             {
                 this.lableList.clear();
@@ -112,10 +109,9 @@ export class AchievePanel extends Component
         this.taskCompletePanel.getChildByPath("ShowBG/Lable").getComponent(RichText).string = _lable;
     }
 
-    public async RefreshList(_user?:UserAccount)
+    public async RefreshList()
     {
-        this.userAccount = _user;
-        for (let t of this.userAccount.Achiev.achievData)
+        for (let t of User.UserData.Achiev.achievData)
         {
             let temp = this.lableList.get(t.emAchievement)
             if (temp)

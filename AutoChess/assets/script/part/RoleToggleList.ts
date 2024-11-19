@@ -10,7 +10,7 @@ import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../bundle/LoadAsset';
 import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
-import { CardEditor } from '../mainInterface/CardEditor';
+import { CardEditor } from '../panel/CardEditor';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleToggleList')

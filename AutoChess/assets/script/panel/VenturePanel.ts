@@ -3,6 +3,7 @@ import { AudioManager } from '../other/AudioManager';
 import * as singleton from '../netDriver/netSingleton';
 import { SendMessage } from '../other/MessageEvent';
 import * as enums from '../other/enums';
+import { User } from '../login/User';
 const { ccclass, property } = _decorator;
 
 @ccclass('VenturePanel')
@@ -11,13 +12,11 @@ export class VenturePanel extends Component
     //退出返回按钮
     private exitBtn:Node;
 
-    private levelBtn:Node;
+    private level:Node;
 
     protected onLoad(): void
     {
         this.exitBtn=this.node.getChildByPath("Exit_Btn");
-        this.levelBtn=this.node.getChildByPath("WorldMap/view/content/Map/Continent/Button");
-        //this.levelBtn=this.node.getChildByPath("Button");
     }
 
     start() 
@@ -30,12 +29,7 @@ export class VenturePanel extends Component
             this.Exit();
         })
 
-        // this.levelBtn.on(Button.EventType.CLICK,()=>
-        // {
-        //     console.log("start pve");
-        //     singleton.netSingleton.game.start_quest_battle_ready();
-        //     this.Exit();
-        // });
+       
     }
 
     public Exit()
@@ -64,10 +58,18 @@ export class VenturePanel extends Component
 
     Open()
     {
+        this.level=this.node.getChildByPath("WorldMap/view/content/Map/Continent/Level");
         
+        for(let i=0;i<this.level.children.length;i++)
+        {
+            let lock=true;
+            if(User.UserData.quest < i)
+            {
+                lock=false;
+            }
+            this.level.children[i].getComponent(Button).interactable=lock;
+        }
     }
-    
-
 }
 
 
