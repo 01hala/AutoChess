@@ -63,7 +63,7 @@ export class VenturePanel extends Component
         for(let i=0;i<this.level.children.length;i++)
         {
             let lock=true;
-            if(User.UserData.quest < i)
+            if((User.UserData.quest%10000)-1 < i)
             {
                 lock=false;
             }
