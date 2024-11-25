@@ -24,6 +24,7 @@ import { AudioManager } from '../../other/AudioManager';
 import { SendMessage } from '../../other/MessageEvent';
 import * as common from '../../battle/AutoChessBattle/common';
 import { EffectSpine } from './EffectSpine';
+import { SkillDis } from './SkillDis';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -70,16 +71,28 @@ export class RoleDis extends Component
     private tAttack: Tween<Node> = null;
     //位移缓动
     private tShiftpos: Tween<Node> = null;
-
+    //死亡锁
     private isDead=false;
-
+    //初始位置
     private originalPos: Vec3;
-
+    //id字符
     private idText:RichText;
-
+    //字体
     private typeface: TTFFont;
     //特效效果
     private effectSpine:Node;
+    //技能表现类
+    private skillDis:SkillDis;
+    //受伤数字设置器
+    public set BeHurtedNum(value:number)
+    {
+        this.beHurtedText.getComponent(RichText).font = this.typeface;
+        this.beHurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + value + "</outline></color>";
+    }
+    //总受伤值
+    private hurtedNum:number=0;
+    //受伤缓动
+    private tBeHurted:Tween<Node>=null;
 
     protected async onLoad(): Promise<void> 
     {
@@ -111,7 +124,6 @@ export class RoleDis extends Component
         }
     }
     
-
     async start() 
     {
         if (this.roleInfo) {
@@ -168,9 +180,10 @@ export class RoleDis extends Component
                 //     this.roleSprite=sf;             
                 // }
                 await this.LoadOnConfig();
-    
+                this.skillDis=new SkillDis(this.node,roleInfo.index);
+                await this.skillDis.Init();    
             }
-            this.changeAtt();
+            this.ChangeAtt();
         }
         catch(error)
         {
@@ -230,7 +243,7 @@ export class RoleDis extends Component
                     }
                 })
                 .call(async () => {
-                    await this.changeAtt();
+                    await this.ChangeAtt();
                     this.ResetPos(readyLocation);
                 })
                 // .to(0.1, { position: readyLocation })
@@ -264,7 +277,7 @@ export class RoleDis extends Component
         });
     }
 
-    async changeAtt(_ms?: number) 
+    async ChangeAtt(_ms?: number) 
     {
         try 
         {
@@ -326,11 +339,12 @@ export class RoleDis extends Component
             console.error("RoleDis 下的 changeAtt 错误 err:" + err);
         }
     }
-
-    async BeHurted(_value:number)
+    //显示受伤缓动
+    private ShowHurtedTween()
     {
-        try
+        if(!this.tBeHurted)
         {
+            this.hurtedNum=0;
             let hurtedTextAnim: Animation=this.behurtedTextEffect.getComponent(Animation);
             hurtedTextAnim.on(Animation.EventType.FINISHED, () => 
             {
@@ -339,33 +353,43 @@ export class RoleDis extends Component
                 hurtedTextAnim.resume();
             }, this);
             let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
+            this.tBeHurted=tween(this.node).to(0,{}).call(()=>
+                {
+                    hurtedTextAnim.resume();
+                    hitAnim.resume();
+                    
+                    this.behurtedTextEffect.active=true;
+                    this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
+                    this.hurtedSpine.active=true;
+                    hurtedTextAnim.play();
+                    hitAnim.play();
+                    
+                    let roleConfig = config.RoleConfig.get(this.RoleId);
+                    let audioString="Sound/sound_character_hit_MN";
+                    if(undefined!=roleConfig.Sex&&undefined!=roleConfig.Armor){
+                        audioString="Sound/sound_character_hit_"+roleConfig.Sex+roleConfig.Armor;
+                    }
+                    AudioManager.Instance.PlayerOnShot(audioString);
+                }).delay(0.2).call(()=>
+                {
+                    this.hurtedSpine.active=false;
+                    
+                }).start();
+        }
+    }
 
-            tween(this.node).to(0,{}).call(()=>
-            {
-                hurtedTextAnim.resume();
-                hitAnim.resume();
-                this.beHurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + _value + "</outline></color>";
-                this.beHurtedText.getComponent(RichText).font = this.typeface;
-                this.behurtedTextEffect.active=true;
-                this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
-                this.hurtedSpine.active=true;
-                hurtedTextAnim.play();
-                hitAnim.play();
-                
-                let roleConfig = config.RoleConfig.get(this.RoleId);
-                let audioString="Sound/sound_character_hit_MN";
-                if(undefined!=roleConfig.Sex&&undefined!=roleConfig.Armor){
-                    audioString="Sound/sound_character_hit_"+roleConfig.Sex+roleConfig.Armor;
-                }
-                AudioManager.Instance.PlayerOnShot(audioString);
-            }).delay(0.2).call(()=>
-            {
-                this.hurtedSpine.active=false;
-            }).start();
+    async BeHurted(_value:number)
+    {
+        try
+        {
+            this.hurtedNum+=_value;
+            this.BeHurtedNum=this.hurtedNum;
+
+            this.ShowHurtedTween();
 
             return delay(700,()=>
             {
-                
+                this.tBeHurted=null;
             });
         }
         catch(err)
@@ -387,7 +411,7 @@ export class RoleDis extends Component
             this.Level+=exp%3;
         }
 
-        await this.changeAtt();
+        await this.ChangeAtt();
 
         return delay(100,()=>{});
     }
@@ -403,7 +427,7 @@ export class RoleDis extends Component
                 this.Exp = stack % 3;
             }
 
-            await this.changeAtt();
+            await this.ChangeAtt();
 
             for(let i = 0;i<value.length;i++)
             {
@@ -504,24 +528,6 @@ export class RoleDis extends Component
         });
     }
 
-    async RemoteAttack(spellcasterLocation: Vec3, targetLocation: Vec3 ,camp?: BattleEnums.Camp,callBack?:()=>{}) 
-    {
-        try 
-        {
-            let bulletNode = instantiate(this.remoteNode);
-            bulletNode.setPosition(spellcasterLocation);
-            console.log(bulletNode);
-            bulletNode.getComponent(Bullet).Init(targetLocation);
-            singleton.netSingleton.battle.panelNode.addChild(bulletNode);
-
-            return delay(700, () => {});
-        }
-        catch (err) 
-        {
-            console.warn("RoleDis 下的 RemoteAttack 错误 err:" + err);
-        }
-    }
-
     Exit() 
     {
         try 
@@ -593,17 +599,14 @@ export class RoleDis extends Component
 
    /**
     * 使用技能表现
-    * @param _effect 效果类型
+    * @param _skill 技能
     * 
     * author：Hotaru
     * 2024/08/24
     */
-   Useskill(_effect : common.SkillEffectEM):Promise<void>
+   async UseSkill(_ev:skill.Event)
    {
-        return new Promise((resolve)=>
-        {
-            
-        });
+        await this.skillDis.UseSkill(_ev);
    }
 
   /**
@@ -661,56 +664,33 @@ export class RoleDis extends Component
     * author：Hotaru
     * 2024/08/26
     */
-   SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>Promise<void>)
-   {   
-       console.log("释放效果表现");
-       let ms=0;
-       switch (_effect)
-       {
-           case common.SkillEffectEM.AddTmpExp:
-           case common.SkillEffectEM.AddProperty:
-               {
+//    SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>Promise<void>)
+//    {   
+//        console.log("释放效果表现");
+//        let ms=0;
+//        switch (_effect)
+//        {
+//            case common.SkillEffectEM.AddTmpExp:
+//            case common.SkillEffectEM.AddProperty:
+//                {
 
-                   let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
-                   let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-                   this.DeliveryGainBall(pos1, pos2);
-                   ms=700;
-               }
-               break;
-           case common.SkillEffectEM.RecoverHP:
-               {
-                   let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
-                   let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-                   this.DeliveryGainBall(pos1, pos2);
-                   ms = 700;
-               }
-               break;
-       }
-       return delay(ms, async () => { await _callBack(); });
-   }
-
-   /**
-    * 增益球
-    * @param _spellcasterLocation 出发位置
-    * @param _targetLocation 目标位置
-    * 
-    * author：Hotaru
-    * 2024/08/26
-    */
-   private DeliveryGainBall(_spellcasterLocation:Vec3 , _targetLocation:Vec3)
-   {
-       try 
-       {
-           let bulletNode = instantiate(this.remoteNode);
-           bulletNode.setPosition(_spellcasterLocation);
-           bulletNode.getComponent(Bullet).Init(_targetLocation , true);
-           singleton.netSingleton.battle.panelNode.addChild(bulletNode);
-       }
-       catch (err) 
-       {
-           console.warn("RoleDis 下的 DeliveryGain 错误 err:" + err);
-       }
-   }
+//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
+//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
+//                    this.DeliveryGainBall(pos1, pos2);
+//                    ms=700;
+//                }
+//                break;
+//            case common.SkillEffectEM.RecoverHP:
+//                {
+//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
+//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
+//                    this.DeliveryGainBall(pos1, pos2);
+//                    ms = 700;
+//                }
+//                break;
+//        }
+//        return delay(ms, async () => { await _callBack(); });
+//    }
    
    /**
     * 入场效果

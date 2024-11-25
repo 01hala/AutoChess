@@ -405,7 +405,7 @@ export class BattleDis
                     }
                 }
                 this.shakeScreen(0.5,10);
-                await this.CheckBehurted(evs_floating);
+                await this.OnBehurted(evs_floating);
                 //角色回到准备战斗位置，手动调用，使得角色在执行到这里、回到原位之前的部分就执行受伤效果展示，即时性更强
                 // {
                 //     allAwait.push(selfRoleNodeRoleDis.ResetPos(
@@ -422,6 +422,52 @@ export class BattleDis
         catch(error) 
         {
             console.error("BattleDis 下的 CheckAttackEvent 错误 err:", error);
+        }
+    }
+
+    //受击
+    private async OnBehurted(evs:skill.Event[])
+    {
+        try 
+        {
+            let allAwait = [];
+            let r:Node = null;
+            for(let ev of evs)
+            {
+                if(battleEnums.EventType.AttackInjured==ev.type || battleEnums.EventType.TransferInjured == ev.type) 
+                {
+                    if (ev.is_trigger_floating) {
+                        continue;
+                    }
+                    ev.is_trigger_floating = true;
+
+                    if(battleEnums.Camp.Self == ev.spellcaster.camp)
+                    {
+                            r = this.enemyQueue.roleNodes[ev.recipient[0].index];
+                            if (r)
+                            {
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
+                                allAwait.push(r.getComponent(RoleDis).ChangeAtt());
+                            }
+                    }
+                    if(battleEnums.Camp.Enemy==ev.spellcaster.camp)
+                    {
+                        
+                            r = this.selfQueue.roleNodes[ev.recipient[0].index];
+                            if (r) 
+                            {
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
+                                allAwait.push(r.getComponent(RoleDis).ChangeAtt());
+                            }              
+                    }
+                }
+            }
+            console.log("ChangeAttEvent allAwait:", allAwait);
+            await Promise.all(allAwait);
+        }
+        catch(error) 
+        {
+            console.error("BattleDis 下的 ChangeAttEvent 错误 err:", error);
         }
     }
 
@@ -459,11 +505,6 @@ export class BattleDis
         shake();
     }
 
-    private async showRemoteAttack(selfRoleDis: RoleDis, spellcasterLocation: Vec3, targetLocation: Vec3, ev:skill.Event) {
-        await selfRoleDis.RemoteAttack(spellcasterLocation, targetLocation);
-        await this.CheckBehurted([ev]);
-    }
-
     //远程攻击技能
     private async CheckRemoteInjured(evs:skill.Event[]) 
     {
@@ -479,46 +520,20 @@ export class BattleDis
                 }
 
                 let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
-                for (let element of ev.recipient) {
+                let self = spList.roleNodes[ev.spellcaster.index];
 
-                    let targetList = battleEnums.Camp.Enemy == element.camp ? this.enemyQueue : this.selfQueue;
-
-                    let self = spList.roleNodes[ev.spellcaster.index];
-                    let target = targetList.roleNodes[element.index];
-
-                    if (self && target) 
-                    {                
-                        let selfpos = this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
-                        let targetpos = this.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());   
-                        if(!ev.isParallel)
-                        {
-                            let selfRoleDis = self.getComponent(RoleDis);
-                            if (selfRoleDis) 
-                            {
-                                allAwait.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev))
-                                //await selfRoleDis.RemoteAttack(selfpos, targetpos);
-                                //await this.ChangeAttEvent([ev]);
-                            }
-                        }
-                        else
-                        {
-                            if(battleEnums.Camp.Self==ev.spellcaster.camp) 
-                            {
-                                let selfRoleDis = self.getComponent(RoleDis);
-                                if (selfRoleDis) {
-                                    this.selfParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev));
-                                }
-                            }
-                            else 
-                            {
-                                let selfRoleDis = self.getComponent(RoleDis); 
-                                if (selfRoleDis) {
-                                    this.enemyParallelList.push(this.showRemoteAttack(selfRoleDis, selfpos, targetpos, ev));
-                                }
-                            }
-                        }
+                if(ev.isParallel)
+                {
+                    if (battleEnums.Camp.Self == ev.spellcaster.camp) 
+                    {
+                        this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                     }
-                };
+                    else 
+                    {
+                        this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                    }
+                }
+                allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
             }
             await Promise.all(allAwait);
         }
@@ -537,35 +552,45 @@ export class BattleDis
             for(let ev of evs)
             {
                 
-                if(battleEnums.EventType.Summon != ev.type) 
+                if(battleEnums.EventType.Summon == ev.type) 
                 {
-                    continue;
-                }
-                else
-                {
-                    //await this.showLaunchSkillEffect();
-                }
-                console.log("检测到召唤技能！");
-                ev.recipient.forEach(element=>{
-                    let tmp:rRole;
-                    tmp = new rRole(null,element.index,element.id, 1,0, element.camp, element.properties,null, 0);
-                    let targetTeam = battleEnums.Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
-                    targetTeam.AddRole(tmp);
-                    let queue = battleEnums.Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
-                    if(!ev.isParallel) 
-                    {
-                        allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
-                    }
-                    else{
-                        if(battleEnums.Camp.Self == ev.spellcaster.camp) {
-                            this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
-                        }
-                        else {
+                    // console.log("检测到召唤技能！");
+                    // ev.recipient.forEach(element=>{
+                    //     let tmp:rRole;
+                    //     tmp = new rRole(null,element.index,element.id, 1,0, element.camp, element.properties,null, 0);
+                    //     let targetTeam = battleEnums.Camp.Self == element.camp ? this.battleCentre.GetSelfTeam() : this.battleCentre.GetEnemyTeam();
+                    //     targetTeam.AddRole(tmp);
+                    //     let queue = battleEnums.Camp.Self == element.camp ? this.selfQueue : this.enemyQueue;
+                    //     if(!ev.isParallel) 
+                    //     {
+                    //         allAwait.push(queue.SummonRole([tmp],ev.spellcaster));
+                    //     }
+                    //     else{
+                    //         if(battleEnums.Camp.Self == ev.spellcaster.camp) {
+                    //             this.selfParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                    //         }
+                    //         else {
+    
+                    //             this.enemyParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                    //         }
+                    //     }
+                    // });
 
-                            this.enemyParallelList.push(queue.SummonRole([tmp],ev.spellcaster));
+                    let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+                    let self = spList.roleNodes[ev.spellcaster.index];
+                    if(ev.isParallel)
+                    {
+                        if (battleEnums.Camp.Self == ev.spellcaster.camp)
+                        {
+                            this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                        }
+                        else
+                        {
+                            this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                         }
                     }
-                });
+                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                }
             } 
             await Promise.all(allAwait);         
         }
@@ -576,60 +601,54 @@ export class BattleDis
     }
 
     //增加临时经验值技能
-    private async CheckAttExpEvent(evs:skill.Event[]){
-        try 
-        {
-            let allAwait = [];
-            for(let ev of evs)
-            {
+    // private async CheckAttExpEvent(evs:skill.Event[]){
+    //     try 
+    //     {
+    //         let allAwait = [];
+    //         for(let ev of evs)
+    //         {
                 
-                if(battleEnums.EventType.IntensifierExp != ev.type) 
-                {
-                    continue;
-                }
-                else
-                {
-                    //await this.showLaunchSkillEffect();
-                }
-                console.log("检测到加临时经验值事件");
-                
-                //受到增益者            
-                ev.recipient.forEach(element=>{
-                    
-                    if(battleEnums.Camp.Self==element.camp)
-                    {
-                        if(this.selfQueue.roleNodes[element.index])
-                        {
-                            allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddTmpExp, this.selfQueue.roleNodes[element.index], async () =>
-                            {
-                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddTmpExp, ev.isParallel);
-                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value[0]);
-                            }));
-                        }
-                        
-                    }
-                    else
-                    {
-                        if(this.enemyQueue.roleNodes[element.index])
-                        {
-                            allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(common.SkillEffectEM.AddTmpExp, this.selfQueue.roleNodes[element.index], async () =>
-                            {
-                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.AddTmpExp, ev.isParallel);
-                                await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).IntensifierExp(ev.value[0]);
-                            }));
-                        }
-                        
-                    }            
-                });
-            }
-            await Promise.all(allAwait);
-        }
-        catch(error) 
-        {
-            console.error("BattleDis 下的 CheckAttExpEvent 错误 err:", error);
-        }
-    }
-    //队伍增益技能
+    //             if(battleEnums.EventType.IntensifierExp != ev.type) 
+    //             {
+    //                 continue;
+    //             }
+    //             console.log("检测到加临时经验值事件");
+    //             let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+    //             let self = spList.roleNodes[ev.spellcaster.index];
+
+    //             if (ev.isParallel)
+    //             {
+    //                 if (battleEnums.Camp.Self == ev.spellcaster.camp) 
+    //                 {
+    //                     let selfRoleDis = self.getComponent(RoleDis);
+    //                     if (selfRoleDis)
+    //                     {
+    //                         this.selfParallelList.push(selfRoleDis.getComponent(RoleDis).UseSkill(ev));
+    //                     }
+    //                 }
+    //                 else 
+    //                 {
+    //                     let selfRoleDis = self.getComponent(RoleDis);
+    //                     if (selfRoleDis)
+    //                     {
+    //                         this.enemyParallelList.push(selfRoleDis.getComponent(RoleDis).UseSkill(ev));
+    //                     }
+    //                 }
+    //             }
+    //             allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+    //         }
+    //         await Promise.all(allAwait);
+    //     }
+    //     catch(error) 
+    //     {
+    //         console.error("BattleDis 下的 CheckAttExpEvent 错误 err:", error);
+    //     }
+    // }
+
+    /**
+     * 检测队伍增益技能
+     * @param evs 事件流
+     */
     private async CheckAttGainEvent(evs:skill.Event[]) 
     {
         try 
@@ -637,76 +656,25 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
-                if(battleEnums.EventType.IntensifierProperties != ev.type) 
+                if(battleEnums.EventType.IntensifierProperties == ev.type || battleEnums.EventType.IntensifierExp == ev.type) 
                 {
-                    continue;
-                }
-                
-                console.log("检测到加属性事件");
-                //受到增益者            
-                ev.recipient.forEach(element=>
-                {
-                    let effectEm:common.SkillEffectEM = common.SkillEffectEM.AddProperty;
-                    if(1 == ev.effectScope)
-                    {
-                        effectEm=common.SkillEffectEM.RecoverHP;
-                    }
-                    if(battleEnums.Camp.Self==element.camp)
-                    {
-                        if(this.selfQueue.roleNodes[element.index] && element.index != ev.spellcaster.index)
-                        {
-                            if (!ev.isParallel) 
-                            {
-                                allAwait.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.selfQueue.roleNodes[element.index], async ()=>
-                                {
-                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
-                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
-                                }));
-                            }
-                            else
-                            {
-                                this.selfParallelList.push(this.selfQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.selfQueue.roleNodes[element.index], async ()=>
-                                {
-                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
-                                    await this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
-                                }));
-                            }
-                        } 
-                        if(element.index == ev.spellcaster.index)
-                        {
-                            allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel));
-                            allAwait.push(this.selfQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
-                        }
-                    }
+                    console.log("检测到加属性事件");
+                    let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+                    let self = spList.roleNodes[ev.spellcaster.index];
 
-                    if(battleEnums.Camp.Enemy == element.camp)
+                    if (ev.isParallel)
                     {
-                        if(this.enemyQueue.roleNodes[element.index] && element.index != ev.spellcaster.index)
+                        if (battleEnums.Camp.Self == ev.spellcaster.camp) 
                         {
-                            if (!ev.isParallel)
-                            {
-                                allAwait.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.enemyQueue.roleNodes[element.index],async ()=>
-                                {
-                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
-                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
-                                }));
-                            }
-                            else
-                            {
-                                this.enemyParallelList.push(this.enemyQueue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).SpellcastEffect(effectEm,this.enemyQueue.roleNodes[element.index],async ()=>
-                                {
-                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel);
-                                    await this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value);
-                                }));
-                            }
+                            this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                         }
-                        if(element.index == ev.spellcaster.index)
+                        else 
                         {
-                            allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).ReceptionEffect(effectEm,ev.isParallel));
-                            allAwait.push(this.enemyQueue.roleNodes[element.index].getComponent(RoleDis).Intensifier(ev.value));
+                            this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                         }
-                    }            
-                });
+                    }
+                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                }
             }
             await Promise.all(allAwait);
         }
@@ -773,86 +741,6 @@ export class BattleDis
         catch (error)
         {
             console.error("BattleDis 下的 CheckAddBuff 错误 err:", error);
-        }
-    }
-
-    //属性改变
-    private async CheckBehurted(evs:skill.Event[])
-    {
-        try 
-        {
-            let allAwait = [];
-            let r:Node = null;
-            for(let ev of evs)
-            {
-                if(battleEnums.EventType.RemoteInjured==ev.type || battleEnums.EventType.IntensifierProperties == ev.type || battleEnums.EventType.AttackInjured==ev.type || battleEnums.EventType.TransferInjured == ev.type) 
-                {
-                    if (ev.is_trigger_floating) {
-                        continue;
-                    }
-                    ev.is_trigger_floating = true;
-
-                    if(battleEnums.Camp.Self == ev.spellcaster.camp)
-                    {
-                        if(battleEnums.EventType.RemoteInjured==ev.type)
-                        {
-                            for(let t of ev.recipient)
-                            {
-                                r = this.enemyQueue.roleNodes[t.index];
-                                //console.warn("敌方role",r.index);
-                                if(r)
-                                {
-                                    
-                                    console.warn("敌方角色远程受伤表现");
-                                    allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
-                                    allAwait.push(r.getComponent(RoleDis).changeAtt());
-                                }
-                            }
-                        }
-                        else
-                        {
-                            r = this.selfQueue.roleNodes[ev.spellcaster.index];
-                            if (r)
-                            {
-                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
-                                allAwait.push(r.getComponent(RoleDis).changeAtt());
-                            }
-                        }
-                    }
-                    if(battleEnums.Camp.Enemy==ev.spellcaster.camp)
-                    {
-                        if(battleEnums.EventType.RemoteInjured==ev.type)
-                        {
-                            for(let t of ev.recipient)
-                            {
-                                r=this.selfQueue.roleNodes[t.index];
-                                if(r)
-                                {
-                                    console.warn("我方角色远程受伤表现");
-                                    allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
-                                    allAwait.push(r.getComponent(RoleDis).changeAtt());
-                                }
-                            }
-                        }
-                        else
-                        {
-                            r = this.enemyQueue.roleNodes[ev.spellcaster.index];
-                            if (r) 
-                            {
-                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
-                                allAwait.push(r.getComponent(RoleDis).changeAtt());
-                            }
-                        }
-                        
-                    }
-                }
-            }
-            console.log("ChangeAttEvent allAwait:", allAwait);
-            await Promise.all(allAwait);
-        }
-        catch(error) 
-        {
-            console.error("BattleDis 下的 ChangeAttEvent 错误 err:", error);
         }
     }
 
@@ -949,7 +837,7 @@ export class BattleDis
                         }
                         break;
                 }
-                allAwait.push(queue.GetRole(ev.spellcaster.index).getComponent(RoleDis).changeAtt(2000));
+                allAwait.push(queue.GetRole(ev.spellcaster.index).getComponent(RoleDis).ChangeAtt(2000));
                 allAwait.push(queue.GetRole(ev.spellcaster.index).getComponent(RoleDis).ReceptionEffect(common.SkillEffectEM.ExchangeProperty, false, null, style));
                 //allAwait.push(queue.roleNodes[ev.spellcaster.index].getComponent(RoleDis).Intensifier([0, ev.value[1]]));
             }
@@ -982,7 +870,7 @@ export class BattleDis
                 evs_floating.push(ev);
             }
             await Promise.all(allAwait);
-            await this.CheckBehurted(evs_floating);
+            await this.OnBehurted(evs_floating);
         }
         catch(error)
         {
@@ -1003,7 +891,6 @@ export class BattleDis
                 await this.CheckAddBuff(evs);
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
-                await this.CheckAttExpEvent(evs);
                 await this.CheckTransPosition(evs);
                 await this.CheckRemoteInjured(evs);
                 if(this.selfParallelList.length > 0 || this.enemyParallelList.length > 0){

@@ -35,7 +35,7 @@ export class Bullet extends Component {
         this.isInit=false; 
     }
 
-    public async Init(targetPos:Vec3 , isGain?:boolean)
+    public Init(targetPos:Vec3 , isGain?:boolean , _callBack?:()=>void)
     {
         console.log("初始化子弹");
         this.targetPos=targetPos;
@@ -74,6 +74,12 @@ export class Bullet extends Component {
                     this.node.destroy();
                 }
                 
+            }).call(()=>
+            {
+                if(_callBack)
+                {
+                    _callBack();
+                }
             }).start();
 
         console.log("初始化子弹完成");
