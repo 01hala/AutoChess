@@ -8,7 +8,7 @@ import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, Vec3
 import { Queue } from './Queue';
 import { Battle } from '../AutoChessBattle/battle';
 import * as skill from '../AutoChessBattle/skill/skill_base'
-import * as battleEnums from '../AutoChessBattle/BattleEnums';
+import * as BattleEnums from '../AutoChessBattle/BattleEnums';
 import { delay, sleep } from '../../other/sleep'
 import { RoleDis } from './RoleDis';
 import { BundleManager } from '../../bundle/BundleManager'
@@ -167,10 +167,10 @@ export class BattleDis
             }
 
             let is_victory = BattleVictory.tie;
-            if (this.battleCentre.GetWinCamp() == battleEnums.Camp.Self) {
+            if (this.battleCentre.GetWinCamp() == BattleEnums.Camp.Self) {
                 is_victory = BattleVictory.victory;
             }
-            else if (this.battleCentre.GetWinCamp() == battleEnums.Camp.Enemy) {
+            else if (this.battleCentre.GetWinCamp() == BattleEnums.Camp.Enemy) {
                 is_victory = BattleVictory.faild;
             }
 
@@ -286,7 +286,7 @@ export class BattleDis
             for(let ev of evs)
             {
                 //console.log("checkAttackEvent ev:", ev)
-                if (battleEnums.EventType.BattleBegin != ev.type)
+                if (BattleEnums.EventType.BattleBegin != ev.type)
                 {
                     continue;
                 }
@@ -331,14 +331,14 @@ export class BattleDis
             let enemyRoleNodeRoleDis:RoleDis = null;
             for(let ev of evs)
             {
-                if (battleEnums.EventType.AttackInjured != ev.type)
+                if (BattleEnums.EventType.AttackInjured != ev.type)
                 {
                     continue;
                 }
 
                 evs_floating.push(ev);
 
-                if (battleEnums.Camp.Self == ev.spellcaster.camp)
+                if (BattleEnums.Camp.Self == ev.spellcaster.camp)
                 {
                     if (!selfAttack)
                     {
@@ -359,7 +359,7 @@ export class BattleDis
                         }
                     }
                 }
-                else if (battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                else if (BattleEnums.Camp.Enemy == ev.spellcaster.camp)
                 {
                     if (!enemyAttack)
                     {
@@ -385,11 +385,11 @@ export class BattleDis
                 allAwait.push(selfRoleNodeRoleDis.Attack(
                     this.selfQueue.readyLocation.worldPosition, 
                     this.selfQueue.battleLocation.worldPosition, 
-                    battleEnums.Camp.Self));
+                    BattleEnums.Camp.Self));
                 allAwait.push(enemyRoleNodeRoleDis.Attack(
                     this.enemyQueue.readyLocation.worldPosition, 
                     this.enemyQueue.battleLocation.worldPosition, 
-                    battleEnums.Camp.Enemy));
+                    BattleEnums.Camp.Enemy));
                 
                 await Promise.all(allAwait);
                 allAwait=[];
@@ -434,14 +434,14 @@ export class BattleDis
             let r:Node = null;
             for(let ev of evs)
             {
-                if(battleEnums.EventType.AttackInjured==ev.type || battleEnums.EventType.TransferInjured == ev.type) 
+                if(BattleEnums.EventType.AttackInjured==ev.type || BattleEnums.EventType.TransferInjured == ev.type) 
                 {
                     if (ev.is_trigger_floating) {
                         continue;
                     }
                     ev.is_trigger_floating = true;
 
-                    if(battleEnums.Camp.Self == ev.spellcaster.camp)
+                    if(BattleEnums.Camp.Self == ev.spellcaster.camp)
                     {
                             r = this.enemyQueue.roleNodes[ev.recipient[0].index];
                             if (r)
@@ -450,7 +450,7 @@ export class BattleDis
                                 allAwait.push(r.getComponent(RoleDis).ChangeAtt());
                             }
                     }
-                    if(battleEnums.Camp.Enemy==ev.spellcaster.camp)
+                    if(BattleEnums.Camp.Enemy==ev.spellcaster.camp)
                     {
                         
                             r = this.selfQueue.roleNodes[ev.recipient[0].index];
@@ -514,17 +514,17 @@ export class BattleDis
             for(let ev of evs)
             {
                 
-                if(battleEnums.EventType.RemoteInjured != ev.type) 
+                if(BattleEnums.EventType.RemoteInjured != ev.type) 
                 {
                     continue;
                 }
 
-                let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+                let spList = BattleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                 let self = spList.roleNodes[ev.spellcaster.index];
 
                 if(ev.isParallel)
                 {
-                    if (battleEnums.Camp.Self == ev.spellcaster.camp) 
+                    if (BattleEnums.Camp.Self == ev.spellcaster.camp) 
                     {
                         this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                     }
@@ -552,7 +552,7 @@ export class BattleDis
             for(let ev of evs)
             {
                 
-                if(battleEnums.EventType.Summon == ev.type) 
+                if(BattleEnums.EventType.Summon == ev.type) 
                 {
                     // console.log("检测到召唤技能！");
                     // ev.recipient.forEach(element=>{
@@ -576,11 +576,11 @@ export class BattleDis
                     //     }
                     // });
 
-                    let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+                    let spList = BattleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                     let self = spList.roleNodes[ev.spellcaster.index];
                     if(ev.isParallel)
                     {
-                        if (battleEnums.Camp.Self == ev.spellcaster.camp)
+                        if (BattleEnums.Camp.Self == ev.spellcaster.camp)
                         {
                             this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                         }
@@ -656,15 +656,15 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
-                if(battleEnums.EventType.IntensifierProperties == ev.type || battleEnums.EventType.IntensifierExp == ev.type) 
+                if(BattleEnums.EventType.IntensifierProperties == ev.type || BattleEnums.EventType.IntensifierExp == ev.type) 
                 {
                     console.log("检测到加属性事件");
-                    let spList = battleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
+                    let spList = BattleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                     let self = spList.roleNodes[ev.spellcaster.index];
 
                     if (ev.isParallel)
                     {
-                        if (battleEnums.Camp.Self == ev.spellcaster.camp) 
+                        if (BattleEnums.Camp.Self == ev.spellcaster.camp) 
                         {
                             this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                         }
@@ -692,18 +692,18 @@ export class BattleDis
             let allAwait = [];
             for (let ev of evs)
             {
-                if (battleEnums.EventType.GiveShields == ev.type || battleEnums.EventType.AddBuff == ev.type) 
+                if (BattleEnums.EventType.GiveShields == ev.type || BattleEnums.EventType.AddBuff == ev.type) 
                 {
                     let skilleffectem;
                     switch (ev.type)
                     {
-                        case battleEnums.EventType.GiveShields: skilleffectem = common.SkillEffectEM.GainShield; break;
-                        case battleEnums.EventType.AddBuff: skilleffectem = common.SkillEffectEM.AddBuffer; break;
+                        case BattleEnums.EventType.GiveShields: skilleffectem = common.SkillEffectEM.GainShield; break;
+                        case BattleEnums.EventType.AddBuff: skilleffectem = common.SkillEffectEM.AddBuffer; break;
                     }
 
                     for (let r of ev.recipient)
                     {
-                        if (battleEnums.Camp.Self == r.camp)
+                        if (BattleEnums.Camp.Self == r.camp)
                         {
                             if (this.selfQueue.roleNodes[r.index])
                             {
@@ -717,7 +717,7 @@ export class BattleDis
                                 }
                             }
                         }
-                        if (battleEnums.Camp.Enemy == r.camp)
+                        if (BattleEnums.Camp.Enemy == r.camp)
                         {
                             if (this.enemyQueue.roleNodes[r.index])
                             {
@@ -752,16 +752,16 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
-                if(battleEnums.EventType.Exit != ev.type)
+                if(BattleEnums.EventType.Exit != ev.type)
                 {
                     continue;
                 }
 
-                if(battleEnums.Camp.Self==ev.spellcaster.camp)
+                if(BattleEnums.Camp.Self==ev.spellcaster.camp)
                 {
                     allAwait.push(this.selfQueue.RemoveRole(ev.spellcaster.index));
                 }
-                else if(battleEnums.Camp.Enemy==ev.spellcaster.camp)
+                else if(BattleEnums.Camp.Enemy==ev.spellcaster.camp)
                 {
                     allAwait.push(this.enemyQueue.RemoveRole(ev.spellcaster.index));
                 }
@@ -782,16 +782,16 @@ export class BattleDis
             let allAwait = [];
             for (let ev of evs)
             {
-                if (battleEnums.EventType.ChangeLocation != ev.type)
+                if (BattleEnums.EventType.ChangeLocation != ev.type)
                 {
                     continue;
                 }
 
-                if (battleEnums.Camp.Self == ev.spellcaster.camp)
+                if (BattleEnums.Camp.Self == ev.spellcaster.camp)
                 {
                     allAwait.push(this.enemyQueue.SwitchRolePos(ev.recipient, ev.value));
                 }
-                if (battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                if (BattleEnums.Camp.Enemy == ev.spellcaster.camp)
                 {
                     allAwait.push(this.selfQueue.SwitchRolePos(ev.recipient, ev.value));
                 }
@@ -812,26 +812,26 @@ export class BattleDis
             let allAwait = [];
             for(let ev of evs)
             {
-                if(battleEnums.EventType.SwapProperties != ev.type)
+                if(BattleEnums.EventType.SwapProperties != ev.type)
                 {
                     continue;
                 }
 
                 let queue:Queue = this.selfQueue;
-                if(battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                if(BattleEnums.Camp.Enemy == ev.spellcaster.camp)
                 {
                     queue = this.enemyQueue;
                 }
                 let style;
                 switch (ev.value[0])
                 {
-                    case battleEnums.SwapPropertiesType.HpSwap:
-                    case battleEnums.SwapPropertiesType.AttackSwap:
+                    case BattleEnums.SwapPropertiesType.HpSwap:
+                    case BattleEnums.SwapPropertiesType.AttackSwap:
                         {
                             style = 1;
                         }
                         break;
-                    case battleEnums.SwapPropertiesType.SelfSwap:
+                    case BattleEnums.SwapPropertiesType.SelfSwap:
                         {
                             style = 2;
                         }
@@ -857,12 +857,12 @@ export class BattleDis
             let evs_floating:skill.Event[] = [];
             for(let ev of evs)
             {
-                if(battleEnums.EventType.SubstituteDamage != ev.type)
+                if(BattleEnums.EventType.SubstituteDamage != ev.type)
                 {
                     continue;
                 }
                 let queue:Queue = this.selfQueue;
-                if(battleEnums.Camp.Enemy == ev.spellcaster.camp)
+                if(BattleEnums.Camp.Enemy == ev.spellcaster.camp)
                 {
                     queue = this.enemyQueue;
                 }

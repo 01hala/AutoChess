@@ -659,14 +659,14 @@ export class ReadyDis
                 break;
             case common.SkillEffectEM.AddProperty:
                 {
-                    for (let i of _effect.recipient)
-                    {
-                        this.roleArea.rolesNode[_effect.spellcaster].getComponent(RoleDis).SpellcastEffect(_effect.effect,this.roleArea.rolesNode[i],async ()=>
-                        {
-                            await this.roleArea.rolesNode[i].getComponent(RoleDis).ReceptionEffect(_effect.effect,false);
-                            await this.roleArea.rolesNode[i].getComponent(RoleDis).Intensifier(_effect.value);
-                        });
-                    }
+                    // for (let i of _effect.recipient)
+                    // {
+                    //     this.roleArea.rolesNode[_effect.spellcaster].getComponent(RoleDis).SpellcastEffect(_effect.effect,this.roleArea.rolesNode[i],async ()=>
+                    //     {
+                    //         await this.roleArea.rolesNode[i].getComponent(RoleDis).ReceptionEffect(_effect.effect,false);
+                    //         await this.roleArea.rolesNode[i].getComponent(RoleDis).Intensifier(_effect.value);
+                    //     });
+                    // }
                     
                     
                 }
