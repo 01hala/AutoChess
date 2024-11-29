@@ -25,6 +25,7 @@ import { SendMessage } from '../../other/MessageEvent';
 import * as common from '../../battle/AutoChessBattle/common';
 import { EffectSpine } from './EffectSpine';
 import { SkillDis } from './SkillDis';
+import { SpEffect } from '../../other/SpEffect';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -93,6 +94,8 @@ export class RoleDis extends Component
     private hurtedNum:number=0;
     //受伤缓动
     private tBeHurted:Tween<Node>=null;
+
+    private spEffect:SpEffect;
 
     protected async onLoad(): Promise<void> 
     {
@@ -181,6 +184,7 @@ export class RoleDis extends Component
                 // }
                 await this.LoadOnConfig();
                 this.skillDis=new SkillDis(this.node,roleInfo.index);
+                this.spEffect=new SpEffect(roleInfo.id,this.node);
                 await this.skillDis.Init();    
             }
             this.ChangeAtt();
@@ -242,8 +246,8 @@ export class RoleDis extends Component
                         singleton.netSingleton.battle.showBattleEffect(false);
                     }
                 })
-                .call(async () => {
-                    await this.ChangeAtt();
+                .call(() => {
+                    this.ChangeAtt();
                     this.ResetPos(readyLocation);
                 })
                 // .to(0.1, { position: readyLocation })
@@ -277,18 +281,38 @@ export class RoleDis extends Component
         });
     }
 
-    async ChangeAtt(_ms?: number) 
+    /**
+     * 交换属性
+     * @param _swapType 类型
+     */
+    async SwapProperties(_swapType:BattleEnums.SwapPropertiesType)
+    {
+        switch(_swapType)
+        {
+            case BattleEnums.SwapPropertiesType.AttackSwap:
+            case BattleEnums.SwapPropertiesType.HpSwap:
+                {
+                    this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
+                }
+                break;
+        }
+        
+        this.ChangeAtt();
+    }
+
+    async ChangeAtt() 
     {
         try 
         {
             if (this.roleInfo.getShields())
             {
-                if (null == this.effectSpine)
-                {
-                    this.effectSpine = this.node.getChildByPath("EffectSpine");
-                }
-                this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
+                // if (null == this.effectSpine)
+                // {
+                //     this.effectSpine = this.node.getChildByPath("EffectSpine");
+                // }
+                // this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
             }
+            
 
             if (null == this.hpText && null == this.atkText)
             {
@@ -327,12 +351,7 @@ export class RoleDis extends Component
 
             //console.log("changeAtt RoleDis.roleInfo:", this.roleInfo);
             //console.log("changeAtt RoleDis:", this);
-            let ms = 100;
-            if (_ms != null)
-            {
-                ms = _ms;
-            }
-            return delay(ms, () => { });
+            return delay(100, () => { });
         }
         catch (err) 
         {
@@ -416,7 +435,7 @@ export class RoleDis extends Component
         return delay(100,()=>{});
     }
 
-    async Intensifier(value: number[],stack?:number) 
+    async Intensifier(value: number[],_isColony: boolean,stack?:number) 
     {
         try 
         {
@@ -427,8 +446,22 @@ export class RoleDis extends Component
                 this.Exp = stack % 3;
             }
 
-            await this.ChangeAtt();
+            let style;
+            if(!_isColony)
+            {
+                if(value[0]!=0 && value[1]!=0) style=1;
+                if(value[0]!=0 && 0==value[1]) style=5;
+                if(0==value[0] && value[1]!=0) style=2;
+            }
+            else
+            {
+                style=2;
+            }
 
+            this.spEffect.UseIntensifierEffect(_isColony,style);
+
+            await this.ChangeAtt();
+            
             for(let i = 0;i<value.length;i++)
             {
                 let tip:Node;
@@ -528,7 +561,186 @@ export class RoleDis extends Component
         });
     }
 
-    Exit() 
+
+    private async RoleRotate()
+    {
+        const rotationAxis = new Vec3(0, 1, 0);
+        let rotationSpeed=4.0;
+        try{
+            while (!this.isDead) {
+                await delay(0,()=>{}); // 让出控制权，以便游戏引擎处理其他事务
+                const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
+                this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
+            }
+        }catch{
+            console.log("角色停止旋转，人物已被销毁");
+        }
+    }
+
+    /*
+    * 添加
+    * author：Guanliu
+    * 2024/04/20
+    * 为人物添加装备
+    */
+   Equipping(equipId:number)
+   {
+        this.roleInfo.equip[0]=equipId;
+   }
+
+   /**
+    * 使用技能表现
+    * @param _skill 技能
+    * 
+    * author：Hotaru
+    * 2024/08/24
+    */
+   async UseSkill(_ev:skill.Event)
+   {
+        let allAwait=[];
+        
+        allAwait.push(this.spEffect.UseSkillEffect());
+        allAwait.push(this.skillDis.UseSkill(_ev));
+        
+        await Promise.all(allAwait);
+   }
+
+   /**
+    * 接收buff表现
+    * 
+    * @author Hotaru
+    * @time 2024/08/24 
+    */
+   async ReceptionBuff(_buff:BattleEnums.BufferType)
+   {
+        this.spEffect.UseBuffEffect(_buff)
+   }
+
+   async DeflexionDamage()
+   {
+    this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
+   }
+
+   async SubstituteDamage()
+   {
+        this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
+   }
+   
+   
+
+  /**
+   * 接受效果表现
+   * @param _effect 效果类型
+   * @param _isParallel 是否是并发效果
+   * @param _buffid buffID
+   * @param _style 样式
+   * @returns deleay
+   * 
+   * author：Hotaru
+   * 2024/08/24
+   */
+    // ReceptionEffect(_effect: common.SkillEffectEM, _isParallel: boolean, _buffid?: number, _style?: number)
+    // {
+    //     if (common.SkillEffectEM.GainShield == _effect)
+    //     {
+    //         this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields, _isParallel);
+    //     }
+    //     switch (_effect)
+    //     {
+    //         case common.SkillEffectEM.AddProperty:
+    //         case common.SkillEffectEM.AddTmpExp:
+    //             {
+    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty, _isParallel);
+    //             }
+    //             break;
+    //         case common.SkillEffectEM.AddBuffer:
+    //             {
+    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff, _isParallel, _buffid);
+    //             }
+    //             break;
+    //         case common.SkillEffectEM.RecoverHP:
+    //             {
+    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Heath, _isParallel);
+    //             }
+    //             break;
+    //         case common.SkillEffectEM.ExchangeProperty:
+    //             {
+    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel, _style);
+    //             }
+    //             break;
+    //         case common.SkillEffectEM.ReductionHurt:
+    //             {
+    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel, _style);
+    //             }
+    //             break;
+    //     }
+    //     return delay(100, () => { });
+    // }
+   /**
+    * 释放效果表现
+    * @param _effect 效果类型
+    * 
+    * author：Hotaru
+    * 2024/08/26
+    */
+//    SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>Promise<void>)
+//    {   
+//        console.log("释放效果表现");
+//        let ms=0;
+//        switch (_effect)
+//        {
+//            case common.SkillEffectEM.AddTmpExp:
+//            case common.SkillEffectEM.AddProperty:
+//                {
+
+//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
+//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
+//                    this.DeliveryGainBall(pos1, pos2);
+//                    ms=700;
+//                }
+//                break;
+//            case common.SkillEffectEM.RecoverHP:
+//                {
+//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
+//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
+//                    this.DeliveryGainBall(pos1, pos2);
+//                    ms = 700;
+//                }
+//                break;
+//        }
+//        return delay(ms, async () => { await _callBack(); });
+//    }
+   
+   /**
+    * 召唤入场效果
+    * 
+    * author：Hotaru
+    * 2024/09/04
+    */
+   public async OnSummon()
+   {
+       await this.spEffect.UseSummonEffect();
+       this.roleSprite.node.active = true;
+       this.atkText.node.active = true;
+       this.hpText.node.active = true;
+       this.levelText.node.active = true;
+
+    //    if (this.effectSpine == null)
+    //    {
+    //        this.effectSpine = this.node.getChildByPath("EffectSpine");
+    //    }
+
+        //await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false);
+        // .then((_ms)=>
+        // {
+        //     this.roleSprite.node.active=true;
+        //     this.atkText.node.active=true;
+        //     this.hpText.node.active=true;
+        //     this.levelText.node.active=true;
+        // });
+   }
+
+   Exit() 
     {
         try 
         {
@@ -572,155 +784,6 @@ export class RoleDis extends Component
         }
 
     }
-
-    private async RoleRotate(){
-        const rotationAxis = new Vec3(0, 1, 0);
-        let rotationSpeed=4.0;
-        try{
-            while (!this.isDead) {
-                await delay(0,()=>{}); // 让出控制权，以便游戏引擎处理其他事务
-                const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
-                this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
-            }
-        }catch{
-            console.log("角色停止旋转，人物已被销毁");
-        }
-    }
-
-    /*
-    * 添加
-    * author：Guanliu
-    * 2024/04/20
-    * 为人物添加装备
-    */
-   Equipping(equipId:number){
-        this.roleInfo.equip[0]=equipId;
-   }
-
-   /**
-    * 使用技能表现
-    * @param _skill 技能
-    * 
-    * author：Hotaru
-    * 2024/08/24
-    */
-   async UseSkill(_ev:skill.Event)
-   {
-        await this.skillDis.UseSkill(_ev);
-   }
-
-  /**
-   * 接受效果表现
-   * @param _effect 效果类型
-   * @param _isParallel 是否是并发效果
-   * @param _buffid buffID
-   * @param _style 样式
-   * @returns deleay
-   * 
-   * author：Hotaru
-   * 2024/08/24
-   */
-   ReceptionEffect(_effect : common.SkillEffectEM ,_isParallel:boolean, _buffid?:number , _style?:number)
-   {
-       if (common.SkillEffectEM.GainShield == _effect)
-       {
-           this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields, _isParallel);
-       }
-       switch(_effect)
-       {
-            case common.SkillEffectEM.AddProperty:
-            case common.SkillEffectEM.AddTmpExp:
-                {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty , _isParallel);
-                }
-                break;
-            case common.SkillEffectEM.AddBuffer:
-                {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff , _isParallel, _buffid);
-                }
-                break;
-            case common.SkillEffectEM.RecoverHP:
-                {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Heath, _isParallel);
-                }
-                break;
-            case common.SkillEffectEM.ExchangeProperty:
-                {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel , _style);
-                }
-                break;
-            case common.SkillEffectEM.ReductionHurt:
-                {
-                    this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel , _style);
-                }
-                break;
-       }
-       return delay(100,()=>{});
-   }
-   /**
-    * 释放效果表现
-    * @param _effect 效果类型
-    * 
-    * author：Hotaru
-    * 2024/08/26
-    */
-//    SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>Promise<void>)
-//    {   
-//        console.log("释放效果表现");
-//        let ms=0;
-//        switch (_effect)
-//        {
-//            case common.SkillEffectEM.AddTmpExp:
-//            case common.SkillEffectEM.AddProperty:
-//                {
-
-//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
-//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-//                    this.DeliveryGainBall(pos1, pos2);
-//                    ms=700;
-//                }
-//                break;
-//            case common.SkillEffectEM.RecoverHP:
-//                {
-//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
-//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-//                    this.DeliveryGainBall(pos1, pos2);
-//                    ms = 700;
-//                }
-//                break;
-//        }
-//        return delay(ms, async () => { await _callBack(); });
-//    }
-   
-   /**
-    * 入场效果
-    * @param _pos 位置
-    * @param _type 效果类型
-    * 
-    * author：Hotaru
-    * 2024/09/04
-    */
-   public async Admission(_type:enums.SpecialEffect)
-   {
-        this.roleSprite.node.active=true;
-        this.atkText.node.active=true;
-        this.hpText.node.active=true;
-        this.levelText.node.active=true;
-        
-        if(this.effectSpine==null)
-        {
-            this.effectSpine=this.node.getChildByPath("EffectSpine");
-        }
-
-        await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false);
-        // .then((_ms)=>
-        // {
-        //     this.roleSprite.node.active=true;
-        //     this.atkText.node.active=true;
-        //     this.hpText.node.active=true;
-        //     this.levelText.node.active=true;
-        // });
-   }
 
 /*
  * 添加

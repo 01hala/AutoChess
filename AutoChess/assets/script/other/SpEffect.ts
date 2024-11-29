@@ -1,11 +1,17 @@
 
-import { _decorator, Component, instantiate, Node, sp } from 'cc';
+import { _decorator, Component, instantiate, Node, sp, Vec3 } from 'cc';
 import * as enums from './enums';
 import * as common from '../battle/AutoChessBattle/common';
 import { loadAssets } from '../bundle/LoadAsset';
 import { config } from '../battle/AutoChessBattle/config/config';
 import * as BattleEnums from '../battle/AutoChessBattle/BattleEnums'
 const { ccclass, property } = _decorator;
+
+export class spEffectObj
+{
+    public key:string;
+    public battleType:BattleEnums.BufferType | BattleEnums.SwapPropertiesType;
+}
 
 /**
  * @class 特效类
@@ -14,19 +20,19 @@ const { ccclass, property } = _decorator;
  */
 export class SpEffect
 {
-    //自我增强时特效
+    //被召唤出场特效
+    private onSummon: sp.SkeletonData; 
+    //技能起手特效
+    private useSkill: sp.SkeletonData;
+    //单体增强时特效
     private intensifierSelf: sp.SkeletonData;
-    //被召唤特效
-    private onSummon: sp.SkeletonData;
-    //特殊战斗特效
-    private specialBattle: sp.SkeletonData;
-    //触发技能特效
-    private skill: sp.SkeletonData;
 
     //群体增强时特效
     private intensifierColony: sp.SkeletonData;
     //存在buff特效
     private buff: Map<string, sp.SkeletonData>;
+    //技能生效特效
+    private checkSkill: Map<string, sp.SkeletonData>;
 
     //父节点
     private parent: Node;
@@ -44,13 +50,19 @@ export class SpEffect
     {
         return new Promise((resolve) =>
         {
+            if (!this.useSkill)
+            {
+                console.warn("使用技能 特效为空");
+                resolve();
+            }
             try
             {
+                
                 let node = instantiate(new Node("SkillEffect"));
                 node.setParent(this.parent.getChildByPath("EffectSpine"));
                 let spEffect = node.addComponent(sp.Skeleton);
-                spEffect.skeletonData = this.skill;
-                let anim = this.skill.getAnimsEnum();
+                spEffect.skeletonData = this.useSkill;
+                let anim = this.useSkill.getAnimsEnum();
                 spEffect.setAnimation(0, String(anim[1]), false);
 
                 spEffect.setCompleteListener((trackEntry) =>
@@ -70,16 +82,80 @@ export class SpEffect
     }
 
     /**
+     * 技能生效特效
+     * @param 特效对象
+     * @returns 
+     */
+    public CheckSkillEffect(_obj:spEffectObj): Promise<void>
+    {
+        return new Promise((resolve) =>
+        {
+            if (this.checkSkill.size <= 0)
+            {
+                console.warn("技能生效 特效为空");
+            }
+            try
+            {
+
+                let node = instantiate(new Node("CheckSkillEffect"));
+                node.setParent(this.parent.getChildByPath("EffectSpine"));
+                let spEffect = node.addComponent(sp.Skeleton);
+                switch (_obj.key)
+                {
+                    case "skill_0024":
+                        {
+                            node.setPosition(new Vec3(0, -55));
+
+                        }
+                        break;
+                    default: resolve();
+                }
+                spEffect.skeletonData = this.checkSkill.get(_obj.key);
+                let anim = spEffect.skeletonData.getAnimsEnum();
+                spEffect.setAnimation(0, String(anim[1]), false);
+
+                if (BattleEnums.SwapPropertiesType.AttackSwap == _obj.battleType)
+                {
+                    spEffect.timeScale = -1;
+                }
+                spEffect.setCompleteListener((trackEntry) =>
+                {
+                    if (trackEntry.animation.name === String(anim[1]))
+                    {
+                        node.destroy();
+                        resolve();
+                    }
+                });
+            } catch (error)
+            {
+                console.error("SpEffect 下的 UseSkillEffect 错误: ", error);
+                resolve();
+            }
+        });
+    }
+
+    /**
      * 使用增益特效
      * @param _isColony 是否是群体效果
      * @returns 
      */
-    public UseIntensifierEffect(_isColony: boolean): Promise<void>
+    public UseIntensifierEffect(_isColony: boolean , _style:number): Promise<void>
     {
         return new Promise((resolve) =>
         {
+            if (!this.intensifierSelf)
+            {
+                console.warn("单体增益 特效为空");
+                resolve();
+            }
             try
             {
+                
+                if(!this.intensifierColony)
+                {
+                    console.warn("群体增益 特效为空");
+                    resolve();
+                }
                 let node = instantiate(new Node("IntensifierEffect"))
                 node.setParent(this.parent.getChildByPath("EffectSpine"));
                 let spEffect = node.addComponent(sp.Skeleton);
@@ -92,7 +168,7 @@ export class SpEffect
                     spEffect.skeletonData = this.intensifierSelf;
                 }
                 let anim = spEffect.skeletonData.getAnimsEnum();
-                spEffect.setAnimation(0, String(anim[1]), false);
+                spEffect.setAnimation(0, String(anim[_style]), false);
 
                 spEffect.setCompleteListener((trackEntry) =>
                 {
@@ -118,8 +194,14 @@ export class SpEffect
     {
         return new Promise((resolve) =>
         {
+            if (!this.onSummon)
+            {
+                console.warn("召唤出场 特效为空");
+                resolve();
+            }
             try
             {
+                
                 let node = instantiate(new Node("OnSummonEffect"))
                 node.setParent(this.parent.getChildByPath("EffectSpine"));
                 let spEffect = node.addComponent(sp.Skeleton);
@@ -144,40 +226,6 @@ export class SpEffect
     }
 
     /**
-     * 使用特殊战斗特效
-     * @returns 
-     */
-    public UseSpecialBattleEffet(): Promise<void>
-    {
-        return new Promise((resolve) =>
-        {
-
-            try
-            {
-                let node = instantiate(new Node("SpecialBattleEffect"))
-                node.setParent(this.parent.getChildByPath("EffectSpine"));
-                let spEffect = node.addComponent(sp.Skeleton);
-                spEffect.skeletonData = this.specialBattle;
-                let anim = this.specialBattle.getAnimsEnum();
-                spEffect.setAnimation(0, String(anim[1]), false);
-
-                spEffect.setCompleteListener((trackEntry) =>
-                {
-                    if (trackEntry.animation.name === String(anim[1]))
-                    {
-                        node.destroy();
-                        resolve();
-                    }
-                });
-            } catch (error)
-            {
-                console.error("SpEffect 下的 UseSpecialBattleEffet 错误: ",error);
-                resolve();
-            }
-        });
-    }
-
-    /**
      * 使用buff特效
      * @param _buff buff类型
      * @returns 
@@ -186,8 +234,14 @@ export class SpEffect
     {
         return new Promise((resolve) =>
         {
+            if (this.buff.size <= 0)
+            {
+                console.warn("buff 特效为空");
+                resolve();
+            }
             try
             {
+                
                 let node = instantiate(new Node());
                 node.setParent(this.parent.getChildByPath("EffectSpine"));
                 let spEffect = node.addComponent(sp.Skeleton);
@@ -199,6 +253,28 @@ export class SpEffect
                             this.parent.getChildByName("EffectSpine/Shields").destroy();
                             node.name = "Shields";
                             spEffect.skeletonData = this.buff.get("shield");
+                        }
+                        break;
+                    case BattleEnums.BufferType.OffsetDamage:
+                        {
+
+                        }
+                    
+                    case BattleEnums.BufferType.Weak:
+                        {
+
+                        }
+                    case BattleEnums.BufferType.InevitableKill:
+                    case BattleEnums.BufferType.ReductionDamage:
+                    case BattleEnums.BufferType.ShareDamage:
+                    case BattleEnums.BufferType.Strength:
+                        {
+
+                        }
+                    default:
+                        {
+                            this.parent.getChildByName("EffectSpine/Buff").destroy();
+                            node.name = "Buff";
                         }
                         break;
                 }

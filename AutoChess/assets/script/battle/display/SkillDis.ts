@@ -60,8 +60,19 @@ export class SkillDis
                         await this.SwapProperties(_ev);
                     }
                     break;
+                case BattleEnums.EventType.AddBuff:
+                case BattleEnums.EventType.GiveShields:
+                    {
+                        this.AddBuff(_ev);
+                    }
+                    break;
+                case BattleEnums.EventType.SubstituteDamage:
+                    {
+                        this.SubstituteDamage(_ev);
+                    }
+                    break;
             }
-            resolve(null);
+            resolve();
         });
     }
     /**
@@ -77,7 +88,7 @@ export class SkillDis
         try 
         {
             let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-            let self = spList.roleNodes[_ev.spellcaster.index];
+            let self = this.parent;
 
             for (let element of _ev.recipient)
             {
@@ -123,13 +134,13 @@ export class SkillDis
         try 
         {
             let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-            let self = spList.roleNodes[_ev.spellcaster.index];
+            let self = this.parent;
 
             for (let element of _ev.recipient)
             {
                 if (element.index == this.index)
                 {
-                    return this.parent.getComponent(RoleDis).Intensifier(_ev.value);
+                    return this.parent.getComponent(RoleDis).Intensifier(_ev.value , false);
                 }
                 let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
                 let target = targetList.roleNodes[element.index];
@@ -149,7 +160,7 @@ export class SkillDis
                         {
                             case BattleEnums.EventType.IntensifierProperties:
                                 {
-                                    target.getComponent(RoleDis).Intensifier(_ev.value);
+                                    target.getComponent(RoleDis).Intensifier(_ev.value , true);
                                 }
                                 break;
                             case BattleEnums.EventType.IntensifierExp:
@@ -170,7 +181,13 @@ export class SkillDis
         }
     }
 
-    //召唤
+    /**
+     * 召唤
+     * @param _ev 事件
+     * 
+     * @author：Hotaru
+     * @time 2024/11/24
+     */
     private Summon(_ev: skill.Event)
     {
         for (let element of _ev.recipient)
@@ -183,17 +200,80 @@ export class SkillDis
             queue.SummonRole([tmp], _ev.spellcaster);
         }
     }
-    //换位
+    /**
+     * 换位
+     * @param _ev 事件
+     * 
+     * @author：Hotaru
+     * @time 2024/11/24
+     */
     private TransPosition(_ev: skill.Event)
     {
-        let queue = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
+        let queue = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
         queue.SwitchRolePos(_ev.recipient, _ev.value);
+
+        return delay(100,()=>
+        {
+
+        });
     }
-    //交换属性
+    /**
+     * 交换属性
+     * @param _ev 事件
+     * 
+     * @author：Hotaru
+     * @time 2024/11/24
+     */
     private SwapProperties(_ev: skill.Event)
     {
-        let queue = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-        queue.GetRole(_ev.spellcaster.index).getComponent(RoleDis).ChangeAtt();
+        // let queue = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
+
+        // queue.GetRole(_ev.spellcaster.index).getComponent(RoleDis).SwapProperties(_ev.value[0]);
+
+        this.parent.getComponent(RoleDis).SwapProperties(_ev.value[0]);
+
+        return delay(2000,()=>
+        {
+
+        });
+    }
+
+    /**
+     * 加buff
+     * @param _ev 事件
+     * 
+     * @author：Hotaru
+     * @time 2024/11/24
+     */
+    private AddBuff(_ev:skill.Event)
+    {
+        let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
+
+        for (let element of _ev.recipient)
+        {
+            spList.roleNodes[element.index].getComponent(RoleDis).ReceptionBuff(_ev.value[0]);
+        }
+
+        return delay(600,()=>
+        {
+
+        });
+    }
+
+    private SubstituteDamage(_ev:skill.Event)
+    {
+        let spList = singleton.netSingleton.battle.selfQueue;
+
+        for(let element of _ev.recipient)
+        {
+            spList.roleNodes[element.index].getComponent(RoleDis).DeflexionDamage();
+        }
+        this.parent.getComponent(RoleDis).SubstituteDamage();
+
+        return delay(100,()=>
+        {
+
+        })
     }
 }
 

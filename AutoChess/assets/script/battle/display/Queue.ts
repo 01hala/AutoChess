@@ -123,7 +123,7 @@ export class Queue extends Component
                     role.setWorldPosition(this.locationTemp[r[i].index].worldPosition);
                     role.getComponent(RoleDis.RoleDis).AttackInit();
                     //await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].worldPosition,true);
-                    await role.getComponent(RoleDis.RoleDis).Admission(enums.SpecialEffect.Summon);
+                    await role.getComponent(RoleDis.RoleDis).OnSummon();
                 }
                 else if(-1==r[i].index)
                 {
