@@ -444,19 +444,19 @@ export class login extends Component {
         }
         await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
         {
-            singleton.netSingleton.player.get_user_data(true);
+            await singleton.netSingleton.player.get_user_data(true);
             singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
             this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
-            switch(panelName)
+            let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel", "VenturePanel") as Prefab;
+            switch (panelName)
             {
                 case "VenturePanel":
                     {
-                        let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel") as Prefab;
-                        let panel=instantiate(vt);
+                        let panel = instantiate(vt);
                         panel.setParent(this.node);
                         panel.getComponent(VenturePanel).Open();
-                        singleton.netSingleton.mainInterface.panelNode.active=false;
+                        singleton.netSingleton.mainInterface.panelNode.active = false;
                     }
                     break;
             }
@@ -467,6 +467,7 @@ export class login extends Component {
                 {
                     if (login.panelOnReady)
                     {
+                        
                         this._setProgress(1.0);
                         this._loading.done();
                         login.panelOnReady = false;
