@@ -49,18 +49,23 @@ export class ShopArea extends Component
 
     protected onLoad(): void 
     {
-        for(let t of this.node.getChildByPath("TopArea/Role").children)
+        try {
+            for(let t of this.node.getChildByPath("TopArea/Role").children)
+            {
+                this.rolesSquare.push(t);
+            }
+            for(let t of this.node.getChildByPath("TopArea/Food").children)
+            {
+                this.FoodSquare.push(t);
+            }
+            this.EquipSquare=this.node.getChildByPath("TopArea/Equip/EquipSquare");
+            this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
+            this.freezeArea=this.node.getChildByPath("FreezeArea");
+            this.cam=this.panel.parent.getChildByPath("Camera");
+        } catch (error) 
         {
-            this.rolesSquare.push(t);
+            console.error("ShopArea 下的 onLoad 错误：",error);
         }
-        for(let t of this.node.getChildByPath("TopArea/Food").children)
-        {
-            this.FoodSquare.push(t);
-        }
-        this.EquipSquare=this.node.getChildByPath("TopArea/Equip/EquipSquare");
-        this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
-        this.freezeArea=this.node.getChildByPath("FreezeArea");
-        this.cam=this.panel.parent.getChildByPath("Camera");
     }
 
     start() 
