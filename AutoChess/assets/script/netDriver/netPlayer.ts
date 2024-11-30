@@ -154,21 +154,29 @@ export class netPlayer {
 
     //更新玩家账户信息
     public cb_get_user_data:(_userInfo:common.UserData , _onLoad:boolean)=>void;
-    public get_user_data(_onLoad?:boolean, _onCallBack?:(_step:common.GuideStep)=>void)
+    public get_user_data(_onLoad?:boolean, _onCallBack?:(_step:common.GuideStep)=>void):Promise<void>
     {
-        this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo:common.UserData)=>
+
+        return new Promise<void>((resolve, reject) =>
         {
-            this.cb_get_user_data(_userInfo , _onLoad);
-            if (_onCallBack) {
-                _onCallBack(_userInfo.guideStep);
-            }
-        },(err)=>
-        {
-            console.log("get user data error:" + err);
-        }).timeout(3000,()=>
-        {
-            console.log("get user data timeout");
-        });
+            this.c_player_shop_caller.get_hub(this.player_name).get_user_data().callBack((_userInfo: common.UserData) =>
+            {
+                this.cb_get_user_data(_userInfo, _onLoad);
+                if (_onCallBack)
+                {
+                    _onCallBack(_userInfo.guideStep);
+                }
+                resolve();
+            }, (err) =>
+            {
+                console.log("get user data error:" + err);
+                reject();
+            }).timeout(3000, () =>
+            {
+                console.log("get user data timeout");
+                reject();
+            });
+        })
     }
 
     //合并碎片
