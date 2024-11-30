@@ -16,9 +16,14 @@ export class RoleArea extends Component
 
     onLoad() 
     {
-        for(let t of this.node.getChildByName("Node").children)
+        try {
+            for(let t of this.node.getChildByName("Node").children)
+            {
+                this.targets.set(t.name, t);
+            }
+        } catch (error) 
         {
-            this.targets.set(t.name, t);
+            console.error("RoleArea 下的 onLoad 错误：",error);
         }
     }
 
