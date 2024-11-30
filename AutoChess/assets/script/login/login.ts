@@ -22,6 +22,7 @@ import { Guide } from '../other/Guide';
 import * as enmus from '../other/enums';
 import SdkManager from '../SDK/SdkManager';
 import * as player_login from "../serverSDK/ccallplayer"
+import { VenturePanel } from '../panel/VenturePanel';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -454,6 +455,7 @@ export class login extends Component {
                         let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel") as Prefab;
                         let panel=instantiate(vt);
                         panel.setParent(this.node);
+                        panel.getComponent(VenturePanel).Open();
                         singleton.netSingleton.mainInterface.panelNode.active=false;
                     }
                     break;
