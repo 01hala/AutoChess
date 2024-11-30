@@ -1,0 +1,326 @@
+{
+    "100001": {
+        "Id": 100001,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100002": {
+        "Id": 100002,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100003": {
+        "Id": 100003,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100004": {
+        "Id": 100004,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100005": {
+        "Id": 100005,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100006": {
+        "Id": 100006,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100007": {
+        "Id": 100007,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100008": {
+        "Id": 100008,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100009": {
+        "Id": 100009,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100010": {
+        "Id": 100010,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100011": {
+        "Id": 100011,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100012": {
+        "Id": 100012,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100013": {
+        "Id": 100013,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100014": {
+        "Id": 100014,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100015": {
+        "Id": 100015,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100016": {
+        "Id": 100016,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100017": {
+        "Id": 100017,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100018": {
+        "Id": 100018,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100019": {
+        "Id": 100019,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100020": {
+        "Id": 100020,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100021": {
+        "Id": 100021,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100022": {
+        "Id": 100022,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100023": {
+        "Id": 100023,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100024": {
+        "Id": 100024,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100025": {
+        "Id": 100025,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100026": {
+        "Id": 100026,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100027": {
+        "Id": 100027,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100028": {
+        "Id": 100028,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100029": {
+        "Id": 100029,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100030": {
+        "Id": 100030,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100031": {
+        "Id": 100031,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100032": {
+        "Id": 100032,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100033": {
+        "Id": 100033,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100034": {
+        "Id": 100034,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100035": {
+        "Id": 100035,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100036": {
+        "Id": 100036,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100037": {
+        "Id": 100037,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100038": {
+        "Id": 100038,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100039": {
+        "Id": 100039,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100040": {
+        "Id": 100040,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100041": {
+        "Id": 100041,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100042": {
+        "Id": 100042,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100043": {
+        "Id": 100043,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100044": {
+        "Id": 100044,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100045": {
+        "Id": 100045,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100046": {
+        "Id": 100046,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100047": {
+        "Id": 100047,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100048": {
+        "Id": 100048,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100049": {
+        "Id": 100049,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100050": {
+        "Id": 100050,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100051": {
+        "Id": 100051,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100052": {
+        "Id": 100052,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100053": {
+        "Id": 100053,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    },
+    "100054": {
+        "Id": 100054,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": ""
+    }
+}
