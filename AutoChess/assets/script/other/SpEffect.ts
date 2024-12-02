@@ -51,7 +51,7 @@ export class SpEffect
         allAwait.push(()=>
         {
             //召唤出场特效
-            address = spConfig.OnSummon + "/" + config.SpListConfig.get(spConfig.OnSummon).name;
+            address = spConfig.OnSummon + "/" + config.SpListConfig.get(spConfig.OnSummon).path;
             loadAssets.LoadSkeletonData(address, (data) =>
             {
                 if (data)
@@ -64,7 +64,7 @@ export class SpEffect
         allAwait.push(() =>
         {
             //单体增强时特效
-            address = spConfig.IntensifierSelf + "/" + config.SpListConfig.get(spConfig.IntensifierSelf).name;
+            address = spConfig.IntensifierSelf + "/" + config.SpListConfig.get(spConfig.IntensifierSelf).path;
             loadAssets.LoadSkeletonData(address, (data) =>
             {
                 if (data)
@@ -77,7 +77,7 @@ export class SpEffect
         allAwait.push(() =>
         {
             //使用技能
-            address = spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill).name;
+            address = spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill).path;
             loadAssets.LoadSkeletonData(address, (data) =>
             {
                 if (data)
@@ -90,7 +90,7 @@ export class SpEffect
         {
             for (let t of spConfig.Buff)
             {
-                address = t + "/" + config.SpListConfig.get(t).name;
+                address = t + "/" + config.SpListConfig.get(t).path;
                 loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
@@ -105,7 +105,7 @@ export class SpEffect
         {
             for (let t of spConfig.CheckSkill)
             {
-                address = t + "/" + config.SpListConfig.get(t).name;
+                address = t + "/" + config.SpListConfig.get(t).path;
                 loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
