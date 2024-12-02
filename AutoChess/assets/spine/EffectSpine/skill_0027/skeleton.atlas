@@ -1,0 +1,167 @@
+
+skeleton.png
+size: 1090,1090
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+star_00001
+  rotate: false
+  xy: 582, 780
+  size: 36, 36
+  orig: 400, 400
+  offset: 182, 182
+  index: -1
+star_00002
+  rotate: false
+  xy: 585, 98
+  size: 72, 72
+  orig: 400, 400
+  offset: 164, 164
+  index: -1
+star_00003
+  rotate: false
+  xy: 162, 32
+  size: 128, 128
+  orig: 400, 400
+  offset: 136, 136
+  index: -1
+star_00004
+  rotate: false
+  xy: 2, 2
+  size: 158, 158
+  orig: 400, 400
+  offset: 121, 121
+  index: -1
+star_00005
+  rotate: false
+  xy: 659, 56
+  size: 178, 178
+  orig: 400, 400
+  offset: 111, 111
+  index: -1
+star_00006
+  rotate: true
+  xy: 848, 640
+  size: 220, 224
+  orig: 400, 400
+  offset: 90, 88
+  index: -1
+star_00007
+  rotate: false
+  xy: 310, 814
+  size: 270, 274
+  orig: 400, 400
+  offset: 65, 63
+  index: -1
+star_00008
+  rotate: false
+  xy: 304, 172
+  size: 290, 294
+  orig: 400, 400
+  offset: 55, 53
+  index: -1
+star_00009
+  rotate: false
+  xy: 2, 162
+  size: 300, 304
+  orig: 400, 400
+  offset: 50, 48
+  index: -1
+star_00010
+  rotate: false
+  xy: 2, 468
+  size: 304, 308
+  orig: 400, 400
+  offset: 48, 46
+  index: -1
+star_00011
+  rotate: false
+  xy: 2, 778
+  size: 306, 310
+  orig: 400, 400
+  offset: 47, 45
+  index: -1
+star_00012
+  rotate: false
+  xy: 308, 486
+  size: 284, 290
+  orig: 400, 400
+  offset: 58, 55
+  index: -1
+star_00013
+  rotate: false
+  xy: 582, 818
+  size: 264, 270
+  orig: 400, 400
+  offset: 68, 65
+  index: -1
+star_00014
+  rotate: true
+  xy: 596, 534
+  size: 244, 250
+  orig: 400, 400
+  offset: 78, 75
+  index: -1
+star_00015
+  rotate: true
+  xy: 848, 862
+  size: 226, 231
+  orig: 400, 400
+  offset: 87, 85
+  index: -1
+star_00016
+  rotate: false
+  xy: 848, 424
+  size: 214, 214
+  orig: 400, 400
+  offset: 93, 93
+  index: -1
+star_00017
+  rotate: false
+  xy: 596, 332
+  size: 200, 200
+  orig: 400, 400
+  offset: 100, 100
+  index: -1
+star_00018
+  rotate: true
+  xy: 798, 236
+  size: 186, 188
+  orig: 400, 400
+  offset: 107, 106
+  index: -1
+star_00019
+  rotate: false
+  xy: 839, 58
+  size: 175, 176
+  orig: 400, 400
+  offset: 112, 112
+  index: -1
+star_00020
+  rotate: false
+  xy: 422, 9
+  size: 161, 161
+  orig: 400, 400
+  offset: 119, 120
+  index: -1
+star_00021
+  rotate: false
+  xy: 292, 32
+  size: 128, 128
+  orig: 400, 400
+  offset: 136, 136
+  index: -1
+xian
+  rotate: true
+  xy: 162, 2
+  size: 8, 82
+  orig: 8, 82
+  offset: 0, 0
+  index: -1
+yuandian
+  rotate: false
+  xy: 162, 12
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1

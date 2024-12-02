@@ -1,0 +1,160 @@
+
+huoyan.png
+size: 1599,1599
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+TX_gx__00002
+  rotate: false
+  xy: 1286, 293
+  size: 170, 186
+  orig: 214, 214
+  offset: 20, 12
+  index: -1
+TX_gy2_00011
+  rotate: false
+  xy: 1505, 1249
+  size: 79, 76
+  orig: 79, 76
+  offset: 0, 0
+  index: -1
+TX_lizi_00000
+  rotate: true
+  xy: 1116, 79
+  size: 192, 171
+  orig: 192, 171
+  offset: 0, 0
+  index: -1
+TX_sg_00044
+  rotate: true
+  xy: 1505, 1327
+  size: 270, 92
+  orig: 270, 92
+  offset: 0, 0
+  index: -1
+TX_wq_00000
+  rotate: false
+  xy: 1289, 103
+  size: 159, 188
+  orig: 159, 188
+  offset: 0, 0
+  index: -1
+TX_xg_0000
+  rotate: true
+  xy: 1116, 273
+  size: 206, 168
+  orig: 206, 168
+  offset: 0, 0
+  index: -1
+fire_00000
+  rotate: true
+  xy: 1115, 481
+  size: 370, 367
+  orig: 600, 600
+  offset: 114, 114
+  index: -1
+fire_00001
+  rotate: true
+  xy: 2, 480
+  size: 371, 370
+  orig: 600, 600
+  offset: 114, 112
+  index: -1
+fire_00002
+  rotate: false
+  xy: 2, 853
+  size: 373, 370
+  orig: 600, 600
+  offset: 113, 112
+  index: -1
+fire_00003
+  rotate: false
+  xy: 1130, 1226
+  size: 373, 371
+  orig: 600, 600
+  offset: 113, 111
+  index: -1
+fire_00004
+  rotate: true
+  xy: 745, 479
+  size: 372, 368
+  orig: 600, 600
+  offset: 114, 113
+  index: -1
+fire_00005
+  rotate: false
+  xy: 378, 1226
+  size: 374, 371
+  orig: 600, 600
+  offset: 113, 112
+  index: -1
+fire_00006
+  rotate: false
+  xy: 754, 1226
+  size: 374, 371
+  orig: 600, 600
+  offset: 113, 112
+  index: -1
+fire_00007
+  rotate: false
+  xy: 2, 1225
+  size: 374, 372
+  orig: 600, 600
+  offset: 113, 112
+  index: -1
+fire_00008
+  rotate: true
+  xy: 374, 479
+  size: 372, 369
+  orig: 600, 600
+  offset: 114, 113
+  index: -1
+fire_00009
+  rotate: false
+  xy: 378, 853
+  size: 373, 371
+  orig: 600, 600
+  offset: 113, 113
+  index: -1
+fire_00010
+  rotate: true
+  xy: 746, 107
+  size: 370, 368
+  orig: 600, 600
+  offset: 114, 114
+  index: -1
+fire_00011
+  rotate: false
+  xy: 2, 107
+  size: 370, 371
+  orig: 600, 600
+  offset: 113, 113
+  index: -1
+fire_00012
+  rotate: false
+  xy: 753, 853
+  size: 371, 371
+  orig: 600, 600
+  offset: 113, 113
+  index: -1
+fire_00013
+  rotate: false
+  xy: 374, 107
+  size: 370, 370
+  orig: 600, 600
+  offset: 113, 113
+  index: -1
+fire_00014
+  rotate: false
+  xy: 1126, 853
+  size: 371, 371
+  orig: 600, 600
+  offset: 113, 112
+  index: -1
+gc
+  rotate: false
+  xy: 1458, 277
+  size: 124, 202
+  orig: 124, 202
+  offset: 0, 0
+  index: -1

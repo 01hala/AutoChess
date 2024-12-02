@@ -1,0 +1,167 @@
+
+skeleton.png
+size: 2446,2446
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+boli_00000
+  rotate: false
+  xy: 1006, 1576
+  size: 366, 366
+  orig: 500, 500
+  offset: 67, 67
+  index: -1
+boli_00001
+  rotate: true
+  xy: 504, 1657
+  size: 376, 381
+  orig: 500, 500
+  offset: 61, 59
+  index: -1
+boli_00002
+  rotate: false
+  xy: 504, 2035
+  size: 396, 409
+  orig: 500, 500
+  offset: 50, 45
+  index: -1
+boli_00003
+  rotate: true
+  xy: 466, 21
+  size: 415, 437
+  orig: 500, 500
+  offset: 41, 32
+  index: -1
+boli_00004
+  rotate: true
+  xy: 2, 3
+  size: 433, 462
+  orig: 500, 500
+  offset: 32, 21
+  index: -1
+boli_00005
+  rotate: false
+  xy: 1993, 957
+  size: 448, 483
+  orig: 500, 500
+  offset: 25, 12
+  index: -1
+boli_00006
+  rotate: true
+  xy: 1902, 2
+  size: 461, 497
+  orig: 500, 500
+  offset: 19, 3
+  index: -1
+boli_00007
+  rotate: true
+  xy: 1902, 465
+  size: 473, 500
+  orig: 500, 500
+  offset: 14, 0
+  index: -1
+boli_00008
+  rotate: false
+  xy: 1507, 940
+  size: 484, 500
+  orig: 500, 500
+  offset: 9, 0
+  index: -1
+boli_00009
+  rotate: false
+  xy: 1407, 438
+  size: 493, 500
+  orig: 500, 500
+  offset: 5, 0
+  index: -1
+boli_00010
+  rotate: false
+  xy: 1006, 940
+  size: 499, 500
+  orig: 500, 500
+  offset: 1, 0
+  index: -1
+boli_00011
+  rotate: false
+  xy: 2, 1442
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00012
+  rotate: false
+  xy: 2, 940
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00013
+  rotate: false
+  xy: 2, 438
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00014
+  rotate: false
+  xy: 905, 1944
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00015
+  rotate: false
+  xy: 1407, 1944
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00016
+  rotate: false
+  xy: 1909, 1944
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00017
+  rotate: false
+  xy: 504, 1155
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00018
+  rotate: false
+  xy: 504, 653
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00019
+  rotate: false
+  xy: 905, 151
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00020
+  rotate: false
+  xy: 1407, 1442
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00021
+  rotate: false
+  xy: 1909, 1442
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+boli_00022
+  rotate: false
+  xy: 2, 1944
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1

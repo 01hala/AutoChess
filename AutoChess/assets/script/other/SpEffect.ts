@@ -1,5 +1,5 @@
 
-import { _decorator, Component, instantiate, Node, sp, Vec3 } from 'cc';
+import { _decorator, assetManager, Component, instantiate, Node, sp, Vec3 } from 'cc';
 import * as enums from './enums';
 import * as common from '../battle/AutoChessBattle/common';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -40,6 +40,84 @@ export class SpEffect
     constructor(_roleId: number, _parent: Node)
     {
         this.parent = _parent;
+        this.init(_roleId);
+    }
+
+    private async init(_roleId:number)
+    {
+        let spConfig=config.RoleSpConfig.get(_roleId);
+        let address:string;
+        let allAwait=[];
+        allAwait.push(()=>
+        {
+            //召唤出场特效
+            address = spConfig.OnSummon + "/" + config.SpListConfig.get(spConfig.OnSummon).name;
+            loadAssets.LoadSkeletonData(address, (data) =>
+            {
+                if (data)
+                {
+                    this.onSummon = data;
+                }
+            });
+        })
+
+        allAwait.push(() =>
+        {
+            //单体增强时特效
+            address = spConfig.IntensifierSelf + "/" + config.SpListConfig.get(spConfig.IntensifierSelf).name;
+            loadAssets.LoadSkeletonData(address, (data) =>
+            {
+                if (data)
+                {
+                    this.intensifierSelf = data;
+                }
+            });
+        })
+
+        allAwait.push(() =>
+        {
+            //使用技能
+            address = spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill).name;
+            loadAssets.LoadSkeletonData(address, (data) =>
+            {
+                if (data)
+                {
+                    this.useSkill = data;
+                }
+            });
+        })
+        allAwait.push(() =>
+        {
+            for (let t of spConfig.Buff)
+            {
+                address = t + "/" + config.SpListConfig.get(t).name;
+                loadAssets.LoadSkeletonData(address, (data) =>
+                {
+                    if (data)
+                    {
+                        this.buff.set(t, data);
+                    }
+                });
+            }
+        })
+        
+        allAwait.push(() =>
+        {
+            for (let t of spConfig.CheckSkill)
+            {
+                address = t + "/" + config.SpListConfig.get(t).name;
+                loadAssets.LoadSkeletonData(address, (data) =>
+                {
+                    if (data)
+                    {
+                        this.checkSkill.set(t, data);
+                    }
+                });
+            }
+        })
+
+        await Promise.all(allAwait);
+       
     }
 
     /**
