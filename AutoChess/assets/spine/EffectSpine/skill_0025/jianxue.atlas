@@ -1,0 +1,20 @@
+
+jianxue.png
+size: 82,82
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a8
+  rotate: false
+  xy: 2, 15
+  size: 70, 65
+  orig: 70, 65
+  offset: 0, 0
+  index: -1
+xian
+  rotate: false
+  xy: 74, 17
+  size: 6, 63
+  orig: 6, 63
+  offset: 0, 0
+  index: -1

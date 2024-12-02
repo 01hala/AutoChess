@@ -1,0 +1,160 @@
+
+Reduce attack.png
+size: 285,285
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+huan
+  rotate: false
+  xy: 2, 29
+  size: 281, 68
+  orig: 281, 68
+  offset: 0, 0
+  index: -1
+round/round_00000
+  rotate: false
+  xy: 186, 147
+  size: 46, 46
+  orig: 48, 48
+  offset: 1, 1
+  index: -1
+round/round_00001
+  rotate: false
+  xy: 234, 147
+  size: 46, 46
+  orig: 48, 48
+  offset: 1, 1
+  index: -1
+round/round_00002
+  rotate: false
+  xy: 2, 107
+  size: 46, 46
+  orig: 48, 48
+  offset: 1, 1
+  index: -1
+round/round_00003
+  rotate: false
+  xy: 50, 103
+  size: 46, 46
+  orig: 48, 48
+  offset: 1, 1
+  index: -1
+round/round_00004
+  rotate: false
+  xy: 98, 103
+  size: 46, 46
+  orig: 48, 48
+  offset: 1, 1
+  index: -1
+round/round_00005
+  rotate: false
+  xy: 146, 99
+  size: 46, 46
+  orig: 48, 48
+  offset: 1, 1
+  index: -1
+round/round_00006
+  rotate: true
+  xy: 46, 201
+  size: 44, 46
+  orig: 46, 48
+  offset: 1, 1
+  index: -1
+round/round_00007
+  rotate: true
+  xy: 94, 197
+  size: 44, 46
+  orig: 46, 48
+  offset: 1, 1
+  index: -1
+round/round_00008
+  rotate: false
+  xy: 142, 197
+  size: 44, 44
+  orig: 46, 46
+  offset: 1, 1
+  index: -1
+round/round_00009
+  rotate: false
+  xy: 188, 195
+  size: 44, 44
+  orig: 46, 46
+  offset: 1, 1
+  index: -1
+round/round_00010
+  rotate: false
+  xy: 234, 195
+  size: 44, 44
+  orig: 46, 46
+  offset: 1, 1
+  index: -1
+round/round_00011
+  rotate: false
+  xy: 2, 155
+  size: 44, 44
+  orig: 46, 46
+  offset: 1, 1
+  index: -1
+round/round_00012
+  rotate: false
+  xy: 48, 155
+  size: 44, 44
+  orig: 46, 46
+  offset: 1, 1
+  index: -1
+round/round_00013
+  rotate: false
+  xy: 94, 151
+  size: 44, 44
+  orig: 46, 46
+  offset: 1, 1
+  index: -1
+round/round_00014
+  rotate: false
+  xy: 140, 151
+  size: 44, 44
+  orig: 46, 46
+  offset: 1, 1
+  index: -1
+round/round_00015
+  rotate: true
+  xy: 212, 241
+  size: 42, 44
+  orig: 44, 46
+  offset: 1, 1
+  index: -1
+round/round_00016
+  rotate: false
+  xy: 2, 231
+  size: 42, 42
+  orig: 44, 44
+  offset: 1, 1
+  index: -1
+round/round_00017
+  rotate: true
+  xy: 126, 243
+  size: 40, 42
+  orig: 42, 44
+  offset: 1, 1
+  index: -1
+round/round_00018
+  rotate: false
+  xy: 170, 243
+  size: 40, 40
+  orig: 42, 42
+  offset: 1, 1
+  index: -1
+round/round_00019
+  rotate: true
+  xy: 86, 247
+  size: 36, 38
+  orig: 38, 40
+  offset: 1, 1
+  index: -1
+xian
+  rotate: true
+  xy: 2, 275
+  size: 8, 82
+  orig: 8, 82
+  offset: 0, 0
+  index: -1

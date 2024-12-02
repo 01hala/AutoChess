@@ -1,0 +1,83 @@
+
+qian.png
+size: 804,804
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jingji_00000
+  rotate: false
+  xy: 598, 554
+  size: 2, 1
+  orig: 400, 400
+  offset: 171, 112
+  index: -1
+jingji_00001
+  rotate: true
+  xy: 2, 2
+  size: 136, 185
+  orig: 400, 400
+  offset: 130, 105
+  index: -1
+jingji_00002
+  rotate: true
+  xy: 404, 381
+  size: 165, 196
+  orig: 400, 400
+  offset: 113, 94
+  index: -1
+jingji_00003
+  rotate: true
+  xy: 584, 143
+  size: 186, 211
+  orig: 400, 400
+  offset: 100, 80
+  index: -1
+jingji_00004
+  rotate: false
+  xy: 602, 331
+  size: 197, 224
+  orig: 400, 400
+  offset: 94, 66
+  index: -1
+jingji_00005
+  rotate: false
+  xy: 389, 144
+  size: 193, 235
+  orig: 400, 400
+  offset: 95, 55
+  index: -1
+jingji_00006
+  rotate: false
+  xy: 598, 557
+  size: 191, 245
+  orig: 400, 400
+  offset: 97, 45
+  index: -1
+jingji_00007
+  rotate: false
+  xy: 404, 548
+  size: 192, 254
+  orig: 400, 400
+  offset: 97, 37
+  index: -1
+jingji_00008
+  rotate: false
+  xy: 2, 140
+  size: 192, 260
+  orig: 400, 400
+  offset: 95, 32
+  index: -1
+jingji_00009
+  rotate: false
+  xy: 196, 145
+  size: 191, 255
+  orig: 400, 400
+  offset: 97, 32
+  index: -1
+jingji_00010
+  rotate: false
+  xy: 2, 402
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
