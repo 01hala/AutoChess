@@ -448,7 +448,7 @@ export class RoleDis extends Component
                 this.Exp = stack % 3;
             }
 
-            let style;
+            let style=1;
             if(!_isColony)
             {
                 if(value[0]!=0 && value[1]!=0) style=1;
