@@ -160,6 +160,7 @@ export class RoleDis extends Component
                 }
             })
         }
+        
     }
 
     async Refresh(roleInfo: Role,isnew?:boolean) 
@@ -184,8 +185,9 @@ export class RoleDis extends Component
                 // }
                 await this.LoadOnConfig();
                 this.skillDis=new SkillDis(this.node,roleInfo.index);
+                await this.skillDis.Init();  
                 this.spEffect=new SpEffect(roleInfo.id,this.node);
-                await this.skillDis.Init();    
+                await this.spEffect.init();
             }
             this.ChangeAtt();
         }

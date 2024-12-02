@@ -36,16 +36,17 @@ export class SpEffect
 
     //父节点
     private parent: Node;
+    private roleId:number;
 
-    constructor(_roleId: number, _parent: Node)
+    constructor(_roleId:number,_parent: Node)
     {
         this.parent = _parent;
-        this.init(_roleId);
+        this.roleId=_roleId;
     }
 
-    private async init(_roleId:number)
+    public async init()
     {
-        let spConfig=config.RoleSpConfig.get(_roleId);
+        let spConfig=config.RoleSpConfig.get(this.roleId);
         let address:string;
         let allAwait=[];
         allAwait.push(()=>
