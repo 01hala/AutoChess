@@ -430,16 +430,16 @@ export class SpEffect
                             {
                                 var anim = node.getComponent(sp.Skeleton).skeletonData.getAnimsEnum();
                                 node.getComponent(sp.Skeleton).setAnimation(0, String(anim[2]), false)
-                            }
 
-                            node.getComponent(sp.Skeleton).setCompleteListener((trackEntry) =>
-                            {
-                                if (trackEntry.animation.name === String(anim[2]))
-                                {
-                                    node.destroy();
-                                    resolve();
-                                }
-                            });
+                                node.getComponent(sp.Skeleton).setCompleteListener((trackEntry) =>
+                                    {
+                                        if (trackEntry.animation.name === String(anim[2]))
+                                        {
+                                            node.destroy();
+                                            resolve();
+                                        }
+                                    });
+                            }
                         }
                         break;
                 }

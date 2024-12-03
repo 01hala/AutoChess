@@ -56,26 +56,26 @@ export class LevelInfo extends Component
         },this);
     }
 
-    destroy(): boolean
-    {
-        for (let t of this.enemyLayout.children)
-        {
-            t.destroy();
-        }
-        for (let t of this.rewardLayout.children)
-        {
-            t.destroy();
-        }
-        this.node.destroy();
-        // this._super.call()
-        return super.destroy();
-    }
+    // destroy(): boolean
+    // {
+    //     for (let t of this.enemyLayout.children)
+    //     {
+    //         t.destroy();
+    //     }
+    //     for (let t of this.rewardLayout.children)
+    //     {
+    //         t.destroy();
+    //     }
+    //     this.node.destroy();
+    //     // this._super.call()
+    //     return super.destroy();
+    // }
 
     Close()
     {
         this.anim.on(Animation.EventType.FINISHED, () =>
         {
-            this.destroy();
+            this.node.destroy();
         }, this);
         this.anim.play("PanelDisappear");
     }

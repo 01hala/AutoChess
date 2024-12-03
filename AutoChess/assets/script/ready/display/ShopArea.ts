@@ -80,25 +80,25 @@ export class ShopArea extends Component
         // this.node.getComponent(Widget).bottom = outPos.y;
     }
 
-    destroy(): boolean
-    {
-        try
-        {
-            for(let t of this.shopRoleNodes)
-            {
-                if(t) t.destroy();
-            }
-            for(let t of this.shopPropNodes)
-            {
-                if(t) t.destroy();
-            }
-        }
-        catch(err)
-        {
-            console.warn("ShopArea 下的 destroy 异常：",err);
-        }
-        return super.destroy();// this._super.call()
-    }
+    // destroy(): boolean
+    // {
+    //     try
+    //     {
+    //         for(let t of this.shopRoleNodes)
+    //         {
+    //             if(t) t.destroy();
+    //         }
+    //         for(let t of this.shopPropNodes)
+    //         {
+    //             if(t) t.destroy();
+    //         }
+    //     }
+    //     catch(err)
+    //     {
+    //         console.warn("ShopArea 下的 destroy 异常：",err);
+    //     }
+    //     return super.destroy();// this._super.call()
+    // }
 
     Init(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
     {

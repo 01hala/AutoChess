@@ -95,11 +95,11 @@ export class RoleIcon extends Component
        }
     }
 
-    destroy(): boolean
-    {
-        this.roleNode.destroy();
-        return super.destroy();// this._super.call()
-    }
+    // destroy(): boolean
+    // {
+    //     this.roleNode.destroy();
+    //     return super.destroy();// this._super.call()
+    // }
 
     //初始化
     async Init(_Id:number , _Hp:number , _Atk:number , _level:number , _exp:number , _freeze:boolean, _fetters:common.Fetters=null , _teamindex:number=-1)
@@ -375,7 +375,7 @@ export class RoleIcon extends Component
             }
             roleDis.Refresh(r,true);
             resolve(role);
-            this.destroy
+            //this.destroy
         });
     }
     //购买角色时的动画效果

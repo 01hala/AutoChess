@@ -27,25 +27,25 @@ export class RoleArea extends Component
         }
     }
 
-    destroy(): boolean
-    {
-        try
-        {
-            for(let t of this.rolesNode)
-            {
-                if(t)
-                {
-                    t.destroy();
-                }
-            }
-        }
-        catch(err)
-        {
-            console.warn("RoleArea 下的 destroy 异常：",err);
-        }
-        // this._super.call();
-        return super.destroy();
-    }
+    // destroy(): boolean
+    // {
+    //     try
+    //     {
+    //         for(let t of this.rolesNode)
+    //         {
+    //             if(t)
+    //             {
+    //                 t.destroy();
+    //             }
+    //         }
+    //     }
+    //     catch(err)
+    //     {
+    //         console.warn("RoleArea 下的 destroy 异常：",err);
+    //     }
+    //     // this._super.call();
+    //     return super.destroy();
+    // }
 
     GetTargetRole(index:number){
         return this.rolesNode[index];

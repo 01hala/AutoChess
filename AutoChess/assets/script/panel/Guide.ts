@@ -149,22 +149,22 @@ export class Guide extends Component
                     this.guideText.getComponent(RichText).string="点击匹配";
                     break;
                 case 3:
-                    t=this.node.parent.getChildByPath("ReadyPanel/TopArea/HpInfo");
+                    t=this.node.parent.getChildByPath("ReadyPanel/State/TopArea/HpInfo");
                     this.guideText.setPosition(new Vec3(0,595.665,0));
                     this.guideText.getComponent(RichText).string="生命值";
                     break;
                 case 4:
-                    t=this.node.parent.getChildByPath("ReadyPanel/TopArea/TrophyInfo");
+                    t=this.node.parent.getChildByPath("ReadyPanel/State/TopArea/TrophyInfo");
                     this.guideText.setPosition(new Vec3(0,595.665,0));
                     this.guideText.getComponent(RichText).string="奖杯";
                     break;
                 case 5:
-                    t=this.node.parent.getChildByPath("ReadyPanel/TopArea/CoinInfo");
+                    t=this.node.parent.getChildByPath("ReadyPanel/State/TopArea/CoinInfo");
                     this.guideText.setPosition(new Vec3(0,595.665,0));
                     this.guideText.getComponent(RichText).string="金币";
                     break;
                 case 6:
-                    t=this.node.parent.getChildByPath("ReadyPanel/TopArea/RoundInfo");
+                    t=this.node.parent.getChildByPath("ReadyPanel/State/TopArea/RoundInfo");
                     this.guideText.setPosition(new Vec3(0,595.665,0));
                     this.guideText.getComponent(RichText).string="回合";
                     break;
@@ -177,7 +177,7 @@ export class Guide extends Component
                     //this.pointer.active=true;
                     //this.pointer.setWorldPosition(this.tnode.worldPosition);
                     //this.tween=tween(this.pointer).to(1,{position:this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_0").worldPosition}).repeatForever().start();
-                    t=this.node.parent.getChildByPath("ReadyPanel/ShopArea").getComponent(ShopArea).shopRoleNodes[0];
+                    t=this.node.parent.getChildByPath("ReadyPanel/Shop/ShopArea").getComponent(ShopArea).shopRoleNodes[0];
                     this.guideText.setPosition(new Vec3(0,-637.995,0));
                     this.guideText.getComponent(RichText).string="拖拽购买角色";
                     break;
@@ -201,8 +201,15 @@ export class Guide extends Component
             if (t != null)
             {
                 this.tnode = instantiate(t);
-                this.tnode.getChildByName("Button")?.getComponent(Button).destroy();
-                this.tnode.getComponent(RoleIcon)?.destroy();
+                if(this.tnode.getChildByName("Button"))
+                {
+                    this.tnode.getChildByName("Button").getComponent(Button).enabled=false;
+                }
+                if(this.tnode.getComponent(RoleIcon))
+                {
+                    this.tnode.getComponent(RoleIcon).destroy();
+                }
+                
                 this.tnode.setParent(this.node);
                 this.tnode.setWorldPosition(t.worldPosition);
                 sleep(100).then(() =>

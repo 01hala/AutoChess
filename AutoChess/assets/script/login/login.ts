@@ -18,7 +18,6 @@ import { MainInterface } from '../mainInterface/MainInterface';
 import { sleep } from '../other/sleep';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
-import { Guide } from '../other/Guide';
 import * as enmus from '../other/enums';
 import SdkManager from '../SDK/SdkManager';
 import * as player_login from "../serverSDK/ccallplayer"
@@ -367,7 +366,7 @@ export class login extends Component {
             await singleton.netSingleton.ready.start(this.bk.node, _battle_info, async (_event) =>
             {
                 console.log("Start Ready callback!");
-                this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
+                //this.bk.node.addChild(singleton.netSingleton.ready.panelNode);
                 await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
                 await _event();
                 await sleep(2000);

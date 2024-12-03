@@ -119,7 +119,7 @@ export class ReadyDis
                     GameManager.Instance.guide.step++;
                 }
                 login.panelOnReady=true;
-                this.Init(_father);
+                this.Init();
             });
 
             if (this.readyData.GetCoins() > 25)
@@ -144,6 +144,7 @@ export class ReadyDis
         //主要界面
         let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "ReadyPanel") as Prefab;
         this.panelNode = instantiate(panel);
+        this.panelNode.setParent(this.father);
         //等待界面
         // panel = await BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting") as Prefab;
         // this.waitingPanel = instantiate(panel);
@@ -192,7 +193,7 @@ export class ReadyDis
         }
     }
 
-    Init(_father:Node)
+    Init()
     {
         try
         {
@@ -236,8 +237,8 @@ export class ReadyDis
 
     public destory() 
     {
-        this.roleArea.destroy();
-        this.shopArea.destroy();
+        this.roleArea.node.destroy();
+        this.shopArea.node.destroy();
         this.panelNode.destroy();
     }
 
