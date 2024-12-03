@@ -306,13 +306,9 @@ export class RoleDis extends Component
     {
         try 
         {
-            if (this.roleInfo.getShields())
+            if (!this.roleInfo.getShields())
             {
-                // if (null == this.effectSpine)
-                // {
-                //     this.effectSpine = this.node.getChildByPath("EffectSpine");
-                // }
-                // this.effectSpine.getComponent(EffectSpine).RemoveEffect(enums.SpecialEffect.Shields);
+                this.spEffect.RemoveBuffEffect(BattleEnums.BufferType.Shields);
             }
             
 
