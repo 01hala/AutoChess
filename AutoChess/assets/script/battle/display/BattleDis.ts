@@ -658,6 +658,7 @@ export class BattleDis
             {
                 if(BattleEnums.EventType.IntensifierProperties == ev.type || BattleEnums.EventType.IntensifierExp == ev.type) 
                 {
+                    if(ev.recipient.length<=0) continue;
                     console.log("检测到加属性事件");
                     let spList = BattleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                     let self = spList.roleNodes[ev.spellcaster.index];
@@ -673,6 +674,7 @@ export class BattleDis
                             this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                         }
                     }
+                    
                     allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
                 }
             }

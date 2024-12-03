@@ -294,12 +294,12 @@ export class RoleDis extends Component
             case BattleEnums.SwapPropertiesType.AttackSwap:
             case BattleEnums.SwapPropertiesType.HpSwap:
                 {
-                    this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
+                    await this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
                 }
                 break;
         }
         
-        this.ChangeAtt();
+        await this.ChangeAtt();
     }
 
     async ChangeAtt() 
@@ -460,7 +460,7 @@ export class RoleDis extends Component
                 style=2;
             }
 
-            this.spEffect.UseIntensifierEffect(_isColony,style);
+            await this.spEffect.UseIntensifierEffect(_isColony,style);
 
             await this.ChangeAtt();
             
@@ -615,17 +615,17 @@ export class RoleDis extends Component
     */
    async ReceptionBuff(_buff:BattleEnums.BufferType)
    {
-        this.spEffect.UseBuffEffect(_buff)
+        await this.spEffect.UseBuffEffect(_buff)
    }
 
    async DeflexionDamage()
    {
-    this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
+        await this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
    }
 
    async SubstituteDamage()
    {
-        this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
+        await this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
    }
    
    

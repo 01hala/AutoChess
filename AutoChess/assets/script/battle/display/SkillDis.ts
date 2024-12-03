@@ -85,40 +85,44 @@ export class SkillDis
      */
     private async RemoteAttack(_ev: skill.Event) 
     {
-        try 
+        return new Promise<void>(async (resolve, reject) =>
         {
-            let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-            let self = this.parent;
-
-            for (let element of _ev.recipient)
+            try 
             {
-                let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
+                let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
+                let self = this.parent;
 
-                let target = targetList.roleNodes[element.index];
-
-                if (self && target) 
+                for (let element of _ev.recipient)
                 {
-                    let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
-                    let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
+                    let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
 
-                    let bulletNode = instantiate(this.remoteNode);
-                    bulletNode.setPosition(selfpos);
-                    console.log(bulletNode);
-                    bulletNode.getComponent(Bullet).Init(targetpos, null, async () =>
+                    let target = targetList.roleNodes[element.index];
+
+                    if (self && target) 
                     {
-                        await target.getComponent(RoleDis).BeHurted(_ev.value[0]);
-                        await target.getComponent(RoleDis).ChangeAtt();
-                    });
-                    singleton.netSingleton.battle.panelNode.addChild(bulletNode);
-                }
-            }
+                        let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
+                        let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
 
-            return delay(1200, () => { });
-        }
-        catch (err) 
-        {
-            console.warn("RoleDis 下的 RemoteAttack 错误 err:" + err);
-        }
+                        let bulletNode = instantiate(this.remoteNode);
+                        bulletNode.setPosition(selfpos);
+                        console.log(bulletNode);
+                        singleton.netSingleton.battle.panelNode.addChild(bulletNode);
+                        await bulletNode.getComponent(Bullet).Init(targetpos, null).then(async () =>
+                        {
+                            await target.getComponent(RoleDis).BeHurted(_ev.value[0]);
+                            await target.getComponent(RoleDis).ChangeAtt();
+                        });
+                    }
+                }
+                resolve();
+                //return delay(1200, () => { });
+            }
+            catch (err) 
+            {
+                console.error("SkillDis 下的 RemoteAttack 错误 err:" + err);
+                reject();
+            }
+        })
     }
 
     /**
@@ -131,54 +135,58 @@ export class SkillDis
     */
     private async DeliveryGain(_ev: skill.Event)
     {
-        try 
+        return new Promise<void>(async (resolve, reject) =>
         {
-            let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-            let self = this.parent;
-
-            for (let element of _ev.recipient)
+            try
             {
-                if (element.index == this.index)
+                let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
+                let self = this.parent;
+
+                for (let element of _ev.recipient)
                 {
-                    return this.parent.getComponent(RoleDis).Intensifier(_ev.value , false);
-                }
-                let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
-                let target = targetList.roleNodes[element.index];
-
-                if (self && target)
-                {
-                    let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
-                    let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
-
-
-                    let bulletNode = instantiate(this.remoteNode);
-                    bulletNode.setPosition(selfpos);
-                    console.log(bulletNode);
-                    bulletNode.getComponent(Bullet).Init(targetpos, true, () =>
+                    if (element.index == this.index)
                     {
-                        switch (_ev.type)
+                        return this.parent.getComponent(RoleDis).Intensifier(_ev.value, false);
+                    }
+                    let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
+                    let target = targetList.roleNodes[element.index];
+
+                    if (self && target)
+                    {
+                        let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
+                        let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
+
+
+                        let bulletNode = instantiate(this.remoteNode);
+                        bulletNode.setPosition(selfpos);
+                        console.log(bulletNode);
+                        singleton.netSingleton.battle.panelNode.addChild(bulletNode);
+                        await bulletNode.getComponent(Bullet).Init(targetpos, true).then(async () =>
                         {
-                            case BattleEnums.EventType.IntensifierProperties:
-                                {
-                                    target.getComponent(RoleDis).Intensifier(_ev.value , true);
-                                }
-                                break;
-                            case BattleEnums.EventType.IntensifierExp:
-                                {
-                                    target.getComponent(RoleDis).IntensifierExp(_ev.value[0]);
-                                }
-                                break;
-                        }
-                    });
-                    singleton.netSingleton.battle.panelNode.addChild(bulletNode);
+                            switch (_ev.type)
+                            {
+                                case BattleEnums.EventType.IntensifierProperties:
+                                    {
+                                        await target.getComponent(RoleDis).Intensifier(_ev.value, true);
+                                    }
+                                    break;
+                                case BattleEnums.EventType.IntensifierExp:
+                                    {
+                                        await target.getComponent(RoleDis).IntensifierExp(_ev.value[0]);
+                                    }
+                                    break;
+                            }
+                        });
+                    }
                 }
+                resolve();
+            } catch (error)
+            {
+                console.error("SkillDis 下的 DeliveryGain 错误 err:" + error);
+                reject();
             }
-            return delay(700, () => { });
-        }
-        catch (err) 
-        {
-            console.warn("RoleDis 下的 DeliveryGain 错误 err:" + err);
-        }
+        })
+        //return delay(1200, () => { });
     }
 
     /**
@@ -190,15 +198,26 @@ export class SkillDis
      */
     private Summon(_ev: skill.Event)
     {
-        for (let element of _ev.recipient)
+        return new Promise<void>(async (resolve, reject) =>
         {
-            let tmp: rRole;
-            tmp = new rRole(null, element.index, element.id, 1, 0, element.camp, element.properties, null, 0);
-            let targetTeam = BattleEnums.Camp.Self == element.camp ? singleton.netSingleton.battle.battleCentre.GetSelfTeam() : singleton.netSingleton.battle.battleCentre.GetEnemyTeam();
-            targetTeam.AddRole(tmp);
-            let queue = BattleEnums.Camp.Self == element.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-            queue.SummonRole([tmp], _ev.spellcaster);
-        }
+            try
+            {
+                for (let element of _ev.recipient)
+                {
+                    let tmp: rRole;
+                    tmp = new rRole(null, element.index, element.id, 1, 0, element.camp, element.properties, null, 0);
+                    let targetTeam = BattleEnums.Camp.Self == element.camp ? singleton.netSingleton.battle.battleCentre.GetSelfTeam() : singleton.netSingleton.battle.battleCentre.GetEnemyTeam();
+                    targetTeam.AddRole(tmp);
+                    let queue = BattleEnums.Camp.Self == element.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
+                    await queue.SummonRole([tmp], _ev.spellcaster);
+                    resolve();
+                }
+            } catch (error)
+            {
+                console.error("SkillDis 下的 Summon 错误 err:" + error);
+                reject();
+            }
+        })
     }
     /**
      * 换位
@@ -209,13 +228,19 @@ export class SkillDis
      */
     private TransPosition(_ev: skill.Event)
     {
-        let queue = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
-        queue.SwitchRolePos(_ev.recipient, _ev.value);
-
-        return delay(100,()=>
+        return new Promise<void>(async (resolve, reject) =>
         {
-
-        });
+            try
+            {
+                let queue = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
+                await queue.SwitchRolePos(_ev.recipient, _ev.value);
+                resolve();
+            } catch (error)
+            {
+                console.error("SkillDis 下的 TransPosition 错误 err:" + error);
+                reject();
+            }
+        })
     }
     /**
      * 交换属性
@@ -230,12 +255,23 @@ export class SkillDis
 
         // queue.GetRole(_ev.spellcaster.index).getComponent(RoleDis).SwapProperties(_ev.value[0]);
 
-        this.parent.getComponent(RoleDis).SwapProperties(_ev.value[0]);
-
-        return delay(2000,()=>
+        return new Promise<void>(async (resolve, reject) =>
         {
+            try
+            {
+                await this.parent.getComponent(RoleDis).SwapProperties(_ev.value[0]);
+                resolve();
+            } catch (error)
+            {
+                console.error("SkillDis 下的 SwapProperties 错误 err:" + error);
+                reject();
+            }
+        })
 
-        });
+        // return delay(2000,()=>
+        // {
+
+        // });
     }
 
     /**
@@ -247,33 +283,54 @@ export class SkillDis
      */
     private AddBuff(_ev:skill.Event)
     {
-        let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-
-        for (let element of _ev.recipient)
+        new Promise<void>(async (resolve, reject) =>
         {
-            spList.roleNodes[element.index].getComponent(RoleDis).ReceptionBuff(_ev.value[0]);
-        }
+            try
+            {
+                let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
 
-        return delay(600,()=>
-        {
+                for (let element of _ev.recipient)
+                {
+                    await spList.roleNodes[element.index].getComponent(RoleDis).ReceptionBuff(_ev.value[0]);
+                }
+                resolve();
+            } catch (error)
+            {
+                console.error("SkillDis 下的 AddBuff 错误 err:" + error);
+                reject();
+            }
+        })
+        // return delay(600,()=>
+        // {
 
-        });
+        // });
     }
 
     private SubstituteDamage(_ev:skill.Event)
     {
-        let spList = singleton.netSingleton.battle.selfQueue;
-
-        for(let element of _ev.recipient)
+        return new Promise<void>(async (resolve, reject) =>
         {
-            spList.roleNodes[element.index].getComponent(RoleDis).DeflexionDamage();
-        }
-        this.parent.getComponent(RoleDis).SubstituteDamage();
+            try
+            {
+                let spList = singleton.netSingleton.battle.selfQueue;
 
-        return delay(100,()=>
-        {
+                for (let element of _ev.recipient)
+                {
+                    await spList.roleNodes[element.index].getComponent(RoleDis).DeflexionDamage();
+                }
+                await this.parent.getComponent(RoleDis).SubstituteDamage();
+                resolve();
+            } catch (error)
+            {
+                console.error("SkillDis 下的 SubstituteDamage 错误 err:" + error);
+                reject();
+            }
+        });
 
-        })
+        // return delay(100,()=>
+        // {
+
+        // })
     }
 }
 

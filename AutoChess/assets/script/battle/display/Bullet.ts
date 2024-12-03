@@ -35,54 +35,53 @@ export class Bullet extends Component {
         this.isInit=false; 
     }
 
-    public Init(targetPos:Vec3 , isGain?:boolean , _callBack?:()=>void)
+    public Init(targetPos:Vec3 , isGain?:boolean):Promise<void>
     {
-        console.log("初始化子弹");
-        this.targetPos=targetPos;
-        this.isInit=true;
-        this.skell=this.node.getComponent(sp.Skeleton);
-        if(isGain)
+        return new Promise<void>((resolve, reject) =>
         {
-            this.skell.enabled=false;
-            this.LoadOnConfig();
-        }
-        else
-        {
-            let anims = this.skell.skeletonData.getAnimsEnum();
-            this.skell.setAnimation(0, String(anims[1]), true);
-        }
-        //设置旋转角度
-        let dir = new Vec2(targetPos.x -this.node.position.x , targetPos.y - this.node.position.y);
-        let angle = dir.signAngle(new Vec2(1,0))*180/Math.PI;
-        this.node.setRotationFromEuler(new Vec3(0,0,-angle));
-        
-        this.tAttack = tween(this.node)
-            .to(0.7, { position: targetPos }).call(() => 
-            { 
-                console.log("销毁子弹");
-                if(isGain)
+            console.log("初始化子弹");
+            this.targetPos = targetPos;
+            this.isInit = true;
+            this.skell = this.node.getComponent(sp.Skeleton);
+            if (isGain)
+            {
+                this.skell.enabled = false;
+                this.LoadOnConfig();
+            }
+            else
+            {
+                let anims = this.skell.skeletonData.getAnimsEnum();
+                this.skell.setAnimation(0, String(anims[1]), true);
+            }
+            //设置旋转角度
+            let dir = new Vec2(targetPos.x - this.node.position.x, targetPos.y - this.node.position.y);
+            let angle = dir.signAngle(new Vec2(1, 0)) * 180 / Math.PI;
+            this.node.setRotationFromEuler(new Vec3(0, 0, -angle));
+
+            this.tAttack = tween(this.node)
+                .to(0.7, { position: targetPos }).call(() => 
                 {
-                    let anims=this.skell.skeletonData.getAnimsEnum();
-                    this.skell.setAnimation(0, String(anims[2]), true);
-                    this.skell.setCompleteListener((trackEntry) =>
+                    console.log("销毁子弹");
+                    if (isGain)
+                    {
+                        let anims = this.skell.skeletonData.getAnimsEnum();
+                        this.skell.setAnimation(0, String(anims[2]), true);
+                        this.skell.setCompleteListener((trackEntry) =>
+                        {
+                            this.node.destroy();
+                        });
+                    }
+                    else
                     {
                         this.node.destroy();
-                    });
-                }
-                else
+                    }
+                }).call(() =>
                 {
-                    this.node.destroy();
-                }
-                
-            }).call(()=>
-            {
-                if(_callBack)
-                {
-                    _callBack();
-                }
-            }).start();
+                    resolve();
+                }).start();
 
-        console.log("初始化子弹完成");
+            console.log("初始化子弹完成");
+        });
     }
 
     private LoadOnConfig()

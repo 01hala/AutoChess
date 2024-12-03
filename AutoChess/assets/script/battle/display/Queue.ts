@@ -99,44 +99,48 @@ export class Queue extends Component
  */
     async SummonRole(r:role.Role[],spellcaster:RoleInfo)
     {
-        try
+        return new Promise<void>(async (resolve, reject) =>
         {
-            for(let i=0;i<r.length;i++)
+            try
             {
-                let role=await this.SpawnRole(r[i]) as Node;
-                if(null==role)
+                for (let i = 0; i < r.length; i++)
                 {
-                    console.warn("Queue 下的 SummonRole 读取的 role 为空");
-                    break;
-                }
-                if(-1!=r[i].index)
-                {
-                    //console.log("Summon a character with ID "+r[i].id+" at position "+r[i].index);
-                    //let roleNode = this.roleNodes[r[i].index];
-                    //role.position = roleNode.position;
-                    this.locationTemp[r[i].index].children[0].active=true;
-                    this.locationTemp[r[i].index].children[0].getComponent(sp.Skeleton).setCompleteListener(()=>
+                    let role = await this.SpawnRole(r[i]) as Node;
+                    if (null == role)
                     {
-                        this.locationTemp[r[i].index].children[0].active=false;
-                    })
-                    this.locationTemp[r[i].index].children[0].getComponent(sp.Skeleton).setAnimation(0,"animate",false);
-                    role.setWorldPosition(this.locationTemp[r[i].index].worldPosition);
-                    role.getComponent(RoleDis.RoleDis).AttackInit();
-                    //await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].worldPosition,true);
-                    await role.getComponent(RoleDis.RoleDis).OnSummon();
+                        console.warn("Queue 下的 SummonRole 读取的 role 为空");
+                        break;
+                    }
+                    if (-1 != r[i].index)
+                    {
+                        //console.log("Summon a character with ID "+r[i].id+" at position "+r[i].index);
+                        //let roleNode = this.roleNodes[r[i].index];
+                        //role.position = roleNode.position;
+                        this.locationTemp[r[i].index].children[0].active = true;
+                        this.locationTemp[r[i].index].children[0].getComponent(sp.Skeleton).setCompleteListener(() =>
+                        {
+                            this.locationTemp[r[i].index].children[0].active = false;
+                        })
+                        this.locationTemp[r[i].index].children[0].getComponent(sp.Skeleton).setAnimation(0, "animate", false);
+                        role.setWorldPosition(this.locationTemp[r[i].index].worldPosition);
+                        role.getComponent(RoleDis.RoleDis).AttackInit();
+                        //await role.getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[r[i].index].worldPosition,true);
+                        await role.getComponent(RoleDis.RoleDis).OnSummon();
+                    }
+                    else if (-1 == r[i].index)
+                    {
+                        await role.getComponent(RoleDis.RoleDis).Exit();
+                    }
                 }
-                else if(-1==r[i].index)
-                {
-                    await role.getComponent(RoleDis.RoleDis).Exit();
-                }
+                resolve();
+                //return delay(1000,()=>{});
             }
-            return delay(1000,()=>{});
-        }
-        catch(error)
-        {
-            console.warn("Queue 下的 SummonRole 错误", error);
-        }
-        
+            catch (error)
+            {
+                console.error("Queue 下的 SummonRole 错误", error);
+                reject();
+            }
+        });
     }
 /*
  * 添加
