@@ -674,8 +674,9 @@ export class BattleDis
                             this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                         }
                     }
-                    
-                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                    else {
+                        allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                    }
                 }
             }
             await Promise.all(allAwait);
