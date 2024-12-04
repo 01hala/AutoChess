@@ -352,8 +352,7 @@ export class MainInterface
             // this.userAccount.Achiev=achieve;
             // this.userAccount.wAchiev=wAchieve;
 
-            //不在战斗中,说明在主界面（？
-            if(null != singleton.netSingleton.battle){
+            if(null != singleton.netSingleton.mainInterface){
                 //this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.gold;
                 //this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.diamond;
                 this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true));
