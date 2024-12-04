@@ -181,6 +181,10 @@ export class SkillDis
                         }));
                     }
                 }
+                if(allAwait.length>0)
+                {
+                   await Promise.all(allAwait);
+                }
                 resolve();
             } catch (error)
             {
