@@ -142,6 +142,8 @@ export class SkillDis
                 let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
                 let self = this.parent;
 
+                let allAwait=[];
+
                 for (let element of _ev.recipient)
                 {
                     if (element.index == this.index)
@@ -161,7 +163,7 @@ export class SkillDis
                         bulletNode.setPosition(selfpos);
                         console.log(bulletNode);
                         singleton.netSingleton.battle.panelNode.addChild(bulletNode);
-                        await bulletNode.getComponent(Bullet).Init(targetpos, true).then(async () =>
+                        allAwait.push(bulletNode.getComponent(Bullet).Init(targetpos, true).then(async () =>
                         {
                             switch (_ev.type)
                             {
@@ -176,8 +178,12 @@ export class SkillDis
                                     }
                                     break;
                             }
-                        });
+                        }));
                     }
+                }
+                if(allAwait.length>0)
+                {
+                   await Promise.all(allAwait);
                 }
                 resolve();
             } catch (error)

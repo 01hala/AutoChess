@@ -22,22 +22,22 @@ export class spEffectObj
 export class SpEffect
 {
     //被召唤出场特效
-    private onSummon: sp.SkeletonData; 
+    private onSummon: sp.SkeletonData=null; 
     //技能起手特效
-    private useSkill: sp.SkeletonData;
+    private useSkill: sp.SkeletonData=null;
     //单体增强时特效
-    private intensifierSelf: sp.SkeletonData;
+    private intensifierSelf: sp.SkeletonData=null;
 
     //群体增强时特效
-    private intensifierColony: sp.SkeletonData;
+    private intensifierColony: sp.SkeletonData=null;
     //存在buff特效
     private buff: Map<string, sp.SkeletonData>=new Map<string,sp.SkeletonData>();
     //技能生效特效
     private checkSkill: Map<string, sp.SkeletonData>=new Map<string,sp.SkeletonData>();
 
     //父节点
-    private parent: Node;
-    private roleId:number;
+    private parent:Node=null;
+    private roleId:number=0;
 
     constructor(_roleId:number,_parent: Node)
     {
@@ -106,15 +106,19 @@ export class SpEffect
         {
             return new Promise((resolve) => {
                 //使用技能
-                let address = "EffectSpine/" + spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill)?.path;
-                loadAssets.LoadSkeletonData(address, (data) =>
+                if(spConfig.UseSkill)
                 {
-                    if (data)
+                    let address = "EffectSpine/" + spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill).path;
+                    loadAssets.LoadSkeletonData(address, (data) =>
                     {
-                        this.useSkill = data;
-                        resolve(null);
-                    }
-                });
+                        if (data)
+                        {
+                            this.useSkill = data;
+                            resolve(null);
+                        }
+                    });
+                }
+                
             });
         });
 
@@ -172,13 +176,13 @@ export class SpEffect
     {
         return new Promise((resolve) =>
         {
+            if (!this.useSkill)
+            {
+                console.warn("使用技能 特效为空");
+                resolve();
+            }
             try
             {
-                if (!this.useSkill)
-                {
-                    console.warn("使用技能 特效为空");
-                    resolve();
-                }
                 let node = new Node("SkillEffect");
                 node.layer=Layers.Enum.UI_2D;
                 this.parent.getChildByPath("EffectSpine").addChild(node);
