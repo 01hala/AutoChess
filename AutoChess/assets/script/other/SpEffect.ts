@@ -176,7 +176,7 @@ export class SpEffect
     {
         return new Promise((resolve) =>
         {
-            if (!this.useSkill)
+            if (null==this.useSkill)
             {
                 console.warn("使用技能 特效为空");
                 resolve();
@@ -216,12 +216,13 @@ export class SpEffect
     {
         return new Promise((resolve) =>
         {
+            if (this.checkSkill.size <= 0)
+            {
+                console.warn("技能生效 特效为空");
+                resolve();
+            }
             try
             {
-                if (this.checkSkill.size <= 0)
-                {
-                    console.warn("技能生效 特效为空");
-                }
                 let node = new Node("CheckSkillEffect");
                 node.layer=Layers.Enum.UI_2D;
                 this.parent.getChildByPath("EffectSpine").addChild(node);
@@ -255,7 +256,7 @@ export class SpEffect
                 });
             } catch (error)
             {
-                console.error("SpEffect 下的 UseSkillEffect 错误: ", error);
+                console.error("SpEffect 下的 CheckSkillEffect 错误: ", error);
                 resolve();
             }
         });

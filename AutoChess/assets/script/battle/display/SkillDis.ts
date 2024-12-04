@@ -167,12 +167,12 @@ export class SkillDis
                             {
                                 case BattleEnums.EventType.IntensifierProperties:
                                     {
-                                        await target.getComponent(RoleDis).Intensifier(_ev.value, true);
+                                        target.getComponent(RoleDis).Intensifier(_ev.value, true);
                                     }
                                     break;
                                 case BattleEnums.EventType.IntensifierExp:
                                     {
-                                        await target.getComponent(RoleDis).IntensifierExp(_ev.value[0]);
+                                        target.getComponent(RoleDis).IntensifierExp(_ev.value[0]);
                                     }
                                     break;
                             }
