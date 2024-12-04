@@ -174,7 +174,7 @@ export class BundleManager
 
     //预加载
     Preloading(_callBack:()=>void) : Promise<void> {
-        return new Promise(async (resolve) => 
+        return new Promise((resolve) => 
         {
             try {
                 console.log("开始预加载资源")
@@ -183,19 +183,19 @@ export class BundleManager
                     let bundleRes = config.BundleConfig.get(i).Path;
                     console.log("正在加载：",bundleRes);
                     if (!this.bundles.has(bundleRes)) {
-                        await assetManager.loadBundle(bundleRes,async (err,bundle) => {
+                        assetManager.loadBundle(bundleRes, (err,bundle) => {
                             if(err) {
                                 console.warn(bundleRes+"加载失败 err:"+err);
                             }
                             else {
                                 this.bundles.set(bundleRes, bundle);
-                                await bundle.preloadDir(bundleRes,(err,data)=>
+                                /*bundle.preloadDir(bundleRes,(err,data)=>
                                 {
                                     if(err)
                                     {
                                         console.warn(bundleRes+"下的资源加载失败 err:"+err);
                                     }
-                                });
+                                });*/
                             }
                         });
                     }

@@ -52,94 +52,111 @@ export class SpEffect
         
         let allAwait=[];
        
-        allAwait.push(delay(0, () =>
+        allAwait.push(() =>
         {
-            //单体增强时特效
-            let address = "EffectSpine/" + spConfig.IntensifierSelf + "/" + config.SpListConfig.get(spConfig.IntensifierSelf).path;
-            console.log("单体增强特效文件路径：", address);
-            loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
-                {
-                    this.intensifierSelf = data;
-                }
+            return new Promise((resolve) => {
+                //单体增强时特效
+                let address = "EffectSpine/" + spConfig.IntensifierSelf + "/" + config.SpListConfig.get(spConfig.IntensifierSelf).path;
+                console.log("单体增强特效文件路径：", address);
+                loadAssets.LoadSkeletonData(address, (data) => {
+                    if (data)
+                    {
+                        this.intensifierSelf = data;
+                        resolve(null);
+                    }
+                });
             });
-        }));
+        });
 
-        allAwait.push(delay(0, () =>
+        allAwait.push(() =>
         {
-            //单体增强时特效
-            let address = "EffectSpine/" + spConfig.IntensifierColony + "/" + config.SpListConfig.get(spConfig.IntensifierColony).path;
-            console.log("群体增强特效文件路径：", address);
-            loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
+            return new Promise((resolve) => {
+                //单体增强时特效
+                let address = "EffectSpine/" + spConfig.IntensifierColony + "/" + config.SpListConfig.get(spConfig.IntensifierColony).path;
+                console.log("群体增强特效文件路径：", address);
+                loadAssets.LoadSkeletonData(address, (data) =>
                 {
-                    this.intensifierColony = data;
-                }
+                    if (data)
+                    {
+                        this.intensifierColony = data;
+                        resolve(null);
+                    }
+                });
             });
-        }));
+        });
 
-        allAwait.push(delay(0, () =>
+        allAwait.push(() =>
         {
-            //召唤出场特效
-            let address = "EffectSpine/" + spConfig.OnSummon + "/" + config.SpListConfig.get(spConfig.OnSummon).path;
-            console.log("出场特效文件路径：", address);
-            loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
+            return new Promise((resolve) => {
+                //召唤出场特效
+                let address = "EffectSpine/" + spConfig.OnSummon + "/" + config.SpListConfig.get(spConfig.OnSummon).path;
+                console.log("出场特效文件路径：", address);
+                loadAssets.LoadSkeletonData(address, (data) =>
                 {
-                    this.onSummon = data;
-                }
+                    if (data)
+                    {
+                        this.onSummon = data;
+                        resolve(null);
+                    }
+                });
             });
-        }));
+        });
         
-        allAwait.push(delay(0, () =>
+        allAwait.push(() =>
         {
-            //使用技能
-            let address = "EffectSpine/" + spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill)?.path;
-            loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
+            return new Promise((resolve) => {
+                //使用技能
+                let address = "EffectSpine/" + spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill)?.path;
+                loadAssets.LoadSkeletonData(address, (data) =>
                 {
-                    this.useSkill = data;
+                    if (data)
+                    {
+                        this.useSkill = data;
+                        resolve(null);
+                    }
+                });
+            });
+        });
+
+        allAwait.push(() =>
+        {
+            return new Promise((resolve) => {
+                //buff特效
+                let address;
+                for (let t of spConfig.Buff)
+                {
+                    address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
+                    loadAssets.LoadSkeletonData(address, (data) =>
+                    {
+                        if (data)
+                        {
+                            this.buff.set(t, data);
+                            resolve(null);
+                        }
+                    });
                 }
             });
-        }));
-
-        allAwait.push(delay(0, () =>
-        {
-            //buff特效
-            let address;
-            for (let t of spConfig.Buff)
-            {
-                address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                loadAssets.LoadSkeletonData(address, (data) =>
-                {
-                    if (data)
-                    {
-                        this.buff.set(t, data);
-                    }
-                });
-            }
-        }));
+        });
     
-        allAwait.push(delay(0, () =>
+        allAwait.push(() =>
         {
-            //技能生效特效
-            let address;
-            for (let t of spConfig.CheckSkill)
-            {
-                address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                loadAssets.LoadSkeletonData(address, (data) =>
+            return new Promise((resolve) => {
+                //技能生效特效
+                let address;
+                for (let t of spConfig.CheckSkill)
                 {
-                    if (data)
+                    address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
+                    loadAssets.LoadSkeletonData(address, (data) =>
                     {
-                        this.checkSkill.set(t, data);
-                    }
-                });
-            }
-        }));
+                        if (data)
+                        {
+                            this.checkSkill.set(t, data);
+                            resolve(null);
+                        }
+                    });
+                }
+            });
+        });
         
         await Promise.all(allAwait).then(()=>
         {
