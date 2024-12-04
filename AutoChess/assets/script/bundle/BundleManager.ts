@@ -105,7 +105,9 @@ export class BundleManager
                     bundle = await this.loadBundle(bundleRes);
                     this.bundles.set(bundleRes, bundle);
                 }
-
+                
+                console.log("bundles:", this.bundles);
+                console.log(`bundleRes:${bundleRes} assetsRes:${assetsRes}`)
                 bundle.load(assetsRes, Asset, (error, asset) => {
                     if(error) {
                         console.warn("loadAssetsFromBundle ", error.message);

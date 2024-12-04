@@ -26,7 +26,7 @@ export class SkillDis
 
     async Init()
     {
-        this.remoteNode = await BundleManager.Instance.loadAssetsFromBundle("Remote", "remote") as Prefab;
+        this.remoteNode = await BundleManager.Instance.loadAssetsFromBundle("remote", "remote") as Prefab;
     }
 
     UseSkill(_ev: skill.Event): Promise<void>
