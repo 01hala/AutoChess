@@ -181,29 +181,33 @@ export class SpEffect
                 console.warn("使用技能 特效为空");
                 resolve();
             }
-            try
+            else
             {
-                let node = new Node("SkillEffect");
-                node.layer=Layers.Enum.UI_2D;
-                this.parent.getChildByPath("EffectSpine").addChild(node);
-                let spEffect = node.addComponent(sp.Skeleton);
-                spEffect.skeletonData = this.useSkill;
-                let anim = this.useSkill.getAnimsEnum();
-                spEffect.setAnimation(0, String(anim[1]), false);
-                spEffect.setSkin("default");
-                spEffect.setCompleteListener((trackEntry) =>
+                try
                 {
-                    if (trackEntry.animation.name === String(anim[1]))
+                    let node = new Node("SkillEffect");
+                    node.layer=Layers.Enum.UI_2D;
+                    this.parent.getChildByPath("EffectSpine").addChild(node);
+                    let spEffect = node.addComponent(sp.Skeleton);
+                    spEffect.skeletonData = this.useSkill;
+                    let anim = this.useSkill.getAnimsEnum();
+                    spEffect.setAnimation(0, String(anim[1]), false);
+                    spEffect.setSkin("default");
+                    spEffect.setCompleteListener((trackEntry) =>
                     {
-                        node.destroy();
-                        resolve();
-                    }
-                });
-            } catch (error)
-            {
-                console.error("SpEffect 下的 UseSkillEffect 错误: ",error);
-                resolve();
+                        if (trackEntry.animation.name === String(anim[1]))
+                        {
+                            node.destroy();
+                            resolve();
+                        }
+                    });
+                } catch (error)
+                {
+                    console.error("SpEffect 下的 UseSkillEffect 错误: ",error);
+                    resolve();
+                }
             }
+           
         });
     }
 
