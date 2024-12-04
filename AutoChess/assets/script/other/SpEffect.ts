@@ -95,9 +95,10 @@ export class SpEffect
         
         allAwait.push(new Promise<void>(async(resolve) => {
             //使用技能
-            if(spConfig.UseSkill)
+            if(!("null"===spConfig.UseSkill))
             {
                 let address = "EffectSpine/" + spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill).path;
+                console.log("使用技能特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
@@ -118,6 +119,7 @@ export class SpEffect
             for (let t of spConfig.Buff)
             {
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
+                console.log("buff特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
@@ -135,6 +137,7 @@ export class SpEffect
             for (let t of spConfig.CheckSkill)
             {
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
+                console.log("技能生效特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
