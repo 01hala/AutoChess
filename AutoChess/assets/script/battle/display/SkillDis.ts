@@ -139,16 +139,14 @@ export class SkillDis
         {
             try
             {
-                let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
                 let self = this.parent;
-
                 let allAwait=[];
 
                 for (let element of _ev.recipient)
                 {
                     if (element.index == this.index)
                     {
-                        return this.parent.getComponent(RoleDis).Intensifier(_ev.value, false);
+                        await this.parent.getComponent(RoleDis).Intensifier(_ev.value, false);
                     }
                     let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
                     let target = targetList.roleNodes[element.index];
