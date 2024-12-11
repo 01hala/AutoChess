@@ -100,89 +100,119 @@ export class ShopArea extends Component
     //     return super.destroy();// this._super.call()
     // }
 
-    Init(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
+    async Init(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
     {
-        this.tempRoles=roles.slice();
-        this.tempProps=props.slice();
-        for (let t of this.shopRoleNodes)
+        return new Promise<void>(async (resolve, reject) =>
         {
-            if (t) t.destroy();
-        }
-        for (let t of this.shopPropNodes)
-        {
-            if (t) t.destroy();
-        }
-        this.shopRoleNodes=[];
-        this.shopPropNodes=[];
-        if(roles)
-        {
-            let tmpCnt:number;
-            switch(stage){
-                case 1:case 2:tmpCnt=4;break;
-                case 3:case 4:tmpCnt=5;break;
-                case 5:case 6:tmpCnt=6;break;
-                default:tmpCnt=6;
-            }
-            console.log("roles:", JSON.stringify(roles));
-            for(let i=0;i<roles.length/*&&tmpCnt>0*/;i++)   //暂时不限制格子数
+            try
             {
-                if(roles[i])
+                let tick=0;
+                let interval = setInterval(()=>
                 {
-                    console.log("shopRoleId: ",roles[i].RoleID);
-                    let newNode=instantiate(this.roleIcon);
-                    newNode.setParent(this.panel);
-                    //console.log(newNode.parent.name);
-                    newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-                    newNode.getComponent(RoleIcon).Init(roles[i].RoleID , roles[i].HP , roles[i].Attack , 1 , 1 ,roles[i].IsFreeze);
-                    this.shopRoleNodes.push(newNode);
+                    tick++;
+                    if(tick>1000)
+                    {
+                        singleton.netSingleton.ready.Waiting(true);
+                    }
+                });
 
-                    tmpCnt--;
+                let allAwait=[];
+
+                this.tempRoles = roles.slice();
+                this.tempProps = props.slice();
+                for (let t of this.shopRoleNodes)
+                {
+                    if (t) t.destroy();
                 }
-                else {
-                    this.shopRoleNodes.push(null);
+                for (let t of this.shopPropNodes)
+                {
+                    if (t) t.destroy();
                 }
-            }
-            
-        }
-        if(props)
-        {
-            let equipIdx:number=0;
-            let foodIdx:number=0;
-            let tmpFoodCnt:number;
-            let tmpEquipCnt:number=1;
-            switch(stage){
-                case 1:case 2:case 3:case 4:tmpFoodCnt=1;break;
-                case 5:case 6:tmpFoodCnt=2;break;
-                default:tmpFoodCnt=2;
-            }
-            for(let i=0;i<props.length;i++)
-            {                
-                if(props[i]) 
-                {       
-                    let newNode=instantiate(this.propIcon);
-                    newNode.setParent(this.panel);
-                    //console.log(newNode.parent.name);
-                    if(props[i].PropID>=1001&&props[i].PropID<=1999&&tmpFoodCnt>0){            
-                        newNode.setWorldPosition(this.FoodSquare[foodIdx++].worldPosition);
-                        tmpFoodCnt--;
+                this.shopRoleNodes = [];
+                this.shopPropNodes = [];
+                if (roles)
+                {
+                    let tmpCnt: number;
+                    switch (stage)
+                    {
+                        case 1: case 2: tmpCnt = 4; break;
+                        case 3: case 4: tmpCnt = 5; break;
+                        case 5: case 6: tmpCnt = 6; break;
+                        default: tmpCnt = 6;
                     }
-                    else if(props[i].PropID>=3001&&props[i].PropID<=3999&&tmpEquipCnt>0){
-                        newNode.setWorldPosition(this.EquipSquare.worldPosition);
-                        tmpEquipCnt--;
+                    console.log("roles:", JSON.stringify(roles));
+                    for (let i = 0; i < roles.length/*&&tmpCnt>0*/; i++)   //暂时不限制格子数
+                    {
+                        if (roles[i])
+                        {
+                            
+                            console.log("shopRoleId: ", roles[i].RoleID);
+                            let newNode = instantiate(this.roleIcon);
+                            newNode.setParent(this.panel);
+                            //console.log(newNode.parent.name);
+                            newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
+                            allAwait.push(newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, 1, 1, roles[i].IsFreeze));
+                            this.shopRoleNodes.push(newNode);
+
+                            tmpCnt--;
+                        }
+                        else
+                        {
+                            this.shopRoleNodes.push(null);
+                        }
                     }
-                    else{
-                        newNode.active=false;
-                    }
-                    newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
-                    this.shopPropNodes.push(newNode);                        
-                    newNode.setParent(this.panel);               
                 }
+                if (props)
+                {
+                    let equipIdx: number = 0;
+                    let foodIdx: number = 0;
+                    let tmpFoodCnt: number;
+                    let tmpEquipCnt: number = 1;
+                    switch (stage)
+                    {
+                        case 1: case 2: case 3: case 4: tmpFoodCnt = 1; break;
+                        case 5: case 6: tmpFoodCnt = 2; break;
+                        default: tmpFoodCnt = 2;
+                    }
+                    for (let i = 0; i < props.length; i++)
+                    {
+                        if (props[i]) 
+                        {
+                            let newNode = instantiate(this.propIcon);
+                            newNode.setParent(this.panel);
+                            //console.log(newNode.parent.name);
+                            if (props[i].PropID >= 1001 && props[i].PropID <= 1999 && tmpFoodCnt > 0)
+                            {
+                                newNode.setWorldPosition(this.FoodSquare[foodIdx++].worldPosition);
+                                tmpFoodCnt--;
+                            }
+                            else if (props[i].PropID >= 3001 && props[i].PropID <= 3999 && tmpEquipCnt > 0)
+                            {
+                                newNode.setWorldPosition(this.EquipSquare.worldPosition);
+                                tmpEquipCnt--;
+                            }
+                            else
+                            {
+                                newNode.active = false;
+                            }
+                            allAwait.push(newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze));
+                            this.shopPropNodes.push(newNode);
+                            newNode.setParent(this.panel);
+                        }
+                    }
+                }
+                await Promise.all(allAwait);
+                clearInterval(interval);
+                resolve();
+            } catch (error) 
+            {
+                console.error("ShopArea 下的 Init 错误: ", error);
+                reject();
             }
-            
-        }
+        });
     }
 
-    AddItems(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
+    async AddItems(roles?:ShopRole[],props?:ShopProp[],stage:number=1)
     {
         try
         {
@@ -216,7 +246,7 @@ export class ShopArea extends Component
                         let newNode = instantiate(this.roleIcon);
                         newNode.setParent(this.panel);
                         newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
-                        newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, roles[i].Level, 1, roles[i].IsFreeze);
+                        await newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, roles[i].Level, 1, roles[i].IsFreeze);
                         this.shopRoleNodes[i] = newNode;
                     }
                 }
@@ -256,7 +286,7 @@ export class ShopArea extends Component
                             newNode.setWorldPosition(this.EquipSquare.worldPosition);
                             //tmpEquipCnt--;
                         }
-                        newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
+                        await newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
                         this.shopPropNodes.push(newNode);
                         newNode.setParent(this.panel);
                     }

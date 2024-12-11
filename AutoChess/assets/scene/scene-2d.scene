@@ -21468,13 +21468,13 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 375.4,
-      "height": 463.63
+      "width": 310,
+      "height": 310
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": null,
-      "y": null
+      "x": 0.5,
+      "y": 0.5
     },
     "_id": "cfKdJfyFROy6SFp1kXsn95"
   },
@@ -21506,7 +21506,7 @@
     "_debugBones": false,
     "_debugSlots": false,
     "_skeletonData": {
-      "__uuid__": "8ffd98b1-276c-4485-a75a-f0e06a95b693",
+      "__uuid__": "ac7bf4e9-ff67-48e2-93db-0b404cea5fc9",
       "__expectedType__": "sp.SkeletonData"
     },
     "_premultipliedAlpha": true,
@@ -21787,8 +21787,8 @@
     ],
     "value": {
       "__type__": "cc.Size",
-      "width": 293,
-      "height": 351
+      "width": 690.16,
+      "height": 843.02
     }
   },
   {
@@ -21807,8 +21807,8 @@
     ],
     "value": {
       "__type__": "cc.Vec2",
-      "x": 0.4568666842203498,
-      "y": 0.06740728742376692
+      "x": 0.41464298133766087,
+      "y": 0.002064007971341131
     }
   },
   {
@@ -21820,7 +21820,7 @@
       "_skeletonData"
     ],
     "value": {
-      "__uuid__": "883bb6a5-2018-4c25-b090-f5de1bedd7ee",
+      "__uuid__": "f2bb6b22-8d26-43f7-8709-e23a59c5e206",
       "__expectedType__": "sp.SkeletonData"
     }
   },
@@ -21838,7 +21838,7 @@
     "propertyPath": [
       "defaultSkin"
     ],
-    "value": "default"
+    "value": ""
   },
   {
     "__type__": "CCPropertyOverrideInfo",
@@ -21848,7 +21848,7 @@
     "propertyPath": [
       "defaultAnimation"
     ],
-    "value": "animation"
+    "value": ""
   },
   {
     "__type__": "CCPropertyOverrideInfo",

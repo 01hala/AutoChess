@@ -110,10 +110,13 @@ export class ReadyDis
                     console.log(battleData.RoleList);
                     await this.Restore(battleData);
                 }
-                this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(),this.readyData.GetStage());
-                //隐藏等待界面
-                //this.waitingPanel.getComponent(BlockInputEvents).enabled = false;
-                //this.waitingPanel.active = false;
+                await this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage()).then(() =>
+                {
+                    if(this.waitingPanel.active)
+                    {
+                        this.Waiting(false);
+                    }
+                });
                 if (GameManager.Instance.guide)
                 {
                     GameManager.Instance.guide.step++;
@@ -146,10 +149,10 @@ export class ReadyDis
         this.panelNode = instantiate(panel);
         this.panelNode.setParent(this.father);
         //等待界面
-        // panel = await BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting") as Prefab;
-        // this.waitingPanel = instantiate(panel);
-        // this.waitingPanel.setParent(this.panelNode);
-        // this.waitingPanel.setSiblingIndex(100);
+        panel = await BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting") as Prefab;
+        this.waitingPanel = instantiate(panel);
+        this.waitingPanel.setParent(this.panelNode);
+        this.waitingPanel.setSiblingIndex(100);
         //金币预制体
         this.coinPre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "CoinPre") as Prefab;
         //操作区域
@@ -292,6 +295,12 @@ export class ReadyDis
             this.shopMask.getChildByPath("ShopMask").getComponent(BlockInputEvents).enabled=false;
             this.shopMask.active=false;
         }
+    }
+
+    Waiting(valve:boolean)
+    {
+        this.waitingPanel.getComponent(BlockInputEvents).enabled=valve;
+        this.waitingPanel.active=valve;
     }
 
 /*
@@ -490,17 +499,12 @@ export class ReadyDis
         }
     }
 
-    Waiting(valve:boolean)
-    {
-        this.waitingPanel.getComponent(BlockInputEvents).enabled=valve;
-        this.waitingPanel.active=valve;
-    }
     //刷新商店
     private async RefreshShop()
     {
         await this.readyData.Refresh();
         console.log('refresh');
-        this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
+        await this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
     }
     //更新玩家信息
     private async UpdatePlayerInfo(_battle_info:common.UserBattleData)

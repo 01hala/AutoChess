@@ -373,7 +373,7 @@ export class RoleIcon extends Component
             {
                 role.active=false;
             }
-            roleDis.Refresh(r,true);
+            await roleDis.Refresh(r,true);
             resolve(role);
             //this.destroy
         });
@@ -657,7 +657,7 @@ export class RoleIcon extends Component
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP + t.TempHP).set(battleEmums.Property.Attack,t.Attack + t.TempAttack);
             let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.equipID,t.additionBuffer);
             //console.log('当前等级 ')
-            this.roleNode.getComponent(RoleDis).Refresh(r);
+            await this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,false,t.Number);
             if(is_update)
             {
@@ -712,7 +712,7 @@ export class RoleIcon extends Component
             }
             let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP+t.TempHP).set(battleEmums.Property.Attack,t.Attack+t.TempAttack);
             let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.equipID,t.additionBuffer);
-            this.roleNode.getComponent(RoleDis).Refresh(r);
+            await this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,false,t.Number);
             this.upgradeLock=false;
 
@@ -748,7 +748,7 @@ export class RoleIcon extends Component
                             t.additionBuffer.push(temp);
                         }
                         let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,[-1],t.additionBuffer);
-                        this.roleNode.getComponent(RoleDis).Refresh(r);
+                        await this.roleNode.getComponent(RoleDis).Refresh(r);
                     }break;
                     case 4:break;
                     case 5:break;

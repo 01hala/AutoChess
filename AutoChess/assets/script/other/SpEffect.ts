@@ -39,6 +39,8 @@ export class SpEffect
     private parent:Node=null;
     private roleId:number=0;
 
+    private spConfig=null;
+
     constructor(_roleId:number,_parent: Node)
     {
         this.parent = _parent;
@@ -48,14 +50,14 @@ export class SpEffect
     public async init()
     {
         console.log("初始化特效类");
-        let spConfig=config.RoleSpConfig.get(this.roleId);
+        this.spConfig=config.RoleSpConfig.get(this.roleId);
         
         let allAwait=[];
        
         allAwait.push(new Promise<void>(async(resolve) => {
             //单体增强时特效
-            let address = "EffectSpine/" + spConfig.IntensifierSelf + "/" + config.SpListConfig.get(spConfig.IntensifierSelf).path;
-            console.log("单体增强特效文件路径：", address);
+            let address = "EffectSpine/" + this.spConfig.IntensifierSelf + "/" + config.SpListConfig.get(this.spConfig.IntensifierSelf).path;
+            //console.log("单体增强特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) => {
                 if (data)
                 {
@@ -67,8 +69,8 @@ export class SpEffect
 
         allAwait.push(new Promise<void>(async(resolve) => {
             //单体增强时特效
-            let address = "EffectSpine/" + spConfig.IntensifierColony + "/" + config.SpListConfig.get(spConfig.IntensifierColony).path;
-            console.log("群体增强特效文件路径：", address);
+            let address = "EffectSpine/" + this.spConfig.IntensifierColony + "/" + config.SpListConfig.get(this.spConfig.IntensifierColony).path;
+            //console.log("群体增强特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) =>
             {
                 if (data)
@@ -81,8 +83,8 @@ export class SpEffect
 
         allAwait.push(new Promise<void>(async(resolve) => {
             //召唤出场特效
-            let address = "EffectSpine/" + spConfig.OnSummon + "/" + config.SpListConfig.get(spConfig.OnSummon).path;
-            console.log("出场特效文件路径：", address);
+            let address = "EffectSpine/" + this.spConfig.OnSummon + "/" + config.SpListConfig.get(this.spConfig.OnSummon).path;
+            //console.log("出场特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) =>
             {
                 if (data)
@@ -95,10 +97,10 @@ export class SpEffect
         
         allAwait.push(new Promise<void>(async(resolve) => {
             //使用技能
-            if(!("null"===spConfig.UseSkill))
+            if(!("null"===this.spConfig.UseSkill))
             {
-                let address = "EffectSpine/" + spConfig.UseSkill + "/" + config.SpListConfig.get(spConfig.UseSkill).path;
-                console.log("使用技能特效文件路径：", address);
+                let address = "EffectSpine/" + this.spConfig.UseSkill + "/" + config.SpListConfig.get(this.spConfig.UseSkill).path;
+                //console.log("使用技能特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
@@ -116,10 +118,10 @@ export class SpEffect
         allAwait.push(new Promise<void>(async(resolve) => {
             //buff特效
             let address;
-            for (let t of spConfig.Buff)
+            for (let t of this.spConfig.Buff)
             {
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                console.log("buff特效文件路径：", address);
+                //console.log("buff特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
@@ -134,10 +136,10 @@ export class SpEffect
         allAwait.push(new Promise<void>(async(resolve) => {
             //技能生效特效
             let address;
-            for (let t of spConfig.CheckSkill)
+            for (let t of this.spConfig.CheckSkill)
             {
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                console.log("技能生效特效文件路径：", address);
+                //console.log("技能生效特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
@@ -176,6 +178,21 @@ export class SpEffect
                     let spEffect = node.addComponent(sp.Skeleton);
                     spEffect.skeletonData = this.useSkill;
                     let anim = this.useSkill.getAnimsEnum();
+
+                    switch(this.spConfig.useSkill)
+                    {
+                        case "skill_0022":
+                            {
+                                node.setScale(new Vec3(0.3,0.3,1));
+                            }
+                            break;
+                        case "skill_0007":
+                        {
+                            node.setScale(new Vec3(0.5,0.5,1));
+                        }
+                        break;
+                    }
+
                     spEffect.setAnimation(0, String(anim[1]), false);
                     spEffect.setSkin("default");
                     spEffect.setCompleteListener((trackEntry) =>
@@ -216,28 +233,59 @@ export class SpEffect
                 node.layer=Layers.Enum.UI_2D;
                 this.parent.getChildByPath("EffectSpine").addChild(node);
                 let spEffect = node.addComponent(sp.Skeleton);
+                spEffect.skeletonData = this.checkSkill.get(_obj.key);
+
+                let anim = spEffect.skeletonData.getAnimsEnum();
+                spEffect.setSkin("default");
+
+                let style=1;
                 switch (_obj.key)
                 {
                     case "skill_0024":
                         {
                             node.setPosition(new Vec3(0, -55));
                             node.setScale(new Vec3(0.5,0.5,1));
+                            if (BattleEnums.SwapPropertiesType.AttackSwap == _obj.battleType)
+                            {
+                                spEffect.timeScale = -1;
+                            }
+                        }
+                        break;
+                    case "skill_0014":
+                        {
+                            node.setScale(new Vec3(0.3,0.3,1));
+                            style=2;
+                        }
+                        break;
+                    case "skill_0009":
+                        {
+                            node.setPosition(new Vec3(0, -90));
+                            node.setScale(new Vec3(0.5,0.5,1));
+                        }
+                        break;
+                    case "skill_0013_1":
+                        {
+                            node.setScale(new Vec3(0.5,0.5,1));
+                        }
+                        break;
+                    case "skill_0013_2":
+                        {
+                            node.setScale(new Vec3(0.5,0.5,1));
+                        }
+                        break;
+                    case "skill_0015":
+                        {
+                            node.setScale(new Vec3(0.35,0.35,1));
                         }
                         break;
                     default: resolve();
                 }
-                spEffect.skeletonData = this.checkSkill.get(_obj.key);
-                let anim = spEffect.skeletonData.getAnimsEnum();
-                spEffect.setSkin("default");
-                spEffect.setAnimation(0, String(anim[1]), false);
 
-                if (BattleEnums.SwapPropertiesType.AttackSwap == _obj.battleType)
-                {
-                    spEffect.timeScale = -1;
-                }
+                spEffect.setAnimation(0, String(anim[style]), false);
+
                 spEffect.setCompleteListener((trackEntry) =>
                 {
-                    if (trackEntry.animation.name === String(anim[1]))
+                    if (trackEntry.animation.name === String(anim[style]))
                     {
                         node.destroy();
                         resolve();

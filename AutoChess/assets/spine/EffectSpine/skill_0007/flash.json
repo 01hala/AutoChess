@@ -1,0 +1,217 @@
+{
+"skeleton": {
+	"hash": "R5Hhr1vgTsA91n2zSP2KY4410qk",
+	"spine": "3.8.75",
+	"x": -155,
+	"y": -155,
+	"width": 310,
+	"height": 310,
+	"images": "",
+	"audio": "F:/自走棋/特效/技能发动时的闪光"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "骨骼", "parent": "root", "length": 67.58, "rotation": 45, "x": 22.83, "y": 21.61 },
+	{ "name": "骨骼2", "parent": "root", "length": 67.58, "rotation": 140.11, "x": -20.85, "y": 21.61 },
+	{ "name": "骨骼3", "parent": "root", "length": 67.58, "rotation": -40, "x": 21.57, "y": -23.33 },
+	{ "name": "骨骼4", "parent": "root", "length": 67.58, "rotation": -135, "x": -23.79, "y": -22.98 },
+	{ "name": "骨骼5", "parent": "root" }
+],
+"slots": [
+	{ "name": "flash", "bone": "root", "attachment": "flash_00000" },
+	{ "name": "shuidi", "bone": "骨骼" },
+	{ "name": "shuidi2", "bone": "骨骼2" },
+	{ "name": "shuidi3", "bone": "骨骼3" },
+	{ "name": "shuidi4", "bone": "骨骼4" },
+	{ "name": "quan", "bone": "骨骼5" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"shuidi2": {
+				"shuidi": { "x": 34.07, "y": 0.88, "rotation": 90, "width": 30, "height": 69 }
+			},
+			"shuidi3": {
+				"shuidi": { "x": 34.07, "y": 0.88, "rotation": 90, "width": 30, "height": 69 }
+			},
+			"shuidi4": {
+				"shuidi": { "x": 34.07, "y": 0.88, "rotation": 90, "width": 30, "height": 69 }
+			},
+			"quan": {
+				"quan": { "width": 205, "height": 205 }
+			},
+			"shuidi": {
+				"shuidi": { "x": 34.07, "y": 0.88, "rotation": 90, "width": 30, "height": 69 }
+			},
+			"flash": {
+				"flash_00000": { "width": 310, "height": 310 },
+				"flash_00001": { "width": 310, "height": 310 },
+				"flash_00002": { "width": 310, "height": 310 },
+				"flash_00003": { "width": 310, "height": 310 },
+				"flash_00004": { "width": 310, "height": 310 },
+				"flash_00005": { "width": 310, "height": 310 },
+				"flash_00006": { "width": 310, "height": 310 },
+				"flash_00007": { "width": 310, "height": 310 },
+				"flash_00008": { "width": 310, "height": 310 },
+				"flash_00009": { "width": 310, "height": 310 },
+				"flash_00010": { "width": 310, "height": 310 },
+				"flash_00011": { "width": 310, "height": 310 },
+				"flash_00012": { "width": 310, "height": 310 },
+				"flash_00013": { "width": 310, "height": 310 },
+				"flash_00014": { "width": 310, "height": 310 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"flash": {
+				"attachment": [
+					{ "time": 0.0333, "name": "flash_00001" },
+					{ "time": 0.0667, "name": "flash_00002" },
+					{ "time": 0.1, "name": "flash_00003" },
+					{ "time": 0.1333, "name": "flash_00004" },
+					{ "time": 0.1667, "name": "flash_00005" },
+					{ "time": 0.2, "name": "flash_00006" },
+					{ "time": 0.2333, "name": "flash_00007" },
+					{ "time": 0.2667, "name": "flash_00008" },
+					{ "time": 0.3, "name": "flash_00009" },
+					{ "time": 0.3333, "name": "flash_00010" },
+					{ "time": 0.3667, "name": "flash_00011" },
+					{ "time": 0.4, "name": "flash_00012" },
+					{ "time": 0.4333, "name": "flash_00013" },
+					{ "time": 0.4667, "name": "flash_00014" },
+					{ "time": 0.5, "name": null }
+				]
+			}
+		}
+	},
+	"animation2": {
+		"slots": {
+			"shuidi": {
+				"attachment": [
+					{ "name": "shuidi" }
+				]
+			},
+			"shuidi3": {
+				"attachment": [
+					{ "name": "shuidi" }
+				]
+			},
+			"shuidi2": {
+				"attachment": [
+					{ "name": "shuidi" }
+				]
+			},
+			"flash": {
+				"attachment": [
+					{ "time": 0.0333, "name": "flash_00001" },
+					{ "time": 0.0667, "name": "flash_00002" },
+					{ "time": 0.1, "name": "flash_00003" },
+					{ "time": 0.1333, "name": "flash_00004" },
+					{ "time": 0.1667, "name": "flash_00005" },
+					{ "time": 0.2, "name": "flash_00006" },
+					{ "time": 0.2333, "name": "flash_00007" },
+					{ "time": 0.2667, "name": "flash_00008" },
+					{ "time": 0.3, "name": "flash_00009" },
+					{ "time": 0.3333, "name": "flash_00010" },
+					{ "time": 0.3667, "name": "flash_00011" },
+					{ "time": 0.4, "name": "flash_00012" },
+					{ "time": 0.4333, "name": "flash_00013" },
+					{ "time": 0.4667, "name": "flash_00014" },
+					{ "time": 0.5, "name": null }
+				]
+			},
+			"shuidi4": {
+				"attachment": [
+					{ "name": "shuidi" }
+				]
+			}
+		},
+		"bones": {
+			"骨骼": {
+				"translate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": 49.18, "y": 52.22 }
+				],
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": 0.654, "y": 0 }
+				]
+			},
+			"骨骼2": {
+				"translate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": -37.34, "y": 33.91 }
+				],
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": 0.654, "y": 0 }
+				]
+			},
+			"骨骼3": {
+				"translate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": 36.58, "y": -34.67 }
+				],
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": 0.654, "y": 0 }
+				]
+			},
+			"骨骼4": {
+				"translate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": -37.72, "y": -37.34 }
+				],
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": 0.654, "y": 0 }
+				]
+			}
+		}
+	},
+	"animation3": {
+		"slots": {
+			"quan": {
+				"color": [
+					{ "time": 0.3333, "color": "ffffffff" },
+					{ "time": 0.4667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "quan" }
+				]
+			},
+			"flash": {
+				"attachment": [
+					{ "time": 0.0333, "name": "flash_00001" },
+					{ "time": 0.0667, "name": "flash_00002" },
+					{ "time": 0.1, "name": "flash_00003" },
+					{ "time": 0.1333, "name": "flash_00004" },
+					{ "time": 0.1667, "name": "flash_00005" },
+					{ "time": 0.2, "name": "flash_00006" },
+					{ "time": 0.2333, "name": "flash_00007" },
+					{ "time": 0.2667, "name": "flash_00008" },
+					{ "time": 0.3, "name": "flash_00009" },
+					{ "time": 0.3333, "name": "flash_00010" },
+					{ "time": 0.3667, "name": "flash_00011" },
+					{ "time": 0.4, "name": "flash_00012" },
+					{ "time": 0.4333, "name": "flash_00013" },
+					{ "time": 0.4667, "name": "flash_00014" },
+					{ "time": 0.5, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"骨骼5": {
+				"scale": [
+					{ "x": 0.291, "y": 0.291 },
+					{ "time": 0.4667, "x": 1.086, "y": 1.086 }
+				]
+			}
+		}
+	}
+}
+}

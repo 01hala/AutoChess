@@ -128,7 +128,6 @@ export class SkillDis
     /**
     * 使用增益
     * @param _ev 事件
-    * @returns 回调
     * 
     * author：Hotaru
     * 2024/11/24
@@ -147,6 +146,7 @@ export class SkillDis
                     if (element.index == this.index)
                     {
                         await this.parent.getComponent(RoleDis).Intensifier(_ev.value, false);
+                        break;
                     }
                     let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
                     let target = targetList.roleNodes[element.index];
@@ -167,12 +167,12 @@ export class SkillDis
                             {
                                 case BattleEnums.EventType.IntensifierProperties:
                                     {
-                                        target.getComponent(RoleDis).Intensifier(_ev.value, true);
+                                        await target.getComponent(RoleDis).Intensifier(_ev.value, true);
                                     }
                                     break;
                                 case BattleEnums.EventType.IntensifierExp:
                                     {
-                                        target.getComponent(RoleDis).IntensifierExp(_ev.value[0]);
+                                        await target.getComponent(RoleDis).IntensifierExp(_ev.value[0]);
                                     }
                                     break;
                             }

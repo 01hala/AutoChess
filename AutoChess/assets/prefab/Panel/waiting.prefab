@@ -360,8 +360,16 @@
       "__id__": 19
     },
     "playOnLoad": false,
-    "_clips": [],
-    "_defaultClip": null,
+    "_clips": [
+      {
+        "__uuid__": "463fe475-00ff-4141-833c-a7e40d55932f",
+        "__expectedType__": "cc.AnimationClip"
+      }
+    ],
+    "_defaultClip": {
+      "__uuid__": "463fe475-00ff-4141-833c-a7e40d55932f",
+      "__expectedType__": "cc.AnimationClip"
+    },
     "_id": ""
   },
   {

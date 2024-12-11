@@ -165,36 +165,41 @@ export class RoleDis extends Component
 
     async Refresh(roleInfo: Role,isnew?:boolean) 
     {
-        try
+        return new Promise<void>(async (resolve, reject) =>
         {
-            this.roleInfo = roleInfo;
-            if(isnew)
+            try
             {
-                this.RoleId=roleInfo.id;
-                let str="Role_"+this.RoleId;
-                if(null==this.idText)
+                this.roleInfo = roleInfo;
+                if (isnew)
                 {
-                    this.idText=this.node.getChildByPath("ID").getComponent(RichText);
+                    this.RoleId = roleInfo.id;
+                    let str = "Role_" + this.RoleId;
+                    if (null == this.idText)
+                    {
+                        this.idText = this.node.getChildByPath("ID").getComponent(RichText);
+                    }
+                    this.idText.string = "<color=#9d0c27>" + this.roleInfo.id;
+                    // let sf:sp.SkeletonData=await this.LoadImg("RolesImg",str);
+                    // if(sf)
+                    // {
+                    //     this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;   
+                    //     this.roleSprite=sf;             
+                    // }
+                    await this.LoadOnConfig();
+                    this.skillDis = new SkillDis(this.node, roleInfo.index);
+                    await this.skillDis.Init();
+                    this.spEffect = new SpEffect(roleInfo.id, this.node);
+                    await this.spEffect.init();
                 }
-                this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
-                // let sf:sp.SkeletonData=await this.LoadImg("RolesImg",str);
-                // if(sf)
-                // {
-                //     this.node.getChildByName("Sprite").getComponent(Sprite).spriteFrame=sf;   
-                //     this.roleSprite=sf;             
-                // }
-                await this.LoadOnConfig();
-                this.skillDis=new SkillDis(this.node,roleInfo.index);
-                await this.skillDis.Init();  
-                this.spEffect=new SpEffect(roleInfo.id,this.node);
-                await this.spEffect.init();
+                this.ChangeAtt();
+                resolve();
             }
-            this.ChangeAtt();
-        }
-        catch(error)
-        {
-            console.error("RoleDis 下的 Refresh 错误 err:" + error);
-        }
+            catch (error)
+            {
+                console.error("RoleDis 下的 Refresh 错误 err:" + error);
+                reject();
+            }
+        })
     }
 
     GetRoleFetter():Fetters
@@ -542,9 +547,10 @@ export class RoleDis extends Component
         
     }
 
-    ShiftPos(vec:Vec3,atkInit?:boolean)
+    async ShiftPos(vec:Vec3,atkInit?:boolean)
     {
         console.log(`shiftPos begin!`);
+        await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
         //开始缓动
         this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).start();
         //返回延迟300ms
@@ -595,12 +601,8 @@ export class RoleDis extends Component
     */
    async UseSkill(_ev:skill.Event)
    {
-        let allAwait=[];
-        
-        allAwait.push(this.spEffect.UseSkillEffect());
-        allAwait.push(this.skillDis.UseSkill(_ev));
-        
-        await Promise.all(allAwait);
+        await this.spEffect.UseSkillEffect();
+        await this.skillDis.UseSkill(_ev);
    }
 
    /**
@@ -611,109 +613,39 @@ export class RoleDis extends Component
     */
    async ReceptionBuff(_buff:BattleEnums.BufferType)
    {
+        let key="";
+        switch(_buff)
+        {
+            case BattleEnums.BufferType.Weak:key="skill_0015";break;
+        }
+        await this.spEffect.CheckSkillEffect({key:key,battleType:null});
         await this.spEffect.UseBuffEffect(_buff)
-   }
 
+   }
+   /**
+    * 转移伤害
+    * @author Hotaru
+    * @time 2024/11/30
+    */
    async DeflexionDamage()
    {
         await this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
    }
-
+   /**
+    * 承受伤害
+    * @author Hotaru
+    * @time 2024/11/30
+    */
    async SubstituteDamage()
    {
         await this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
    }
    
-   
-
-  /**
-   * 接受效果表现
-   * @param _effect 效果类型
-   * @param _isParallel 是否是并发效果
-   * @param _buffid buffID
-   * @param _style 样式
-   * @returns deleay
-   * 
-   * author：Hotaru
-   * 2024/08/24
-   */
-    // ReceptionEffect(_effect: common.SkillEffectEM, _isParallel: boolean, _buffid?: number, _style?: number)
-    // {
-    //     if (common.SkillEffectEM.GainShield == _effect)
-    //     {
-    //         this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Shields, _isParallel);
-    //     }
-    //     switch (_effect)
-    //     {
-    //         case common.SkillEffectEM.AddProperty:
-    //         case common.SkillEffectEM.AddTmpExp:
-    //             {
-    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddProperty, _isParallel);
-    //             }
-    //             break;
-    //         case common.SkillEffectEM.AddBuffer:
-    //             {
-    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.AddBuff, _isParallel, _buffid);
-    //             }
-    //             break;
-    //         case common.SkillEffectEM.RecoverHP:
-    //             {
-    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.Heath, _isParallel);
-    //             }
-    //             break;
-    //         case common.SkillEffectEM.ExchangeProperty:
-    //             {
-    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel, _style);
-    //             }
-    //             break;
-    //         case common.SkillEffectEM.ReductionHurt:
-    //             {
-    //                 this.effectSpine.getComponent(EffectSpine).ShowEffect(enums.SpecialEffect.SwapProperties, _isParallel, _style);
-    //             }
-    //             break;
-    //     }
-    //     return delay(100, () => { });
-    // }
-   /**
-    * 释放效果表现
-    * @param _effect 效果类型
-    * 
-    * author：Hotaru
-    * 2024/08/26
-    */
-//    SpellcastEffect(_effect : common.SkillEffectEM , _recipient:Node , _callBack?:()=>Promise<void>)
-//    {   
-//        console.log("释放效果表现");
-//        let ms=0;
-//        switch (_effect)
-//        {
-//            case common.SkillEffectEM.AddTmpExp:
-//            case common.SkillEffectEM.AddProperty:
-//                {
-
-//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
-//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-//                    this.DeliveryGainBall(pos1, pos2);
-//                    ms=700;
-//                }
-//                break;
-//            case common.SkillEffectEM.RecoverHP:
-//                {
-//                    let pos1 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(this.node.worldPosition);
-//                    let pos2 = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(_recipient.worldPosition);
-//                    this.DeliveryGainBall(pos1, pos2);
-//                    ms = 700;
-//                }
-//                break;
-//        }
-//        return delay(ms, async () => { await _callBack(); });
-//    }
-   
    /**
     * 召唤入场效果
     * 
-    * author：Hotaru
-    * 2024/09/04
+    * @author Hotaru
+    * @time 2024/09/04
     */
    public async OnSummon()
    {
@@ -791,32 +723,38 @@ export class RoleDis extends Component
  */
     private LoadOnConfig()
     {
-        try
+        return new Promise<void>((resolve, reject) =>
         {
-            let jconfig = config.RoleConfig.get(this.RoleId);
-            this.roleSprite=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
-            loadAssets.LoadSkeletonData(jconfig.Skel,(data)=>
+            try
             {
-                if (data)
+                let jconfig = config.RoleConfig.get(this.RoleId);
+                this.roleSprite = this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
+                loadAssets.LoadSkeletonData(jconfig.Skel, (data) =>
                 {
-                    try
+                    if (data)
                     {
-                        this.roleSprite.skeletonData = data;
-                        let anims = data.getAnimsEnum();
-                        //this.roleSprite.animation="animation";
-                        this.roleSprite.setAnimation(0, String(anims[1]), true);
+                        try
+                        {
+                            this.roleSprite.skeletonData = data;
+                            let anims = data.getAnimsEnum();
+                            //this.roleSprite.animation="animation";
+                            this.roleSprite.setAnimation(0, String(anims[1]), true);
+                            resolve();
+                        }
+                        catch (error)
+                        {
+                            console.warn(`角色 ${jconfig.Id} 的动画设置失败：`, error);
+                            resolve();
+                        }
                     }
-                    catch (error)
-                    {
-                        console.warn(`角色 ${jconfig.Id} 的动画设置失败：`, error);
-                    }
-                }
-            });
-        }
-        catch(error)
-        {
-            console.error(`RoleDis 下的 LoadOnConfig 错误 err:${error} RoleId:${this.RoleId}`);
-        }
+                });
+            }
+            catch (error)
+            {
+                console.error(`RoleDis 下的 LoadOnConfig 错误 err:${error} RoleId:${this.RoleId}`);
+                reject();
+            }
+        })
     }
 }
 
