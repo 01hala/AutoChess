@@ -111,12 +111,13 @@ export class login extends Component {
         this.progressBar = this._loading.progressBar;
         this.progressBar.active = true;
 
-        this.interval=setInterval(()=>{
-            this._progress += randomRange(0.01 , 0.1);
+        this.interval = setInterval(() =>
+        {
+            this._progress += 0.001;
             this._setProgress(this._progress);
-        }, 300);
+        }, 150);
 
-        await BundleManager.Instance.Preloading(()=>
+        await BundleManager.Instance.PreloadBundle(()=>
         {
             this._progress += 0.1;
             this._setProgress(this._progress);
@@ -133,6 +134,113 @@ export class login extends Component {
             singleton.netSingleton.player.create_role(code, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().avatarUrl);
         };
 
+        //连接
+        this.netNode.on("connect", (e) =>
+            {
+                console.log("on net connect!");
+    
+                this._progress += 0.1;
+                this._setProgress(this._progress);
+                //this.wxLogin();
+                SdkManager.SDK.login((e: boolean) =>
+                {
+                    if(e!=null)
+                    {
+                        this._loading.progressBar.active = e;
+                        if (!e )
+                        {
+                            clearInterval(this.interval);
+
+                        }
+                        else
+                        {
+                            this.interval = setInterval(() =>
+                            {
+                                this._progress += 0.001;
+                                this._setProgress(this._progress);
+                            }, 150);
+                        }
+                    }
+                   
+                    //this._setProgress(0.5);
+                }, null);
+            });
+    
+            //重连
+            this.netNode.on("reconnect", () =>
+            {
+                console.log("on net reconnect!");
+    
+                singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack((info, match_name) =>
+                {
+                    singleton.netSingleton.player.UserData = info;
+                    if (match_name != "")
+                    {
+                        singleton.netSingleton.game.match_name = match_name;
+                        if (singleton.netSingleton.ready)
+                        {
+                            singleton.netSingleton.game.get_match_battle_data().callBack((battle_info, shop_info, fetters_info) =>
+                            {
+                                singleton.netSingleton.ready.Restore(battle_info);
+                            }, () =>
+                            {
+                                console.log("on net reconnect get_battle_data error!");
+                            }).timeout(3000, () =>
+                            {
+                                console.log("on net reconnect get_battle_data timeout!");
+                            })
+                        }
+                    }
+                    else
+                    {
+                        this.BackMainInterface();
+                    }
+                }, (err) =>
+                {
+                    if (singleton.netSingleton.ready)
+                    {
+                        singleton.netSingleton.ready.destory();
+                        singleton.netSingleton.ready = null;
+                    }
+                    if (singleton.netSingleton.battle)
+                    {
+                        singleton.netSingleton.battle.destory();
+                        singleton.netSingleton.battle = null;
+                    }
+    
+                    this._loading = new load.Loading();
+                    this._setProgress = this._loading.load(this.ld.node);
+    
+                    this.interval = setInterval(() =>
+                    {
+                        this._progress += 0.001;
+                        this._setProgress(this._progress);
+                    }, 150);
+    
+                    SdkManager.SDK.login((e: boolean) =>
+                    {
+                        if (e != null)
+                        {
+                            this._loading.progressBar.active = e;
+                            if (!e)
+                            {
+                                clearInterval(this.interval);
+
+                            }
+                            else
+                            {
+                                this.interval = setInterval(() =>
+                                {
+                                    this._progress += 0.001;
+                                    this._setProgress(this._progress);
+                                }, 150);
+                            }
+                        }
+                        //this._setProgress(0.5);
+                    }, null);
+                });
+            });
+
         //登录进入主界面
         singleton.netSingleton.player.cb_player_login_sucess = async () => 
         {
@@ -142,7 +250,7 @@ export class login extends Component {
             singleton.netSingleton.mainInterface = new MainInterface();
             await singleton.netSingleton.mainInterface.start(this.bk.node, async (event) =>
             {
-                singleton.netSingleton.player.get_user_data(true,(_step) =>
+                await singleton.netSingleton.player.get_user_data(true,(_step) =>
                 {
                     console.log("guide step:", _step);
                     if (common.GuideStep.None == _step)
@@ -154,11 +262,12 @@ export class login extends Component {
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
-                let checkReady = setInterval(() => 
+                let checkReady = setInterval(async () => 
                 {
                     if (login.panelOnReady)
                     {
                         this._setProgress(1.0);
+                        await sleep(300);
                         this._loading.done();
                         login.panelOnReady = false;
                         console.log("login sucess!");
@@ -168,99 +277,37 @@ export class login extends Component {
                 }, 100);
                 
             });
-
-            
         }
        
         //注册回调
         this.RegGameCallBack();
        
-        //连接
-        this.netNode.on("connect", (e) =>
-        {
-            console.log("on net connect!");
-
-            this._progress += 0.1;
-            this._setProgress(this._progress);
-            //this.wxLogin();
-            SdkManager.SDK.login((e: boolean = true) =>
-            {
-                this._loading.progressBar.active = e;
-                this._progress += 0.1;
-                this._setProgress(this._progress);
-            }, null);
-        });
-
-        //重连
-        this.netNode.on("reconnect", () =>
-        {
-            console.log("on net reconnect!");
-
-            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack((info, match_name) =>
-            {
-                singleton.netSingleton.player.UserData = info;
-                if (match_name != "")
-                {
-                    singleton.netSingleton.game.match_name = match_name;
-                    if (singleton.netSingleton.ready)
-                    {
-                        singleton.netSingleton.game.get_match_battle_data().callBack((battle_info, shop_info, fetters_info) =>
-                        {
-                            singleton.netSingleton.ready.Restore(battle_info);
-                        }, () =>
-                        {
-                            console.log("on net reconnect get_battle_data error!");
-                        }).timeout(3000, () =>
-                        {
-                            console.log("on net reconnect get_battle_data timeout!");
-                        })
-                    }
-                }
-                else
-                {
-                    this.BackMainInterface();
-                }
-            }, (err) =>
-            {
-                if (singleton.netSingleton.ready)
-                {
-                    singleton.netSingleton.ready.destory();
-                    singleton.netSingleton.ready = null;
-                }
-                if (singleton.netSingleton.battle)
-                {
-                    singleton.netSingleton.battle.destory();
-                    singleton.netSingleton.battle = null;
-                }
-
-                this._loading = new load.Loading();
-                this._setProgress = this._loading.load(this.ld.node);
-
-                setInterval(() =>
-                {
-                    this._progress += 0.01;
-                    this._setProgress(this._progress);
-                }, 800);
-
-                SdkManager.SDK.login((e: boolean = true) =>
-                {
-                    this._loading.progressBar.active = e;
-                    this._progress += 0.1;
-                    this._setProgress(this._progress);
-                }, null);
-            });
-        });
-
+        
         if (singleton.netSingleton.is_conn_gate)
         {
             this._progress += 0.1;
             this._setProgress(this._progress);
             
-            SdkManager.SDK.login((e: boolean = true) =>
+            SdkManager.SDK.login((e: boolean) =>
             {
-                this._loading.progressBar.active = e;
-                this._progress += 0.1;
-                this._setProgress(this._progress);
+                if (e != null)
+                {
+                    this._loading.progressBar.active = e;
+                    if (!e)
+                    {
+                        clearInterval(this.interval);
+
+                    }
+                    else
+                    {
+                        this.interval = setInterval(() =>
+                        {
+                            this._progress += 0.001;
+                            this._setProgress(this._progress);
+                        }, 150);
+                    }
+                }
+                //this._setProgress(0.5);
             }, null);
         }
     }
