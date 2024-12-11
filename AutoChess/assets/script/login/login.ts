@@ -147,10 +147,9 @@ export class login extends Component {
                     if(e!=null)
                     {
                         this._loading.progressBar.active = e;
-                        if (!e )
+                        if (!e)
                         {
                             clearInterval(this.interval);
-
                         }
                         else
                         {
@@ -293,19 +292,19 @@ export class login extends Component {
                 if (e != null)
                 {
                     this._loading.progressBar.active = e;
-                    if (!e)
-                    {
-                        clearInterval(this.interval);
+                    // if (!e)
+                    // {
+                    //     clearInterval(this.interval);
 
-                    }
-                    else
-                    {
-                        this.interval = setInterval(() =>
-                        {
-                            this._progress += 0.001;
-                            this._setProgress(this._progress);
-                        }, 150);
-                    }
+                    // }
+                    // else
+                    // {
+                    //     this.interval = setInterval(() =>
+                    //     {
+                    //         this._progress += 0.001;
+                    //         this._setProgress(this._progress);
+                    //     }, 150);
+                    // }
                 }
                 //this._setProgress(0.5);
             }, null);
