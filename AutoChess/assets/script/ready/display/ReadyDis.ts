@@ -110,7 +110,7 @@ export class ReadyDis
                     console.log(battleData.RoleList);
                     await this.Restore(battleData);
                 }
-                await this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage()).then(() =>
+                this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage()).then(() =>
                 {
                     if(this.waitingPanel.active)
                     {
@@ -504,7 +504,13 @@ export class ReadyDis
     {
         await this.readyData.Refresh();
         console.log('refresh');
-        await this.shopArea.Init(this.readyData.GetShopRoles(),this.readyData.GetShopProps(),this.readyData.GetStage());
+        this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage()).then(() =>
+        {
+            if (this.waitingPanel.active)
+            {
+                this.Waiting(false);
+            }
+        });
     }
     //更新玩家信息
     private async UpdatePlayerInfo(_battle_info:common.UserBattleData)

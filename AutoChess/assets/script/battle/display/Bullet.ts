@@ -37,7 +37,7 @@ export class Bullet extends Component {
 
     public Init(targetPos:Vec3 , isGain?:boolean):Promise<void>
     {
-        return new Promise<void>((resolve, reject) =>
+        return new Promise<void>(async (resolve, reject) =>
         {
             console.log("初始化子弹");
             this.targetPos = targetPos;
@@ -46,7 +46,7 @@ export class Bullet extends Component {
             if (isGain)
             {
                 this.skell.enabled = false;
-                this.LoadOnConfig();
+                await this.LoadOnConfig();
             }
             else
             {
@@ -86,31 +86,35 @@ export class Bullet extends Component {
 
     private LoadOnConfig()
     {
-        try
-        {
-            loadAssets.LoadSkeletonData("EffectSpine/gq/Luminous sphere",(data)=>
-            {
-                if (data)
-                {
-                    try
-                    {
-                        this.skell.skeletonData = data;
-                        this.skell.enabled=true;
-                        let anims = data.getAnimsEnum();
-                        this.skell.setAnimation(0, String(anims[1]), true);
-                        
-                    }
-                    catch (error)
-                    {
-                        console.warn(`子弹光球效果获取失败：`, error);
-                    }
-                }
-            });
-        }
-        catch(error)
-        {
-            console.error(`Bullet 下的 LoadOnConfig 错误 err:${error}`);
-        }
+       return new Promise<void>((resolve, reject) => {
+         try
+         {
+             loadAssets.LoadSkeletonData("EffectSpine/gq/Luminous sphere",(data)=>
+             {
+                 if (data)
+                 {
+                     try
+                     {
+                         this.skell.skeletonData = data;
+                         this.skell.enabled=true;
+                         let anims = data.getAnimsEnum();
+                         this.skell.setAnimation(0, String(anims[1]), true);
+                         resolve();
+                     }
+                     catch (error)
+                     {
+                         console.warn(`子弹光球效果获取失败：`, error);
+                         resolve();
+                     }
+                 }
+             });
+         }
+         catch(error)
+         {
+             console.error(`Bullet 下的 LoadOnConfig 错误 err:${error}`);
+             reject();
+         }
+       })
     }
 
     bezierCurve(p0: Vec3, p1: Vec3, p2: Vec3, t: number): Vec3 {

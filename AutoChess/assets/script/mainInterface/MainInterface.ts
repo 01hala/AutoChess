@@ -293,6 +293,15 @@ export class MainInterface
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,User.UserData));
             },this);
+
+            //后台下载
+            let allAwait = [];
+            // allAwait.push(BundleManager.Instance.PreLoadBundleDir("Panel", "/"));
+            // allAwait.push(BundleManager.Instance.PreLoadBundleDir("Board", "/"));
+            allAwait.push(BundleManager.Instance.PreLoadBundleDir("RoleSpine", ""));
+            allAwait.push(BundleManager.Instance.PreLoadBundleDir("EffectSpine", ""));
+
+            //Promise.all(allAwait);
         }
         catch(error)
         {

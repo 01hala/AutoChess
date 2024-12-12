@@ -1,4 +1,4 @@
-import { __private, _decorator, Asset, assetManager, AssetManager, Component, error, ImageAsset, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
+import { __private, _decorator, Asset, assetManager, AssetManager, Component, error, ImageAsset, isValid, JsonAsset, Node, path, Prefab, resources, SpriteFrame } from 'cc';
 import { config } from '../battle/AutoChessBattle/config/config';
 const { ccclass, property } = _decorator;
 
@@ -174,43 +174,98 @@ export class BundleManager
         });
     }
 
-    //预加载
-    Preloading(_callBack:()=>void) : Promise<void> {
-        return new Promise((resolve) => 
+    /**
+     * 预加载bundle
+     * @param _callBack 回调
+     */
+    PreloadBundle(_callBack: () => void): Promise<void>
+    {
+        return new Promise(async(resolve) => 
         {
-            try {
-                console.log("开始预加载资源")
-                for(let i:number=0;i<config.BundleConfig.size;i++) 
+            try
+            {
+                console.log("开始预加载资源");
+                let allAwait = [];
+                for (let i: number = 0; i < config.BundleConfig.size; i++) 
                 {
                     let bundleRes = config.BundleConfig.get(i).Path;
-                    console.log("正在加载：",bundleRes);
-                    if (!this.bundles.has(bundleRes)) {
-                        assetManager.loadBundle(bundleRes, (err,bundle) => {
-                            if(err) {
-                                console.warn(bundleRes+"加载失败 err:"+err);
+                    console.log("正在加载：", bundleRes);
+                    if (!this.bundles.has(bundleRes))
+                    {
+                        assetManager.loadBundle(bundleRes, (err, bundle) =>
+                        {
+                            if (err)
+                            {
+                                console.warn(bundleRes + "加载失败 err:" + err);
                             }
-                            else {
+                            else
+                            {
                                 this.bundles.set(bundleRes, bundle);
-                                /*bundle.preloadDir(bundleRes,(err,data)=>
+                                if("Sound" === bundleRes)
                                 {
-                                    if(err)
-                                    {
-                                        console.warn(bundleRes+"下的资源加载失败 err:"+err);
-                                    }
-                                });*/
+                                    allAwait.push(this.PreLoadBundleDir(bundleRes, ""));
+                                }
+
+                                //bundle.preloadDir("/");
                             }
                         });
                     }
                 }
                 _callBack();
+                //Promise.all(allAwait);
                 console.log("预加载资源完成");
                 resolve(null);
             }
-            catch (error) {
-                console.warn(this.res+"下的 Preloading 错误:"+error);
+            catch (error)
+            {
+                console.warn(this.res + "下的 Preloading 错误:" + error);
                 resolve(null);
             }
         });
+    }
+
+    /**
+     * 预加载文件夹下的所有文件
+     * @param _bundle 包名
+     * @param _res 文件夹路径 （根目录填""）
+     */
+    async PreLoadBundleDir(_bundle:string,_res:string)
+    {
+        return new Promise<void>(async (resolve, reject) => {
+            let bundle = this.bundles.get(_bundle);
+            if(!bundle)
+            {
+                bundle = await this.loadBundle(_bundle);
+            }
+            let info = bundle.getDirWithPath(_res);
+            
+            if(info)
+            {
+                let n=0;
+                for(let t of info)
+                {
+                    let uuid =t.uuid;
+                    let cachedAsset = assetManager.assets.get(uuid)
+                    if (cachedAsset && isValid(cachedAsset))
+                    {
+                        n++;
+                    }
+                }
+                if(n==info.length)
+                {
+                    resolve();
+                }
+            }
+            
+            bundle.preloadDir(_res,null,null,(err,data)=>
+            {
+                if(err)
+                {
+                    reject();
+                }
+            });
+            resolve();
+        })
     }
 }
 
