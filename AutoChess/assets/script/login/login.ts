@@ -113,16 +113,20 @@ export class login extends Component {
 
         this.interval = setInterval(() =>
         {
-            this._progress += 0.001;
-            this._setProgress(this._progress);
+            if(this.progressBar.active)
+            {
+                this._progress += 0.001;
+                this._setProgress(this._progress);
+            }
         }, 150);
 
-        await BundleManager.Instance.PreloadBundle(()=>
+        await BundleManager.Instance.PreloadBundle((bundleName,progress)=>
+        {
+            this._loading.ShowLog(bundleName,progress);
+        }).then(()=>
         {
             this._progress += 0.1;
             this._setProgress(this._progress);
-        }).then(()=>
-        {
             GameManager.Instance.Init();
         });
 
@@ -147,21 +151,7 @@ export class login extends Component {
                     if(e!=null)
                     {
                         this._loading.progressBar.active = e;
-                        if (!e)
-                        {
-                            clearInterval(this.interval);
-                        }
-                        else
-                        {
-                            this.interval = setInterval(() =>
-                            {
-                                this._progress += 0.001;
-                                this._setProgress(this._progress);
-                            }, 150);
-                        }
                     }
-                   
-                    //this._setProgress(0.5);
                 }, null);
             });
     
@@ -221,19 +211,6 @@ export class login extends Component {
                         if (e != null)
                         {
                             this._loading.progressBar.active = e;
-                            if (!e)
-                            {
-                                clearInterval(this.interval);
-
-                            }
-                            else
-                            {
-                                this.interval = setInterval(() =>
-                                {
-                                    this._progress += 0.001;
-                                    this._setProgress(this._progress);
-                                }, 150);
-                            }
                         }
                         //this._setProgress(0.5);
                     }, null);
@@ -261,19 +238,19 @@ export class login extends Component {
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
                 this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
-                let checkReady = setInterval(async () => 
+                while(true)
                 {
                     if (login.panelOnReady)
-                    {
-                        this._setProgress(1.0);
-                        await sleep(300);
-                        this._loading.done();
-                        login.panelOnReady = false;
-                        console.log("login sucess!");
-                        clearInterval(this.interval);
-                        clearInterval(checkReady);
-                    }
-                }, 100);
+                        {
+                            login.panelOnReady = false;
+                            clearInterval(this.interval);
+                            this._setProgress(1.0);
+                            await sleep(1000);
+                            this._loading.done();
+                            console.log("login sucess!");
+                            break;
+                        }
+                }
                 
             });
         }
@@ -292,21 +269,7 @@ export class login extends Component {
                 if (e != null)
                 {
                     this._loading.progressBar.active = e;
-                    // if (!e)
-                    // {
-                    //     clearInterval(this.interval);
-
-                    // }
-                    // else
-                    // {
-                    //     this.interval = setInterval(() =>
-                    //     {
-                    //         this._progress += 0.001;
-                    //         this._setProgress(this._progress);
-                    //     }, 150);
-                    // }
                 }
-                //this._setProgress(0.5);
             }, null);
         }
     }
@@ -416,18 +379,19 @@ export class login extends Component {
                 await sleep(10);    //不知道为啥必须等待0.01秒，商店物品的位置才不会错
                 await _event();
                 await sleep(2000);
-                let checkReady = setInterval(() => 
+                while (true)
                 {
                     if (login.panelOnReady)
                     {
-                        this._setProgress(1.0);
-                        this._loading.done();
                         login.panelOnReady = false;
-                        console.log("Ready!");
                         clearInterval(this.interval);
-                        clearInterval(checkReady);
+                        this._setProgress(1.0);
+                        await sleep(1000);
+                        this._loading.done();
+                        console.log("login sucess!");
+                        break;
                     }
-                }, 100);
+                }
                 // console.log("Start Ready sucess!");
                 // this._loading.done();
                 // clearInterval(this.interval);
@@ -508,19 +472,19 @@ export class login extends Component {
 
             await sleep(3000);
 
-            let checkReady = setInterval(() => 
+            while (true)
+            {
+                if (login.panelOnReady)
                 {
-                    if (login.panelOnReady)
-                    {
-                        
-                        this._setProgress(1.0);
-                        this._loading.done();
-                        login.panelOnReady = false;
-                        console.log("Back Main Interface!");
-                        clearInterval(this.interval);
-                        clearInterval(checkReady);
-                    }
-                }, 100);
+                    login.panelOnReady = false;
+                    clearInterval(this.interval);
+                    this._setProgress(1.0);
+                    await sleep(1000);
+                    this._loading.done();
+                    console.log("login sucess!");
+                    break;
+                }
+            }
         });
 
         console.log("BackMainInterface end!");

@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, assetManager, Button, Camera, Component, find, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, System, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
+import { _decorator, Animation, animation, assetManager, BlockInputEvents, Button, Camera, Component, find, ImageAsset, instantiate, Node, Prefab, RichText, screen, Sprite, SpriteFrame, sys, System, Texture2D, Toggle, tween, Vec3, view, Widget } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { BundleManager } from '../bundle/BundleManager';
 import { StorePanel } from '../panel/StorePanel';
@@ -49,6 +49,9 @@ export class MainInterface
     //玩家头像
     private userAvatar:Node;
 
+    //等待界面
+    private waitingPanel:Node;
+
     public cardEditPanel:Node;
     public storePanel:Node;
     public cardLibraryPanel:Node;
@@ -67,8 +70,10 @@ export class MainInterface
     private async Load()
     {
         let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface");
+        let WaitingPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting");
         let awaitResult= await Promise.all([
-            MainInterfacePromise
+            MainInterfacePromise,
+            WaitingPanelPromise
         ]);;
 
         return awaitResult;
@@ -87,8 +92,14 @@ export class MainInterface
             //加载
             let assets = await this.Load();
             let MainInterfacepanel = assets[0] as Prefab;
+            let WaitingPanel = assets[1] as Prefab;
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
+            //等待面板
+            this.waitingPanel=instantiate(WaitingPanel);
+            this.waitingPanel.setParent(this.panelNode);
+            this.waitingPanel.setSiblingIndex(100);
+            this.waitingPanel.active=false;
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePart=this.panelNode.getChildByPath("StartGamePanel");
@@ -239,12 +250,29 @@ export class MainInterface
             //打开冒险模式界面
             this.ventureBtn.on(Button.EventType.CLICK,async ()=>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "VenturePanel") as Prefab;
-                let panel=instantiate(vt);
-                panel.setParent(this.fatherNode);
-                panel.getComponent(VenturePanel).Open();
-                this.panelNode.active = false;
+                new Promise<void>(async (resolve, reject) =>
+                {
+                    let tick=0;
+                    let interval= setInterval(()=>
+                    {
+                        tick++;
+                        if(tick>100)
+                        {
+                            this.Waiting(true);
+                        }
+                    });
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                    let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel", "VenturePanel") as Prefab;
+                    let panel = instantiate(vt);
+                    panel.setParent(this.fatherNode);
+                    panel.getComponent(VenturePanel).Open();
+                    this.panelNode.active = false;
+                    clearInterval(interval);
+                    resolve();
+                }).then(()=>
+                {
+                    this.Waiting(false);
+                })
                 
             },this);
             //打开任务、成就
@@ -298,8 +326,6 @@ export class MainInterface
             let allAwait = [];
             // allAwait.push(BundleManager.Instance.PreLoadBundleDir("Panel", "/"));
             // allAwait.push(BundleManager.Instance.PreLoadBundleDir("Board", "/"));
-            allAwait.push(BundleManager.Instance.PreLoadBundleDir("RoleSpine", ""));
-            allAwait.push(BundleManager.Instance.PreLoadBundleDir("EffectSpine", ""));
 
             //Promise.all(allAwait);
         }
@@ -307,6 +333,12 @@ export class MainInterface
         {
             console.error('MainInterface 下 Init 错误 err: ',error);
         }
+    }
+
+    Waiting(valve: boolean)
+    {
+        this.waitingPanel.getComponent(BlockInputEvents).enabled = valve;
+        this.waitingPanel.active = valve;
     }
 /*
  * 修改RegCallBack
@@ -361,10 +393,14 @@ export class MainInterface
             // this.userAccount.Achiev=achieve;
             // this.userAccount.wAchiev=wAchieve;
 
-            if(null != singleton.netSingleton.mainInterface){
+            if(null != singleton.netSingleton.mainInterface)
+            {
                 //this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.gold;
                 //this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.diamond;
-                this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true));
+                if(this.panelNode)
+                {
+                    this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true));
+                }
             }
         }
         //回调领取任务奖励
