@@ -100,7 +100,7 @@ export class StorePanel extends Component
                 this.ClearPageView();
                 if (!this.storePagePre) 
                 {
-                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "StorePage") as Prefab;
+                    this.storePagePre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "StorePage") as Prefab;
                 }
                 this.storePage = instantiate(this.storePagePre);
                 this.pageView.addPage(this.storePage);
@@ -127,7 +127,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.cardListPre) {
-                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "CardPage") as Prefab;
+                    this.cardListPre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "CardPage") as Prefab;
                 }
                 this.cardListPage = instantiate(this.cardListPre);
                 this.pageView.addPage(this.cardListPage);
@@ -159,7 +159,7 @@ export class StorePanel extends Component
                 this.node.getChildByPath("StoreArea/PageView").getComponent(PageView).removeAllPages();
                 this.ClearPageView();
                 if (!this.rechargePre) {
-                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("Parts", "RechargePage") as Prefab;
+                    this.rechargePre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "RechargePage") as Prefab;
                 }
                 this.rechargePage = instantiate(this.rechargePre);
                 this.pageView.addPage(this.rechargePage);

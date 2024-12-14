@@ -2,7 +2,7 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "0a8a6e1f-8736-48d3-9c7f-17234c43cf95",
+  "uuid": "e007b961-38bf-48b6-b8b8-fad8b67fb324",
   "files": [],
   "subMetas": {},
   "userData": {
@@ -11,6 +11,6 @@
       "wechatgame": true
     },
     "isBundle": true,
-    "priority": 2
+    "priority": 10
   }
 }

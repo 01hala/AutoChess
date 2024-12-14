@@ -91,7 +91,7 @@ export class BattleDis
         try
         {
             console.log("battledis start");
-            let panel = await BundleManager.Instance.loadAssetsFromBundle("Battle", "BattlePanel") as Prefab;
+            let panel = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "BattlePanel") as Prefab;
             this.panelNode = instantiate(panel);
 
             this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
@@ -109,13 +109,13 @@ export class BattleDis
             this.launchSkillEffect=this.panelNode.getChildByName("LaunchSkillEffect");
             this.launchSkillEffect.active=false;
 
-            this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
-            this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
-                console.log("gm Button!");
-                let gmPrefab = await BundleManager.Instance.loadAssetsFromBundle("Panel", "gm") as Prefab;
-                let gmPanel = instantiate(gmPrefab);
-                this.panelNode.addChild(gmPanel);
-            }, this);
+            // this.gmBtn = this.panelNode.getChildByName("gm").getComponent(Button);
+            // this.gmBtn.node.on(Node.EventType.TOUCH_START, async ()=>{
+            //     console.log("gm Button!");
+            //     let gmPrefab = await BundleManager.Instance.loadAssetsFromBundle("Panel", "gm") as Prefab;
+            //     let gmPanel = instantiate(gmPrefab);
+            //     this.panelNode.addChild(gmPanel);
+            // }, this);
 
             let pauseNode = this.panelNode.getChildByName("pause");
             this.pauseBtn = pauseNode.getComponent(Button);

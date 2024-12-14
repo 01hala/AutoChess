@@ -88,7 +88,7 @@ export class CardLibrary extends Component
             this.cardContent=this.node.getChildByPath("CardView/view/content");
             this.toggleBar.getChildByPath("Mountain").getComponent(Toggle).isChecked=true;
             this.toggleBar.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
-            this.cardBoothPre=await BundleManager.Instance.loadAssetsFromBundle("Parts", "CardBooth") as Prefab;
+            this.cardBoothPre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "CardBooth") as Prefab;
             this.LoadCard(Biomes.Mountain);
         }
         catch(error)
@@ -174,7 +174,7 @@ export class CardLibrary extends Component
         try
         {
             this.ShowBooth(_biomes);
-            this.rolePaintingPre=await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePainting") as Prefab;
+            this.rolePaintingPre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "RolePainting") as Prefab;
             console.log("LoadCard!!!");
             let boothNum = 0;
             for(let j=0;j<this.cardCfgs.length;j++)

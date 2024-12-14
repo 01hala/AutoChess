@@ -205,14 +205,15 @@ export class BundleManager
                         });
                     }
                 }
-                allAwait.push(this.PreLoadBundleDir("Panel",""));
-                allAwait.push(this.PreLoadBundleDir("Board",""));
-                allAwait.push(this.PreLoadBundleDir("Parts",""));
-                Promise.all(allAwait);
-
                 await this.PreLoadBundleDir("Sound", "",_callBack);
                 await this.PreLoadBundleDir("RoleSpine","",_callBack);
                 await this.PreLoadBundleDir("EffectSpine","",_callBack);
+
+                allAwait.push(this.PreLoadBundleDir("IconTexture","Venture"));
+                allAwait.push(this.PreLoadBundleDir("BackGroungTexture",""));
+                allAwait.push(this.PreLoadBundleDir("ButtonTexture",""));
+                allAwait.push(this.PreLoadBundleDir("OtherTexture","Ornament"));
+                Promise.all(allAwait);
                 
                 console.log("预加载资源完成");
                 resolve(null);
@@ -273,6 +274,7 @@ export class BundleManager
             {
                 if (err)
                 {
+                    console.warn("预下载 ",bundle,"/",_res," 错误 ",err);
                     reject();
                 }
                 else

@@ -358,8 +358,9 @@ export class login extends Component {
         {
             this._progress += randomRange(0.01 , 0.1);
             this._setProgress(this._progress);
-        }, 100);
+        }, 150);
         singleton.netSingleton.mainInterface.destory();
+        singleton.netSingleton.mainInterface=null;
         console.log("start singleton.netSingleton.ready!");
         if (null == singleton.netSingleton.ready)
         {
@@ -451,17 +452,18 @@ export class login extends Component {
             singleton.netSingleton.ready.destory();
             singleton.netSingleton.ready=null;
         }
+        singleton.netSingleton.mainInterface = new MainInterface();
         await singleton.netSingleton.mainInterface.start(this.bk.node,async (event)=>
         {
             await singleton.netSingleton.player.get_user_data(true);
             singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
             this.bk.node.addChild(singleton.netSingleton.mainInterface.panelNode);
 
-            let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel", "VenturePanel") as Prefab;
             switch (panelName)
             {
                 case "VenturePanel":
                     {
+                        let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "VenturePanel") as Prefab;
                         let panel = instantiate(vt);
                         panel.setParent(this.node);
                         panel.getComponent(VenturePanel).Open();

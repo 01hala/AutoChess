@@ -136,7 +136,7 @@ export class RoleArea extends Component
     {
         try
         {
-            let r=await BundleManager.Instance.loadAssetsFromBundle("Icons","RoleIcon") as Prefab;
+            let r=await BundleManager.Instance.loadAssetsFromBundle("IconPrefabs","RoleIcon") as Prefab;
 
             console.log("ResetTeam _roleList:", JSON.stringify(_roleList));
             for(let i=0;i<_roleList.length;i++)
@@ -168,7 +168,7 @@ export class RoleArea extends Component
 
     async SummonRole(_index:number,_role:common.Role)
     {
-        let r=await BundleManager.Instance.loadAssetsFromBundle("Icons","RoleIcon") as Prefab;
+        let r=await BundleManager.Instance.loadAssetsFromBundle("IconPrefabs","RoleIcon") as Prefab;
 
         let obj=instantiate(r);
         obj.setParent(this.node.parent);

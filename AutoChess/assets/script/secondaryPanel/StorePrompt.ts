@@ -24,7 +24,7 @@ export class StorePrompt extends Component
 
     private async Init()
     {
-        this.itemPre=await BundleManager.Instance.loadAssetsFromBundle("Icons","CardPacketItem")as Prefab;
+        this.itemPre=await BundleManager.Instance.loadAssetsFromBundle("IconPrefabs","CardPacketItem")as Prefab;
     }
 
     update(deltaTime: number) {

@@ -3,7 +3,7 @@
  * author: Hotaru
  * 2023/11/11
  */
-import { _decorator, Animation, BlockInputEvents, Camera, Canvas, Component, instantiate, Node, Prefab, tween, Tween, UITransform, Vec3, view, Widget } from 'cc';
+import { _decorator, Animation, BlockInputEvents, Camera, Canvas, Component, game, instantiate, Node, Prefab, tween, Tween, UITransform, Vec3, view, Widget } from 'cc';
 import { ShopIndex, ShopProp, ShopRole } from '../../battle/AutoChessBattle/common';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
@@ -112,7 +112,7 @@ export class ShopArea extends Component
                     tick++;
                     if(tick>1000)
                     {
-                        singleton.netSingleton.ready.Waiting(true);
+                        GameManager.Instance.Waitting(true);
                     }
                 });
 

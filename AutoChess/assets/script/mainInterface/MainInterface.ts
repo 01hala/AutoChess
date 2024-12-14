@@ -21,7 +21,7 @@ const { ccclass, property } = _decorator;
 export class MainInterface 
 {
     //父节点
-    public fatherNode:Node;
+    public parentNode:Node;
     //主体
     public panelNode:Node;
     //主界面
@@ -49,9 +49,6 @@ export class MainInterface
     //玩家头像
     private userAvatar:Node;
 
-    //等待界面
-    private waitingPanel:Node;
-
     public cardEditPanel:Node;
     public storePanel:Node;
     public cardLibraryPanel:Node;
@@ -69,11 +66,9 @@ export class MainInterface
  */
     private async Load()
     {
-        let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "MainInterface");
-        let WaitingPanelPromise= BundleManager.Instance.loadAssetsFromBundle("Panel", "waiting");
+        let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "MainInterface");
         let awaitResult= await Promise.all([
-            MainInterfacePromise,
-            WaitingPanelPromise
+            MainInterfacePromise
         ]);;
 
         return awaitResult;
@@ -88,18 +83,12 @@ export class MainInterface
     {
         try
         {
-            this.fatherNode=_father;
+            this.parentNode=_father;
             //加载
             let assets = await this.Load();
             let MainInterfacepanel = assets[0] as Prefab;
-            let WaitingPanel = assets[1] as Prefab;
             //主界面
             this.panelNode=instantiate(MainInterfacepanel);
-            //等待面板
-            this.waitingPanel=instantiate(WaitingPanel);
-            this.waitingPanel.setParent(this.panelNode);
-            this.waitingPanel.setSiblingIndex(100);
-            this.waitingPanel.active=false;
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePart=this.panelNode.getChildByPath("StartGamePanel");
@@ -220,9 +209,9 @@ export class MainInterface
             this.storeBtn.on(Button.EventType.CLICK,async ()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                let st = await BundleManager.Instance.loadAssetsFromBundle("Panel", "StorePanel") as Prefab;
+                let st = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "StorePanel") as Prefab;
                 this.storePanel =instantiate(st);
-                this.storePanel.setParent(this.fatherNode);
+                this.storePanel.setParent(this.parentNode);
                 this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
                 this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked = true;
                 this.panelNode.active = false;
@@ -231,9 +220,9 @@ export class MainInterface
             this.cardlibraryBtn.on(Button.EventType.CLICK,async ()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                let cl = await BundleManager.Instance.loadAssetsFromBundle("Panel","CardLibrary") as Prefab;
+                let cl = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","CardLibrary") as Prefab;
                 this.cardLibraryPanel = instantiate(cl);
-                this.cardLibraryPanel.setParent(this.fatherNode);
+                this.cardLibraryPanel.setParent(this.parentNode);
                 this.cardLibraryPanel.getComponent(CardLibrary).OpenCardLib();
                 this.panelNode.active=false;
             },this);
@@ -241,9 +230,9 @@ export class MainInterface
             this.cardEditorBtn.on(Button.EventType.CLICK,async ()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                let ce = await BundleManager.Instance.loadAssetsFromBundle("Panel" , "CardEditor") as Prefab;
+                let ce = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs" , "CardEditor") as Prefab;
                 this.cardEditPanel = instantiate(ce);
-                this.cardEditPanel.setParent(this.fatherNode);
+                this.cardEditPanel.setParent(this.parentNode);
                 this.cardEditPanel.getComponent(CardEditor).OpenCardEditor();
                 this.panelNode.active=false;
             },this);
@@ -258,20 +247,20 @@ export class MainInterface
                         tick++;
                         if(tick>100)
                         {
-                            this.Waiting(true);
+                            GameManager.Instance.Waitting(true);
                         }
                     });
                     AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                    let vt = await BundleManager.Instance.loadAssetsFromBundle("Panel", "VenturePanel") as Prefab;
+                    let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "VenturePanel") as Prefab;
                     let panel = instantiate(vt);
-                    panel.setParent(this.fatherNode);
+                    panel.setParent(this.parentNode);
                     panel.getComponent(VenturePanel).Open();
                     this.panelNode.active = false;
                     clearInterval(interval);
                     resolve();
                 }).then(()=>
                 {
-                    this.Waiting(false);
+                    GameManager.Instance.Waitting(false);
                 })
                 
             },this);
@@ -280,9 +269,9 @@ export class MainInterface
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 //this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true,this.userAccount));
-                let ap = await BundleManager.Instance.loadAssetsFromBundle("Panel", "AchievePanel") as Prefab;
+                let ap = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "AchievePanel") as Prefab;
                 this.achievePanel = instantiate(ap);
-                this.achievePanel.setParent(this.fatherNode);
+                this.achievePanel.setParent(this.parentNode);
                 this.achievePanel.getComponent(AchievePanel).Open();
                 this.panelNode.active = false;
             }, this);
@@ -335,11 +324,6 @@ export class MainInterface
         }
     }
 
-    Waiting(valve: boolean)
-    {
-        this.waitingPanel.getComponent(BlockInputEvents).enabled = valve;
-        this.waitingPanel.active = valve;
-    }
 /*
  * 修改RegCallBack
  * author：Hotaru
@@ -354,7 +338,7 @@ export class MainInterface
             if(_bagInfo && _cardPacketInfo)
             {
                 User.UserData.bag=_bagInfo;
-                let panel=this.fatherNode.getChildByName("StorePanel").getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
+                let panel=this.parentNode.getChildByName("StorePanel").getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
                 //this.storePanel.getComponent(StorePanel).ShowCardPacketContent(_cardPacketInfo);
             }
         };
@@ -392,12 +376,12 @@ export class MainInterface
             // this.userAccount.diamond=this.userData.diamond;
             // this.userAccount.Achiev=achieve;
             // this.userAccount.wAchiev=wAchieve;
-
+            
             if(null != singleton.netSingleton.mainInterface)
             {
                 //this.userMoney.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.gold;
                 //this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.diamond;
-                if(this.panelNode)
+                if(null!=this.panelNode)
                 {
                     this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true));
                 }
