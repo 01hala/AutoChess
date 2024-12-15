@@ -45,7 +45,7 @@ export class TaskAchieve extends Component
         });
         this.lableList=new Map<number,Node>();
 
-        this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","TaskLabel")as Prefab;
+        this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","TaskLabel")as Prefab;
     }
 
     start() 

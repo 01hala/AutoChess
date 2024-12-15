@@ -53,8 +53,8 @@ export class RankList extends Component
     private async Init()
     {
         this.RegCallBack();
-        this.rankFarmePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RankFarme") as Prefab;
-        this.roleFarmePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleFarme") as Prefab;
+        this.rankFarmePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RankFarme") as Prefab;
+        this.roleFarmePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleFarme") as Prefab;
     }
     
     private RegCallBack()

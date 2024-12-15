@@ -91,7 +91,7 @@ export class PopUps extends Component
                     this.content.getComponent(Widget).isAlignRight = true;
                     this.content.getComponent(Widget).left = 0;
                 }
-                let rewardIcon = await BundleManager.Instance.loadAssetsFromBundle("Icons", "RewardIcon") as Prefab;
+                let rewardIcon = await BundleManager.Instance.loadAssetsFromBundle("IconPrefabs", "RewardIcon") as Prefab;
                 for (let [key, value] of _items)
                 {
                     let newNode = instantiate(rewardIcon);

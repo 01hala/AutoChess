@@ -178,7 +178,7 @@ export class BundleManager
      * 预加载bundle
      * @param _callBack 回调
      */
-    PreloadBundle(_callBack: () => void): Promise<void>
+    PreloadBundle(_callBack: (bundleName,progress) => void): Promise<void>
     {
         return new Promise(async(resolve) => 
         {
@@ -192,7 +192,7 @@ export class BundleManager
                     console.log("正在加载：", bundleRes);
                     if (!this.bundles.has(bundleRes))
                     {
-                        assetManager.loadBundle(bundleRes, (err, bundle) =>
+                        assetManager.loadBundle(bundleRes, async (err, bundle) =>
                         {
                             if (err)
                             {
@@ -201,18 +201,20 @@ export class BundleManager
                             else
                             {
                                 this.bundles.set(bundleRes, bundle);
-                                if("Sound" === bundleRes)
-                                {
-                                    allAwait.push(this.PreLoadBundleDir(bundleRes, ""));
-                                }
-
-                                //bundle.preloadDir("/");
                             }
                         });
                     }
                 }
-                _callBack();
-                //Promise.all(allAwait);
+                await this.PreLoadBundleDir("Sound", "",_callBack);
+                await this.PreLoadBundleDir("RoleSpine","",_callBack);
+                await this.PreLoadBundleDir("EffectSpine","",_callBack);
+
+                allAwait.push(this.PreLoadBundleDir("IconTexture","Venture"));
+                allAwait.push(this.PreLoadBundleDir("BackGroungTexture",""));
+                allAwait.push(this.PreLoadBundleDir("ButtonTexture",""));
+                allAwait.push(this.PreLoadBundleDir("OtherTexture","Ornament"));
+                Promise.all(allAwait);
+                
                 console.log("预加载资源完成");
                 resolve(null);
             }
@@ -229,42 +231,61 @@ export class BundleManager
      * @param _bundle 包名
      * @param _res 文件夹路径 （根目录填""）
      */
-    async PreLoadBundleDir(_bundle:string,_res:string)
+    async PreLoadBundleDir(_bundle:string,_res:string,_callBack?:((bundleName,progress)=>void)|null)
     {
-        return new Promise<void>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) =>
+        {
             let bundle = this.bundles.get(_bundle);
-            if(!bundle)
+            if (!bundle)
             {
                 bundle = await this.loadBundle(_bundle);
             }
             let info = bundle.getDirWithPath(_res);
-            
-            if(info)
+
+            if (info)
             {
-                let n=0;
-                for(let t of info)
+                let n = 0;
+                for (let t of info)
                 {
-                    let uuid =t.uuid;
+                    let uuid = t.uuid;
                     let cachedAsset = assetManager.assets.get(uuid)
                     if (cachedAsset && isValid(cachedAsset))
                     {
                         n++;
                     }
                 }
-                if(n==info.length)
+                if (n == info.length)
                 {
+                    if (_callBack)
+                    {
+                        _callBack(null, null);
+                    }
                     resolve();
                 }
             }
-            
-            bundle.preloadDir(_res,null,null,(err,data)=>
+
+            bundle.preloadDir(_res, null, (finished, total, item) =>
             {
-                if(err)
+                if (_callBack)
                 {
+                    _callBack(_bundle, Math.floor(finished / total * 100));
+                }
+            }, (err, data) =>
+            {
+                if (err)
+                {
+                    console.warn("预下载 ",bundle,"/",_res," 错误 ",err);
                     reject();
                 }
+                else
+                {
+                    if(_callBack)
+                    {
+                        _callBack(null, null);
+                    }
+                    resolve();
+                }
             });
-            resolve();
         })
     }
 }

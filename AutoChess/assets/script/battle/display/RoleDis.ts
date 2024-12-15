@@ -141,7 +141,7 @@ export class RoleDis extends Component
 
         if(null == this.intensifierTip)
         {
-            this.intensifierTip = await BundleManager.Instance.loadAssetsFromBundle("TextTipBar","IntensifierTip") as Prefab;
+            this.intensifierTip = await BundleManager.Instance.loadAssetsFromBundle("TextTipPrefabs","IntensifierTip") as Prefab;
         }
 
         if(null == singleton.netSingleton.battle)

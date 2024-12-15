@@ -30,6 +30,8 @@ export class GameManager extends Component
     private typeface: TTFFont;
     //升阶界面
     private upStageBoard:Node;
+    //等待界面
+    private waitingPanel:Node;
     //新手引导
     public guide:Guide;
     
@@ -57,9 +59,14 @@ export class GameManager extends Component
         try
         {
             let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
+            let wt=BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","waiting");
             //加载
-            let awaitResult = await Promise.all([tf]);
+            let awaitResult = await Promise.all([tf,wt]);
             this.typeface = awaitResult[0] as TTFFont;
+            let tpre=awaitResult[1] as Prefab;
+            this.waitingPanel=instantiate(tpre);
+            this.waitingPanel.setParent(this.node);
+            this.waitingPanel.active=false;
 
             this.InitEvent();
         }
@@ -84,7 +91,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenCardInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
+            let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
             let board=instantiate(ib);
             board.setParent(this.node);
             board.getComponent(InfoBoard).OpenCardInfo(event.detail);
@@ -103,7 +110,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenFetterInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
+            let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
             let board=instantiate(ib);
             board.setParent(this.node);
             board.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
@@ -120,7 +127,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenInfoBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let ib=await BundleManager.Instance.loadAssetsFromBundle("Board","InformationBoard") as Prefab;
+            let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
             let board=instantiate(ib);
             board.setParent(this.node);
             board.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
@@ -153,7 +160,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenSettlement,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let st=await BundleManager.Instance.loadAssetsFromBundle("Board","SettlementBoard") as Prefab;
+            let st=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","SettlementBoard") as Prefab;
             let board = instantiate(st);
             board.setParent(this.node);
             board.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
@@ -172,7 +179,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
 
-            let up = await BundleManager.Instance.loadAssetsFromBundle("Board","UpStageBoard") as Prefab;
+            let up = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","UpStageBoard") as Prefab;
             let board=instantiate(up);
             board.setParent(this.node);
             board.getComponent(UpStage).OpenUpStageBoard(event.detail);
@@ -191,7 +198,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
 
-            let us = await BundleManager.Instance.loadAssetsFromBundle("Board","UserInfoBoard") as Prefab;
+            let us = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","UserInfoBoard") as Prefab;
             let board=instantiate(us);
             board.setParent(this.node);
             board.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
@@ -209,7 +216,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
 
-            let ta = await BundleManager.Instance.loadAssetsFromBundle("Board","TaskAchieveBoard") as Prefab;
+            let ta = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","TaskAchieveBoard") as Prefab;
             let board=instantiate(ta);
             board.setParent(this.node);
             board.getComponent(TaskAchieve).OpenTaskAchieveBoard();
@@ -245,7 +252,7 @@ export class GameManager extends Component
         {
             event.propagationStopped=true;
 
-            let rk = await BundleManager.Instance.loadAssetsFromBundle("Board","RankListBoard") as Prefab;
+            let rk = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","RankListBoard") as Prefab;
             let board = instantiate(rk);
             board.setParent(this.node);
             board.getComponent(RankList).OpenRankListBoard(event.detail);
@@ -274,7 +281,7 @@ export class GameManager extends Component
         {
             console.log("on message OpenChooseTag");
             event.propagationStopped=true;
-            let ct = await BundleManager.Instance.loadAssetsFromBundle("Board", "ChooseTagBoard") as Prefab;
+            let ct = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", "ChooseTagBoard") as Prefab;
             let board = instantiate(ct);
             board.setParent(this.node);
             await sleep(100);
@@ -288,11 +295,18 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenLevelInfo ,async (event:SendMessage)=>
         {
             event.propagationStopped = true;
-            let ct = await BundleManager.Instance.loadAssetsFromBundle("Board", "LevelInfoBoard") as Prefab;
+            let ct = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", "LevelInfoBoard") as Prefab;
             let board = instantiate(ct);
             board.setParent(this.node);
             board.getComponent(LevelInfo).Open(event.detail.levelId, event.callBack);
         })
+    }
+
+    //显示等待
+    public Waitting(_flag:boolean)
+    {
+        this.waitingPanel.active=_flag;
+        this.waitingPanel.setSiblingIndex(999);
     }
 
     //显示提示信息
@@ -300,7 +314,7 @@ export class GameManager extends Component
     {
         try
         {
-            let tt = await BundleManager.Instance.loadAssetsFromBundle("TextTipBar", "TextTipBar") as Prefab;
+            let tt = await BundleManager.Instance.loadAssetsFromBundle("TextTipPrefabs", "TextTipBar") as Prefab;
             let tip=instantiate(tt);
             console.log("获取richtext");
             tip.getChildByPath("RichText").getComponent(RichText).string=_msg;
@@ -322,10 +336,11 @@ export class GameManager extends Component
         }
     }
 
+    //显示弹窗
     private async OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number> ,  _callBack?:(e?:boolean)=>void)
     {
         console.log("弹窗类型：",_type);
-        let ups = await BundleManager.Instance.loadAssetsFromBundle("Board","PopUpsBoard") as Prefab;
+        let ups = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","PopUpsBoard") as Prefab;
         let board=instantiate(ups);
         board.setParent(this.node);
         board.getComponent(PopUps).title=_title;
@@ -333,9 +348,10 @@ export class GameManager extends Component
         board.getComponent(PopUps).Open(_type , _items , _callBack);
     }
 
+    //开始新手引导
     public async StartGuide(_step:common.GuideStep)
     {
-        let tnode=await BundleManager.Instance.loadAssetsFromBundle("Panel","GuidePanel") as Prefab;
+        let tnode=await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","GuidePanel") as Prefab;
         let gnode=instantiate(tnode);
 
         gnode.setParent(this.node);

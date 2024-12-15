@@ -66,7 +66,7 @@ export class Queue extends Component
         {
             try 
             {
-                let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePrefab") as Prefab;
+                let newNode = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "RolePrefab") as Prefab;
                 let role = instantiate(newNode); 
                 //this.node.addChild(role);
                 role.setParent(this.node.parent);

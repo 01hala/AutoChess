@@ -96,7 +96,7 @@ export class CardEditor extends Component
     {
         try
         {
-            this.framePre = await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggleFarme")as Prefab;
+            this.framePre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggleFarme")as Prefab;
             this.LoadGroup();
         }
         catch(error)

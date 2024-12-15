@@ -365,7 +365,7 @@ export class RoleIcon extends Component
     {
         return new Promise (async (resolve)=>
         {
-            let newNode = await BundleManager.Instance.loadAssetsFromBundle("Roles", "RolePrefab") as Prefab;
+            let newNode = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "RolePrefab") as Prefab;
             let role = instantiate(newNode);
             role.setParent(this.node);
             let roleDis = role.getComponent(RoleDis);

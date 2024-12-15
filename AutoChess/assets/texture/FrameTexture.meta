@@ -2,7 +2,7 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "9734af44-1aaa-455f-ac56-6766e16b1e22",
+  "uuid": "ab3cee19-dbef-44d7-9754-25838f28a2cf",
   "files": [],
   "subMetas": {},
   "userData": {
@@ -11,7 +11,6 @@
       "wechatgame": true
     },
     "isBundle": true,
-    "bundleName": "PanelImg",
-    "priority": 2
+    "priority": 10
   }
 }

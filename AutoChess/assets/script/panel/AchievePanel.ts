@@ -40,7 +40,7 @@ export class AchievePanel extends Component
 
     private async Load()
     {
-        this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","TaskLabel") as Prefab;
+        this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","TaskLabel") as Prefab;
     }
 
     private Exit()

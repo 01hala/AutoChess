@@ -2,17 +2,15 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "42cad9df-0bf7-42be-9d7d-6d4aa2112b5c",
+  "uuid": "1f226120-e23c-4596-9a2d-728c9104cacf",
   "files": [],
   "subMetas": {},
   "userData": {
     "compressionType": {},
     "isRemoteBundle": {
-      "wechatgame": true,
-      "web-desktop": true
+      "wechatgame": true
     },
-    "bundleName": "OtherImg",
     "isBundle": true,
-    "priority": 2
+    "priority": 10
   }
 }

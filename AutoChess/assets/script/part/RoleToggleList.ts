@@ -36,7 +36,7 @@ export class RoleToggleList extends Component
     {
         try
         {
-            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("Parts","RoleToggel") as Prefab;
+            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggel") as Prefab;
             this.stageLvText=this.node.parent.getChildByPath("Label").getComponent(Label);
 
             this.stageLvText.string=+_stageLv+"阶角色";

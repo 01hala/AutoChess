@@ -1,98 +1,142 @@
 {
-  "0":{
-    "ID": 0,
-    "Name": "音效",
-    "URL": "https://www.ucat.games:8001/zzq/remote/audio/",
-    "Path": "Sound"
-  }, 
-  "1":{
-    "ID": 1,
-    "Name": "角色立绘",
-    "URL": "https://www.ucat.games:8001/zzq/remote/spine/",
-    "Path": "RoleSpine"
-  },
-  "2":{
-    "ID": 2,
-    "Name": "背景图片",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "BackGroung"
-  },
-  "3":{
-    "ID": 3,
-    "Name": "按钮图片",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "Button"
-  },
-  "4":{
-    "ID": 4,
-    "Name": "框架图片",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "Frame"
-  },
-  "5":{
-    "ID": 5,
-    "Name": "图标图片",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "IconTexture"
-  },
-  "6":{
-    "ID": 6,
-    "Name": "其他图片",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "OtherImg"
-  },
-  "7":{
-    "ID": 7,
-    "Name": "面板图片",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "PanelImg"
-  },
-  "8":{
-    "ID": 8,
-    "Name": "道具图片",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "Props"
-  },
-  "9":{
-    "ID": 9,
-    "Name": "角色头像",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "RoleAvatar"
-  },
-  "10":{
-    "ID": 10,
-    "Name": "角色立绘",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "RolesImg"
-  },
-  "11":{
-    "ID": 11,
-    "Name": "字体",
-    "URL": "https://www.ucat.games:8001/zzq/remote/texture/",
-    "Path": "Typeface"
-  },
-  "12":{
-    "ID": 12,
-    "Name": "场景动效",
-    "URL": "https://www.ucat.games:8001/zzq/remote/spine/",
-    "Path": "SceneSpine"
-  },
-  "13":{
-    "ID": 13,
-    "Name": "角色动效",
-    "URL": "https://www.ucat.games:8001/zzq/remote/spine/",
-    "Path": "RoleSpine"
-  },
-  "14":{
-    "ID": 14,
-    "Name": "效果动效",
-    "URL": "https://www.ucat.games:8001/zzq/remote/spine/",
-    "Path": "EffectSpine"
-  },
-  "15":{
-    "ID": 15,
-    "Name": "特殊动效",
-    "URL": "https://www.ucat.games:8001/zzq/remote/spine/",
-    "Path": "ImgSpine"
-  }
+    "0": {
+        "ID": 0,
+        "Type": 3,
+        "Name": "音效",
+        "Path": "Sound",
+        "URL": "https://www.ucat.games:8002/zzq/remote/Sound"
+    },
+    "1": {
+        "ID": 1,
+        "Type": 2,
+        "Name": "角色动效",
+        "Path": "RoleSpine",
+        "URL": "https://www.ucat.games:8002/zzq/remote/RoleSpine"
+    },
+    "2": {
+        "ID": 2,
+        "Type": 1,
+        "Name": "背景图片",
+        "Path": "BackGroungTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/BackGroungTexture"
+    },
+    "3": {
+        "ID": 3,
+        "Type": 1,
+        "Name": "按钮图片",
+        "Path": "ButtonTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/ButtonTexture"
+    },
+    "4": {
+        "ID": 4,
+        "Type": 1,
+        "Name": "框架图片",
+        "Path": "FrameTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/FrameTexture"
+    },
+    "5": {
+        "ID": 5,
+        "Type": 1,
+        "Name": "图标图片",
+        "Path": "IconTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/IconTexture"
+    },
+    "6": {
+        "ID": 6,
+        "Type": 1,
+        "Name": "界面图片",
+        "Path": "PanelTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/PanelTexture"
+    },
+    "7": {
+        "ID": 7,
+        "Type": 1,
+        "Name": "道具图片",
+        "Path": "PropsTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/PropsTexture"
+    },
+    "8": {
+        "ID": 8,
+        "Type": 1,
+        "Name": "角色头像",
+        "Path": "RoleAvatarTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/RoleAvatarTexture"
+    },
+    "9": {
+        "ID": 9,
+        "Type": 1,
+        "Name": "角色立绘",
+        "Path": "RolesTexture",
+        "URL": "https://www.ucat.games:8002/zzq/remote/RolesTexture"
+    },
+    "10": {
+        "ID": 10,
+        "Type": 0,
+        "Name": "字体",
+        "Path": "Typeface",
+        "URL": "https://www.ucat.games:8002/zzq/remote/Typeface"
+    },
+    "11": {
+        "ID": 11,
+        "Type": 2,
+        "Name": "场景动效",
+        "Path": "SceneSpine",
+        "URL": "https://www.ucat.games:8002/zzq/remote/SceneSpine"
+    },
+    "12": {
+        "ID": 12,
+        "Type": 2,
+        "Name": "特效动效",
+        "Path": "EffectSpine",
+        "URL": "https://www.ucat.games:8002/zzq/remote/EffectSpine"
+    },
+    "13": {
+        "ID": 13,
+        "Type": 2,
+        "Name": "氛围动效",
+        "Path": "SpecialSpine",
+        "URL": "https://www.ucat.games:8002/zzq/remote/SpecialSpine"
+    },
+    "14": {
+        "ID": 14,
+        "Type": 4,
+        "Name": "界面",
+        "Path": "PanelPrefabs",
+        "URL": "https://www.ucat.games:8002/zzq/remote/PanelPrefabs"
+    },
+    "15": {
+        "ID": 15,
+        "Type": 4,
+        "Name": "二级面板",
+        "Path": "BoardPrefabs",
+        "URL": "https://www.ucat.games:8002/zzq/remote/BoardPrefabs"
+    },
+    "16": {
+        "ID": 16,
+        "Type": 4,
+        "Name": "图标",
+        "Path": "IconPrefabs",
+        "URL": "https://www.ucat.games:8002/zzq/remote/IconPrefabs"
+    },
+    "17": {
+        "ID": 17,
+        "Type": 4,
+        "Name": "物体组件",
+        "Path": "PartPrefabs",
+        "URL": "https://www.ucat.games:8002/zzq/remote/PartPrefabs"
+    },
+    "18": {
+        "ID": 18,
+        "Type": 4,
+        "Name": "弹射物",
+        "Path": "BulletPrefabs",
+        "URL": "https://www.ucat.games:8002/zzq/remote/BulletPrefabs"
+    },
+    "19": {
+        "ID": 19,
+        "Type": 4,
+        "Name": "提示信息",
+        "Path": "TextTipPrefabs",
+        "URL": "https://www.ucat.games:8002/zzq/remote/TextTipPrefabs"
+    }
 }

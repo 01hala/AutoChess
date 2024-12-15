@@ -11,6 +11,6 @@
       "wechatgame": true
     },
     "isBundle": true,
-    "priority": 2
+    "priority": 10
   }
 }

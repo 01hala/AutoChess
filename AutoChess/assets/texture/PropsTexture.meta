@@ -2,16 +2,15 @@
   "ver": "1.1.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "fd2ff31c-5b06-444f-b84b-dfcb23d0c43d",
+  "uuid": "0a8a6e1f-8736-48d3-9c7f-17234c43cf95",
   "files": [],
   "subMetas": {},
   "userData": {
-    "isBundle": true,
-    "bundleName": "Roles",
-    "bundleConfigID": "10/3kWFm5JBrRddctK2a3b",
     "compressionType": {},
     "isRemoteBundle": {
       "wechatgame": true
-    }
+    },
+    "isBundle": true,
+    "priority": 10
   }
 }
