@@ -37,12 +37,18 @@ export class Queue extends Component
 
     destroyRole()
     {
-        for(let i=0;i<this.roleNodes.length;i++)
+        try
         {
-            if(this.roleNodes[i])
+            for (let i = 0; i < this.roleNodes.length; i++)
             {
-                this.roleNodes[i].destroy();
+                if (this.roleNodes[i])
+                {
+                    this.roleNodes[i].destroy();
+                }
             }
+        } catch (error) 
+        {
+            console.log("Queue 下的 destroyRole 错误:",error);
         }
     }
 
@@ -226,14 +232,18 @@ export class Queue extends Component
             try
             {
                 let tempRole;
+
+                let allAwait=[];
                 if(this.roleNodes[_recipient[0].index])
                 {
-                    await this.roleNodes[_recipient[0].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[0]].worldPosition);
+                    allAwait.push(this.roleNodes[_recipient[0].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[0]].worldPosition));
                 }
                 if(this.roleNodes[_recipient[1].index])
                 {
-                    await this.roleNodes[_recipient[1].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[1]].worldPosition);
+                    allAwait.push(this.roleNodes[_recipient[1].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[1]].worldPosition));
                 }
+
+                await Promise.all(allAwait);
 
                 tempRole = this.roleNodes[_indexValue[0]];
                 this.roleNodes[_indexValue[0]] = this.roleNodes[_indexValue[1]];

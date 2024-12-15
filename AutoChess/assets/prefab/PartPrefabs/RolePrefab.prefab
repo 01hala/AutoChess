@@ -577,8 +577,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5093663190481287,
-      "y": 0.4721681341569275
+      "x": null,
+      "y": null
     },
     "_id": ""
   },
@@ -616,7 +616,7 @@
     "_debugBones": false,
     "_debugSlots": false,
     "_skeletonData": {
-      "__uuid__": "edea8775-56cf-4405-8455-a7348d78230d",
+      "__uuid__": "81d78e10-6fcb-4d2b-9ff7-28553583be43",
       "__expectedType__": "sp.SkeletonData"
     },
     "_premultipliedAlpha": true,

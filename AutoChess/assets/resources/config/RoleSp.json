@@ -484,5 +484,167 @@
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
         "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200001": {
+        "Id": 200001,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200002": {
+        "Id": 200002,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200003": {
+        "Id": 200003,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200004": {
+        "Id": 200004,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200005": {
+        "Id": 200005,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200006": {
+        "Id": 200006,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200007": {
+        "Id": 200007,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200008": {
+        "Id": 200008,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200009": {
+        "Id": 200009,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200010": {
+        "Id": 200010,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200011": {
+        "Id": 200011,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200012": {
+        "Id": 200012,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200013": {
+        "Id": 200013,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200014": {
+        "Id": 200014,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200015": {
+        "Id": 200015,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200016": {
+        "Id": 200016,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200017": {
+        "Id": 200017,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+    },
+    "200018": {
+        "Id": 200018,
+        "IntensifierSelf": "skill_0003",
+        "OnSummon": "skill_0001",
+        "Skill": "skill_0007",
+        "intensifierColony": "skill_0010",
+        "buff": "skill_0002|skill_0005|skill_0025",
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
     }
 }

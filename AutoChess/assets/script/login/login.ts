@@ -359,8 +359,11 @@ export class login extends Component {
             this._progress += randomRange(0.01 , 0.1);
             this._setProgress(this._progress);
         }, 150);
-        singleton.netSingleton.mainInterface.destory();
-        singleton.netSingleton.mainInterface=null;
+        if(singleton.netSingleton.mainInterface)
+        {
+            singleton.netSingleton.mainInterface.destory();
+            singleton.netSingleton.mainInterface=null;
+        }
         console.log("start singleton.netSingleton.ready!");
         if (null == singleton.netSingleton.ready)
         {

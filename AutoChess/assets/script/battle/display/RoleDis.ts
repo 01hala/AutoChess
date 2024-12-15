@@ -549,20 +549,23 @@ export class RoleDis extends Component
 
     async ShiftPos(vec:Vec3,atkInit?:boolean)
     {
-        console.log(`shiftPos begin!`);
-        await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
-        //开始缓动
-        this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).start();
-        //返回延迟300ms
-        return delay(300, () => 
+        return new Promise<void>(async (resolve, reject) => 
         {
-            if (this.tShiftpos) {
-                this.tShiftpos.stop();
-                this.tShiftpos = null;
-                console.log("shiftPos end!");
-            }
-            if(atkInit) this.AttackInit();
-        });
+            console.log(`shiftPos begin!`);
+            await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
+            //开始缓动
+            this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).call(()=>
+            {
+                if (this.tShiftpos) 
+                {
+                    this.tShiftpos.stop();
+                    this.tShiftpos = null;
+                    console.log("shiftPos end!");
+                }
+                if(atkInit) this.AttackInit();
+                resolve();
+            }).start();
+        })
     }
 
 
