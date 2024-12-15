@@ -46,6 +46,7 @@ namespace Player
         private int currentRolrGroup = 101;
         private long lastTickStrengthTime;
 
+        public bool isQuestEvent;
         public long PeakStrengthID = 0;
 
         public battle_shop_player BattleShopPlayer;
@@ -110,6 +111,7 @@ namespace Player
                     roleGroup = RoleGroup,
                 },
                 guideSteps = new List<GuideStep>(),
+                isQuestEvent = false,
                 lastTickStrengthTime = Timerservice.Tick
             };
         }
@@ -236,6 +238,15 @@ namespace Player
                 info.info.quest = 10001;
             }
 
+            if (data.Contains("isQuestEvent"))
+            {
+                info.isQuestEvent = data.GetValue("isQuestEvent").AsBoolean;
+            }
+            else
+            {
+                info.isQuestEvent = false;
+            }
+
             if (data.Contains("PVELevelIndex"))
             {
                 info.info.PVELevelIndex = data.GetValue("PVELevelIndex").AsInt32;
@@ -340,6 +351,7 @@ namespace Player
                 { "diamond", info.diamond },
                 { "quest", info.quest },
                 { "score", info.score },
+                { "isQuestEvent", isQuestEvent },
                 { "guideStep", info.guideStep },
                 { "RoleList", roleList },
                 { "RoleGroup",  roleGroup },
@@ -1214,14 +1226,22 @@ namespace Player
 
             if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
             {
+                Log.Log.trace("PVELevelConfigs TryGetValue quest:{0}", info.quest);
+
                 PVELevelCfg = cfg;
                 BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
                 StartPVERound(0);
 
-                if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var rcfg))
+                Log.Log.trace("PVELevelConfigs TryGetValue isQuestEvent:{0}", isQuestEvent);
+                if (!isQuestEvent)
                 {
-                    return Tuple.Create(true, rcfg.EventID);
+                    Log.Log.trace("PVELevelConfigs TryGetValue info.PVELevelIndex:{0}", info.PVELevelIndex);
+                    if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var rcfg))
+                    {
+                        return Tuple.Create(true, rcfg.EventID);
+                    }
                 }
+                return Tuple.Create(true, new List<int>());
             }
 
             return Tuple.Create(false, new List<int>());
@@ -1235,16 +1255,16 @@ namespace Player
                 if (config.Config.PVEEventConfigs.TryGetValue(eventid, out var cfg))
                 {
                     if (config.Config.RoleConfigs.TryGetValue(cfg.RoleID, out RoleConfig rcfg))
-                    { 
-                        var r = new ShopRole();
+                    {
+                        isQuestEvent = true;
 
+                        var r = new ShopRole();
                         r.RoleID = cfg.RoleID;
                         r.Level = cfg.RoleLevel;
                         r.SkillID = rcfg.SkillID;
                         r.HP = cfg.RoleHP;
                         r.Attack = cfg.RoleAttack;
                         r.equipID = cfg.RoleEquip;
-
                         BattleShopPlayer.ShopData.SaleRoleList[5] = r;
                     }
                 }
