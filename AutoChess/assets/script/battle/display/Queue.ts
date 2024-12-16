@@ -234,11 +234,11 @@ export class Queue extends Component
                 let tempRole;
 
                 let allAwait=[];
-                if(this.roleNodes[_recipient[0].index])
+                if(_recipient[0] && this.roleNodes[_recipient[0].index])
                 {
                     allAwait.push(this.roleNodes[_recipient[0].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[0]].worldPosition));
                 }
-                if(this.roleNodes[_recipient[1].index])
+                if(_recipient[1] && this.roleNodes[_recipient[1].index])
                 {
                     allAwait.push(this.roleNodes[_recipient[1].index].getComponent(RoleDis.RoleDis).ShiftPos(this.locationTemp[_indexValue[1]].worldPosition));
                 }
