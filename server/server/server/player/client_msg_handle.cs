@@ -2,6 +2,7 @@
 using avatar;
 using battle_shop;
 using config;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using System;
 using System.Text.RegularExpressions;
@@ -221,6 +222,8 @@ namespace Player
                         rsp.rsp(em_quest_state.faild);
                         _data.Data.ClearPVEState();
                     }
+
+                    _data.Data.isQuestEvent = false;
                 }
             }
             catch (System.Exception ex)
@@ -402,6 +405,7 @@ namespace Player
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     var (err, eventIdList) = _data.Data.StartQuestReady(uuid, client_mng.BattleClientCaller);
+                    Log.Log.trace("on_start_quest_ready quest:{2} err:{0} eventId List:{1}", err, eventIdList, _data.Data.Info().quest);
                     if (err)
                     {
                         Log.Log.trace("on_start_quest_ready eventId List:{0}", eventIdList.ToJson());

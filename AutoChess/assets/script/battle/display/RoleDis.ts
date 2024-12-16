@@ -187,9 +187,8 @@ export class RoleDis extends Component
                     // }
                     await this.LoadOnConfig();
                     this.skillDis = new SkillDis(this.node, roleInfo.index);
-                    await this.skillDis.Init();
                     this.spEffect = new SpEffect(roleInfo.id, this.node);
-                    await this.spEffect.init();
+                    await Promise.all([this.skillDis.Init(), this.spEffect.init()]);
                 }
                 this.ChangeAtt();
                 resolve();

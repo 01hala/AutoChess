@@ -99,6 +99,7 @@ export class SpEffect
             //使用技能
             if(!("null"===this.spConfig.UseSkill))
             {
+                console.log("this.spConfig.UseSkill:", this.spConfig.UseSkill);
                 let address = "EffectSpine/" + this.spConfig.UseSkill + "/" + config.SpListConfig.get(this.spConfig.UseSkill).path;
                 //console.log("使用技能特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>

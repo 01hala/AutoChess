@@ -139,6 +139,7 @@ export class RoleArea extends Component
             let r=await BundleManager.Instance.loadAssetsFromBundle("IconPrefabs","RoleIcon") as Prefab;
 
             console.log("ResetTeam _roleList:", JSON.stringify(_roleList));
+            let awaitList = [];
             for(let i=0;i<_roleList.length;i++)
             {
                 if(_roleList[i]!=null)
@@ -150,7 +151,7 @@ export class RoleArea extends Component
                     obj.getComponent(RoleIcon).index=i;
                     obj.getComponent(RoleIcon).target=this.targets.get("Location_" + i);
                     obj.getComponent(RoleIcon).isBuy=true;
-                    await obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP+_roleList[i].TempHP,_roleList[i].Attack+_roleList[i].TempAttack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i);
+                    awaitList.push(obj.getComponent(RoleIcon).Init(_roleList[i].RoleID,_roleList[i].HP+_roleList[i].TempHP,_roleList[i].Attack+_roleList[i].TempAttack, _roleList[i].Level , _roleList[i].Number , false , _roleList[i].FettersSkillID , i));
                     //obj.getComponent(RoleIcon).iconMask.active=false;
                     if (this.rolesNode[i]) {
                         this.rolesNode[i].destroy();
@@ -158,6 +159,7 @@ export class RoleArea extends Component
                     this.rolesNode[i]=obj;
                 }
             }
+            await Promise.all(awaitList);
         }
         catch(error)
         {
