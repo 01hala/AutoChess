@@ -68,7 +68,7 @@ export class Loading {
                 break;
             default:
                 {
-                    this.log.string="";
+                    this.log.string="加载中 请稍后...";
                 }
         }
     }

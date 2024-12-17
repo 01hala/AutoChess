@@ -89,7 +89,7 @@ export class LevelInfo extends Component
         {
             singleton.netSingleton.game.start_quest_battle_ready();
             _callBack(true);
-            this.destroy();
+            this.node.destroy();
         }, this);
     }
 

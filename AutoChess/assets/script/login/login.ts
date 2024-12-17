@@ -21,7 +21,7 @@ import { GameManager } from '../other/GameManager';
 import * as enmus from '../other/enums';
 import SdkManager from '../SDK/SdkManager';
 import * as player_login from "../serverSDK/ccallplayer"
-import { VenturePanel } from '../panel/VenturePanel';
+import { QuestPanel } from '../panel/QuestPanel';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -104,12 +104,13 @@ export class login extends Component {
 
         await config.config.load();
         console.log("login start!");
-
+        //初始化加载界面
         this._loading = new load.Loading();
         this._setProgress = this._loading.load(this.ld.node, true);
 
         this.progressBar = this._loading.progressBar;
         this.progressBar.active = true;
+        this._loading.ShowLog("",0);
 
         this.interval = setInterval(() =>
         {
@@ -119,7 +120,7 @@ export class login extends Component {
                 this._setProgress(this._progress);
             }
         }, 150);
-
+        //预加载
         await BundleManager.Instance.PreloadBundle((bundleName,progress)=>
         {
             this._loading.ShowLog(bundleName,progress);
@@ -127,9 +128,10 @@ export class login extends Component {
         {
             this._progress += 0.1;
             this._setProgress(this._progress);
+            this._loading.ShowLog("",0);
             GameManager.Instance.Init();
         });
-
+        //连接
         singleton.netSingleton.player.cb_player_login_non_account = (code:string) => {
             this._progress += 0.1;
             this._setProgress(this._progress);
@@ -137,8 +139,6 @@ export class login extends Component {
             console.log("login non_account create role");
             singleton.netSingleton.player.create_role(code, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().avatarUrl);
         };
-
-        //连接
         this.netNode.on("connect", (e) =>
             {
                 console.log("on net connect!");
@@ -468,7 +468,7 @@ export class login extends Component {
                         let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "VenturePanel") as Prefab;
                         let panel = instantiate(vt);
                         panel.setParent(this.node);
-                        panel.getComponent(VenturePanel).Open();
+                        panel.getComponent(QuestPanel).Open();
                         singleton.netSingleton.mainInterface.panelNode.active = false;
                     }
                     break;

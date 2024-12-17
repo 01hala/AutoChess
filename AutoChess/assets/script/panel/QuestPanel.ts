@@ -6,8 +6,8 @@ import * as enums from '../other/enums';
 import { User } from '../login/User';
 const { ccclass, property } = _decorator;
 
-@ccclass('VenturePanel')
-export class VenturePanel extends Component 
+@ccclass('QuestPanel')
+export class QuestPanel extends Component 
 {
     //退出返回按钮
     private exitBtn:Node;

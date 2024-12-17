@@ -15,7 +15,7 @@ import SdkManager from '../SDK/SdkManager';
 import { login } from '../login/login';
 import { AchievePanel } from '../panel/AchievePanel';
 import { User } from '../login/User';
-import { VenturePanel } from '../panel/VenturePanel';
+import { QuestPanel } from '../panel/QuestPanel';
 const { ccclass, property } = _decorator;
 
 export class MainInterface 
@@ -36,7 +36,7 @@ export class MainInterface
     private achieveBtn:Node;//成就按钮
     private rankListBtn:Node;//排行榜按钮
     private cardEditorBtn:Node;//卡组编辑按钮
-    private ventureBtn:Node;//冒险模式按钮（pve）
+    private questBtn:Node;//冒险模式按钮（pve）
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
@@ -95,10 +95,10 @@ export class MainInterface
             //各区域按钮
             this.startBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StartHouse/Button");//匹配
             this.storeBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/StoreHoues/Store_Btn");//商店
-            this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");//娱乐
+            // this.amusementBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Amusement/Amusement_Btn");//娱乐
             this.cardlibraryBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/CardLib/CardLib_Btn");//牌库
             this.rankListBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/RankList/Rank_Btn");//排行
-            this.ventureBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Venture/Venture_Btn");//挑战模式
+            this.questBtn=this.panelNode.getChildByPath("MainPanel/BottomLayer/Quest/Quest_Btn");//冒险模式
             //下拉按钮列表
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
             this.cardEditorBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
@@ -199,12 +199,12 @@ export class MainInterface
                 this.startGamePart.getComponent(StartGame).OpenAthleticsWindow();
             },this);
             //打开自定义模式
-            this.amusementBtn.on(Button.EventType.CLICK,()=>
-            {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                this.startGamePart.active=true;
-                this.startGamePart.getComponent(StartGame).OpenAmusementWindow();
-            },this);
+            // this.amusementBtn.on(Button.EventType.CLICK,()=>
+            // {
+            //     AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
+            //     this.startGamePart.active=true;
+            //     this.startGamePart.getComponent(StartGame).OpenAmusementWindow();
+            // },this);
             //打开商店界面
             this.storeBtn.on(Button.EventType.CLICK,async ()=>
             {
@@ -237,7 +237,7 @@ export class MainInterface
                 this.panelNode.active=false;
             },this);
             //打开冒险模式界面
-            this.ventureBtn.on(Button.EventType.CLICK,async ()=>
+            this.questBtn.on(Button.EventType.CLICK,async ()=>
             {
                 new Promise<void>(async (resolve, reject) =>
                 {
@@ -254,7 +254,7 @@ export class MainInterface
                     let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "VenturePanel") as Prefab;
                     let panel = instantiate(vt);
                     panel.setParent(this.parentNode);
-                    panel.getComponent(VenturePanel).Open();
+                    panel.getComponent(QuestPanel).Open();
                     this.panelNode.active = false;
                     clearInterval(interval);
                     resolve();
