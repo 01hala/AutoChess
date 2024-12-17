@@ -143,7 +143,7 @@ export class login extends Component {
             {
                 console.log("on net connect!");
     
-                this._progress += 0.1;
+                this._progress += 0.3;
                 this._setProgress(this._progress);
                 //this.wxLogin();
                 SdkManager.SDK.login((e: boolean) =>
@@ -151,6 +151,7 @@ export class login extends Component {
                     if(e!=null)
                     {
                         this._loading.progressBar.active = e;
+                        this._loading.log.node.active=e;
                     }
                 }, null);
             });
@@ -211,6 +212,7 @@ export class login extends Component {
                         if (e != null)
                         {
                             this._loading.progressBar.active = e;
+                            this._loading.log.node.active=e;
                         }
                         //this._setProgress(0.5);
                     }, null);

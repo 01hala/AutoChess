@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "VenturePanel",
+    "_name": "QuestPanel",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "VenturePanel",
+    "_name": "QuestPanel",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -4556,6 +4556,8 @@
       "__id__": 0
     },
     "fileId": "2dwWcyjspL76NencjS/QGc",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -10948,6 +10950,8 @@
       "__id__": 0
     },
     "fileId": "13ZHtzvONFgqK7cPtKKJsz",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -12500,7 +12504,7 @@
     "fileId": "baEOXpe9FOq4ZRiP1SyC5e"
   },
   {
-    "__type__": "0ea93M6YSVMLY5NUAsibd0M",
+    "__type__": "69887AFy0hA4Ji02d9A4tuo",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -12514,7 +12518,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "585z4lVP1LSohMfu3s6oLH"
+    "fileId": "60iI4Zu7JI1IkeX/p89+TM"
   },
   {
     "__type__": "cc.PrefabInfo",

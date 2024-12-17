@@ -251,7 +251,7 @@ export class MainInterface
                         }
                     });
                     AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                    let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "VenturePanel") as Prefab;
+                    let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "QuestPanel") as Prefab;
                     let panel = instantiate(vt);
                     panel.setParent(this.parentNode);
                     panel.getComponent(QuestPanel).Open();
