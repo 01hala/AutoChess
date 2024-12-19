@@ -6,6 +6,10 @@ import { loadAssets } from '../bundle/LoadAsset';
 import { config } from '../battle/AutoChessBattle/config/config';
 import * as BattleEnums from '../battle/AutoChessBattle/BattleEnums'
 import { delay } from './sleep';
+import { Bullet } from '../battle/display/Bullet';
+import { GameManager } from './GameManager';
+import * as singleton from '../netDriver/netSingleton';
+import { RoleSpConfig } from '../battle/AutoChessBattle/config/RoleSp_config';
 const { ccclass, property } = _decorator;
 
 export class spEffectObj
@@ -50,21 +54,24 @@ export class SpEffect
     private parent:Node=null;
     private roleId:number=0;
 
-    private spConfig=null;
+    private spConfig:RoleSpConfig=null;
+
+    private spOnUi:SpEffectOnUI=null;
 
     constructor(_roleId:number,_parent: Node)
     {
         this.parent = _parent;
         this.roleId=_roleId;
+        this.spOnUi=new SpEffectOnUI();
+
+        this.spConfig=config.RoleSpConfig.get(this.roleId);
     }
 
     public async init()
     {
         console.log("初始化特效类");
-        this.spConfig=config.RoleSpConfig.get(this.roleId);
         
         let allAwait=[];
-       
         allAwait.push(new Promise<void>(async(resolve) => {
             //单体增强时特效
             let address = "EffectSpine/" + this.spConfig.IntensifierSelf + "/" + config.SpListConfig.get(this.spConfig.IntensifierSelf).path;
@@ -110,7 +117,7 @@ export class SpEffect
             //使用技能
             if(!("null"===this.spConfig.UseSkill))
             {
-                console.log("this.spConfig.UseSkill:", this.spConfig.UseSkill);
+                //console.log("this.spConfig.UseSkill:", this.spConfig.UseSkill);
                 let address = "EffectSpine/" + this.spConfig.UseSkill + "/" + config.SpListConfig.get(this.spConfig.UseSkill).path;
                 //console.log("使用技能特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
@@ -195,11 +202,6 @@ export class SpEffect
 
                     switch(this.spConfig.UseSkill)
                     {
-                        case "skill_0022":
-                            {
-                                node.setScale(new Vec3(0.3, 0.3, 1));
-                            }
-                            break;
                         case "skill_0007":
                             {
                                 node.setPosition(new Vec3(-45,70,0));
@@ -525,6 +527,46 @@ export class SpEffect
             }
         });
     }
+
+    /**
+     * 飞行物特效
+     * @param _self 发射位置
+     * @param _target 目标位置
+     * @param _isGain 增益否
+     */
+    public ProjectilesEffect(_self:Vec3,_target:Vec3,_isGain:boolean): Promise<void>
+    {
+        return new Promise((resolve)=>
+        {
+            try
+            {
+                let str:string="";
+                if(_isGain)
+                {
+                    str=this.spConfig.Projectiles[0]+"/"+config.SpListConfig.get(this.spConfig.Projectiles[0]).path;
+                }
+                else
+                {
+                    str=this.spConfig.Projectiles[1]+"/"+config.SpListConfig.get(this.spConfig.Projectiles[1]).path;
+                }
+                let node = new Node("Projectiles");
+                node.layer=Layers.Enum.UI_2D;
+                singleton.netSingleton.battle.panelNode.addChild(node);
+
+                node.setPosition(_self);
+                node.setScale(new Vec3(0.5,0.5,1));
+
+                node.addComponent(Bullet).Init(_target,str,_isGain).then(()=>
+                {
+                    resolve();
+                });
+            }
+            catch(error)
+            {
+                console.log("SpEffect 下的 UseProjectiles 错误: ",error)
+            }
+        });
+    }
 }
 
 /**
@@ -532,8 +574,66 @@ export class SpEffect
  * @author Hotaru
  * @CreateTime 2024/11/27
  */
-export class SpEffectUI
+export class SpEffectOnUI
 {
+    private canvas:Node=null;
 
+    constructor()
+    {
+        this.canvas=GameManager.Instance.node;
+    }
+
+    public CheckSkillEffect(_obj:spEffectObj): Promise<void>
+    {
+        return new Promise(async (resolve)=>
+        {
+            
+                try
+                {
+                    let node = new Node("CheckSkillEffect");
+                    node.layer = Layers.Enum.UI_2D;
+                    let spEffect = node.addComponent(sp.Skeleton);
+
+                    let style = 1;
+                    switch (_obj.key)
+                    {
+                        case "skill_0022":
+                            {
+                                
+                            }
+                            break;
+                    }
+                    let address = "EffectSpine/" + _obj.key + "/" + config.SpListConfig.get(_obj.key).path;
+                    await Promise.all([new Promise<void>(async (resolve, reject) =>
+                    {
+                        await loadAssets.LoadSkeletonData(address, (data) =>
+                        {
+                            if (data)
+                            {
+                                spEffect.skeletonData = data;
+                            }
+                            resolve();
+                        });
+                    })]); 
+                    let anim = spEffect.skeletonData.getAnimsEnum();
+                    spEffect.setSkin("default");
+
+                    spEffect.setAnimation(0, String(anim[style]), false);
+
+                    spEffect.setCompleteListener((trackEntry) =>
+                    {
+                        if (trackEntry.animation.name === String(anim[style]))
+                        {
+                            node.destroy();
+                            resolve();
+                        }
+                    });
+                }
+                catch (error)
+                {
+                    console.log("SpEffectOnUI下的 CheckSkillEffect 错误: ", error);
+                }
+        });
+    }
 }
 

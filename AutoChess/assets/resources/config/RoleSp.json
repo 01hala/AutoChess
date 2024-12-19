@@ -6,7 +6,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100002": {
         "Id": 100002,
@@ -15,7 +16,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100003": {
         "Id": 100003,
@@ -24,7 +26,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100004": {
         "Id": 100004,
@@ -33,7 +36,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100005": {
         "Id": 100005,
@@ -42,7 +46,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100006": {
         "Id": 100006,
@@ -51,7 +56,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100007": {
         "Id": 100007,
@@ -60,7 +66,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100008": {
         "Id": 100008,
@@ -69,7 +76,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100009": {
         "Id": 100009,
@@ -78,7 +86,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100010": {
         "Id": 100010,
@@ -87,7 +96,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100011": {
         "Id": 100011,
@@ -96,7 +106,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100012": {
         "Id": 100012,
@@ -105,7 +116,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100013": {
         "Id": 100013,
@@ -114,7 +126,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100014": {
         "Id": 100014,
@@ -123,7 +136,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100015": {
         "Id": 100015,
@@ -132,7 +146,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100016": {
         "Id": 100016,
@@ -141,7 +156,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100017": {
         "Id": 100017,
@@ -150,7 +166,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100018": {
         "Id": 100018,
@@ -159,7 +176,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100019": {
         "Id": 100019,
@@ -168,7 +186,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100020": {
         "Id": 100020,
@@ -177,7 +196,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100021": {
         "Id": 100021,
@@ -186,7 +206,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100022": {
         "Id": 100022,
@@ -195,7 +216,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100023": {
         "Id": 100023,
@@ -204,7 +226,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100024": {
         "Id": 100024,
@@ -213,7 +236,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100025": {
         "Id": 100025,
@@ -222,7 +246,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100026": {
         "Id": 100026,
@@ -231,7 +256,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100027": {
         "Id": 100027,
@@ -240,7 +266,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100028": {
         "Id": 100028,
@@ -249,7 +276,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100029": {
         "Id": 100029,
@@ -258,7 +286,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100030": {
         "Id": 100030,
@@ -267,7 +296,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100031": {
         "Id": 100031,
@@ -276,7 +306,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100032": {
         "Id": 100032,
@@ -285,7 +316,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100033": {
         "Id": 100033,
@@ -294,7 +326,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100034": {
         "Id": 100034,
@@ -303,7 +336,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100035": {
         "Id": 100035,
@@ -312,7 +346,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100036": {
         "Id": 100036,
@@ -321,7 +356,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100037": {
         "Id": 100037,
@@ -330,7 +366,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100038": {
         "Id": 100038,
@@ -339,7 +376,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100039": {
         "Id": 100039,
@@ -348,7 +386,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100040": {
         "Id": 100040,
@@ -357,7 +396,8 @@
         "Skill": "skill_0022",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100041": {
         "Id": 100041,
@@ -366,7 +406,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100042": {
         "Id": 100042,
@@ -375,7 +416,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100043": {
         "Id": 100043,
@@ -384,7 +426,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100044": {
         "Id": 100044,
@@ -393,7 +436,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100045": {
         "Id": 100045,
@@ -402,7 +446,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100046": {
         "Id": 100046,
@@ -411,7 +456,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100047": {
         "Id": 100047,
@@ -420,7 +466,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100048": {
         "Id": 100048,
@@ -429,7 +476,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100049": {
         "Id": 100049,
@@ -438,7 +486,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100050": {
         "Id": 100050,
@@ -447,7 +496,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100051": {
         "Id": 100051,
@@ -456,7 +506,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100052": {
         "Id": 100052,
@@ -465,7 +516,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100053": {
         "Id": 100053,
@@ -474,7 +526,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "100054": {
         "Id": 100054,
@@ -483,7 +536,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200001": {
         "Id": 200001,
@@ -492,7 +546,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200002": {
         "Id": 200002,
@@ -501,7 +556,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200003": {
         "Id": 200003,
@@ -510,7 +566,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200004": {
         "Id": 200004,
@@ -519,7 +576,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200005": {
         "Id": 200005,
@@ -528,7 +586,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200006": {
         "Id": 200006,
@@ -537,7 +596,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200007": {
         "Id": 200007,
@@ -546,7 +606,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200008": {
         "Id": 200008,
@@ -555,7 +616,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200009": {
         "Id": 200009,
@@ -564,7 +626,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200010": {
         "Id": 200010,
@@ -573,7 +636,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200011": {
         "Id": 200011,
@@ -582,7 +646,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200012": {
         "Id": 200012,
@@ -591,7 +656,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200013": {
         "Id": 200013,
@@ -600,7 +666,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200014": {
         "Id": 200014,
@@ -609,7 +676,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200015": {
         "Id": 200015,
@@ -618,7 +686,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200016": {
         "Id": 200016,
@@ -627,7 +696,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200017": {
         "Id": 200017,
@@ -636,7 +706,8 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     },
     "200018": {
         "Id": 200018,
@@ -645,6 +716,7 @@
         "Skill": "skill_0007",
         "intensifierColony": "skill_0010",
         "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027"
+        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0023|skill_0024|skill_0026|skill_0027",
+        "projectiles": "Luminous|FireBall"
     }
 }

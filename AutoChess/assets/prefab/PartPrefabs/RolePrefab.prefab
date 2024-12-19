@@ -577,8 +577,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": null,
-      "y": null
+      "x": 0,
+      "y": 0
     },
     "_id": ""
   },
@@ -1975,10 +1975,7 @@
       "__id__": 91
     },
     "RoleId": 100001,
-    "remoteNode": {
-      "__uuid__": "6e367cde-9671-4098-9fdb-bf14866c81e1",
-      "__expectedType__": "cc.Prefab"
-    },
+    "remoteNode": null,
     "_id": ""
   },
   {

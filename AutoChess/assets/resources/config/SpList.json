@@ -136,5 +136,59 @@
         "Key": "skill_0027",
         "Path": "skeleton",
         "Name": "圣光"
+    },
+    "24": {
+        "Id": 24,
+        "Key": "Luminous",
+        "Path": "Luminous sphere",
+        "Name": "增益光球"
+    },
+    "25": {
+        "Id": 25,
+        "Key": "FireBall",
+        "Path": "fire",
+        "Name": "远程攻击火球"
+    },
+    "26": {
+        "Id": 26,
+        "Key": "EnergyWaves",
+        "Path": "skeleton",
+        "Name": "远程攻击光波"
+    },
+    "27": {
+        "Id": 27,
+        "Key": "Card",
+        "Path": "pai",
+        "Name": "远程攻击卡片"
+    },
+    "28": {
+        "Id": 28,
+        "Key": "Fist",
+        "Path": "skeleton",
+        "Name": "远程攻击拳头"
+    },
+    "29": {
+        "Id": 29,
+        "Key": "GreenFire",
+        "Path": "greed fire",
+        "Name": "远程攻击绿火"
+    },
+    "30": {
+        "Id": 30,
+        "Key": "MachineEagle",
+        "Path": "28",
+        "Name": "远程攻击机器鹰"
+    },
+    "31": {
+        "Id": 31,
+        "Key": "Magic",
+        "Path": "skeleton",
+        "Name": "远程攻击魔法"
+    },
+    "32": {
+        "Id": 32,
+        "Key": "Spear",
+        "Path": "mao",
+        "Name": "远程攻击长矛"
     }
 }

@@ -394,7 +394,22 @@ export class RoleDis extends Component
         }
     }
 
-    async BeHurted(_ev:skill.Event)
+    private async RoleRotate()
+    {
+        const rotationAxis = new Vec3(0, 1, 0);
+        let rotationSpeed=4.0;
+        try{
+            while (!this.isDead) {
+                await delay(0,()=>{}); // 让出控制权，以便游戏引擎处理其他事务
+                const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
+                this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
+            }
+        }catch{
+            console.log("角色停止旋转，人物已被销毁");
+        }
+    }
+
+    public async BeHurted(_ev:skill.Event)
     {
         try
         {
@@ -422,7 +437,7 @@ export class RoleDis extends Component
         }
     }
 
-    async IntensifierExp(value: number)
+    public async IntensifierExp(value: number)
     {
         let exp=this.Exp+value;
         if(exp<3)
@@ -440,7 +455,7 @@ export class RoleDis extends Component
         return delay(100,()=>{});
     }
 
-    async Intensifier(value: number[],_isColony: boolean,stack?:number) 
+    public async Intensifier(value: number[],_isColony: boolean,stack?:number) 
     {
         try 
         {
@@ -513,7 +528,7 @@ export class RoleDis extends Component
     }
 
     //缓动有bug暂时空置
-    async LevelUp()
+    public async LevelUp()
     {
         try
         {
@@ -549,7 +564,7 @@ export class RoleDis extends Component
         
     }
 
-    async ShiftPos(vec:Vec3,atkInit?:boolean)
+    public async ShiftPos(vec:Vec3,atkInit?:boolean)
     {
         return new Promise<void>(async (resolve, reject) => 
         {
@@ -571,32 +586,16 @@ export class RoleDis extends Component
         })
     }
 
-
-    private async RoleRotate()
-    {
-        const rotationAxis = new Vec3(0, 1, 0);
-        let rotationSpeed=4.0;
-        try{
-            while (!this.isDead) {
-                await delay(0,()=>{}); // 让出控制权，以便游戏引擎处理其他事务
-                const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
-                this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
-            }
-        }catch{
-            console.log("角色停止旋转，人物已被销毁");
-        }
-    }
-
     /*
     * 添加
     * author：Guanliu
     * 2024/04/20
     * 为人物添加装备
     */
-   Equipping(equipId:number)
-   {
-        this.roleInfo.equip[0]=equipId;
-   }
+    public Equipping(equipId: number)
+    {
+        this.roleInfo.equip[0] = equipId;
+    }
 
    /**
     * 使用技能表现
@@ -605,7 +604,7 @@ export class RoleDis extends Component
     * author：Hotaru
     * 2024/08/24
     */
-   async UseSkill(_ev:skill.Event)
+   public async UseSkill(_ev:skill.Event)
    {
         await this.spEffect.UseSkillEffect();
         await this.skillDis.UseSkill(_ev);
@@ -617,7 +616,7 @@ export class RoleDis extends Component
     * @author Hotaru
     * @time 2024/08/24 
     */
-   async ReceptionBuff(_buff:BattleEnums.BufferType)
+   public async ReceptionBuff(_buff:BattleEnums.BufferType)
    {
         let key="";
         switch(_buff)
@@ -634,7 +633,7 @@ export class RoleDis extends Component
     * @author Hotaru
     * @time 2024/11/30
     */
-   async DeflexionDamage()
+   public async DeflexionDamage()
    {
         //await this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
         await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0013_1",null));
@@ -644,7 +643,7 @@ export class RoleDis extends Component
     * @author Hotaru
     * @time 2024/11/30
     */
-   async SubstituteDamage()
+   public async SubstituteDamage()
    {
        // await this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
        await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0013_2",null));
@@ -679,7 +678,12 @@ export class RoleDis extends Component
         // });
    }
 
-   Exit() 
+   public async UseProjectiles(_self:Vec3,_target:Vec3,_isGain:boolean)
+   {
+        return this.spEffect.ProjectilesEffect(_self,_target,_isGain);
+   }
+
+   public Exit() 
     {
         try 
         {

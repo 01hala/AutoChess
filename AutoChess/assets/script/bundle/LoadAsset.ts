@@ -53,10 +53,16 @@ export class loadAssets
             try
             {
                 let ads: string[] = null;
+                let path:string="";
                 if (_address)
                 {
                     ads = _address.split('/');
-                    BundleManager.Instance.loadAssetsFromBundleSync(sp.SkeletonData ,ads[0], `${ads[1]}/${ads[2]}`,(data)=>
+                    for(let i=1;i<ads.length-1;i++)
+                    {
+                        path=path+ads[i]+"/";
+                    }
+                    path=path+ads[ads.length-1];
+                    BundleManager.Instance.loadAssetsFromBundleSync(sp.SkeletonData ,ads[0], path,(data)=>
                     {
                         if(data)
                         {

@@ -35,86 +35,98 @@ export class Bullet extends Component {
         this.isInit=false; 
     }
 
-    public Init(targetPos:Vec3 , isGain?:boolean):Promise<void>
+    public Init(targetPos:Vec3 , _effect:string , isGain:boolean):Promise<void>
     {
         return new Promise<void>(async (resolve, reject) =>
         {
-            console.log("初始化子弹");
-            this.targetPos = targetPos;
-            this.isInit = true;
-            this.skell = this.node.getComponent(sp.Skeleton);
-            if (isGain)
+            this.skell=this.node.addComponent(sp.Skeleton);
+            this.LoadOnConfig(_effect).then(()=>
             {
-                this.skell.enabled = false;
-                await this.LoadOnConfig();
-            }
-            else
-            {
-                let anims = this.skell.skeletonData.getAnimsEnum();
-                this.skell.setAnimation(0, String(anims[1]), true);
-            }
-            //设置旋转角度
-            let dir = new Vec2(targetPos.x - this.node.position.x, targetPos.y - this.node.position.y);
-            let angle = dir.signAngle(new Vec2(1, 0)) * 180 / Math.PI;
-            this.node.setRotationFromEuler(new Vec3(0, 0, -angle));
+                console.log("初始化子弹");
+                this.targetPos = targetPos;
+                this.isInit = true;
 
-            this.tAttack = tween(this.node)
-                .to(0.7, { position: targetPos }).call(() => 
-                {
-                    console.log("销毁子弹");
-                    if (isGain)
+                //设置旋转角度
+                let dir = new Vec2(targetPos.x - this.node.position.x, targetPos.y - this.node.position.y);
+                let angle = dir.signAngle(new Vec2(1, 0)) * 180 / Math.PI;
+                this.node.setRotationFromEuler(new Vec3(0, 0, -angle));
+
+                this.tAttack = tween(this.node)
+                    .to(0.7, { position: targetPos }).call(() => 
                     {
-                        let anims = this.skell.skeletonData.getAnimsEnum();
-                        this.skell.setAnimation(0, String(anims[2]), true);
-                        this.skell.setCompleteListener((trackEntry) =>
+                        console.log("销毁子弹");
+                        if (isGain)
+                        {
+                            let anims = this.skell.skeletonData.getAnimsEnum();
+                            this.skell.setAnimation(0, String(anims[2]), true);
+                            this.skell.setCompleteListener((trackEntry) =>
+                            {
+                                this.node.destroy();
+                            });
+                        }
+                        else
                         {
                             this.node.destroy();
-                        });
-                    }
-                    else
+                        }
+                    }).call(() =>
                     {
-                        this.node.destroy();
-                    }
-                }).call(() =>
-                {
-                    resolve();
-                }).start();
+                        resolve();
+                    }).start();
+            })
+            
+            
+            // this.skell = this.node.getComponent(sp.Skeleton);
+            // if (isGain)
+            // {
+            //     this.skell.enabled = false;
+            //     await this.LoadOnConfig();
+            // }
+            // else
+            // {
+            //     let anims = this.skell.skeletonData.getAnimsEnum();
+            //     this.skell.setAnimation(0, String(anims[1]), true);
+            // }
+           
+
+            
 
             console.log("初始化子弹完成");
         });
     }
 
-    private LoadOnConfig()
+    private LoadOnConfig(_str:string)
     {
-       return new Promise<void>((resolve, reject) => {
-         try
-         {
-             loadAssets.LoadSkeletonData("EffectSpine/gq/Luminous sphere",(data)=>
-             {
-                 if (data)
-                 {
-                     try
-                     {
-                         this.skell.skeletonData = data;
-                         this.skell.enabled=true;
-                         let anims = data.getAnimsEnum();
-                         this.skell.setAnimation(0, String(anims[1]), true);
-                         resolve();
-                     }
-                     catch (error)
-                     {
-                         console.warn(`子弹光球效果获取失败：`, error);
-                         resolve();
-                     }
-                 }
-             });
-         }
-         catch(error)
-         {
-             console.error(`Bullet 下的 LoadOnConfig 错误 err:${error}`);
-             reject();
-         }
-       })
+        return new Promise<void>((resolve, reject) =>
+        {
+            try
+            {
+                let path="EffectSpine/Projectiles/"+_str;
+                loadAssets.LoadSkeletonData(path, (data) =>
+                {
+                    if (data)
+                    {
+                        try
+                        {
+                            this.skell.skeletonData = data;
+                            this.skell.enabled = true;
+                            let anims = data.getAnimsEnum();
+                            this.skell.setAnimation(0, String(anims[1]), true);
+                            resolve();
+                        }
+                        catch (error)
+                        {
+                            console.warn(`子弹光球效果获取失败：`, error);
+                            reject();
+                        }
+                    }
+                });
+            }
+            catch (error)
+            {
+                console.error(`Bullet 下的 LoadOnConfig 错误 err:${error}`);
+                reject();
+            }
+        });
     }
 
     bezierCurve(p0: Vec3, p1: Vec3, p2: Vec3, t: number): Vec3 {

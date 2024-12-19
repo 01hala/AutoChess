@@ -26,7 +26,7 @@ export class SkillDis
 
     async Init()
     {
-        this.remoteNode = await BundleManager.Instance.loadAssetsFromBundle("BulletPrefabs", "remote") as Prefab;
+
     }
 
     UseSkill(_ev: skill.Event): Promise<void>
@@ -103,11 +103,7 @@ export class SkillDis
                         let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
 
-                        let bulletNode = instantiate(this.remoteNode);
-                        bulletNode.setPosition(selfpos);
-                        console.log(bulletNode);
-                        singleton.netSingleton.battle.panelNode.addChild(bulletNode);
-                        await bulletNode.getComponent(Bullet).Init(targetpos, null).then(async () =>
+                        await this.parent.getComponent(RoleDis).UseProjectiles(selfpos,targetpos,false).then(async ()=>
                         {
                             await target.getComponent(RoleDis).BeHurted(_ev);
                             await target.getComponent(RoleDis).ChangeAtt();
@@ -156,12 +152,7 @@ export class SkillDis
                         let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
 
-
-                        let bulletNode = instantiate(this.remoteNode);
-                        bulletNode.setPosition(selfpos);
-                        console.log(bulletNode);
-                        singleton.netSingleton.battle.panelNode.addChild(bulletNode);
-                        allAwait.push(bulletNode.getComponent(Bullet).Init(targetpos, true).then(async () =>
+                        allAwait.push(this.parent.getComponent(RoleDis).UseProjectiles(selfpos, targetpos, true).then(async () =>
                         {
                             switch (_ev.type)
                             {
@@ -177,6 +168,7 @@ export class SkillDis
                                     break;
                             }
                         }));
+                        
                     }
                 }
                 if(allAwait.length>0)
