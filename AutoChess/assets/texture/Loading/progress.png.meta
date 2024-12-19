@@ -11,7 +11,7 @@
     "6c48a": {
       "importer": "texture",
       "uuid": "b8580b8b-08c1-4784-aa31-52a3e030c67a@6c48a",
-      "displayName": "Progress",
+      "displayName": "progress",
       "id": "6c48a",
       "name": "texture",
       "userData": {
@@ -35,7 +35,7 @@
     "f9941": {
       "importer": "sprite-frame",
       "uuid": "b8580b8b-08c1-4784-aa31-52a3e030c67a@f9941",
-      "displayName": "Progress",
+      "displayName": "progress",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {
