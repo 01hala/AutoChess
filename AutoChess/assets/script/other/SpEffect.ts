@@ -12,6 +12,17 @@ export class spEffectObj
 {
     public key:string;
     public battleType:BattleEnums.BufferType | BattleEnums.SwapPropertiesType;
+    public style:number;
+
+    constructor(_key:string,_battlestype:BattleEnums.BufferType | BattleEnums.SwapPropertiesType | null ,_style?:number)
+    {
+        this.key=_key;
+        this.battleType-_battlestype;
+        if(_style)
+        {
+            this.style=_style;
+        }
+    }
 }
 
 /**
@@ -180,25 +191,29 @@ export class SpEffect
                     spEffect.skeletonData = this.useSkill;
                     let anim = this.useSkill.getAnimsEnum();
 
-                    switch(this.spConfig.useSkill)
+                    let style=1;
+
+                    switch(this.spConfig.UseSkill)
                     {
                         case "skill_0022":
                             {
-                                node.setScale(new Vec3(0.3,0.3,1));
+                                node.setScale(new Vec3(0.3, 0.3, 1));
                             }
                             break;
                         case "skill_0007":
-                        {
-                            node.setScale(new Vec3(0.5,0.5,1));
-                        }
-                        break;
+                            {
+                                node.setPosition(new Vec3(-45,70,0));
+                                node.setScale(new Vec3(0.4, 0.4, 1));
+                                style=2;
+                            }
+                            break;
                     }
 
-                    spEffect.setAnimation(0, String(anim[1]), false);
+                    spEffect.setAnimation(0, String(anim[style]), false);
                     spEffect.setSkin("default");
                     spEffect.setCompleteListener((trackEntry) =>
                     {
-                        if (trackEntry.animation.name === String(anim[1]))
+                        if (trackEntry.animation.name === String(anim[style]))
                         {
                             node.destroy();
                             resolve();

@@ -109,7 +109,7 @@ export class SkillDis
                         singleton.netSingleton.battle.panelNode.addChild(bulletNode);
                         await bulletNode.getComponent(Bullet).Init(targetpos, null).then(async () =>
                         {
-                            await target.getComponent(RoleDis).BeHurted(_ev.value[0]);
+                            await target.getComponent(RoleDis).BeHurted(_ev);
                             await target.getComponent(RoleDis).ChangeAtt();
                         });
                     }

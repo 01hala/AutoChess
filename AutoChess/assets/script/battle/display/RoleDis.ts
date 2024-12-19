@@ -25,7 +25,7 @@ import { SendMessage } from '../../other/MessageEvent';
 import * as common from '../../battle/AutoChessBattle/common';
 import { EffectSpine } from './EffectSpine';
 import { SkillDis } from './SkillDis';
-import { SpEffect } from '../../other/SpEffect';
+import { SpEffect, spEffectObj } from '../../other/SpEffect';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -298,7 +298,8 @@ export class RoleDis extends Component
             case BattleEnums.SwapPropertiesType.AttackSwap:
             case BattleEnums.SwapPropertiesType.HpSwap:
                 {
-                    await this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
+                    //await this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
+                    await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0024", _swapType));
                 }
                 break;
         }
@@ -385,12 +386,6 @@ export class RoleDis extends Component
                     hurtedTextAnim.play();
                     hitAnim.play();
                     
-                    let roleConfig = config.RoleConfig.get(this.RoleId);
-                    let audioString="Sound/sound_character_hit_MN";
-                    if(undefined!=roleConfig.Sex&&undefined!=roleConfig.Armor){
-                        audioString="Sound/sound_character_hit_"+roleConfig.Sex+roleConfig.Armor;
-                    }
-                    AudioManager.Instance.PlayerOnShot(audioString);
                 }).delay(0.2).call(()=>
                 {
                     this.hurtedSpine.active=false;
@@ -399,14 +394,22 @@ export class RoleDis extends Component
         }
     }
 
-    async BeHurted(_value:number)
+    async BeHurted(_ev:skill.Event)
     {
         try
         {
-            this.hurtedNum+=_value;
+            this.hurtedNum+=_ev.value[0];
             this.BeHurtedNum=this.hurtedNum;
 
             this.ShowHurtedTween();
+
+            let roleConfig = config.RoleConfig.get(this.RoleId);
+            let audioString = "Sound/sound_character_hit_MN";
+            if (undefined != roleConfig.Sex && undefined != roleConfig.Armor)
+            {
+                audioString = "Sound/sound_character_hit_" + roleConfig.Sex + roleConfig.Armor;
+            }
+            AudioManager.Instance.PlayerOnShot(audioString);
 
             return delay(700,()=>
             {
@@ -551,7 +554,8 @@ export class RoleDis extends Component
         return new Promise<void>(async (resolve, reject) => 
         {
             console.log(`shiftPos begin!`);
-            await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
+            //await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
+            await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0014",null));
             //开始缓动
             this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).call(()=>
             {
@@ -620,7 +624,8 @@ export class RoleDis extends Component
         {
             case BattleEnums.BufferType.Weak:key="skill_0015";break;
         }
-        await this.spEffect.CheckSkillEffect({key:key,battleType:null});
+        //await this.spEffect.CheckSkillEffect({key:key,battleType:null});
+        await this.spEffect.CheckSkillEffect(new spEffectObj(key,null));
         await this.spEffect.UseBuffEffect(_buff)
 
    }
@@ -631,7 +636,8 @@ export class RoleDis extends Component
     */
    async DeflexionDamage()
    {
-        await this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
+        //await this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
+        await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0013_1",null));
    }
    /**
     * 承受伤害
@@ -640,7 +646,8 @@ export class RoleDis extends Component
     */
    async SubstituteDamage()
    {
-        await this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
+       // await this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
+       await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0013_2",null));
    }
    
    /**

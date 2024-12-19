@@ -21430,8 +21430,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -45,
+      "y": 70,
       "z": 0
     },
     "_lrot": {
@@ -21443,8 +21443,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.4,
+      "y": 0.4,
       "z": 1
     },
     "_mobility": 0,
@@ -21511,7 +21511,7 @@
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "animation2",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,

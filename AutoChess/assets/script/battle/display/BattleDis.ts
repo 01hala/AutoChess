@@ -446,7 +446,7 @@ export class BattleDis
                             r = this.enemyQueue.roleNodes[ev.recipient[0].index];
                             if (r)
                             {
-                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev));
                                 allAwait.push(r.getComponent(RoleDis).ChangeAtt());
                             }
                     }
@@ -456,7 +456,7 @@ export class BattleDis
                             r = this.selfQueue.roleNodes[ev.recipient[0].index];
                             if (r) 
                             {
-                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev.value[0]));
+                                allAwait.push(r.getComponent(RoleDis).BeHurted(ev));
                                 allAwait.push(r.getComponent(RoleDis).ChangeAtt());
                             }              
                     }
