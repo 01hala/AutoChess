@@ -467,7 +467,7 @@ export class login extends Component {
             {
                 case "VenturePanel":
                     {
-                        let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "VenturePanel") as Prefab;
+                        let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "QuestPanel") as Prefab;
                         let panel = instantiate(vt);
                         panel.setParent(this.node);
                         panel.getComponent(QuestPanel).Open();
