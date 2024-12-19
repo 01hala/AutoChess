@@ -1,0 +1,17 @@
+/**index.wxss**/
+page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.scrollarea {
+  flex: 1;
+  height: 100%;
+  overflow-y: hidden;
+}
+.avatar {
+  height: 100%;
+  width: 100%;
+  display: block;
+  mode: aspectFit;
+}
