@@ -1,0 +1,48 @@
+
+pai.png
+size: 728,728
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fangkuai
+  rotate: false
+  xy: 149, 36
+  size: 116, 141
+  orig: 118, 143
+  offset: 1, 1
+  index: -1
+heimei
+  rotate: true
+  xy: 145, 179
+  size: 145, 141
+  orig: 147, 143
+  offset: 1, 1
+  index: -1
+meihua
+  rotate: false
+  xy: 2, 13
+  size: 145, 146
+  orig: 147, 148
+  offset: 1, 1
+  index: -1
+paibei
+  rotate: false
+  xy: 2, 326
+  size: 268, 400
+  orig: 270, 402
+  offset: 1, 1
+  index: -1
+taohua
+  rotate: true
+  xy: 2, 161
+  size: 163, 141
+  orig: 165, 143
+  offset: 1, 1
+  index: -1
+xian
+  rotate: true
+  xy: 2, 2
+  size: 9, 96
+  orig: 9, 96
+  offset: 0, 0
+  index: -1

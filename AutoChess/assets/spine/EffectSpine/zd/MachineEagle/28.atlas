@@ -1,0 +1,76 @@
+
+28.png
+size: 457,457
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+baoguangdian
+  rotate: false
+  xy: 2, 343
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: -1
+jiantou
+  rotate: false
+  xy: 2, 436
+  size: 45, 19
+  orig: 45, 19
+  offset: 0, 0
+  index: -1
+liuguang0001
+  rotate: true
+  xy: 49, 427
+  size: 28, 46
+  orig: 28, 46
+  offset: 0, 0
+  index: -1
+liuguang0002
+  rotate: false
+  xy: 183, 413
+  size: 45, 42
+  orig: 45, 42
+  offset: 0, 0
+  index: -1
+liuguang0003
+  rotate: true
+  xy: 358, 400
+  size: 55, 56
+  orig: 55, 56
+  offset: 0, 0
+  index: -1
+liuguang0004
+  rotate: false
+  xy: 230, 409
+  size: 67, 46
+  orig: 67, 46
+  offset: 0, 0
+  index: -1
+liuguang0005
+  rotate: true
+  xy: 299, 407
+  size: 48, 57
+  orig: 48, 57
+  offset: 0, 0
+  index: -1
+liuguang0006
+  rotate: true
+  xy: 97, 427
+  size: 28, 49
+  orig: 28, 49
+  offset: 0, 0
+  index: -1
+niao
+  rotate: false
+  xy: 86, 297
+  size: 369, 101
+  orig: 369, 101
+  offset: 0, 0
+  index: -1
+suduquan
+  rotate: false
+  xy: 148, 422
+  size: 33, 33
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
