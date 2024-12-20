@@ -244,9 +244,15 @@ export class BattleDis
         
     }
 
-    showBattleEffect(_bool:boolean)
+    ShowBattleEffect()
     {
-        this.battleEffectImg.active=_bool;
+        this.battleEffectImg.active=true;
+        this.battleEffectImg.setSiblingIndex(99);
+        this.battleEffectImg.getComponent(sp.Skeleton).setAnimation(0,"animation",false);
+        delay(500,()=>
+        {
+            this.battleEffectImg.active=false;
+        })
     }
 
     private showLaunchSkillEffect(isShow:boolean=false)
@@ -462,12 +468,12 @@ export class BattleDis
                     }
                 }
             }
-            console.log("ChangeAttEvent allAwait:", allAwait);
+            console.log("OnBehurted allAwait:", allAwait);
             await Promise.all(allAwait);
         }
         catch(error) 
         {
-            console.error("BattleDis 下的 ChangeAttEvent 错误 err:", error);
+            console.error("BattleDis 下的 OnBehurted 错误 err:", error);
         }
     }
 
@@ -710,48 +716,7 @@ export class BattleDis
 
                     allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
                 }
-                //     let skilleffectem;
-                //     switch (ev.type)
-                //     {
-                //         case BattleEnums.EventType.GiveShields: skilleffectem = common.SkillEffectEM.GainShield; break;
-                //         case BattleEnums.EventType.AddBuff: skilleffectem = common.SkillEffectEM.AddBuffer; break;
-                //     }
-
-                //     for (let r of ev.recipient)
-                //     {
-                //         if (BattleEnums.Camp.Self == r.camp)
-                //         {
-                //             if (this.selfQueue.roleNodes[r.index])
-                //             {
-                //                 if (!ev.isParallel) 
-                //                 {
-                //                     allAwait.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
-                //                 }
-                //                 else
-                //                 {
-                //                     this.selfParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
-                //                 }
-                //             }
-                //         }
-                //         if (BattleEnums.Camp.Enemy == r.camp)
-                //         {
-                //             if (this.enemyQueue.roleNodes[r.index])
-                //             {
-                //                 if (!ev.isParallel)
-                //                 {
-                //                     allAwait.push(this.enemyQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
-                //                 }
-                //                 else
-                //                 {
-                //                     this.enemyParallelList.push(this.selfQueue.roleNodes[r.index].getComponent(RoleDis).ReceptionEffect(skilleffectem, ev.isParallel, ev.value[0]));
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
             }
-
-
             await Promise.all(allAwait);
         }
         catch (error)
