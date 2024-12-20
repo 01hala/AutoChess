@@ -428,14 +428,10 @@ export class RoleDis extends Component
                 hitAnim.resume();
                 
                 this.behurtedTextEffect.active = true;
-                this.hurtedSpine.getComponent(sp.Skeleton).animation = "animation";
-                this.hurtedSpine.active = true;
+                
                 hurtedTextAnim.play();
                 hitAnim.play();
 
-            }).delay(0.2).call(() =>
-            {
-                this.hurtedSpine.active = false;
             }).start();
         }
     }
@@ -459,13 +455,14 @@ export class RoleDis extends Component
             }
             if(BattleEnums.EventType.RemoteInjured == _ev.type)
             {
-                this.node.getChildByPath("BeHurtedSpEffect").active=true;
+                this.hurtedSpine.getComponent(sp.Skeleton).animation = "animation";
+                this.hurtedSpine.active = true;
             }
             
             return delay(700, () =>
             {
                 this.tBeHurted = null;
-                this.node.getChildByPath("BeHurtedSpEffect").active=false;
+                this.hurtedSpine.active = false;
             });
         }
         catch (err)
