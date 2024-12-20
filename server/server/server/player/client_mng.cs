@@ -1229,8 +1229,11 @@ namespace Player
                 Log.Log.trace("PVELevelConfigs TryGetValue quest:{0}", info.quest);
 
                 PVELevelCfg = cfg;
-                BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
-                StartPVERound(0);
+                if (info.PVELevelIndex == 0)
+                {
+                    BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
+                    StartPVERound(0);
+                }
 
                 Log.Log.trace("PVELevelConfigs TryGetValue isQuestEvent:{0}", isQuestEvent);
                 if (!isQuestEvent)
