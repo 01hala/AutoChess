@@ -25,7 +25,7 @@ import { SendMessage } from '../../other/MessageEvent';
 import * as common from '../../battle/AutoChessBattle/common';
 import { EffectSpine } from './EffectSpine';
 import { SkillDis } from './SkillDis';
-import { SpEffect, spEffectObj } from '../../other/SpEffect';
+import { SpEffectOnRole, spEffectObj } from '../../other/SpEffect';
 const { ccclass, property } = _decorator;
 
 @ccclass('RoleDis')
@@ -47,106 +47,110 @@ export class RoleDis extends Component
         type: Prefab,
         displayName: "增益提示"
     })
-    public intensifierTip:Prefab;
+    public intensifierTip: Prefab;
     //血量和攻击
     public Hp: number;
     public AtkNum: number;
     //等级和经验
     public Level: number;
-    public Exp:number;
+    public Exp: number;
     //角色立绘(骨骼动画)
-    public roleSprite:sp.Skeleton;
+    public roleSprite: sp.Skeleton;
     //角色信息
     private roleInfo: Role = null;
     //生命和攻击文本
     private hpText: RichText;
     private atkText: RichText;
-    private levelText:RichText;
+    private levelText: RichText;
     //提示字符
-    private behurtedTextEffect:Node;
-    private beHurtedText:Node;
+    private behurtedTextEffect: Node;
+    private beHurtedText: Node;
     //受伤效果
     private bandage: Node;
-    private hurtedSpine:Node;
+    private hurtedSpine: Node;
     //攻击缓动
     private tAttack: Tween<Node> = null;
     //位移缓动
     private tShiftpos: Tween<Node> = null;
     //死亡锁
-    private isDead=false;
+    private isDead = false;
     //初始位置
     private originalPos: Vec3;
     //id字符
-    private idText:RichText;
+    private idText: RichText;
     //字体
     private typeface: TTFFont;
     //特效效果
-    private effectSpine:Node;
+    private effectSpine: Node;
     //技能表现类
-    private skillDis:SkillDis;
+    private skillDis: SkillDis;
     //受伤数字设置器
-    public set BeHurtedNum(value:number)
+    public set BeHurtedNum(value: number)
     {
         this.beHurtedText.getComponent(RichText).font = this.typeface;
-        this.beHurtedText.getComponent(RichText).string="<color=#ad0003><outline color=#f05856 width=4>-" + value + "</outline></color>";
+        this.beHurtedText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>-" + value + "</outline></color>";
     }
     //总受伤值
-    private hurtedNum:number=0;
+    private hurtedNum: number = 0;
     //受伤缓动
-    private tBeHurted:Tween<Node>=null;
+    private tBeHurted: Tween<Node> = null;
 
-    private spEffect:SpEffect;
+    private RoleSpEffect: SpEffectOnRole;
 
     protected async onLoad(): Promise<void> 
     {
-        try {
+        try
+        {
             this.typeface = (await BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
 
             //this.levelSprite = this.node.getChildByName("LevelSprite");
             this.bandage = this.node.getChildByName("Bandage");
-            this.behurtedTextEffect=this.node.getChildByName("BeHertedTextEffect");
-            this.beHurtedText=this.behurtedTextEffect.getChildByName("BeHurtedText");
-            this.hurtedSpine=this.node.getChildByPath("BeHurtedSpine");
-            this.effectSpine=this.node.getChildByPath("EffectSpine");
+            this.behurtedTextEffect = this.node.getChildByName("BeHertedTextEffect");
+            this.beHurtedText = this.behurtedTextEffect.getChildByName("BeHurtedText");
+            this.hurtedSpine = this.node.getChildByPath("BeHurtedSpine");
+            this.effectSpine = this.node.getChildByPath("EffectSpine");
 
             this.bandage.active = false;
-            this.behurtedTextEffect.active=false;
-            this.hurtedSpine.active=false;
+            this.behurtedTextEffect.active = false;
+            this.hurtedSpine.active = false;
             this.hpText = this.node.getChildByPath("Hp/HpText").getComponent(RichText);
             this.atkText = this.node.getChildByPath("Atk/AtkText").getComponent(RichText);
-            this.levelText=this.node.getChildByPath("Level/LevelText").getComponent(RichText);
-            
-            this.idText=this.node.getChildByPath("ID").getComponent(RichText);
+            this.levelText = this.node.getChildByPath("Level/LevelText").getComponent(RichText);
+
+            this.idText = this.node.getChildByPath("ID").getComponent(RichText);
             //this.typeface = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
             //this.hpText.font = this.atkText.font = this.typeface;
 
             this.AttackInit();
         }
-        catch (err) {
+        catch (err)
+        {
             console.warn("RoleDis 下的 onLoad 错误 err:" + err);
         }
     }
-    
+
     async start() 
     {
-        if (this.roleInfo) {
-            if (this.hpText && this.atkText) {
+        if (this.roleInfo)
+        {
+            if (this.hpText && this.atkText)
+            {
                 this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
                 this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-                this.levelText.string="<color=#7CFC0><outline color=#7FFF00 width=4>"+ this.Level + "</outline></color>";
+                this.levelText.string = "<color=#7CFC0><outline color=#7FFF00 width=4>" + this.Level + "</outline></color>";
 
-                this.idText.string="<color=#9d0c27>"+this.roleInfo.id;
+                this.idText.string = "<color=#9d0c27>" + this.roleInfo.id;
             }
         }
 
-        if(null == this.intensifierTip)
+        if (null == this.intensifierTip)
         {
-            this.intensifierTip = await BundleManager.Instance.loadAssetsFromBundle("TextTipPrefabs","IntensifierTip") as Prefab;
+            this.intensifierTip = await BundleManager.Instance.loadAssetsFromBundle("TextTipPrefabs", "IntensifierTip") as Prefab;
         }
 
-        if(null == singleton.netSingleton.battle)
+        if (null == singleton.netSingleton.battle)
         {
-            this.node.getComponent(Button).enabled=false;
+            this.node.getComponent(Button).enabled = false;
         }
         else
         {
@@ -160,10 +164,10 @@ export class RoleDis extends Component
                 }
             })
         }
-        
+
     }
 
-    async Refresh(roleInfo: Role,isnew?:boolean) 
+    public async Refresh(roleInfo: Role, isnew?: boolean) 
     {
         return new Promise<void>(async (resolve, reject) =>
         {
@@ -187,8 +191,8 @@ export class RoleDis extends Component
                     // }
                     await this.LoadOnConfig();
                     this.skillDis = new SkillDis(this.node, roleInfo.index);
-                    this.spEffect = new SpEffect(roleInfo.id, this.node);
-                    await Promise.all([this.skillDis.Init(), this.spEffect.init()]);
+                    this.RoleSpEffect = new SpEffectOnRole(roleInfo.id, this.node);
+                    await Promise.all([this.skillDis.Init(), this.RoleSpEffect.init()]);
                 }
                 this.ChangeAtt();
                 resolve();
@@ -201,121 +205,99 @@ export class RoleDis extends Component
         })
     }
 
-    GetRoleFetter():Fetters
+    public GetRoleFetter(): Fetters
     {
-        if(this.roleInfo) return this.roleInfo.fetter;
-    }
-    
-    GetRoleSkillID():number
-    {
-        if(this.roleInfo) return this.roleInfo.skillid;
+        if (this.roleInfo) return this.roleInfo.fetter;
     }
 
-    GetRoleInfo()
+    public GetRoleSkillID(): number
     {
-        if(this.roleInfo) return this.roleInfo;
+        if (this.roleInfo) return this.roleInfo.skillid;
     }
 
-    AttackInit() 
+    public GetRoleInfo()
+    {
+        if (this.roleInfo) return this.roleInfo;
+    }
+
+    public AttackInit() 
     {
         this.originalPos = new Vec3(this.node.position);
     }
 
-    Attack(readyLocation: Vec3, battleLocation: Vec3, camp: BattleEnums.Camp ) 
+    /*
+    * 添加
+    * author：Guanliu
+    * 2024/04/20
+    * 为人物添加装备
+    */
+    public Equipping(equipId: number)
     {
-        try 
-        {
-            this.node.setSiblingIndex(90);
-            this.tAttack = tween(this.node)
-                .to(0.15, { worldPosition: readyLocation })
-                //这里做出蓄力效果
-                .delay(0.1)
-                .to(0.05,{worldPosition:new Vec3(readyLocation.x+15,readyLocation.y,readyLocation.z)})
-                .to(0.05,{worldPosition:new Vec3(readyLocation.x-15,readyLocation.y,readyLocation.z)})
-                .to(0.05,{worldPosition:new Vec3(readyLocation.x,readyLocation.y+15,readyLocation.z)})
-                .to(0.05,{worldPosition:new Vec3(readyLocation.x,readyLocation.y-15,readyLocation.z)}) 
-                //上面是蓄力效果
-                .to(0.05, { worldPosition: battleLocation })
-                .call(() => {
-                    if (BattleEnums.Camp.Self == camp) {
-                        singleton.netSingleton.battle.showBattleEffect(true);
-                        // let roleConfig = config.RoleConfig.get(this.RoleId);
-                        // let audioString="Sound/sound_character_hit_MN";
-                        // if(undefined!=roleConfig.Sex&&undefined!=roleConfig.Armor){
-                        //     audioString="Sound/sound_character_hit_"+roleConfig.Sex+roleConfig.Armor;
-                        // }
-                        // AudioManager.Instance.PlayerOnShot(audioString);
-                    }
-                })
-                .delay(0.1).call(() => {
-                    if (BattleEnums.Camp.Self == camp) {
-                        singleton.netSingleton.battle.showBattleEffect(false);
-                    }
-                })
-                .call(() => {
-                    this.ChangeAtt();
-                    this.ResetPos(readyLocation);
-                })
-                // .to(0.1, { position: readyLocation })
-                .start();
+        this.roleInfo.equip[0] = equipId;
+    }
 
-            return delay(450, () => 
+    public Attack(readyLocation: Vec3, battleLocation: Vec3, camp: BattleEnums.Camp) 
+    {
+        return new Promise<void>((resolve, reject) =>
+        {
+            try
             {
-                // if (this.tAttack) {
-                //     this.tAttack.stop();
-                //     this.tAttack = null;
-                // }
-            });
-        }
-
-        catch (err) 
-        {
-            console.error("RoleDis 下的 Attack 错误 err:" + err);
-        }
+                this.node.setSiblingIndex(90);
+                this.tAttack = tween(this.node)
+                    .to(0.15, { worldPosition: readyLocation })
+                    //这里做出蓄力效果
+                    .delay(0.1)
+                    .to(0.05, { worldPosition: new Vec3(readyLocation.x + 15, readyLocation.y, readyLocation.z) })
+                    .to(0.05, { worldPosition: new Vec3(readyLocation.x - 15, readyLocation.y, readyLocation.z) })
+                    .to(0.05, { worldPosition: new Vec3(readyLocation.x, readyLocation.y + 15, readyLocation.z) })
+                    .to(0.05, { worldPosition: new Vec3(readyLocation.x, readyLocation.y - 15, readyLocation.z) })
+                    //上面是蓄力效果
+                    .to(0.05, { worldPosition: battleLocation })
+                    .call(() =>
+                    {
+                        if (BattleEnums.Camp.Self == camp)
+                        {
+                            singleton.netSingleton.battle.ShowBattleEffect();
+                        }
+                    })
+                    .call(() =>
+                    {
+                        this.ChangeAtt();
+                        this.ResetPos(readyLocation);
+                        resolve();
+                    })
+                    .start();
+            } catch (error) 
+            {
+                console.error("RoleDis 下的 Attack 错误 err:" + error);
+            }
+        });
     }
 
     //异步执行将对撞角色归位，防止阻碍到后续判断
-    async ResetPos(readyLocation: Vec3){
+    public async ResetPos(readyLocation: Vec3)
+    {
         this.tAttack = tween(this.node)
-        .to(0.1, { worldPosition: readyLocation }).start();
+            .to(0.1, { worldPosition: readyLocation }).start();
         return delay(100, () => 
         {
-            if (this.tAttack) {
+            if (this.tAttack)
+            {
                 this.tAttack.stop();
                 this.tAttack = null;
             }
         });
     }
 
-    /**
-     * 交换属性
-     * @param _swapType 类型
-     */
-    async SwapProperties(_swapType:BattleEnums.SwapPropertiesType)
-    {
-        switch(_swapType)
-        {
-            case BattleEnums.SwapPropertiesType.AttackSwap:
-            case BattleEnums.SwapPropertiesType.HpSwap:
-                {
-                    //await this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
-                    await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0024", _swapType));
-                }
-                break;
-        }
-        
-        await this.ChangeAtt();
-    }
-
-    async ChangeAtt() 
+    public async ChangeAtt() 
     {
         try 
         {
             if (!this.roleInfo.getShields())
             {
-                this.spEffect.RemoveBuffEffect(BattleEnums.BufferType.Shields);
+                this.RoleSpEffect.RemoveBuffEffect(BattleEnums.BufferType.Shields);
             }
-            
+
 
             if (null == this.hpText && null == this.atkText)
             {
@@ -361,77 +343,129 @@ export class RoleDis extends Component
             console.error("RoleDis 下的 changeAtt 错误 err:" + err);
         }
     }
+
+    public Exit() 
+    {
+        try 
+        {
+            this.bandage.getComponent(Animation).on(Animation.EventType.FINISHED, () => 
+            {
+                //singleton.netSingleton.battle.showBattleEffect(false);
+                this.node.active = false;
+            });
+
+            let offset = -1000;
+            if (BattleEnums.Camp.Self != this.roleInfo.selfCamp) offset = 1000;
+            let hitAnim: Animation = this.node.getChildByName("Sprite").getComponent(Animation);
+            tween(this.node)
+                .call(() =>
+                {
+                    // hitAnim.resume();
+                    // this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
+                    // this.hurtedSpine.active=true;
+                    // hitAnim.play();
+                    this.node.getChildByName("Sprite").getComponent(sp.Skeleton).color = color(110, 110, 110, 255);
+                    this.RoleRotate();
+                })
+                // .delay(0.2).call(()=>
+                // {
+                //     this.hurtedSpine.active=false; 
+                // })         
+                .by(0.7, { position: new Vec3(this.node.position.x + offset, this.node.position.y + 500) }, { easing: 'quintIn' })
+                .to(0.7, { position: new Vec3(this.node.position.x + offset, this.node.position.y + 500) })
+                .delay(0.2).call(() =>
+                {
+                    this.isDead = true;
+                    this.roleInfo = null;
+                    console.log("销毁角色");
+                    this.node.destroy();
+                })
+                .start();
+            return delay(200, () => { });
+        }
+        catch (err) 
+        {
+            console.warn("RoleDis 下的 Exit 错误 err:" + err);
+        }
+
+    }
+
+    private async RoleRotate()
+    {
+        const rotationAxis = new Vec3(0, 1, 0);
+        let rotationSpeed = 4.0;
+        try
+        {
+            while (!this.isDead)
+            {
+                await delay(0, () => { }); // 让出控制权，以便游戏引擎处理其他事务
+                const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
+                this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
+            }
+        } catch
+        {
+            console.log("角色停止旋转，人物已被销毁");
+        }
+    }
+
     //显示受伤缓动
     private ShowHurtedTween()
     {
-        if(!this.tBeHurted)
+        if (!this.tBeHurted)
         {
-            this.hurtedNum=0;
-            let hurtedTextAnim: Animation=this.behurtedTextEffect.getComponent(Animation);
+            this.hurtedNum = 0;
+            let hurtedTextAnim: Animation = this.behurtedTextEffect.getComponent(Animation);
             hurtedTextAnim.on(Animation.EventType.FINISHED, () => 
             {
                 hurtedTextAnim.stop();
                 this.behurtedTextEffect.active = false;
                 hurtedTextAnim.resume();
             }, this);
-            let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
-            this.tBeHurted=tween(this.node).to(0,{}).call(()=>
-                {
-                    hurtedTextAnim.resume();
-                    hitAnim.resume();
-                    
-                    this.behurtedTextEffect.active=true;
-                    this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
-                    this.hurtedSpine.active=true;
-                    hurtedTextAnim.play();
-                    hitAnim.play();
-                    
-                }).delay(0.2).call(()=>
-                {
-                    this.hurtedSpine.active=false;
-                    
-                }).start();
+            let hitAnim: Animation = this.node.getChildByName("Sprite").getComponent(Animation);
+            this.tBeHurted = tween(this.node).to(0, {}).call(() =>
+            {
+                hurtedTextAnim.resume();
+                hitAnim.resume();
+                
+                this.behurtedTextEffect.active = true;
+                
+                hurtedTextAnim.play();
+                hitAnim.play();
+
+            }).start();
         }
     }
 
-    private async RoleRotate()
-    {
-        const rotationAxis = new Vec3(0, 1, 0);
-        let rotationSpeed=4.0;
-        try{
-            while (!this.isDead) {
-                await delay(0,()=>{}); // 让出控制权，以便游戏引擎处理其他事务
-                const deltaRotation = Quat.fromEuler(new Quat(), 0, rotationSpeed, 0);
-                this.node.setRotation(Quat.multiply(new Quat(), this.node.rotation, deltaRotation));
-            }
-        }catch{
-            console.log("角色停止旋转，人物已被销毁");
-        }
-    }
-
-    public async BeHurted(_ev:skill.Event)
+    public async BeHurted(_ev: skill.Event,_style?:number)
     {
         try
         {
-            this.hurtedNum+=_ev.value[0];
-            this.BeHurtedNum=this.hurtedNum;
-
+            this.hurtedNum += _ev.value[0];
+            this.BeHurtedNum = this.hurtedNum;
             this.ShowHurtedTween();
-
-            let roleConfig = config.RoleConfig.get(this.RoleId);
-            let audioString = "Sound/sound_character_hit_MN";
-            if (undefined != roleConfig.Sex && undefined != roleConfig.Armor)
+            if(BattleEnums.EventType.AttackInjured == _ev.type && _ev.spellcaster.camp == BattleEnums.Camp.Self)
             {
-                audioString = "Sound/sound_character_hit_" + roleConfig.Sex + roleConfig.Armor;
+                let roleConfig = config.RoleConfig.get(this.RoleId);
+                let audioString = "Sound/sound_character_hit_MN";
+                if (undefined != roleConfig.Sex && undefined != roleConfig.Armor)
+                {
+                    audioString = "Sound/sound_character_hit_" + roleConfig.Sex + roleConfig.Armor;
+                }
+                AudioManager.Instance.PlayerOnShot(audioString);
             }
-            AudioManager.Instance.PlayerOnShot(audioString);
-
-            return delay(700,()=>
+            if(BattleEnums.EventType.RemoteInjured == _ev.type)
             {
-                this.tBeHurted=null;
+                this.hurtedSpine.getComponent(sp.Skeleton).animation = "animation";
+                this.hurtedSpine.active = true;
+            }
+            
+            return delay(700, () =>
+            {
+                this.tBeHurted = null;
+                this.hurtedSpine.active = false;
             });
         }
-        catch(err)
+        catch (err)
         {
             console.error("RoleDis 下的 BeHurted 错误 err:" + err);
         }
@@ -439,56 +473,56 @@ export class RoleDis extends Component
 
     public async IntensifierExp(value: number)
     {
-        let exp=this.Exp+value;
-        if(exp<3)
+        let exp = this.Exp + value;
+        if (exp < 3)
         {
-            this.Exp=exp;
+            this.Exp = exp;
         }
         else
         {
-            this.Exp=exp%3;
-            this.Level+=exp%3;
+            this.Exp = exp % 3;
+            this.Level += exp % 3;
         }
 
         await this.ChangeAtt();
 
-        return delay(100,()=>{});
+        return delay(100, () => { });
     }
 
-    public async Intensifier(value: number[],_isColony: boolean,stack?:number) 
+    public async Intensifier(value: number[], _isColony: boolean, stack?: number) 
     {
         try 
         {
-            let ms=0;
+            let ms = 0;
 
             if (stack)
             {
                 this.Exp = stack % 3;
             }
 
-            let style=1;
-            if(!_isColony)
+            let style = 1;
+            if (!_isColony)
             {
-                if(value[0]!=0 && value[1]!=0) style=1;
-                if(value[0]!=0 && 0==value[1]) style=5;
-                if(0==value[0] && value[1]!=0) style=2;
+                if (value[0] != 0 && value[1] != 0) style = 1;
+                if (value[0] != 0 && 0 == value[1]) style = 5;
+                if (0 == value[0] && value[1] != 0) style = 2;
             }
             else
             {
-                style=2;
+                style = 2;
             }
 
-            await this.spEffect.UseIntensifierEffect(_isColony,style);
+            await this.RoleSpEffect.UseIntensifierEffect(_isColony, style);
 
             await this.ChangeAtt();
-            
-            for(let i = 0;i<value.length;i++)
+
+            for (let i = 0; i < value.length; i++)
             {
-                let tip:Node;
+                let tip: Node;
                 if (value[i] != 0)
                 {
                     tip = instantiate(this.intensifierTip);
-                    if(0==i)
+                    if (0 == i)
                     {
                         tip.getChildByPath("RichText").getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[i] + "</outline></color>";
                     }
@@ -498,20 +532,20 @@ export class RoleDis extends Component
                     }
                     tip.setParent(this.node);
                     let anim = tip.getComponent(Animation);
-                    anim.getState('Tips').speed=1.5;
+                    anim.getState('Tips').speed = 1.5;
                     anim.on(Animation.EventType.FINISHED, (event) =>
                     {
                         tip.destroy();
-                        ms+=anim.getState('Tips').time;
+                        ms += anim.getState('Tips').time;
                     });
-                    
+
                     anim.play();
                 }
-                
+
                 await sleep(750);
             }
-           
-            return delay(ms,()=>
+
+            return delay(ms, () =>
             {
                 // if(newtween)
                 // {
@@ -538,41 +572,41 @@ export class RoleDis extends Component
                 {
                     //scale:new Vec3(1.1,1.1,1)
                 })
-            .call(()=>
-            {
-                //this.Level=_level;
-                //if(sf)
-                //{
-                    //this.levelSprite.getComponent(Sprite).spriteFrame=sf;
-                //}
-            })
-            .delay(0.1).to(0.1,
+                .call(() =>
                 {
-                    //scale:new Vec3(1,1,1)
+                    //this.Level=_level;
+                    //if(sf)
+                    //{
+                    //this.levelSprite.getComponent(Sprite).spriteFrame=sf;
+                    //}
                 })
-            .start();
+                .delay(0.1).to(0.1,
+                    {
+                        //scale:new Vec3(1,1,1)
+                    })
+                .start();
 
-            return delay(300,()=>
+            return delay(300, () =>
             {
-                
+
             })
         }
-        catch(error)
+        catch (error)
         {
             console.error("RoleDis 下的 LevelUp 错误 err:" + error);
         }
-        
+
     }
 
-    public async ShiftPos(vec:Vec3,atkInit?:boolean)
+    public async ShiftPos(vec: Vec3, atkInit?: boolean)
     {
         return new Promise<void>(async (resolve, reject) => 
         {
             console.log(`shiftPos begin!`);
             //await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
-            await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0014",null));
+            await this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0014", null));
             //开始缓动
-            this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).call(()=>
+            this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).call(() =>
             {
                 if (this.tShiftpos) 
                 {
@@ -580,160 +614,125 @@ export class RoleDis extends Component
                     this.tShiftpos = null;
                     console.log("shiftPos end!");
                 }
-                if(atkInit) this.AttackInit();
+                if (atkInit) this.AttackInit();
                 resolve();
             }).start();
         })
     }
-
-    /*
-    * 添加
-    * author：Guanliu
-    * 2024/04/20
-    * 为人物添加装备
-    */
-    public Equipping(equipId: number)
+    /**
+     * 使用技能表现
+     * @param _skill 技能
+     * 
+     * @author：Hotaru
+     * @time 2024/08/24
+     */
+    public async UseSkill(_ev: skill.Event)
     {
-        this.roleInfo.equip[0] = equipId;
-    }
-
-   /**
-    * 使用技能表现
-    * @param _skill 技能
-    * 
-    * author：Hotaru
-    * 2024/08/24
-    */
-   public async UseSkill(_ev:skill.Event)
-   {
-        await this.spEffect.UseSkillEffect();
+        await this.RoleSpEffect.UseSkillEffect();
         await this.skillDis.UseSkill(_ev);
-   }
-
-   /**
-    * 接收buff表现
-    * 
-    * @author Hotaru
-    * @time 2024/08/24 
-    */
-   public async ReceptionBuff(_buff:BattleEnums.BufferType)
-   {
-        let key="";
-        switch(_buff)
-        {
-            case BattleEnums.BufferType.Weak:key="skill_0015";break;
-        }
-        //await this.spEffect.CheckSkillEffect({key:key,battleType:null});
-        await this.spEffect.CheckSkillEffect(new spEffectObj(key,null));
-        await this.spEffect.UseBuffEffect(_buff)
-
-   }
-   /**
-    * 转移伤害
-    * @author Hotaru
-    * @time 2024/11/30
-    */
-   public async DeflexionDamage()
-   {
-        //await this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
-        await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0013_1",null));
-   }
-   /**
-    * 承受伤害
-    * @author Hotaru
-    * @time 2024/11/30
-    */
-   public async SubstituteDamage()
-   {
-       // await this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
-       await this.spEffect.CheckSkillEffect(new spEffectObj("skill_0013_2",null));
-   }
-   
-   /**
-    * 召唤入场效果
-    * 
-    * @author Hotaru
-    * @time 2024/09/04
-    */
-   public async OnSummon()
-   {
-       await this.spEffect.UseSummonEffect();
-       this.roleSprite.node.active = true;
-       this.atkText.node.active = true;
-       this.hpText.node.active = true;
-       this.levelText.node.active = true;
-
-    //    if (this.effectSpine == null)
-    //    {
-    //        this.effectSpine = this.node.getChildByPath("EffectSpine");
-    //    }
-
-        //await this.effectSpine.getComponent(EffectSpine).ShowEffect(_type , false);
-        // .then((_ms)=>
-        // {
-        //     this.roleSprite.node.active=true;
-        //     this.atkText.node.active=true;
-        //     this.hpText.node.active=true;
-        //     this.levelText.node.active=true;
-        // });
-   }
-
-   public async UseProjectiles(_self:Vec3,_target:Vec3,_isGain:boolean)
-   {
-        return this.spEffect.ProjectilesEffect(_self,_target,_isGain);
-   }
-
-   public Exit() 
-    {
-        try 
-        {
-            this.bandage.getComponent(Animation).on(Animation.EventType.FINISHED, () => 
-            {
-                singleton.netSingleton.battle.showBattleEffect(false);
-                this.node.active = false;
-            });
-            
-            let offset=-1000;
-            if(BattleEnums.Camp.Self!=this.roleInfo.selfCamp) offset=1000;
-            let hitAnim:Animation=this.node.getChildByName("Sprite").getComponent(Animation);
-            tween(this.node)
-            .call(()=>
-            {
-                // hitAnim.resume();
-                // this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
-                // this.hurtedSpine.active=true;
-                // hitAnim.play();
-                this.node.getChildByName("Sprite").getComponent(sp.Skeleton).color=color(110,110,110,255);
-                this.RoleRotate();
-            })
-            // .delay(0.2).call(()=>
-            // {
-            //     this.hurtedSpine.active=false; 
-            // })         
-            .by(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y+500)},{easing: 'quintIn'})
-            .to(0.7,{position: new Vec3(this.node.position.x+offset,this.node.position.y+500)})
-            .delay(0.2).call(() => {
-                this.isDead=true;
-                this.roleInfo = null;
-                console.log("销毁角色");
-                this.node.destroy();
-            })
-            .start();
-            return delay(200, () => {});
-        }
-        catch (err) 
-        {
-            console.warn("RoleDis 下的 Exit 错误 err:" + err);
-        }
-
     }
+    /**
+     * 技能发动时表现
+     * 
+     * @author：Hotaru
+     * @time 2024/08/24
+     */
+    public async OnSkill(_isFetter:boolean)
+    {
+        return this.RoleSpEffect.OnSkillEffect(_isFetter);
+    }
+    /**
+      * 交换属性
+      * 
+      * @param _swapType 类型
+      */
+    public async SwapProperties(_swapType: BattleEnums.SwapPropertiesType)
+    {
+        switch (_swapType)
+        {
+            case BattleEnums.SwapPropertiesType.AttackSwap:
+            case BattleEnums.SwapPropertiesType.HpSwap:
+                {
+                    //await this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
+                    await this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0024", _swapType));
+                }
+                break;
+        }
 
-/*
- * 添加
- * author：Hotaru
- * 2024/03/06
- * 从配置文件加载
- */
+        await this.ChangeAtt();
+    }
+    /**
+     * 接收buff表现
+     * 
+     * @author Hotaru
+     * @time 2024/08/24 
+     */
+    public async ReceptionBuff(_buff: BattleEnums.BufferType)
+    {
+        //await this.spEffect.CheckSkillEffect({key:key,battleType:null});
+        //await this.spEffect.CheckSkillEffect(new spEffectObj(key,null));
+        let key = "";
+        switch (_buff)
+        {
+            case BattleEnums.BufferType.Weak: key = "skill_0015"; break;
+        }
+        if (key.length > 0)
+        {
+            await this.RoleSpEffect.CheckSkillEffect(new spEffectObj(key, null));
+        }
+        await this.RoleSpEffect.UseBuffEffect(_buff);
+    }
+    /**
+     * 转移伤害
+     * @author Hotaru
+     * @time 2024/11/30
+     */
+    public async DeflexionDamage()
+    {
+        //await this.spEffect.CheckSkillEffect({key:"skill_0013_1" , battleType : null});
+        return this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0013_1", null));
+    }
+    /**
+     * 承受伤害
+     * @author Hotaru
+     * @time 2024/11/30
+     */
+    public async SubstituteDamage()
+    {
+        // await this.spEffect.CheckSkillEffect({key:"skill_0013_2" , battleType : null});
+        return this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0013_2", null));
+    }
+    /**
+     * 召唤入场效果
+     * 
+     * @author Hotaru
+     * @time 2024/09/04
+     */
+    public async OnSummon()
+    {
+        await this.RoleSpEffect.UseSummonEffect();
+        this.roleSprite.node.active = true;
+        this.atkText.node.active = true;
+        this.hpText.node.active = true;
+        this.levelText.node.active = true;
+    }
+    /**
+     * 使用飞行物
+     * 
+     * @param _self 发射位置
+     * @param _target 目标位置
+     * @param _isGain 是否是增益效果
+     */
+    public async UseProjectiles(_self: Vec3, _target: Vec3, _isGain: boolean)
+    {
+        return this.RoleSpEffect.ProjectilesEffect(_self, _target, _isGain);
+    }
+    /** 
+     * 从配置文件加载
+     * 
+     * @author Hotaru
+     * @time 2024/03/06
+     */
     private LoadOnConfig()
     {
         return new Promise<void>((resolve, reject) =>

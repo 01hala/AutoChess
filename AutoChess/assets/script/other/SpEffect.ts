@@ -34,37 +34,31 @@ export class spEffectObj
  * @author Hotaru
  * @CreateTime 2024/11/27
  */
-export class SpEffect
+export class SpEffectOnRole
 {
     //被召唤出场特效
     private onSummon: sp.SkeletonData=null; 
     //技能起手特效
     private useSkill: sp.SkeletonData=null;
+    //技能发动时特效
+    private onSkill : sp.SkeletonData[]=[];
     //单体增强时特效
     private intensifierSelf: sp.SkeletonData=null;
-
     //群体增强时特效
     private intensifierColony: sp.SkeletonData=null;
     //存在buff特效
     private buff: Map<string, sp.SkeletonData>=new Map<string,sp.SkeletonData>();
     //技能生效特效
     private checkSkill: Map<string, sp.SkeletonData>=new Map<string,sp.SkeletonData>();
-
     //父节点
     private parent:Node=null;
-    private roleId:number=0;
-
-    private spConfig:RoleSpConfig=null;
-
-    private spOnUi:SpEffectOnUI=null;
+    //配置文件
+    private roleSpCfg:RoleSpConfig=null;
 
     constructor(_roleId:number,_parent: Node)
     {
         this.parent = _parent;
-        this.roleId=_roleId;
-        this.spOnUi=new SpEffectOnUI();
-
-        this.spConfig=config.RoleSpConfig.get(this.roleId);
+        this.roleSpCfg=config.RoleSpConfig.get(_roleId);
     }
 
     public async init()
@@ -74,7 +68,7 @@ export class SpEffect
         let allAwait=[];
         allAwait.push(new Promise<void>(async(resolve) => {
             //单体增强时特效
-            let address = "EffectSpine/" + this.spConfig.IntensifierSelf + "/" + config.SpListConfig.get(this.spConfig.IntensifierSelf).path;
+            let address = "EffectSpine/" + this.roleSpCfg.IntensifierSelf + "/" + config.SpListConfig.get(this.roleSpCfg.IntensifierSelf).path;
             //console.log("单体增强特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) => {
                 if (data)
@@ -87,7 +81,7 @@ export class SpEffect
 
         allAwait.push(new Promise<void>(async(resolve) => {
             //单体增强时特效
-            let address = "EffectSpine/" + this.spConfig.IntensifierColony + "/" + config.SpListConfig.get(this.spConfig.IntensifierColony).path;
+            let address = "EffectSpine/" + this.roleSpCfg.IntensifierColony + "/" + config.SpListConfig.get(this.roleSpCfg.IntensifierColony).path;
             //console.log("群体增强特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) =>
             {
@@ -101,7 +95,7 @@ export class SpEffect
 
         allAwait.push(new Promise<void>(async(resolve) => {
             //召唤出场特效
-            let address = "EffectSpine/" + this.spConfig.OnSummon + "/" + config.SpListConfig.get(this.spConfig.OnSummon).path;
+            let address = "EffectSpine/" + this.roleSpCfg.OnSummon + "/" + config.SpListConfig.get(this.roleSpCfg.OnSummon).path;
             //console.log("出场特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) =>
             {
@@ -115,10 +109,10 @@ export class SpEffect
         
         allAwait.push(new Promise<void>(async(resolve) => {
             //使用技能
-            if(!("null"===this.spConfig.UseSkill))
+            if(!("null"===this.roleSpCfg.UseSkill))
             {
                 //console.log("this.spConfig.UseSkill:", this.spConfig.UseSkill);
-                let address = "EffectSpine/" + this.spConfig.UseSkill + "/" + config.SpListConfig.get(this.spConfig.UseSkill).path;
+                let address = "EffectSpine/" + this.roleSpCfg.UseSkill + "/" + config.SpListConfig.get(this.roleSpCfg.UseSkill).path;
                 //console.log("使用技能特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
@@ -135,9 +129,33 @@ export class SpEffect
         }));
 
         allAwait.push(new Promise<void>(async(resolve) => {
+            //技能特效
+            if(this.roleSpCfg.OnSkill.length>0)
+            {
+                for(let t of this.roleSpCfg.OnSkill)
+                {
+                    let address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
+                    await loadAssets.LoadSkeletonData(address, (data) =>
+                    {
+                        if (data)
+                        {
+                            this.onSkill.push(data);
+                        }
+                        resolve();
+                    });
+                }
+            }
+            else
+            {
+                resolve();
+            }
+            
+        }));
+
+        allAwait.push(new Promise<void>(async(resolve) => {
             //buff特效
             let address;
-            for (let t of this.spConfig.Buff)
+            for (let t in enums.BuffEffectSp)
             {
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
                 //console.log("buff特效文件路径：", address);
@@ -155,7 +173,7 @@ export class SpEffect
         allAwait.push(new Promise<void>(async(resolve) => {
             //技能生效特效
             let address;
-            for (let t of this.spConfig.CheckSkill)
+            for (let t in enums.CheckSkillEffectSp)
             {
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
                 //console.log("技能生效特效文件路径：", address);
@@ -200,7 +218,7 @@ export class SpEffect
 
                     let style=1;
 
-                    switch(this.spConfig.UseSkill)
+                    switch(this.roleSpCfg.UseSkill)
                     {
                         case "skill_0007":
                             {
@@ -228,6 +246,58 @@ export class SpEffect
                 }
             }
            
+        });
+    }
+
+    public OnSkillEffect(_isFetter:boolean): Promise<void>
+    {
+        return new Promise((resolve)=>
+        {
+            if(null==this.onSkill)
+            {
+                console.warn("技能 特效为空");
+                resolve();
+            }
+            else
+            {
+                try
+                {
+                    let node = new Node("OnSkillEffect");
+                    node.layer=Layers.Enum.UI_2D;
+                    let spEffect = node.addComponent(sp.Skeleton);
+
+                    let style = 1;
+                    switch (this.roleSpCfg.OnSkill[_isFetter?1:0])
+                    {
+                        case "skill_0022":
+                            {
+                                singleton.netSingleton.battle.panelNode.addChild(node);
+                            }
+                            break;
+                        default: 
+                        {
+                            this.parent.getChildByPath("EffectSpine").addChild(node);
+                        }
+                    }
+
+                    let anim = spEffect.skeletonData.getAnimsEnum();
+                    spEffect.setSkin("default");
+                    spEffect.setAnimation(0, String(anim[style]), false);
+                    spEffect.setCompleteListener((trackEntry) =>
+                    {
+                        if (trackEntry.animation.name === String(anim[style]))
+                        {
+                            node.destroy();
+                            resolve();
+                        }
+                    });
+                }
+                catch(error)
+                {
+                    console.error("SpEffect 下的 OnSkillEffect 错误: ",error);
+                    resolve();
+                }
+            }
         });
     }
 
@@ -328,45 +398,47 @@ export class SpEffect
         {
             try
             {
-                if (!this.intensifierSelf)
+                if (null==this.intensifierSelf)
                 {
                     console.warn("单体增益 特效为空");
                     resolve();
-                }
-                if (!this.intensifierColony)
+                }else if (null ==this.intensifierColony)
                 {
                     console.warn("群体增益 特效为空");
                     resolve();
                 }
-                let node = new Node("IntensifierEffect");
-                node.layer=Layers.Enum.UI_2D;
-                console.log("实例化增益特效",node);
-                let spEffect = node.addComponent(sp.Skeleton);
-                if (_isColony)
-                {
-                    spEffect.skeletonData = this.intensifierColony;
-                }
                 else
                 {
-                    spEffect.skeletonData = this.intensifierSelf;
-                }
-                this.parent.getChildByPath("EffectSpine").addChild(node);
-                spEffect.setSkin("default");
-                node.getComponent(UITransform).anchorX=0.5;
-                node.getComponent(UITransform).anchorY=0.5;
-                node.setScale(new Vec3(0.5,0.5,1));
-                let anim = spEffect.skeletonData.getAnimsEnum();
-                spEffect.setAnimation(0, String(anim[_style]), false);
-
-                spEffect.setCompleteListener((trackEntry) =>
-                {
-                    if (trackEntry.animation.name === String(anim[_style]))
+                    let node = new Node("IntensifierEffect");
+                    node.layer=Layers.Enum.UI_2D;
+                    console.log("实例化增益特效",node);
+                    let spEffect = node.addComponent(sp.Skeleton);
+                    if (_isColony)
                     {
-                        console.log("增益特效播放完毕");
-                        node.destroy();
-                        resolve();
+                        spEffect.skeletonData = this.intensifierColony;
                     }
-                });
+                    else
+                    {
+                        spEffect.skeletonData = this.intensifierSelf;
+                    }
+                    this.parent.getChildByPath("EffectSpine").addChild(node);
+                    spEffect.setSkin("default");
+                    node.getComponent(UITransform).anchorX=0.5;
+                    node.getComponent(UITransform).anchorY=0.5;
+                    node.setScale(new Vec3(0.5,0.5,1));
+                    let anim = spEffect.skeletonData.getAnimsEnum();
+                    spEffect.setAnimation(0, String(anim[_style]), false);
+    
+                    spEffect.setCompleteListener((trackEntry) =>
+                    {
+                        if (trackEntry.animation.name === String(anim[_style]))
+                        {
+                            console.log("增益特效播放完毕");
+                            node.destroy();
+                            resolve();
+                        }
+                    });
+                }
             } catch (error)
             {
                 console.error("SpEffect 下的 UseIntensifierEffect 错误: ",error);
@@ -441,14 +513,16 @@ export class SpEffect
                         {
                             this.parent.getChildByName("EffectSpine/Shields").destroy();
                             node.name = "Shields";
-                            spEffect.skeletonData = this.buff.get("shield");
+                            spEffect.skeletonData = this.buff.get("skill_0005");
                         }
                         break;
                     case BattleEnums.BufferType.OffsetDamage:
                         {
-
+                            this.parent.getChildByName("EffectSpine/SaintShields").destroy();
+                            node.name = "SaintShields";
+                            spEffect.skeletonData = this.buff.get("skill_0002");
                         }
-                    
+                        break;
                     case BattleEnums.BufferType.Weak:
                         {
 
@@ -507,7 +581,6 @@ export class SpEffect
                             {
                                 var anim = node.getComponent(sp.Skeleton).skeletonData.getAnimsEnum();
                                 node.getComponent(sp.Skeleton).setAnimation(0, String(anim[2]), false)
-
                                 node.getComponent(sp.Skeleton).setCompleteListener((trackEntry) =>
                                     {
                                         if (trackEntry.animation.name === String(anim[2]))
@@ -517,6 +590,20 @@ export class SpEffect
                                         }
                                     });
                             }
+                        }
+                        break;
+                    case BattleEnums.BufferType.OffsetDamage:
+                        {
+                            node = this.parent.getChildByName("EffectSpine/SaintShields");
+                            node.getComponent(sp.Skeleton).setAnimation(0, String(anim[2]), false)
+                            node.getComponent(sp.Skeleton).setCompleteListener((trackEntry) =>
+                            {
+                                if (trackEntry.animation.name === String(anim[2]))
+                                {
+                                    node.destroy();
+                                    resolve();
+                                }
+                            });
                         }
                         break;
                 }
@@ -543,11 +630,11 @@ export class SpEffect
                 let str:string="";
                 if(_isGain)
                 {
-                    str=this.spConfig.Projectiles[0]+"/"+config.SpListConfig.get(this.spConfig.Projectiles[0]).path;
+                    str=this.roleSpCfg.Projectiles[0]+"/"+config.SpListConfig.get(this.roleSpCfg.Projectiles[0]).path;
                 }
                 else
                 {
-                    str=this.spConfig.Projectiles[1]+"/"+config.SpListConfig.get(this.spConfig.Projectiles[1]).path;
+                    str=this.roleSpCfg.Projectiles[1]+"/"+config.SpListConfig.get(this.roleSpCfg.Projectiles[1]).path;
                 }
                 let node = new Node("Projectiles");
                 node.layer=Layers.Enum.UI_2D;
@@ -570,7 +657,7 @@ export class SpEffect
 }
 
 /**
- * @class UI特效类
+ * @class UI特效类 
  * @author Hotaru
  * @CreateTime 2024/11/27
  */
@@ -583,57 +670,6 @@ export class SpEffectOnUI
         this.canvas=GameManager.Instance.node;
     }
 
-    public CheckSkillEffect(_obj:spEffectObj): Promise<void>
-    {
-        return new Promise(async (resolve)=>
-        {
-            
-                try
-                {
-                    let node = new Node("CheckSkillEffect");
-                    node.layer = Layers.Enum.UI_2D;
-                    let spEffect = node.addComponent(sp.Skeleton);
 
-                    let style = 1;
-                    switch (_obj.key)
-                    {
-                        case "skill_0022":
-                            {
-                                
-                            }
-                            break;
-                    }
-                    let address = "EffectSpine/" + _obj.key + "/" + config.SpListConfig.get(_obj.key).path;
-                    await Promise.all([new Promise<void>(async (resolve, reject) =>
-                    {
-                        await loadAssets.LoadSkeletonData(address, (data) =>
-                        {
-                            if (data)
-                            {
-                                spEffect.skeletonData = data;
-                            }
-                            resolve();
-                        });
-                    })]); 
-                    let anim = spEffect.skeletonData.getAnimsEnum();
-                    spEffect.setSkin("default");
-
-                    spEffect.setAnimation(0, String(anim[style]), false);
-
-                    spEffect.setCompleteListener((trackEntry) =>
-                    {
-                        if (trackEntry.animation.name === String(anim[style]))
-                        {
-                            node.destroy();
-                            resolve();
-                        }
-                    });
-                }
-                catch (error)
-                {
-                    console.log("SpEffectOnUI下的 CheckSkillEffect 错误: ", error);
-                }
-        });
-    }
 }
 

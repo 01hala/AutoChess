@@ -621,7 +621,7 @@
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "animation",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,
@@ -673,8 +673,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 7.804499900817859,
-      "y": 15.880499298095685,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_lrot": {

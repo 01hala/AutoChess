@@ -7,6 +7,7 @@ import { delay } from '../../other/sleep';
 import { BundleManager } from '../../bundle/BundleManager';
 import { RoleDis } from './RoleDis';
 import { Role as rRole } from '../AutoChessBattle/role';
+import { spEffectObj } from '../../other/SpEffect';
 const { ccclass, property } = _decorator;
 
 export class SkillDis
@@ -92,6 +93,11 @@ export class SkillDis
                 let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
                 let self = this.parent;
 
+                if(_ev.objCount>=6)
+                {
+                    await this.RemoteAttackColony(_ev).then(resolve);
+                }
+
                 for (let element of _ev.recipient)
                 {
                     let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
@@ -120,7 +126,50 @@ export class SkillDis
             }
         })
     }
+    /**
+     * 群伤远程攻击
+     * @param _ev 
+     */
+    private async RemoteAttackColony(_ev: skill.Event)
+    {
+        return new Promise<void>(async (resolve, reject)=>
+        {
+            try
+            {
+                let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
+                let self = this.parent;
+                
+                let allAwait=[];
 
+                for (let element of _ev.recipient)
+                {
+                    let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
+
+                    let target = targetList.roleNodes[element.index];
+
+                    if (self && target) 
+                    {
+                        allAwait.push(new Promise<void>(async (resolve)=>
+                        {
+                            await target.getComponent(RoleDis).BeHurted(_ev);
+                            await target.getComponent(RoleDis).ChangeAtt();
+                            resolve();
+                        }));
+                    }
+                }
+                await this.parent.getComponent(RoleDis).OnSkill(_ev.isFetter).then(()=>
+                {
+                    Promise.all(allAwait);
+                });
+                resolve();
+            }
+            catch(err)
+            {
+                console.error("SkillDis 下的 RemoteAttackColony 错误 err:" + err);
+                reject();
+            }
+        })
+    }
     /**
     * 使用增益
     * @param _ev 事件
@@ -263,11 +312,6 @@ export class SkillDis
                 reject();
             }
         })
-
-        // return delay(2000,()=>
-        // {
-
-        // });
     }
 
     /**
@@ -296,12 +340,11 @@ export class SkillDis
                 reject();
             }
         })
-        // return delay(600,()=>
-        // {
-
-        // });
     }
-
+    /**
+     * 转移伤害
+     * @param _ev 事件
+     */
     private SubstituteDamage(_ev:skill.Event)
     {
         return new Promise<void>(async (resolve, reject) =>
@@ -322,11 +365,6 @@ export class SkillDis
                 reject();
             }
         });
-
-        // return delay(100,()=>
-        // {
-
-        // })
     }
 }
 

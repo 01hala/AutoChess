@@ -9,7 +9,7 @@
         "Id": 2,
         "Key": "skill_0002",
         "Path": "shield",
-        "Name": "护盾"
+        "Name": "圣盾"
     },
     "3": {
         "Id": 3,
@@ -21,7 +21,7 @@
         "Id": 4,
         "Key": "skill_0005",
         "Path": "shield",
-        "Name": "科技护盾"
+        "Name": "护盾"
     },
     "5": {
         "Id": 5,
@@ -123,7 +123,7 @@
         "Id": 21,
         "Key": "skill_0025",
         "Path": "jianxue",
-        "Name": "流血"
+        "Name": "减疗"
     },
     "22": {
         "Id": 22,

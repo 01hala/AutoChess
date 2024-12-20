@@ -1558,7 +1558,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -262.694,
-      "y": -150,
+      "y": -180,
       "z": 0
     },
     "_lrot": {
@@ -1873,7 +1873,7 @@
     "_left": 37.30599999999998,
     "_right": 550,
     "_top": 365,
-    "_bottom": 65,
+    "_bottom": 35,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -1941,7 +1941,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -150,
+      "y": -180,
       "z": 0
     },
     "_lrot": {
@@ -2256,7 +2256,7 @@
     "_left": 300,
     "_right": 300,
     "_top": 365,
-    "_bottom": 65,
+    "_bottom": 35,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -2324,7 +2324,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 267.771,
-      "y": -150,
+      "y": -180,
       "z": 0
     },
     "_lrot": {
@@ -2639,7 +2639,7 @@
     "_left": 550,
     "_right": 32.228999999999985,
     "_top": 365,
-    "_bottom": 65,
+    "_bottom": 35,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -3322,7 +3322,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -262.694,
-      "y": -150,
+      "y": -180,
       "z": 0
     },
     "_lrot": {
@@ -3437,7 +3437,7 @@
     "_left": 37.30599999999998,
     "_right": 550,
     "_top": 365,
-    "_bottom": 65,
+    "_bottom": 35,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -3495,7 +3495,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -150,
+      "y": -180,
       "z": 0
     },
     "_lrot": {
@@ -3610,7 +3610,7 @@
     "_left": 300,
     "_right": 300,
     "_top": 365,
-    "_bottom": 65,
+    "_bottom": 35,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -3668,7 +3668,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 267.771,
-      "y": -150,
+      "y": -180,
       "z": 0
     },
     "_lrot": {
@@ -3783,7 +3783,7 @@
     "_left": 550,
     "_right": 32.228999999999985,
     "_top": 365,
-    "_bottom": 65,
+    "_bottom": 35,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
