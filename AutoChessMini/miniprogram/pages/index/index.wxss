@@ -13,5 +13,5 @@ page {
   height: 100%;
   width: 100%;
   display: block;
-  mode: aspectFit;
+  mode: widthFix;
 }
