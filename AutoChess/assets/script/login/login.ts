@@ -121,9 +121,14 @@ export class login extends Component {
             }
         }, 150);
         //预加载
-        let waitPreLoad = BundleManager.Instance.PreloadBundle((bundleName,progress)=>
+        await BundleManager.Instance.PreloadBundle((bundleName,progress)=>
         {
             this._loading.ShowLog(bundleName, progress);
+        }).then(() => {
+            this._progress += 0.1;
+            this._setProgress(this._progress);
+            this._loading.ShowLog("",0);
+            GameManager.Instance.Init();
         });
         //连接
         singleton.netSingleton.player.cb_player_login_non_account = (code:string) => {
@@ -153,14 +158,24 @@ export class login extends Component {
         this.netNode.on("reconnect", () => {
             console.log("on net reconnect!");
 
-            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack(async (info, match_name) => {
-                await waitPreLoad;
-                this._progress += 0.1;
+            if (!singleton.netSingleton.player.UserData) {
+                this._progress += 0.3;
                 this._setProgress(this._progress);
-                this._loading.ShowLog("",0);
-                GameManager.Instance.Init();
+                //this.wxLogin();
+                SdkManager.SDK.login((e: boolean) =>
+                {
+                    if(e!=null)
+                    {
+                        this._loading.progressBar.active = e;
+                        this._loading.log.node.active=e;
+                    }
+                }, null);
+                return;
+            }
 
+            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack(async (info, match_name) => {
                 singleton.netSingleton.player.UserData = info;
+
                 if (match_name != "")
                 {
                     singleton.netSingleton.game.match_name = match_name;
@@ -222,12 +237,6 @@ export class login extends Component {
             this._progress += 0.1;
             this._setProgress(this._progress);
             
-            await waitPreLoad;
-            this._progress += 0.1;
-            this._setProgress(this._progress);
-            this._loading.ShowLog("",0);
-            GameManager.Instance.Init();
-
             singleton.netSingleton.mainInterface = new MainInterface();
             await singleton.netSingleton.mainInterface.start(this.bk.node, async (event) =>
             {

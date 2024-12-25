@@ -1234,6 +1234,10 @@ namespace Player
                     BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
                     StartPVERound(0);
                 }
+                if (BattleShopPlayer.ShopData.SaleRoleList.Count == 0 || BattleShopPlayer.ShopData.SalePropList.Count == 0)
+                {
+                    BattleShopPlayer.refresh(GetStage());
+                }
 
                 Log.Log.trace("PVELevelConfigs TryGetValue isQuestEvent:{0}", isQuestEvent);
                 if (!isQuestEvent)
