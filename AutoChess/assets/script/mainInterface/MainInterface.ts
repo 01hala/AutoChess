@@ -16,6 +16,7 @@ import { login } from '../login/login';
 import { AchievePanel } from '../panel/AchievePanel';
 import { User } from '../login/User';
 import { QuestPanel } from '../panel/QuestPanel';
+import { config } from '../battle/AutoChessBattle/config/config';
 const { ccclass, property } = _decorator;
 
 export class MainInterface 
@@ -34,6 +35,7 @@ export class MainInterface
     private amusementBtn:Node;//娱乐模式按钮
     private cardlibraryBtn:Node;//牌库按钮
     private achieveBtn:Node;//成就按钮
+    private wxGroupBtn:Node;
     private rankListBtn:Node;//排行榜按钮
     private cardEditorBtn:Node;//卡组编辑按钮
     private questBtn:Node;//冒险模式按钮（pve）
@@ -53,6 +55,7 @@ export class MainInterface
     public storePanel:Node;
     public cardLibraryPanel:Node;
     public achievePanel:Node;
+    public wxGroupPanel:Node;
 
     constructor()
     {
@@ -103,6 +106,7 @@ export class MainInterface
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
             this.cardEditorBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
             this.achieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Task_Btn");//任务
+            this.wxGroupBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Other_Btn");
             //玩家信息
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserMoney");
             this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserDiamonds");
@@ -274,6 +278,22 @@ export class MainInterface
                 this.achievePanel.setParent(this.parentNode);
                 this.achievePanel.getComponent(AchievePanel).Open();
                 this.panelNode.active = false;
+            }, this);
+            this.wxGroupBtn.on(Node.EventType.TOUCH_START, async () =>
+            {
+                console.log("wxGroupBtn CLICK OpenJoinWXGroup:", config.HotFixedConfig.OpenJoinWXGroup);
+                if (config.HotFixedConfig.OpenJoinWXGroup) {
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                    let wgp = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "WxGroup") as Prefab;
+                    this.wxGroupPanel = instantiate(wgp);
+                    this.wxGroupPanel.setParent(this.parentNode);
+                }
+            }, this);
+            this.panelNode.on(Node.EventType.TOUCH_START, () => {
+                if (this.wxGroupPanel) {
+                    this.wxGroupPanel.destroy();
+                    this.wxGroupPanel = null;
+                }
             }, this);
             //按钮条切换
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
