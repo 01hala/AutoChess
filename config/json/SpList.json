@@ -1,0 +1,194 @@
+{
+    "1": {
+        "Id": 1,
+        "Key": "skill_0001",
+        "Path": "magic",
+        "Name": "召唤出场"
+    },
+    "2": {
+        "Id": 2,
+        "Key": "skill_0002",
+        "Path": "shield",
+        "Name": "圣盾"
+    },
+    "3": {
+        "Id": 3,
+        "Key": "skill_0003",
+        "Path": "level up",
+        "Name": "单体强化升级"
+    },
+    "4": {
+        "Id": 4,
+        "Key": "skill_0005",
+        "Path": "shield",
+        "Name": "护盾"
+    },
+    "5": {
+        "Id": 5,
+        "Key": "skill_0006",
+        "Path": "damage",
+        "Name": "受击"
+    },
+    "6": {
+        "Id": 6,
+        "Key": "skill_0006_1",
+        "Path": "shouji1",
+        "Name": "受击"
+    },
+    "7": {
+        "Id": 7,
+        "Key": "skill_0006_2",
+        "Path": "shouji2",
+        "Name": "受击"
+    },
+    "8": {
+        "Id": 8,
+        "Key": "skill_0007",
+        "Path": "flash",
+        "Name": "技能发动"
+    },
+    "9": {
+        "Id": 9,
+        "Key": "skill_0009",
+        "Path": "jisi",
+        "Name": "即死"
+    },
+    "10": {
+        "Id": 10,
+        "Key": "skill_0010",
+        "Path": "attribute",
+        "Name": "群体强化升级"
+    },
+    "11": {
+        "Id": 11,
+        "Key": "skill_0013_1",
+        "Path": "qian",
+        "Name": "转移伤害"
+    },
+    "12": {
+        "Id": 12,
+        "Key": "skill_0013_2",
+        "Path": "hou",
+        "Name": "抗伤"
+    },
+    "13": {
+        "Id": 13,
+        "Key": "skill_0014",
+        "Path": "change",
+        "Name": "换位"
+    },
+    "14": {
+        "Id": 14,
+        "Key": "skill_0015",
+        "Path": "weak",
+        "Name": "受到虚弱buff"
+    },
+    "15": {
+        "Id": 15,
+        "Key": "skill_0016",
+        "Path": "window",
+        "Name": ""
+    },
+    "16": {
+        "Id": 16,
+        "Key": "skill_0017",
+        "Path": "star",
+        "Name": ""
+    },
+    "17": {
+        "Id": 17,
+        "Key": "skill_0019",
+        "Path": "skeleton",
+        "Name": ""
+    },
+    "18": {
+        "Id": 18,
+        "Key": "skill_0022",
+        "Path": "huoyan",
+        "Name": ""
+    },
+    "19": {
+        "Id": 19,
+        "Key": "skill_0023",
+        "Path": "Slash",
+        "Name": ""
+    },
+    "20": {
+        "Id": 20,
+        "Key": "skill_0024",
+        "Path": "change",
+        "Name": "交换属性"
+    },
+    "21": {
+        "Id": 21,
+        "Key": "skill_0025",
+        "Path": "jianxue",
+        "Name": "减疗"
+    },
+    "22": {
+        "Id": 22,
+        "Key": "skill_0026",
+        "Path": "Reduce attack",
+        "Name": ""
+    },
+    "23": {
+        "Id": 23,
+        "Key": "skill_0027",
+        "Path": "skeleton",
+        "Name": "圣光"
+    },
+    "24": {
+        "Id": 24,
+        "Key": "Luminous",
+        "Path": "Luminous sphere",
+        "Name": "增益光球"
+    },
+    "25": {
+        "Id": 25,
+        "Key": "FireBall",
+        "Path": "fire",
+        "Name": "远程攻击火球"
+    },
+    "26": {
+        "Id": 26,
+        "Key": "EnergyWaves",
+        "Path": "skeleton",
+        "Name": "远程攻击光波"
+    },
+    "27": {
+        "Id": 27,
+        "Key": "Card",
+        "Path": "pai",
+        "Name": "远程攻击卡片"
+    },
+    "28": {
+        "Id": 28,
+        "Key": "Fist",
+        "Path": "skeleton",
+        "Name": "远程攻击拳头"
+    },
+    "29": {
+        "Id": 29,
+        "Key": "GreenFire",
+        "Path": "greed fire",
+        "Name": "远程攻击绿火"
+    },
+    "30": {
+        "Id": 30,
+        "Key": "MachineEagle",
+        "Path": "28",
+        "Name": "远程攻击机器鹰"
+    },
+    "31": {
+        "Id": 31,
+        "Key": "Magic",
+        "Path": "skeleton",
+        "Name": "远程攻击魔法"
+    },
+    "32": {
+        "Id": 32,
+        "Key": "Spear",
+        "Path": "mao",
+        "Name": "远程攻击长矛"
+    }
+}

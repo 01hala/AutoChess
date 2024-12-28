@@ -1,0 +1,56 @@
+{
+    "1": {
+        "Stage": 1,
+        "level1Probability": 100,
+        "level2Probability": 0,
+        "level3Probability": 0,
+        "level4Probability": 0,
+        "level5Probability": 0,
+        "level6Probability": 0
+    },
+    "2": {
+        "Stage": 2,
+        "level1Probability": 60,
+        "level2Probability": 40,
+        "level3Probability": 0,
+        "level4Probability": 0,
+        "level5Probability": 0,
+        "level6Probability": 0
+    },
+    "3": {
+        "Stage": 3,
+        "level1Probability": 40,
+        "level2Probability": 30,
+        "level3Probability": 30,
+        "level4Probability": 0,
+        "level5Probability": 0,
+        "level6Probability": 0
+    },
+    "4": {
+        "Stage": 4,
+        "level1Probability": 25,
+        "level2Probability": 25,
+        "level3Probability": 35,
+        "level4Probability": 15,
+        "level5Probability": 0,
+        "level6Probability": 0
+    },
+    "5": {
+        "Stage": 5,
+        "level1Probability": 20,
+        "level2Probability": 15,
+        "level3Probability": 25,
+        "level4Probability": 25,
+        "level5Probability": 15,
+        "level6Probability": 0
+    },
+    "6": {
+        "Stage": 6,
+        "level1Probability": 10,
+        "level2Probability": 10,
+        "level3Probability": 15,
+        "level4Probability": 25,
+        "level5Probability": 25,
+        "level6Probability": 15
+    }
+}
