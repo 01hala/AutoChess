@@ -95,7 +95,7 @@ export class ChooseTag extends Component
                     case 3: skillInfo = skcfg.Leve3Text; break;
                     default:skillInfo = skcfg.Leve1Text;
                 }
-                this.tagnodes[i].getChildByPath("Label").getComponent(Label).string = skcfg.Timeing_Text + "?\n" + skillInfo;
+                this.tagnodes[i].getChildByPath("Label").getComponent(Label).string = skcfg.Timeing_Text + ":\n" + skillInfo;
 
                 let img = await loadAssets.LoadImg(rolec.Avatar);
                 if (img)
