@@ -94,7 +94,7 @@ export class GameManager extends Component
             let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
             let board=instantiate(ib);
             board.setParent(this.node);
-            board.getComponent(InfoBoard).OpenCardInfo(event.detail);
+            board.getComponent(InfoBoard).OpenCardInfo(event.detail.id);
 
         },this);
 
@@ -118,7 +118,7 @@ export class GameManager extends Component
 
         /* 消息来源
          * RoleIcon.ts : 第 453 行 
-         * 
+         * RoleDis.ts : 第 157 行
          * 
          * 
          * 

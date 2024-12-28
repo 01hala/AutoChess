@@ -42,7 +42,7 @@ export class MainInterface
     //侧边伸缩按钮区
     private btnList:Node;
     //伸缩按钮区切换开关
-    private btnListSwitch:boolean=false;
+    private btnListSwitch:boolean=true;
     //玩家信息
     private userMoney:Node;
     private userDiamonds:Node;

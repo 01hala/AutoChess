@@ -29,6 +29,8 @@ export class spEffectObj
     }
 }
 
+const OnSummonEffectStr="Skill_0001";
+
 /**
  * @class 特效类
  * @author Hotaru
@@ -38,6 +40,8 @@ export class SpEffectOnRole
 {
     //被召唤出场特效
     private onSummon: sp.SkeletonData=null; 
+    //登场特效
+    private admission:sp.SkeletonData=null; 
     //技能起手特效
     private useSkill: sp.SkeletonData=null;
     //技能发动时特效
@@ -66,6 +70,36 @@ export class SpEffectOnRole
         console.log("初始化特效类");
         
         let allAwait=[];
+
+        allAwait.push(new Promise<void>(async (resolve) =>
+        {
+            //召唤出场特效
+            let address = "EffectSpine/" + OnSummonEffectStr + "/" + config.SpListConfig.get(OnSummonEffectStr).path;
+            //console.log("出场特效文件路径：", address);
+            await loadAssets.LoadSkeletonData(address, (data) =>
+            {
+                if (data)
+                {
+                    this.onSummon = data;
+                }
+                resolve();
+            });
+        }));
+
+        allAwait.push(new Promise<void>(async (resolve) =>
+        {
+            //入场特效
+            let address = "EffectSpine/" + this.roleSpCfg.Admission + "/" + config.SpListConfig.get(this.roleSpCfg.Admission).path;
+            await loadAssets.LoadSkeletonData(address, (data) =>
+            {
+                if (data)
+                {
+                    this.admission = data;
+                }
+                resolve();
+            });
+        }));
+
         allAwait.push(new Promise<void>(async(resolve) => {
             //单体增强时特效
             let address = "EffectSpine/" + this.roleSpCfg.IntensifierSelf + "/" + config.SpListConfig.get(this.roleSpCfg.IntensifierSelf).path;
@@ -88,20 +122,6 @@ export class SpEffectOnRole
                 if (data)
                 {
                     this.intensifierColony = data;
-                }
-                resolve();
-            });
-        }));
-
-        allAwait.push(new Promise<void>(async(resolve) => {
-            //召唤出场特效
-            let address = "EffectSpine/" + this.roleSpCfg.OnSummon + "/" + config.SpListConfig.get(this.roleSpCfg.OnSummon).path;
-            //console.log("出场特效文件路径：", address);
-            await loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
-                {
-                    this.onSummon = data;
                 }
                 resolve();
             });
@@ -134,16 +154,19 @@ export class SpEffectOnRole
             {
                 for(let t of this.roleSpCfg.OnSkill)
                 {
-                    let address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                    await loadAssets.LoadSkeletonData(address, (data) =>
+                    if(!(t==="null"))
                     {
-                        if (data)
+                        let address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
+                        await loadAssets.LoadSkeletonData(address, (data) =>
                         {
-                            this.onSkill.push(data);
-                        }
-                        resolve();
-                    });
+                            if (data)
+                            {
+                                this.onSkill.push(data);
+                            }
+                        });
+                    }
                 }
+                resolve();
             }
             else
             {

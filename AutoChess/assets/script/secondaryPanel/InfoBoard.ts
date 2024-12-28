@@ -12,6 +12,7 @@ import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
 import * as common from "../battle/AutoChessBattle/common"
 import * as battleEnums from '../battle/AutoChessBattle/BattleEnums';
+import { BundleManager } from '../bundle/BundleManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('InfoPanel')
@@ -200,16 +201,29 @@ export class InfoBoard extends Component
         this.fetterBoard.getChildByName("Introduce").getComponent(RichText).string=content;
     }
 
-    OpenCardInfo(_id:number)
+    async OpenCardInfo(_id:number)
     {
         this.node.setSiblingIndex(100);
         this.node.getComponent(BlockInputEvents).enabled=true;
-        this.simpleBoard.active=true;
+        
         this.detailedBoard.active=false;
         this.propBoard.active=false;
         this.fetterBoard.active=false;
-        this.ShowSimpel(_id);
 
+        //立绘
+        let tSp = this.simpleBoard.getChildByPath("Sculpture/Spine").getComponent(sp.Skeleton);
+        loadAssets.LoadSkeletonData(config.RoleConfig.get(_id).Skel,( data )=>
+        {
+            if(data)
+            {
+                tSp.skeletonData=data
+                let anims= tSp.skeletonData.getAnimsEnum()
+                tSp.setAnimation(0, String(anims[1]), true);
+            }
+        })
+
+        await this.ShowSimpel(_id);
+        this.simpleBoard.active=true;
         this.simpleBoard.getComponent(Animation).play("PanelAppear");
     }
 
@@ -231,6 +245,9 @@ export class InfoBoard extends Component
         let fe=config.FettersConfig.get(ro.Fetters);
         let fettersImg = await loadAssets.LoadImg(fe.Res);
         this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
+
+        this.simpleBoard.getChildByPath("Sculpture/Spine").getComponent(sp.Skeleton);
+
     }
 
     private async ShowDetailed(_index:number,_role?:RoleDis)
