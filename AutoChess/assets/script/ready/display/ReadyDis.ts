@@ -499,52 +499,10 @@ export class ReadyDis
         console.log("UpdatePlayerInfo _battle_info:", JSON.stringify(_battle_info));
         try
         {
-            this.UpdateText(_battle_info);
-
-            //console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
-            for(let i=0;i<6;i++)
-            {
-                this.fetters[i].active=false;
-                if(i<_battle_info.FettersList.length)
-                {                 
-                    //let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
-                    let str=config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Res;
-                    let infoStr=str;
-                    let fetterLevels=config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).roleNum;
-                    let sf:SpriteFrame=await this.LoadFetterImg(str);
-                    if(sf)
-                    {
-                        this.fetters[i].getChildByName("IconImage").getComponent(Sprite).spriteFrame=sf;             
-                    }
-                    str="IconTexture/Fetters/lv_"+_battle_info.FettersList[i].fetters_level;
-                    sf=await loadAssets.LoadImg(str);
-                    //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
-                    this.fetters[i].getComponent(Sprite).spriteFrame=sf;
-                    this.fetters[i].active=true;
-
-                    //羁绊的文字信息，最新版UI暂时不用
-                    // this.fetters[i].getChildByName("FetterName").getComponent(RichText).string=
-                    //     "<color=#00ff00>"+config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Name+"</color>";
-                    // let text = this.fetters[i].getChildByPath("Level/Text");
-                    // let content="";
-                    // for(let j=0;j<fetterLevels.length;j++){
-                    //     if(_battle_info.FettersList[i].fetters_level>=j+1){
-                    //         content+="<color=#ffffff>"+fetterLevels[j]+" ";
-                    //     }
-                    //     else{
-                    //         content+="<color=#AAAAAA>"+fetterLevels[j]+" ";
-                    //     }
-                    // }
-                    // text.getComponent(RichText).string=content;
-
-                    this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK,()=>{
-                        this.fetters[i].getChildByName("Button").
-                            dispatchEvent(new SendMessage('OpenFetterInfo',true,
-                                {id:_battle_info.FettersList[i].fetters_id,spritePath:infoStr,level:_battle_info.FettersList[i].fetters_level}));
-                    })
-                    //continue;
-                }               
-            }       
+            let allAwait=[];
+            allAwait.push(this.UpdataText(_battle_info));
+            allAwait.push(this.UpdataFetterIcon(_battle_info));
+            Promise.all(allAwait);
         }
        catch(error)
         {
@@ -552,7 +510,7 @@ export class ReadyDis
         }
     }
 
-    private UpdateText(_battle_info:common.UserBattleData):Promise<void>
+    private UpdataText(_battle_info:common.UserBattleData):Promise<void>
     {
         return new Promise(async (relolve)=>
         {
@@ -571,6 +529,72 @@ export class ReadyDis
             catch(error)
             {
                 console.warn("引擎bug,还是会有极小概率richtext报空函数,可以忽略 err:", error);
+                relolve();
+            }
+        });
+    }
+
+    private UpdataFetterIcon(_battle_info: common.UserBattleData): Promise<void>
+    {
+        return new Promise(async (relolve) =>
+        {
+            try
+            {
+                //console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
+                for (let i = 0; i < 6; i++)
+                {
+                    if (_battle_info.FettersList.length < i+1)
+                    {
+                        this.fetters[i].active = false;
+                    }
+                    else
+                    {
+                        //let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
+                        let str = config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Res;
+                        let infoStr = str;
+                        let fetterLevels = config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).roleNum;
+                        let sf: SpriteFrame = await this.LoadFetterImg(str);
+                        if (sf)
+                        {
+                            this.fetters[i].getChildByName("IconImage").getComponent(Sprite).spriteFrame = sf;
+                        }
+                        str = "IconTexture/Fetters/lv_" + _battle_info.FettersList[i].fetters_level;
+                        sf = await loadAssets.LoadImg(str);
+                        //this.fetters[i].getChildByName("RichText").getComponent(RichText).string=""+_battle_info.FettersList[i].fetters_level;
+                        this.fetters[i].getComponent(Sprite).spriteFrame = sf;
+                        this.fetters[i].active = true;
+
+                        //羁绊的文字信息，最新版UI暂时不用
+                        // this.fetters[i].getChildByName("FetterName").getComponent(RichText).string=
+                        //     "<color=#00ff00>"+config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Name+"</color>";
+                        // let text = this.fetters[i].getChildByPath("Level/Text");
+                        // let content="";
+                        // for(let j=0;j<fetterLevels.length;j++){
+                        //     if(_battle_info.FettersList[i].fetters_level>=j+1){
+                        //         content+="<color=#ffffff>"+fetterLevels[j]+" ";
+                        //     }
+                        //     else{
+                        //         content+="<color=#AAAAAA>"+fetterLevels[j]+" ";
+                        //     }
+                        // }
+                        // text.getComponent(RichText).string=content;
+
+                        this.fetters[i].getChildByName("Button")
+                        this.fetters[i].getChildByName("Button").off(Button.EventType.CLICK);
+                        this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK, () =>
+                        {
+                            this.fetters[i].getChildByName("Button").
+                                dispatchEvent(new SendMessage('OpenFetterInfo', true,
+                                    { id: _battle_info.FettersList[i].fetters_id, spritePath: infoStr, level: _battle_info.FettersList[i].fetters_level }));
+                        })
+                        //continue;
+                    }
+                }
+                relolve();
+            }
+            catch (error)
+            {
+                console.error("ReadyDis 里的 UpdataFetterIcon 错误 err:", error);
                 relolve();
             }
         });
