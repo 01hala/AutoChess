@@ -211,7 +211,7 @@ export class InfoBoard extends Component
         this.fetterBoard.active=false;
 
         //立绘
-        let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
+        let tSp = this.simpleBoard.getChildByPath("Sculpture/Spine").getComponent(sp.Skeleton);
         loadAssets.LoadSkeletonData(config.RoleConfig.get(_id).Skel,( data )=>
         {
             if(data)
