@@ -121,7 +121,7 @@ export class RoleCard extends Component
         {
             console.log("OpenInfoBoard");
             AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
-            this.node.dispatchEvent(new SendMessage('OpenCardInfo',true,this.roleId));
+            this.node.dispatchEvent(new SendMessage('OpenCardInfo',true,{id:this.roleId}));
 
         },this);
 
