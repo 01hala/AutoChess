@@ -77,22 +77,25 @@ export class ChooseTag extends Component
             {
                 let rolec = config.RoleConfig.get(pvec.RoleId);
                 this.tagnodes[i].getChildByPath("RichText").getComponent(RichText).string = "<color=#000000>" + rolec.Name + "</color>";
+
                 this.tagnodes[i].getChildByPath("Avatar/Hp/RichText").
                     getComponent(RichText).string = "<color=#9d0c27><outline color=#e93552 width=4>" + pvec.RoleHP + "</outline></color>";
                 this.tagnodes[i].getChildByPath("Avatar/Atk/RichText").
                     getComponent(RichText).string = "<color=#f99b08><outline color=#fff457 width=4>" + pvec.RoleAttack + "</outline></color>";
+                this.tagnodes[i].getChildByPath("Avatar/Lvl/RichText").
+                    getComponent(RichText).string = "<color=1d994f><outline color=74eda5 width=4>"+(pvec.RoleLevel?pvec.RoleLevel:1)+"</outline></color>";
 
 
-                let skcfg = config.SkillIntroduceConfig.get(pvec.RoleId);
-                this.tagnodes[i].getChildByPath("Label").getComponent(Label).string = skcfg.Timeing_Text + "\n";
-                let skinfo = "";
+                let skcfg = config.SkillIntroduceConfig.get(rolec.SkillID);
+                let skillInfo = "";
                 switch (pvec.RoleLevel)
                 {
-                    case 1: skinfo = skcfg.Leve1Text; break;
-                    case 2: skinfo = skcfg.Leve2Text; break;
-                    case 3: skinfo = skcfg.Leve3Text; break;
+                    case 1: skillInfo = skcfg.Leve1Text; break;
+                    case 2: skillInfo = skcfg.Leve2Text; break;
+                    case 3: skillInfo = skcfg.Leve3Text; break;
+                    default:skillInfo = skcfg.Leve1Text;
                 }
-                this.tagnodes[i].getChildByPath("Label").getComponent(Label).string += skinfo;
+                this.tagnodes[i].getChildByPath("Label").getComponent(Label).string = skcfg.Timeing_Text + ":\n" + skillInfo;
 
                 let img = await loadAssets.LoadImg(rolec.Avatar);
                 if (img)
