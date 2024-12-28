@@ -86,6 +86,20 @@ export default class WxSdk implements SdkInterface
             withShareTicket:true ,
             menus:["shareAppMessage" , "shareTimeline"]
         });
+        wx.onShareAppMessage(
+            function () {
+                return {
+                    title: '萌萌自走棋',
+                    imageUrl: '',
+                };
+            }
+        );
+        wx.onShareTimeline(function () {
+            return {
+                title: '快来一起玩萌萌自走棋！', // 自定义分享标题
+                imageUrl: '',
+            };
+        });
     }
     
     /**
@@ -95,13 +109,7 @@ export default class WxSdk implements SdkInterface
      */
     login(_callBack:Function , _target: Object): void
     {
-        wx.onShareAppMessage(
-            function () {
-                return {
-                    title: '萌萌自走棋'
-                };
-            }
-        );
+        this.init(null, null);
         wx.login({
             complete: (res) =>
             {
