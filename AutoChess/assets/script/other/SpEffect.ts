@@ -29,7 +29,7 @@ export class spEffectObj
     }
 }
 
-const OnSummonEffectStr="Skill_0001";
+const OnSummonEffectStr="skill_0001";
 
 /**
  * @class 特效类
@@ -74,8 +74,8 @@ export class SpEffectOnRole
         allAwait.push(new Promise<void>(async (resolve) =>
         {
             //召唤出场特效
+            console.log("召唤特效:",OnSummonEffectStr);
             let address = "EffectSpine/" + OnSummonEffectStr + "/" + config.SpListConfig.get(OnSummonEffectStr).path;
-            //console.log("出场特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) =>
             {
                 if (data)
@@ -89,22 +89,32 @@ export class SpEffectOnRole
         allAwait.push(new Promise<void>(async (resolve) =>
         {
             //入场特效
-            let address = "EffectSpine/" + this.roleSpCfg.Admission + "/" + config.SpListConfig.get(this.roleSpCfg.Admission).path;
-            await loadAssets.LoadSkeletonData(address, (data) =>
+            if (!("null" === this.roleSpCfg.Admission))
             {
-                if (data)
+                console.log("入场特效:",this.roleSpCfg.Admission);
+                let address = "EffectSpine/" + this.roleSpCfg.Admission + "/" + config.SpListConfig.get(this.roleSpCfg.Admission).path;
+                await loadAssets.LoadSkeletonData(address, (data) =>
                 {
-                    this.admission = data;
-                }
+                    if (data)
+                    {
+                        this.admission = data;
+                    }
+                    resolve();
+                });
+            }
+            else
+            {
                 resolve();
-            });
+            }
         }));
 
-        allAwait.push(new Promise<void>(async(resolve) => {
+        allAwait.push(new Promise<void>(async (resolve) =>
+        {
             //单体增强时特效
             let address = "EffectSpine/" + this.roleSpCfg.IntensifierSelf + "/" + config.SpListConfig.get(this.roleSpCfg.IntensifierSelf).path;
             //console.log("单体增强特效文件路径：", address);
-            await loadAssets.LoadSkeletonData(address, (data) => {
+            await loadAssets.LoadSkeletonData(address, (data) =>
+            {
                 if (data)
                 {
                     this.intensifierSelf = data;
@@ -116,7 +126,7 @@ export class SpEffectOnRole
         allAwait.push(new Promise<void>(async(resolve) => {
             //单体增强时特效
             let address = "EffectSpine/" + this.roleSpCfg.IntensifierColony + "/" + config.SpListConfig.get(this.roleSpCfg.IntensifierColony).path;
-            //console.log("群体增强特效文件路径：", address);
+           // console.log("群体增强特效文件路径：", address);
             await loadAssets.LoadSkeletonData(address, (data) =>
             {
                 if (data)
@@ -156,6 +166,7 @@ export class SpEffectOnRole
                 {
                     if(!(t==="null"))
                     {
+                        //console.log("使用技能特效文件路径：",  t );
                         let address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
                         await loadAssets.LoadSkeletonData(address, (data) =>
                         {
@@ -180,6 +191,7 @@ export class SpEffectOnRole
             let address;
             for (let t in enums.BuffEffectSp)
             {
+                console.log("buff特效文件路径：",  t );
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
                 //console.log("buff特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
@@ -193,13 +205,15 @@ export class SpEffectOnRole
             }
         }));
     
-        allAwait.push(new Promise<void>(async(resolve) => {
+        allAwait.push(new Promise<void>(async (resolve) =>
+        {
             //技能生效特效
             let address;
             for (let t in enums.CheckSkillEffectSp)
             {
+                //console.log("技能生效特效文件路径：", t);
                 address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                //console.log("技能生效特效文件路径：", address);
+
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
