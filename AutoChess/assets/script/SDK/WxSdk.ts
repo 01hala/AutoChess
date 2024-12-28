@@ -95,6 +95,13 @@ export default class WxSdk implements SdkInterface
      */
     login(_callBack:Function , _target: Object): void
     {
+        wx.onShareAppMessage(
+            function () {
+                return {
+                    title: '萌萌自走棋'
+                };
+            }
+        );
         wx.login({
             complete: (res) =>
             {

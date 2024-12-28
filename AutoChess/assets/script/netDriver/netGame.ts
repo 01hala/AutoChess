@@ -257,8 +257,9 @@ export class netGame {
     {
         return new Promise((resolve, reject) =>
         {
-            netSingleton.battleshop.refresh(this.match_name).callBack((shop_info) =>
+            netSingleton.battleshop.refresh(this.match_name).callBack((shop_info, battle_info) =>
             {
+                this.cb_match_battle_info(battle_info);
                 this.cb_match_shop_info.call(null, shop_info);
                 resolve(null);
             }, (err) =>
@@ -536,8 +537,9 @@ export class netGame {
     {
         return new Promise((resolve, reject) =>
         {
-            netSingleton.battleshop.refresh(netSingleton.player.player_name).callBack((shop_info) =>
+            netSingleton.battleshop.refresh(netSingleton.player.player_name).callBack((shop_info, battle_info) =>
             {
+                this.cb_quest_battle_info(battle_info);
                 this.cb_quest_shop_info(shop_info);
                 resolve("finish");
             }, (err) =>

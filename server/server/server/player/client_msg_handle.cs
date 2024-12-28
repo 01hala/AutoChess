@@ -247,10 +247,15 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    _data.Data.refresh(_data.Data.GetStage());
-                    _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
-
-                    rsp.rsp(_data.Data.BattleShopPlayer.ShopData);
+                    if (!_data.Data.refresh(_data.Data.GetStage()))
+                    {
+                        rsp.err((int)em_error.no_enough_coin);
+                    }
+                    else
+                    {
+                        _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
+                        rsp.rsp(_data.Data.BattleShopPlayer.ShopData, _data.Data.BattleShopPlayer.BattleData);
+                    }
                 }
             }
             catch (System.Exception ex)
