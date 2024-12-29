@@ -140,7 +140,7 @@ export class InfoBoard extends Component
                 if(null==role||!isBuy)
                 {
                     //立绘
-                    let tSp = this.simpleBoard.getChildByPath("Sculpture/Sprite").getComponent(sp.Skeleton);
+                    let tSp = this.simpleBoard.getChildByPath("Sculpture/Spine").getComponent(sp.Skeleton);
                     tSp.skeletonData = role.roleSprite.skeletonData;
                     tSp.animation = role.roleSprite.animation;
 
