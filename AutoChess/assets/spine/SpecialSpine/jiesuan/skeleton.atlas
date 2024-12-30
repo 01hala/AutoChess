@@ -1,0 +1,146 @@
+
+skeleton.png
+size: 3164,3164
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+TX_lizi_00000
+  rotate: false
+  xy: 1338, 2691
+  size: 192, 171
+  orig: 192, 171
+  offset: 0, 0
+  index: -1
+TX_xg_0000
+  rotate: false
+  xy: 1338, 2994
+  size: 206, 168
+  orig: 206, 168
+  offset: 0, 0
+  index: -1
+sd_1
+  rotate: false
+  xy: 1532, 2798
+  size: 50, 64
+  orig: 50, 64
+  offset: 0, 0
+  index: -1
+sd_2
+  rotate: true
+  xy: 1338, 2580
+  size: 109, 186
+  orig: 109, 186
+  offset: 0, 0
+  index: -1
+sd_3
+  rotate: true
+  xy: 1338, 2864
+  size: 128, 202
+  orig: 128, 202
+  offset: 0, 0
+  index: -1
+sd_4
+  rotate: false
+  xy: 1437, 2
+  size: 149, 209
+  orig: 149, 209
+  offset: 0, 0
+  index: -1
+sd_5
+  rotate: false
+  xy: 1280, 2
+  size: 155, 209
+  orig: 155, 209
+  offset: 0, 0
+  index: -1
+sd_6
+  rotate: true
+  xy: 1338, 2255
+  size: 161, 183
+  orig: 161, 183
+  offset: 0, 0
+  index: -1
+sd_7
+  rotate: true
+  xy: 1338, 2418
+  size: 160, 184
+  orig: 160, 184
+  offset: 0, 0
+  index: -1
+sd_8
+  rotate: false
+  xy: 1338, 2137
+  size: 157, 116
+  orig: 157, 116
+  offset: 0, 0
+  index: -1
+失败光圈
+  rotate: false
+  xy: 2, 1826
+  size: 1334, 1336
+  orig: 1334, 1336
+  offset: 0, 0
+  index: -1
+失败标
+  rotate: true
+  xy: 2, 13
+  size: 473, 1276
+  orig: 473, 1276
+  offset: 0, 0
+  index: -1
+平局
+  rotate: false
+  xy: 1338, 975
+  size: 834, 851
+  orig: 834, 851
+  offset: 0, 0
+  index: -1
+平局_1
+  rotate: false
+  xy: 2174, 975
+  size: 834, 851
+  orig: 834, 851
+  offset: 0, 0
+  index: -1
+平局光圈
+  rotate: false
+  xy: 2, 488
+  size: 1334, 1336
+  orig: 1334, 1336
+  offset: 0, 0
+  index: -1
+星_0
+  rotate: false
+  xy: 1280, 213
+  size: 260, 273
+  orig: 260, 273
+  offset: 0, 0
+  index: -1
+星_1
+  rotate: false
+  xy: 1338, 1868
+  size: 133, 132
+  orig: 133, 132
+  offset: 0, 0
+  index: -1
+星_2
+  rotate: false
+  xy: 1338, 2002
+  size: 133, 133
+  orig: 133, 133
+  offset: 0, 0
+  index: -1
+皇冠
+  rotate: false
+  xy: 1542, 284
+  size: 794, 689
+  orig: 794, 689
+  offset: 0, 0
+  index: -1
+胜利光圈
+  rotate: true
+  xy: 1588, 1828
+  size: 1334, 1336
+  orig: 1334, 1336
+  offset: 0, 0
+  index: -1

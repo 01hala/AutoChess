@@ -1,0 +1,111 @@
+
+xin.png
+size: 741,741
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+StarLight
+  rotate: false
+  xy: 2, 2
+  size: 66, 67
+  orig: 68, 69
+  offset: 1, 1
+  index: -1
+sd_1
+  rotate: false
+  xy: 70, 5
+  size: 50, 64
+  orig: 50, 64
+  offset: 0, 0
+  index: -1
+sd_2
+  rotate: false
+  xy: 245, 3
+  size: 109, 186
+  orig: 109, 186
+  offset: 0, 0
+  index: -1
+sd_3
+  rotate: false
+  xy: 287, 537
+  size: 128, 202
+  orig: 128, 202
+  offset: 0, 0
+  index: -1
+sd_4
+  rotate: true
+  xy: 427, 191
+  size: 149, 209
+  orig: 149, 209
+  offset: 0, 0
+  index: -1
+sd_5
+  rotate: true
+  xy: 427, 342
+  size: 155, 209
+  orig: 155, 209
+  offset: 0, 0
+  index: -1
+sd_6
+  rotate: false
+  xy: 518, 6
+  size: 161, 183
+  orig: 161, 183
+  offset: 0, 0
+  index: -1
+sd_7
+  rotate: false
+  xy: 356, 5
+  size: 160, 184
+  orig: 160, 184
+  offset: 0, 0
+  index: -1
+sd_8
+  rotate: false
+  xy: 245, 202
+  size: 157, 116
+  orig: 157, 116
+  offset: 0, 0
+  index: -1
+shangdian_0
+  rotate: true
+  xy: 208, 320
+  size: 95, 217
+  orig: 95, 217
+  offset: 0, 0
+  index: -1
+shangdian_1
+  rotate: false
+  xy: 208, 417
+  size: 77, 322
+  orig: 77, 322
+  offset: 0, 0
+  index: -1
+shangdian_2
+  rotate: false
+  xy: 127, 353
+  size: 79, 386
+  orig: 79, 386
+  offset: 0, 0
+  index: -1
+shangdian_3
+  rotate: false
+  xy: 2, 320
+  size: 123, 419
+  orig: 123, 419
+  offset: 0, 0
+  index: -1
+心 完整
+  rotate: true
+  xy: 2, 71
+  size: 247, 241
+  orig: 247, 241
+  offset: 0, 0
+  index: -1
+心 破碎
+  rotate: false
+  xy: 427, 499
+  size: 246, 240
+  orig: 246, 240
+  offset: 0, 0
+  index: -1

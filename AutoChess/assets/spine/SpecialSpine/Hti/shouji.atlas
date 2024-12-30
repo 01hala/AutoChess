@@ -1,0 +1,55 @@
+
+shouji.png
+size: 1108,1108
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guanban1
+  rotate: false
+  xy: 314, 329
+  size: 89, 89
+  orig: 100, 100
+  offset: 6, 5
+  index: -1
+guangquan3
+  rotate: false
+  xy: 408, 420
+  size: 98, 98
+  orig: 100, 100
+  offset: 1, 1
+  index: -1
+guanling_2
+  rotate: false
+  xy: 2, 470
+  size: 404, 48
+  orig: 404, 48
+  offset: 0, 0
+  index: -1
+guanling_3
+  rotate: false
+  xy: 2, 157
+  size: 310, 311
+  orig: 310, 311
+  offset: 0, 0
+  index: -1
+ring1
+  rotate: false
+  xy: 592, 592
+  size: 514, 514
+  orig: 514, 514
+  offset: 0, 0
+  index: -1
+starlight1
+  rotate: false
+  xy: 2, 520
+  size: 588, 586
+  orig: 588, 586
+  offset: 0, 0
+  index: -1
+xingxing
+  rotate: false
+  xy: 592, 110
+  size: 470, 480
+  orig: 470, 480
+  offset: 0, 0
+  index: -1

@@ -1,237 +1,314 @@
 
 Role_100043.png
-size: 1079,1079
+size: 1142,1142
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-tj_0
+jia
   rotate: false
-  xy: 794, 28
+  xy: 1061, 1049
+  size: 79, 91
+  orig: 79, 91
+  offset: 0, 0
+  index: -1
+jinlian_1
+  rotate: true
+  xy: 565, 38
+  size: 130, 143
+  orig: 130, 143
+  offset: 0, 0
+  index: -1
+jinlian_2
+  rotate: true
+  xy: 577, 387
+  size: 69, 53
+  orig: 69, 53
+  offset: 0, 0
+  index: -1
+shoushi
+  rotate: false
+  xy: 632, 392
+  size: 38, 64
+  orig: 38, 64
+  offset: 0, 0
+  index: -1
+tj_0
+  rotate: true
+  xy: 1046, 82
   size: 104, 94
   orig: 104, 94
   offset: 0, 0
   index: -1
 tj_1
-  rotate: false
-  xy: 790, 124
+  rotate: true
+  xy: 264, 120
   size: 102, 57
   orig: 102, 57
   offset: 0, 0
   index: -1
 tj_10
   rotate: false
-  xy: 2, 130
+  xy: 672, 706
   size: 387, 434
   orig: 387, 434
   offset: 0, 0
   index: -1
 tj_11
   rotate: true
-  xy: 391, 79
+  xy: 577, 170
   size: 190, 255
   orig: 190, 255
   offset: 0, 0
   index: -1
 tj_12
-  rotate: true
-  xy: 768, 313
+  rotate: false
+  xy: 577, 458
   size: 82, 169
   orig: 82, 169
   offset: 0, 0
   index: -1
 tj_13
-  rotate: true
-  xy: 325, 13
+  rotate: false
+  xy: 264, 20
   size: 35, 98
   orig: 35, 98
   offset: 0, 0
   index: -1
 tj_14
   rotate: false
-  xy: 996, 604
+  xy: 193, 89
   size: 69, 133
   orig: 69, 133
   offset: 0, 0
   index: -1
 tj_15
-  rotate: false
-  xy: 790, 183
+  rotate: true
+  xy: 2, 110
   size: 112, 128
   orig: 112, 128
   offset: 0, 0
   index: -1
 tj_16
   rotate: false
-  xy: 325, 50
+  xy: 351, 305
   size: 202, 27
   orig: 202, 27
   offset: 0, 0
   index: -1
 tj_17
-  rotate: false
-  xy: 904, 114
+  rotate: true
+  xy: 493, 50
   size: 130, 70
   orig: 130, 70
   offset: 0, 0
   index: -1
 tj_18
-  rotate: true
-  xy: 939, 291
+  rotate: false
+  xy: 710, 38
   size: 115, 130
   orig: 115, 130
   offset: 0, 0
   index: -1
 tj_19
   rotate: false
-  xy: 2, 566
+  xy: 2, 629
   size: 668, 511
   orig: 668, 511
   offset: 0, 0
   index: -1
 tj_2
   rotate: false
-  xy: 391, 271
+  xy: 352, 334
   size: 223, 293
   orig: 223, 293
   offset: 0, 0
   index: -1
 tj_20
   rotate: false
-  xy: 648, 118
+  xy: 834, 202
   size: 140, 158
   orig: 140, 158
   offset: 0, 0
   index: -1
+tj_20_1
+  rotate: true
+  xy: 493, 182
+  size: 121, 81
+  orig: 121, 81
+  offset: 0, 0
+  index: -1
 tj_21
   rotate: true
-  xy: 904, 186
+  xy: 2, 5
   size: 103, 110
   orig: 103, 110
   offset: 0, 0
   index: -1
 tj_22
-  rotate: false
-  xy: 1054, 1039
+  rotate: true
+  xy: 632, 369
   size: 21, 38
   orig: 21, 38
   offset: 0, 0
   index: -1
 tj_23
-  rotate: true
-  xy: 648, 57
+  rotate: false
+  xy: 132, 78
   size: 59, 144
   orig: 59, 144
   offset: 0, 0
   index: -1
 tj_24
   rotate: false
-  xy: 672, 739
-  size: 380, 338
-  orig: 380, 338
+  xy: 2, 344
+  size: 348, 283
+  orig: 348, 284
   offset: 0, 0
   index: -1
 tj_25
   rotate: false
-  xy: 768, 397
+  xy: 325, 96
   size: 166, 203
   orig: 166, 203
   offset: 0, 0
   index: -1
 tj_26
   rotate: false
-  xy: 904, 291
+  xy: 1112, 60
   size: 13, 20
   orig: 13, 20
   offset: 0, 0
   index: -1
 tj_27
-  rotate: false
-  xy: 368, 88
+  rotate: true
+  xy: 577, 364
   size: 21, 40
   orig: 21, 40
   offset: 0, 0
   index: -1
 tj_28
   rotate: true
-  xy: 936, 408
+  xy: 1005, 188
   size: 192, 133
   orig: 192, 133
   offset: 0, 0
   index: -1
 tj_29
-  rotate: false
-  xy: 756, 337
+  rotate: true
+  xy: 1110, 707
   size: 10, 15
   orig: 10, 15
   offset: 0, 0
   index: -1
 tj_3
-  rotate: false
-  xy: 616, 278
+  rotate: true
+  xy: 1061, 909
   size: 138, 74
   orig: 144, 74
   offset: 0, 0
   index: -1
 tj_30
-  rotate: false
-  xy: 529, 50
+  rotate: true
+  xy: 1110, 769
   size: 28, 27
   orig: 28, 27
   offset: 0, 0
   index: -1
 tj_31
-  rotate: false
-  xy: 1065, 275
+  rotate: true
+  xy: 834, 188
   size: 12, 14
   orig: 12, 14
   offset: 0, 0
   index: -1
 tj_32
-  rotate: false
-  xy: 425, 18
+  rotate: true
+  xy: 1110, 719
   size: 14, 30
   orig: 14, 30
   offset: 0, 0
   index: -1
 tj_4
-  rotate: false
-  xy: 616, 354
+  rotate: true
+  xy: 834, 36
   size: 150, 210
   orig: 150, 210
   offset: 0, 0
   index: -1
 tj_5
   rotate: true
-  xy: 2, 10
+  xy: 2, 224
   size: 118, 321
   orig: 118, 321
   offset: 0, 0
   index: -1
 tj_6
-  rotate: true
-  xy: 672, 602
+  rotate: false
+  xy: 1005, 382
   size: 135, 322
   orig: 135, 322
   offset: 0, 0
   index: -1
 tj_7
   rotate: true
-  xy: 1016, 199
+  xy: 1061, 707
   size: 90, 47
   orig: 90, 47
   offset: 0, 0
   index: -1
 tj_8
-  rotate: false
-  xy: 325, 104
+  rotate: true
+  xy: 325, 301
   size: 41, 24
   orig: 41, 24
   offset: 0, 0
   index: -1
 tj_9
   rotate: true
-  xy: 672, 568
+  xy: 114, 44
   size: 32, 35
   orig: 32, 35
   offset: 0, 0
+  index: -1
+toushi
+  rotate: false
+  xy: 1061, 799
+  size: 73, 108
+  orig: 73, 108
+  offset: 0, 0
+  index: -1
+yanwu_0
+  rotate: true
+  xy: 193, 22
+  size: 65, 35
+  orig: 65, 35
+  offset: 0, 0
+  index: -1
+yanwu_1
+  rotate: false
+  xy: 850, 188
+  size: 14, 12
+  orig: 14, 12
+  offset: 0, 0
+  index: -1
+yanwu_2
+  rotate: false
+  xy: 1110, 735
+  size: 25, 32
+  orig: 25, 32
+  offset: 0, 0
+  index: -1
+yanwu_3
+  rotate: true
+  xy: 1046, 19
+  size: 61, 64
+  orig: 61, 64
+  offset: 0, 0
+  index: -1
+yanwu_4
+  rotate: false
+  xy: 672, 362
+  size: 331, 342
+  orig: 332, 344
+  offset: 1, 2
   index: -1

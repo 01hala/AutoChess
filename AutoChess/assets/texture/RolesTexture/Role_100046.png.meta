@@ -42,14 +42,14 @@
         "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
-        "offsetX": -1.5,
-        "offsetY": 1,
-        "trimX": 27,
-        "trimY": 19,
-        "width": 343,
-        "height": 480,
-        "rawWidth": 400,
-        "rawHeight": 520,
+        "offsetX": 0,
+        "offsetY": 0,
+        "trimX": 0,
+        "trimY": 0,
+        "width": 358,
+        "height": 475,
+        "rawWidth": 358,
+        "rawHeight": 475,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
@@ -61,17 +61,17 @@
         "meshType": 0,
         "vertices": {
           "rawPosition": [
-            -171.5,
-            -240,
+            -179,
+            -237.5,
             0,
-            171.5,
-            -240,
+            179,
+            -237.5,
             0,
-            -171.5,
-            240,
+            -179,
+            237.5,
             0,
-            171.5,
-            240,
+            179,
+            237.5,
             0
           ],
           "indexes": [
@@ -83,33 +83,33 @@
             3
           ],
           "uv": [
-            27,
-            501,
-            370,
-            501,
-            27,
-            21,
-            370,
-            21
+            0,
+            475,
+            358,
+            475,
+            0,
+            0,
+            358,
+            0
           ],
           "nuv": [
-            0.0675,
-            0.04038461538461539,
-            0.925,
-            0.04038461538461539,
-            0.0675,
-            0.9634615384615385,
-            0.925,
-            0.9634615384615385
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
           ],
           "minPos": [
-            -171.5,
-            -240,
+            -179,
+            -237.5,
             0
           ],
           "maxPos": [
-            171.5,
-            240,
+            179,
+            237.5,
             0
           ]
         },
@@ -131,7 +131,7 @@
     "hasAlpha": true,
     "redirect": "f11b9656-e5ab-4a49-b740-ab6fc2bba216@f9941",
     "compressSettings": {
-      "useCompressTexture": true,
+      "useCompressTexture": false,
       "presetId": "2a9a5C22lAjIMChwTKyh6o"
     }
   }

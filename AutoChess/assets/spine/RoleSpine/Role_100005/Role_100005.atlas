@@ -1,216 +1,258 @@
 
 Role_100005.png
-size: 1099,1099
+size: 1102,1102
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 cycz_0
   rotate: false
-  xy: 2, 684
+  xy: 2, 687
   size: 480, 413
   orig: 480, 413
   offset: 0, 0
   index: -1
 cycz_1
-  rotate: true
-  xy: 306, 217
+  rotate: false
+  xy: 2, 192
   size: 152, 238
   orig: 152, 238
   offset: 0, 0
   index: -1
 cycz_10
-  rotate: true
-  xy: 959, 781
+  rotate: false
+  xy: 318, 169
   size: 316, 123
   orig: 316, 123
   offset: 0, 0
   index: -1
 cycz_11
-  rotate: true
-  xy: 662, 259
+  rotate: false
+  xy: 156, 292
   size: 86, 138
   orig: 86, 138
   offset: 0, 0
   index: -1
 cycz_12
   rotate: false
-  xy: 546, 290
+  xy: 430, 23
   size: 102, 144
   orig: 102, 144
   offset: 0, 0
   index: -1
 cycz_13
   rotate: true
-  xy: 739, 18
-  size: 113, 103
-  orig: 113, 103
-  offset: 0, 0
+  xy: 751, 48
+  size: 129, 104
+  orig: 129, 110
+  offset: 0, 5
   index: -1
 cycz_14
-  rotate: false
-  xy: 623, 9
+  rotate: true
+  xy: 534, 56
   size: 111, 97
   orig: 111, 97
   offset: 0, 0
   index: -1
 cycz_15
   rotate: false
-  xy: 831, 208
-  size: 266, 405
-  orig: 266, 405
+  xy: 831, 179
+  size: 253, 353
+  orig: 258, 353
   offset: 0, 0
   index: -1
 cycz_16
   rotate: true
-  xy: 2, 371
+  xy: 156, 179
   size: 111, 160
   orig: 111, 160
   offset: 0, 0
   index: -1
 cycz_17
   rotate: true
-  xy: 959, 615
-  size: 164, 120
-  orig: 164, 127
-  offset: 0, 0
+  xy: 703, 304
+  size: 158, 108
+  orig: 165, 117
+  offset: 7, 9
   index: -1
 cycz_18
   rotate: false
-  xy: 164, 373
-  size: 124, 109
-  orig: 124, 109
+  xy: 636, 181
+  size: 145, 118
+  orig: 145, 118
   offset: 0, 0
   index: -1
 cycz_19
-  rotate: true
-  xy: 2, 484
+  rotate: false
+  xy: 2, 432
   size: 198, 253
   orig: 198, 253
   offset: 0, 0
   index: -1
 cycz_2
-  rotate: false
-  xy: 2, 212
+  rotate: true
+  xy: 934, 798
   size: 302, 157
   orig: 302, 157
   offset: 0, 0
   index: -1
 cycz_20
-  rotate: true
-  xy: 623, 108
+  rotate: false
+  xy: 857, 63
   size: 107, 114
   orig: 107, 114
   offset: 0, 0
   index: -1
 cycz_21
   rotate: false
-  xy: 546, 217
+  xy: 496, 308
   size: 114, 71
   orig: 114, 71
   offset: 0, 0
   index: -1
 cycz_22
-  rotate: false
-  xy: 309, 371
-  size: 171, 311
-  orig: 171, 311
-  offset: 0, 0
+  rotate: true
+  xy: 2, 11
+  size: 166, 252
+  orig: 166, 253
+  offset: 0, 1
   index: -1
 cycz_23
-  rotate: true
-  xy: 309, 34
-  size: 181, 312
-  orig: 181, 312
-  offset: 0, 0
+  rotate: false
+  xy: 934, 534
+  size: 166, 262
+  orig: 166, 264
+  offset: 0, 2
   index: -1
 cycz_24
-  rotate: true
-  xy: 844, 2
-  size: 96, 87
-  orig: 96, 87
+  rotate: false
+  xy: 612, 301
+  size: 89, 80
+  orig: 89, 80
   offset: 0, 0
   index: -1
 cycz_25
-  rotate: true
-  xy: 257, 535
+  rotate: false
+  xy: 448, 530
   size: 31, 42
   orig: 31, 42
   offset: 0, 0
   index: -1
 cycz_26
-  rotate: false
-  xy: 2, 16
+  rotate: true
+  xy: 256, 380
   size: 305, 190
   orig: 305, 190
   offset: 0, 0
   index: -1
 cycz_27
   rotate: false
-  xy: 484, 764
-  size: 473, 333
-  orig: 473, 333
+  xy: 484, 792
+  size: 448, 308
+  orig: 448, 309
   offset: 0, 0
   index: -1
 cycz_28
-  rotate: false
-  xy: 844, 100
+  rotate: true
+  xy: 448, 381
   size: 81, 106
   orig: 81, 106
   offset: 0, 0
   index: -1
 cycz_29
-  rotate: true
-  xy: 257, 568
+  rotate: false
+  xy: 448, 574
   size: 32, 45
   orig: 32, 45
   offset: 0, 0
   index: -1
 cycz_3
   rotate: false
-  xy: 831, 628
+  xy: 316, 33
   size: 112, 134
   orig: 112, 134
   offset: 0, 0
   index: -1
 cycz_4
-  rotate: true
-  xy: 650, 347
+  rotate: false
+  xy: 831, 622
   size: 87, 168
   orig: 87, 168
   offset: 0, 0
   index: -1
 cycz_5
-  rotate: false
-  xy: 739, 133
+  rotate: true
+  xy: 370, 299
   size: 79, 124
   orig: 83, 124
   offset: 4, 0
   index: -1
 cycz_6
   rotate: false
-  xy: 257, 641
+  xy: 202, 556
   size: 41, 41
   orig: 41, 41
   offset: 0, 0
   index: -1
 cycz_7
-  rotate: true
-  xy: 927, 108
+  rotate: false
+  xy: 556, 383
   size: 98, 79
   orig: 98, 79
   offset: 0, 0
   index: -1
 cycz_8
   rotate: false
-  xy: 257, 602
+  xy: 202, 517
   size: 40, 37
   orig: 40, 37
   offset: 0, 0
   index: -1
 cycz_9
   rotate: false
-  xy: 484, 436
+  xy: 484, 464
   size: 345, 326
   orig: 345, 326
+  offset: 0, 0
+  index: -1
+s_0
+  rotate: true
+  xy: 831, 540
+  size: 80, 101
+  orig: 80, 101
+  offset: 0, 0
+  index: -1
+s_1
+  rotate: true
+  xy: 636, 35
+  size: 144, 113
+  orig: 144, 113
+  offset: 0, 0
+  index: -1
+s_2
+  rotate: false
+  xy: 202, 599
+  size: 40, 86
+  orig: 40, 86
+  offset: 0, 0
+  index: -1
+s_3
+  rotate: false
+  xy: 448, 621
+  size: 31, 64
+  orig: 31, 65
+  offset: 0, 0
+  index: -1
+s_4
+  rotate: false
+  xy: 256, 70
+  size: 58, 107
+  orig: 58, 107
+  offset: 0, 0
+  index: -1
+s_5
+  rotate: true
+  xy: 244, 294
+  size: 84, 124
+  orig: 84, 124
   offset: 0, 0
   index: -1

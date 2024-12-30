@@ -1,272 +1,272 @@
 
 Role_100003.png
-size: 1016,1016
+size: 936,936
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 df_0
   rotate: false
-  xy: 2, 616
-  size: 373, 398
+  xy: 2, 526
+  size: 373, 408
   orig: 373, 460
   offset: 0, 0
   index: -1
 df_1
   rotate: true
-  xy: 2, 165
-  size: 449, 274
-  orig: 449, 274
-  offset: 0, 0
+  xy: 191, 142
+  size: 382, 237
+  orig: 384, 237
+  offset: 2, 0
   index: -1
 df_10
   rotate: false
-  xy: 873, 129
-  size: 113, 87
-  orig: 113, 90
+  xy: 430, 142
+  size: 101, 78
+  orig: 101, 81
   offset: 0, 3
   index: -1
 df_11
-  rotate: false
-  xy: 331, 6
+  rotate: true
+  xy: 130, 9
   size: 108, 52
   orig: 108, 52
   offset: 0, 0
   index: -1
 df_12
-  rotate: true
-  xy: 799, 559
+  rotate: false
+  xy: 636, 358
   size: 208, 195
   orig: 208, 195
   offset: 0, 0
   index: -1
 df_13
   rotate: false
-  xy: 684, 512
-  size: 113, 214
-  orig: 113, 214
+  xy: 533, 28
+  size: 101, 192
+  orig: 101, 192
   offset: 0, 0
   index: -1
 df_14
-  rotate: false
-  xy: 467, 468
-  size: 215, 258
-  orig: 215, 266
-  offset: 0, 8
+  rotate: true
+  xy: 637, 739
+  size: 195, 232
+  orig: 195, 232
+  offset: 0, 0
   index: -1
 df_15
-  rotate: true
-  xy: 463, 53
-  size: 76, 116
-  orig: 76, 116
+  rotate: false
+  xy: 184, 12
+  size: 68, 105
+  orig: 68, 105
   offset: 0, 0
   index: -1
 df_16
   rotate: true
-  xy: 2, 4
-  size: 159, 221
-  orig: 159, 221
+  xy: 636, 213
+  size: 143, 201
+  orig: 143, 201
   offset: 0, 0
   index: -1
 df_17
-  rotate: false
-  xy: 377, 728
-  size: 375, 286
-  orig: 375, 286
+  rotate: true
+  xy: 377, 595
+  size: 339, 258
+  orig: 339, 258
   offset: 0, 0
   index: -1
 df_18
   rotate: true
-  xy: 674, 67
-  size: 73, 82
-  orig: 73, 82
+  xy: 839, 144
+  size: 71, 80
+  orig: 71, 80
   offset: 0, 0
   index: -1
 df_19
   rotate: true
-  xy: 837, 69
-  size: 58, 59
-  orig: 58, 59
+  xy: 865, 560
+  size: 56, 57
+  orig: 56, 57
   offset: 0, 0
   index: -1
 df_2
-  rotate: false
-  xy: 467, 229
-  size: 220, 237
-  orig: 220, 237
+  rotate: true
+  xy: 430, 222
+  size: 191, 204
+  orig: 191, 204
   offset: 0, 0
   index: -1
 df_20
   rotate: false
-  xy: 225, 2
-  size: 104, 138
-  orig: 104, 138
+  xy: 348, 4
+  size: 102, 136
+  orig: 102, 136
   offset: 0, 0
   index: -1
 df_21
   rotate: true
-  xy: 946, 357
+  xy: 871, 903
   size: 31, 63
   orig: 43, 63
   offset: 12, 0
   index: -1
 df_22
-  rotate: false
-  xy: 581, 45
+  rotate: true
+  xy: 377, 530
   size: 63, 36
   orig: 63, 36
   offset: 0, 0
   index: -1
 df_23
   rotate: false
-  xy: 996, 710
+  xy: 430, 471
   size: 18, 57
   orig: 18, 57
   offset: 0, 0
   index: -1
 df_24
   rotate: false
-  xy: 377, 629
+  xy: 839, 217
   size: 86, 97
   orig: 86, 97
   offset: 0, 0
   index: -1
 df_25
-  rotate: false
-  xy: 858, 330
+  rotate: true
+  xy: 209, 127
   size: 13, 25
   orig: 13, 25
   offset: 0, 0
   index: -1
 df_26
   rotate: true
-  xy: 946, 390
+  xy: 865, 618
   size: 40, 68
   orig: 40, 68
   offset: 0, 0
   index: -1
 df_27
   rotate: false
-  xy: 689, 142
+  xy: 452, 415
   size: 182, 178
   orig: 182, 178
   offset: 0, 0
   index: -1
 df_28
   rotate: false
-  xy: 946, 432
+  xy: 871, 776
   size: 60, 125
   orig: 60, 127
   offset: 0, 2
   index: -1
 df_29
-  rotate: false
-  xy: 588, 151
+  rotate: true
+  xy: 452, 42
   size: 98, 76
   orig: 98, 76
   offset: 0, 0
   index: -1
 df_3
-  rotate: false
-  xy: 331, 60
-  size: 130, 147
-  orig: 130, 147
+  rotate: true
+  xy: 2, 5
+  size: 112, 126
+  orig: 112, 126
   offset: 0, 0
   index: -1
 df_30
   rotate: false
-  xy: 278, 167
+  xy: 865, 518
   size: 51, 40
   orig: 51, 40
   offset: 0, 0
   index: -1
 df_31
   rotate: true
-  xy: 873, 218
+  xy: 254, 3
   size: 137, 92
   orig: 137, 92
   offset: 0, 0
   index: -1
 df_32
-  rotate: true
-  xy: 689, 322
+  rotate: false
+  xy: 636, 44
   size: 188, 167
   orig: 193, 167
   offset: 5, 0
   index: -1
 df_33
   rotate: false
-  xy: 754, 769
-  size: 248, 245
-  orig: 248, 245
+  xy: 637, 555
+  size: 226, 182
+  orig: 226, 182
   offset: 0, 0
   index: -1
 df_34
-  rotate: true
-  xy: 467, 131
+  rotate: false
+  xy: 826, 23
   size: 96, 119
   orig: 96, 119
   offset: 0, 0
   index: -1
 df_35
   rotate: true
-  xy: 225, 142
+  xy: 191, 119
   size: 21, 16
   orig: 21, 16
   offset: 0, 0
   index: -1
 df_36
   rotate: true
-  xy: 858, 357
+  xy: 846, 316
   size: 200, 86
   orig: 200, 86
   offset: 0, 0
   index: -1
 df_37
   rotate: false
-  xy: 278, 209
+  xy: 2, 119
   size: 187, 405
   orig: 187, 405
   offset: 0, 0
   index: -1
 df_4
   rotate: false
-  xy: 758, 99
-  size: 77, 41
-  orig: 77, 41
+  xy: 865, 660
+  size: 69, 35
+  orig: 69, 35
   offset: 0, 0
   index: -1
 df_5
-  rotate: false
-  xy: 588, 83
-  size: 84, 66
-  orig: 84, 66
+  rotate: true
+  xy: 871, 697
+  size: 77, 60
+  orig: 77, 60
   offset: 0, 0
   index: -1
 df_6
-  rotate: false
-  xy: 758, 60
-  size: 72, 37
-  orig: 72, 37
+  rotate: true
+  xy: 415, 530
+  size: 63, 32
+  orig: 63, 32
   offset: 0, 0
   index: -1
 df_7
-  rotate: true
-  xy: 967, 272
-  size: 83, 41
-  orig: 83, 41
+  rotate: false
+  xy: 452, 5
+  size: 74, 35
+  orig: 74, 35
   offset: 0, 0
   index: -1
 df_8
   rotate: false
-  xy: 799, 522
-  size: 48, 35
-  orig: 48, 35
+  xy: 663, 13
+  size: 43, 29
+  orig: 43, 29
   offset: 0, 0
   index: -1
 df_9
-  rotate: false
-  xy: 754, 739
-  size: 37, 28
-  orig: 37, 28
+  rotate: true
+  xy: 636, 8
+  size: 34, 25
+  orig: 34, 25
   offset: 0, 0
   index: -1

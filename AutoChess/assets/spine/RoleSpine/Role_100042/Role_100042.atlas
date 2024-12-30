@@ -1,299 +1,299 @@
 
 Role_100042.png
-size: 984,984
+size: 940,940
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 kzs_0
-  rotate: false
-  xy: 855, 620
+  rotate: true
+  xy: 921, 581
   size: 31, 17
   orig: 31, 17
   offset: 0, 0
   index: -1
 kzs_1
   rotate: false
-  xy: 675, 121
+  xy: 602, 141
   size: 99, 85
   orig: 99, 85
   offset: 0, 0
   index: -1
 kzs_10
   rotate: true
-  xy: 138, 10
+  xy: 314, 546
   size: 18, 35
   orig: 18, 35
   offset: 0, 0
   index: -1
 kzs_11
-  rotate: false
-  xy: 833, 639
+  rotate: true
+  xy: 779, 233
   size: 96, 151
   orig: 96, 151
   offset: 0, 0
   index: -1
 kzs_12
   rotate: true
-  xy: 833, 619
+  xy: 617, 510
   size: 18, 20
   orig: 18, 20
   offset: 0, 0
   index: -1
 kzs_13
-  rotate: true
-  xy: 615, 605
+  rotate: false
+  xy: 921, 552
   size: 12, 27
   orig: 12, 27
   offset: 0, 0
   index: -1
 kzs_14
   rotate: true
-  xy: 348, 530
-  size: 69, 156
+  xy: 779, 150
+  size: 81, 156
   orig: 81, 156
-  offset: 12, 0
+  offset: 0, 0
   index: -1
 kzs_15
   rotate: false
-  xy: 506, 271
-  size: 142, 328
-  orig: 142, 328
+  xy: 644, 614
+  size: 144, 324
+  orig: 144, 324
   offset: 0, 0
   index: -1
 kzs_16
-  rotate: true
-  xy: 712, 208
-  size: 97, 86
+  rotate: false
+  xy: 777, 64
+  size: 96, 84
   orig: 97, 86
-  offset: 0, 0
+  offset: 0, 1
   index: -1
 kzs_17
-  rotate: false
-  xy: 870, 800
-  size: 78, 73
+  rotate: true
+  xy: 703, 148
+  size: 78, 72
   orig: 78, 73
   offset: 0, 0
   index: -1
 kzs_18
-  rotate: false
-  xy: 114, 8
+  rotate: true
+  xy: 195, 205
   size: 22, 20
   orig: 22, 20
   offset: 0, 0
   index: -1
 kzs_19
   rotate: true
-  xy: 38, 6
+  xy: 515, 163
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 kzs_2
   rotate: false
-  xy: 501, 100
+  xy: 617, 338
   size: 172, 169
   orig: 172, 169
   offset: 0, 0
   index: -1
 kzs_20
   rotate: true
-  xy: 803, 290
-  size: 327, 135
+  xy: 790, 614
+  size: 324, 135
   orig: 343, 135
-  offset: 16, 0
+  offset: 19, 0
   index: -1
 kzs_21
-  rotate: false
-  xy: 561, 604
+  rotate: true
+  xy: 602, 243
   size: 52, 13
   orig: 52, 13
   offset: 0, 0
   index: -1
 kzs_22
   rotate: false
-  xy: 307, 20
+  xy: 887, 511
   size: 36, 26
   orig: 36, 26
   offset: 0, 0
   index: -1
 kzs_23
-  rotate: true
-  xy: 2, 201
-  size: 326, 377
-  orig: 328, 377
-  offset: 0, 0
+  rotate: false
+  xy: 314, 566
+  size: 328, 372
+  orig: 330, 373
+  offset: 1, 0
   index: -1
 kzs_24
   rotate: true
-  xy: 181, 116
-  size: 83, 177
+  xy: 373, 78
+  size: 82, 177
   orig: 83, 177
   offset: 0, 0
   index: -1
 kzs_25
-  rotate: true
-  xy: 2, 30
-  size: 169, 177
-  orig: 169, 180
-  offset: 0, 0
+  rotate: false
+  xy: 217, 70
+  size: 154, 157
+  orig: 155, 162
+  offset: 1, 1
   index: -1
 kzs_26
-  rotate: true
-  xy: 360, 17
-  size: 140, 138
-  orig: 140, 138
+  rotate: false
+  xy: 373, 162
+  size: 140, 131
+  orig: 140, 132
   offset: 0, 0
   index: -1
 kzs_27
   rotate: false
-  xy: 650, 307
-  size: 151, 310
-  orig: 151, 310
+  xy: 195, 229
+  size: 154, 310
+  orig: 155, 310
   offset: 0, 0
   index: -1
 kzs_28
   rotate: true
-  xy: 181, 5
-  size: 41, 48
-  orig: 41, 48
+  xy: 552, 146
+  size: 39, 48
+  orig: 39, 48
   offset: 0, 0
   index: -1
 kzs_29
   rotate: false
-  xy: 800, 108
-  size: 73, 66
-  orig: 73, 66
+  xy: 582, 73
+  size: 70, 66
+  orig: 70, 66
   offset: 0, 0
   index: -1
 kzs_3
-  rotate: true
-  xy: 348, 791
-  size: 191, 335
-  orig: 191, 335
+  rotate: false
+  xy: 2, 205
+  size: 191, 334
+  orig: 191, 334
   offset: 0, 0
   index: -1
 kzs_30
   rotate: false
-  xy: 875, 110
-  size: 61, 64
-  orig: 61, 64
+  xy: 875, 84
+  size: 60, 64
+  orig: 60, 64
   offset: 0, 0
   index: -1
 kzs_31
   rotate: true
-  xy: 381, 346
-  size: 182, 121
-  orig: 182, 121
+  xy: 791, 331
+  size: 176, 109
+  orig: 177, 109
   offset: 0, 0
   index: -1
 kzs_32
   rotate: true
-  xy: 800, 176
-  size: 112, 95
-  orig: 112, 95
-  offset: 0, 0
+  xy: 515, 187
+  size: 106, 85
+  orig: 107, 86
+  offset: 1, 1
   index: -1
 kzs_33
   rotate: true
-  xy: 685, 875
-  size: 107, 284
-  orig: 107, 284
-  offset: 0, 0
+  xy: 644, 509
+  size: 103, 241
+  orig: 104, 242
+  offset: 1, 1
   index: -1
 kzs_34
-  rotate: true
-  xy: 500, 2
-  size: 96, 298
-  orig: 96, 315
+  rotate: false
+  xy: 523, 297
+  size: 92, 267
+  orig: 93, 267
   offset: 0, 0
   index: -1
 kzs_35
   rotate: false
-  xy: 685, 792
-  size: 183, 81
-  orig: 183, 81
+  xy: 392, 3
+  size: 177, 73
+  orig: 177, 73
   offset: 0, 0
   index: -1
 kzs_36
-  rotate: true
-  xy: 360, 159
+  rotate: false
+  xy: 875, 63
   size: 40, 19
   orig: 40, 19
   offset: 0, 0
   index: -1
 kzs_37
-  rotate: false
-  xy: 381, 164
-  size: 118, 180
-  orig: 118, 180
-  offset: 0, 0
+  rotate: true
+  xy: 617, 228
+  size: 108, 160
+  orig: 109, 160
+  offset: 1, 0
   index: -1
 kzs_38
   rotate: false
-  xy: 897, 222
+  xy: 654, 73
   size: 54, 66
   orig: 54, 66
   offset: 0, 0
   index: -1
 kzs_39
   rotate: false
-  xy: 348, 601
-  size: 211, 188
-  orig: 211, 188
+  xy: 2, 13
+  size: 213, 190
+  orig: 213, 190
   offset: 0, 0
   index: -1
 kzs_4
-  rotate: true
-  xy: 561, 619
-  size: 170, 270
+  rotate: false
+  xy: 351, 295
+  size: 170, 269
   orig: 170, 270
   offset: 0, 0
   index: -1
 kzs_40
   rotate: false
-  xy: 2, 529
-  size: 344, 453
-  orig: 344, 453
+  xy: 2, 541
+  size: 310, 397
+  orig: 310, 398
   offset: 0, 0
   index: -1
 kzs_41
-  rotate: false
-  xy: 650, 277
-  size: 60, 28
+  rotate: true
+  xy: 552, 85
+  size: 59, 28
   orig: 60, 28
-  offset: 0, 0
+  offset: 1, 0
   index: -1
 kzs_5
-  rotate: true
-  xy: 231, 13
-  size: 33, 74
+  rotate: false
+  xy: 887, 539
+  size: 32, 73
   orig: 33, 74
-  offset: 0, 0
+  offset: 1, 1
   index: -1
 kzs_6
-  rotate: false
-  xy: 2, 3
+  rotate: true
+  xy: 617, 530
   size: 34, 25
   orig: 34, 25
   offset: 0, 0
   index: -1
 kzs_7
   rotate: true
-  xy: 181, 48
+  xy: 217, 2
   size: 66, 173
   orig: 66, 173
   offset: 0, 0
   index: -1
 kzs_8
-  rotate: false
-  xy: 64, 8
+  rotate: true
+  xy: 351, 270
   size: 23, 20
   orig: 23, 20
   offset: 0, 0
   index: -1
 kzs_9
-  rotate: false
-  xy: 89, 8
+  rotate: true
+  xy: 351, 245
   size: 23, 20
   orig: 23, 20
   offset: 0, 0

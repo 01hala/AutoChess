@@ -21,7 +21,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 704
+      "__id__": 712
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 705
+      "__id__": 713
     },
     "_id": "ce6c1ebb-f0bd-4049-96f3-c647b79310fb"
   },
@@ -86,13 +86,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 701
+        "__id__": 709
       },
       {
-        "__id__": 702
+        "__id__": 710
       },
       {
-        "__id__": 703
+        "__id__": 711
       }
     ],
     "_prefab": null,
@@ -21987,8 +21987,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -22050,12 +22050,12 @@
     "_debugBones": false,
     "_debugSlots": false,
     "_skeletonData": {
-      "__uuid__": "8ffd98b1-276c-4485-a75a-f0e06a95b693",
+      "__uuid__": "bc52b306-e29c-4281-abb0-5cf034ec0853",
       "__expectedType__": "sp.SkeletonData"
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "animation2",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,
@@ -22069,7 +22069,7 @@
       "__id__": 2
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 682
@@ -22119,13 +22119,13 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 379.0000305175781,
-      "height": 369
+      "width": 247,
+      "height": 241
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": 0.5,
+      "y": 0.5830290456431535
     },
     "_id": "baa4GtCmpKYYkac/GK65Zk"
   },
@@ -22157,12 +22157,12 @@
     "_debugBones": false,
     "_debugSlots": false,
     "_skeletonData": {
-      "__uuid__": "ef3d2ca0-4722-4f6d-999a-12cd62736f21",
+      "__uuid__": "db556bdf-ab84-4934-b9b3-d32416e39162",
       "__expectedType__": "sp.SkeletonData"
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "xin2",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,
@@ -22222,6 +22222,24 @@
       },
       {
         "__id__": 699
+      },
+      {
+        "__id__": 701
+      },
+      {
+        "__id__": 703
+      },
+      {
+        "__id__": 704
+      },
+      {
+        "__id__": 706
+      },
+      {
+        "__id__": 707
+      },
+      {
+        "__id__": 708
       }
     ],
     "removedComponents": []
@@ -22355,6 +22373,89 @@
     ]
   },
   {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 702
+    },
+    "propertyPath": [
+      "_contentSize"
+    ],
+    "value": {
+      "__type__": "cc.Size",
+      "width": 674.02,
+      "height": 801.38
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "10CI8dighCv7kZohh0V64v"
+    ]
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 702
+    },
+    "propertyPath": [
+      "_anchorPoint"
+    ],
+    "value": {
+      "__type__": "cc.Vec2",
+      "x": 0.4905937509272722,
+      "y": 0.013114876837455389
+    }
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 705
+    },
+    "propertyPath": [
+      "_skeletonData"
+    ],
+    "value": {
+      "__uuid__": "5f20bd92-e26b-458d-881e-bdf4375e7cbf",
+      "__expectedType__": "sp.SkeletonData"
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "ebVARFnZNPG7xc9CITlszF"
+    ]
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 705
+    },
+    "propertyPath": [
+      "defaultSkin"
+    ],
+    "value": "default"
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 705
+    },
+    "propertyPath": [
+      "defaultAnimation"
+    ],
+    "value": "animation2"
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 694
+    },
+    "propertyPath": [
+      "_active"
+    ],
+    "value": false
+  },
+  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -22456,22 +22557,22 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 706
+      "__id__": 714
     },
     "shadows": {
-      "__id__": 707
+      "__id__": 715
     },
     "_skybox": {
-      "__id__": 708
+      "__id__": 716
     },
     "fog": {
-      "__id__": 709
+      "__id__": 717
     },
     "octree": {
-      "__id__": 710
+      "__id__": 718
     },
     "lightProbeInfo": {
-      "__id__": 711
+      "__id__": 719
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

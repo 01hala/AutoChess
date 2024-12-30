@@ -4,7 +4,7 @@
  * author: hotaru
  * 2024/03/30
  */
-import { _decorator, Animation, BlockInputEvents, Button, Component, Node, RichText, Sprite, spriteAssembler, SpriteFrame, Toggle } from 'cc';
+import { _decorator, Animation, BlockInputEvents, Button, Component, Node, RichText, sp, Sprite, spriteAssembler, SpriteFrame, Toggle } from 'cc';
 import { BattleVictory } from '../battle/AutoChessBattle/common';
 import { netSingleton } from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
@@ -79,7 +79,7 @@ export class Settlement extends Component
     {
         for(let t of this.hpGroup.children)
         {
-            t.getComponent(Toggle).isChecked=false;
+            t.getComponent(sp.Skeleton).setAnimation(0,"xin2",true);
         }
     }
 
@@ -96,7 +96,7 @@ export class Settlement extends Component
         console.log(_hpNum);
         for(let i=0;i<_hpNum;i++)
         {
-            this.hpGroup.children[i].getComponent(Toggle).isChecked=true;
+            this.hpGroup.children[i].getComponent(sp.Skeleton).setAnimation(0,"xin1",true);
         }
         this.midArea.getComponent(Animation).play("PanelAppear");
         switch(_isVictory)
@@ -104,27 +104,41 @@ export class Settlement extends Component
             case BattleVictory.faild:
                 AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#245998 width=20>失<size=30></size>败</color>";
+                this.cupNum.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff>+0</color>"
                 this.banners.getComponent(Sprite).spriteFrame=this.loseBanners;
-                this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.loseImg;
-                this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.loseRing;
+                //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.loseImg;
+                //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.loseRing;
+                this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0,"loss",true);
                 break;
             case BattleVictory.tie:
                 AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
+                this.cupNum.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff>+0</color>"
                 this.banners.getComponent(Sprite).spriteFrame=this.drwaBanners;
-                this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
-                this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
+                //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
+                //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
+                this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0,"draw",true);
                 break;
             case BattleVictory.victory:
                 AudioManager.Instance.PlayerOnShot("Sound/battle_win_01");
                 this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#f4b428 width=20>胜<size=30></size>利</color>";
                 this.banners.getComponent(Sprite).spriteFrame=this.winBanners;
-                this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.winImg;
-                this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.winRing;
+                //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.winImg;
+                //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.winRing;
+                this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0,"win",true);
                 break;
         }
         this.midArea.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
         {
+            this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setAnimation(0,"animation",false);
+            this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setCompleteListener((trackEntry)=>
+            {
+                if(trackEntry.animation.name === "animation")
+                {
+                    this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setAnimation(0,"xin2",true);
+                }
+            });
+
             if(_isAddTime)
             {
                 this.ShowAddTimeBoard();
@@ -181,15 +195,14 @@ export class Settlement extends Component
                     netSingleton.game.confirm_quest_victory(this.isVictory, this.addCoin);
                 }
             }
-            
+            this.node.destroy();
         });
         this.midArea.getComponent(Animation).play("PanelDisappear");
-        for(let t of this.hpGroup.children)
-        {
-            t.getComponent(Toggle).isChecked=false;
-        }
+        // for (let t of this.hpGroup.children)
+        // {
+        //     t.getComponent(sp.Skeleton).setAnimation(0, "xin2", true);
+        // }
     }
-
 }
 
 

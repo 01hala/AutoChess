@@ -413,7 +413,6 @@ export class RoleDis extends Component
     {
         if (!this.tBeHurted)
         {
-            this.hurtedNum = 0;
             let hurtedTextAnim: Animation = this.behurtedTextEffect.getComponent(Animation);
             hurtedTextAnim.on(Animation.EventType.FINISHED, () => 
             {
@@ -461,6 +460,7 @@ export class RoleDis extends Component
             
             return delay(700, () =>
             {
+                this.hurtedNum = 0;
                 this.tBeHurted = null;
                 this.hurtedSpine.active = false;
             });
