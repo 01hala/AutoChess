@@ -252,7 +252,7 @@ export class plan_refresh_cb{
     private cb_uuid : number;
     private module_rsp_cb : plan_rsp_cb;
 
-    public event_refresh_handle_cb : (info:common.ShopData)=>void | null;
+    public event_refresh_handle_cb : (info:common.ShopData, battle_info:common.UserBattleData)=>void | null;
     public event_refresh_handle_err : (err:number)=>void | null;
     public event_refresh_handle_timeout : ()=>void | null;
     constructor(_cb_uuid : number, _module_rsp_cb : plan_rsp_cb){
@@ -263,7 +263,7 @@ export class plan_refresh_cb{
         this.event_refresh_handle_timeout = null;
     }
 
-    callBack(_cb:(info:common.ShopData)=>void, _err:(err:number)=>void)
+    callBack(_cb:(info:common.ShopData, battle_info:common.UserBattleData)=>void, _err:(err:number)=>void)
     {
         this.event_refresh_handle_cb = _cb;
         this.event_refresh_handle_err = _err;
@@ -613,6 +613,7 @@ export class plan_rsp_cb extends client_handle.imodule {
         let uuid = inArray[0];
         let _argv_97f4163d_22be_334a_ad37_ab1f786ceb46:any[] = [];
         _argv_97f4163d_22be_334a_ad37_ab1f786ceb46.push(common.protcol_to_ShopData(inArray[1]));
+        _argv_97f4163d_22be_334a_ad37_ab1f786ceb46.push(common.protcol_to_UserBattleData(inArray[2]));
         var rsp = this.try_get_and_del_refresh_cb(uuid);
         if (rsp && rsp.event_refresh_handle_cb) {
             rsp.event_refresh_handle_cb.apply(null, _argv_97f4163d_22be_334a_ad37_ab1f786ceb46);

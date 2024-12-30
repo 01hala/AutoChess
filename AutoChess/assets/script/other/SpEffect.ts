@@ -67,32 +67,42 @@ export class SpEffectOnRole
 
     public async init()
     {
-        console.log("初始化特效类");
+        console.log("初始化特效类 config.SpListConfig:", config.SpListConfig);
         
         let allAwait=[];
 
         allAwait.push(new Promise<void>(async (resolve) =>
         {
-            //召唤出场特效
-            console.log("召唤特效:",OnSummonEffectStr);
-            let address = "EffectSpine/" + OnSummonEffectStr + "/" + config.SpListConfig.get(OnSummonEffectStr).path;
-            await loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
-                {
-                    this.onSummon = data;
-                }
+            let cfg = config.SpListConfig.get(OnSummonEffectStr);
+            if (!cfg) {
+                console.log("初始化特效类 get cfg faild:", OnSummonEffectStr);
                 resolve();
-            });
+            }
+            else {
+                //召唤出场特效
+                let address = "EffectSpine/" + OnSummonEffectStr + "/" + cfg.path;
+                //console.log("出场特效文件路径：", address);
+                await loadAssets.LoadSkeletonData(address, (data) =>
+                {
+                    if (data)
+                    {
+                        this.onSummon = data;
+                    }
+                    resolve();
+                });
+            }
         }));
 
         allAwait.push(new Promise<void>(async (resolve) =>
         {
-            //入场特效
-            if (!("null" === this.roleSpCfg.Admission))
-            {
-                console.log("入场特效:",this.roleSpCfg.Admission);
-                let address = "EffectSpine/" + this.roleSpCfg.Admission + "/" + config.SpListConfig.get(this.roleSpCfg.Admission).path;
+            let cfg = config.SpListConfig.get(this.roleSpCfg.Admission);
+            if (!cfg) {
+                console.log("初始化特效类 get cfg faild:", this.roleSpCfg.Admission);
+                resolve();
+            }
+            else {
+                //入场特效
+                let address = "EffectSpine/" + this.roleSpCfg.Admission + "/" + cfg.path;
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
                     if (data)
@@ -102,59 +112,74 @@ export class SpEffectOnRole
                     resolve();
                 });
             }
-            else
-            {
+        }));
+
+        allAwait.push(new Promise<void>(async(resolve) => {
+            let cfg = config.SpListConfig.get(this.roleSpCfg.IntensifierSelf);
+            if (!cfg) {
+                console.log("初始化特效类 get cfg faild:", this.roleSpCfg.IntensifierSelf);
                 resolve();
             }
-        }));
-
-        allAwait.push(new Promise<void>(async (resolve) =>
-        {
-            //单体增强时特效
-            let address = "EffectSpine/" + this.roleSpCfg.IntensifierSelf + "/" + config.SpListConfig.get(this.roleSpCfg.IntensifierSelf).path;
-            //console.log("单体增强特效文件路径：", address);
-            await loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
-                {
-                    this.intensifierSelf = data;
-                }
-                resolve();
-            });
-        }));
-
-        allAwait.push(new Promise<void>(async(resolve) => {
-            //单体增强时特效
-            let address = "EffectSpine/" + this.roleSpCfg.IntensifierColony + "/" + config.SpListConfig.get(this.roleSpCfg.IntensifierColony).path;
-           // console.log("群体增强特效文件路径：", address);
-            await loadAssets.LoadSkeletonData(address, (data) =>
-            {
-                if (data)
-                {
-                    this.intensifierColony = data;
-                }
-                resolve();
-            });
-        }));
-        
-        allAwait.push(new Promise<void>(async(resolve) => {
-            //使用技能
-            if(!("null"===this.roleSpCfg.UseSkill))
-            {
-                //console.log("this.spConfig.UseSkill:", this.spConfig.UseSkill);
-                let address = "EffectSpine/" + this.roleSpCfg.UseSkill + "/" + config.SpListConfig.get(this.roleSpCfg.UseSkill).path;
-                //console.log("使用技能特效文件路径：", address);
-                await loadAssets.LoadSkeletonData(address, (data) =>
-                {
+            else {
+                //单体增强时特效
+                let address = "EffectSpine/" + this.roleSpCfg.IntensifierSelf + "/" + cfg.path;
+                //console.log("单体增强特效文件路径：", address);
+                await loadAssets.LoadSkeletonData(address, (data) => {
                     if (data)
                     {
-                        this.useSkill = data;
+                        this.intensifierSelf = data;
                     }
                     resolve();
                 });
             }
-            else {
+        }));
+
+        allAwait.push(new Promise<void>(async(resolve) => {
+            let cfg = config.SpListConfig.get(this.roleSpCfg.IntensifierColony);
+            if (!cfg) {
+                console.log("初始化特效类 get cfg faild:", this.roleSpCfg.IntensifierColony);
                 resolve();
+            }
+            else {
+                //单体增强时特效
+                let address = "EffectSpine/" + this.roleSpCfg.IntensifierColony + "/" + cfg.path;
+                //console.log("群体增强特效文件路径：", address);
+                await loadAssets.LoadSkeletonData(address, (data) =>
+                {
+                    if (data)
+                    {
+                        this.intensifierColony = data;
+                    }
+                    resolve();
+                });
+            }
+        }));
+        
+        allAwait.push(new Promise<void>(async(resolve) => {
+            let cfg = config.SpListConfig.get(this.roleSpCfg.UseSkill);
+            if (!cfg) {
+                console.log("初始化特效类 get cfg faild:", this.roleSpCfg.UseSkill);
+                resolve();
+            }
+            else {
+                //使用技能
+                if(!("null"===this.roleSpCfg.UseSkill))
+                {
+                    //console.log("this.spConfig.UseSkill:", this.spConfig.UseSkill);
+                    let address = "EffectSpine/" + this.roleSpCfg.UseSkill + "/" + cfg.path;
+                    //console.log("使用技能特效文件路径：", address);
+                    await loadAssets.LoadSkeletonData(address, (data) =>
+                    {
+                        if (data)
+                        {
+                            this.useSkill = data;
+                        }
+                        resolve();
+                    });
+                }
+                else {
+                    resolve();
+                }
             }
         }));
 
@@ -166,15 +191,20 @@ export class SpEffectOnRole
                 {
                     if(!(t==="null"))
                     {
-                        //console.log("使用技能特效文件路径：",  t );
-                        let address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                        await loadAssets.LoadSkeletonData(address, (data) =>
-                        {
-                            if (data)
+                        let cfg = config.SpListConfig.get(t);
+                        if (!cfg) {
+                            console.log("初始化特效类 get cfg faild:", t);
+                        }
+                        else {
+                            let address = "EffectSpine/" + t + "/" + cfg.path;
+                            await loadAssets.LoadSkeletonData(address, (data) =>
                             {
-                                this.onSkill.push(data);
-                            }
-                        });
+                                if (data)
+                                {
+                                    this.onSkill.push(data);
+                                }
+                            });
+                        }
                     }
                 }
                 resolve();
@@ -191,37 +221,46 @@ export class SpEffectOnRole
             let address;
             for (let t in enums.BuffEffectSp)
             {
-                console.log("buff特效文件路径：",  t );
-                address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-                //console.log("buff特效文件路径：", address);
-                await loadAssets.LoadSkeletonData(address, (data) =>
-                {
-                    if (data)
+                let cfg = config.SpListConfig.get(t);
+                if (!cfg) {
+                    console.log("初始化特效类 get cfg faild:", t);
+                }
+                else {
+                    address = "EffectSpine/" + t + "/" + cfg.path;
+                    //console.log("buff特效文件路径：", address);
+                    await loadAssets.LoadSkeletonData(address, (data) =>
                     {
-                        this.buff.set(t, data);
-                    }
-                    resolve();
-                });
+                        if (data)
+                        {
+                            this.buff.set(t, data);
+                        }
+                        resolve();
+                    });
+                }
             }
         }));
     
-        allAwait.push(new Promise<void>(async (resolve) =>
-        {
+        allAwait.push(new Promise<void>(async(resolve) => {
             //技能生效特效
             let address;
             for (let t in enums.CheckSkillEffectSp)
             {
-                //console.log("技能生效特效文件路径：", t);
-                address = "EffectSpine/" + t + "/" + config.SpListConfig.get(t).path;
-
-                await loadAssets.LoadSkeletonData(address, (data) =>
-                {
-                    if (data)
+                let cfg = config.SpListConfig.get(t);
+                if (!cfg) {
+                    console.log("初始化特效类 get cfg faild:", t);
+                }
+                else {
+                    address = "EffectSpine/" + t + "/" + cfg.path;
+                    //console.log("技能生效特效文件路径：", address);
+                    await loadAssets.LoadSkeletonData(address, (data) =>
                     {
-                        this.checkSkill.set(t, data);
-                    }
-                    resolve();
-                });
+                        if (data)
+                        {
+                            this.checkSkill.set(t, data);
+                        }
+                        resolve();
+                    });
+                }
             }
         }));
         

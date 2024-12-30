@@ -175,7 +175,7 @@ export class CardLibrary extends Component
         {
             this.ShowBooth(_biomes);
             this.rolePaintingPre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "RolePainting") as Prefab;
-            console.log("LoadCard!!!");
+            console.log("LoadCard!!! User.UserData.bag.ItemList:", User.UserData.bag.ItemList);
             let boothNum = 0;
             for(let j=0;j<this.cardCfgs.length;j++)
             {

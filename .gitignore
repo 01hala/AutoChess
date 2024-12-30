@@ -419,6 +419,7 @@ node_modules/
 # WebStorm
 #//////////////////////////
 .idea/
+/PNGoo.0.1.1
 *.zip
 .build
 lib

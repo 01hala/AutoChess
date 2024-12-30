@@ -178,10 +178,11 @@ namespace Abelkhan
             uuid_eda10fa8_319d_3f29_8927_072b71272ea7 = _uuid;
         }
 
-        public void rsp(ShopData info_391fd3d4_2d55_3f5e_9223_7f450a814a15){
+        public void rsp(ShopData info_391fd3d4_2d55_3f5e_9223_7f450a814a15, UserBattleData battle_info_504125a2_a75d_3fa2_9a35_a9fdc5331928){
             var _argv_97f4163d_22be_334a_ad37_ab1f786ceb46 = new ArrayList();
             _argv_97f4163d_22be_334a_ad37_ab1f786ceb46.Add(uuid_eda10fa8_319d_3f29_8927_072b71272ea7);
             _argv_97f4163d_22be_334a_ad37_ab1f786ceb46.Add(ShopData.ShopData_to_protcol(info_391fd3d4_2d55_3f5e_9223_7f450a814a15));
+            _argv_97f4163d_22be_334a_ad37_ab1f786ceb46.Add(UserBattleData.UserBattleData_to_protcol(battle_info_504125a2_a75d_3fa2_9a35_a9fdc5331928));
             Hub.Hub._gates.call_client(_client_uuid_97f4163d_22be_334a_ad37_ab1f786ceb46, "plan_rsp_cb_refresh_rsp", _argv_97f4163d_22be_334a_ad37_ab1f786ceb46);
         }
 

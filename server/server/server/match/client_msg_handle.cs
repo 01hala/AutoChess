@@ -419,10 +419,19 @@ namespace Match
             try
             {
                 var self = Match.battle_Mng.get_battle_player(uuid);
-                self.BattleShopPlayer.refresh(self.baseStage());
-                self.BattleShopPlayer.do_skill(self.baseStage());
+                if (self.BattleShopPlayer.BattleData.coin <= 0)
+                {
+                    rsp.err((int)em_error.no_enough_coin);
+                }
+                else
+                {
+                    self.BattleShopPlayer.BattleData.coin--;
 
-                rsp.rsp(self.BattleShopPlayer.ShopData);
+                    self.BattleShopPlayer.refresh(self.baseStage());
+                    self.BattleShopPlayer.do_skill(self.baseStage());
+
+                    rsp.rsp(self.BattleShopPlayer.ShopData, self.BattleShopPlayer.BattleData);
+                }
             }
             catch(System.Exception ex)
             {

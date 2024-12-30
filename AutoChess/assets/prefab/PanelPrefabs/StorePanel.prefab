@@ -248,7 +248,7 @@
   {
     "__type__": "cc.Node",
     "_name": "StoreArea",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 1
     },
@@ -301,7 +301,7 @@
   {
     "__type__": "cc.Node",
     "_name": "PageView",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 10
     },
@@ -354,7 +354,7 @@
   {
     "__type__": "cc.Node",
     "_name": "view",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 11
     },
@@ -410,7 +410,7 @@
   {
     "__type__": "cc.Node",
     "_name": "content",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 12
     },
@@ -860,7 +860,7 @@
         "__id__": 38
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 44

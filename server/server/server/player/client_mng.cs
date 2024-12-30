@@ -1150,9 +1150,17 @@ namespace Player
             return false;
         }
 
-        public void refresh(int stage)
+        public bool refresh(int stage)
         {
+            if (BattleShopPlayer.BattleData.coin <= 0)
+            {
+                return false;
+            }
+
+            BattleShopPlayer.BattleData.coin--;
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(stage);
+
+            return true;
         }
 
         public int GetStage()
@@ -1229,8 +1237,15 @@ namespace Player
                 Log.Log.trace("PVELevelConfigs TryGetValue quest:{0}", info.quest);
 
                 PVELevelCfg = cfg;
-                BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
-                StartPVERound(0);
+                if (info.PVELevelIndex == 0)
+                {
+                    BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
+                    StartPVERound(0);
+                }
+                if (BattleShopPlayer.ShopData.SaleRoleList.Count == 0 || BattleShopPlayer.ShopData.SalePropList.Count == 0)
+                {
+                    BattleShopPlayer.refresh(GetStage());
+                }
 
                 Log.Log.trace("PVELevelConfigs TryGetValue isQuestEvent:{0}", isQuestEvent);
                 if (!isQuestEvent)
