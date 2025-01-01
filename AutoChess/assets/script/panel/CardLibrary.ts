@@ -14,6 +14,7 @@ import { AudioManager } from '../other/AudioManager';
 import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { sleep } from '../other/sleep';
 import { User } from '../login/User';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('CardLibrary')
@@ -182,7 +183,7 @@ export class CardLibrary extends Component
                 let card = instantiate(this.rolePaintingPre);
                 await card.getComponent(RoleCard).Init(this.cardCfgs[j].Id, this.cardCfgs[j].Skel);
                 card.getComponent(RoleCard).Stage = this.cardCfgs[j].Stage;
-                card.getComponent(RoleCard).Name = this.cardCfgs[j].Name;
+                card.getComponent(RoleCard).Name = GameManager.Instance.GetText(this.cardCfgs[j].Name);
                 card.setParent(this.cardContent.children[boothNum].getChildByPath("Layout"));
                 try
                 {

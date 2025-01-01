@@ -2,6 +2,7 @@ import { _decorator, Button, Component, Label, Node, RichText, sp } from 'cc';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { PlotConfig } from '../battle/AutoChessBattle/config/Plot_config';
 import { loadAssets } from '../bundle/LoadAsset';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlotPanel')
@@ -107,7 +108,7 @@ export class PlotPanel extends Component
         this.next.enabled=false;
 
         let jconfig = config.RoleConfig.get(_plot.RoleId);
-        this.title.string="<color=#ffffff>- " + jconfig.Name + " -</color>";
+        this.title.string="<color=#ffffff>- " + GameManager.Instance.GetText(jconfig.Name) + " -</color>";
 
         this.LoadPainting(jconfig.Skel);
 

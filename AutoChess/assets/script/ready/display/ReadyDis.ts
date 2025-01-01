@@ -613,12 +613,12 @@ export class ReadyDis
         if(roleSkillInfo){
             let content="";
             switch(level){
-                case 1:content=roleSkillInfo.Leve1Text;break;
-                case 2:content=roleSkillInfo.Leve2Text;break;
-                default:content=roleSkillInfo.Leve3Text;
+                case 1:content=GameManager.Instance.GetText(roleSkillInfo.Leve1Text);break;
+                case 2:content=GameManager.Instance.GetText(roleSkillInfo.Leve2Text);break;
+                default:content=GameManager.Instance.GetText(roleSkillInfo.Leve3Text);
             }
             this.roleInfoNode.getChildByName("SkillIntroduce").getComponent(RichText).string=
-                roleSkillInfo.Timeing_Text+":"+content;           
+                GameManager.Instance.GetText(roleSkillInfo.Timeing_Text)+":"+content;           
         }      
         let roleFetterInfo=config.FettersConfig.get(roleInfo.Fetters);
         if(roleFetterInfo){
@@ -628,7 +628,7 @@ export class ReadyDis
             {
                 this.roleInfoNode.getChildByPath("Fetter/IconImage").getComponent(Sprite).spriteFrame=sf;             
             }
-            this.roleInfoNode.getChildByPath("Fetter/FetterName").getComponent(RichText).string=roleFetterInfo.Name;
+            this.roleInfoNode.getChildByPath("Fetter/FetterName").getComponent(RichText).string=GameManager.Instance.GetText(roleFetterInfo.Name);
         }
     }
 

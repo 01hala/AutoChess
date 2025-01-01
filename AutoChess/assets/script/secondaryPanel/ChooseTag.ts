@@ -91,12 +91,12 @@ export class ChooseTag extends Component
                 let skillInfo = "";
                 switch (pvec.RoleLevel)
                 {
-                    case 1: skillInfo = skcfg.Leve1Text; break;
-                    case 2: skillInfo = skcfg.Leve2Text; break;
-                    case 3: skillInfo = skcfg.Leve3Text; break;
-                    default:skillInfo = skcfg.Leve1Text;
+                    case 1: skillInfo = GameManager.Instance.GetText(skcfg.Leve1Text); break;
+                    case 2: skillInfo = GameManager.Instance.GetText(skcfg.Leve2Text); break;
+                    case 3: skillInfo = GameManager.Instance.GetText(skcfg.Leve3Text); break;
+                    default:skillInfo = GameManager.Instance.GetText(skcfg.Leve1Text);
                 }
-                this.tagnodes[i].getChildByPath("Label").getComponent(Label).string = skcfg.Timeing_Text + ":\n" + skillInfo;
+                this.tagnodes[i].getChildByPath("Label").getComponent(Label).string = GameManager.Instance.GetText(skcfg.Timeing_Text) + ":\n" + skillInfo;
 
                 let img = await loadAssets.LoadImg(rolec.Avatar);
                 if (img)

@@ -1,387 +1,387 @@
 {
     "1": {
         "Id": 1,
-        "Timeing_Text": "购买时",
-        "Leve1_Text": "随机友方角色获得+1生命值和+1攻击力",
-        "Leve2_Text": "随机友方角色获得+2生命值和+2攻击力",
-        "Leve3_Text": "随机友方角色获得+3生命值和+3攻击力"
+        "Timeing_Text": "skill_timeing_text_1",
+        "Leve1_Text": "skill_level1_test_1",
+        "Leve2_Text": "skill_level2_test_1",
+        "Leve3_Text": "skill_level3_test_1"
     },
     "2": {
         "Id": 2,
-        "Timeing_Text": "击倒后",
-        "Leve1_Text": "获得+3攻击力和+3生命值",
-        "Leve2_Text": "获得+4攻击力和+4生命值",
-        "Leve3_Text": "获得+5攻击力和+5生命值"
+        "Timeing_Text": "skill_timeing_text_2",
+        "Leve1_Text": "skill_level1_test_2",
+        "Leve2_Text": "skill_level2_test_2",
+        "Leve3_Text": "skill_level3_test_2"
     },
     "3": {
         "Id": 3,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "对敌方随机角色造成1点远程伤害",
-        "Leve2_Text": "对敌方随机角色造成2点远程伤害",
-        "Leve3_Text": "对敌方随机角色造成3点远程伤害"
+        "Timeing_Text": "skill_timeing_text_3",
+        "Leve1_Text": "skill_level1_test_3",
+        "Leve2_Text": "skill_level2_test_3",
+        "Leve3_Text": "skill_level3_test_3"
     },
     "4": {
         "Id": 4,
-        "Timeing_Text": "受伤时",
-        "Leve1_Text": "己方全部角色+1生命值",
-        "Leve2_Text": "己方全部角色+2生命值",
-        "Leve3_Text": "己方全部角色+3生命值"
+        "Timeing_Text": "skill_timeing_text_4",
+        "Leve1_Text": "skill_level1_test_4",
+        "Leve2_Text": "skill_level2_test_4",
+        "Leve3_Text": "skill_level3_test_4"
     },
     "5": {
         "Id": 5,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "对敌方三名角色造成2点远程伤害",
-        "Leve2_Text": "对敌方三名角色造成3点远程伤害",
-        "Leve3_Text": "对敌方三名角色造成4点远程伤害"
+        "Timeing_Text": "skill_timeing_text_5",
+        "Leve1_Text": "skill_level1_test_5",
+        "Leve2_Text": "skill_level2_test_5",
+        "Leve3_Text": "skill_level3_test_5"
     },
     "6": {
         "Id": 6,
-        "Timeing_Text": "晕厥时",
-        "Leve1_Text": "召唤一个2/2的虚空虫",
-        "Leve2_Text": "召唤一个3/3的虚空虫",
-        "Leve3_Text": "召唤一个4/4的虚空虫"
+        "Timeing_Text": "skill_timeing_text_6",
+        "Leve1_Text": "skill_level1_test_6",
+        "Leve2_Text": "skill_level2_test_6",
+        "Leve3_Text": "skill_level3_test_6"
     },
     "7": {
         "Id": 7,
-        "Timeing_Text": "晕厥时",
-        "Leve1_Text": "召唤一个5/5的虚空虫",
-        "Leve2_Text": "召唤一个6/6的虚空虫",
-        "Leve3_Text": "召唤一个8/8的虚空虫"
+        "Timeing_Text": "skill_timeing_text_7",
+        "Leve1_Text": "skill_level1_test_7",
+        "Leve2_Text": "skill_level2_test_7",
+        "Leve3_Text": "skill_level3_test_7"
     },
     "8": {
         "Id": 8,
-        "Timeing_Text": "休整结束时",
-        "Leve1_Text": "复制前方角色的1级能力，直到下次休整开始",
-        "Leve2_Text": "复制前方角色的2级能力，直到下次休整开始",
-        "Leve3_Text": "复制前方角色的3级能力，直到下次休整开始"
+        "Timeing_Text": "skill_timeing_text_8",
+        "Leve1_Text": "skill_level1_test_8",
+        "Leve2_Text": "skill_level2_test_8",
+        "Leve3_Text": "skill_level3_test_8"
     },
     "9": {
         "Id": 9,
-        "Timeing_Text": "休整结束时",
-        "Leve1_Text": "使前方角色获得+1攻击力和+1生命值",
-        "Leve2_Text": "使前方角色获得+2攻击力和+2生命值",
-        "Leve3_Text": "使前方角色获得+3攻击力和+3生命值"
+        "Timeing_Text": "skill_timeing_text_9",
+        "Leve1_Text": "skill_level1_test_9",
+        "Leve2_Text": "skill_level2_test_9",
+        "Leve3_Text": "skill_level3_test_9"
     },
     "10": {
         "Id": 10,
-        "Timeing_Text": "出售时",
-        "Leve1_Text": "从前往后依次使所有角色获得+1攻击力，次数等于此兵种参与的战斗数",
-        "Leve2_Text": "从前往后依次使所有角色获得+2攻击力，次数等于此兵种参与的战斗数",
-        "Leve3_Text": "从前往后依次使所有角色获得+3攻击力，次数等于此兵种参与的战斗数"
+        "Timeing_Text": "skill_timeing_text_10",
+        "Leve1_Text": "skill_level1_test_10",
+        "Leve2_Text": "skill_level2_test_10",
+        "Leve3_Text": "skill_level3_test_10"
     },
     "11": {
         "Id": 11,
-        "Timeing_Text": "升级时",
-        "Leve1_Text": "使所有角色获得+2生命值和+2攻击力",
-        "Leve2_Text": "使所有角色获得+3生命值和+3攻击力",
-        "Leve3_Text": "使所有角色获得+4生命值和+4攻击力"
+        "Timeing_Text": "skill_timeing_text_11",
+        "Leve1_Text": "skill_level1_test_11",
+        "Leve2_Text": "skill_level2_test_11",
+        "Leve3_Text": "skill_level3_test_11"
     },
     "12": {
         "Id": 12,
-        "Timeing_Text": "右方吃掉食物时",
-        "Leve1_Text": "使其额外获得+1生命值",
-        "Leve2_Text": "使其额外获得+2生命值",
-        "Leve3_Text": "使其额外获得+3生命值"
+        "Timeing_Text": "skill_timeing_text_12",
+        "Leve1_Text": "skill_level1_test_12",
+        "Leve2_Text": "skill_level2_test_12",
+        "Leve3_Text": "skill_level3_test_12"
     },
     "13": {
         "Id": 13,
-        "Timeing_Text": "受伤时",
-        "Leve1_Text": "获得圣盾特性（每场生效一次）",
-        "Leve2_Text": "获得圣盾特性（每场生效两次）",
-        "Leve3_Text": "获得圣盾特性（每场生效三次）"
+        "Timeing_Text": "skill_timeing_text_13",
+        "Leve1_Text": "skill_level1_test_13",
+        "Leve2_Text": "skill_level2_test_13",
+        "Leve3_Text": "skill_level3_test_13"
     },
     "14": {
         "Id": 14,
-        "Timeing_Text": "吃掉食物时",
-        "Leve1_Text": "使随机两个角色获得+1攻击和+1生命值",
-        "Leve2_Text": "使随机两个角色获得+2攻击和+2生命值",
-        "Leve3_Text": "使随机两个角色获得+3攻击和+3生命值"
+        "Timeing_Text": "skill_timeing_text_14",
+        "Leve1_Text": "skill_level1_test_14",
+        "Leve2_Text": "skill_level2_test_14",
+        "Leve3_Text": "skill_level3_test_14"
     },
     "15": {
         "Id": 15,
-        "Timeing_Text": "受伤时",
-        "Leve1_Text": "获得+4攻击力",
-        "Leve2_Text": "获得+6攻击力",
-        "Leve3_Text": "获得+6攻击力和+2生命值"
+        "Timeing_Text": "skill_timeing_text_15",
+        "Leve1_Text": "skill_level1_test_15",
+        "Leve2_Text": "skill_level2_test_15",
+        "Leve3_Text": "skill_level3_test_15"
     },
     "16": {
         "Id": 16,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "此回合所有虚空虫获得+2攻击力值和+2生命值",
-        "Leve2_Text": "此回合所有虚空虫获得+3攻击力和+3生命值",
-        "Leve3_Text": "此回合所有虚空虫获得+4攻击力和+4生命值"
+        "Timeing_Text": "skill_timeing_text_16",
+        "Leve1_Text": "skill_level1_test_16",
+        "Leve2_Text": "skill_level2_test_16",
+        "Leve3_Text": "skill_level3_test_16"
     },
     "17": {
         "Id": 17,
-        "Timeing_Text": "晕厥时",
-        "Leve1_Text": "使所有伙伴获得+1攻击力和+1生命值",
-        "Leve2_Text": "使所有伙伴获得+2攻击力和+2生命值",
-        "Leve3_Text": "使所有伙伴获得+3攻击力和+3生命值"
+        "Timeing_Text": "skill_timeing_text_17",
+        "Leve1_Text": "skill_level1_test_17",
+        "Leve2_Text": "skill_level2_test_17",
+        "Leve3_Text": "skill_level3_test_17"
     },
     "18": {
         "Id": 18,
-        "Timeing_Text": "休整开始时",
-        "Leve1_Text": "使商店左列角色获得+1攻击力和+1生命值",
-        "Leve2_Text": "使商店左列角色获得+2攻击力和+2生命值",
-        "Leve3_Text": "使商店左列角色获得+3攻击力和+3生命值"
+        "Timeing_Text": "skill_timeing_text_18",
+        "Leve1_Text": "skill_level1_test_18",
+        "Leve2_Text": "skill_level2_test_18",
+        "Leve3_Text": "skill_level3_test_18"
     },
     "19": {
         "Id": 19,
-        "Timeing_Text": "晕厥时",
-        "Leve1_Text": "使己方随机一个无护盾角色获得护盾buff",
-        "Leve2_Text": "使己方随机一个无护盾角色获得二级护盾buff",
-        "Leve3_Text": "使己方随机一个无护盾角色获得三级护盾buff"
+        "Timeing_Text": "skill_timeing_text_19",
+        "Leve1_Text": "skill_level1_test_19",
+        "Leve2_Text": "skill_level2_test_19",
+        "Leve3_Text": "skill_level3_test_19"
     },
     "20": {
         "Id": 20,
-        "Timeing_Text": "晕厥时",
-        "Leve1_Text": "使后方角色增加5点生命值",
-        "Leve2_Text": "使后方角色增加8点生命值",
-        "Leve3_Text": "使后方角色增加+2/+4"
+        "Timeing_Text": "skill_timeing_text_20",
+        "Leve1_Text": "skill_level1_test_20",
+        "Leve2_Text": "skill_level2_test_20",
+        "Leve3_Text": "skill_level3_test_20"
     },
     "21": {
         "Id": 21,
-        "Timeing_Text": "购买时",
-        "Leve1_Text": "此单位获得装备圣剑（攻击敌人后直接致死）",
-        "Leve2_Text": "此单位获得装备圣剑（攻击敌人后直接致死）",
-        "Leve3_Text": "此单位获得装备圣剑（攻击敌人后直接致死）"
+        "Timeing_Text": "skill_timeing_text_21",
+        "Leve1_Text": "skill_level1_test_21",
+        "Leve2_Text": "skill_level2_test_21",
+        "Leve3_Text": "skill_level3_test_21"
     },
     "22": {
         "Id": 22,
-        "Timeing_Text": "友方攻击三次时",
-        "Leve1_Text": "为己方所有单位增加2点生命值",
-        "Leve2_Text": "为己方所有单位增加3点生命值",
-        "Leve3_Text": "为己方所有单位增加4点生命值"
+        "Timeing_Text": "skill_timeing_text_22",
+        "Leve1_Text": "skill_level1_test_22",
+        "Leve2_Text": "skill_level2_test_22",
+        "Leve3_Text": "skill_level3_test_22"
     },
     "23": {
         "Id": 23,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "对一个随机敌人造成此兵种攻击值50%的伤害",
-        "Leve2_Text": "对一个随机敌人造成此兵种攻击值60%的伤害",
-        "Leve3_Text": "对一个随机敌人造成此兵种攻击值70%的伤害"
+        "Timeing_Text": "skill_timeing_text_23",
+        "Leve1_Text": "skill_level1_test_23",
+        "Leve2_Text": "skill_level2_test_23",
+        "Leve3_Text": "skill_level3_test_23"
     },
     "24": {
         "Id": 24,
-        "Timeing_Text": "出售时",
-        "Leve1_Text": "额外获得1金币",
-        "Leve2_Text": "额外获得2金币",
-        "Leve3_Text": "额外获得3金币"
+        "Timeing_Text": "skill_timeing_text_24",
+        "Leve1_Text": "skill_level1_test_24",
+        "Leve2_Text": "skill_level2_test_24",
+        "Leve3_Text": "skill_level3_test_24"
     },
     "25": {
         "Id": 25,
-        "Timeing_Text": "受伤时",
-        "Leve1_Text": "对所有单位造成2点伤害",
-        "Leve2_Text": "对所有单位造成3点伤害",
-        "Leve3_Text": "对所有单位造成4点伤害"
+        "Timeing_Text": "skill_timeing_text_25",
+        "Leve1_Text": "skill_level1_test_25",
+        "Leve2_Text": "skill_level2_test_25",
+        "Leve3_Text": "skill_level3_test_25"
     },
     "26": {
         "Id": 26,
-        "Timeing_Text": "休整开始时",
-        "Leve1_Text": "使商店食物价格-1",
-        "Leve2_Text": "使商店食物价格-2",
-        "Leve3_Text": "使商店食物价格-3"
+        "Timeing_Text": "skill_timeing_text_26",
+        "Leve1_Text": "skill_level1_test_26",
+        "Leve2_Text": "skill_level2_test_26",
+        "Leve3_Text": "skill_level3_test_26"
     },
     "27": {
         "Id": 27,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "使后方角色经验值+1（临时）",
-        "Leve2_Text": "使后方角色经验值+2（临时）",
-        "Leve3_Text": "使后方角色经验值+2（临时）"
+        "Timeing_Text": "skill_timeing_text_27",
+        "Leve1_Text": "skill_level1_test_27",
+        "Leve2_Text": "skill_level2_test_27",
+        "Leve3_Text": "skill_level3_test_27"
     },
     "28": {
         "Id": 28,
-        "Timeing_Text": "友方攻击三次后",
-        "Leve1_Text": "对敌方随机一名敌人造成5点伤害",
-        "Leve2_Text": "对敌方随机一名敌人造成6点伤害",
-        "Leve3_Text": "对敌方随机一名敌人造成7点伤害"
+        "Timeing_Text": "skill_timeing_text_28",
+        "Leve1_Text": "skill_level1_test_28",
+        "Leve2_Text": "skill_level2_test_28",
+        "Leve3_Text": "skill_level3_test_28"
     },
     "29": {
         "Id": 29,
-        "Timeing_Text": "前方伙伴受伤时",
-        "Leve1_Text": "替前方单位承受此次伤害",
-        "Leve2_Text": "替前方单位承受此次伤害，并额外减免2伤害",
-        "Leve3_Text": "替前方单位承受此次伤害，并额外减免4伤害"
+        "Timeing_Text": "skill_timeing_text_29",
+        "Leve1_Text": "skill_level1_test_29",
+        "Leve2_Text": "skill_level2_test_29",
+        "Leve3_Text": "skill_level3_test_29"
     },
     "30": {
         "Id": 30,
-        "Timeing_Text": "伙伴晕厥时",
-        "Leve1_Text": "获得+1攻击力和+2生命值。在战斗外翻倍",
-        "Leve2_Text": "获得+2攻击力和+3生命值。在战斗外翻倍",
-        "Leve3_Text": "获得+3攻击力和+4生命值。在战斗外翻倍"
+        "Timeing_Text": "skill_timeing_text_30",
+        "Leve1_Text": "skill_level1_test_30",
+        "Leve2_Text": "skill_level2_test_30",
+        "Leve3_Text": "skill_level3_test_30"
     },
     "31": {
         "Id": 31,
-        "Timeing_Text": "攻击前",
-        "Leve1_Text": "下一个休整开始时，获得+1金币。每场战斗最多生效2次",
-        "Leve2_Text": "下一个休整开始时，获得+1金币。每场战斗最多生效4次",
-        "Leve3_Text": "下一个休整开始时，获得+2金币。每场战斗最多生效4次"
+        "Timeing_Text": "skill_timeing_text_31",
+        "Leve1_Text": "skill_level1_test_31",
+        "Leve2_Text": "skill_level2_test_31",
+        "Leve3_Text": "skill_level3_test_31"
     },
     "32": {
         "Id": 32,
-        "Timeing_Text": "受伤时",
-        "Leve1_Text": "对一个随机敌人造成2点伤害",
-        "Leve2_Text": "对一个随机敌人造成3点伤害",
-        "Leve3_Text": "对一个随机敌人造成4点伤害"
+        "Timeing_Text": "skill_timeing_text_32",
+        "Leve1_Text": "skill_level1_test_32",
+        "Leve2_Text": "skill_level2_test_32",
+        "Leve3_Text": "skill_level3_test_32"
     },
     "33": {
         "Id": 33,
-        "Timeing_Text": "晕厥时",
-        "Leve1_Text": "使后方角色获得+2生命值",
-        "Leve2_Text": "使后方角色获得+3生命值",
-        "Leve3_Text": "使后方角色获得+4生命值"
+        "Timeing_Text": "skill_timeing_text_33",
+        "Leve1_Text": "skill_level1_test_33",
+        "Leve2_Text": "skill_level2_test_33",
+        "Leve3_Text": "skill_level3_test_33"
     },
     "34": {
         "Id": 34,
-        "Timeing_Text": "休整结束时",
-        "Leve1_Text": "花费至多2金币，并在下回合重新获得之",
-        "Leve2_Text": "花费至多3金币，并在下回合重新获得之",
-        "Leve3_Text": "花费至多4金币，并在下回合重新获得之"
+        "Timeing_Text": "skill_timeing_text_34",
+        "Leve1_Text": "skill_level1_test_34",
+        "Leve2_Text": "skill_level2_test_34",
+        "Leve3_Text": "skill_level3_test_34"
     },
     "35": {
         "Id": 35,
-        "Timeing_Text": "晕厥时",
-        "Leve1_Text": "使后方角色经验值+1",
-        "Leve2_Text": "使后方角色和随机一名角色经验值+2",
-        "Leve3_Text": "使后方角色和随机两名角色经验值+3"
+        "Timeing_Text": "skill_timeing_text_35",
+        "Leve1_Text": "skill_level1_test_35",
+        "Leve2_Text": "skill_level2_test_35",
+        "Leve3_Text": "skill_level3_test_35"
     },
     "36": {
         "Id": 36,
-        "Timeing_Text": "休整开始时",
-        "Leve1_Text": "如果上一轮战斗获胜，获得2金币",
-        "Leve2_Text": "如果上一轮战斗获胜，获得3金币",
-        "Leve3_Text": "如果上一轮战斗获胜，获得4金币"
+        "Timeing_Text": "skill_timeing_text_36",
+        "Leve1_Text": "skill_level1_test_36",
+        "Leve2_Text": "skill_level2_test_36",
+        "Leve3_Text": "skill_level3_test_36"
     },
     "37": {
         "Id": 37,
-        "Timeing_Text": "敌人被召唤或推动时",
-        "Leve1_Text": "对其造成1点远程伤害",
-        "Leve2_Text": "对其造成2点远程伤害",
-        "Leve3_Text": "对其造成3点远程伤害"
+        "Timeing_Text": "skill_timeing_text_37",
+        "Leve1_Text": "skill_level1_test_37",
+        "Leve2_Text": "skill_level2_test_37",
+        "Leve3_Text": "skill_level3_test_37"
     },
     "38": {
         "Id": 38,
-        "Timeing_Text": "伙伴晕厥时",
-        "Leve1_Text": "将最后排的1名敌人推动到前排（每场战斗生效一次）",
-        "Leve2_Text": "将最后排的2名敌人推动到前排（每场战斗生效一次）",
-        "Leve3_Text": "将最后排的3名敌人推动到前排（每场战斗生效一次）"
+        "Timeing_Text": "skill_timeing_text_38",
+        "Leve1_Text": "skill_level1_test_38",
+        "Leve2_Text": "skill_level2_test_38",
+        "Leve3_Text": "skill_level3_test_38"
     },
     "39": {
         "Id": 39,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "使2名敌人位置发生改变",
-        "Leve2_Text": "使3名敌人位置发生改变",
-        "Leve3_Text": "使4名敌人位置发生改变"
+        "Timeing_Text": "skill_timeing_text_39",
+        "Leve1_Text": "skill_level1_test_39",
+        "Leve2_Text": "skill_level2_test_39",
+        "Leve3_Text": "skill_level3_test_39"
     },
     "40": {
         "Id": 40,
-        "Timeing_Text": "击倒时",
-        "Leve1_Text": "对敌方所有敌人造成2点伤害",
-        "Leve2_Text": "对敌方所有敌人造成3点伤害",
-        "Leve3_Text": "对敌方所有敌人造成4点伤害"
+        "Timeing_Text": "skill_timeing_text_40",
+        "Leve1_Text": "skill_level1_test_40",
+        "Leve2_Text": "skill_level2_test_40",
+        "Leve3_Text": "skill_level3_test_40"
     },
     "41": {
         "Id": 41,
-        "Timeing_Text": "伙伴被出售时",
-        "Leve1_Text": "使一个随机角色获得+1生命值",
-        "Leve2_Text": "使一个随机角色获得+2生命值",
-        "Leve3_Text": "使一个随机角色获得+3生命值"
+        "Timeing_Text": "skill_timeing_text_41",
+        "Leve1_Text": "skill_level1_test_41",
+        "Leve2_Text": "skill_level2_test_41",
+        "Leve3_Text": "skill_level3_test_41"
     },
     "42": {
         "Id": 42,
-        "Timeing_Text": "攻击前",
-        "Leve1_Text": "对后方角色造成1点远程伤害",
-        "Leve2_Text": "对后方角色造成两次1点远程伤害",
-        "Leve3_Text": "对后方角色造成三次1点远程伤害"
+        "Timeing_Text": "skill_timeing_text_42",
+        "Leve1_Text": "skill_level1_test_42",
+        "Leve2_Text": "skill_level2_test_42",
+        "Leve3_Text": "skill_level3_test_42"
     },
     "43": {
         "Id": 43,
-        "Timeing_Text": "休整结束时",
-        "Leve1_Text": "如果场上拥有3级的角色，其获得+2攻击力和+2生命值",
-        "Leve2_Text": "如果场上拥有3级的角色，其获得+3攻击力和+3生命值",
-        "Leve3_Text": "如果场上拥有3级的角色，其获得+4攻击力和+4生命值"
+        "Timeing_Text": "skill_timeing_text_43",
+        "Leve1_Text": "skill_level1_test_43",
+        "Leve2_Text": "skill_level2_test_43",
+        "Leve3_Text": "skill_level3_test_43"
     },
     "44": {
         "Id": 44,
-        "Timeing_Text": "出售时",
-        "Leve1_Text": "使两个随机角色获得+1生命值",
-        "Leve2_Text": "使两个随机角色获得+2生命值",
-        "Leve3_Text": "使两个随机角色获得+3生命值"
+        "Timeing_Text": "skill_timeing_text_44",
+        "Leve1_Text": "skill_level1_test_44",
+        "Leve2_Text": "skill_level2_test_44",
+        "Leve3_Text": "skill_level3_test_44"
     },
     "45": {
         "Id": 45,
-        "Timeing_Text": "前方伙伴攻击时",
-        "Leve1_Text": "对一个随机敌人造成此角色攻击20%的伤害",
-        "Leve2_Text": "对一个随机敌人造成此角色攻击30%的伤害",
-        "Leve3_Text": "对一个随机敌人造成此角色攻击40%的伤害"
+        "Timeing_Text": "skill_timeing_text_45",
+        "Leve1_Text": "skill_level1_test_45",
+        "Leve2_Text": "skill_level2_test_45",
+        "Leve3_Text": "skill_level3_test_45"
     },
     "46": {
         "Id": 46,
-        "Timeing_Text": "休整开始时",
-        "Leve1_Text": "金币数每比10多1，获得+1攻击力",
-        "Leve2_Text": "金币数每比10多1，获得+1攻击力和+1生命值",
-        "Leve3_Text": "金币数每比10多1，获得+2攻击力和+1生命值"
+        "Timeing_Text": "skill_timeing_text_46",
+        "Leve1_Text": "skill_level1_test_46",
+        "Leve2_Text": "skill_level2_test_46",
+        "Leve3_Text": "skill_level3_test_46"
     },
     "47": {
         "Id": 47,
-        "Timeing_Text": "休整结束时",
-        "Leve1_Text": "如果有空位，下回合获得+2金币",
-        "Leve2_Text": "如果有空位，下回合获得+3金币",
-        "Leve3_Text": "如果有空位，下回合获得+4金币"
+        "Timeing_Text": "skill_timeing_text_47",
+        "Leve1_Text": "skill_level1_test_47",
+        "Leve2_Text": "skill_level2_test_47",
+        "Leve3_Text": "skill_level3_test_47"
     },
     "48": {
         "Id": 48,
-        "Timeing_Text": "休整结束时",
-        "Leve1_Text": "本回合每花费5金币，就使一名随机角色获得+1攻击",
-        "Leve2_Text": "本回合每花费5金币，就使一名随机角色获得+2攻击",
-        "Leve3_Text": "本回合每花费5金币，就使一名随机角色获得+3攻击"
+        "Timeing_Text": "skill_timeing_text_48",
+        "Leve1_Text": "skill_level1_test_48",
+        "Leve2_Text": "skill_level2_test_48",
+        "Leve3_Text": "skill_level3_test_48"
     },
     "49": {
         "Id": 49,
-        "Timeing_Text": "出售时",
-        "Leve1_Text": "召唤鲨女仆（和（草原系中间人角色）（24）各一只",
-        "Leve2_Text": "召唤二级鲨女仆和二级（草原系中间人角色）（24）各一只",
-        "Leve3_Text": "召唤三级鲨女仆和三级（草原系中间人角色）（24）各一只"
+        "Timeing_Text": "skill_timeing_text_49",
+        "Leve1_Text": "skill_level1_test_49",
+        "Leve2_Text": "skill_level2_test_49",
+        "Leve3_Text": "skill_level3_test_49"
     },
     "50": {
         "Id": 50,
-        "Timeing_Text": "伙伴被召唤时",
-        "Leve1_Text": "使其获得+2攻击力和+2生命值",
-        "Leve2_Text": "使其获得+3攻击力和+3生命值",
-        "Leve3_Text": "使其获得+4攻击力和+4生命值"
+        "Timeing_Text": "skill_timeing_text_50",
+        "Leve1_Text": "skill_level1_test_50",
+        "Leve2_Text": "skill_level2_test_50",
+        "Leve3_Text": "skill_level3_test_50"
     },
     "51": {
         "Id": 51,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "前方角色的能力额外触发一次（视为1级效果）",
-        "Leve2_Text": "前方角色的能力额外触发一次（视为2级效果）",
-        "Leve3_Text": "前方角色的能力额外触发一次（视为3级效果）"
+        "Timeing_Text": "skill_timeing_text_51",
+        "Leve1_Text": "skill_level1_test_51",
+        "Leve2_Text": "skill_level2_test_51",
+        "Leve3_Text": "skill_level3_test_51"
     },
     "52": {
         "Id": 52,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "使攻击等于生命+1",
-        "Leve2_Text": "使攻击等于生命+2",
-        "Leve3_Text": "使攻击等于生命+3"
+        "Timeing_Text": "skill_timeing_text_52",
+        "Leve1_Text": "skill_level1_test_52",
+        "Leve2_Text": "skill_level2_test_52",
+        "Leve3_Text": "skill_level3_test_52"
     },
     "53": {
         "Id": 53,
-        "Timeing_Text": "休整结束时",
-        "Leve1_Text": "使所有有装备的角色获得+2攻击力和+2生命值",
-        "Leve2_Text": "使所有有装备的伙伴获得+3攻击力和+3生命值",
-        "Leve3_Text": "使所有有装备的伙伴获得+3攻击力和+3生命值"
+        "Timeing_Text": "skill_timeing_text_53",
+        "Leve1_Text": "skill_level1_test_53",
+        "Leve2_Text": "skill_level2_test_53",
+        "Leve3_Text": "skill_level3_test_53"
     },
     "54": {
         "Id": 54,
-        "Timeing_Text": "战斗开始时",
-        "Leve1_Text": "使一名敌人获得虚弱特性",
-        "Leve2_Text": "使两名敌人获得虚弱特性",
-        "Leve3_Text": "使三名敌人获得虚弱特性"
+        "Timeing_Text": "skill_timeing_text_54",
+        "Leve1_Text": "skill_level1_test_54",
+        "Leve2_Text": "skill_level2_test_54",
+        "Leve3_Text": "skill_level3_test_54"
     },
     "101": {
         "Id": 101,
-        "Timeing_Text": "攻击后",
-        "Leve1_Text": "对敌人旁边的角色造成5点额外伤害",
-        "Leve2_Text": "对敌人身旁和身后的角色造成五点额外伤害",
+        "Timeing_Text": "skill_timeing_text_101",
+        "Leve1_Text": "skill_level1_test_101",
+        "Leve2_Text": "skill_level2_test_101",
         "Leve3_Text": ""
     }
 }
