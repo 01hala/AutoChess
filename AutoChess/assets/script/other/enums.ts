@@ -148,3 +148,9 @@ export enum BuffEffectSp
     /** 减疗 */
     skill_0025="skill_0025",
 }
+
+export enum Language
+{
+    Chinese=1,
+    English=2,
+}

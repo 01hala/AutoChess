@@ -102,7 +102,7 @@ export class InfoBoard extends Component
         } 
     }
     
-    async OpenInfoBoard(id:number,index?:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
+    async OpenEntityInfo(id:number,index?:number,role?:RoleDis,isBuy?:boolean,propType?:PropsType)
     {
         try
         {
@@ -124,7 +124,7 @@ export class InfoBoard extends Component
                 if(1000<id&&id<2000) pn=config.FoodConfig.get(id);
                 else pn=config.EquipConfig.get(id);
                 
-                this.propBoard.getChildByName("PropName").getComponent(Label).string=pn.Name;
+                this.propBoard.getChildByName("PropName").getComponent(Label).string=GameManager.Instance.GetText(pn.Name);
                 //立绘
                 let img = await loadAssets.LoadImg(pn.Res);
                 if(img)
@@ -132,7 +132,7 @@ export class InfoBoard extends Component
                     this.propBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame = img;
                 }
                 //简介
-                this.propBoard.getChildByName("Introduce").getComponent(Label).string=pn.Introduce;
+                this.propBoard.getChildByName("Introduce").getComponent(Label).string=GameManager.Instance.GetText(pn.Introduce);
                
             }
             else
@@ -190,15 +190,15 @@ export class InfoBoard extends Component
 
         let sp=await loadAssets.LoadImg(spritePath);
         this.fetterBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=sp;
-        this.fetterBoard.getChildByName("FetterName").getComponent(Label).string=cf.FetterName;
-        this.fetterBoard.getChildByName("Introduce").getComponent(RichText).string="<color=#000000>"+cf.Introductory+"</color>";
+        this.fetterBoard.getChildByName("FetterName").getComponent(Label).string=GameManager.Instance.GetText(cf.FetterName);
+        this.fetterBoard.getChildByName("Introduce").getComponent(Label).string=GameManager.Instance.GetText(cf.Introductory);
         let content="";
         let list=cf.Text.split("\n");
         for(let i=0;i<list.length;i++){
-            if(level>=i+1) content+="<color=#FFD700>"+list[i]+"</color>\n";
-            else content+="<color=#AAAAAA>"+list[i]+"</color>\n";        
+            if(level>=i+1) content+=list[i];
+            else content+=+list[i]+"\n";        
         }
-        this.fetterBoard.getChildByName("Introduce").getComponent(RichText).string=content;
+        this.fetterBoard.getChildByName("Text").getComponent(Label).string=content;
     }
 
     async OpenCardInfo(_id:number)
@@ -232,7 +232,7 @@ export class InfoBoard extends Component
         //角色名
         this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _id;
         let ro = config.RoleConfig.get(_id);
-        this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = ro.Name;
+        this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = GameManager.Instance.GetText(ro.Name);
         //技能介绍
         let str = config.SkillIntroduceConfig.get(_id%100000);
         console.log(str.Id);
@@ -240,14 +240,11 @@ export class InfoBoard extends Component
         this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + str.Timeing_Text + ":</color>";
         //羁绊
         let ft = config.FettersConfig.get(ro.Fetters);
-        this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#00ff00>" + ft.Name + "</color>";
+        this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(ft.Name); + "</color>";
         //羁绊图标
         let fe=config.FettersConfig.get(ro.Fetters);
         let fettersImg = await loadAssets.LoadImg(fe.Res);
         this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
-
-        this.simpleBoard.getChildByPath("Sculpture/Spine").getComponent(sp.Skeleton);
-
     }
 
     private async ShowDetailed(_index:number,_role?:RoleDis)
@@ -284,7 +281,7 @@ export class InfoBoard extends Component
             this.detailedBoard.getChildByPath("RoleArea/HP/RichText").getComponent(RichText).string="<color=0>"+r.HP+"</color>";
             this.detailedBoard.getChildByPath("RoleArea/Lv/RichText").getComponent(RichText).string="<color=0>"+r.Level+"</color>";
             //名字
-            this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=#b98b00><outline width=5>"+ro.Name+"</outline></color>";
+            this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=#b98b00><outline width=5>"+GameManager.Instance.GetText(ro.Name)+"</outline></color>";
             //技能信息
             let sk=config.SkillIntroduceConfig.get(r.SkillID);
             this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#785d00><outline width=5>"+sk.Timeing_Text+": </outline></color>";
@@ -298,7 +295,7 @@ export class InfoBoard extends Component
             this.detailedBoard.getChildByPath("IntroduceArea/Label").getComponent(Label).string=str;
             //羁绊
             let ft=config.FettersConfig.get(ro.Fetters);
-            this.detailedBoard.getChildByPath("DetailsArea/Fetters/RichText").getComponent(RichText).string="<color=#785d00>"+ft.Name+"</color>";
+            this.detailedBoard.getChildByPath("DetailsArea/Fetters/RichText").getComponent(RichText).string="<color=#785d00>"+GameManager.Instance.GetText(ft.Name)+"</color>";
             //buff
             let bustr:string="";
             if(r.additionBuffer)

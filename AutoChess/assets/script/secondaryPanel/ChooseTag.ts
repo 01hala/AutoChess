@@ -2,6 +2,7 @@ import { _decorator, Animation, animation, Button, Component, Label, Node, RichT
 import * as singleton from '../netDriver/netSingleton';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../bundle/LoadAsset';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('ChooseTag')
@@ -76,7 +77,7 @@ export class ChooseTag extends Component
             if (pvec.RoleId)
             {
                 let rolec = config.RoleConfig.get(pvec.RoleId);
-                this.tagnodes[i].getChildByPath("RichText").getComponent(RichText).string = "<color=#000000>" + rolec.Name + "</color>";
+                this.tagnodes[i].getChildByPath("RichText").getComponent(RichText).string = "<color=#000000>" + GameManager.Instance.GetText(rolec.Name) + "</color>";
 
                 this.tagnodes[i].getChildByPath("Avatar/Hp/RichText").
                     getComponent(RichText).string = "<color=#9d0c27><outline color=#e93552 width=4>" + pvec.RoleHP + "</outline></color>";
