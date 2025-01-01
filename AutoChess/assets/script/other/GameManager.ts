@@ -16,6 +16,8 @@ import * as common from "../battle/AutoChessBattle/common"
 import { ChooseTag } from '../secondaryPanel/ChooseTag';
 import { sleep } from './sleep';
 import { LevelInfo } from '../secondaryPanel/LevelInfo';
+import { config } from '../battle/AutoChessBattle/config/config';
+import { OptionsData, User } from '../login/User';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -27,13 +29,13 @@ export class GameManager extends Component
     {
         return this._instance;
     }
-    private typeface: TTFFont;
+    private typeface: TTFFont=null;
     //升阶界面
-    private upStageBoard:Node;
+    private upStageBoard:Node=null;
     //等待界面
-    private waitingPanel:Node;
+    private waitingPanel:Node=null;
     //新手引导
-    public guide:Guide;
+    public guide:Guide=null;
     
     protected onLoad()
     {
@@ -45,7 +47,7 @@ export class GameManager extends Component
     {
         try
         {
-            
+           User.OptionsData=new OptionsData();
         }
         catch(error)
         {
@@ -119,7 +121,7 @@ export class GameManager extends Component
         /* 消息来源
          * RoleIcon.ts : 第 453 行 
          * RoleDis.ts : 第 157 行
-         * 
+         * PropIcon.ts
          * 
          * 
          * 
@@ -130,7 +132,7 @@ export class GameManager extends Component
             let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
             let board=instantiate(ib);
             board.setParent(this.node);
-            board.getComponent(InfoBoard).OpenInfoBoard(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
+            board.getComponent(InfoBoard).OpenEntityInfo(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
         },this);
 
         //消息提示
@@ -358,6 +360,26 @@ export class GameManager extends Component
         this.guide=gnode.getComponent(Guide);
 
         this.guide.Init(_step);
+    }
+
+    //获取文本
+    public GetText(key:string):string
+    {
+        let temp=null;
+        switch(User.OptionsData.language)
+        {
+            case enums.Language.Chinese:
+                temp = config.LanguageConfig.get(key).chinese;
+                break;
+            default:
+                temp = config.LanguageConfig.get(key).chinese;
+                break;
+        }
+        if(temp)
+        {
+            return temp;
+        }
+        return "null";
     }
 }
 

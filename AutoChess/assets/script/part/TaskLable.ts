@@ -4,6 +4,7 @@ import { TaskConfig } from '../battle/AutoChessBattle/config/task_config';
 import { Achievement, AchievementAwardStatus } from '../battle/AutoChessBattle/common';
 import * as singleton from '../netDriver/netSingleton';
 import { loadAssets } from '../bundle/LoadAsset';
+import { GameManager } from '../other/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('TaskLable')
@@ -76,8 +77,8 @@ export class TaskLable extends Component
         {
             this.id = _config.Id;
             this.status = _status;
-            this.TaskName = _config.Name;
-            this.TaskLable = _config.tLable;
+            this.TaskName =GameManager.Instance.GetText( _config.Name);
+            this.TaskLable = GameManager.Instance.GetText(_config.tLable);
             this._taskMaxValue = _config.tValue;
             this.TaskValue = _count;
             this.ShowCompleteTask = showComplete;
