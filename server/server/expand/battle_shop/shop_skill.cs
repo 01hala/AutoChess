@@ -27,7 +27,7 @@ namespace battle_shop
             Log.Log.trace("slill  target_list:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(target_list));
             foreach (var target_index in target_list)
             {
-                if (target_index > 0)
+                if (target_index >= 0)
                 {
                     Log.Log.trace("slill  _player:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(_player));
                     var r = _player.BattleData.RoleList[index];

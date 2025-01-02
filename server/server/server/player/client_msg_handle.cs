@@ -339,6 +339,7 @@ namespace Player
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     var err = _data.Data.buy(_avatar.ClientUUID, shop_index, index, role_index);
+                    _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
                     rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData);
                 }
             }
