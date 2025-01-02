@@ -365,6 +365,8 @@ export class GameManager extends Component
     //获取文本
     public GetText(key:string):string
     {
+        console.log("GetText config.LanguageConfig:", config.LanguageConfig)
+        console.log("GetText key:", key);
         let temp=null;
         switch(User.OptionsData.language)
         {

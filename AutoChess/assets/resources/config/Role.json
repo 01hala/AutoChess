@@ -1,7 +1,7 @@
 {
     "100001": {
         "Id": 100001,
-        "Name": "暂无",
+        "Name": "role_100001_name",
         "Skill": 1,
         "Stage": 2,
         "Price": 3,
@@ -20,7 +20,7 @@
     },
     "100002": {
         "Id": 100002,
-        "Name": "暂无",
+        "Name": "role_100002_name",
         "Skill": 2,
         "Stage": 6,
         "Price": 3,
@@ -39,7 +39,7 @@
     },
     "100003": {
         "Id": 100003,
-        "Name": "暂无",
+        "Name": "role_100003_name",
         "Skill": 3,
         "Stage": 1,
         "Price": 3,
@@ -58,7 +58,7 @@
     },
     "100004": {
         "Id": 100004,
-        "Name": "暂无",
+        "Name": "role_100004_name",
         "Skill": 4,
         "Stage": 3,
         "Price": 3,
@@ -77,7 +77,7 @@
     },
     "100005": {
         "Id": 100005,
-        "Name": "暂无",
+        "Name": "role_100005_name",
         "Skill": 5,
         "Stage": 6,
         "Price": 3,
@@ -96,7 +96,7 @@
     },
     "100006": {
         "Id": 100006,
-        "Name": "暂无",
+        "Name": "role_100006_name",
         "Skill": 6,
         "Stage": 2,
         "Price": 3,
@@ -115,7 +115,7 @@
     },
     "100007": {
         "Id": 100007,
-        "Name": "暂无",
+        "Name": "role_100007_name",
         "Skill": 7,
         "Stage": 4,
         "Price": 3,
@@ -134,7 +134,7 @@
     },
     "100008": {
         "Id": 100008,
-        "Name": "暂无",
+        "Name": "role_100008_name",
         "Skill": 8,
         "Stage": 5,
         "Price": 3,
@@ -153,7 +153,7 @@
     },
     "100009": {
         "Id": 100009,
-        "Name": "暂无",
+        "Name": "role_100009_name",
         "Skill": 9,
         "Stage": 3,
         "Price": 3,
@@ -172,7 +172,7 @@
     },
     "100010": {
         "Id": 100010,
-        "Name": "暂无",
+        "Name": "role_100010_name",
         "Skill": 10,
         "Stage": 1,
         "Price": 3,
@@ -191,7 +191,7 @@
     },
     "100011": {
         "Id": 100011,
-        "Name": "暂无",
+        "Name": "role_100011_name",
         "Skill": 11,
         "Stage": 2,
         "Price": 3,
@@ -210,7 +210,7 @@
     },
     "100012": {
         "Id": 100012,
-        "Name": "暂无",
+        "Name": "role_100012_name",
         "Skill": 12,
         "Stage": 3,
         "Price": 3,
@@ -229,7 +229,7 @@
     },
     "100013": {
         "Id": 100013,
-        "Name": "暂无",
+        "Name": "role_100013_name",
         "Skill": 13,
         "Stage": 6,
         "Price": 3,
@@ -242,13 +242,13 @@
         "ActivePrice": 0,
         "Res": "RolesTexture/Role_100013",
         "Avatar": "RoleAvatarTexture/Role_100013",
-        "Skel": "RoleSpine/Role_100013/gaoshan_wushi",
+        "Skel": "RoleSpine/Role_100013/Role_100013",
         "Sex": "F",
         "Armor": "N"
     },
     "100014": {
         "Id": 100014,
-        "Name": "暂无",
+        "Name": "role_100014_name",
         "Skill": 14,
         "Stage": 6,
         "Price": 3,
@@ -267,7 +267,7 @@
     },
     "100015": {
         "Id": 100015,
-        "Name": "暂无",
+        "Name": "role_100015_name",
         "Skill": 15,
         "Stage": 4,
         "Price": 3,
@@ -286,7 +286,7 @@
     },
     "100016": {
         "Id": 100016,
-        "Name": "暂无",
+        "Name": "role_100016_name",
         "Skill": 16,
         "Stage": 6,
         "Price": 3,
@@ -305,7 +305,7 @@
     },
     "100017": {
         "Id": 100017,
-        "Name": "暂无",
+        "Name": "role_100017_name",
         "Skill": 17,
         "Stage": 4,
         "Price": 3,
@@ -324,7 +324,7 @@
     },
     "100018": {
         "Id": 100018,
-        "Name": "暂无",
+        "Name": "role_100018_name",
         "Skill": 18,
         "Stage": 2,
         "Price": 3,
@@ -343,7 +343,7 @@
     },
     "100019": {
         "Id": 100019,
-        "Name": "暂无",
+        "Name": "role_100019_name",
         "Skill": 19,
         "Stage": 3,
         "Price": 3,
@@ -362,7 +362,7 @@
     },
     "100020": {
         "Id": 100020,
-        "Name": "暂无",
+        "Name": "role_100020_name",
         "Skill": 20,
         "Stage": 5,
         "Price": 3,
@@ -381,7 +381,7 @@
     },
     "100021": {
         "Id": 100021,
-        "Name": "暂无",
+        "Name": "role_100021_name",
         "Skill": 21,
         "Stage": 6,
         "Price": 3,
@@ -400,7 +400,7 @@
     },
     "100022": {
         "Id": 100022,
-        "Name": "暂无",
+        "Name": "role_100022_name",
         "Skill": 22,
         "Stage": 4,
         "Price": 3,
@@ -419,7 +419,7 @@
     },
     "100023": {
         "Id": 100023,
-        "Name": "暂无",
+        "Name": "role_100023_name",
         "Skill": 23,
         "Stage": 1,
         "Price": 3,
@@ -438,7 +438,7 @@
     },
     "100024": {
         "Id": 100024,
-        "Name": "暂无",
+        "Name": "role_100024_name",
         "Skill": 24,
         "Stage": 1,
         "Price": 3,
@@ -457,7 +457,7 @@
     },
     "100025": {
         "Id": 100025,
-        "Name": "暂无",
+        "Name": "role_100025_name",
         "Skill": 25,
         "Stage": 5,
         "Price": 3,
@@ -476,7 +476,7 @@
     },
     "100026": {
         "Id": 100026,
-        "Name": "暂无",
+        "Name": "role_100026_name",
         "Skill": 26,
         "Stage": 3,
         "Price": 3,
@@ -495,7 +495,7 @@
     },
     "100027": {
         "Id": 100027,
-        "Name": "暂无",
+        "Name": "role_100027_name",
         "Skill": 27,
         "Stage": 3,
         "Price": 3,
@@ -514,7 +514,7 @@
     },
     "100028": {
         "Id": 100028,
-        "Name": "暂无",
+        "Name": "role_100028_name",
         "Skill": 28,
         "Stage": 5,
         "Price": 3,
@@ -533,7 +533,7 @@
     },
     "100029": {
         "Id": 100029,
-        "Name": "暂无",
+        "Name": "role_100029_name",
         "Skill": 29,
         "Stage": 3,
         "Price": 3,
@@ -552,7 +552,7 @@
     },
     "100030": {
         "Id": 100030,
-        "Name": "暂无",
+        "Name": "role_100030_name",
         "Skill": 30,
         "Stage": 5,
         "Price": 3,
@@ -571,7 +571,7 @@
     },
     "100031": {
         "Id": 100031,
-        "Name": "暂无",
+        "Name": "role_100031_name",
         "Skill": 31,
         "Stage": 5,
         "Price": 3,
@@ -590,7 +590,7 @@
     },
     "100032": {
         "Id": 100032,
-        "Name": "暂无",
+        "Name": "role_100032_name",
         "Skill": 32,
         "Stage": 2,
         "Price": 3,
@@ -609,7 +609,7 @@
     },
     "100033": {
         "Id": 100033,
-        "Name": "暂无",
+        "Name": "role_100033_name",
         "Skill": 33,
         "Stage": 1,
         "Price": 3,
@@ -628,7 +628,7 @@
     },
     "100034": {
         "Id": 100034,
-        "Name": "暂无",
+        "Name": "role_100034_name",
         "Skill": 34,
         "Stage": 2,
         "Price": 3,
@@ -647,7 +647,7 @@
     },
     "100035": {
         "Id": 100035,
-        "Name": "暂无",
+        "Name": "role_100035_name",
         "Skill": 35,
         "Stage": 5,
         "Price": 3,
@@ -666,7 +666,7 @@
     },
     "100036": {
         "Id": 100036,
-        "Name": "暂无",
+        "Name": "role_100036_name",
         "Skill": 36,
         "Stage": 5,
         "Price": 3,
@@ -685,7 +685,7 @@
     },
     "100037": {
         "Id": 100037,
-        "Name": "暂无",
+        "Name": "role_100037_name",
         "Skill": 37,
         "Stage": 1,
         "Price": 3,
@@ -704,7 +704,7 @@
     },
     "100038": {
         "Id": 100038,
-        "Name": "暂无",
+        "Name": "role_100038_name",
         "Skill": 38,
         "Stage": 4,
         "Price": 3,
@@ -723,7 +723,7 @@
     },
     "100039": {
         "Id": 100039,
-        "Name": "暂无",
+        "Name": "role_100039_name",
         "Skill": 39,
         "Stage": 2,
         "Price": 3,
@@ -742,7 +742,7 @@
     },
     "100040": {
         "Id": 100040,
-        "Name": "暂无",
+        "Name": "role_100040_name",
         "Skill": 40,
         "Stage": 4,
         "Price": 3,
@@ -761,7 +761,7 @@
     },
     "100041": {
         "Id": 100041,
-        "Name": "暂无",
+        "Name": "role_100041_name",
         "Skill": 41,
         "Stage": 2,
         "Price": 3,
@@ -780,7 +780,7 @@
     },
     "100042": {
         "Id": 100042,
-        "Name": "暂无",
+        "Name": "role_100042_name",
         "Skill": 42,
         "Stage": 2,
         "Price": 3,
@@ -799,7 +799,7 @@
     },
     "100043": {
         "Id": 100043,
-        "Name": "暂无",
+        "Name": "role_100043_name",
         "Skill": 43,
         "Stage": 4,
         "Price": 3,
@@ -818,7 +818,7 @@
     },
     "100044": {
         "Id": 100044,
-        "Name": "暂无",
+        "Name": "role_100044_name",
         "Skill": 44,
         "Stage": 1,
         "Price": 3,
@@ -837,7 +837,7 @@
     },
     "100045": {
         "Id": 100045,
-        "Name": "暂无",
+        "Name": "role_100045_name",
         "Skill": 45,
         "Stage": 1,
         "Price": 3,
@@ -856,7 +856,7 @@
     },
     "100046": {
         "Id": 100046,
-        "Name": "暂无",
+        "Name": "role_100046_name",
         "Skill": 46,
         "Stage": 6,
         "Price": 3,
@@ -875,7 +875,7 @@
     },
     "100047": {
         "Id": 100047,
-        "Name": "暂无",
+        "Name": "role_100047_name",
         "Skill": 47,
         "Stage": 3,
         "Price": 3,
@@ -894,7 +894,7 @@
     },
     "100048": {
         "Id": 100048,
-        "Name": "暂无",
+        "Name": "role_100048_name",
         "Skill": 48,
         "Stage": 3,
         "Price": 3,
@@ -913,7 +913,7 @@
     },
     "100049": {
         "Id": 100049,
-        "Name": "暂无",
+        "Name": "role_100049_name",
         "Skill": 49,
         "Stage": 4,
         "Price": 3,
@@ -932,7 +932,7 @@
     },
     "100050": {
         "Id": 100050,
-        "Name": "暂无",
+        "Name": "role_100050_name",
         "Skill": 50,
         "Stage": 5,
         "Price": 3,
@@ -951,7 +951,7 @@
     },
     "100051": {
         "Id": 100051,
-        "Name": "暂无",
+        "Name": "role_100051_name",
         "Skill": 51,
         "Stage": 6,
         "Price": 3,
@@ -970,7 +970,7 @@
     },
     "100052": {
         "Id": 100052,
-        "Name": "暂无",
+        "Name": "role_100052_name",
         "Skill": 52,
         "Stage": 1,
         "Price": 3,
@@ -989,7 +989,7 @@
     },
     "100053": {
         "Id": 100053,
-        "Name": "暂无",
+        "Name": "role_100053_name",
         "Skill": 53,
         "Stage": 6,
         "Price": 3,
@@ -1008,7 +1008,7 @@
     },
     "100054": {
         "Id": 100054,
-        "Name": "暂无",
+        "Name": "role_100054_name",
         "Skill": 54,
         "Stage": 4,
         "Price": 3,
@@ -1027,7 +1027,7 @@
     },
     "200001": {
         "Id": 200001,
-        "Name": "暂无",
+        "Name": "role_200001_name",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,
@@ -1046,7 +1046,7 @@
     },
     "200002": {
         "Id": 200002,
-        "Name": "暂无",
+        "Name": "role_200002_name",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,
@@ -1065,7 +1065,7 @@
     },
     "200003": {
         "Id": 200003,
-        "Name": "暂无",
+        "Name": "role_200003_name",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,
@@ -1084,7 +1084,7 @@
     },
     "200004": {
         "Id": 200004,
-        "Name": "暂无",
+        "Name": "role_200004_name",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,
@@ -1103,7 +1103,7 @@
     },
     "200005": {
         "Id": 200005,
-        "Name": "暂无",
+        "Name": "role_200005_name",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,
@@ -1122,7 +1122,7 @@
     },
     "200006": {
         "Id": 200006,
-        "Name": "暂无",
+        "Name": "role_200006_name",
         "Skill": 0,
         "Stage": 0,
         "Price": 0,

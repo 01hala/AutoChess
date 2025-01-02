@@ -193,7 +193,7 @@ export class InfoBoard extends Component
         this.fetterBoard.getChildByName("FetterName").getComponent(Label).string=GameManager.Instance.GetText(cf.FetterName);
         this.fetterBoard.getChildByName("Introduce").getComponent(Label).string=GameManager.Instance.GetText(cf.Introductory);
         let content="";
-        let list=cf.Text.split("\n");
+        let list=GameManager.Instance.GetText(cf.Text).split("\n");
         for(let i=0;i<list.length;i++){
             if(level>=i+1) content+=list[i];
             else content+=+list[i]+"\n";        
@@ -236,8 +236,8 @@ export class InfoBoard extends Component
         //技能介绍
         let str = config.SkillIntroduceConfig.get(_id%100000);
         console.log(str.Id);
-        this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = str.Leve1Text;
-        this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + str.Timeing_Text + ":</color>";
+        this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = GameManager.Instance.GetText(str.Leve1Text);
+        this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(str.Timeing_Text) + ":</color>";
         //羁绊
         let ft = config.FettersConfig.get(ro.Fetters);
         this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(ft.Name); + "</color>";
@@ -284,13 +284,13 @@ export class InfoBoard extends Component
             this.detailedBoard.getChildByPath("RoleArea/Name/RichText").getComponent(RichText).string="<color=#b98b00><outline width=5>"+GameManager.Instance.GetText(ro.Name)+"</outline></color>";
             //技能信息
             let sk=config.SkillIntroduceConfig.get(r.SkillID);
-            this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#785d00><outline width=5>"+sk.Timeing_Text+": </outline></color>";
+            this.detailedBoard.getChildByPath("IntroduceArea/TimeingText").getComponent(RichText).string="<color=#785d00><outline width=5>"+GameManager.Instance.GetText(sk.Timeing_Text)+": </outline></color>";
             let str="";
             switch(r.Level)
             {
-                case 1:str=sk.Leve1Text;break;
-                case 2:str=sk.Leve2Text;break;
-                case 3:str=sk.Leve3Text;break;
+                case 1:str=GameManager.Instance.GetText(sk.Leve1Text);break;
+                case 2:str=GameManager.Instance.GetText(sk.Leve2Text);break;
+                case 3:str=GameManager.Instance.GetText(sk.Leve3Text);break;
             }
             this.detailedBoard.getChildByPath("IntroduceArea/Label").getComponent(Label).string=str;
             //羁绊

@@ -1,7 +1,7 @@
 {
     "1": {
         "Id": 1,
-        "Name": "家仆",
+        "Name": "fetters_1_name",
         "Priority": "Hight",
         "EffectTime": 1,
         "Effect": 5,
@@ -27,7 +27,7 @@
     },
     "2": {
         "Id": 2,
-        "Name": "狂战士",
+        "Name": "fetters_2_name",
         "Priority": "Low",
         "EffectTime": 18,
         "Effect": 1,
@@ -53,7 +53,7 @@
     },
     "3": {
         "Id": 3,
-        "Name": "海盗",
+        "Name": "fetters_3_name",
         "Priority": "Hight",
         "EffectTime": 8,
         "Effect": 3,
@@ -79,7 +79,7 @@
     },
     "4": {
         "Id": 4,
-        "Name": "护士",
+        "Name": "fetters_4_name",
         "Priority": "Low",
         "EffectTime": 11,
         "Effect": 2,
@@ -105,7 +105,7 @@
     },
     "5": {
         "Id": 5,
-        "Name": "术士",
+        "Name": "fetters_5_name",
         "Priority": "Normal",
         "EffectTime": 8,
         "Effect": 4,
@@ -131,7 +131,7 @@
     },
     "6": {
         "Id": 6,
-        "Name": "机械师",
+        "Name": "fetters_6_name",
         "Priority": "Normal",
         "EffectTime": 1,
         "Effect": 15,
@@ -157,7 +157,7 @@
     },
     "7": {
         "Id": 7,
-        "Name": "健身达人",
+        "Name": "fetters_7_name",
         "Priority": "Normal",
         "EffectTime": 10,
         "Effect": 1,
@@ -183,7 +183,7 @@
     },
     "8": {
         "Id": 8,
-        "Name": "厨师",
+        "Name": "fetters_8_name",
         "Priority": "Normal",
         "EffectTime": 1,
         "Effect": 8,
@@ -209,7 +209,7 @@
     },
     "9": {
         "Id": 9,
-        "Name": "巫师",
+        "Name": "fetters_9_name",
         "Priority": "Normal",
         "EffectTime": 6,
         "Effect": 1,
@@ -235,7 +235,7 @@
     },
     "10": {
         "Id": 10,
-        "Name": "祭祀",
+        "Name": "fetters_10_name",
         "Priority": "Hight",
         "EffectTime": 1,
         "Effect": 1,
@@ -261,7 +261,7 @@
     },
     "11": {
         "Id": 11,
-        "Name": "魔术师",
+        "Name": "fetters_11_name",
         "Priority": "Normal",
         "EffectTime": 0,
         "Effect": 0,
@@ -287,7 +287,7 @@
     },
     "12": {
         "Id": 12,
-        "Name": "中间人",
+        "Name": "fetters_12_name",
         "Priority": "Hight",
         "EffectTime": 1,
         "Effect": 5,
@@ -313,7 +313,7 @@
     },
     "13": {
         "Id": 13,
-        "Name": "圣骑士",
+        "Name": "fetters_13_name",
         "Priority": "Normal",
         "EffectTime": 18,
         "Effect": 11,
@@ -339,7 +339,7 @@
     },
     "14": {
         "Id": 14,
-        "Name": "铁匠",
+        "Name": "fetters_14_name",
         "Priority": "Low",
         "EffectTime": 1,
         "Effect": 23,

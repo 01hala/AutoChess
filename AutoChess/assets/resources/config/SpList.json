@@ -190,5 +190,35 @@
         "Key": "Spear",
         "Path": "mao",
         "Name": "远程攻击长矛"
+    },
+    "33": {
+        "Id": 33,
+        "Key": "skill_0020",
+        "Path": "hanbingdan",
+        "Name": "寒冰特效"
+    },
+    "34": {
+        "Id": 34,
+        "Key": "Hti",
+        "Path": "shouji",
+        "Name": "角色撞击"
+    },
+    "35": {
+        "Id": 35,
+        "Key": "jiesuan",
+        "Path": "skeleton",
+        "Name": "战斗结算胜负"
+    },
+    "36": {
+        "Id": 36,
+        "Key": "aixin",
+        "Path": "xin",
+        "Name": "战斗结算爱心"
+    },
+    "37": {
+        "Id": 37,
+        "Key": "mofazhen",
+        "Path": "magic",
+        "Name": "召唤魔法阵"
     }
 }
