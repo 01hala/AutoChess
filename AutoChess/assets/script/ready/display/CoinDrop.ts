@@ -32,40 +32,46 @@ export class CoinDrop extends Component
 
     public Drop(_from:Vec3 , _target:Vec3 ,_callBack:()=>void)
     {
-        this.node.setWorldPosition(_from);
-
-        let dropGroup = [];
-        let pfb = this.node.children[0];
-        dropGroup.push(pfb);
-        for(let i=0;i<this.coinCount;i++)
+        try
         {
-            let pfbClone = instantiate(pfb);
-            pfbClone.setParent(pfb.parent);
-            dropGroup.push(pfbClone);
-        }
+            this.node.setWorldPosition(_from);
 
-        let finishedCount=0;
-        for(let i=0;i<this.coinCount;i++)
-        {
-            let angle = randomRange(i*360/this.coinCount,(i+1)*360/this.coinCount);
-            let radius=randomRange(this.minRadius,this.maxRadius);
-            let randX=radius*Math.cos(angle);
-            let randY=radius*Math.sin(angle);
+            let dropGroup = [];
+            let pfb = this.node.children[0];
+            dropGroup.push(pfb);
+            for (let i = 0; i < this.coinCount; i++)
+            {
+                let pfbClone = instantiate(pfb);
+                pfbClone.setParent(pfb.parent);
+                dropGroup.push(pfbClone);
+            }
 
-            tween(dropGroup[i])
-                .to(this.duration1 , { position: new Vec3(randX,randY,0)} , {easing:'smooth'})
-                .to(this.duration2 , { worldPosition: _target } , {easing:'smooth'})
-                .call(()=>
-                {
-                    if(++finishedCount >= this.coinCount)
+            let finishedCount = 0;
+            for (let i = 0; i < this.coinCount; i++)
+            {
+                let angle = randomRange(i * 360 / this.coinCount, (i + 1) * 360 / this.coinCount);
+                let radius = randomRange(this.minRadius, this.maxRadius);
+                let randX = radius * Math.cos(angle);
+                let randY = radius * Math.sin(angle);
+
+                tween(dropGroup[i])
+                    .to(this.duration1, { position: new Vec3(randX, randY, 0) }, { easing: 'smooth' })
+                    .to(this.duration2, { worldPosition: _target }, { easing: 'smooth' })
+                    .call(() =>
                     {
-                        if(_callBack)
+                        if (++finishedCount >= this.coinCount)
                         {
-                            _callBack();
+                            if (_callBack)
+                            {
+                                _callBack();
+                            }
+                            this.node.destroy();
                         }
-                        this.node.destroy();
-                    }
-                })
+                    })
+            }
+        } catch (error)
+        {
+            console.error("CoinDrop 下的 Drop 错误：",error);
         }
     }
 }

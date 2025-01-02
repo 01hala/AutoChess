@@ -471,7 +471,7 @@ export class RoleDis extends Component
         }
     }
 
-    public async IntensifierExp(value: number)
+    public async IntensifierExp(value: number,_isColony: boolean)
     {
         let exp = this.Exp + value;
         if (exp < 3)
@@ -483,10 +483,12 @@ export class RoleDis extends Component
             this.Exp = exp % 3;
             this.Level += exp % 3;
         }
+        let allAwait=[];
 
-        await this.ChangeAtt();
+        allAwait.push(this.RoleSpEffect.UseIntensifierEffect(_isColony, 4));
+        allAwait.push(this.ChangeAtt());
 
-        return delay(100, () => { });
+        await Promise.all(allAwait);
     }
     /**
      * -增益效果表现-

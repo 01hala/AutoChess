@@ -214,7 +214,7 @@ export class SkillDis
                                     break;
                                 case BattleEnums.EventType.IntensifierExp:
                                     {
-                                        await target.getComponent(RoleDis).IntensifierExp(_ev.value[0]);
+                                        await target.getComponent(RoleDis).IntensifierExp(_ev.value[0],isColony);
                                     }
                                     break;
                             }

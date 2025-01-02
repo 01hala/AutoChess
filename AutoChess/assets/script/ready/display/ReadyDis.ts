@@ -544,9 +544,9 @@ export class ReadyDis
             try
             {
                 //console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
-                for (let i = 0; i < 6; i++)
+                for (let i = 0; i < this.readyData.GetFetters().length; i++)
                 {
-                    if (_battle_info.FettersList.length < i+1)
+                    if (_battle_info.FettersList.length < i)
                     {
                         this.fetters[i].active = false;
                     }
@@ -582,7 +582,6 @@ export class ReadyDis
                         // }
                         // text.getComponent(RichText).string=content;
 
-                        this.fetters[i].getChildByName("Button")
                         this.fetters[i].getChildByName("Button").off(Button.EventType.CLICK);
                         this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK, () =>
                         {
@@ -592,7 +591,9 @@ export class ReadyDis
                         })
                         //continue;
                     }
+                    
                 }
+                this.readyData.setFetters(_battle_info.FettersList);
                 relolve();
             }
             catch (error)
@@ -679,12 +680,15 @@ export class ReadyDis
             case common.SkillEffectEM.AddProperty:
                 {
                     let self=this.roleArea.rolesNode[_effect.spellcaster];
+                    let selfpos = singleton.netSingleton.ready.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                     if (_effect.recipient.length > 0 && self)
                     {
                         for (let i of _effect.recipient)
                         {
                             let target = this.roleArea.rolesNode[i]
-                            self.getComponent(RoleDis).UseProjectiles(self.position, target.position, true).then(async () =>
+                            let targetpos = singleton.netSingleton.ready.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
+                            
+                            self.getComponent(RoleDis).UseProjectiles(selfpos, targetpos, true).then(async () =>
                             {
                                 target.getComponent(RoleDis).Intensifier(_effect.value, true);
                             });
@@ -706,7 +710,7 @@ export class ReadyDis
             let _target = this.topArea.getChildByPath("CoinInfo").worldPosition;
             let coinNode = instantiate(this.coinPre);
             coinNode.setParent(this.father);
-            coinNode.getComponent(CoinDrop)?.Drop(_from, _target, () =>
+            coinNode.getComponent(CoinDrop).Drop(_from, _target, () =>
             {
                 this.coinText.string = "<color=000000>" + this.readyData.GetCoins() + "</color>";
             });

@@ -20,18 +20,18 @@ const { ccclass, property } = _decorator;
 @ccclass('ReadyData')
 export class ReadyData
 {
-    public static roles:common.Role[];
+    public static roles:common.Role[]=[];
     //游戏模式
-    public gameMode:enmus.GameMode;
+    public gameMode:enmus.GameMode=null;
     //pve事件
-    public evnets:number[];
+    public evnets:number[]=[];
 
-    private heath:number;
-    private stage:number;
-    private props:ShopProp[];
-    private shopRoles:ShopRole[];
+    private heath:number=0;
+    private stage:number=0;
+    private props:ShopProp[]=[];
+    private shopRoles:ShopRole[]=[];
 
-    private fetters_info:common.Fetters[];
+    private fetters_info:common.Fetters[]=[];
 
     private coin:number=0;
 
@@ -124,6 +124,11 @@ export class ReadyData
         //     }
         //     return tmpProp;
         // }
+    }
+
+    public setFetters(_fetters_info:common.Fetters[])
+    {
+        this.fetters_info = _fetters_info;
     }
 
     public GetFetters():common.Fetters[]

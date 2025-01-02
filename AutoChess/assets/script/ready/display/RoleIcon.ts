@@ -654,10 +654,10 @@ export class RoleIcon extends Component
         try
         {
             let value =[t.HP-this.roleNode.getComponent(RoleDis).Hp,t.Attack-this.roleNode.getComponent(RoleDis).AtkNum];
-            //let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP + t.TempHP).set(battleEmums.Property.Attack,t.Attack + t.TempAttack);
-            //let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.equipID,t.additionBuffer);
+            let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP + t.TempHP).set(battleEmums.Property.Attack,t.Attack + t.TempAttack);
+            let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,t.equipID,t.additionBuffer);
             //console.log('当前等级 ')
-            //await this.roleNode.getComponent(RoleDis).Refresh(r);
+            await this.roleNode.getComponent(RoleDis).Refresh(r);
             await this.roleNode.getComponent(RoleDis).Intensifier(value,false,t.Number);
             if(is_update)
             {
