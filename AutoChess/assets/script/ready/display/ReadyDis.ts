@@ -195,8 +195,11 @@ export class ReadyDis
             this.refreshBtn = this.panelNode.getChildByPath("Shop/ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK, () =>
             {
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
-                this.RefreshShop();
+                if(this.readyData.GetCoins()>0)
+                {
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
+                    this.RefreshShop();
+                }
             }, this);
             //开始按钮
             this.startBtn = this.panelNode.getChildByPath("Shop/ShopArea/Start_Btn").getComponent(Button);
@@ -250,7 +253,7 @@ export class ReadyDis
             safeHeight = (SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height);
         }
         let outPos: Vec3 = this.cameraNode.getComponent(Camera).getComponent(Camera).screenToWorld(new Vec3(0, safeHeight, 0));
-        this.shopMask.getComponent(Widget).bottom = outPos.y - 310;
+        //this.shopMask.getComponent(Widget).bottom = outPos.y - 310;
     }
 
     //技能发动效果
@@ -675,16 +678,22 @@ export class ReadyDis
                 break;
             case common.SkillEffectEM.AddProperty:
                 {
-                    // for (let i of _effect.recipient)
-                    // {
-                    //     this.roleArea.rolesNode[_effect.spellcaster].getComponent(RoleDis).SpellcastEffect(_effect.effect,this.roleArea.rolesNode[i],async ()=>
-                    //     {
-                    //         await this.roleArea.rolesNode[i].getComponent(RoleDis).ReceptionEffect(_effect.effect,false);
-                    //         await this.roleArea.rolesNode[i].getComponent(RoleDis).Intensifier(_effect.value);
-                    //     });
-                    // }
-                    
-                    
+                    let self=this.roleArea.rolesNode[_effect.spellcaster];
+                    if (_effect.recipient.length > 0 && self)
+                    {
+                        for (let i of _effect.recipient)
+                        {
+                            let target = this.roleArea.rolesNode[i]
+                            self.getComponent(RoleDis).UseProjectiles(self.position, target.position, true).then(async () =>
+                            {
+                                target.getComponent(RoleDis).Intensifier(_effect.value, true);
+                            });
+                        }
+                    }
+                   else if(self)
+                   {
+                        self.getComponent(RoleDis).Intensifier(_effect.value, false);
+                   }
                 }
         }
     }

@@ -300,9 +300,14 @@ export class InfoBoard extends Component
             let bustr:string="";
             if(r.additionBuffer)
             {
+                console.warn("角色身上的buff：",r.additionBuffer);
                 for(let i of r.additionBuffer)
                 {
-                    bustr+=config.BufferConfig.get(i).Name+"\n";
+                    let b=config.BufferConfig.get(i);
+                    if(b)
+                    {
+                        bustr+=b.Name+"\n";
+                    }
                 }
             }
             this.detailedBoard.getChildByPath("DetailsArea/Buff/Label").getComponent(Label).string=bustr;

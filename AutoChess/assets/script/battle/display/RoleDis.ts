@@ -488,13 +488,16 @@ export class RoleDis extends Component
 
         return delay(100, () => { });
     }
-
+    /**
+     * -增益效果表现-
+     * @param value 增益数值 
+     * @param _isColony 是否为群体
+     * @param stack 经验值
+     */
     public async Intensifier(value: number[], _isColony: boolean, stack?: number) 
     {
         try 
         {
-            let ms = 0;
-
             if (stack)
             {
                 this.Exp = stack % 3;
@@ -512,51 +515,47 @@ export class RoleDis extends Component
                 style = 2;
             }
 
-            await this.RoleSpEffect.UseIntensifierEffect(_isColony, style);
+            let allAwait=[];
 
-            await this.ChangeAtt();
+            allAwait.push(this.RoleSpEffect.UseIntensifierEffect(_isColony, style));
+            allAwait.push(this.ChangeAtt());
 
-            for (let i = 0; i < value.length; i++)
+            allAwait.push(new Promise<void>(async (resolve)=>
             {
-                let tip: Node;
-                if (value[i] != 0)
+                for (let i = 0; i < value.length; i++)
                 {
-                    tip = instantiate(this.intensifierTip);
-                    if (0 == i)
+                    let tip: Node;
+                    if (value[i] != 0)
                     {
-                        tip.getChildByPath("RichText").getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[i] + "</outline></color>";
-                    }
-                    else
-                    {
-                        tip.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[i] + "</outline></color>";
-                    }
-                    tip.setParent(this.node);
-                    let anim = tip.getComponent(Animation);
-                    anim.getState('Tips').speed = 1.5;
-                    anim.on(Animation.EventType.FINISHED, (event) =>
-                    {
-                        tip.destroy();
-                        ms += anim.getState('Tips').time;
-                    });
+                        tip = instantiate(this.intensifierTip);
+                        if (0 == i)
+                        {
+                            tip.getChildByPath("RichText").getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>+" + value[i] + "</outline></color>";
+                        }
+                        else
+                        {
+                            tip.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffa900><outline color=#ffe900 width=4>+" + value[i] + "</outline></color>";
+                        }
+                        tip.setParent(this.node);
+                        let anim = tip.getComponent(Animation);
+                        anim.getState('Tips').speed = 1.5;
+                        anim.on(Animation.EventType.FINISHED, (event) =>
+                        {
+                            tip.destroy();
+                        });
 
-                    anim.play();
+                        anim.play();
+                    }
+                    await sleep(750);
                 }
+                resolve();
+            }));
 
-                await sleep(750);
-            }
-
-            return delay(ms, () =>
-            {
-                // if(newtween)
-                // {
-                //     newtween.stop();
-                //     newtween=null;
-                // }
-            })
+            await Promise.all(allAwait);
         }
         catch (err) 
         {
-            console.warn("RoleDis 下的 Intensifier 错误 err:" + err);
+            console.error("RoleDis 下的 Intensifier 错误 err:" + err);
         }
 
     }
@@ -602,38 +601,46 @@ export class RoleDis extends Component
     {
         return new Promise<void>(async (resolve, reject) => 
         {
-            console.log(`shiftPos begin!`);
-            //await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
-            await this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0014", null));
-            //开始缓动
-            this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).call(() =>
+            try
             {
-                if (this.tShiftpos) 
+                console.log(`shiftPos begin!`);
+                //await this.spEffect.CheckSkillEffect({key:"skill_0014",battleType : null});
+                await this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0014", null));
+                //开始缓动
+                this.tShiftpos = tween(this.node).to(0.3, { worldPosition: vec }).call(() =>
                 {
-                    this.tShiftpos.stop();
-                    this.tShiftpos = null;
-                    console.log("shiftPos end!");
-                }
-                if (atkInit) this.AttackInit();
-                resolve();
-            }).start();
-        })
+                    if (this.tShiftpos) 
+                    {
+                        this.tShiftpos.stop();
+                        this.tShiftpos = null;
+                        console.log("shiftPos end!");
+                    }
+                    if (atkInit) this.AttackInit();
+                    resolve();
+                }).start();
+            } 
+            catch (error)
+            {
+                console.error("RoleDis 下的 ShiftPos 错误 err:" + error);
+                reject();
+            }
+        });
     }
     /**
-     * 使用技能表现
+     * -使用战斗技能表现-
      * @param _skill 技能
-     * 
      * @author：Hotaru
      * @time 2024/08/24
      */
-    public async UseSkill(_ev: skill.Event)
+    public async UseBattleSkill(_ev: skill.Event)
     {
-        await this.RoleSpEffect.UseSkillEffect();
-        await this.skillDis.UseSkill(_ev);
+        let allAwait=[];
+        allAwait.push(this.RoleSpEffect.UseSkillEffect());
+        allAwait.push(this.skillDis.UseSkill(_ev));
+        await Promise.all(allAwait);
     }
     /**
-     * 技能发动时表现
-     * 
+     * -技能发动时表现-
      * @author：Hotaru
      * @time 2024/08/24
      */
@@ -642,35 +649,36 @@ export class RoleDis extends Component
         return this.RoleSpEffect.OnSkillEffect(_isFetter);
     }
     /**
-      * 交换属性
-      * 
+      * -交换属性-
       * @param _swapType 类型
+      * @author Hotaru
+      * @time 2024/11/30
       */
     public async SwapProperties(_swapType: BattleEnums.SwapPropertiesType)
     {
+        let allAwait=[];
         switch (_swapType)
         {
             case BattleEnums.SwapPropertiesType.AttackSwap:
             case BattleEnums.SwapPropertiesType.HpSwap:
                 {
                     //await this.spEffect.CheckSkillEffect({ key: "skill_0024", battleType: _swapType });
-                    await this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0024", _swapType));
+                    allAwait.push(this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0024", _swapType)));
                 }
                 break;
         }
 
-        await this.ChangeAtt();
+        allAwait.push(this.ChangeAtt());
+
+        await Promise.all(allAwait);
     }
     /**
-     * 接收buff表现
-     * 
+     * -接收buff表现-
      * @author Hotaru
      * @time 2024/08/24 
      */
     public async ReceptionBuff(_buff: BattleEnums.BufferType)
     {
-        //await this.spEffect.CheckSkillEffect({key:key,battleType:null});
-        //await this.spEffect.CheckSkillEffect(new spEffectObj(key,null));
         let key = "";
         switch (_buff)
         {
@@ -683,7 +691,7 @@ export class RoleDis extends Component
         await this.RoleSpEffect.UseBuffEffect(_buff);
     }
     /**
-     * 转移伤害
+     * -转移伤害-
      * @author Hotaru
      * @time 2024/11/30
      */
@@ -693,7 +701,7 @@ export class RoleDis extends Component
         return this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0013_1", null));
     }
     /**
-     * 承受伤害
+     * -承受伤害-
      * @author Hotaru
      * @time 2024/11/30
      */
@@ -703,8 +711,7 @@ export class RoleDis extends Component
         return this.RoleSpEffect.CheckSkillEffect(new spEffectObj("skill_0013_2", null));
     }
     /**
-     * 召唤入场效果
-     * 
+     * -召唤入场效果-
      * @author Hotaru
      * @time 2024/09/04
      */
@@ -717,8 +724,7 @@ export class RoleDis extends Component
         this.levelText.node.active = true;
     }
     /**
-     * 使用飞行物
-     * 
+     * -使用飞行物-
      * @param _self 发射位置
      * @param _target 目标位置
      * @param _isGain 是否是增益效果
@@ -728,8 +734,7 @@ export class RoleDis extends Component
         return this.RoleSpEffect.ProjectilesEffect(_self, _target, _isGain);
     }
     /** 
-     * 从配置文件加载
-     * 
+     * -从配置文件加载-
      * @author Hotaru
      * @time 2024/03/06
      */

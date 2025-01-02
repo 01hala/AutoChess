@@ -29,10 +29,10 @@ export class spEffectObj
     }
 }
 
-const OnSummonEffectStr="skill_0001";
+const OnRoleSummonEffectStr="skill_0001";
 
 /**
- * @class 特效类
+ * @class 角色特效类
  * @author Hotaru
  * @CreateTime 2024/11/27
  */
@@ -73,14 +73,14 @@ export class SpEffectOnRole
 
         allAwait.push(new Promise<void>(async (resolve) =>
         {
-            let cfg = config.SpListConfig.get(OnSummonEffectStr);
+            let cfg = config.SpListConfig.get(OnRoleSummonEffectStr);
             if (!cfg) {
-                console.log("初始化特效类 get cfg faild:", OnSummonEffectStr);
+                console.log("初始化特效类 get cfg faild:", OnRoleSummonEffectStr);
                 resolve();
             }
             else {
                 //召唤出场特效
-                let address = "EffectSpine/" + OnSummonEffectStr + "/" + cfg.path;
+                let address = "EffectSpine/" + OnRoleSummonEffectStr + "/" + cfg.path;
                 //console.log("出场特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
@@ -267,10 +267,8 @@ export class SpEffectOnRole
         await Promise.all(allAwait);
         console.log("初始化特效类完毕");
     }
-
     /**
      * 使用技能特效
-     * @returns 
      */
     public UseSkillEffect(): Promise<void>
     {
@@ -324,7 +322,10 @@ export class SpEffectOnRole
            
         });
     }
-
+    /**
+     * 技能特效
+     * @param _isFetter 是否为羁绊
+     */
     public OnSkillEffect(_isFetter:boolean): Promise<void>
     {
         return new Promise((resolve)=>
@@ -376,11 +377,9 @@ export class SpEffectOnRole
             }
         });
     }
-
     /**
      * 技能生效特效
      * @param 特效对象
-     * @returns 
      */
     public CheckSkillEffect(_obj:spEffectObj): Promise<void>
     {
@@ -714,7 +713,14 @@ export class SpEffectOnRole
                 }
                 let node = new Node("Projectiles");
                 node.layer=Layers.Enum.UI_2D;
-                singleton.netSingleton.battle.panelNode.addChild(node);
+                if(singleton.netSingleton.battle)
+                {
+                    singleton.netSingleton.battle.panelNode.addChild(node);
+                }
+                else
+                {
+                    singleton.netSingleton.ready.panelNode.addChild(node);
+                }
 
                 node.setPosition(_self);
                 node.setScale(new Vec3(0.5,0.5,1));

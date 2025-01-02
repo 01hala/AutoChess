@@ -609,6 +609,7 @@ export class netGame {
     }
 
     //结束当前准备回合
+    public cb_end_round:()=>void;
     public end_round(gameMode:enums.GameMode)
     {
         return new Promise((resolve , reject)=>

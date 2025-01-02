@@ -77,73 +77,89 @@ export class Settlement extends Component
     
     private Init()
     {
-        for(let t of this.hpGroup.children)
+        try
         {
-            t.getComponent(sp.Skeleton).setAnimation(0,"xin2",true);
+            for (let t of this.hpGroup.children)
+            {
+                t.getComponent(sp.Skeleton).setAnimation(0, "xin2", true);
+            }
+        }
+        catch (error) 
+        {
+            console.error("Settlement 下的 Init 错误：", error);
         }
     }
 
     public OpenSettlementBoard(_isVictory:BattleVictory, GameMode:enums.GameMode, addCoin:number, _hpNum:number,_isAddTime:boolean=false)
     {
-        console.log("show settlement");
-        //this.node.getComponent(BlockInputEvents).enabled=true;
-        this.node.setSiblingIndex(100);
-        this.isVictory=_isVictory;
-        this.GameMode = GameMode;
-        this.isAddTime=_isAddTime;
-        this.addCoin = addCoin;
-        this.midArea.active=true;
-        console.log(_hpNum);
-        for(let i=0;i<_hpNum;i++)
+        try
         {
-            this.hpGroup.children[i].getComponent(sp.Skeleton).setAnimation(0,"xin1",true);
-        }
-        this.midArea.getComponent(Animation).play("PanelAppear");
-        switch(_isVictory)
-        {
-            case BattleVictory.faild:
-                AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
-                this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#245998 width=20>失<size=30></size>败</color>";
-                this.cupNum.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff>+0</color>"
-                this.banners.getComponent(Sprite).spriteFrame=this.loseBanners;
-                //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.loseImg;
-                //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.loseRing;
-                this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0,"loss",true);
-                break;
-            case BattleVictory.tie:
-                AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
-                this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
-                this.cupNum.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff>+0</color>"
-                this.banners.getComponent(Sprite).spriteFrame=this.drwaBanners;
-                //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
-                //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
-                this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0,"draw",true);
-                break;
-            case BattleVictory.victory:
-                AudioManager.Instance.PlayerOnShot("Sound/battle_win_01");
-                this.banners.getChildByPath("RichText").getComponent(RichText).string="<color=#ffffff><outline color=#f4b428 width=20>胜<size=30></size>利</color>";
-                this.banners.getComponent(Sprite).spriteFrame=this.winBanners;
-                //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.winImg;
-                //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.winRing;
-                this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0,"win",true);
-                break;
-        }
-        this.midArea.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
-        {
-            this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setAnimation(0,"animation",false);
-            this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setCompleteListener((trackEntry)=>
+            console.log("show settlement");
+            //this.node.getComponent(BlockInputEvents).enabled=true;
+            this.node.setSiblingIndex(100);
+            this.isVictory = _isVictory;
+            this.GameMode = GameMode;
+            this.isAddTime = _isAddTime;
+            this.addCoin = addCoin;
+            this.midArea.active = true;
+            console.log(_hpNum);
+            for (let i = 0; i < _hpNum; i++)
             {
-                if(trackEntry.animation.name === "animation")
+                this.hpGroup.children[i].getComponent(sp.Skeleton).setAnimation(0, "xin1", true);
+            }
+            this.midArea.getComponent(Animation).play("PanelAppear");
+            switch (_isVictory)
+            {
+                case BattleVictory.faild:
+                    AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
+                    this.banners.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#245998 width=20>失<size=30></size>败</color>";
+                    this.cupNum.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff>+0</color>"
+                    this.banners.getComponent(Sprite).spriteFrame = this.loseBanners;
+                    //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.loseImg;
+                    //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.loseRing;
+                    this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0, "loss", true);
+                    break;
+                case BattleVictory.tie:
+                    AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
+                    this.banners.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
+                    this.cupNum.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff>+0</color>"
+                    this.banners.getComponent(Sprite).spriteFrame = this.drwaBanners;
+                    //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
+                    //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
+                    this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0, "draw", true);
+                    break;
+                case BattleVictory.victory:
+                    AudioManager.Instance.PlayerOnShot("Sound/battle_win_01");
+                    this.banners.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#f4b428 width=20>胜<size=30></size>利</color>";
+                    this.banners.getComponent(Sprite).spriteFrame = this.winBanners;
+                    //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.winImg;
+                    //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.winRing;
+                    this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0, "win", true);
+                    break;
+            }
+            this.midArea.getComponent(Animation).on(Animation.EventType.FINISHED, () =>
+            {
+                if(_hpNum<5 && BattleVictory.faild==this.isVictory)
                 {
-                    this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setAnimation(0,"xin2",true);
+                    this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setAnimation(0, "animation", false);
+                    this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setCompleteListener((trackEntry) =>
+                    {
+                        if (trackEntry.animation.name === "animation")
+                        {
+                            this.hpGroup.children[_hpNum].getComponent(sp.Skeleton).setAnimation(0, "xin2", true);
+                        }
+                    });
+                }
+                if (_isAddTime)
+                {
+                    this.ShowAddTimeBoard();
                 }
             });
-
-            if(_isAddTime)
-            {
-                this.ShowAddTimeBoard();
-            }
-        });
+        }
+        catch (error) 
+        {
+            console.error("Settlement 下的 OpenSettlementBoard 错误：",error);
+        }
     }
 
     private boardLock=false;

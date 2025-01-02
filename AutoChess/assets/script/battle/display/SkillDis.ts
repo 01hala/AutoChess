@@ -41,6 +41,7 @@ export class SkillDis
                         await this.RemoteAttack(_ev);
                     }
                     break;
+                case BattleEnums.EventType.IntensifierExp:
                 case BattleEnums.EventType.IntensifierProperties:
                     {
                         await this.DeliveryGain(_ev);
@@ -77,7 +78,7 @@ export class SkillDis
         });
     }
     /**
-     * 远程攻击
+     * -远程攻击-
      * @param _ev 事件
      * @returns 回调
      * 
@@ -127,7 +128,7 @@ export class SkillDis
         })
     }
     /**
-     * 群伤远程攻击
+     * -群伤远程攻击-
      * @param _ev 
      */
     private async RemoteAttackColony(_ev: skill.Event)
@@ -171,7 +172,7 @@ export class SkillDis
         })
     }
     /**
-    * 使用增益
+    * -使用增益-
     * @param _ev 事件
     * 
     * author：Hotaru
@@ -185,10 +186,11 @@ export class SkillDis
             {
                 let self = this.parent;
                 let allAwait=[];
+                let isColony=_ev.recipient.length>1?true:false;
 
                 for (let element of _ev.recipient)
                 {
-                    if (element.index == this.index)
+                    if (element.index == this.index && _ev.recipient.length<=1)
                     {
                         await this.parent.getComponent(RoleDis).Intensifier(_ev.value, false);
                         break;
@@ -207,7 +209,7 @@ export class SkillDis
                             {
                                 case BattleEnums.EventType.IntensifierProperties:
                                     {
-                                        await target.getComponent(RoleDis).Intensifier(_ev.value, true);
+                                        await target.getComponent(RoleDis).Intensifier(_ev.value, isColony);
                                     }
                                     break;
                                 case BattleEnums.EventType.IntensifierExp:
@@ -235,7 +237,7 @@ export class SkillDis
     }
 
     /**
-     * 召唤
+     * -召唤-
      * @param _ev 事件
      * 
      * @author：Hotaru
@@ -265,7 +267,7 @@ export class SkillDis
         })
     }
     /**
-     * 换位
+     * -换位-
      * @param _ev 事件
      * 
      * @author：Hotaru
@@ -288,7 +290,7 @@ export class SkillDis
         })
     }
     /**
-     * 交换属性
+     * -交换属性-
      * @param _ev 事件
      * 
      * @author：Hotaru
@@ -296,10 +298,6 @@ export class SkillDis
      */
     private SwapProperties(_ev: skill.Event)
     {
-        // let queue = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
-
-        // queue.GetRole(_ev.spellcaster.index).getComponent(RoleDis).SwapProperties(_ev.value[0]);
-
         return new Promise<void>(async (resolve, reject) =>
         {
             try
@@ -315,7 +313,7 @@ export class SkillDis
     }
 
     /**
-     * 加buff
+     * -加buff-
      * @param _ev 事件
      * 
      * @author：Hotaru
@@ -342,7 +340,7 @@ export class SkillDis
         })
     }
     /**
-     * 转移伤害
+     * -转移伤害-
      * @param _ev 事件
      */
     private SubstituteDamage(_ev:skill.Event)
