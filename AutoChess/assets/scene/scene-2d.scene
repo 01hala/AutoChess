@@ -22124,8 +22124,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": null,
-      "y": null
+      "x": 0,
+      "y": 0
     },
     "_id": "baa4GtCmpKYYkac/GK65Zk"
   },
@@ -22162,7 +22162,7 @@
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "jinbi",
+    "defaultAnimation": "jingyan",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,
