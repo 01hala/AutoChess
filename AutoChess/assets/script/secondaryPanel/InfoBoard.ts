@@ -190,15 +190,20 @@ export class InfoBoard extends Component
 
         let sp=await loadAssets.LoadImg(spritePath);
         this.fetterBoard.getChildByPath("Sculpture/Sprite").getComponent(Sprite).spriteFrame=sp;
-        this.fetterBoard.getChildByName("FetterName").getComponent(Label).string=GameManager.Instance.GetText(cf.FetterName);
+
+        this.fetterBoard.getChildByName("FetterName").getComponent(RichText).string="<color=#ffffff><outline color=#000000 width=4>"+ GameManager.Instance.GetText(cf.FetterName) + "</outline></color>";
+
         this.fetterBoard.getChildByName("Introduce").getComponent(Label).string=GameManager.Instance.GetText(cf.Introductory);
         let content="";
         let list=GameManager.Instance.GetText(cf.Text).split("\n");
-        for(let i=0;i<list.length;i++){
-            if(level>=i+1) content+=list[i];
-            else content+=+list[i]+"\n";        
+        for(let i=0;i<list.length;i++)
+        {
+            if(level>=i+1) 
+                content+="<color=#FFD700>"+list[i]+"</color>\n";
+            else 
+                content+="<color=#AAAAAA>"+list[i]+"</color>\n";        
         }
-        this.fetterBoard.getChildByName("Text").getComponent(Label).string=content;
+        this.fetterBoard.getChildByName("Text").getComponent(RichText).string=content;
     }
 
     async OpenCardInfo(_id:number)
@@ -240,7 +245,7 @@ export class InfoBoard extends Component
         this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(str.Timeing_Text) + ":</color>";
         //羁绊
         let ft = config.FettersConfig.get(ro.Fetters);
-        this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(ft.Name); + "</color>";
+        this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#ffffff><outline color=#000000 width = 4>" + GameManager.Instance.GetText(ft.Name) + "</outline></color>";
         //羁绊图标
         let fe=config.FettersConfig.get(ro.Fetters);
         let fettersImg = await loadAssets.LoadImg(fe.Res);
@@ -300,9 +305,14 @@ export class InfoBoard extends Component
             let bustr:string="";
             if(r.additionBuffer)
             {
+                console.warn("角色身上的buff：",r.additionBuffer);
                 for(let i of r.additionBuffer)
                 {
-                    bustr+=config.BufferConfig.get(i).Name+"\n";
+                    let b=config.BufferConfig.get(i);
+                    if(b)
+                    {
+                        bustr+=b.Name+"\n";
+                    }
                 }
             }
             this.detailedBoard.getChildByPath("DetailsArea/Buff/Label").getComponent(Label).string=bustr;

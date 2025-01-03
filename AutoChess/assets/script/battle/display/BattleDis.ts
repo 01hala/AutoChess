@@ -532,16 +532,16 @@ export class BattleDis
                 {
                     if (BattleEnums.Camp.Self == ev.spellcaster.camp) 
                     {
-                        this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                        this.selfParallelList.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                     }
                     else 
                     {
-                        this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                        this.enemyParallelList.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                     }
                 }
                 else
                 {
-                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                    allAwait.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                 }
                 
             }
@@ -592,16 +592,16 @@ export class BattleDis
                     {
                         if (BattleEnums.Camp.Self == ev.spellcaster.camp)
                         {
-                            this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                            this.selfParallelList.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                         }
                         else
                         {
-                            this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                            this.enemyParallelList.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                         }
                     }
                     else
                     {
-                        allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                        allAwait.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                     }
                     
                 }
@@ -681,15 +681,15 @@ export class BattleDis
                     {
                         if (BattleEnums.Camp.Self == ev.spellcaster.camp) 
                         {
-                            this.selfParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                            this.selfParallelList.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                         }
                         else 
                         {
-                            this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
+                            this.enemyParallelList.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                         }
                     }
                     else {
-                        allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                        allAwait.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                     }
                 }
             }
@@ -714,7 +714,7 @@ export class BattleDis
                     let spList = BattleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                     let self = spList.roleNodes[ev.spellcaster.index];
 
-                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                    allAwait.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                 }
             }
             await Promise.all(allAwait);
@@ -746,7 +746,7 @@ export class BattleDis
                     // {
                     //     this.enemyParallelList.push(self.getComponent(RoleDis).UseSkill(ev));
                     // }
-                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                    allAwait.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                 }
             }
             await Promise.all(allAwait);
@@ -770,7 +770,7 @@ export class BattleDis
                     let spList = BattleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                     let self = spList.roleNodes[ev.spellcaster.index];
 
-                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                    allAwait.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                 }
             }
             await Promise.all(allAwait);
@@ -795,7 +795,7 @@ export class BattleDis
                     let spList = BattleEnums.Camp.Self == ev.spellcaster.camp ? this.selfQueue : this.enemyQueue;
                     let self = spList.roleNodes[ev.spellcaster.index];
 
-                    allAwait.push(self.getComponent(RoleDis).UseSkill(ev));
+                    allAwait.push(self.getComponent(RoleDis).UseBattleSkill(ev));
                 }
                 // let queue: Queue = this.selfQueue;
                 // if (BattleEnums.Camp.Enemy == ev.spellcaster.camp)
@@ -854,11 +854,11 @@ export class BattleDis
 
                 await this.CheckBeginBattle(evs);
                 await this.CheckSwapProperties(evs);
+                await this.CheckRemoteInjured(evs);
                 await this.CheckAddBuff(evs);
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
                 await this.CheckTransPosition(evs);
-                await this.CheckRemoteInjured(evs);
                 if(this.selfParallelList.length > 0 || this.enemyParallelList.length > 0){
                     await Promise.all(this.selfParallelList);
                     await Promise.all(this.enemyParallelList);

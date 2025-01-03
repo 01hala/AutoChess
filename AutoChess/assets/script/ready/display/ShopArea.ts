@@ -309,7 +309,6 @@ export class ShopArea extends Component
         {
             if(this.shopRoleNodes[i] == _obj)
             {
-                singleton.netSingleton.ready.readyData.Buy(ShopIndex.Role, i, _index);
                 if(!_isMerge)
                 {
                     this.roleArea.rolesNode[_index]=_obj;
@@ -318,6 +317,7 @@ export class ShopArea extends Component
                 {
                     AudioManager.Instance.PlayerOnShot("Sound/sound_herolvup_01");
                 }
+                singleton.netSingleton.ready.readyData.Buy(ShopIndex.Role, i, _index);
                 this.shopRoleNodes[i] = null;
             }
         }

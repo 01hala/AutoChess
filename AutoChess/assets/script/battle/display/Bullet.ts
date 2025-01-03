@@ -52,7 +52,7 @@ export class Bullet extends Component {
                 this.node.setRotationFromEuler(new Vec3(0, 0, -angle));
 
                 this.tAttack = tween(this.node)
-                    .to(0.7, { position: targetPos }).call(() => 
+                    .to(0.5, { position: targetPos }).call(() => 
                     {
                         console.log("销毁子弹");
                         if (isGain)
