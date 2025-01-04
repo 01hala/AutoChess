@@ -105,14 +105,16 @@ export class ChooseTag extends Component
                 }
                 
                 let propc=config.EquipConfig.get(pvec.RoleEquip);
-                img =await loadAssets.LoadImg(propc.Res);
-                if(img)
-                {
-                    this.tagnodes[i].getChildByPath("Avatar/Equip/Sprite").getComponent(Sprite).spriteFrame = img;
-                }
-                else
-                {
-                    this.tagnodes[i].getChildByPath("Avatar/Equip/Sprite").getComponent(Sprite).spriteFrame=null;
+                if (propc) {
+                    img =await loadAssets.LoadImg(propc.Res);
+                    if(img)
+                    {
+                        this.tagnodes[i].getChildByPath("Avatar/Equip/Sprite").getComponent(Sprite).spriteFrame = img;
+                    }
+                    else
+                    {
+                        this.tagnodes[i].getChildByPath("Avatar/Equip/Sprite").getComponent(Sprite).spriteFrame=null;
+                    }
                 }
             }            
         }
