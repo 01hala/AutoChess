@@ -543,10 +543,11 @@ export class ReadyDis
         {
             try
             {
-                //console.log("now count of player fetters:"+_battle_info.FettersList.length+"。");
+                console.warn("now count of player fetters:"+_battle_info.FettersList.length);
+                console.warn("fetters:"+this.readyData.GetFetters().length);
                 if(_battle_info.FettersList.length<this.readyData.GetFetters().length)
                 {
-                    for(let i=_battle_info.FettersList.length-1;i<this.readyData.GetFetters().length;i++)
+                    for(let i=_battle_info.FettersList.length-1;i<6;i++)
                     {
                         this.fetters[i].active = false;
                     }
@@ -554,7 +555,6 @@ export class ReadyDis
 
                 for (let i = 0; i < _battle_info.FettersList.length; i++)
                 {
-
                     //let str="Fetter_"+_battle_info.FettersList[i].fetters_id;
                     let str = config.FettersConfig.get(_battle_info.FettersList[i].fetters_id).Res;
                     let infoStr = str;

@@ -15,24 +15,11 @@ const { ccclass, property } = _decorator;
 export class Settlement extends Component 
 {
     @property(SpriteFrame)
-    public winImg:SpriteFrame;
-    @property(SpriteFrame)
-    public loseImg:SpriteFrame;
-    @property(SpriteFrame)
-    public drawImg:SpriteFrame;
-    @property(SpriteFrame)
     public winBanners:SpriteFrame;
     @property(SpriteFrame)
     public loseBanners:SpriteFrame;
     @property(SpriteFrame)
     public drwaBanners:SpriteFrame;
-    @property(SpriteFrame)
-    public winRing:SpriteFrame;
-    @property(SpriteFrame)
-    public loseRing:SpriteFrame;
-    @property(SpriteFrame)
-    public drawRing:SpriteFrame;
-
     //退出按钮
     private exitBtn:Button;
     //显示区域
@@ -115,8 +102,6 @@ export class Settlement extends Component
                     this.banners.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#245998 width=20>失<size=30></size>败</color>";
                     this.cupNum.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff>+0</color>"
                     this.banners.getComponent(Sprite).spriteFrame = this.loseBanners;
-                    //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.loseImg;
-                    //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.loseRing;
                     this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0, "loss", true);
                     break;
                 case BattleVictory.tie:
@@ -124,16 +109,12 @@ export class Settlement extends Component
                     this.banners.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
                     this.cupNum.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff>+0</color>"
                     this.banners.getComponent(Sprite).spriteFrame = this.drwaBanners;
-                    //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.drawImg;
-                    //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.drawRing;
                     this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0, "draw", true);
                     break;
                 case BattleVictory.victory:
                     AudioManager.Instance.PlayerOnShot("Sound/battle_win_01");
                     this.banners.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#f4b428 width=20>胜<size=30></size>利</color>";
                     this.banners.getComponent(Sprite).spriteFrame = this.winBanners;
-                    //this.outCome.getChildByPath("Sprite").getComponent(Sprite).spriteFrame=this.winImg;
-                    //this.outCome.getChildByPath("Ring").getComponent(Sprite).spriteFrame=this.winRing;
                     this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0, "win", true);
                     break;
             }
