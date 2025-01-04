@@ -136,7 +136,7 @@ export class CardLibPanel extends Component
             for (let j = 0; j < this.cardCfgs.length; j++)
             {
                 let card = instantiate(this.rolePaintingPre);
-                card.getComponent(RoleCard).Init(this.cardCfgs[j].Id, this.cardCfgs[j].Res).then(()=>
+                card.getComponent(RoleCard).Init(this.cardCfgs[j].Id).then(()=>
                 {
                     card.getComponent(RoleCard).Stage = this.cardCfgs[j].Stage;
                     card.getComponent(RoleCard).Name = GameManager.Instance.GetText(this.cardCfgs[j].Name);
