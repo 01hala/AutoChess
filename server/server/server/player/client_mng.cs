@@ -1165,6 +1165,15 @@ namespace Player
 
         public int GetStage()
         {
+            Log.Log.trace("GetStage PVELevelCfg:{0} PVELevelIndex:{1}", PVELevelCfg.ToJson(), info.PVELevelIndex);
+            if (PVELevelCfg == null)
+            {
+                if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfgPVELevelCfg))
+                {
+                    Log.Log.trace("PVELevelConfigs TryGetValue quest:{0}", info.quest);
+                    PVELevelCfg = cfgPVELevelCfg;
+                }
+            }
             if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var cfg))
             {
                 return cfg.Stage;
@@ -1423,7 +1432,7 @@ namespace Player
 
                 if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
                 {
-                    var result = BattleShopPlayer.buy_food(p, index, role_index);
+                    var result = BattleShopPlayer.buy_food(p, index, role_index, GetStage());
                     if (result != em_error.success)
                     {
                         return result;

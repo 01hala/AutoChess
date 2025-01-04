@@ -1,5 +1,6 @@
 ﻿using Abelkhan;
 using config;
+using InfluxData.Net.Common.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,6 @@ namespace battle_shop
         public int skill_id;
         public int fetters_level;
         public int fetters_id;
-        public Action do_skill_callback;
     }
 
     public class skill_execute
@@ -45,6 +45,8 @@ namespace battle_shop
 
         public List<skill_execute> Trigger(int stage, List<shop_event> evs, battle_shop_player _player)
         {
+            Log.Log.trace("Trigger {0}", $"Trigger evs:{evs.ToJson()}");
+
             var ret = new List<skill_execute>();
 
             ShopSkillConfig skill;
@@ -86,6 +88,7 @@ namespace battle_shop
         {
             foreach(var ev in evs)
             {
+                Log.Log.trace("TriggerSkill {0}", $"ev.ev:{ev.ev.ToJson()} index:{index} EffectTime:{EffectTime}");
                 switch (ev.ev)
                 {
                     case EMRoleShopEvent.sales:
@@ -106,6 +109,7 @@ namespace battle_shop
                     break;
                     case EMRoleShopEvent.buy:
                     {
+                        Log.Log.trace("TriggerSkill {0}", $"ev.ev:{ev.ev.ToJson()} index:{index} EffectTime:{EffectTime}");
                         if (EffectTime == EMSkillEvent.buy && skillID == ev.skill_id && index == ev.index)
                         {
                             Log.Log.trace("TriggerSkill EMRoleShopEvent.buy EMSkillEvent.buy");
@@ -412,7 +416,6 @@ namespace battle_shop
                 }
                 if (summon_index == -1)
                 {
-                    trigger_ev.do_skill_callback = null;
                     summon_index = trigger_ev.index;
                 }
 

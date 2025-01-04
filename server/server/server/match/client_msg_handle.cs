@@ -448,10 +448,9 @@ namespace Match
             try
             {
                 var self = Match.battle_Mng.get_battle_player(uuid);
-                if (self.BattleShopPlayer.sale_role(index))
+                if (self.BattleShopPlayer.sale_role(index, self.baseStage()))
                 {
                     rsp.rsp(self.BattleShopPlayer.BattleData);
-                    self.BattleShopPlayer.do_skill(self.baseStage());
                 }
                 else
                 {
@@ -476,8 +475,8 @@ namespace Match
                 var err = self.buy(shop_index, index, role_index);
                 if (err == em_error.success)
                 {
-                    rsp.rsp(self.BattleShopPlayer.BattleData, self.BattleShopPlayer.ShopData);
                     self.BattleShopPlayer.do_skill(self.baseStage());
+                    rsp.rsp(self.BattleShopPlayer.BattleData, self.BattleShopPlayer.ShopData);
                 }
                 else
                 {

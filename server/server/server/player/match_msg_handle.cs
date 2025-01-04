@@ -25,12 +25,11 @@ namespace Player
             try
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
-                var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var _player_info = _avatar.get_real_hosting_data<PlayerInfo>();
                 if (_player_info.Data.CheckBuyEquip(equip))
                 {
                     client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
                 }
-                _player_info.write_back();
             }
             catch (System.Exception ex)
             {
@@ -47,12 +46,11 @@ namespace Player
             try
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
-                var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var _player_info = _avatar.get_real_hosting_data<PlayerInfo>();
                 if (_player_info.Data.CheckBuyRole(roleInfo))
                 {
                     client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
                 }
-                _player_info.write_back();
             }
             catch (System.Exception ex)
             {
@@ -71,7 +69,7 @@ namespace Player
             try
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(user.User.UserGuid);
-                var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var _player_info = _avatar.get_real_hosting_data<PlayerInfo>();
                 //if (is_victory == BattleVictory.victory)
                 //{
                 //    _player_info.Data.Info().score += 5;
@@ -96,7 +94,6 @@ namespace Player
                 {
                     client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
                 }
-                _player_info.write_back();
 
                 var rank_Info = new UserRankInfo
                 {
@@ -120,7 +117,7 @@ namespace Player
             try
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(user.User.UserGuid);
-                var _player_info = _avatar.get_clone_hosting_data<PlayerInfo>();
+                var _player_info = _avatar.get_real_hosting_data<PlayerInfo>();
                 var battleInfo = new BattleInfo
                 {
                     mod = mod,
@@ -133,7 +130,6 @@ namespace Player
                     client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_player_info.Data.Info().Achiev, _player_info.Data.Info().wAchiev);
                 }
                 _player_info.Data.CheckRank(mod, is_victory);
-                _player_info.write_back();
 
                 client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).battle_victory();
             }

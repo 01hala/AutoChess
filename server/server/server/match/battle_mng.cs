@@ -207,7 +207,7 @@ namespace Match
 
                 if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
                 {
-                    var result = BattleShopPlayer.buy_food(p, index, role_index);
+                    var result = BattleShopPlayer.buy_food(p, index, role_index, baseStage());
                     if (result != em_error.success)
                     {
                         return result;

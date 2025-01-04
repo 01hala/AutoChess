@@ -1,9 +1,8 @@
 ﻿using Abelkhan;
 using config;
+using InfluxData.Net.Common.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace battle_shop
 {
@@ -17,13 +16,21 @@ namespace battle_shop
             set
             {
                 battleData = value;
+                for (var i = 0; i < battleData.RoleList.Count; i++)
+                {
+                    var r = battleData.RoleList[i];
+                    if (r == null)
+                    {
+                        continue;
+                    }
+                    shop_skill_roles[i] = new shop_skill_role(i, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, battleData.round);
+                }
             }
             get
             {
                 return battleData;
             }
         }
-
         private List<shop_skill_role> shop_skill_roles;
         public List<shop_skill_role> ShopSkillRoles
         {
@@ -380,10 +387,12 @@ namespace battle_shop
             {
                 var tmp_evs = new List<shop_event>(evs);
                 evs.Clear();
+                Log.Log.trace("do_skill {0}", $"tmp_evs:{tmp_evs.ToJson()}");
 
                 var _trigger_skill = new Dictionary<Priority, List<Action>>();
                 foreach (var _skill_role in shop_skill_roles)
                 {
+                    Log.Log.trace("do_skill {0}", $"_skill_role:{_skill_role.ToJson()}");
                     if (_skill_role != null)
                     {
                         var execute = _skill_role.Trigger(stage, tmp_evs, this);
@@ -422,11 +431,6 @@ namespace battle_shop
                     {
                         e.Invoke();
                     }
-                }
-
-                foreach (var ev in tmp_evs)
-                {
-                    ev.do_skill_callback?.Invoke();
                 }
 
             } while (evs.Count > 0);
@@ -569,7 +573,7 @@ namespace battle_shop
             return fetters_info;
         }
 
-        public bool sale_role(int index)
+        public bool sale_role(int index, int stage)
         {
             var r = battleData.RoleList[index];
             if (r != null)
@@ -588,12 +592,11 @@ namespace battle_shop
                     role_level = r.Level,
                     fetters_id = r.FettersSkillID.fetters_id,
                     fetters_level = r.FettersSkillID.fetters_level,
-                    do_skill_callback = () =>
-                    {
-                        battleData.RoleList[index] = null;
-                        shop_skill_roles[index] = null;
-                    }
                 });
+                do_skill(stage);
+
+                battleData.RoleList[index] = null;
+                shop_skill_roles[index] = null;
 
                 clear_skill_tag();
                 check_fetters();
@@ -689,7 +692,7 @@ namespace battle_shop
                 evs.Add(new shop_event()
                 {
                     ev = EMRoleShopEvent.buy,
-                    index = index,
+                    index = role_index,
                     skill_id = r.SkillID,
                     role_level = r.Level,
                     fetters_id = r.FettersSkillID.fetters_id,
@@ -743,7 +746,7 @@ namespace battle_shop
             evs.Add(new shop_event()
             {
                 ev = EMRoleShopEvent.buy,
-                index = index,
+                index = role_index,
                 skill_id = r.SkillID,
                 role_level = r.Level,
                 fetters_id = r.FettersSkillID.fetters_id,
@@ -753,7 +756,7 @@ namespace battle_shop
             return em_error.success;
         }
 
-        public em_error buy_food(ShopProp p, int index, int role_index)
+        public em_error buy_food(ShopProp p, int index, int role_index, int stage)
         {
             var r = battleData.RoleList[role_index];
             if (r == null)
@@ -851,14 +854,12 @@ namespace battle_shop
                                         role_level = r.Level,
                                         fetters_id = r.FettersSkillID.fetters_id,
                                         fetters_level = r.FettersSkillID.fetters_level,
-                                        do_skill_callback = () =>
-                                        {
-                                            battleData.RoleList[role_index] = null;
-                                            shop_skill_roles[role_index] = null;
-                                        }
                                     });
+                                    do_skill(stage);
 
                                     is_syncope = true;
+                                    battleData.RoleList[role_index] = null;
+                                    shop_skill_roles[role_index] = null;
                                 }
                                 break;
                         }

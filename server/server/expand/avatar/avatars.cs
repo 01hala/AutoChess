@@ -33,8 +33,6 @@ namespace avatar
     public abstract class IDataAgent<T> where T : IHostingData
     {
         public T Data { get; set; }
-
-        public abstract void write_back();
     }
 
     internal class DataAgent<T> : IDataAgent<T> where T : IHostingData
@@ -44,12 +42,6 @@ namespace avatar
         internal DataAgent(Avatar _avatar)
         {
             avatar = _avatar;
-        }
-
-        public override void write_back()
-        {
-            avatar.Datas[T.Type()] = Data;
-            avatar.set_dirty();
         }
     }
 
@@ -183,26 +175,6 @@ namespace avatar
         public void add_hosting_data<T>(string type_name, T data) where T : IHostingData
         {
             dataDict.Add(type_name, data);
-        }
-
-        public IDataAgent<T> get_clone_hosting_data<T>() where T : IHostingData
-        {
-            try
-            {
-                if (dataDict.TryGetValue(T.Type(), out var data))
-                {
-                    DataAgent<T> agent = new(this)
-                    {
-                        Data = (T)T.Load(data.Store())
-                    };
-                    return agent;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Log.Log.err("avatar get_clone_hosting_data ex:{0}!", ex);
-            }
-            return default(IDataAgent<T>);
         }
 
         public IDataAgent<T> get_real_hosting_data<T>() where T : IHostingData

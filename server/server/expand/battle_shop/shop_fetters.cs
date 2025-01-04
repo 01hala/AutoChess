@@ -140,7 +140,6 @@ namespace battle_shop
             }
             if (summon_index == -1)
             {
-                trigger_ev.do_skill_callback = null;
                 summon_index = trigger_ev.index;
             }
 

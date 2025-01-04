@@ -305,10 +305,9 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    if (_data.Data.BattleShopPlayer.sale_role(index))
+                    if (_data.Data.BattleShopPlayer.sale_role(index, _data.Data.GetStage()))
                     {
                         rsp.rsp(_data.Data.BattleShopPlayer.BattleData);
-                        _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
                     }
                     else
                     {
@@ -527,12 +526,11 @@ namespace Player
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 if (_avatar != null)
                 {
-                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     var a = _data.Data.GetAchievementData(Achievement.EMGold25);
                     if (a.status != AchievementAwardStatus.EMRecv)
                     {
                         a.status = AchievementAwardStatus.EMComplete;
-                        _data.write_back();
                         client_mng.PlayerClientCaller.get_client(_avatar.ClientUUID).achievement_complete(_data.Data.Info().Achiev, _data.Data.Info().wAchiev);
                     }
                 }
@@ -580,11 +578,10 @@ namespace Player
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 if (_avatar != null)
                 {
-                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     var err = _data.Data.EditRoleGroup(_group);
                     if (err == 0)
                     {
-                        _data.write_back();
                         rsp.rsp(_data.Data.Info());
                     }
                     else
@@ -612,11 +609,10 @@ namespace Player
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 if (_avatar != null)
                 {
-                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     var (err, packet) = _data.Data.BuyCardPacket();
                     if (err == 0)
                     {
-                        _data.write_back();
                         rsp.rsp(packet, _data.Data.Info().bag);
                     }
                     else
@@ -644,11 +640,10 @@ namespace Player
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 if (_avatar != null)
                 {
-                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     var err = _data.Data.BuyCardMerge(_roleID);
                     if (err == 0)
                     {
-                        _data.write_back();
                         rsp.rsp(_roleID, _data.Data.Info());
                     }
                     else
@@ -835,10 +830,9 @@ namespace Player
                 var _avatar = Player.client_Mng.token_get_client_proxy(uuid, token);
                 if (_avatar != null)
                 {
-                    var _data = _avatar.get_clone_hosting_data<PlayerInfo>();
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     _data.Data.Info().User.UserName = name;
                     _data.Data.Info().User.Avatar = avatar;
-                    _data.write_back();
 
                     rsp.rsp(_avatar.PlayerInfo().Info());
 
