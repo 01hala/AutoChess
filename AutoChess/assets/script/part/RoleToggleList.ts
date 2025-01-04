@@ -4,7 +4,7 @@
  * 2024/05/16
  * 牌库复选栏
  */
-import { _decorator, assetManager, CCInteger, Color, color, Component, instantiate, Label, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
+import { _decorator, assetManager, CCInteger, Color, color, Component, EventHandler, instantiate, Label, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
 import * as common from '../battle/AutoChessBattle/common';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../battle/AutoChessBattle/config/config';
@@ -18,8 +18,6 @@ export class RoleToggleList extends Component
 {
     @property(CCInteger)
     public stageLv:number;
-    //toggle预制体
-    private roleTogglePre:Prefab
     //选中的toggle列表
     private confirmToggles:Node[]=[];
     //等阶文本
@@ -27,53 +25,56 @@ export class RoleToggleList extends Component
     //父节点组件
     private cardEditor:CardEditor;
 
-    start() 
+    private roleGroup:common.RoleGroup;
+
+    private checkEventHandler:EventHandler;
+
+    protected onLoad(): void
     {
         
     }
 
-    public async Init(_roleGroup:common.RoleGroup , _stageLv:number , _father:Node)
+    start() 
+    {
+        //点击勾选事件
+        this.checkEventHandler = new EventHandler();
+        this.checkEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
+        this.checkEventHandler.component = 'RoleToggleList';//这个是脚本类名
+        this.checkEventHandler.handler = 'CheckToggle';
+    }
+
+    public async Init(_roleGroup:common.RoleGroup , _stageLv:number ,_pre:Prefab)
     {
         try
         {
-            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggel") as Prefab;
+            this.roleGroup=_roleGroup;
+            console.log("Init RoleToggleList !");
+            
             this.stageLvText=this.node.parent.getChildByPath("Label").getComponent(Label);
 
             this.stageLvText.string=+_stageLv+"阶角色";
             this.stageLv=_stageLv;
-            this.cardEditor=_father.getComponent(CardEditor);
+            this.cardEditor=this.node.parent.getComponent(CardEditor);
             let i=100001;   //角色id
-            let jconfig:RoleConfig=null;
-            //点击勾选事件
-            let checkEventHandler = new RoleToggleList.EventHandler();
-            checkEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
-            checkEventHandler.component = 'RoleToggleList';//这个是脚本类名
-            checkEventHandler.handler = 'CheckToggle';
+            let rConfig:RoleConfig=null;
             
+            
+            let allAwait = [];
             do
             {
-                jconfig=config.RoleConfig.get(i);
-                if(jconfig!=null)
+                rConfig = config.RoleConfig.get(i);
+                if (rConfig != null)
                 {
-                    if (jconfig.Stage == this.stageLv)
-                    {
-                        let t_node = instantiate(this.roleTogglePre);
-                        t_node.name = jconfig.Id.toString();
-                        t_node.getComponent(Toggle).isChecked;
-                        this.LoadImgOnConfig(t_node, jconfig.Avatar);
-                        t_node.setParent(this.node);
-                        if (_roleGroup.RoleList.find((value) => (value == jconfig.Id)))
-                        {
-                            this.confirmToggles.push(t_node);
-                            t_node.getComponent(Toggle).isChecked = true;
-                        }
-                        checkEventHandler.customEventData = jconfig.Id.toString();
-                        let toggle = t_node.getComponent(Toggle);
-                        toggle.checkEvents.push(checkEventHandler);
-                    }
+                    //console.warn("load RoleToggle:",i);
                     i++;
+                    if (rConfig.Stage == this.stageLv)
+                    {
+                        allAwait.push(this.InstantiateToggle(rConfig,_pre));
+                    }
                 }
-            }while(jconfig!=null)
+            } while (rConfig != null);
+
+            await Promise.all(allAwait);
         }
         catch(error)
         {
@@ -81,37 +82,76 @@ export class RoleToggleList extends Component
         }
     }
 
-    private async LoadImgOnConfig(_node:Node,_address:string)
+    private InstantiateToggle(_config:RoleConfig,_pre:Prefab)
     {
-        try
+        return new Promise<void>(async (resolve, reject) =>
         {
-            let texture=await loadAssets.LoadImg(_address);
-            if(texture)
+            try
             {
-                _node.getChildByPath("IconMask/RoleSprite").getComponent(Sprite).spriteFrame=texture;
-            }
-            let color;
-            switch(this.stageLv)
+                let t_node = instantiate(_pre);
+                t_node.setParent(this.node);
+                t_node.name = _config.Id.toString();
+                t_node.getComponent(Toggle).isChecked;
+                await this.LoadImgOnConfig(t_node, _config.Avatar);
+                if (this.roleGroup.RoleList.find((value) => (value == _config.Id)))
+                {
+                    this.confirmToggles.push(t_node);
+                    t_node.getComponent(Toggle).isChecked = true;
+                }
+                this.checkEventHandler.customEventData = _config.Id.toString();
+                let toggle = t_node.getComponent(Toggle);
+                toggle.checkEvents.push(this.checkEventHandler);
+                resolve()
+            } 
+            catch (error)
             {
-                case 1:color=new Color().fromHEX("#ffffff");break;
-                case 2:color=new Color().fromHEX("#6fce98");break;
-                case 3:color=new Color().fromHEX("#6f8ed3");break;
-                case 4:color=new Color().fromHEX("#c97ef3");break;
-                case 5:color=new Color().fromHEX("#e5ad27");break;
-                case 6:color=new Color().fromHEX("#d34fsa");break;
+                console.error("RoleToggleList 下的 InstantiateToggle 错误:",error);
+                reject();
             }
-            _node.getChildByPath("Farme").getComponent(Sprite).color=color;
-        }
-        catch(error)
+        })
+    }
+
+    private LoadImgOnConfig(_node:Node,_address:string)
+    {
+        return new Promise<void>((resolve, reject) => 
         {
-            console.log("RoleToggleList 下的 LoadImgOnConfig 错误:",error);
-        }
+            try
+            {
+                loadAssets.LoadImg(_address).then((data) =>
+                {
+                    let texture = data;
+                    if (texture)
+                    {
+                        _node.getChildByPath("IconMask/RoleSprite").getComponent(Sprite).spriteFrame = texture;
+                    }
+                    let color;
+                    switch (this.stageLv)
+                    {
+                        case 1: color = new Color().fromHEX("#ffffff"); break;
+                        case 2: color = new Color().fromHEX("#6fce98"); break;
+                        case 3: color = new Color().fromHEX("#6f8ed3"); break;
+                        case 4: color = new Color().fromHEX("#c97ef3"); break;
+                        case 5: color = new Color().fromHEX("#e5ad27"); break;
+                        case 6: color = new Color().fromHEX("#d34fsa"); break;
+                    }
+                    _node.getChildByPath("Farme").getComponent(Sprite).color = color;
+
+                    resolve();
+                });
+            }
+            catch(error)
+            {
+                console.log("RoleToggleList 下的 LoadImgOnConfig 错误:",error);
+                reject();
+            }
+        })
     }
 
     private CheckToggle(event: Event, customEventData: string)
     {
         try
         {
+            console.warn("Check RoleToggle!");
             let checkNode=this.node.getChildByName(customEventData);
             if (checkNode.getComponent(Toggle).isChecked)
             {

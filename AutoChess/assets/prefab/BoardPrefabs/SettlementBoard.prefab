@@ -3795,18 +3795,6 @@
     "__prefab": {
       "__id__": 171
     },
-    "winImg": {
-      "__uuid__": "b17ff096-c1c3-4290-8b49-9c829fddc5e0@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "loseImg": {
-      "__uuid__": "ea55dbee-81cb-46d0-9a01-66226aa90933@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "drawImg": {
-      "__uuid__": "fa1cea1b-cf3b-4a09-9ab0-13594bd32a11@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
     "winBanners": {
       "__uuid__": "cf95d6d5-0ea8-48a6-a33c-87bc60690f16@f9941",
       "__expectedType__": "cc.SpriteFrame"
@@ -3817,18 +3805,6 @@
     },
     "drwaBanners": {
       "__uuid__": "054be8c2-bb13-488b-b66c-3bc414572df6@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "winRing": {
-      "__uuid__": "98de96d7-868d-4a91-8ae0-b00f9c6eb7a7@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "loseRing": {
-      "__uuid__": "b2ef1d0c-f665-4a56-90c2-5d3946e4a0cd@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "drawRing": {
-      "__uuid__": "b46cebad-8356-4cb9-ace7-24d2a52cb169@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_id": ""

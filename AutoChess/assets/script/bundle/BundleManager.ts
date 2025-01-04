@@ -110,7 +110,7 @@ export class BundleManager
                 //console.log(`bundleRes:${bundleRes} assetsRes:${assetsRes}`)
                 bundle.load(assetsRes, Asset, (error, asset) => {
                     if(error) {
-                        console.warn("loadAssetsFromBundle ", error.message);
+                        console.warn(`loadAssets '${assetsRes}' error:`, error.message);
                         resolve(null);
                     }
                     else {
@@ -209,10 +209,13 @@ export class BundleManager
                 await this.PreLoadBundleDir("RoleSpine","",_callBack);
                 await this.PreLoadBundleDir("EffectSpine","",_callBack);
 
-                allAwait.push(this.PreLoadBundleDir("IconTexture","Venture"));
+                allAwait.push(this.PreLoadBundleDir("IconTexture",""));
                 allAwait.push(this.PreLoadBundleDir("BackGroungTexture",""));
                 allAwait.push(this.PreLoadBundleDir("ButtonTexture",""));
-                allAwait.push(this.PreLoadBundleDir("OtherTexture","Ornament"));
+                allAwait.push(this.PreLoadBundleDir("OtherTexture",""));
+                allAwait.push(this.PreLoadBundleDir("Quest",""));
+                allAwait.push(this.PreLoadBundleDir("CardLib",""));
+
                 Promise.all(allAwait);
                 
                 console.log("预加载资源完成");

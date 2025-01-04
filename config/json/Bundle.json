@@ -138,5 +138,40 @@
         "Name": "提示信息",
         "Path": "TextTipPrefabs",
         "URL": "https://www.ucat.games:8002/zzq/remote/TextTipPrefabs"
+    },
+    "20": {
+        "ID": 20,
+        "Type": 1,
+        "Name": "牌库界面相关资源",
+        "Path": "CardLib",
+        "URL": "https://www.ucat.games:8002/zzq/remote/CardLib"
+    },
+    "21": {
+        "ID": 21,
+        "Type": 1,
+        "Name": "准备面板相关资源",
+        "Path": "Ready",
+        "URL": "https://www.ucat.games:8002/zzq/remote/Ready"
+    },
+    "22": {
+        "ID": 22,
+        "Type": 1,
+        "Name": "主界面相关资源",
+        "Path": "MainInterface",
+        "URL": "https://www.ucat.games:8002/zzq/remote/MainInterface"
+    },
+    "23": {
+        "ID": 23,
+        "Type": 1,
+        "Name": "冒险界面相关资源",
+        "Path": "Quest",
+        "URL": "https://www.ucat.games:8002/zzq/remote/Quest"
+    },
+    "24": {
+        "ID": 24,
+        "Type": 1,
+        "Name": "战斗相关资源",
+        "Path": "Battle",
+        "URL": "https://www.ucat.games:8002/zzq/remote/Battle"
     }
 }

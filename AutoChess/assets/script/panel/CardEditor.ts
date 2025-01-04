@@ -29,6 +29,9 @@ export class CardEditor extends Component
     //保存按钮
     private saveBtn:Node;
 
+    //toggle预制体
+    public roleTogglePre:Prefab
+
     protected async onLoad(): Promise<void>
     {
         this.pageContent=this.node.getChildByPath("PageView/view/content");
@@ -97,7 +100,8 @@ export class CardEditor extends Component
         try
         {
             this.framePre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggleFarme")as Prefab;
-            this.LoadGroup();
+            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggel") as Prefab;
+            await this.LoadGroup();
         }
         catch(error)
         {
@@ -114,7 +118,7 @@ export class CardEditor extends Component
             {
                 let t_node = instantiate(this.framePre);
                 t_node.setParent(this.pageContent);
-                await t_node.getChildByPath("RoleToggleList").getComponent(RoleToggleList).Init(this.roleGroup, i, this.node);
+                await t_node.getChildByPath("RoleToggleList").getComponent(RoleToggleList).Init(this.roleGroup, i,this.roleTogglePre);
             }
         }
         catch(error)

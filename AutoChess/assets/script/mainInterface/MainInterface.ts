@@ -17,6 +17,7 @@ import { AchievePanel } from '../panel/AchievePanel';
 import { User } from '../login/User';
 import { QuestPanel } from '../panel/QuestPanel';
 import { config } from '../battle/AutoChessBattle/config/config';
+import { CardLibPanel } from '../panel/CardLibPanel';
 const { ccclass, property } = _decorator;
 
 export class MainInterface 
@@ -224,10 +225,10 @@ export class MainInterface
             this.cardlibraryBtn.on(Button.EventType.CLICK,async ()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                let cl = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","CardLibrary") as Prefab;
+                let cl = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","CardLibPanel") as Prefab;
                 this.cardLibraryPanel = instantiate(cl);
                 this.cardLibraryPanel.setParent(this.parentNode);
-                this.cardLibraryPanel.getComponent(CardLibrary).OpenCardLib();
+                this.cardLibraryPanel.getComponent(CardLibPanel).OpenCardLib();
                 this.panelNode.active=false;
             },this);
             //打开卡组编辑界面

@@ -4,7 +4,7 @@
  * 2024/05/22
  * 修改
  */
-import { _decorator, Animation, assetManager, Button, ccenum, Color, color, Component, debug, enumerableProps, error, Label, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
+import { _decorator, Animation, assetManager, Button, ccenum, Color, color, Component, debug, Enum, enumerableProps, error, Label, log, Node, RichText, Skeleton, sp, Sprite } from 'cc';
 import * as singleton from '../netDriver/netSingleton';
 import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -23,7 +23,7 @@ export enum CardType
 export class RoleCard extends Component 
 {
     @property({
-        type:ccenum(CardType),
+        type:Enum(CardType),
         displayName:"Type"
     })
     public type:CardType;
@@ -52,9 +52,25 @@ export class RoleCard extends Component
     public set Stage(value:number)
     {
         this.stage=value;
-        this.node.getChildByPath("Info/Stage/RichText").getComponent(RichText).string="<color=#1d994f><outline color=#74eda5 width=4>"+ value +"</outline></color>";
+        if(CardType.Card == this.type)
+        {
+            let color:Color=new Color("#ffffff");;
+            switch(value)
+            {
+                case 1:color=new Color("#ffffff");break;
+                case 2:color=new Color("#4EB156");break;
+                case 3:color=new Color("#66ccff");break;
+                case 4:color=new Color("#AC6BFF");break;
+                case 5:color=new Color("#FFCB5C");break;
+                case 6:color=new Color("#FF5858");break;
+            }
+            this.node.getChildByPath("Frame/Mask/Color").getComponent(Sprite).color=color;
+        }
+        if(CardType.Painting == this.type)
+        {
+            this.node.getChildByPath("Info/Stage/RichText").getComponent(RichText).string="<color=#1d994f><outline color=#74eda5 width=4>"+ value +"</outline></color>";
+        }   
     }
-
     //获取角色名
     public get Name()
     {
@@ -64,21 +80,22 @@ export class RoleCard extends Component
     public set Name(value:string)
     {
         this.roleName=value;
-        this.node.getChildByPath("Info/Name").getComponent(RichText).string="<color=#ffffff>"+ value +"</color>";
+        this.node.getChildByPath("Info/Name").getComponent(RichText).string="<color=#ffffff><outline color=#000000 width=4>"+ value +"</outline></color>";
     }
-
+    //获取锁定状态
     public get Lock()
     {
         return this.lock;
     }
-
+    //设置锁定状态
     public set Lock(value:boolean)
     {
         this.lock=value;
-        //this.spr.grayscale=this.lock;
+        this.unlockBtn.active=true;
         if (CardType.Card == this.type)
         {
-            this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).grayscale = value;
+            this.node.getChildByPath("Frame/Mask/Role").getComponent(Sprite).grayscale = value;
+
         }
         if (CardType.Painting == this.type)
         {
@@ -86,12 +103,10 @@ export class RoleCard extends Component
             if(value)
             {
                 color = new Color().fromHEX('#686868');
-                this.unlockBtn.active=true;
             }
             else
             {
                 color = new Color().fromHEX('#FFFFFF');
-                this.unlockBtn.active=false;
             }
             this.node.getChildByPath("Sprite").getComponent(sp.Skeleton).color = color;
         }
@@ -99,21 +114,9 @@ export class RoleCard extends Component
 
     protected onLoad(): void 
     {
-        if(CardType.Card==this.type)
-        {
-            this.spr=this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite);
-        }
-        if(CardType.Painting==this.type)
-        {
-            this.painting=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
-        }
-
         this.numberText=this.node.getChildByPath("Unlock_Btn/Label").getComponent(Label);
         this.unlockBtn=this.node.getChildByPath("Unlock_Btn");
-
-        this.painting.node.active=false;
     }
-
 
     start() 
     {
@@ -144,14 +147,17 @@ export class RoleCard extends Component
                 this.roleId=_id;
                 if (CardType.Card == this.type)
                 {
+                    this.spr=this.node.getChildByPath("Frame/Mask/Role").getComponent(Sprite);
                     let img = await loadAssets.LoadImg(_res);
                     if (img)
                     {
-                        this.node.getChildByPath("RoleAvatar/Sprite").getComponent(Sprite).spriteFrame = img;
+                        this.spr.spriteFrame = img;
                     }
+                    resolve();
                 }
                 if (CardType.Painting == this.type)
                 {
+                    this.painting=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
                     loadAssets.LoadSkeletonData(_res, (data) =>
                     {
                         //console.log(`当前 ${this.roleId} 的动画信息 ${data}`);
@@ -175,14 +181,15 @@ export class RoleCard extends Component
                             this.painting.node.active=true;
                             this.node.getComponent(Animation).play();
                         }
+                        resolve();
                     });
                 }
             }
             catch(error)
             {
                 console.error('RoleCard 下 Init 错误 err: ',error);
+                resolve();
             }
-            resolve();
         });
     }
 
