@@ -181,7 +181,7 @@ export class CardLibrary extends Component
             for(let j=0;j<this.cardCfgs.length;j++)
             {
                 let card = instantiate(this.rolePaintingPre);
-                await card.getComponent(RoleCard).Init(this.cardCfgs[j].Id, this.cardCfgs[j].Skel);
+                await card.getComponent(RoleCard).Init(this.cardCfgs[j].Id);
                 card.getComponent(RoleCard).Stage = this.cardCfgs[j].Stage;
                 card.getComponent(RoleCard).Name = GameManager.Instance.GetText(this.cardCfgs[j].Name);
                 card.setParent(this.cardContent.children[boothNum].getChildByPath("Layout"));

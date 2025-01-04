@@ -4,7 +4,7 @@
  * 2024/05/16
  * 牌库复选栏
  */
-import { _decorator, assetManager, CCInteger, Color, color, Component, EventHandler, instantiate, Label, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
+import { _decorator, assetManager, Button, CCInteger, Color, color, Component, EventHandler, instantiate, Label, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
 import * as common from '../battle/AutoChessBattle/common';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../battle/AutoChessBattle/config/config';
@@ -22,6 +22,7 @@ export class RoleToggleList extends Component
     private confirmToggles:Node[]=[];
     //等阶文本
     private stageLvText:Label;
+    private countText:Label;
     //父节点组件
     private cardEditor:CardEditor;
 
@@ -31,30 +32,31 @@ export class RoleToggleList extends Component
 
     protected onLoad(): void
     {
-        
-    }
-
-    start() 
-    {
         //点击勾选事件
         this.checkEventHandler = new EventHandler();
         this.checkEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
         this.checkEventHandler.component = 'RoleToggleList';//这个是脚本类名
-        this.checkEventHandler.handler = 'CheckToggle';
+        this.checkEventHandler.handler = 'ClickToggle';
     }
 
-    public async Init(_roleGroup:common.RoleGroup , _stageLv:number ,_pre:Prefab)
+    start() 
+    {
+        
+    }
+
+    public async Init(_cardEditor:CardEditor , _stageLv:number ,_pre:Prefab)
     {
         try
         {
-            this.roleGroup=_roleGroup;
+            this.cardEditor=_cardEditor;
+            this.roleGroup=_cardEditor.roleGroup;
             console.log("Init RoleToggleList !");
             
             this.stageLvText=this.node.parent.getChildByPath("Label").getComponent(Label);
+            this.countText=this.node.parent.getChildByPath("Label/Count").getComponent(Label);
 
             this.stageLvText.string=+_stageLv+"阶角色";
             this.stageLv=_stageLv;
-            this.cardEditor=this.node.parent.getComponent(CardEditor);
             let i=100001;   //角色id
             let rConfig:RoleConfig=null;
             
@@ -92,15 +94,18 @@ export class RoleToggleList extends Component
                 t_node.setParent(this.node);
                 t_node.name = _config.Id.toString();
                 t_node.getComponent(Toggle).isChecked;
-                await this.LoadImgOnConfig(t_node, _config.Avatar);
                 if (this.roleGroup.RoleList.find((value) => (value == _config.Id)))
                 {
                     this.confirmToggles.push(t_node);
                     t_node.getComponent(Toggle).isChecked = true;
                 }
-                this.checkEventHandler.customEventData = _config.Id.toString();
-                let toggle = t_node.getComponent(Toggle);
-                toggle.checkEvents.push(this.checkEventHandler);
+                //this.checkEventHandler.customEventData = _config.Id.toString();
+                t_node.on(Button.EventType.CLICK,()=>
+                {
+                    this.ClickToggle(null,t_node.name);
+                })
+                //t_node.getComponent(Button).clickEvents.push(this.checkEventHandler);
+                await this.LoadImgOnConfig(t_node, _config.Avatar);
                 resolve()
             } 
             catch (error)
@@ -147,33 +152,61 @@ export class RoleToggleList extends Component
         })
     }
 
-    private CheckToggle(event: Event, customEventData: string)
+    private ClickToggle(event: Event, customEventData: string)
     {
         try
         {
-            console.warn("Check RoleToggle!");
-            let checkNode=this.node.getChildByName(customEventData);
-            if (checkNode.getComponent(Toggle).isChecked)
-            {
-                //将当前组里的一个角色取消勾选
-                let t = this.confirmToggles.pop();
-                t.getComponent(Toggle).isChecked = false;
-                this.confirmToggles.push(checkNode);
-                //查找并替换卡组里原本的角色
-                for (let i = 0; i < this.cardEditor.roleGroup.RoleList.length; i++)
-                {
-                    if (Number(customEventData) == this.cardEditor.roleGroup.RoleList[i])
-                    {
-                        this.cardEditor.roleGroup.RoleList.splice(i, 1, Number(customEventData));
-                        break;
-                    }
-                }
-            }
             
+            let checkNode=this.node.getChildByName(customEventData);
+            if(checkNode.getComponent(Toggle).isChecked)
+            {
+                checkNode.getComponent(Toggle).isChecked=true;
+                this.confirmToggles.push(checkNode);
+                this.cardEditor.roleGroup.RoleList.push(Number(checkNode.name));
+
+                //如果已选角色超过9人
+                if (this.confirmToggles.length > 9)
+                {
+                    //将当前组里的一个角色取消勾选
+                    let t = this.confirmToggles.shift();
+                    t.getComponent(Toggle).isChecked = false;
+                    let index=this.cardEditor.roleGroup.RoleList.findIndex((value)=>(value==Number(t.name)));
+                    this.cardEditor.roleGroup.RoleList.splice(index,1);
+                }
+
+                // for (let i = 0; i < this.confirmToggles.length; i++)
+                // {
+                //     if (this.confirmToggles[i].name == checkNode.name)
+                //     {
+                //         this.confirmToggles.splice(i, 1);
+
+                //         for (let j = 0; j < this.cardEditor.roleGroup.RoleList.length; j++)
+                //         {
+                //             if (Number(checkNode.name) == this.cardEditor.roleGroup.RoleList[j])
+                //             {
+                //                 this.cardEditor.roleGroup.RoleList.splice(j, 1, Number(checkNode.name));
+                //                 break;
+                //             }
+                //         }
+                //         break;
+                //     }
+                // }
+            }
+            else
+            {
+                checkNode.getComponent(Toggle).isChecked = false;
+                let index=this.confirmToggles.findIndex((value)=>(value.name == checkNode.name));
+                this.confirmToggles.splice(index,1);
+
+                index=this.cardEditor.roleGroup.RoleList.findIndex((value)=>(value==Number(checkNode.name)));
+                this.cardEditor.roleGroup.RoleList.splice(index,1);
+            }
+            this.countText.string=this.confirmToggles.length+" / 9";
+            console.warn("rolr list length:",this.cardEditor.roleGroup.RoleList.length);
         }
         catch(error)
         {
-            console.log("RoleToggleList 下的 CheckToggle 错误:",error);
+            console.error("RoleToggleList 下的 CheckToggle 错误:",error);
         }
     }
 }

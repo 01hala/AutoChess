@@ -29,7 +29,9 @@ export class RoleCard extends Component
     public type:CardType;
     //立绘
     private spr:Sprite;
-    private painting:sp.Skeleton
+    private painting:sp.Skeleton;
+    //羁绊图片
+    private fetterSpr:Sprite;
     //是否解锁
     private lock:boolean=false;
     //碎片数量
@@ -137,7 +139,7 @@ export class RoleCard extends Component
         this.unlockBtn.getComponent(Button).enabled=false;
     }
 
-    public Init(_id:number,_res:string):Promise<void>
+    public Init(_id:number):Promise<void>
     {
         return new Promise(async(resolve)=>
         {
@@ -145,20 +147,34 @@ export class RoleCard extends Component
             {
                 this.node.getChildByPath("Info").active=false;
                 this.roleId=_id;
+                let rConfig=config.RoleConfig.get(_id);
+                let fConfig=config.FettersConfig.get(rConfig.Fetters);
                 if (CardType.Card == this.type)
                 {
                     this.spr=this.node.getChildByPath("Frame/Mask/Role").getComponent(Sprite);
-                    let img = await loadAssets.LoadImg(_res);
-                    if (img)
+                    this.fetterSpr=this.node.getChildByPath("Frame/Fetter/Icon").getComponent(Sprite);
+                    
+                    loadAssets.LoadImg(rConfig.Res).then((data)=>
                     {
-                        this.spr.spriteFrame = img;
-                    }
+                        if(data)
+                        {
+                            this.spr.spriteFrame = data;
+                        }
+                    });
+                    loadAssets.LoadImg(fConfig.Res).then((data)=>
+                    {
+                        if(data)
+                        {
+                            this.fetterSpr.spriteFrame = data
+                        }
+                    });
                     resolve();
                 }
                 if (CardType.Painting == this.type)
                 {
                     this.painting=this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
-                    loadAssets.LoadSkeletonData(_res, (data) =>
+
+                    loadAssets.LoadSkeletonData(rConfig.Skel, (data) =>
                     {
                         //console.log(`当前 ${this.roleId} 的动画信息 ${data}`);
                         if (data)

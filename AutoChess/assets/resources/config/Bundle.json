@@ -173,5 +173,12 @@
         "Name": "战斗相关资源",
         "Path": "Battle",
         "URL": "https://www.ucat.games:8002/zzq/remote/Battle"
+    },
+    "25": {
+        "ID": 25,
+        "Type": 1,
+        "Name": "卡组编辑",
+        "Path": "CareEdit",
+        "URL": "https://www.ucat.games:8002/zzq/remote/CareEdit"
     }
 }
