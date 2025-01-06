@@ -2,7 +2,7 @@ import { _decorator, Component, instantiate, Node, Prefab, UITransform, Vec3 } f
 import * as skill from '../AutoChessBattle//skill/skill_base';
 import * as singleton from '../../netDriver/netSingleton';
 import * as BattleEnums from '../AutoChessBattle/BattleEnums';
-import { Bullet } from './Bullet';
+import { Bullet, BulletInfo } from './Bullet';
 import { delay } from '../../other/sleep';
 import { BundleManager } from '../../bundle/BundleManager';
 import { RoleDis } from './RoleDis';
@@ -93,6 +93,7 @@ export class SkillDis
             {
                 let spList = BattleEnums.Camp.Self == _ev.spellcaster.camp ? singleton.netSingleton.battle.selfQueue : singleton.netSingleton.battle.enemyQueue;
                 let self = this.parent;
+                let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
 
                 if(_ev.objCount>=6)
                 {
@@ -102,15 +103,13 @@ export class SkillDis
                 for (let element of _ev.recipient)
                 {
                     let targetList = BattleEnums.Camp.Enemy == element.camp ? singleton.netSingleton.battle.enemyQueue : singleton.netSingleton.battle.selfQueue;
-
                     let target = targetList.roleNodes[element.index];
 
                     if (self && target) 
                     {
-                        let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
 
-                        await this.parent.getComponent(RoleDis).UseProjectiles(selfpos,targetpos,false).then(async ()=>
+                        await this.parent.getComponent(RoleDis).OnSkill(_ev.isFetter,new BulletInfo(selfpos,targetpos,false)).then(async ()=>
                         {
                             await target.getComponent(RoleDis).BeHurted(_ev);
                             await target.getComponent(RoleDis).ChangeAtt();
@@ -118,7 +117,6 @@ export class SkillDis
                     }
                 }
                 resolve();
-                //return delay(1200, () => { });
             }
             catch (err) 
             {
@@ -203,7 +201,13 @@ export class SkillDis
                         let selfpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(self.getWorldPosition());
                         let targetpos = singleton.netSingleton.battle.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
 
-                        allAwait.push(this.parent.getComponent(RoleDis).UseProjectiles(selfpos, targetpos, true).then(async () =>
+                        let style=_ev.value[0]?1:3;
+                        if(BattleEnums.EventType.IntensifierExp ==_ev.type)
+                        {
+                            style=2;
+                        }
+
+                        allAwait.push(this.parent.getComponent(RoleDis).OnSkill(_ev.isFetter,new BulletInfo(selfpos,targetpos,true,style)).then(async ()=>
                         {
                             switch (_ev.type)
                             {
@@ -219,7 +223,6 @@ export class SkillDis
                                     break;
                             }
                         }));
-                        
                     }
                 }
                 if(allAwait.length>0)

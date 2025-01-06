@@ -14,6 +14,22 @@ import { _decorator, BoxCollider, Component, ITriggerEvent, math, Node, sp, Twee
 import { loadAssets } from '../../bundle/LoadAsset';
 const { ccclass, property } = _decorator;
 
+export class BulletInfo
+{
+    public selfpos: Vec3 = null;
+    public targetPos: Vec3 = null;
+    public isGain: boolean = false;
+    public style: number = 0;
+
+    constructor(selfpos: Vec3,targetPos: Vec3,isGain: boolean,style: number=0)
+    {
+        this.selfpos=selfpos;
+        this.targetPos=targetPos;
+        this.isGain=isGain;
+        this.style=style;
+    }
+}
+
 @ccclass('Bullet')
 export class Bullet extends Component {
 
@@ -35,7 +51,7 @@ export class Bullet extends Component {
         this.isInit=false; 
     }
 
-    public Init(targetPos:Vec3 , _effect:string , isGain:boolean):Promise<void>
+    public Init(targetPos:Vec3 , _effect:string , isGain:boolean , _style:number):Promise<void>
     {
         return new Promise<void>(async (resolve, reject) =>
         {
@@ -51,13 +67,18 @@ export class Bullet extends Component {
                 let angle = dir.signAngle(new Vec2(1, 0)) * 180 / Math.PI;
                 this.node.setRotationFromEuler(new Vec3(0, 0, -angle));
 
+                let anims=this.skell.skeletonData.getAnimsEnum();
+                if(_style!=0 && isGain)
+                {
+                    this.skell.setAnimation(0, String(anims[_style]), true);
+                }
+
                 this.tAttack = tween(this.node)
                     .to(0.5, { position: targetPos }).call(() => 
                     {
                         console.log("销毁子弹");
-                        if (isGain)
+                        if (this.skell.skeletonData.name === "Luminous sphere")
                         {
-                            let anims = this.skell.skeletonData.getAnimsEnum();
                             this.skell.setAnimation(0, String(anims[2]), true);
                             this.skell.setCompleteListener((trackEntry) =>
                             {

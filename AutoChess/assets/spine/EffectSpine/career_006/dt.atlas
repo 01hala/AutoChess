@@ -1,0 +1,83 @@
+
+dt.png
+size: 1343,1343
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cui
+  rotate: false
+  xy: 2, 669
+  size: 663, 672
+  orig: 663, 672
+  offset: 0, 0
+  index: -1
+cuibing
+  rotate: false
+  xy: 474, 253
+  size: 364, 414
+  orig: 364, 414
+  offset: 0, 0
+  index: -1
+tx_0
+  rotate: true
+  xy: 667, 841
+  size: 151, 142
+  orig: 151, 142
+  offset: 0, 0
+  index: -1
+tx_1
+  rotate: true
+  xy: 667, 994
+  size: 173, 164
+  orig: 175, 166
+  offset: 1, 1
+  index: -1
+tx_2
+  rotate: true
+  xy: 667, 1169
+  size: 172, 166
+  orig: 174, 168
+  offset: 1, 1
+  index: -1
+tx_3
+  rotate: false
+  xy: 695, 80
+  size: 171, 171
+  orig: 173, 173
+  offset: 1, 1
+  index: -1
+tx_4
+  rotate: false
+  xy: 527, 74
+  size: 166, 177
+  orig: 168, 179
+  offset: 1, 1
+  index: -1
+tx_5
+  rotate: false
+  xy: 354, 7
+  size: 171, 178
+  orig: 173, 180
+  offset: 1, 1
+  index: -1
+tx_6
+  rotate: false
+  xy: 180, 4
+  size: 172, 181
+  orig: 174, 183
+  offset: 1, 1
+  index: -1
+tx_7
+  rotate: false
+  xy: 2, 2
+  size: 176, 183
+  orig: 178, 185
+  offset: 1, 1
+  index: -1
+xingxing
+  rotate: false
+  xy: 2, 187
+  size: 470, 480
+  orig: 470, 480
+  offset: 0, 0
+  index: -1

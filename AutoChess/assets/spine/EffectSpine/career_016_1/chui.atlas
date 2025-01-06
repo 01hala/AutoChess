@@ -1,0 +1,13 @@
+
+chui.png
+size: 186,186
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+battle_icon_03
+  rotate: false
+  xy: 2, 7
+  size: 182, 177
+  orig: 187, 191
+  offset: 3, 3
+  index: -1

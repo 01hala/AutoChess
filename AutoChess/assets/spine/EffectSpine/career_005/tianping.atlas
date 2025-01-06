@@ -1,0 +1,27 @@
+
+tianping.png
+size: 898,898
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bai
+  rotate: true
+  xy: 463, 467
+  size: 429, 433
+  orig: 429, 433
+  offset: 0, 0
+  index: -1
+tp
+  rotate: false
+  xy: 463, 30
+  size: 431, 435
+  orig: 431, 435
+  offset: 0, 0
+  index: -1
+tpg
+  rotate: false
+  xy: 2, 432
+  size: 459, 464
+  orig: 459, 464
+  offset: 0, 0
+  index: -1

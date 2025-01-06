@@ -1,0 +1,69 @@
+
+sjg.png
+size: 166,166
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+daji
+  rotate: false
+  xy: 14, 66
+  size: 33, 98
+  orig: 33, 98
+  offset: 0, 0
+  index: -1
+sjgdaji_0
+  rotate: true
+  xy: 98, 9
+  size: 40, 66
+  orig: 42, 68
+  offset: 1, 1
+  index: -1
+sjgdaji_1
+  rotate: false
+  xy: 49, 88
+  size: 48, 76
+  orig: 50, 78
+  offset: 1, 1
+  index: -1
+sjgdaji_2
+  rotate: false
+  xy: 99, 51
+  size: 48, 66
+  orig: 50, 68
+  offset: 1, 1
+  index: -1
+sjgdaji_3
+  rotate: false
+  xy: 2, 4
+  size: 48, 58
+  orig: 50, 60
+  offset: 1, 1
+  index: -1
+sjgdaji_4
+  rotate: true
+  xy: 99, 119
+  size: 45, 51
+  orig: 47, 53
+  offset: 1, 1
+  index: -1
+sjgdaji_5
+  rotate: true
+  xy: 52, 2
+  size: 47, 44
+  orig: 49, 46
+  offset: 1, 1
+  index: -1
+sjgdaji_6
+  rotate: false
+  xy: 52, 54
+  size: 44, 32
+  orig: 46, 34
+  offset: 1, 1
+  index: -1
+xian
+  rotate: false
+  xy: 2, 64
+  size: 10, 100
+  orig: 10, 100
+  offset: 0, 0
+  index: -1

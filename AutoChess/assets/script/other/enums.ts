@@ -123,21 +123,28 @@ export enum CheckSkillEffectSp
     skill_0014="skill_0014",
     /** 受到虚弱效果 */
     skill_0015="skill_0015",
-    /**  */
+    /** 刺客领域 */
     skill_0016="skill_0016",
-    /**  */
+    /** 获得圣光 */
     skill_0017="skill_0017",
-    /**  */
+    /** 玻璃碎开（召唤物特效） */
     skill_0019="skill_0019",
-    /**  */
+    /** 刺客斩击 */
     skill_0023="skill_0023",
     /** 交换属性 */
     skill_0024="skill_0024",
-    /**  */
+    /** 减攻击力 */
     skill_0026="skill_0026",
     /** 圣光 */
     skill_0027="skill_0027",
 }
+
+/** 召唤出场 */
+export const skill_0001="skill_0001";
+/** 祭祀羁绊飞行物 */
+export const skill_0008_1="skill_0008_1";
+/** 巫师羁绊飞行物 */
+export const career_011="career_011";
 
 export enum BuffEffectSp
 {
@@ -147,6 +154,11 @@ export enum BuffEffectSp
     skill_0005="skill_0005",
     /** 减疗 */
     skill_0025="skill_0025",
+}
+
+export enum FettersSp
+{
+
 }
 
 export enum Language

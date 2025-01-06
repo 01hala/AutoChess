@@ -29,8 +29,6 @@ export class spEffectObj
     }
 }
 
-const OnRoleSummonEffectStr="skill_0001";
-
 /**
  * @class 角色特效类
  * @author Hotaru
@@ -73,14 +71,14 @@ export class SpEffectOnRole
 
         allAwait.push(new Promise<void>(async (resolve) =>
         {
-            let cfg = config.SpListConfig.get(OnRoleSummonEffectStr);
+            let cfg = config.SpListConfig.get(enums.skill_0001);
             if (!cfg) {
-                console.log("初始化特效类 get cfg faild:", OnRoleSummonEffectStr);
+                console.log("初始化特效类 get cfg faild:", enums.skill_0001);
                 resolve();
             }
             else {
                 //召唤出场特效
-                let address = "EffectSpine/" + OnRoleSummonEffectStr + "/" + cfg.path;
+                let address = "EffectSpine/" + enums.skill_0001 + "/" + cfg.path;
                 //console.log("出场特效文件路径：", address);
                 await loadAssets.LoadSkeletonData(address, (data) =>
                 {
@@ -189,22 +187,21 @@ export class SpEffectOnRole
             {
                 for(let t of this.roleSpCfg.OnSkill)
                 {
-                    if(!(t==="null"))
+                    let cfg = config.SpListConfig.get(t);
+                    if (!cfg)
                     {
-                        let cfg = config.SpListConfig.get(t);
-                        if (!cfg) {
-                            console.log("初始化特效类 get cfg faild:", t);
-                        }
-                        else {
-                            let address = "EffectSpine/" + t + "/" + cfg.path;
-                            await loadAssets.LoadSkeletonData(address, (data) =>
+                        this.onSkill.push(null);
+                    }
+                    else
+                    {
+                        let address = "EffectSpine/" + t + "/" + cfg.path;
+                        await loadAssets.LoadSkeletonData(address, (data) =>
+                        {
+                            if (data)
                             {
-                                if (data)
-                                {
-                                    this.onSkill.push(data);
-                                }
-                            });
-                        }
+                                this.onSkill.push(data);
+                            }
+                        });
                     }
                 }
                 resolve();
@@ -342,6 +339,7 @@ export class SpEffectOnRole
                     let node = new Node("OnSkillEffect");
                     node.layer=Layers.Enum.UI_2D;
                     let spEffect = node.addComponent(sp.Skeleton);
+                    spEffect.skeletonData = this.onSkill[_isFetter?1:0];
 
                     let style = 1;
                     switch (this.roleSpCfg.OnSkill[_isFetter?1:0])
@@ -696,21 +694,37 @@ export class SpEffectOnRole
      * @param _target 目标位置
      * @param _isGain 增益否
      */
-    public ProjectilesEffect(_self:Vec3,_target:Vec3,_isGain:boolean): Promise<void>
+    public ProjectilesEffect(_self:Vec3,_target:Vec3,_isGain:boolean, _style:number=0,fetter:number=0): Promise<void>
     {
         return new Promise((resolve)=>
         {
             try
             {
                 let str:string="";
-                if(_isGain)
+                if (0 == fetter)
                 {
-                    str=this.roleSpCfg.Projectiles[0]+"/"+config.SpListConfig.get(this.roleSpCfg.Projectiles[0]).path;
+                    if (_isGain)
+                    {
+                        str = this.roleSpCfg.Projectiles[0] + "/" + config.SpListConfig.get(this.roleSpCfg.Projectiles[0]).path;
+                    }
+                    else
+                    {
+                        str = this.roleSpCfg.Projectiles[1] + "/" + config.SpListConfig.get(this.roleSpCfg.Projectiles[1]).path;
+                    }
                 }
                 else
                 {
-                    str=this.roleSpCfg.Projectiles[1]+"/"+config.SpListConfig.get(this.roleSpCfg.Projectiles[1]).path;
+                    switch(fetter)
+                    {
+                        case 9:
+                            str=enums.career_011+"/"+config.SpListConfig.get(enums.career_011).path;
+                            break;
+                        case 10:
+                            str=enums.skill_0008_1+"/"+config.SpListConfig.get(enums.skill_0008_1).path;
+                            break;
+                    }
                 }
+                
                 let node = new Node("Projectiles");
                 node.layer=Layers.Enum.UI_2D;
                 if(singleton.netSingleton.battle)
@@ -725,7 +739,7 @@ export class SpEffectOnRole
                 node.setPosition(_self);
                 node.setScale(new Vec3(0.5,0.5,1));
 
-                node.addComponent(Bullet).Init(_target,str,_isGain).then(()=>
+                node.addComponent(Bullet).Init(_target,str,_isGain,_style).then(()=>
                 {
                     resolve();
                 });

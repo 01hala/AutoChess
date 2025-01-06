@@ -1,0 +1,55 @@
+
+up.png
+size: 701,701
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+UP 拷贝 17
+  rotate: false
+  xy: 413, 117
+  size: 137, 91
+  orig: 137, 91
+  offset: 0, 0
+  index: -1
+UP 拷贝 3
+  rotate: true
+  xy: 552, 75
+  size: 133, 88
+  orig: 133, 88
+  offset: 0, 0
+  index: -1
+niu_0
+  rotate: false
+  xy: 255, 100
+  size: 156, 108
+  orig: 156, 108
+  offset: 0, 0
+  index: -1
+niu_1
+  rotate: false
+  xy: 2, 2
+  size: 251, 206
+  orig: 251, 206
+  offset: 0, 0
+  index: -1
+niu_2
+  rotate: false
+  xy: 2, 210
+  size: 631, 489
+  orig: 631, 489
+  offset: 0, 0
+  index: -1
+图层 2
+  rotate: true
+  xy: 255, 44
+  size: 54, 94
+  orig: 54, 94
+  offset: 0, 0
+  index: -1
+图层 2 拷贝 5
+  rotate: true
+  xy: 413, 59
+  size: 56, 97
+  orig: 56, 97
+  offset: 0, 0
+  index: -1

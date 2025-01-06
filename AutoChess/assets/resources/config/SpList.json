@@ -35,14 +35,14 @@
         "Path": "shouji1",
         "Name": "受击"
     },
-    "7": {
-        "Id": 7,
+    "6_2": {
+        "Id": 62,
         "Key": "skill_0006_2",
         "Path": "shouji2",
         "Name": "受击"
     },
-    "8": {
-        "Id": 8,
+    "7": {
+        "Id": 7,
         "Key": "skill_0007",
         "Path": "flash",
         "Name": "技能发动"
@@ -61,164 +61,302 @@
     },
     "11": {
         "Id": 11,
+        "Key": "skill_0011",
+        "Path": "Luminous sphere",
+        "Name": "复制属性"
+    },
+    "12": {
+        "Id": 12,
+        "Key": "skill_0012",
+        "Path": "Character Frame",
+        "Name": "商店格提醒"
+    },
+    "13_1": {
+        "Id": 131,
         "Key": "skill_0013_1",
         "Path": "qian",
         "Name": "转移伤害"
     },
-    "12": {
-        "Id": 12,
+    "13_2": {
+        "Id": 132,
         "Key": "skill_0013_2",
         "Path": "hou",
         "Name": "抗伤"
     },
-    "13": {
-        "Id": 13,
+    "14": {
+        "Id": 14,
         "Key": "skill_0014",
         "Path": "change",
         "Name": "换位"
     },
-    "14": {
-        "Id": 14,
+    "15": {
+        "Id": 15,
         "Key": "skill_0015",
         "Path": "weak",
         "Name": "受到虚弱buff"
     },
-    "15": {
-        "Id": 15,
-        "Key": "skill_0016",
-        "Path": "window",
-        "Name": ""
-    },
     "16": {
         "Id": 16,
-        "Key": "skill_0017",
-        "Path": "star",
-        "Name": ""
+        "Key": "skill_0016",
+        "Path": "window",
+        "Name": "刺客领域"
     },
     "17": {
         "Id": 17,
-        "Key": "skill_0019",
-        "Path": "skeleton",
-        "Name": ""
+        "Key": "skill_0017",
+        "Path": "star",
+        "Name": "获得圣光"
     },
     "18": {
         "Id": 18,
-        "Key": "skill_0022",
-        "Path": "huoyan",
-        "Name": ""
+        "Key": "skill_0018",
+        "Path": "yanwu",
+        "Name": "商店格刷新"
     },
     "19": {
         "Id": 19,
-        "Key": "skill_0023",
-        "Path": "Slash",
-        "Name": ""
+        "Key": "skill_0019",
+        "Path": "skeleton",
+        "Name": "玻璃碎开（召唤物特效）"
     },
     "20": {
         "Id": 20,
+        "Key": "skill_0020",
+        "Path": "hanbingdan",
+        "Name": "全屏寒冰弹"
+    },
+    "21": {
+        "Id": 21,
+        "Key": "skill_0021",
+        "Path": "jinbi",
+        "Name": "家仆羁绊"
+    },
+    "22": {
+        "Id": 22,
+        "Key": "skill_0022",
+        "Path": "huoyan",
+        "Name": "护士大招"
+    },
+    "23": {
+        "Id": 23,
+        "Key": "skill_0023",
+        "Path": "Slash",
+        "Name": "刺客斩击"
+    },
+    "24": {
+        "Id": 24,
         "Key": "skill_0024",
         "Path": "change",
         "Name": "交换属性"
     },
-    "21": {
-        "Id": 21,
+    "25": {
+        "Id": 25,
         "Key": "skill_0025",
         "Path": "jianxue",
         "Name": "减疗"
     },
-    "22": {
-        "Id": 22,
+    "26": {
+        "Id": 26,
         "Key": "skill_0026",
         "Path": "Reduce attack",
-        "Name": ""
+        "Name": "减攻击力"
     },
-    "23": {
-        "Id": 23,
+    "27": {
+        "Id": 27,
         "Key": "skill_0027",
         "Path": "skeleton",
         "Name": "圣光"
     },
-    "24": {
-        "Id": 24,
-        "Key": "Luminous",
-        "Path": "Luminous sphere",
-        "Name": "增益光球"
-    },
-    "25": {
-        "Id": 25,
-        "Key": "FireBall",
+    "8": {
+        "Id": 8,
+        "Key": "skill_0008",
         "Path": "fire",
         "Name": "远程攻击火球"
     },
-    "26": {
-        "Id": 26,
-        "Key": "EnergyWaves",
+    "8_1": {
+        "Id": 81,
+        "Key": "skill_0008_1",
+        "Path": "greed fire",
+        "Name": "祭祀羁绊飞行物"
+    },
+    "8_2": {
+        "Id": 82,
+        "Key": "skill_0008_2",
         "Path": "skeleton",
         "Name": "远程攻击光波"
     },
-    "27": {
-        "Id": 27,
-        "Key": "Card",
-        "Path": "pai",
-        "Name": "远程攻击卡片"
-    },
-    "28": {
-        "Id": 28,
-        "Key": "Fist",
-        "Path": "skeleton",
-        "Name": "远程攻击拳头"
-    },
-    "29": {
-        "Id": 29,
-        "Key": "GreenFire",
-        "Path": "greed fire",
-        "Name": "远程攻击绿火"
-    },
-    "30": {
-        "Id": 30,
-        "Key": "MachineEagle",
+    "8_3": {
+        "Id": 83,
+        "Key": "skill_0008_3",
         "Path": "28",
         "Name": "远程攻击机器鹰"
     },
-    "31": {
-        "Id": 31,
-        "Key": "Magic",
-        "Path": "skeleton",
-        "Name": "远程攻击魔法"
+    "8_4": {
+        "Id": 84,
+        "Key": "skill_0008_4",
+        "Path": "pai",
+        "Name": "远程攻击卡片"
     },
-    "32": {
-        "Id": 32,
-        "Key": "Spear",
+    "8_5": {
+        "Id": 85,
+        "Key": "skill_0008_5",
+        "Path": "skeleton",
+        "Name": "远程攻击拳头"
+    },
+    "8_6": {
+        "Id": 86,
+        "Key": "skill_0008_6",
         "Path": "mao",
         "Name": "远程攻击长矛"
     },
+    "8_7": {
+        "Id": 87,
+        "Key": "skill_0008_7",
+        "Path": "feixingwu",
+        "Name": "远程增益魔法"
+    },
+    "8_8": {
+        "Id": 88,
+        "Key": "skill_0008_8",
+        "Path": "skeleton",
+        "Name": "远程攻击魔法"
+    },
+    "31": {
+        "Id": 31,
+        "Key": "career_001",
+        "Path": "cstb",
+        "Name": "厨师buff"
+    },
+    "32": {
+        "Id": 32,
+        "Key": "career_002",
+        "Path": "jianshen",
+        "Name": "健身"
+    },
     "33": {
         "Id": 33,
-        "Key": "skill_0020",
-        "Path": "hanbingdan",
-        "Name": "寒冰特效"
+        "Key": "career_003",
+        "Path": "up",
+        "Name": "狂战士buff（不知道采不采用）"
     },
     "34": {
         "Id": 34,
-        "Key": "Hti",
-        "Path": "shouji",
-        "Name": "角色撞击"
+        "Key": "career_004",
+        "Path": "moshushi",
+        "Name": "魔术师buff"
     },
     "35": {
         "Id": 35,
-        "Key": "jiesuan",
-        "Path": "skeleton",
-        "Name": "战斗结算胜负"
+        "Key": "career_005",
+        "Path": "tianping",
+        "Name": "审判官平分平分伤害"
     },
     "36": {
         "Id": 36,
-        "Key": "aixin",
-        "Path": "xin",
-        "Name": "战斗结算爱心"
+        "Key": "career_006",
+        "Path": "dt",
+        "Name": "打铁"
     },
     "37": {
         "Id": 37,
-        "Key": "mofazhen",
+        "Key": "career_007",
+        "Path": "hushi",
+        "Name": "护士治愈"
+    },
+    "38": {
+        "Id": 38,
+        "Key": "career_008",
+        "Path": "jinbi",
+        "Name": "出售中间人特效"
+    },
+    "39": {
+        "Id": 39,
+        "Key": "career_009",
+        "Path": "zd",
+        "Name": "炸弹"
+    },
+    "39_1": {
+        "Id": 391,
+        "Key": "career_009_1",
+        "Path": "bz",
+        "Name": "爆炸"
+    },
+    "40": {
+        "Id": 40,
+        "Key": "career_010",
         "Path": "magic",
-        "Name": "召唤魔法阵"
+        "Name": "魔法召唤阵"
+    },
+    "41": {
+        "Id": 41,
+        "Key": "career_011",
+        "Path": "bo",
+        "Name": "巫师羁绊飞行物"
+    },
+    "42": {
+        "Id": 42,
+        "Key": "career_012",
+        "Path": "di",
+        "Name": "机械类的召唤阵"
+    },
+    "43": {
+        "Id": 43,
+        "Key": "career_013",
+        "Path": "xunkongfazhen",
+        "Name": "道具召唤阵"
+    },
+    "44": {
+        "Id": 44,
+        "Key": "career_014",
+        "Path": "skeleton",
+        "Name": "道具盾特效"
+    },
+    "45": {
+        "Id": 45,
+        "Key": "career_015",
+        "Path": "sjg",
+        "Name": "双截棍打击"
+    },
+    "46": {
+        "Id": 46,
+        "Key": "career_016",
+        "Path": "nadi",
+        "Name": "牛奶特效"
+    },
+    "46_1": {
+        "Id": 461,
+        "Key": "career_016_1",
+        "Path": "chui",
+        "Name": "锤特效"
+    },
+    "46_2": {
+        "Id": 462,
+        "Key": "career_016_2",
+        "Path": "laba",
+        "Name": "喇叭特效"
+    },
+    "46_3": {
+        "Id": 463,
+        "Key": "career_016_3",
+        "Path": "lingdang",
+        "Name": "铃铛特效"
+    },
+    "46_4": {
+        "Id": 464,
+        "Key": "career_016_4",
+        "Path": "yaling",
+        "Name": "哑铃特效"
+    },
+    "51": {
+        "Id": 51,
+        "Key": "buff",
+        "Path": "buff",
+        "Name": "buff"
+    },
+    "52": {
+        "Id": 52,
+        "Key": "buff_2",
+        "Path": "buff",
+        "Name": "巫师buff"
     }
 }

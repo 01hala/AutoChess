@@ -14,7 +14,7 @@ import { netDriver } from '../../netDriver/netDriver';
 import { netGame } from '../../netDriver/netGame';
 import { hub_call_gate_reverse_reg_client_hub_rsp } from '../../serverSDK/gate';
 import { BundleManager } from '../../bundle/BundleManager';
-import { Bullet } from './Bullet';
+import { Bullet, BulletInfo } from './Bullet';
 import * as singleton from '../../netDriver/netSingleton';
 import { Fetters } from '../AutoChessBattle/common';
 import { config } from '../AutoChessBattle/config/config';
@@ -508,13 +508,16 @@ export class RoleDis extends Component
             let style = 1;
             if (!_isColony)
             {
+                if (0 == value[0] && value[1] != 0) style = 2;
                 if (value[0] != 0 && value[1] != 0) style = 1;
                 if (value[0] != 0 && 0 == value[1]) style = 5;
-                if (0 == value[0] && value[1] != 0) style = 2;
             }
             else
             {
-                style = 2;
+                if (0 == value[0] && value[1] != 0) style = 1;
+                if (value[0] != 0 && 0 == value[1]) style = 2;
+                if (value[0] != 0 && value[1] != 0) style = 3;
+                
             }
 
             let allAwait=[];
@@ -629,12 +632,12 @@ export class RoleDis extends Component
         });
     }
     /**
-     * -使用战斗技能表现-
+     * -使用技能表现-
      * @param _skill 技能
      * @author：Hotaru
      * @time 2024/08/24
      */
-    public async UseBattleSkill(_ev: skill.Event)
+    public async UseSkill(_ev: skill.Event)
     {
         let allAwait=[];
         allAwait.push(this.RoleSpEffect.UseSkillEffect());
@@ -646,9 +649,18 @@ export class RoleDis extends Component
      * @author：Hotaru
      * @time 2024/08/24
      */
-    public async OnSkill(_isFetter:boolean)
+    public async OnSkill(_isFetter:boolean,_obj?:any | BulletInfo)
     {
-        return this.RoleSpEffect.OnSkillEffect(_isFetter);
+        if(_obj && _obj as BulletInfo)
+        {
+            let bi:BulletInfo=_obj;
+            return this.UseProjectiles(bi.selfpos,bi.targetPos,bi.isGain,_isFetter,bi.style);
+        }
+        else
+        {
+            return this.RoleSpEffect.OnSkillEffect(_isFetter);
+        }
+        
     }
     /**
       * -交换属性-
@@ -731,9 +743,14 @@ export class RoleDis extends Component
      * @param _target 目标位置
      * @param _isGain 是否是增益效果
      */
-    public async UseProjectiles(_self: Vec3, _target: Vec3, _isGain: boolean)
+    public async UseProjectiles(_self: Vec3, _target: Vec3, _isGain: boolean , _isFetter:boolean , style?:number)
     {
-        return this.RoleSpEffect.ProjectilesEffect(_self, _target, _isGain);
+        let fetterID=0;
+        if(_isFetter)
+        {
+            fetterID = this.roleInfo.fetter.fetters_id;
+        }
+        return this.RoleSpEffect.ProjectilesEffect(_self, _target, _isGain , style ,fetterID);
     }
     /** 
      * -从配置文件加载-

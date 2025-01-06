@@ -1,0 +1,13 @@
+
+yaling.png
+size: 273,273
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+18哑铃
+  rotate: false
+  xy: 2, 91
+  size: 269, 180
+  orig: 284, 188
+  offset: 4, 4
+  index: -1

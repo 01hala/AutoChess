@@ -1,0 +1,62 @@
+
+xunkongfazhen.png
+size: 310,310
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+19神石
+  rotate: false
+  xy: 118, 2
+  size: 77, 56
+  orig: 77, 56
+  offset: 0, 0
+  index: -1
+fazhen01
+  rotate: false
+  xy: 2, 5
+  size: 101, 48
+  orig: 101, 48
+  offset: 0, 0
+  index: -1
+fazhen02
+  rotate: false
+  xy: 2, 171
+  size: 215, 137
+  orig: 215, 137
+  offset: 0, 0
+  index: -1
+fazhen03
+  rotate: true
+  xy: 219, 190
+  size: 118, 67
+  orig: 118, 67
+  offset: 0, 0
+  index: -1
+guangdian
+  rotate: false
+  xy: 118, 70
+  size: 99, 99
+  orig: 99, 99
+  offset: 0, 0
+  index: -1
+guangquan
+  rotate: false
+  xy: 2, 55
+  size: 114, 114
+  orig: 114, 114
+  offset: 0, 0
+  index: -1
+shenshi
+  rotate: true
+  xy: 219, 99
+  size: 89, 68
+  orig: 89, 68
+  offset: 0, 0
+  index: -1
+xian
+  rotate: true
+  xy: 118, 60
+  size: 8, 164
+  orig: 8, 164
+  offset: 0, 0
+  index: -1
