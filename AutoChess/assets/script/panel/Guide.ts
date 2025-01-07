@@ -63,6 +63,11 @@ export class Guide extends Component
             this.node.destroy();
         }, this);
     }
+
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
     
     public async Init(_step:common.GuideStep)
     {   

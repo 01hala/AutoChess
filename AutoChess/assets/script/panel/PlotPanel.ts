@@ -62,6 +62,11 @@ export class PlotPanel extends Component
         },this);
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     private LoadPlot(_id:number)
     {
         config.PlotConfig.forEach((value , key)=>

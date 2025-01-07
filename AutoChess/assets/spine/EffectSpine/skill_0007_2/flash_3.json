@@ -1,0 +1,148 @@
+{
+"skeleton": {
+	"hash": "AJwuBI3loKt6v0+RTL1+tSWvLZo",
+	"spine": "3.8.75",
+	"x": -182.75,
+	"y": -182.75,
+	"width": 365.49,
+	"height": 365.49,
+	"images": "",
+	"audio": "F:/自走棋/特效/技能发动时的闪光"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "light_2", "parent": "root", "scaleX": 0.3046, "scaleY": 0.3046 },
+	{ "name": "flash", "parent": "root" },
+	{ "name": "xing", "parent": "root" },
+	{ "name": "light", "parent": "root" }
+],
+"slots": [
+	{ "name": "light_2", "bone": "light_2", "attachment": "light_2", "blend": "additive" },
+	{ "name": "flash", "bone": "flash", "blend": "additive" },
+	{ "name": "xing", "bone": "xing", "attachment": "xing_00009", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"light_2": {
+				"light_2": { "width": 1200, "height": 1200 }
+			},
+			"xing": {
+				"xing_00000": { "width": 310, "height": 310 },
+				"xing_00001": { "width": 310, "height": 310 },
+				"xing_00002": { "width": 310, "height": 310 },
+				"xing_00003": { "width": 310, "height": 310 },
+				"xing_00004": { "width": 310, "height": 310 },
+				"xing_00005": { "width": 310, "height": 310 },
+				"xing_00006": { "width": 310, "height": 310 },
+				"xing_00007": { "width": 310, "height": 310 },
+				"xing_00008": { "width": 310, "height": 310 },
+				"xing_00009": { "width": 310, "height": 310 }
+			},
+			"flash": {
+				"flash_00000": { "width": 310, "height": 310 },
+				"flash_00001": { "width": 310, "height": 310 },
+				"flash_00002": { "width": 310, "height": 310 },
+				"flash_00003": { "width": 310, "height": 310 },
+				"flash_00004": { "width": 310, "height": 310 },
+				"flash_00005": { "width": 310, "height": 310 },
+				"flash_00006": { "width": 310, "height": 310 },
+				"flash_00007": { "width": 310, "height": 310 },
+				"flash_00008": { "width": 310, "height": 310 },
+				"flash_00009": { "width": 310, "height": 310 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"xing": {
+				"attachment": [
+					{ "name": "xing_00000" },
+					{ "time": 0.0667, "name": "xing_00001" },
+					{ "time": 0.1, "name": "xing_00002" },
+					{ "time": 0.1333, "name": "xing_00003" },
+					{ "time": 0.1667, "name": "xing_00004" },
+					{ "time": 0.2, "name": "xing_00005" },
+					{ "time": 0.2333, "name": "xing_00006" },
+					{ "time": 0.2667, "name": "xing_00007" },
+					{ "time": 0.3, "name": "xing_00008" },
+					{ "time": 0.3333, "name": "xing_00009" },
+					{ "time": 0.3667, "name": null }
+				]
+			},
+			"flash": {
+				"attachment": [
+					{ "name": "flash_00000" },
+					{ "time": 0.1, "name": "flash_00001" },
+					{ "time": 0.1333, "name": "flash_00002" },
+					{ "time": 0.1667, "name": "flash_00003" },
+					{ "time": 0.2, "name": "flash_00004" },
+					{ "time": 0.2333, "name": "flash_00005" },
+					{ "time": 0.2667, "name": "flash_00006" },
+					{ "time": 0.3, "name": "flash_00007" },
+					{ "time": 0.3333, "name": "flash_00008" },
+					{ "time": 0.3667, "name": "flash_00009" },
+					{ "time": 0.4, "name": null }
+				]
+			},
+			"light_2": {
+				"color": [
+					{ "time": 0.0667, "color": "ffffffff" },
+					{ "time": 0.2667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.0667, "name": "light_2" }
+				]
+			}
+		},
+		"bones": {
+			"light_2": {
+				"rotate": [
+					{ "time": 0.0667, "angle": -6.07 }
+				],
+				"scale": [
+					{ "time": 0.0667, "x": 0.729, "y": 0.729 },
+					{ "time": 0.1333, "x": 2.326, "y": 2.326 },
+					{ "time": 0.2667, "x": 3.249, "y": 3.249 }
+				]
+			},
+			"flash": {
+				"rotate": [
+					{ "time": 0.1, "angle": -45 }
+				],
+				"scale": [
+					{ "x": 0, "y": 0 },
+					{ "time": 0.0667, "x": 0.346, "y": 0.346 },
+					{ "time": 0.1, "x": 0.91, "y": 0.91 },
+					{ "time": 0.1333, "x": 1.244, "y": 1.244, "curve": "stepped" },
+					{ "time": 0.1667, "x": 1.244, "y": 1.244 },
+					{ "time": 0.2, "x": 1.344, "y": 1.344 },
+					{ "time": 0.2333, "x": 0.503, "y": 0.503 },
+					{ "time": 0.2667, "x": 0.555, "y": 0.555 },
+					{ "time": 0.4, "x": 0, "y": 0 }
+				]
+			},
+			"xing": {
+				"scale": [
+					{ "x": 0, "y": 0 },
+					{ "time": 0.1333 },
+					{ "time": 0.1667, "x": 0.546, "y": 0.546 },
+					{ "time": 0.3667, "x": 0, "y": 0 }
+				]
+			}
+		},
+		"drawOrder": [
+			{
+				"time": 0.0667,
+				"offsets": [
+					{ "slot": "light_2", "offset": 2 }
+				]
+			}
+		]
+	}
+}
+}

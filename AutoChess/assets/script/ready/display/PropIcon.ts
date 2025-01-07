@@ -77,6 +77,11 @@ export class PropIcon extends Component
         }
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     private checkPropType(propId:number) : PropsType {
         if (propId >= 1001 && propId <= 1999) {
             return PropsType.Food;

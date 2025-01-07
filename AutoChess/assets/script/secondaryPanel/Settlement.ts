@@ -61,6 +61,11 @@ export class Settlement extends Component
         });
         this.addTimeBoard.active=false;
     }
+
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
     
     private Init()
     {

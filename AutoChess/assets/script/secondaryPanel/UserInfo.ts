@@ -29,6 +29,10 @@ export class UserInfo extends Component
             this.Close();
         },this);
     }
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
 
     update(deltaTime: number) {
         

@@ -74,6 +74,11 @@ export class CoinDrop extends Component
             console.error("CoinDrop 下的 Drop 错误：",error);
         }
     }
+
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
 }
 
 

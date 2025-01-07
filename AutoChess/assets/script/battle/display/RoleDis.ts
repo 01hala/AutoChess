@@ -167,6 +167,11 @@ export class RoleDis extends Component
 
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     public async Refresh(roleInfo: Role, isnew?: boolean) 
     {
         return new Promise<void>(async (resolve, reject) =>
@@ -425,12 +430,12 @@ export class RoleDis extends Component
             {
                 hurtedTextAnim.resume();
                 hitAnim.resume();
-                
-                this.behurtedTextEffect.active = true;
-                
+                if(this.BeHurtedNum!=0)
+                {
+                    this.behurtedTextEffect.active = true;
+                }
                 hurtedTextAnim.play();
                 hitAnim.play();
-
             }).start();
         }
     }
@@ -439,8 +444,11 @@ export class RoleDis extends Component
     {
         try
         {
-            this.hurtedNum += _ev.value[0];
-            this.BeHurtedNum = this.hurtedNum;
+            if(_ev.value[0]!=0)
+            {
+                this.hurtedNum += _ev.value[0];
+                this.BeHurtedNum = this.hurtedNum;
+            }
             this.ShowHurtedTween();
             if(BattleEnums.EventType.AttackInjured == _ev.type && _ev.spellcaster.camp == BattleEnums.Camp.Self)
             {
@@ -702,7 +710,7 @@ export class RoleDis extends Component
         {
             await this.RoleSpEffect.CheckSkillEffect(new spEffectObj(key, null));
         }
-        await this.RoleSpEffect.UseBuffEffect(_buff);
+        await this.RoleSpEffect.BuffEffect(_buff);
     }
     /**
      * -转移伤害-
@@ -731,7 +739,7 @@ export class RoleDis extends Component
      */
     public async OnSummon()
     {
-        await this.RoleSpEffect.UseSummonEffect();
+        await this.RoleSpEffect.SummonEffect();
         this.roleSprite.node.active = true;
         this.atkText.node.active = true;
         this.hpText.node.active = true;

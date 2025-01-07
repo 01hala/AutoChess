@@ -80,6 +80,19 @@ export class ShopArea extends Component
         // this.node.getComponent(Widget).bottom = outPos.y;
     }
 
+    protected onDestroy(): void
+    {
+        for (let t of this.shopRoleNodes)
+        {
+            if (t) t.destroy();
+        }
+        for (let t of this.shopPropNodes)
+        {
+            if (t) t.destroy();
+        }
+        this.destroy();
+    }
+
     // destroy(): boolean
     // {
     //     try

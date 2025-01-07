@@ -106,6 +106,11 @@ export class CardEditor extends Component
         }
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
      private OnCheckToggleEvent(event: Event, customEventData: string)
         {
             try

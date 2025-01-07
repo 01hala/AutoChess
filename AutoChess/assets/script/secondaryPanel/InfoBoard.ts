@@ -49,6 +49,11 @@ export class InfoBoard extends Component
         });
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     Exit()
     {
         //this.simpleBoard.active=false;

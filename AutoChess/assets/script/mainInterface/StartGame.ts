@@ -84,6 +84,12 @@ export class StartGame extends Component
             console.error('StartGamePanel 下 start 错误 err: ',error);
         }
     }
+
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     //竞技模式窗口
     public OpenAthleticsWindow()
     {

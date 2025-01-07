@@ -95,6 +95,11 @@ export class RoleIcon extends Component
        }
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     // destroy(): boolean
     // {
     //     this.roleNode.destroy();

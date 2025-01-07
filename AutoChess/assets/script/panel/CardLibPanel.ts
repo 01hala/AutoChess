@@ -55,6 +55,11 @@ export class CardLibPanel extends Component
         }
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     public async OpenCardLib()
     {
         try

@@ -71,6 +71,11 @@ export class TaskLable extends Component
 
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     public async Init(_config:TaskConfig,_count:number, _status:AchievementAwardStatus,_achievement: Achievement,showComplete:(name:string,lable:string)=>void=null)
     {       
         try

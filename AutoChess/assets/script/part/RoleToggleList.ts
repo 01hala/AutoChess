@@ -44,6 +44,11 @@ export class RoleToggleList extends Component
         
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     public async Init(_cardEditor:CardEditor , _stageLv:number ,_pre:Prefab)
     {
         try

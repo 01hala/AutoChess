@@ -75,8 +75,8 @@ export class BattleDis
 
     public destory() 
     {
-        this.selfQueue.destroyRole();
-        this.enemyQueue.destroyRole();
+        this.selfQueue.destroy();
+        this.enemyQueue.destroy();
         this.panelNode.destroy();
     }
 
@@ -281,6 +281,39 @@ export class BattleDis
         })
     }
 
+    private shakeScreen(duration: number, magnitude: number) {
+        // 获取摄像机组件
+        // const cameraNode = this.panelNode.parent.getChildByName('Camera');
+        // if (!cameraNode) {
+        //     console.error('Camera node not found,shake screen failed');
+        //     return;
+        // }
+    
+        // 保存原始位置，以便震动后可以恢复
+    
+        // 震动效果
+        if(null==this.cameraNode) return;
+        let elapsed = 0;
+        const shake = () => {
+            if (elapsed < duration) {
+                // 随机确定摄像机震动的新位置
+                const randomX = Math.random() * magnitude * 2 - magnitude;
+                const randomY = Math.random() * magnitude * 2 - magnitude;
+                this.cameraNode.setPosition(this.originCameraPos.x + randomX, this.originCameraPos.y + randomY);
+    
+                // 更新已经过去的时间
+                elapsed += 0.05;
+                // 请求下一帧继续执行震动
+                requestAnimationFrame(shake);
+            } else {
+                // 震动结束，恢复摄像机的原始位置
+                this.cameraNode.setPosition(this.originCameraPos);
+            }
+        };
+    
+        // 开始震动
+        shake();
+    }
     /*
      * 
      * 以下为事件响应函数
@@ -337,47 +370,47 @@ export class BattleDis
             let enemyRoleNodeRoleDis:RoleDis = null;
             for(let ev of evs)
             {
-                if (BattleEnums.EventType.AttackInjured != ev.type)
+                if(BattleEnums.EventType.AttackInjured == ev.type || BattleEnums.EventType.TransferInjured)
                 {
-                    continue;
+                    evs_floating.push(ev);
                 }
-
-                evs_floating.push(ev);
-
-                if (BattleEnums.Camp.Self == ev.spellcaster.camp)
+                if (BattleEnums.EventType.AttackInjured == ev.type)
                 {
-                    if (!selfAttack)
-                    {
-                        for(let r of ev.recipient)
+                    if (BattleEnums.Camp.Self == ev.spellcaster.camp)
                         {
-                            if(this.battleCentre.GetEnemyTeam().GetRole(r.index).CheckDead())
+                            if (!selfAttack)
                             {
-                                // singleton.netSingleton.game.kill_Role_ntf(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
+                                for(let r of ev.recipient)
+                                {
+                                    if(this.battleCentre.GetEnemyTeam().GetRole(r.index).CheckDead())
+                                    {
+                                        // singleton.netSingleton.game.kill_Role_ntf(this.battleCentre.GetSelfTeam().GetRole(ev.spellcaster.index).c_role);
+                                    }
+                                }
+                                let roleNode = this.selfQueue.roleNodes[ev.spellcaster.index];
+                                if(roleNode)
+                                {
+                                    selfRoleNodeRoleDis = roleNode.getComponent(RoleDis);
+                                    if (selfRoleNodeRoleDis) {
+                                        selfAttack = true;
+                                    }
+                                }
                             }
                         }
-                        let roleNode = this.selfQueue.roleNodes[ev.spellcaster.index];
-                        if(roleNode)
+                        else if (BattleEnums.Camp.Enemy == ev.spellcaster.camp)
                         {
-                            selfRoleNodeRoleDis = roleNode.getComponent(RoleDis);
-                            if (selfRoleNodeRoleDis) {
-                                selfAttack = true;
+                            if (!enemyAttack)
+                            {
+                                let roleNode = this.enemyQueue.roleNodes[ev.spellcaster.index];
+                                if(roleNode)
+                                {
+                                    enemyRoleNodeRoleDis = roleNode.getComponent(RoleDis);
+                                    if (enemyRoleNodeRoleDis) {
+                                        enemyAttack = true;
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-                else if (BattleEnums.Camp.Enemy == ev.spellcaster.camp)
-                {
-                    if (!enemyAttack)
-                    {
-                        let roleNode = this.enemyQueue.roleNodes[ev.spellcaster.index];
-                        if(roleNode)
-                        {
-                            enemyRoleNodeRoleDis = roleNode.getComponent(RoleDis);
-                            if (enemyRoleNodeRoleDis) {
-                                enemyAttack = true;
-                            }
-                        }
-                    }
                 }
             }
             
@@ -475,40 +508,6 @@ export class BattleDis
         {
             console.error("BattleDis 下的 OnBehurted 错误 err:", error);
         }
-    }
-
-    private shakeScreen(duration: number, magnitude: number) {
-        // 获取摄像机组件
-        // const cameraNode = this.panelNode.parent.getChildByName('Camera');
-        // if (!cameraNode) {
-        //     console.error('Camera node not found,shake screen failed');
-        //     return;
-        // }
-    
-        // 保存原始位置，以便震动后可以恢复
-    
-        // 震动效果
-        if(null==this.cameraNode) return;
-        let elapsed = 0;
-        const shake = () => {
-            if (elapsed < duration) {
-                // 随机确定摄像机震动的新位置
-                const randomX = Math.random() * magnitude * 2 - magnitude;
-                const randomY = Math.random() * magnitude * 2 - magnitude;
-                this.cameraNode.setPosition(this.originCameraPos.x + randomX, this.originCameraPos.y + randomY);
-    
-                // 更新已经过去的时间
-                elapsed += 0.05;
-                // 请求下一帧继续执行震动
-                requestAnimationFrame(shake);
-            } else {
-                // 震动结束，恢复摄像机的原始位置
-                this.cameraNode.setPosition(this.originCameraPos);
-            }
-        };
-    
-        // 开始震动
-        shake();
     }
 
     //远程攻击技能
@@ -854,11 +853,11 @@ export class BattleDis
 
                 await this.CheckBeginBattle(evs);
                 await this.CheckSwapProperties(evs);
+                await this.CheckTransPosition(evs);
                 await this.CheckRemoteInjured(evs);
                 await this.CheckAddBuff(evs);
                 await this.CheckSummonEvent(evs);
                 await this.CheckAttGainEvent(evs);
-                await this.CheckTransPosition(evs);
                 if(this.selfParallelList.length > 0 || this.enemyParallelList.length > 0){
                     await Promise.all(this.selfParallelList);
                     await Promise.all(this.enemyParallelList);

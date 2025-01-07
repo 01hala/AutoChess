@@ -30,6 +30,10 @@ export class UpStage extends Component
             this.Exit();
         })
     }
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
 
     public async OpenUpStageBoard(_stage:number)
     {

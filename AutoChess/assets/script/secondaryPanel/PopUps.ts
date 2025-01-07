@@ -60,6 +60,11 @@ export class PopUps extends Component
         }
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     Close()
     {
         try

@@ -51,30 +51,40 @@ export class Bullet extends Component {
         this.isInit=false; 
     }
 
-    public Init(targetPos:Vec3 , _effect:string , isGain:boolean , _style:number):Promise<void>
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
+    public Init(_targetPos:Vec3 , _str:string , _isGain:boolean , _style:number , _isCopy?:boolean):Promise<void>
     {
         return new Promise<void>(async (resolve, reject) =>
         {
             this.skell=this.node.addComponent(sp.Skeleton);
-            this.LoadOnConfig(_effect).then(()=>
+            let effectStr=_str;
+            if(_isCopy)
+            {
+                effectStr="skill_0011/Luminous sphere";
+            }
+            this.LoadOnConfig(effectStr).then(()=>
             {
                 console.log("初始化子弹");
-                this.targetPos = targetPos;
+                this.targetPos = _targetPos;
                 this.isInit = true;
 
                 //设置旋转角度
-                let dir = new Vec2(targetPos.x - this.node.position.x, targetPos.y - this.node.position.y);
+                let dir = new Vec2(_targetPos.x - this.node.position.x, _targetPos.y - this.node.position.y);
                 let angle = dir.signAngle(new Vec2(1, 0)) * 180 / Math.PI;
                 this.node.setRotationFromEuler(new Vec3(0, 0, -angle));
 
                 let anims=this.skell.skeletonData.getAnimsEnum();
-                if(_style!=0 && isGain)
+                if(_style!=0 && _isGain)
                 {
                     this.skell.setAnimation(0, String(anims[_style]), true);
                 }
 
                 this.tAttack = tween(this.node)
-                    .to(0.5, { position: targetPos }).call(() => 
+                    .to(0.5, { position: _targetPos }).call(() => 
                     {
                         console.log("销毁子弹");
                         if (this.skell.skeletonData.name === "Luminous sphere")
@@ -107,10 +117,6 @@ export class Bullet extends Component {
             //     let anims = this.skell.skeletonData.getAnimsEnum();
             //     this.skell.setAnimation(0, String(anims[1]), true);
             // }
-           
-
-            
-
             console.log("初始化子弹完成");
         });
     }

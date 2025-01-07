@@ -295,16 +295,15 @@ export class SpEffectOnRole
                             {
                                 node.setPosition(new Vec3(-45,70,0));
                                 node.setScale(new Vec3(0.4, 0.4, 1));
-                                style=2;
                             }
                             break;
                     }
 
-                    spEffect.setAnimation(0, String(anim[style]), false);
+                    spEffect.setAnimation(0, String(anim[1]), false);
                     spEffect.setSkin("default");
                     spEffect.setCompleteListener((trackEntry) =>
                     {
-                        if (trackEntry.animation.name === String(anim[style]))
+                        if (trackEntry.animation.name === String(anim[1]))
                         {
                             node.destroy();
                             resolve();
@@ -524,7 +523,7 @@ export class SpEffectOnRole
      * 使用召唤出场特效
      * @returns 
      */
-    public UseSummonEffect(): Promise<void>
+    public SummonEffect(): Promise<void>
     {
         return new Promise((resolve) =>
         {
@@ -540,6 +539,7 @@ export class SpEffectOnRole
                 this.parent.getChildByPath("EffectSpine").addChild(node);
                 let spEffect = node.addComponent(sp.Skeleton);
                 spEffect.skeletonData = this.onSummon;
+                node.setScale(new Vec3(0.5,0.5,1));
                 let anim = this.onSummon.getAnimsEnum();
                 spEffect.setAnimation(0, String(anim[1]), false);
                 spEffect.setSkin("default");
@@ -564,7 +564,7 @@ export class SpEffectOnRole
      * @param _buff buff类型
      * @returns 
      */
-    public UseBuffEffect(_buff: BattleEnums.BufferType): Promise<void>
+    public BuffEffect(_buff: BattleEnums.BufferType): Promise<void>
     {
         return new Promise((resolve) =>
         {
@@ -737,7 +737,7 @@ export class SpEffectOnRole
                 }
 
                 node.setPosition(_self);
-                node.setScale(new Vec3(0.5,0.5,1));
+                //node.setScale(new Vec3(0.5,0.5,1));
 
                 node.addComponent(Bullet).Init(_target,str,_isGain,_style).then(()=>
                 {
@@ -746,7 +746,8 @@ export class SpEffectOnRole
             }
             catch(error)
             {
-                console.log("SpEffect 下的 UseProjectiles 错误: ",error)
+                console.error("SpEffect 下的 UseProjectiles 错误: ",error);
+                resolve();
             }
         });
     }

@@ -75,6 +75,11 @@ export class CardLibrary extends Component
         }
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     public Exit()
     {
         this.RemoveAll();
