@@ -15,7 +15,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;career_003",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100003": {
         "Id": 100003,
@@ -33,7 +33,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;career_007",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100005": {
         "Id": 100005,
@@ -50,8 +50,8 @@
         "intensifierColony": "skill_0010",
         "Admission": "null",
         "UseSkill": "null",
-        "OnSkill": "skill_0001;career_010",
-        "Projectiles": "Luminous;FireBall"
+        "OnSkill": "skill_0001;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100007": {
         "Id": 100007,
@@ -59,8 +59,8 @@
         "intensifierColony": "skill_0010",
         "Admission": "null",
         "UseSkill": "null",
-        "OnSkill": "skill_0001;career_010",
-        "Projectiles": "Luminous;FireBall"
+        "OnSkill": "skill_0001;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100008": {
         "Id": 100008,
@@ -69,7 +69,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;career_0012",
-        "Projectiles": "skill_0011;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100009": {
         "Id": 100009,
@@ -95,8 +95,8 @@
         "intensifierColony": "skill_0010",
         "Admission": "null",
         "UseSkill": "skill_0006",
-        "OnSkill": "null;career_0012",
-        "Projectiles": "Luminous;FireBall"
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100012": {
         "Id": 100012,
@@ -114,7 +114,7 @@
         "Admission": "null",
         "UseSkill": "skill_0006",
         "OnSkill": "skill_0002;career_001",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100014": {
         "Id": 100014,
@@ -132,7 +132,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;career_009",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100016": {
         "Id": 100016,
@@ -140,8 +140,8 @@
         "intensifierColony": "skill_0010",
         "Admission": "null",
         "UseSkill": "null",
-        "OnSkill": "skill_0019;career_010",
-        "Projectiles": "Luminous;FireBall"
+        "OnSkill": "skill_0019;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100017": {
         "Id": 100017,
@@ -149,7 +149,7 @@
         "intensifierColony": "skill_0010",
         "Admission": "null",
         "UseSkill": "null",
-        "OnSkill": "skill_0012;null",
+        "OnSkill": "null;null",
         "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100018": {
@@ -159,7 +159,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0012;career_004",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100019": {
         "Id": 100019,
@@ -168,7 +168,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0005;career_005",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100020": {
         "Id": 100020,
@@ -186,7 +186,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;career_0012",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100022": {
         "Id": 100022,
@@ -195,7 +195,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;career_007",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100023": {
         "Id": 100023,
@@ -213,7 +213,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0021;career_008",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100025": {
         "Id": 100025,
@@ -222,7 +222,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0020;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100026": {
         "Id": 100026,
@@ -231,7 +231,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;career_002",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100027": {
         "Id": 100027,
@@ -258,7 +258,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0013;career_005",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100030": {
         "Id": 100030,
@@ -276,7 +276,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0021;career_008",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100032": {
         "Id": 100032,
@@ -303,7 +303,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0021;skill_0021",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100035": {
         "Id": 100035,
@@ -321,7 +321,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0021;skill_0021",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100037": {
         "Id": 100037,
@@ -339,7 +339,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0014;career_004",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100039": {
         "Id": 100039,
@@ -348,7 +348,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0014;career_004",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100040": {
         "Id": 100040,
@@ -357,7 +357,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0022;career_007",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100041": {
         "Id": 100041,
@@ -384,7 +384,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;career_006",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100044": {
         "Id": 100044,
@@ -411,7 +411,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;career_008",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100047": {
         "Id": 100047,
@@ -420,7 +420,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0021;career_008",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100048": {
         "Id": 100048,
@@ -429,7 +429,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0021;skill_0021",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100049": {
         "Id": 100049,
@@ -438,7 +438,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;skill_0021",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100050": {
         "Id": 100050,
@@ -447,7 +447,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;career_010",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100051": {
         "Id": 100051,
@@ -456,7 +456,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0011;career_004",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100052": {
         "Id": 100052,
@@ -465,7 +465,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;career_0012",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100053": {
         "Id": 100053,
@@ -474,7 +474,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;career_006",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100054": {
         "Id": 100054,
@@ -483,7 +483,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0015;career_006",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100055": {
         "Id": 100055,
@@ -492,7 +492,7 @@
         "Admission": "null",
         "UseSkill": "skill_0006",
         "OnSkill": "skill_0024;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100056": {
         "Id": 100056,
@@ -501,7 +501,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0023;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100057": {
         "Id": 100057,
@@ -510,7 +510,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0016;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100058": {
         "Id": 100058,
@@ -519,7 +519,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100059": {
         "Id": 100059,
@@ -528,7 +528,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0018;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100060": {
         "Id": 100060,
@@ -537,7 +537,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0025;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100061": {
         "Id": 100061,
@@ -546,7 +546,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "skill_0018;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100062": {
         "Id": 100062,
@@ -555,7 +555,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0001;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100063": {
         "Id": 100063,
@@ -564,7 +564,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100064": {
         "Id": 100064,
@@ -573,7 +573,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0026;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100065": {
         "Id": 100065,
@@ -582,7 +582,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0008;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100066": {
         "Id": 100066,
@@ -591,7 +591,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0026;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100067": {
         "Id": 100067,
@@ -600,7 +600,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0001;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100068": {
         "Id": 100068,
@@ -609,7 +609,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100069": {
         "Id": 100069,
@@ -618,7 +618,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0001;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100070": {
         "Id": 100070,
@@ -627,7 +627,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100071": {
         "Id": 100071,
@@ -636,7 +636,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0017;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100072": {
         "Id": 100072,
@@ -645,7 +645,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_0027;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100073": {
         "Id": 100073,
@@ -654,7 +654,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100074": {
         "Id": 100074,
@@ -663,7 +663,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100075": {
         "Id": 100075,
@@ -690,7 +690,7 @@
         "Admission": "null",
         "UseSkill": "skill_0007",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100078": {
         "Id": 100078,
@@ -699,7 +699,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "skill_002;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200001": {
         "Id": 200001,
@@ -708,7 +708,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200002": {
         "Id": 200002,
@@ -717,7 +717,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200003": {
         "Id": 200003,
@@ -726,7 +726,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200004": {
         "Id": 200004,
@@ -735,7 +735,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200005": {
         "Id": 200005,
@@ -744,7 +744,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200006": {
         "Id": 200006,
@@ -753,7 +753,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200007": {
         "Id": 200007,
@@ -762,7 +762,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200008": {
         "Id": 200008,
@@ -771,7 +771,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200009": {
         "Id": 200009,
@@ -780,7 +780,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200010": {
         "Id": 200010,
@@ -789,7 +789,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200011": {
         "Id": 200011,
@@ -798,7 +798,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200012": {
         "Id": 200012,
@@ -807,7 +807,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200013": {
         "Id": 200013,
@@ -816,7 +816,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200014": {
         "Id": 200014,
@@ -825,7 +825,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200015": {
         "Id": 200015,
@@ -834,7 +834,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200016": {
         "Id": 200016,
@@ -843,7 +843,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200017": {
         "Id": 200017,
@@ -852,7 +852,7 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "200018": {
         "Id": 200018,
@@ -861,6 +861,6 @@
         "Admission": "null",
         "UseSkill": "null",
         "OnSkill": "null;null",
-        "Projectiles": "Luminous;FireBall"
+        "Projectiles": "skill_0008_7;skill_0008"
     }
 }
