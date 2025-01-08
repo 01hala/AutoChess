@@ -38,6 +38,11 @@ export class AchievePanel extends Component
         },this);
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     private async Load()
     {
         this.lablePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","TaskLabel") as Prefab;

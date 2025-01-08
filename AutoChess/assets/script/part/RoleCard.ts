@@ -139,6 +139,11 @@ export class RoleCard extends Component
         this.unlockBtn.getComponent(Button).enabled=false;
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     public Init(_id:number):Promise<void>
     {
         return new Promise(async(resolve)=>

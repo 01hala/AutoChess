@@ -28,8 +28,11 @@ export class QuestPanel extends Component
             singleton.netSingleton.mainInterface.panelNode.active = true;
             this.Exit();
         })
+    }
 
-       
+    protected onDestroy(): void
+    {
+        this.destroy();
     }
 
     public Exit()

@@ -63,6 +63,11 @@ export class TaskAchieve extends Component
         this.Init();
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     private Init()
     {
         try

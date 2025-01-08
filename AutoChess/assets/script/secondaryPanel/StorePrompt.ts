@@ -21,6 +21,10 @@ export class StorePrompt extends Component
         this.Init();
         this.viewContent=this.node.getChildByPath("ScrollView/view/content");
     }
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
 
     private async Init()
     {

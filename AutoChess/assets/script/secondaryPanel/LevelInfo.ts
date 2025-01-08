@@ -56,6 +56,11 @@ export class LevelInfo extends Component
         },this);
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     // destroy(): boolean
     // {
     //     for (let t of this.enemyLayout.children)

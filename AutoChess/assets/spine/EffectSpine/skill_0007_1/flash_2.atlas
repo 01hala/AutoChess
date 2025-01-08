@@ -1,0 +1,34 @@
+
+flash_2.png
+size: 1380,1380
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bo
+  rotate: false
+  xy: 595, 938
+  size: 440, 440
+  orig: 440, 440
+  offset: 0, 0
+  index: -1
+flash_00000
+  rotate: false
+  xy: 283, 1068
+  size: 310, 310
+  orig: 310, 310
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 2, 1099
+  size: 279, 279
+  orig: 279, 279
+  offset: 0, 0
+  index: -1
+light_2
+  rotate: false
+  xy: 2, 2
+  size: 953, 934
+  orig: 1200, 1200
+  offset: 126, 126
+  index: -1

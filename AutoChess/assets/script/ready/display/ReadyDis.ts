@@ -691,7 +691,7 @@ export class ReadyDis
                             let target = this.roleArea.rolesNode[i]
                             let targetpos = singleton.netSingleton.ready.panelNode.getComponent(UITransform).convertToNodeSpaceAR(target.getWorldPosition());
                             
-                            self.getComponent(RoleDis).UseProjectiles(selfpos, targetpos, true).then(async () =>
+                            self.getComponent(RoleDis).UseProjectiles(selfpos, targetpos, true ,false).then(async () =>
                             {
                                 target.getComponent(RoleDis).Intensifier(_effect.value, true);
                             });

@@ -30,12 +30,13 @@ export class Queue extends Component
     //角色列表（站位和下标对应）
     public roleNodes:Node[] = [null, null, null, null, null, null];
 
-    start() 
+    protected onDestroy(): void
     {
-
+        this.DestroyRole();
+        this.destroy();
     }
 
-    destroyRole()
+    private DestroyRole()
     {
         try
         {
@@ -66,7 +67,7 @@ export class Queue extends Component
  * 2023/10/31
  * 生成角色
  */
-    SpawnRole(r:role.Role):Promise<Node>
+    public SpawnRole(r:role.Role):Promise<Node>
     {
         return new Promise (async (resolve)=>
         {
@@ -103,7 +104,7 @@ export class Queue extends Component
  * 2024/1/30
  * 召唤角色
  */
-    async SummonRole(r:role.Role[],spellcaster:RoleInfo)
+    public async SummonRole(r:role.Role[],spellcaster:RoleInfo)
     {
         return new Promise<void>(async (resolve, reject) =>
         {
@@ -154,7 +155,7 @@ export class Queue extends Component
  * 2023/10/31
  * 战斗开始初始化角色
  */
-    async InitRole(r:role.Role[])
+    public async InitRole(r:role.Role[])
     {
         try
         {
@@ -182,7 +183,7 @@ export class Queue extends Component
         }
     }
 
-    async Shiftdis(r:role.Role[])
+    public async Shiftdis(r:role.Role[])
     {
         try
         {
@@ -199,7 +200,7 @@ export class Queue extends Component
        }
     }
 
-    async RemoveRole(index:number)
+    public async RemoveRole(index:number)
     {
         try
         {
@@ -225,7 +226,7 @@ export class Queue extends Component
      * @param _indexValue 目标位置
      * @returns 
      */
-    async SwitchRolePos(_recipient:RoleInfo[] , _indexValue:number[]):Promise<void>
+    public async SwitchRolePos(_recipient:RoleInfo[] , _indexValue:number[]):Promise<void>
     {
         return new Promise(async (resolve)=>
         {

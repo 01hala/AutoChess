@@ -25,12 +25,12 @@ export class SkillDis
         this.index = _index;
     }
 
-    async Init()
+    public async Init()
     {
 
     }
 
-    UseSkill(_ev: skill.Event): Promise<void>
+    public UseSkill(_ev: skill.Event): Promise<void>
     {
         return new Promise(async (resolve) =>
         {
@@ -65,12 +65,12 @@ export class SkillDis
                 case BattleEnums.EventType.AddBuff:
                 case BattleEnums.EventType.GiveShields:
                     {
-                        this.AddBuff(_ev);
+                        await this.AddBuff(_ev);
                     }
                     break;
                 case BattleEnums.EventType.SubstituteDamage:
                     {
-                        this.SubstituteDamage(_ev);
+                        await this.SubstituteDamage(_ev);
                     }
                     break;
             }

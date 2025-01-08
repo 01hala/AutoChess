@@ -27,17 +27,24 @@ export class RoleArea extends Component
         }
     }
 
+    protected onDestroy(): void
+    {
+        
+        for(let t of this.rolesNode)
+        {
+            if (t)
+            {
+                t.destroy();
+            }
+        }
+        this.destroy();
+    }
+
     // destroy(): boolean
     // {
     //     try
     //     {
-    //         for(let t of this.rolesNode)
-    //         {
-    //             if(t)
-    //             {
-    //                 t.destroy();
-    //             }
-    //         }
+    //         
     //     }
     //     catch(err)
     //     {

@@ -50,6 +50,11 @@ export class RankList extends Component
         this.listStartY=this.listcontent.position.y;
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     private async Init()
     {
         this.RegCallBack();

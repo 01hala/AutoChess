@@ -33,6 +33,11 @@ export class ChooseTag extends Component
         this.tagnodes=[this.tag_1,this.tag_2,this.tag_3];
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     Init()
     {
         this.tag_1.on(Button.EventType.CLICK, () =>

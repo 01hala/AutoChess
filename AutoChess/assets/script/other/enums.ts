@@ -137,6 +137,24 @@ export enum CheckSkillEffectSp
     skill_0026="skill_0026",
     /** 圣光 */
     skill_0027="skill_0027",
+    /** 护士治愈 */
+    career_007="career_007",
+    /** 炸弹爆炸 */
+    career_009="career_009",
+    /** 审判官平分平分伤害 */
+    career_005="career_005",
+    /** 厨师 */
+    career_001="career_001",
+    /** 健身 */
+    career_002="career_002",
+    /** 狂战士 */
+    career_003="career_003",
+    /** 魔术师 */
+    career_004="career_004",
+    /** 打铁 */
+    career_006="career_006",
+    /** 家仆羁绊 */
+    skill_0021="skill_0021",
 }
 
 /** 召唤出场 */
@@ -154,11 +172,8 @@ export enum BuffEffectSp
     skill_0005="skill_0005",
     /** 减疗 */
     skill_0025="skill_0025",
-}
-
-export enum FettersSp
-{
-
+    /** 减攻击力 */
+    skill_0026="skill_0026",
 }
 
 export enum Language

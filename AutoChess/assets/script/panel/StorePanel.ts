@@ -81,6 +81,11 @@ export class StorePanel extends Component
         }
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
     public Exit()
     {
         this.ClearPageView();

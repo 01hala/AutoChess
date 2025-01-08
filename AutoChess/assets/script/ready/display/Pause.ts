@@ -43,6 +43,11 @@ export class Pause extends Component
         });
     }
 
+    protected onDestroy(): void
+    {
+        this.destroy();
+    }
+
    public Open()
    {    
         this.node.setSiblingIndex(110);
