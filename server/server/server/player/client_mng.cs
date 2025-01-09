@@ -50,7 +50,7 @@ namespace Player
         public long PeakStrengthID = 0;
 
         public battle_shop_player battleShopPlayer;
-        public PVELevelConfig PVELevelCfg;
+        public PVELevelConfig pveLevelCfg;
 
         public battle_shop_player TmpBattleShopPlayer;
         public PVELevelConfig TmpPVELevelCfg;
@@ -1175,7 +1175,7 @@ namespace Player
 
         public int GetStage()
         {
-            var PVELevelCfgImpl = PVELevelCfg;
+            var PVELevelCfgImpl = pveLevelCfg;
             var PVELevelIndex = info.PVELevelIndex;
             if (TmpPVELevelCfg != null)
             {
@@ -1195,16 +1195,18 @@ namespace Player
         public void ClearPVEState()
         {
             battleShopPlayer = null;
-            PVELevelCfg = null;
+            pveLevelCfg = null;
             info.PVELevelIndex = 0;
         }
 
         public void StartPVERound(int addCoin)
         {
             var BattleShopPlayerImpl = battleShopPlayer;
+            var PVELevelCfg = pveLevelCfg;
             if (TmpBattleShopPlayer != null)
             {
                 BattleShopPlayerImpl = TmpBattleShopPlayer;
+                PVELevelCfg = TmpPVELevelCfg;
             }
 
             foreach (var r in BattleShopPlayerImpl.BattleData.RoleList)
@@ -1281,10 +1283,10 @@ namespace Player
                     return Tuple.Create(em_error.last_quest, new List<int>());
                 }
 
-                PVELevelCfg = cfg;
+                pveLevelCfg = cfg;
                 if (info.PVELevelIndex == 0)
                 {
-                    battleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
+                    battleShopPlayer.BattleData.faild = pveLevelCfg.Hp;
                     StartPVERound(0);
                 }
                 if (battleShopPlayer.ShopData.SaleRoleList.Count == 0 || battleShopPlayer.ShopData.SalePropList.Count == 0)
@@ -1296,7 +1298,7 @@ namespace Player
                 if (!isQuestEvent)
                 {
                     Log.Log.trace("PVELevelConfigs TryGetValue info.PVELevelIndex:{0}", info.PVELevelIndex);
-                    if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var rcfg))
+                    if (config.Config.PVERoundConfigs.TryGetValue(pveLevelCfg.Level[info.PVELevelIndex], out var rcfg))
                     {
                         return Tuple.Create(em_error.success, rcfg.EventID);
                     }
@@ -1309,7 +1311,7 @@ namespace Player
 
         public Tuple<em_error, List<int>> StartQuestReady1(int quest, string _clientUUID, battle_client_caller battleClientCaller)
         {
-            if (TmpBattleShopPlayer != null)
+            if (TmpBattleShopPlayer == null || quest != TmpPVELevelCfg.ID)
             {
                 TmpBattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
             }
@@ -1326,7 +1328,7 @@ namespace Player
                 TmpPVELevelCfg = cfg;
                 if (TmpPVELevelIndex == 0)
                 {
-                    TmpBattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
+                    TmpBattleShopPlayer.BattleData.faild = TmpPVELevelCfg.Hp;
                     StartPVERound(0);
                 }
                 if (TmpBattleShopPlayer.ShopData.SaleRoleList.Count == 0 || TmpBattleShopPlayer.ShopData.SalePropList.Count == 0)
@@ -1382,7 +1384,7 @@ namespace Player
 
         public UserBattleData StartQuestBattle()
         {
-            var PVELevelCfgImpl = PVELevelCfg;
+            var PVELevelCfgImpl = pveLevelCfg;
             var PVELevelIndex = info.PVELevelIndex;
             if (TmpBattleShopPlayer != null)
             {

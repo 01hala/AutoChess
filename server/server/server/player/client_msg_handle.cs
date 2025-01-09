@@ -63,7 +63,7 @@ namespace Player
 
             try
             {
-                var rsp = player_quest_Module.rsp as player_quest_start_quest_shop_ready_rsp;
+                var rsp = player_quest_Module.rsp as player_quest_start_quest_shop_ready1_rsp;
                 var uuid = Hub.Hub._gates.current_client_uuid;
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 if (_avatar != null)
@@ -73,7 +73,7 @@ namespace Player
                     Log.Log.trace("on_start_quest_ready quest:{2} err:{0} eventId List:{1}", err, eventIdList, _data.Data.Info().quest);
                     if (err == em_error.success)
                     {
-                        Log.Log.trace("on_start_quest_ready eventId List:{0}", eventIdList.ToJson());
+                        Log.Log.trace("on_start_quest_ready eventId List:{0} _data.Data.TmpBattleShopPlayer:{1}", eventIdList.ToJson(), _data.Data.TmpBattleShopPlayer.ToJson());
                         rsp.rsp(_data.Data.TmpBattleShopPlayer.BattleData, _data.Data.TmpBattleShopPlayer.ShopData, eventIdList);
                     }
                     else
@@ -206,7 +206,7 @@ namespace Player
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
 
                     var BattleShopPlayer = _data.Data.battleShopPlayer;
-                    var PVELevelCfgImpl = _data.Data.PVELevelCfg;
+                    var PVELevelCfgImpl = _data.Data.pveLevelCfg;
                     var PVELevelIndexImpl = _data.Data.Info().PVELevelIndex;
                     if (_data.Data.TmpBattleShopPlayer != null)
                     {
@@ -250,10 +250,15 @@ namespace Player
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
 
                     var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    var pveLevelCfg = _data.Data.pveLevelCfg;
+                    var PVELevelIndex = _data.Data.Info().PVELevelIndex;
                     if (_data.Data.TmpBattleShopPlayer != null)
                     {
                         BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                        pveLevelCfg = _data.Data.TmpPVELevelCfg;
+                        PVELevelIndex = _data.Data.TmpPVELevelIndex;
                     }
+
                     BattleShopPlayer.lastBattleResults = is_victory;
                     if (is_victory == BattleVictory.faild)
                     {
@@ -262,10 +267,13 @@ namespace Player
 
                     if (BattleShopPlayer.BattleData.faild > 0)
                     {
-                        _data.Data.Info().PVELevelIndex++;
-                        if (_data.Data.Info().PVELevelIndex >= _data.Data.PVELevelCfg.Level.Count)
+                        PVELevelIndex++;
+                        if (PVELevelIndex >= pveLevelCfg.Level.Count)
                         {
-                            _data.Data.Info().quest++;
+                            if (_data.Data.TmpBattleShopPlayer == null)
+                            {
+                                _data.Data.Info().quest++;
+                            }
 
                             if (!_data.Data.CheckFinishPVELevel())
                             {
@@ -287,6 +295,15 @@ namespace Player
                     {
                         rsp.rsp(em_quest_state.faild);
                         _data.Data.ClearPVEState();
+                    }
+
+                    if (_data.Data.TmpBattleShopPlayer != null)
+                    {
+                        _data.Data.TmpPVELevelIndex = PVELevelIndex;
+                    }
+                    else
+                    {
+                        _data.Data.Info().PVELevelIndex = PVELevelIndex;
                     }
 
                     _data.Data.isQuestEvent = false;
