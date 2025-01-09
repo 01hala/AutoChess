@@ -1,5 +1,4 @@
 import { _decorator, BlockInputEvents, Button, Camera, Component, EventTouch, instantiate, Node, RichText, tween, Tween, UITransform, Vec3 } from 'cc';
-import { SendEvent } from '../other/MessageEvent';
 import { GameManager } from '../other/GameManager';
 import { ShopArea } from '../ready/display/ShopArea';
 import { RoleArea } from '../ready/display/RoleArea';
@@ -79,14 +78,12 @@ export class Guide extends Component
     
     public async Init(_step:common.GuideStep)
     {   
-        // this.step = _step + 1;
+        this.step = _step;
         // this.next = _step;
-
         // this.end = common.GuideStep.Done;
-
         // this.node.setSiblingIndex(101);
-
         // this.StartGuide();
+        this.CheckGuide();
     }
 
     private OnTouch(event:EventTouch)

@@ -362,7 +362,7 @@ export class GameManager extends Component
         gnode.setParent(this.node);
         this.guide=gnode.getComponent(Guide);
 
-        //this.guide.Init(_step);
+        this.guide.Init(_step);
         this.OnGuideListening();
     }
 
