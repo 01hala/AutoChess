@@ -52,6 +52,10 @@ namespace Player
         public battle_shop_player BattleShopPlayer;
         public PVELevelConfig PVELevelCfg;
 
+        public battle_shop_player TmpBattleShopPlayer;
+        public PVELevelConfig TmpPVELevelCfg;
+        public int TmpPVELevelIndex;
+
         public static string Type()
         {
             return "player_info";
@@ -1229,7 +1233,7 @@ namespace Player
             BattleShopPlayer.do_skill(GetStage());
         }
 
-        public Tuple<bool, List<int>> StartQuestReady(string _clientUUID, battle_client_caller battleClientCaller)
+        public Tuple<em_error, List<int>> StartQuestReady(int quest, string _clientUUID, battle_client_caller battleClientCaller)
         {
             if (BattleShopPlayer == null)
             {
@@ -1244,6 +1248,11 @@ namespace Player
             if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
             {
                 Log.Log.trace("PVELevelConfigs TryGetValue quest:{0}", info.quest);
+
+                if (cfg.Level.Count <= 0)
+                {
+                    return Tuple.Create(em_error.last_quest, new List<int>());
+                }
 
                 PVELevelCfg = cfg;
                 if (info.PVELevelIndex == 0)
@@ -1262,13 +1271,13 @@ namespace Player
                     Log.Log.trace("PVELevelConfigs TryGetValue info.PVELevelIndex:{0}", info.PVELevelIndex);
                     if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var rcfg))
                     {
-                        return Tuple.Create(true, rcfg.EventID);
+                        return Tuple.Create(em_error.success, rcfg.EventID);
                     }
                 }
-                return Tuple.Create(true, new List<int>());
+                return Tuple.Create(em_error.success, new List<int>());
             }
 
-            return Tuple.Create(false, new List<int>());
+            return Tuple.Create(em_error.not_exist_quest, new List<int>());
         }
 
         public void StartQuestShop(int eventid)
