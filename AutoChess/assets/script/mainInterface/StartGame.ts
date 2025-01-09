@@ -97,11 +97,9 @@ export class StartGame extends Component
         {
             if(GameManager.Instance.guide)
             {
-                GameManager.Instance.guide.next=common.GuideStep.ClickMatch;
-
                 this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    
+                    GameManager.Instance.guide.next=common.GuideStep.ClickMatch;
                 });
             }
             this.amusementWindow.active=false;
@@ -311,6 +309,7 @@ export class StartGame extends Component
                 });
                 this.amusementWindow.getComponent(Animation).play("PanelDisappear");
             }
+            singleton.netSingleton.mainInterface.activity=true;
         }
         catch(error)
         {

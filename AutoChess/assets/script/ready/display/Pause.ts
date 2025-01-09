@@ -22,11 +22,11 @@ export class Pause extends Component
             AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
             if (enmus.GameMode.PVE == singleton.netSingleton.ready.readyData.gameMode)
             {
-                singleton.netSingleton.ready.father.getComponent(login).BackMainInterface("VenturePanel");
+                singleton.netSingleton.ready.parent.getComponent(login).BackMainInterface("VenturePanel");
             }
             else
             {
-                singleton.netSingleton.ready.father.getComponent(login).BackMainInterface();
+                singleton.netSingleton.ready.parent.getComponent(login).BackMainInterface();
             }
 
         });
@@ -34,6 +34,7 @@ export class Pause extends Component
         {
             this.board.getComponent(Animation).on(Animation.EventType.FINISHED, () =>
             {
+                singleton.netSingleton.ready.activity=true;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 this.board.active = false;
                 this.node.active = false;

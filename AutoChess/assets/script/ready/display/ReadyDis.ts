@@ -31,7 +31,7 @@ const { ccclass, property } = _decorator;
 export class ReadyDis 
  {
     //父节点
-    public father:Node;
+    public parent:Node;
     //界面
     public panelNode:Node;
     //操作界面
@@ -62,6 +62,8 @@ export class ReadyDis
     //金币预制体
     private coinPre:Prefab;
 
+    public activity:boolean=false;
+
     public constructor(ready:ReadyData) 
     {
         this.readyData = ready;
@@ -79,7 +81,7 @@ export class ReadyDis
         try
         {
             console.log("ReadyDis start!");
-            this.father=_father;
+            this.parent=_father;
             await this.load();
             this.InterfaceAdjust();//适配
             //注册回调
@@ -108,14 +110,10 @@ export class ReadyDis
                     console.log(battleData.RoleList);
                     await this.Restore(battleData);
                 }
-                this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage()).then(() =>
+                await this.shopArea.Init(this.readyData.GetShopRoles(), this.readyData.GetShopProps(), this.readyData.GetStage()).then(() =>
                 {
                     GameManager.Instance.Waitting(false);
                 });
-                if (GameManager.Instance.guide)
-                {
-                    GameManager.Instance.guide.next=common.GuideStep.BuyRole;
-                }
                 login.panelOnReady=true;
                 this.Init();
             });
@@ -142,7 +140,7 @@ export class ReadyDis
         //主要界面
         let panel = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "ReadyPanel") as Prefab;
         this.panelNode = instantiate(panel);
-        this.panelNode.setParent(this.father);
+        this.panelNode.setParent(this.parent);
         //金币预制体
         this.coinPre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "CoinPre") as Prefab;
         //操作区域
@@ -150,7 +148,7 @@ export class ReadyDis
         this.roleArea = this.panelNode.getChildByPath("RoleArea").getComponent(RoleArea);
         this.PauseBoard = this.panelNode.getChildByPath("Pause");
         //图形适配获取整个区域
-        this.cameraNode = this.father.getChildByName('Camera');
+        this.cameraNode = this.parent.getChildByName('Camera');
         this.topArea = this.panelNode.getChildByPath("State/TopArea");
         let safeHeigh = SdkManager.SDK.getSystemInfo().screenHeight - SdkManager.SDK.getSystemInfo().safeArea.height;
         let menuBtnHeight = SdkManager.SDK.getSystemInfo().menuBtn.bottom;
@@ -191,6 +189,7 @@ export class ReadyDis
         try
         {
             console.log("ReadyDis Init begin!");
+            this.activity=true;
             //刷新按钮
             this.refreshBtn = this.panelNode.getChildByPath("Shop/ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK, () =>
@@ -216,12 +215,18 @@ export class ReadyDis
             this.setBtn = this.panelNode.getChildByPath("State/TopArea/Set_Btn").getComponent(Button);
             this.setBtn.node.on(Button.EventType.CLICK, () =>
             {
+                this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 this.PauseBoard.active=true;
                 this.PauseBoard.getComponent(Pause).Open();
                 //AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
                 //_father.getComponent(login).BackMainInterface();
             }, this);
+
+            if (GameManager.Instance.guide)
+            {
+                GameManager.Instance.guide.next = common.GuideStep.BuyRole;
+            }
 
             console.log("ReadyDis Init end!");
         }
@@ -712,7 +717,7 @@ export class ReadyDis
             let _from = this.roleArea.rolesNode[_fromIndex].worldPosition;
             let _target = this.topArea.getChildByPath("CoinInfo").worldPosition;
             let coinNode = instantiate(this.coinPre);
-            coinNode.setParent(this.father);
+            coinNode.setParent(this.parent);
             coinNode.getComponent(CoinDrop).Drop(_from, _target, () =>
             {
                 this.coinText.string = "<color=000000>" + this.readyData.GetCoins() + "</color>";

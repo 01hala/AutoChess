@@ -39,7 +39,7 @@ export class GameManager extends Component
     //新手引导
     public guide:Guide=null;
     //侦听计时器
-    private listening=null;
+    public listening=null;
     
     protected onLoad()
     {
@@ -399,8 +399,8 @@ export class GameManager extends Component
         {
             if (GameManager.Instance.guide)
             {
-                this.second += 10;
-                if (this.node.getChildByPath("MainInterface/MainPanel")?.active && this.second >= 3000)
+                this.second += 100;
+                if (singleton.netSingleton.mainInterface?.activity && this.second >= 3000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.ClickGameLobby == GameManager.Instance.guide.next) && (common.GuideStep.ClickGameLobby!=GameManager.Instance.guide.step))
@@ -419,7 +419,7 @@ export class GameManager extends Component
                         GameManager.Instance.guide.OnGuide(common.GuideStep.ClickMatch);
                     }
                 }
-                if(this.node.getChildByPath("ReadyPanel")?.active && this.second>=3000)
+                if(singleton.netSingleton.ready?.activity && this.second>=3000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.BuyRole == GameManager.Instance.guide.next) && (common.GuideStep.BuyRole!=GameManager.Instance.guide.step))
@@ -429,7 +429,7 @@ export class GameManager extends Component
                         
                     }
                 }
-                if(this.node.getChildByPath("ReadyPanel/RoleArea")?.getComponent(RoleArea).GetRolesNumber()>0 && this.second>=3000)
+                if(singleton.netSingleton.ready?.activity && this.node.getChildByPath("ReadyPanel/RoleArea")?.getComponent(RoleArea).GetRolesNumber()>0 && this.second>=3000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.CoinInfo == GameManager.Instance.guide.next) && (common.GuideStep.CoinInfo!=GameManager.Instance.guide.step))
@@ -448,11 +448,11 @@ export class GameManager extends Component
             {
                 clearInterval(this.listening);
             }
-            if(this.second>10000)
+            if(this.second>3000)
             {
                 this.second=0;
             }
-        }, 10);
+        }, 100);
     }
 }
 

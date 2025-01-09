@@ -95,29 +95,36 @@ export class Guide extends Component
 
     private OnTouch(event:EventTouch)
     {
-        if(this.step < 3 || this.step > 6)
+        switch(this.step)
         {
-            let t=this.tnode.getChildByName("Button");
-            if(null==t)
+            case common.GuideStep.ClickGameLobby:
+            case common.GuideStep.ClickMatch:
+            case common.GuideStep.RoleInfo:
+            case common.GuideStep.BuyRole: 
             {
-                t=this.tnode;
-            }
-            let contentSizeX=t.getComponent(UITransform).contentSize.x/2;
-            let contentSizeY=t.getComponent(UITransform).contentSize.y/2;
-            let tpos = this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(t.worldPosition.x,t.worldPosition.y,0));
-    
-            let touchPos = this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(event.getUILocation().x, event.getUILocation().y,0));
-            
-            console.log(touchPos);
-            console.log(tpos);
-            if(touchPos.x > (tpos.x - contentSizeX) && touchPos.x < (tpos.x + contentSizeX))
-            {
-                if(touchPos.y > (tpos.y - contentSizeY) && touchPos.y < (tpos.y + contentSizeY))
+                let t=this.tnode.getChildByName("Button");
+                if(null==t)
                 {
-                    event.preventSwallow = true;
-                    this.CheckGuide();
+                    t=this.tnode;
+                }
+                let contentSizeX=t.getComponent(UITransform).contentSize.x/2;
+                let contentSizeY=t.getComponent(UITransform).contentSize.y/2;
+                let tpos = this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(t.worldPosition.x,t.worldPosition.y,0));
+        
+                let touchPos = this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(event.getUILocation().x, event.getUILocation().y,0));
+                
+                console.log(touchPos);
+                console.log(tpos);
+                if(touchPos.x > (tpos.x - contentSizeX) && touchPos.x < (tpos.x + contentSizeX))
+                {
+                    if(touchPos.y > (tpos.y - contentSizeY) && touchPos.y < (tpos.y + contentSizeY))
+                    {
+                        event.preventSwallow = true;
+                        this.CheckGuide();
+                    }
                 }
             }
+            break;
         }
     }
 
@@ -308,6 +315,7 @@ export class Guide extends Component
                     this.tnode.setWorldPosition(t.worldPosition);   //异步等待0.1秒刷新位置，解决执行适配代码后图标覆盖不上的问题
                 });
             }
+            this.hand.setSiblingIndex(101);
         }
         catch(error)
         {

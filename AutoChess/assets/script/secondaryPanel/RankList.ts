@@ -232,10 +232,11 @@ export class RankList extends Component
     {
         try
         {
+            singleton.netSingleton.mainInterface.activity=true;
             this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
-                this.node.active=false;
                 this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.destroy();
             });
             this.board.getComponent(Animation).play("PanelDisappear");
         }

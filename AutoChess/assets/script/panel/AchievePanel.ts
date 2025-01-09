@@ -50,6 +50,7 @@ export class AchievePanel extends Component
 
     private Exit()
     {
+        singleton.netSingleton.mainInterface.activity=true;
         this.RemoveAllLables();
         this.node.destroy();
     }

@@ -38,6 +38,7 @@ export class QuestPanel extends Component
 
     public Exit()
     {
+        singleton.netSingleton.mainInterface.activity=true;
         this.node.destroy();
     }
 
