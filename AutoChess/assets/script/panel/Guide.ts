@@ -228,8 +228,8 @@ export class Guide extends Component
                         t = this.node.parent.getChildByPath("ReadyPanel/Shop/ShopArea").getComponent(ShopArea).shopRoleNodes[0];
                         let target = this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_4").worldPosition;
                         this.hand.active = true;
-                        this.tween = tween(this.hand).to(0, { worldPosition: t.worldPosition, scale: new Vec3(0.8, 0.8, 1) }).
-                            to(0.7, { worldPosition: target }).to(0, { scale: new Vec3(1, 1, 1) }).repeatForever(this.tween).start();
+                        this.tween = tween(this.hand).repeatForever(tween().to(0, { worldPosition: t.worldPosition, scale: new Vec3(0.8, 0.8, 1) }).
+                            to(0.7, { worldPosition: target }).to(0, { scale: new Vec3(1, 1, 1) })).start();
                         this.guideText.setPosition(new Vec3(0, -637.995, 0));
                         this.guideText.getComponent(RichText).string = "拖拽购买角色";
                     }
@@ -252,8 +252,8 @@ export class Guide extends Component
                             }
                         }
                         this.hand.active = true;
-                        this.tween=tween(this.hand).to(0, { worldPosition: t.worldPosition, scale: new Vec3(1, 1, 1) }).
-                            to(0.5, { scale: new Vec3(0.8, 0.8, 1) }).repeatForever(this.tween).start();
+                        this.tween=tween(this.hand).repeatForever(tween().to(0, { worldPosition: t.worldPosition, scale: new Vec3(1, 1, 1) }).
+                            to(0.5, { scale: new Vec3(0.8, 0.8, 1) })).start();
                         this.guideText.setPosition(new Vec3(0, -85.498, 0));
                         this.guideText.getComponent(RichText).string = "点击角色查看详细界面";
                     }

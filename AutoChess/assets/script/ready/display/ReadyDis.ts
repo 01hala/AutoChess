@@ -114,7 +114,7 @@ export class ReadyDis
                 });
                 if (GameManager.Instance.guide)
                 {
-                    GameManager.Instance.guide.step=common.GuideStep.BuyRole;
+                    GameManager.Instance.guide.next=common.GuideStep.BuyRole;
                 }
                 login.panelOnReady=true;
                 this.Init();

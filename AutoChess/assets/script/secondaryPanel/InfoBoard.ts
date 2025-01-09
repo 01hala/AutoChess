@@ -176,7 +176,7 @@ export class InfoBoard extends Component
             }
             if (GameManager.Instance.guide)
             {
-                GameManager.Instance.guide.step=common.GuideStep.RoleInfo;
+                GameManager.Instance.guide.next=common.GuideStep.HPInfo;
             }
         }
         catch(error)

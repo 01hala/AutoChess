@@ -97,8 +97,8 @@ export class StartGame extends Component
         {
             if(GameManager.Instance.guide)
             {
-                GameManager.Instance.guide.step=common.GuideStep.ClickMatch;
-                
+                GameManager.Instance.guide.next=common.GuideStep.ClickMatch;
+
                 this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
                     
