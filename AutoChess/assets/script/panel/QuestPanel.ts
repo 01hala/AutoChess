@@ -4,6 +4,7 @@ import * as singleton from '../netDriver/netSingleton';
 import { SendMessage } from '../other/MessageEvent';
 import * as enums from '../other/enums';
 import { User } from '../login/User';
+import { em_error } from '../serverSDK/error';
 const { ccclass, property } = _decorator;
 
 @ccclass('QuestPanel')
@@ -43,20 +44,45 @@ export class QuestPanel extends Component
     public OnLevelBtnClick(_event,_data)
     {
         let levelId = parseInt(_data);
-        //singleton.netSingleton.game.start_quest_battle_ready();
-        //this.Exit();
-        this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.OpenLevelInfo, true,
-            {
-                levelId: levelId
-            },
-            (flag) =>
-            {
-                if (flag)
+        if(User.UserData.quest == levelId)
+        {
+            singleton.netSingleton.game.start_quest_battle_ready().then(()=>
                 {
                     this.Exit();
-                }
-            }
-        ));
+                },(err)=>
+                {
+                    if(err == em_error.last_quest)
+                    {
+                        this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip, true,"<outline color=black width=4>后续关卡待开放</outline>"));
+                    }
+                });
+        }
+        else
+        {
+            singleton.netSingleton.game.start_quest_battle_ready_repeat(levelId).then(()=>
+                {
+                    this.Exit();
+                },(err)=>
+                {
+                    if(err == em_error.last_quest)
+                    {
+                        this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip, true,"<outline color=black width=4>后续关卡待开放</outline>"));
+                    }
+                });
+        }
+        
+        // this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.OpenLevelInfo, true,
+        //     {
+        //         levelId: levelId
+        //     },
+        //     (flag) =>
+        //     {
+        //         if (flag)
+        //         {
+        //             this.Exit();
+        //         }
+        //     }
+        // ));
     }
 
     Open()

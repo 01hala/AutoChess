@@ -407,7 +407,7 @@ export class netGame {
                     }, (err) =>
                     {
                         console.log("start_quest_shop err:", err);
-                        reject("error");
+                        reject(err);
                     }).timeout(3000, () =>
                     {
                         console.log("start_quest_shop timeout");
@@ -421,6 +421,36 @@ export class netGame {
             }
            
         });
+    }
+
+    public start_quest_battle_ready_repeat(_id:number)
+    {
+        return new Promise((resolve, reject) =>
+            {
+                try
+                {
+                    this.c_player_quest_caller.get_hub(netSingleton.player.player_name).start_quest_shop_ready1(_id).callBack((battle_info, shop_info , events) =>
+                        {
+                            console.log("pve events:",events);
+                            this.cb_start_quest_battle_ready(battle_info, shop_info , events);
+                            resolve("finish");
+                        }, (err) =>
+                        {
+                            console.log("start_quest_shop err:", err);
+                            reject(err);
+                        }).timeout(3000, () =>
+                        {
+                            console.log("start_quest_shop timeout");
+                            reject("timeout");
+                        });
+                }
+                catch(error)
+                {
+                    console.error("start_quest_shop Program err:", error);
+                    reject("Program error");
+                }
+               
+            });
     }
 
     //开始pve战斗

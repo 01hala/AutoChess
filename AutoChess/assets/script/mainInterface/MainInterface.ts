@@ -191,10 +191,6 @@ export class MainInterface
         try
         {
             this.startGamePart.active=false;
-            if (GameManager.Instance.guide)
-            {
-                
-            }
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
@@ -300,23 +296,7 @@ export class MainInterface
             this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                this.btnListSwitch=!this.btnListSwitch;
-                tween(this.btnList).to(0,{}).call(()=>
-                {
-                    if(this.btnListSwitch)
-                    {
-                        this.btnList.getComponent(Animation).play("ListDown");
-                    }
-                    else
-                    {
-                        this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
-                        this.btnList.getComponent(Animation).play("ListUp");
-                    }
-                }).delay(0.4).call(()=>
-                {
-                    this.btnList.getComponent(Animation).resume();
-                    this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
-                }).start();
+                this.SwitchBtnlist();
     
             },this);
             //打开用户信息
@@ -343,6 +323,34 @@ export class MainInterface
         {
             console.error('MainInterface 下 Init 错误 err: ',error);
         }
+    }
+
+    public SwitchBtnlist(_flag?:boolean)
+    {
+        if(_flag)
+        {
+            this.btnListSwitch=_flag;
+        }
+        else
+        {
+            this.btnListSwitch=!this.btnListSwitch;
+        }
+        tween(this.btnList).to(0,{}).call(()=>
+        {
+            if(this.btnListSwitch)
+            {
+                this.btnList.getComponent(Animation).play("ListDown");
+            }
+            else
+            {
+                this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
+                this.btnList.getComponent(Animation).play("ListUp");
+            }
+        }).delay(0.4).call(()=>
+        {
+            this.btnList.getComponent(Animation).resume();
+            this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
+        }).start();
     }
 
 /*

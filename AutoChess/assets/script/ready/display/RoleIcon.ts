@@ -393,7 +393,7 @@ export class RoleIcon extends Component
         {
             if (GameManager.Instance.guide)
             {
-                //GameManager.Instance.guide.step++;
+                GameManager.Instance.guide.next=common.GuideStep.CoinInfo;
             }
         }) // 在0.5秒内将缩放变为原来的两倍
         .start();
