@@ -409,16 +409,16 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    var (err, eventIdList) = _data.Data.StartQuestReady(uuid, client_mng.BattleClientCaller);
+                    var (err, eventIdList) = _data.Data.StartQuestReady(0, uuid, client_mng.BattleClientCaller);
                     Log.Log.trace("on_start_quest_ready quest:{2} err:{0} eventId List:{1}", err, eventIdList, _data.Data.Info().quest);
-                    if (err)
+                    if (err == em_error.success)
                     {
                         Log.Log.trace("on_start_quest_ready eventId List:{0}", eventIdList.ToJson());
                         rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, eventIdList);
                     }
                     else
                     {
-                        rsp.err((int)em_error.not_exist_quest);
+                        rsp.err((int)err);
                     }
                 }
             }

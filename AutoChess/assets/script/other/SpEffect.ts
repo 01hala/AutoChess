@@ -700,6 +700,7 @@ export class SpEffectOnRole
         {
             try
             {
+                console.log("roleSpCfg.Projectiles:", this.roleSpCfg.Projectiles);
                 let str:string="";
                 if (0 == fetter)
                 {
