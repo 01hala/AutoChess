@@ -1,122 +1,122 @@
 {
     "3001": {
         "Id": 3001,
-        "Name": "虚空标记",
+        "Name": "equip_3001_name",
         "Price": 3,
         "Stage": 1,
         "Effect": "7",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "6",
-        "Res": "Props/battle_icon_3001",
-        "Introduce": "死亡后召唤一个1/1的虚空虫"
+        "Res": "PropsTexture/battle_icon_3001",
+        "Introduce": "equip_3001_desc"
     },
     "3002": {
         "Id": 3002,
-        "Name": "哑铃",
+        "Name": "equip_3002_name",
         "Price": 6,
         "Stage": 2,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "1",
-        "Res": "Props/battle_icon_3002",
-        "Introduce": "带有该装备的角色，每个准备阶段结束时+1生命值"
+        "Res": "PropsTexture/battle_icon_3002",
+        "Introduce": "equip_3002_desc"
     },
     "3003": {
         "Id": 3003,
-        "Name": "盾牌",
+        "Name": "equip_3003_name",
         "Price": 6,
         "Stage": 3,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "2",
-        "Res": "Props/battle_icon_3003",
-        "Introduce": "每次收到的伤害减少2"
+        "Res": "PropsTexture/battle_icon_3003",
+        "Introduce": "equip_3003_desc"
     },
     "3004": {
         "Id": 3004,
-        "Name": "飞刀",
+        "Name": "equip_3004_name",
         "Price": 6,
         "Stage": 4,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "5",
-        "Res": "Props/battle_icon_3004",
-        "Introduce": "每次攻击会造成额外5点伤害"
+        "Res": "PropsTexture/battle_icon_3004",
+        "Introduce": "equip_3004_desc"
     },
     "3005": {
         "Id": 3005,
-        "Name": "无",
+        "Name": "equip_3005_name",
         "Price": 6,
         "Stage": 5,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "1|1",
-        "Res": "Props/battle_icon_3005",
-        "Introduce": "阵亡后变为1/1复活（不改变原技能等级）"
+        "Res": "PropsTexture/battle_icon_3005",
+        "Introduce": "equip_3005_desc"
     },
     "3006": {
         "Id": 3006,
-        "Name": "背带裤",
+        "Name": "equip_3006_name",
         "Price": 6,
         "Stage": 0,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "10",
-        "Res": "Props/battle_icon_3006",
-        "Introduce": "该角色获得额外十点护甲（额外血量，可高过50点生命值）"
+        "Res": "PropsTexture/battle_icon_3006",
+        "Introduce": "equip_3006_desc"
     },
     "3007": {
         "Id": 3007,
-        "Name": "圣剑",
+        "Name": "equip_3007_name",
         "Price": 0,
         "Stage": 0,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "0",
-        "Res": "Props/battle_icon_3007",
-        "Introduce": "伤害到敌人后造成即死效果"
+        "Res": "PropsTexture/battle_icon_3007",
+        "Introduce": "equip_3007_desc"
     },
     "3008": {
         "Id": 3008,
-        "Name": "十字吊坠",
+        "Name": "equip_3008_name",
         "Price": 0,
         "Stage": 0,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "1",
-        "Res": "Props/battle_icon_3008",
-        "Introduce": "受到致死伤害不会立刻死亡，而是将生命值降为1，然后暂时移除该装备"
+        "Res": "PropsTexture/battle_icon_3008",
+        "Introduce": "equip_3008_desc"
     },
     "3009": {
         "Id": 3009,
-        "Name": "指虎",
+        "Name": "equip_3009_name",
         "Price": 0,
         "Stage": 0,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "0",
-        "Res": "Props/battle_icon_3009",
-        "Introduce": "首次直接攻击造成双倍伤害"
+        "Res": "PropsTexture/battle_icon_3009",
+        "Introduce": "equip_3009_desc"
     },
     "3010": {
         "Id": 3010,
-        "Name": "双截棍",
+        "Name": "equip_3010_name",
         "Price": 0,
         "Stage": 0,
         "Effect": "3",
         "AttackBonus": 0,
         "HpBonus": 0,
         "Value": "5",
-        "Res": "Props/battle_icon_3010",
-        "Introduce": "直接攻击后会对受击单位身后的角色造成5伤害"
+        "Res": "PropsTexture/battle_icon_3010",
+        "Introduce": "equip_3010_desc"
     }
 }

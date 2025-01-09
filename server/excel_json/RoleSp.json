@@ -2,487 +2,865 @@
     "100001": {
         "Id": 100001,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;skill_0021",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100002": {
         "Id": 100002,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_003",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100003": {
         "Id": 100003,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_009",
+        "Projectiles": "skill_0008_2;skill_0008_2"
     },
     "100004": {
         "Id": 100004,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_007",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100005": {
         "Id": 100005,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0006",
+        "OnSkill": "null;career_009",
+        "Projectiles": "skill_0008_2;skill_0008_2"
     },
     "100006": {
         "Id": 100006,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0001;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100007": {
         "Id": 100007,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0001;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100008": {
         "Id": 100008,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_0012",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100009": {
         "Id": 100009,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_002",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100010": {
         "Id": 100010,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_002",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100011": {
         "Id": 100011,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0006",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100012": {
         "Id": 100012,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_001",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100013": {
         "Id": 100013,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0006",
+        "OnSkill": "skill_0002;career_001",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100014": {
         "Id": 100014,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_001",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100015": {
         "Id": 100015,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_009",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100016": {
         "Id": 100016,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0019;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100017": {
         "Id": 100017,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100018": {
         "Id": 100018,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0012;career_004",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100019": {
         "Id": 100019,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0005;career_005",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100020": {
         "Id": 100020,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_003",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100021": {
         "Id": 100021,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_0012",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100022": {
         "Id": 100022,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_007",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100023": {
         "Id": 100023,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0006",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_8;skill_0008_8"
     },
     "100024": {
         "Id": 100024,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0021;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100025": {
         "Id": 100025,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0020;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100026": {
         "Id": 100026,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_002",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100027": {
         "Id": 100027,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100028": {
         "Id": 100028,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_3;skill_0008_3"
     },
     "100029": {
         "Id": 100029,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0013;career_005",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100030": {
         "Id": 100030,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0006",
+        "OnSkill": "null;career_005",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100031": {
         "Id": 100031,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0021;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100032": {
         "Id": 100032,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_009",
+        "Projectiles": "skill_0008_2;skill_0008_2"
     },
     "100033": {
         "Id": 100033,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_8;skill_0008_8"
     },
     "100034": {
         "Id": 100034,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0021;skill_0021",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100035": {
         "Id": 100035,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_004",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100036": {
         "Id": 100036,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0021;skill_0021",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100037": {
         "Id": 100037,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_004",
+        "Projectiles": "skill_0008_4;skill_0008_4"
     },
     "100038": {
         "Id": 100038,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0014;career_004",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100039": {
         "Id": 100039,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0014;career_004",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100040": {
         "Id": 100040,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0022;career_007",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100041": {
         "Id": 100041,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100042": {
         "Id": 100042,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_003",
+        "Projectiles": "skill_0008_5;skill_0008_5"
     },
     "100043": {
         "Id": 100043,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_006",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100044": {
         "Id": 100044,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008_7"
     },
     "100045": {
         "Id": 100045,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_003",
+        "Projectiles": "skill_0008_6;skill_0008_6"
     },
     "100046": {
         "Id": 100046,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_008",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100047": {
         "Id": 100047,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0021;career_008",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100048": {
         "Id": 100048,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0021;skill_0021",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100049": {
         "Id": 100049,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;skill_0021",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100050": {
         "Id": 100050,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;career_010",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100051": {
         "Id": 100051,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0011;career_004",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100052": {
         "Id": 100052,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_0012",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100053": {
         "Id": 100053,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;career_006",
+        "Projectiles": "skill_0008_7;skill_0008"
     },
     "100054": {
         "Id": 100054,
         "IntensifierSelf": "skill_0003",
-        "OnSummon": "skill_0001",
-        "Skill": "",
         "intensifierColony": "skill_0010",
-        "buff": "skill_0002|skill_0005|skill_0025",
-        "checkSkill": "skill_0009|skill_0013_1|skill_0013_2|skill_0014|skill_0015|skill_0016|skill_0017|skill_0019|skill_0022|skill_0023|skill_0024|skill_0026|skill_0027"
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0015;career_006",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100055": {
+        "Id": 100055,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0006",
+        "OnSkill": "skill_0024;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100056": {
+        "Id": 100056,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0023;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100057": {
+        "Id": 100057,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0016;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100058": {
+        "Id": 100058,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100059": {
+        "Id": 100059,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0018;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100060": {
+        "Id": 100060,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0025;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100061": {
+        "Id": 100061,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "skill_0018;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100062": {
+        "Id": 100062,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0001;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100063": {
+        "Id": 100063,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100064": {
+        "Id": 100064,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0026;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100065": {
+        "Id": 100065,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0008;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100066": {
+        "Id": 100066,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0026;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100067": {
+        "Id": 100067,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0001;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100068": {
+        "Id": 100068,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100069": {
+        "Id": 100069,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0001;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100070": {
+        "Id": 100070,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100071": {
+        "Id": 100071,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0017;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100072": {
+        "Id": 100072,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_0027;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100073": {
+        "Id": 100073,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100074": {
+        "Id": 100074,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100075": {
+        "Id": 100075,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008_7"
+    },
+    "100076": {
+        "Id": 100076,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008_7"
+    },
+    "100077": {
+        "Id": 100077,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "skill_0007",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "100078": {
+        "Id": 100078,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "skill_002;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200001": {
+        "Id": 200001,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200002": {
+        "Id": 200002,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200003": {
+        "Id": 200003,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200004": {
+        "Id": 200004,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200005": {
+        "Id": 200005,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200006": {
+        "Id": 200006,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200007": {
+        "Id": 200007,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200008": {
+        "Id": 200008,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200009": {
+        "Id": 200009,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200010": {
+        "Id": 200010,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200011": {
+        "Id": 200011,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200012": {
+        "Id": 200012,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200013": {
+        "Id": 200013,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200014": {
+        "Id": 200014,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200015": {
+        "Id": 200015,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200016": {
+        "Id": 200016,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200017": {
+        "Id": 200017,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
+    },
+    "200018": {
+        "Id": 200018,
+        "IntensifierSelf": "skill_0003",
+        "intensifierColony": "skill_0010",
+        "Admission": "null",
+        "UseSkill": "null",
+        "OnSkill": "null;null",
+        "Projectiles": "skill_0008_7;skill_0008"
     }
 }

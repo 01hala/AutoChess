@@ -1,0 +1,1738 @@
+{
+    "role_100001_name": {
+        "id": "role_100001_name",
+        "chinese": "鲨女仆"
+    },
+    "role_100002_name": {
+        "id": "role_100002_name",
+        "chinese": "银龙.四海庇佑"
+    },
+    "role_100003_name": {
+        "id": "role_100003_name",
+        "chinese": "见习炮手"
+    },
+    "role_100004_name": {
+        "id": "role_100004_name",
+        "chinese": "兔兔护士"
+    },
+    "role_100005_name": {
+        "id": "role_100005_name",
+        "chinese": "船长.杰克"
+    },
+    "role_100006_name": {
+        "id": "role_100006_name",
+        "chinese": "海兽祭祀"
+    },
+    "role_100007_name": {
+        "id": "role_100007_name",
+        "chinese": "渊海长老"
+    },
+    "role_100008_name": {
+        "id": "role_100008_name",
+        "chinese": "东海博士"
+    },
+    "role_100009_name": {
+        "id": "role_100009_name",
+        "chinese": "沙滩教练"
+    },
+    "role_100010_name": {
+        "id": "role_100010_name",
+        "chinese": "摸鱼鼠"
+    },
+    "role_100011_name": {
+        "id": "role_100011_name",
+        "chinese": "陷阱修理师"
+    },
+    "role_100012_name": {
+        "id": "role_100012_name",
+        "chinese": "卓尔.老独眼"
+    },
+    "role_100013_name": {
+        "id": "role_100013_name",
+        "chinese": "莉莉丝"
+    },
+    "role_100014_name": {
+        "id": "role_100014_name",
+        "chinese": "皇室主厨"
+    },
+    "role_100015_name": {
+        "id": "role_100015_name",
+        "chinese": "二副.琼斯"
+    },
+    "role_100016_name": {
+        "id": "role_100016_name",
+        "chinese": "虚空先知"
+    },
+    "role_100017_name": {
+        "id": "role_100017_name",
+        "chinese": "沙暴祭祀"
+    },
+    "role_100018_name": {
+        "id": "role_100018_name",
+        "chinese": "沙漠魔术师"
+    },
+    "role_100019_name": {
+        "id": "role_100019_name",
+        "chinese": "贵族骑士"
+    },
+    "role_100020_name": {
+        "id": "role_100020_name",
+        "chinese": "狮王近卫"
+    },
+    "role_100021_name": {
+        "id": "role_100021_name",
+        "chinese": "冒险者.妮娜"
+    },
+    "role_100022_name": {
+        "id": "role_100022_name",
+        "chinese": "医疗精灵"
+    },
+    "role_100023_name": {
+        "id": "role_100023_name",
+        "chinese": "风祭祀"
+    },
+    "role_100024_name": {
+        "id": "role_100024_name",
+        "chinese": "走私人.卡尔"
+    },
+    "role_100025_name": {
+        "id": "role_100025_name",
+        "chinese": "冰霜.大祭司"
+    },
+    "role_100026_name": {
+        "id": "role_100026_name",
+        "chinese": "幼龙"
+    },
+    "role_100027_name": {
+        "id": "role_100027_name",
+        "chinese": "鸢尾花密使"
+    },
+    "role_100028_name": {
+        "id": "role_100028_name",
+        "chinese": "南风博士"
+    },
+    "role_100029_name": {
+        "id": "role_100029_name",
+        "chinese": "圣堂卫"
+    },
+    "role_100030_name": {
+        "id": "role_100030_name",
+        "chinese": "神庭骑士"
+    },
+    "role_100031_name": {
+        "id": "role_100031_name",
+        "chinese": "战争贩.兰斯"
+    },
+    "role_100032_name": {
+        "id": "role_100032_name",
+        "chinese": "水手长"
+    },
+    "role_100033_name": {
+        "id": "role_100033_name",
+        "chinese": "小屋学徒"
+    },
+    "role_100034_name": {
+        "id": "role_100034_name",
+        "chinese": "内庭管家"
+    },
+    "role_100035_name": {
+        "id": "role_100035_name",
+        "chinese": "DR.麦哲蔻"
+    },
+    "role_100036_name": {
+        "id": "role_100036_name",
+        "chinese": "大副.威尔"
+    },
+    "role_100037_name": {
+        "id": "role_100037_name",
+        "chinese": "剧团新人"
+    },
+    "role_100038_name": {
+        "id": "role_100038_name",
+        "chinese": "剧团主理人"
+    },
+    "role_100039_name": {
+        "id": "role_100039_name",
+        "chinese": "魔术助手"
+    },
+    "role_100040_name": {
+        "id": "role_100040_name",
+        "chinese": "丛林黑医"
+    },
+    "role_100041_name": {
+        "id": "role_100041_name",
+        "chinese": "森林祭祀"
+    },
+    "role_100042_name": {
+        "id": "role_100042_name",
+        "chinese": "丛林战士"
+    },
+    "role_100043_name": {
+        "id": "role_100043_name",
+        "chinese": "密林锻手"
+    },
+    "role_100044_name": {
+        "id": "role_100044_name",
+        "chinese": "花精灵"
+    },
+    "role_100045_name": {
+        "id": "role_100045_name",
+        "chinese": "亚马逊猎手"
+    },
+    "role_100046_name": {
+        "id": "role_100046_name",
+        "chinese": "金融之主"
+    },
+    "role_100047_name": {
+        "id": "role_100047_name",
+        "chinese": "林中行商"
+    },
+    "role_100048_name": {
+        "id": "role_100048_name",
+        "chinese": "皇家财政总管"
+    },
+    "role_100049_name": {
+        "id": "role_100049_name",
+        "chinese": "阿福"
+    },
+    "role_100050_name": {
+        "id": "role_100050_name",
+        "chinese": "辰光.神佑"
+    },
+    "role_100051_name": {
+        "id": "role_100051_name",
+        "chinese": "剧团团长"
+    },
+    "role_100052_name": {
+        "id": "role_100052_name",
+        "chinese": "机修师"
+    },
+    "role_100053_name": {
+        "id": "role_100053_name",
+        "chinese": "圣城军需长"
+    },
+    "role_100054_name": {
+        "id": "role_100054_name",
+        "chinese": "村好匠"
+    },
+    "role_100055_name": {
+        "id": "role_100055_name",
+        "chinese": "影杀"
+    },
+    "role_100056_name": {
+        "id": "role_100056_name",
+        "chinese": "绝杀"
+    },
+    "role_100057_name": {
+        "id": "role_100057_name",
+        "chinese": "蛮杀"
+    },
+    "role_100058_name": {
+        "id": "role_100058_name",
+        "chinese": "信风使者"
+    },
+    "role_100059_name": {
+        "id": "role_100059_name",
+        "chinese": "邮寄员"
+    },
+    "role_100060_name": {
+        "id": "role_100060_name",
+        "chinese": "芙兰朵院长"
+    },
+    "role_100061_name": {
+        "id": "role_100061_name",
+        "chinese": "经济学导师"
+    },
+    "role_100062_name": {
+        "id": "role_100062_name",
+        "chinese": "黑魔法导师"
+    },
+    "role_100063_name": {
+        "id": "role_100063_name",
+        "chinese": "实习辅导员"
+    },
+    "role_100064_name": {
+        "id": "role_100064_name",
+        "chinese": "牛仔.买命财"
+    },
+    "role_100065_name": {
+        "id": "role_100065_name",
+        "chinese": "牛仔.路我开"
+    },
+    "role_100066_name": {
+        "id": "role_100066_name",
+        "chinese": "牛仔.树我栽"
+    },
+    "role_100067_name": {
+        "id": "role_100067_name",
+        "chinese": "太阳之子"
+    },
+    "role_100068_name": {
+        "id": "role_100068_name",
+        "chinese": "萝拉.冥海宠爱"
+    },
+    "role_100069_name": {
+        "id": "role_100069_name",
+        "chinese": "虚空讲师"
+    },
+    "role_100070_name": {
+        "id": "role_100070_name",
+        "chinese": "焚火长"
+    },
+    "role_100071_name": {
+        "id": "role_100071_name",
+        "chinese": "圣城提灯人"
+    },
+    "role_100072_name": {
+        "id": "role_100072_name",
+        "chinese": "天界之门"
+    },
+    "role_100073_name": {
+        "id": "role_100073_name",
+        "chinese": "养花匠"
+    },
+    "role_100074_name": {
+        "id": "role_100074_name",
+        "chinese": "奇异果农"
+    },
+    "role_100075_name": {
+        "id": "role_100075_name",
+        "chinese": "朱莉.警官"
+    },
+    "role_100076_name": {
+        "id": "role_100076_name",
+        "chinese": "米娅.警队长"
+    },
+    "role_100077_name": {
+        "id": "role_100077_name",
+        "chinese": "佐菲警司"
+    },
+    "role_100078_name": {
+        "id": "role_100078_name",
+        "chinese": "木法警长"
+    },
+    "role_200001_name": {
+        "id": "role_200001_name",
+        "chinese": "暂无"
+    },
+    "role_200002_name": {
+        "id": "role_200002_name",
+        "chinese": "暂无"
+    },
+    "role_200003_name": {
+        "id": "role_200003_name",
+        "chinese": "暂无"
+    },
+    "role_200004_name": {
+        "id": "role_200004_name",
+        "chinese": "暂无"
+    },
+    "role_200005_name": {
+        "id": "role_200005_name",
+        "chinese": "暂无"
+    },
+    "role_200006_name": {
+        "id": "role_200006_name",
+        "chinese": "暂无"
+    },
+    "food_1001_name": {
+        "id": "food_1001_name",
+        "chinese": "爆米花"
+    },
+    "food_1002_name": {
+        "id": "food_1002_name",
+        "chinese": "战斗号角"
+    },
+    "food_1003_name": {
+        "id": "food_1003_name",
+        "chinese": "充气锤子"
+    },
+    "food_1004_name": {
+        "id": "food_1004_name",
+        "chinese": "棒棒糖"
+    },
+    "food_1005_name": {
+        "id": "food_1005_name",
+        "chinese": "薯条"
+    },
+    "food_1006_name": {
+        "id": "food_1006_name",
+        "chinese": "铃铛"
+    },
+    "food_1007_name": {
+        "id": "food_1007_name",
+        "chinese": "菜单"
+    },
+    "food_1008_name": {
+        "id": "food_1008_name",
+        "chinese": "卷饼"
+    },
+    "food_1009_name": {
+        "id": "food_1009_name",
+        "chinese": "牛奶"
+    },
+    "food_1010_name": {
+        "id": "food_1010_name",
+        "chinese": "巧克力"
+    },
+    "food_1011_name": {
+        "id": "food_1011_name",
+        "chinese": "披萨"
+    },
+    "food_1012_name": {
+        "id": "food_1012_name",
+        "chinese": "汉堡"
+    },
+    "food_1013_name": {
+        "id": "food_1013_name",
+        "chinese": "西瓜汁"
+    },
+    "food_1001_desc": {
+        "id": "food_1001_desc",
+        "chinese": "给予一个角色+1生命值和+1攻击力"
+    },
+    "food_1002_desc": {
+        "id": "food_1002_desc",
+        "chinese": "当角色共造成20点伤害后，全角色+1攻击力"
+    },
+    "food_1003_desc": {
+        "id": "food_1003_desc",
+        "chinese": "使该角色直接晕厥"
+    },
+    "food_1004_desc": {
+        "id": "food_1004_desc",
+        "chinese": "给予一个角色+3生命值和+3攻击力，持续至本回合战斗结束"
+    },
+    "food_1005_desc": {
+        "id": "food_1005_desc",
+        "chinese": "给予两个随机角色+1生命值和+1攻击力"
+    },
+    "food_1006_desc": {
+        "id": "food_1006_desc",
+        "chinese": "当角色共受到30点伤害后，全角色+1生命值"
+    },
+    "food_1007_desc": {
+        "id": "food_1007_desc",
+        "chinese": "使商店当前及将来出售的所有角色+1生命值和+2攻击力"
+    },
+    "food_1008_desc": {
+        "id": "food_1008_desc",
+        "chinese": "给予一个角色+2生命值和+2攻击力"
+    },
+    "food_1009_desc": {
+        "id": "food_1009_desc",
+        "chinese": "给予一个宠物+1经验值，并且给予其+1生命值和+1攻击力"
+    },
+    "food_1010_desc": {
+        "id": "food_1010_desc",
+        "chinese": "给予四个随机宠物+1/+1"
+    },
+    "food_1011_desc": {
+        "id": "food_1011_desc",
+        "chinese": "给予三个随机角色+2/+2"
+    },
+    "food_1012_desc": {
+        "id": "food_1012_desc",
+        "chinese": "给予一个角色+3/+3"
+    },
+    "food_1013_desc": {
+        "id": "food_1013_desc",
+        "chinese": "给予一个角色+1/+1"
+    },
+    "equip_3001_name": {
+        "id": "equip_3001_name",
+        "chinese": "虚空标记"
+    },
+    "equip_3002_name": {
+        "id": "equip_3002_name",
+        "chinese": "哑铃"
+    },
+    "equip_3003_name": {
+        "id": "equip_3003_name",
+        "chinese": "盾牌"
+    },
+    "equip_3004_name": {
+        "id": "equip_3004_name",
+        "chinese": "飞刀"
+    },
+    "equip_3005_name": {
+        "id": "equip_3005_name",
+        "chinese": "奇兵"
+    },
+    "equip_3006_name": {
+        "id": "equip_3006_name",
+        "chinese": "背带裤"
+    },
+    "equip_3007_name": {
+        "id": "equip_3007_name",
+        "chinese": "圣剑"
+    },
+    "equip_3008_name": {
+        "id": "equip_3008_name",
+        "chinese": "十字吊坠"
+    },
+    "equip_3009_name": {
+        "id": "equip_3009_name",
+        "chinese": "指虎"
+    },
+    "equip_3010_name": {
+        "id": "equip_3010_name",
+        "chinese": "双截棍"
+    },
+    "equip_3001_desc": {
+        "id": "equip_3001_desc",
+        "chinese": "死亡后召唤一个1/1的虚空虫"
+    },
+    "equip_3002_desc": {
+        "id": "equip_3002_desc",
+        "chinese": "带有该装备的角色，每个准备阶段结束时+1生命值"
+    },
+    "equip_3003_desc": {
+        "id": "equip_3003_desc",
+        "chinese": "每次收到的伤害减少2"
+    },
+    "equip_3004_desc": {
+        "id": "equip_3004_desc",
+        "chinese": "每次攻击会造成额外5点伤害"
+    },
+    "equip_3005_desc": {
+        "id": "equip_3005_desc",
+        "chinese": "阵亡后变为1/1复活（不改变原技能等级）"
+    },
+    "equip_3006_desc": {
+        "id": "equip_3006_desc",
+        "chinese": "该角色获得额外十点护甲（额外血量，可高过50点生命值）"
+    },
+    "equip_3007_desc": {
+        "id": "equip_3007_desc",
+        "chinese": "伤害到敌人后造成即死效果"
+    },
+    "equip_3008_desc": {
+        "id": "equip_3008_desc",
+        "chinese": "受到致死伤害不会立刻死亡，而是将生命值降为1，然后暂时移除该装备"
+    },
+    "equip_3009_desc": {
+        "id": "equip_3009_desc",
+        "chinese": "首次直接攻击造成双倍伤害"
+    },
+    "equip_3010_desc": {
+        "id": "equip_3010_desc",
+        "chinese": "直接攻击后会对受击单位身后的角色造成5伤害"
+    },
+    "task_1001_name": {
+        "id": "task_1001_name",
+        "chinese": "每周首胜"
+    },
+    "task_1002_name": {
+        "id": "task_1002_name",
+        "chinese": "全数消灭"
+    },
+    "task_1003_name": {
+        "id": "task_1003_name",
+        "chinese": "试试手气"
+    },
+    "task_1004_name": {
+        "id": "task_1004_name",
+        "chinese": "巫术"
+    },
+    "task_1005_name": {
+        "id": "task_1005_name",
+        "chinese": "战争艺术"
+    },
+    "task_1006_name": {
+        "id": "task_1006_name",
+        "chinese": "海上传奇"
+    },
+    "task_1007_name": {
+        "id": "task_1007_name",
+        "chinese": "快人一步"
+    },
+    "task_1008_name": {
+        "id": "task_1008_name",
+        "chinese": "越战越勇"
+    },
+    "task_1009_name": {
+        "id": "task_1009_name",
+        "chinese": "奋战不屈"
+    },
+    "task_1010_name": {
+        "id": "task_1010_name",
+        "chinese": "武器大师"
+    },
+    "task_1011_name": {
+        "id": "task_1011_name",
+        "chinese": "登峰造极"
+    },
+    "task_1012_name": {
+        "id": "task_1012_name",
+        "chinese": "国王"
+    },
+    "task_1013_name": {
+        "id": "task_1013_name",
+        "chinese": "天将"
+    },
+    "task_1014_name": {
+        "id": "task_1014_name",
+        "chinese": "不败之军"
+    },
+    "task_1015_name": {
+        "id": "task_1015_name",
+        "chinese": "南征北战"
+    },
+    "task_1016_name": {
+        "id": "task_1016_name",
+        "chinese": "机甲大师"
+    },
+    "task_1017_name": {
+        "id": "task_1017_name",
+        "chinese": "芜湖，冠军"
+    },
+    "task_1018_name": {
+        "id": "task_1018_name",
+        "chinese": "我还没出全力呢"
+    },
+    "task_1019_name": {
+        "id": "task_1019_name",
+        "chinese": "巨贾"
+    },
+    "task_1020_name": {
+        "id": "task_1020_name",
+        "chinese": "战神"
+    },
+    "task_1021_name": {
+        "id": "task_1021_name",
+        "chinese": "赤手空拳"
+    },
+    "task_1001_desc": {
+        "id": "task_1001_desc",
+        "chinese": "赢得一局游戏"
+    },
+    "task_1002_desc": {
+        "id": "task_1002_desc",
+        "chinese": "消灭八十个敌人"
+    },
+    "task_1003_desc": {
+        "id": "task_1003_desc",
+        "chinese": "开启一次卡包"
+    },
+    "task_1004_desc": {
+        "id": "task_1004_desc",
+        "chinese": "使用“巫师角色”击败一百个敌人"
+    },
+    "task_1005_desc": {
+        "id": "task_1005_desc",
+        "chinese": "使用“狂战士角色”击败一百个敌人"
+    },
+    "task_1006_desc": {
+        "id": "task_1006_desc",
+        "chinese": "使用“海盗角色”击败一百个敌人"
+    },
+    "task_1007_desc": {
+        "id": "task_1007_desc",
+        "chinese": "购买十位效果在“回合开始前”触发的角色"
+    },
+    "task_1008_desc": {
+        "id": "task_1008_desc",
+        "chinese": "购买十位效果在“受伤时”触发的角色"
+    },
+    "task_1009_desc": {
+        "id": "task_1009_desc",
+        "chinese": "购买十位效果在“晕厥时”触发的角色"
+    },
+    "task_1010_desc": {
+        "id": "task_1010_desc",
+        "chinese": "购买十件装备"
+    },
+    "task_1011_desc": {
+        "id": "task_1011_desc",
+        "chinese": "拥有一个满级角色"
+    },
+    "task_1012_desc": {
+        "id": "task_1012_desc",
+        "chinese": "连续获得五局皇冠"
+    },
+    "task_1013_desc": {
+        "id": "task_1013_desc",
+        "chinese": "获胜时场上全部角色都是满级"
+    },
+    "task_1014_desc": {
+        "id": "task_1014_desc",
+        "chinese": "十连胜赢得皇冠"
+    },
+    "task_1015_desc": {
+        "id": "task_1015_desc",
+        "chinese": "匹配/排位模式累计对局五百次"
+    },
+    "task_1016_desc": {
+        "id": "task_1016_desc",
+        "chinese": "获胜时全部角色都是机械师序列"
+    },
+    "task_1017_desc": {
+        "id": "task_1017_desc",
+        "chinese": "获得巅峰对决冠军"
+    },
+    "task_1018_desc": {
+        "id": "task_1018_desc",
+        "chinese": "获胜时场上还剩一个角色空位"
+    },
+    "task_1019_desc": {
+        "id": "task_1019_desc",
+        "chinese": "回合开始时拥有25枚金币"
+    },
+    "task_1020_desc": {
+        "id": "task_1020_desc",
+        "chinese": "获胜时全部角色攻防全满"
+    },
+    "task_1021_desc": {
+        "id": "task_1021_desc",
+        "chinese": "获胜时全部角色均未携带装备"
+    },
+    "fetters_1_name": {
+        "id": "fetters_1_name",
+        "chinese": "家仆"
+    },
+    "fetters_2_name": {
+        "id": "fetters_2_name",
+        "chinese": "狂战士"
+    },
+    "fetters_3_name": {
+        "id": "fetters_3_name",
+        "chinese": "海盗"
+    },
+    "fetters_4_name": {
+        "id": "fetters_4_name",
+        "chinese": "护士"
+    },
+    "fetters_5_name": {
+        "id": "fetters_5_name",
+        "chinese": "术士"
+    },
+    "fetters_6_name": {
+        "id": "fetters_6_name",
+        "chinese": "机械师"
+    },
+    "fetters_7_name": {
+        "id": "fetters_7_name",
+        "chinese": "健身达人"
+    },
+    "fetters_8_name": {
+        "id": "fetters_8_name",
+        "chinese": "厨师"
+    },
+    "fetters_9_name": {
+        "id": "fetters_9_name",
+        "chinese": "巫师"
+    },
+    "fetters_10_name": {
+        "id": "fetters_10_name",
+        "chinese": "祭祀"
+    },
+    "fetters_11_name": {
+        "id": "fetters_11_name",
+        "chinese": "魔术师"
+    },
+    "fetters_12_name": {
+        "id": "fetters_12_name",
+        "chinese": "中间人"
+    },
+    "fetters_13_name": {
+        "id": "fetters_13_name",
+        "chinese": "圣骑士"
+    },
+    "fetters_14_name": {
+        "id": "fetters_14_name",
+        "chinese": "铁匠"
+    },
+    "fetters_1_introductory": {
+        "id": "fetters_1_introductory",
+        "chinese": "主人，我搞卫生的时候又找到一枚金币，给你"
+    },
+    "fetters_2_introductory": {
+        "id": "fetters_2_introductory",
+        "chinese": "未战而狂者为狂战士，战斗，爽！"
+    },
+    "fetters_3_introductory": {
+        "id": "fetters_3_introductory",
+        "chinese": "海盗们从不甘心死亡，当他们在战场上阵亡时，他们会召唤炮火攻击所有敌人"
+    },
+    "fetters_4_introductory": {
+        "id": "fetters_4_introductory",
+        "chinese": "高端的治疗就是满血也能为你继续加血"
+    },
+    "fetters_5_introductory": {
+        "id": "fetters_5_introductory",
+        "chinese": "观星的术士们试图利用虚空的力量，而虚空也甘之如饴"
+    },
+    "fetters_6_introductory": {
+        "id": "fetters_6_introductory",
+        "chinese": "机械师角色会每回合修建一个最终战斗机甲，机甲在修建数4/20/40时会获得不同的效果（机甲会在全部机甲羁绊角色阵亡后出现）"
+    },
+    "fetters_7_introductory": {
+        "id": "fetters_7_introductory",
+        "chinese": "健身可能有效果，但健身有效果不太可能"
+    },
+    "fetters_8_introductory": {
+        "id": "fetters_8_introductory",
+        "chinese": "虽然只会做生菜沙拉，但已然是世界上少有的高级厨师"
+    },
+    "fetters_9_introductory": {
+        "id": "fetters_9_introductory",
+        "chinese": "巫师们会从他人的苦难中汲取力量"
+    },
+    "fetters_10_introductory": {
+        "id": "fetters_10_introductory",
+        "chinese": "祭祀们从神祗那里获得力量，每次回合开始时会强化一名随机角色"
+    },
+    "fetters_11_introductory": {
+        "id": "fetters_11_introductory",
+        "chinese": "魔法？没那么夸张，仅仅是一场魔术罢了"
+    },
+    "fetters_12_introductory": {
+        "id": "fetters_12_introductory",
+        "chinese": "中间人售卖战争的结果，并从中获益"
+    },
+    "fetters_13_introductory": {
+        "id": "fetters_13_introductory",
+        "chinese": "圣骑士角色所受到的伤害，会由全部圣骑士平均进行分摊"
+    },
+    "fetters_14_introductory": {
+        "id": "fetters_14_introductory",
+        "chinese": "万一下回合就刷出来那把神器了呢？"
+    },
+    "fetters_1_text": {
+        "id": "fetters_1_text",
+        "chinese": "2：每位家仆角色获得1金币\n3：每位家仆角色获得2金币"
+    },
+    "fetters_2_text": {
+        "id": "fetters_2_text",
+        "chinese": "2：攻击力提升3\n3：攻击力提升5\n4：攻击力提升5，生命值提升1"
+    },
+    "fetters_3_text": {
+        "id": "fetters_3_text",
+        "chinese": "2：对所有角色造成1伤害\n3：对所有角色造成2伤害\n4：对所有角色造成3伤害\n5：对所有角色造成5伤害"
+    },
+    "fetters_4_text": {
+        "id": "fetters_4_text",
+        "chinese": "2：随机一名友方单位增加5生命值\n3：随机两名友方单位增加5生命值"
+    },
+    "fetters_5_text": {
+        "id": "fetters_5_text",
+        "chinese": "2：召唤一个1/1的虚空虫\n3：召唤一个3/3的虚空虫\n4：召唤一个5/5的虚空虫"
+    },
+    "fetters_6_text": {
+        "id": "fetters_6_text",
+        "chinese": "2：增加1修建值\n3：增加2修建值\n5：增加3修建值\n6：增加4修建值"
+    },
+    "fetters_7_text": {
+        "id": "fetters_7_text",
+        "chinese": "2：额外提升1生命值\n3：额外提升1生命值和1攻击力"
+    },
+    "fetters_8_text": {
+        "id": "fetters_8_text",
+        "chinese": "2：使商店刷新免费沙拉"
+    },
+    "fetters_9_text": {
+        "id": "fetters_9_text",
+        "chinese": "2：巫师角色提升1/1的数值\n3：巫师角色提升1/2的数值\n4：巫师角色提升2/2的数值"
+    },
+    "fetters_10_text": {
+        "id": "fetters_10_text",
+        "chinese": "2：随机使一名角色+1生命值\n3：使一名角色+1/+1\n4：使一名角色+1/+2"
+    },
+    "fetters_11_text": {
+        "id": "fetters_11_text",
+        "chinese": "2：随机调换对方三名角色的属性（攻击/生命）\n4：魔术师所有棋子的血量等于血量最高的伙伴（可以是非魔术师）的属性\n6：将你的第一个棋子与对方第一个棋子交换"
+    },
+    "fetters_12_text": {
+        "id": "fetters_12_text",
+        "chinese": "2：若上一场战斗失败，获得6金币\n3：若上一场战斗失败，获得10金币\n4：若上一场战斗失败，获得15金币"
+    },
+    "fetters_13_text": {
+        "id": "fetters_13_text",
+        "chinese": "2：所受伤害-1\n3：所受伤害-2"
+    },
+    "fetters_14_text": {
+        "id": "fetters_14_text",
+        "chinese": "3：商店将会展示一把铁匠武器"
+    },
+    "skill_level1_test_1": {
+        "id": "skill_level1_test_1",
+        "chinese": "随机友方角色获得+1生命值和+1攻击力"
+    },
+    "skill_level1_test_2": {
+        "id": "skill_level1_test_2",
+        "chinese": "获得+3攻击力和+3生命值"
+    },
+    "skill_level1_test_3": {
+        "id": "skill_level1_test_3",
+        "chinese": "对敌方随机角色造成1点远程伤害"
+    },
+    "skill_level1_test_4": {
+        "id": "skill_level1_test_4",
+        "chinese": "己方全部角色+1生命值"
+    },
+    "skill_level1_test_5": {
+        "id": "skill_level1_test_5",
+        "chinese": "对敌方三名角色造成2点远程伤害"
+    },
+    "skill_level1_test_6": {
+        "id": "skill_level1_test_6",
+        "chinese": "召唤一个2/2的虚空虫"
+    },
+    "skill_level1_test_7": {
+        "id": "skill_level1_test_7",
+        "chinese": "召唤一个5/5的虚空虫"
+    },
+    "skill_level1_test_8": {
+        "id": "skill_level1_test_8",
+        "chinese": "复制前方角色的1级能力，直到下次休整开始"
+    },
+    "skill_level1_test_9": {
+        "id": "skill_level1_test_9",
+        "chinese": "使前方角色获得+1攻击力和+1生命值"
+    },
+    "skill_level1_test_10": {
+        "id": "skill_level1_test_10",
+        "chinese": "从前往后依次使所有角色获得+1攻击力，次数等于此兵种参与的战斗数"
+    },
+    "skill_level1_test_11": {
+        "id": "skill_level1_test_11",
+        "chinese": "使所有角色获得+2生命值和+2攻击力"
+    },
+    "skill_level1_test_12": {
+        "id": "skill_level1_test_12",
+        "chinese": "使其额外获得+1生命值"
+    },
+    "skill_level1_test_13": {
+        "id": "skill_level1_test_13",
+        "chinese": "获得圣盾特性（每场生效一次）"
+    },
+    "skill_level1_test_14": {
+        "id": "skill_level1_test_14",
+        "chinese": "使随机两个角色获得+1攻击和+1生命值"
+    },
+    "skill_level1_test_15": {
+        "id": "skill_level1_test_15",
+        "chinese": "获得+4攻击力"
+    },
+    "skill_level1_test_16": {
+        "id": "skill_level1_test_16",
+        "chinese": "此回合所有虚空虫获得+2攻击力值和+2生命值"
+    },
+    "skill_level1_test_17": {
+        "id": "skill_level1_test_17",
+        "chinese": "使所有伙伴获得+1攻击力和+1生命值"
+    },
+    "skill_level1_test_18": {
+        "id": "skill_level1_test_18",
+        "chinese": "使商店左列角色获得+1攻击力和+1生命值"
+    },
+    "skill_level1_test_19": {
+        "id": "skill_level1_test_19",
+        "chinese": "使己方随机一个无护盾角色获得护盾buff"
+    },
+    "skill_level1_test_20": {
+        "id": "skill_level1_test_20",
+        "chinese": "使后方角色增加5点生命值"
+    },
+    "skill_level1_test_21": {
+        "id": "skill_level1_test_21",
+        "chinese": "此单位获得装备圣剑（攻击敌人后直接致死）"
+    },
+    "skill_level1_test_22": {
+        "id": "skill_level1_test_22",
+        "chinese": "为己方所有单位增加2点生命值"
+    },
+    "skill_level1_test_23": {
+        "id": "skill_level1_test_23",
+        "chinese": "对一个随机敌人造成此兵种攻击值50%的伤害"
+    },
+    "skill_level1_test_24": {
+        "id": "skill_level1_test_24",
+        "chinese": "额外获得1金币"
+    },
+    "skill_level1_test_25": {
+        "id": "skill_level1_test_25",
+        "chinese": "对所有单位造成2点伤害"
+    },
+    "skill_level1_test_26": {
+        "id": "skill_level1_test_26",
+        "chinese": "使商店食物价格-1"
+    },
+    "skill_level1_test_27": {
+        "id": "skill_level1_test_27",
+        "chinese": "使后方角色经验值+1（临时）"
+    },
+    "skill_level1_test_28": {
+        "id": "skill_level1_test_28",
+        "chinese": "对敌方随机一名敌人造成5点伤害"
+    },
+    "skill_level1_test_29": {
+        "id": "skill_level1_test_29",
+        "chinese": "替前方单位承受此次伤害"
+    },
+    "skill_level1_test_30": {
+        "id": "skill_level1_test_30",
+        "chinese": "获得+1攻击力和+2生命值。在战斗外翻倍"
+    },
+    "skill_level1_test_31": {
+        "id": "skill_level1_test_31",
+        "chinese": "下一个休整开始时，获得+1金币。每场战斗最多生效2次"
+    },
+    "skill_level1_test_32": {
+        "id": "skill_level1_test_32",
+        "chinese": "对一个随机敌人造成2点伤害"
+    },
+    "skill_level1_test_33": {
+        "id": "skill_level1_test_33",
+        "chinese": "使后方角色获得+2生命值"
+    },
+    "skill_level1_test_34": {
+        "id": "skill_level1_test_34",
+        "chinese": "花费至多2金币，并在下回合重新获得之"
+    },
+    "skill_level1_test_35": {
+        "id": "skill_level1_test_35",
+        "chinese": "使后方角色经验值+1"
+    },
+    "skill_level1_test_36": {
+        "id": "skill_level1_test_36",
+        "chinese": "如果上一轮战斗获胜，获得2金币"
+    },
+    "skill_level1_test_37": {
+        "id": "skill_level1_test_37",
+        "chinese": "对其造成1点远程伤害"
+    },
+    "skill_level1_test_38": {
+        "id": "skill_level1_test_38",
+        "chinese": "将最后排的1名敌人推动到前排（每场战斗生效一次）"
+    },
+    "skill_level1_test_39": {
+        "id": "skill_level1_test_39",
+        "chinese": "使2名敌人位置发生改变"
+    },
+    "skill_level1_test_40": {
+        "id": "skill_level1_test_40",
+        "chinese": "对敌方所有敌人造成2点伤害"
+    },
+    "skill_level1_test_41": {
+        "id": "skill_level1_test_41",
+        "chinese": "使一个随机角色获得+1生命值"
+    },
+    "skill_level1_test_42": {
+        "id": "skill_level1_test_42",
+        "chinese": "对后方角色造成1点远程伤害"
+    },
+    "skill_level1_test_43": {
+        "id": "skill_level1_test_43",
+        "chinese": "如果场上拥有3级的角色，其获得+2攻击力和+2生命值"
+    },
+    "skill_level1_test_44": {
+        "id": "skill_level1_test_44",
+        "chinese": "使两个随机角色获得+1生命值"
+    },
+    "skill_level1_test_45": {
+        "id": "skill_level1_test_45",
+        "chinese": "对一个随机敌人造成此角色攻击20%的伤害"
+    },
+    "skill_level1_test_46": {
+        "id": "skill_level1_test_46",
+        "chinese": "金币数每比10多1，获得+1攻击力"
+    },
+    "skill_level1_test_47": {
+        "id": "skill_level1_test_47",
+        "chinese": "如果有空位，下回合获得+2金币"
+    },
+    "skill_level1_test_48": {
+        "id": "skill_level1_test_48",
+        "chinese": "本回合每花费5金币，就使一名随机角色获得+1攻击"
+    },
+    "skill_level1_test_49": {
+        "id": "skill_level1_test_49",
+        "chinese": "召唤鲨女仆（和（草原系中间人角色）（24）各一只"
+    },
+    "skill_level1_test_50": {
+        "id": "skill_level1_test_50",
+        "chinese": "使其获得+2攻击力和+2生命值"
+    },
+    "skill_level1_test_51": {
+        "id": "skill_level1_test_51",
+        "chinese": "前方角色的能力额外触发一次（视为1级效果）"
+    },
+    "skill_level1_test_52": {
+        "id": "skill_level1_test_52",
+        "chinese": "使攻击等于生命+1"
+    },
+    "skill_level1_test_53": {
+        "id": "skill_level1_test_53",
+        "chinese": "使所有有装备的角色获得+2攻击力和+2生命值"
+    },
+    "skill_level1_test_54": {
+        "id": "skill_level1_test_54",
+        "chinese": "使一名敌人获得虚弱特性"
+    },
+    "skill_level1_test_101": {
+        "id": "skill_level1_test_101",
+        "chinese": "对敌人旁边的角色造成5点额外伤害"
+    },
+    "skill_level2_test_1": {
+        "id": "skill_level2_test_1",
+        "chinese": "随机友方角色获得+2生命值和+2攻击力"
+    },
+    "skill_level2_test_2": {
+        "id": "skill_level2_test_2",
+        "chinese": "获得+4攻击力和+4生命值"
+    },
+    "skill_level2_test_3": {
+        "id": "skill_level2_test_3",
+        "chinese": "对敌方随机角色造成2点远程伤害"
+    },
+    "skill_level2_test_4": {
+        "id": "skill_level2_test_4",
+        "chinese": "己方全部角色+2生命值"
+    },
+    "skill_level2_test_5": {
+        "id": "skill_level2_test_5",
+        "chinese": "对敌方三名角色造成3点远程伤害"
+    },
+    "skill_level2_test_6": {
+        "id": "skill_level2_test_6",
+        "chinese": "召唤一个3/3的虚空虫"
+    },
+    "skill_level2_test_7": {
+        "id": "skill_level2_test_7",
+        "chinese": "召唤一个6/6的虚空虫"
+    },
+    "skill_level2_test_8": {
+        "id": "skill_level2_test_8",
+        "chinese": "复制前方角色的2级能力，直到下次休整开始"
+    },
+    "skill_level2_test_9": {
+        "id": "skill_level2_test_9",
+        "chinese": "使前方角色获得+2攻击力和+2生命值"
+    },
+    "skill_level2_test_10": {
+        "id": "skill_level2_test_10",
+        "chinese": "从前往后依次使所有角色获得+2攻击力，次数等于此兵种参与的战斗数"
+    },
+    "skill_level2_test_11": {
+        "id": "skill_level2_test_11",
+        "chinese": "使所有角色获得+3生命值和+3攻击力"
+    },
+    "skill_level2_test_12": {
+        "id": "skill_level2_test_12",
+        "chinese": "使其额外获得+2生命值"
+    },
+    "skill_level2_test_13": {
+        "id": "skill_level2_test_13",
+        "chinese": "获得圣盾特性（每场生效两次）"
+    },
+    "skill_level2_test_14": {
+        "id": "skill_level2_test_14",
+        "chinese": "使随机两个角色获得+2攻击和+2生命值"
+    },
+    "skill_level2_test_15": {
+        "id": "skill_level2_test_15",
+        "chinese": "获得+6攻击力"
+    },
+    "skill_level2_test_16": {
+        "id": "skill_level2_test_16",
+        "chinese": "此回合所有虚空虫获得+3攻击力和+3生命值"
+    },
+    "skill_level2_test_17": {
+        "id": "skill_level2_test_17",
+        "chinese": "使所有伙伴获得+2攻击力和+2生命值"
+    },
+    "skill_level2_test_18": {
+        "id": "skill_level2_test_18",
+        "chinese": "使商店左列角色获得+2攻击力和+2生命值"
+    },
+    "skill_level2_test_19": {
+        "id": "skill_level2_test_19",
+        "chinese": "使己方随机一个无护盾角色获得二级护盾buff"
+    },
+    "skill_level2_test_20": {
+        "id": "skill_level2_test_20",
+        "chinese": "使后方角色增加8点生命值"
+    },
+    "skill_level2_test_21": {
+        "id": "skill_level2_test_21",
+        "chinese": "此单位获得装备圣剑（攻击敌人后直接致死）"
+    },
+    "skill_level2_test_22": {
+        "id": "skill_level2_test_22",
+        "chinese": "为己方所有单位增加3点生命值"
+    },
+    "skill_level2_test_23": {
+        "id": "skill_level2_test_23",
+        "chinese": "对一个随机敌人造成此兵种攻击值60%的伤害"
+    },
+    "skill_level2_test_24": {
+        "id": "skill_level2_test_24",
+        "chinese": "额外获得2金币"
+    },
+    "skill_level2_test_25": {
+        "id": "skill_level2_test_25",
+        "chinese": "对所有单位造成3点伤害"
+    },
+    "skill_level2_test_26": {
+        "id": "skill_level2_test_26",
+        "chinese": "使商店食物价格-2"
+    },
+    "skill_level2_test_27": {
+        "id": "skill_level2_test_27",
+        "chinese": "使后方角色经验值+2（临时）"
+    },
+    "skill_level2_test_28": {
+        "id": "skill_level2_test_28",
+        "chinese": "对敌方随机一名敌人造成6点伤害"
+    },
+    "skill_level2_test_29": {
+        "id": "skill_level2_test_29",
+        "chinese": "替前方单位承受此次伤害，并额外减免2伤害"
+    },
+    "skill_level2_test_30": {
+        "id": "skill_level2_test_30",
+        "chinese": "获得+2攻击力和+3生命值。在战斗外翻倍"
+    },
+    "skill_level2_test_31": {
+        "id": "skill_level2_test_31",
+        "chinese": "下一个休整开始时，获得+1金币。每场战斗最多生效4次"
+    },
+    "skill_level2_test_32": {
+        "id": "skill_level2_test_32",
+        "chinese": "对一个随机敌人造成3点伤害"
+    },
+    "skill_level2_test_33": {
+        "id": "skill_level2_test_33",
+        "chinese": "使后方角色获得+3生命值"
+    },
+    "skill_level2_test_34": {
+        "id": "skill_level2_test_34",
+        "chinese": "花费至多3金币，并在下回合重新获得之"
+    },
+    "skill_level2_test_35": {
+        "id": "skill_level2_test_35",
+        "chinese": "使后方角色和随机一名角色经验值+2"
+    },
+    "skill_level2_test_36": {
+        "id": "skill_level2_test_36",
+        "chinese": "如果上一轮战斗获胜，获得3金币"
+    },
+    "skill_level2_test_37": {
+        "id": "skill_level2_test_37",
+        "chinese": "对其造成2点远程伤害"
+    },
+    "skill_level2_test_38": {
+        "id": "skill_level2_test_38",
+        "chinese": "将最后排的2名敌人推动到前排（每场战斗生效一次）"
+    },
+    "skill_level2_test_39": {
+        "id": "skill_level2_test_39",
+        "chinese": "使3名敌人位置发生改变"
+    },
+    "skill_level2_test_40": {
+        "id": "skill_level2_test_40",
+        "chinese": "对敌方所有敌人造成3点伤害"
+    },
+    "skill_level2_test_41": {
+        "id": "skill_level2_test_41",
+        "chinese": "使一个随机角色获得+2生命值"
+    },
+    "skill_level2_test_42": {
+        "id": "skill_level2_test_42",
+        "chinese": "对后方角色造成两次1点远程伤害"
+    },
+    "skill_level2_test_43": {
+        "id": "skill_level2_test_43",
+        "chinese": "如果场上拥有3级的角色，其获得+3攻击力和+3生命值"
+    },
+    "skill_level2_test_44": {
+        "id": "skill_level2_test_44",
+        "chinese": "使两个随机角色获得+2生命值"
+    },
+    "skill_level2_test_45": {
+        "id": "skill_level2_test_45",
+        "chinese": "对一个随机敌人造成此角色攻击30%的伤害"
+    },
+    "skill_level2_test_46": {
+        "id": "skill_level2_test_46",
+        "chinese": "金币数每比10多1，获得+1攻击力和+1生命值"
+    },
+    "skill_level2_test_47": {
+        "id": "skill_level2_test_47",
+        "chinese": "如果有空位，下回合获得+3金币"
+    },
+    "skill_level2_test_48": {
+        "id": "skill_level2_test_48",
+        "chinese": "本回合每花费5金币，就使一名随机角色获得+2攻击"
+    },
+    "skill_level2_test_49": {
+        "id": "skill_level2_test_49",
+        "chinese": "召唤二级鲨女仆和二级（草原系中间人角色）（24）各一只"
+    },
+    "skill_level2_test_50": {
+        "id": "skill_level2_test_50",
+        "chinese": "使其获得+3攻击力和+3生命值"
+    },
+    "skill_level2_test_51": {
+        "id": "skill_level2_test_51",
+        "chinese": "前方角色的能力额外触发一次（视为2级效果）"
+    },
+    "skill_level2_test_52": {
+        "id": "skill_level2_test_52",
+        "chinese": "使攻击等于生命+2"
+    },
+    "skill_level2_test_53": {
+        "id": "skill_level2_test_53",
+        "chinese": "使所有有装备的伙伴获得+3攻击力和+3生命值"
+    },
+    "skill_level2_test_54": {
+        "id": "skill_level2_test_54",
+        "chinese": "使两名敌人获得虚弱特性"
+    },
+    "skill_level2_test_101": {
+        "id": "skill_level2_test_101",
+        "chinese": "对敌人身旁和身后的角色造成五点额外伤害"
+    },
+    "skill_level3_test_1": {
+        "id": "skill_level3_test_1",
+        "chinese": "随机友方角色获得+3生命值和+3攻击力"
+    },
+    "skill_level3_test_2": {
+        "id": "skill_level3_test_2",
+        "chinese": "获得+5攻击力和+5生命值"
+    },
+    "skill_level3_test_3": {
+        "id": "skill_level3_test_3",
+        "chinese": "对敌方随机角色造成3点远程伤害"
+    },
+    "skill_level3_test_4": {
+        "id": "skill_level3_test_4",
+        "chinese": "己方全部角色+3生命值"
+    },
+    "skill_level3_test_5": {
+        "id": "skill_level3_test_5",
+        "chinese": "对敌方三名角色造成4点远程伤害"
+    },
+    "skill_level3_test_6": {
+        "id": "skill_level3_test_6",
+        "chinese": "召唤一个4/4的虚空虫"
+    },
+    "skill_level3_test_7": {
+        "id": "skill_level3_test_7",
+        "chinese": "召唤一个8/8的虚空虫"
+    },
+    "skill_level3_test_8": {
+        "id": "skill_level3_test_8",
+        "chinese": "复制前方角色的3级能力，直到下次休整开始"
+    },
+    "skill_level3_test_9": {
+        "id": "skill_level3_test_9",
+        "chinese": "使前方角色获得+3攻击力和+3生命值"
+    },
+    "skill_level3_test_10": {
+        "id": "skill_level3_test_10",
+        "chinese": "从前往后依次使所有角色获得+3攻击力，次数等于此兵种参与的战斗数"
+    },
+    "skill_level3_test_11": {
+        "id": "skill_level3_test_11",
+        "chinese": "使所有角色获得+4生命值和+4攻击力"
+    },
+    "skill_level3_test_12": {
+        "id": "skill_level3_test_12",
+        "chinese": "使其额外获得+3生命值"
+    },
+    "skill_level3_test_13": {
+        "id": "skill_level3_test_13",
+        "chinese": "获得圣盾特性（每场生效三次）"
+    },
+    "skill_level3_test_14": {
+        "id": "skill_level3_test_14",
+        "chinese": "使随机两个角色获得+3攻击和+3生命值"
+    },
+    "skill_level3_test_15": {
+        "id": "skill_level3_test_15",
+        "chinese": "获得+6攻击力和+2生命值"
+    },
+    "skill_level3_test_16": {
+        "id": "skill_level3_test_16",
+        "chinese": "此回合所有虚空虫获得+4攻击力和+4生命值"
+    },
+    "skill_level3_test_17": {
+        "id": "skill_level3_test_17",
+        "chinese": "使所有伙伴获得+3攻击力和+3生命值"
+    },
+    "skill_level3_test_18": {
+        "id": "skill_level3_test_18",
+        "chinese": "使商店左列角色获得+3攻击力和+3生命值"
+    },
+    "skill_level3_test_19": {
+        "id": "skill_level3_test_19",
+        "chinese": "使己方随机一个无护盾角色获得三级护盾buff"
+    },
+    "skill_level3_test_20": {
+        "id": "skill_level3_test_20",
+        "chinese": "使后方角色增加+2/+4"
+    },
+    "skill_level3_test_21": {
+        "id": "skill_level3_test_21",
+        "chinese": "此单位获得装备圣剑（攻击敌人后直接致死）"
+    },
+    "skill_level3_test_22": {
+        "id": "skill_level3_test_22",
+        "chinese": "为己方所有单位增加4点生命值"
+    },
+    "skill_level3_test_23": {
+        "id": "skill_level3_test_23",
+        "chinese": "对一个随机敌人造成此兵种攻击值70%的伤害"
+    },
+    "skill_level3_test_24": {
+        "id": "skill_level3_test_24",
+        "chinese": "额外获得3金币"
+    },
+    "skill_level3_test_25": {
+        "id": "skill_level3_test_25",
+        "chinese": "对所有单位造成4点伤害"
+    },
+    "skill_level3_test_26": {
+        "id": "skill_level3_test_26",
+        "chinese": "使商店食物价格-3"
+    },
+    "skill_level3_test_27": {
+        "id": "skill_level3_test_27",
+        "chinese": "使后方角色经验值+2（临时）"
+    },
+    "skill_level3_test_28": {
+        "id": "skill_level3_test_28",
+        "chinese": "对敌方随机一名敌人造成7点伤害"
+    },
+    "skill_level3_test_29": {
+        "id": "skill_level3_test_29",
+        "chinese": "替前方单位承受此次伤害，并额外减免4伤害"
+    },
+    "skill_level3_test_30": {
+        "id": "skill_level3_test_30",
+        "chinese": "获得+3攻击力和+4生命值。在战斗外翻倍"
+    },
+    "skill_level3_test_31": {
+        "id": "skill_level3_test_31",
+        "chinese": "下一个休整开始时，获得+2金币。每场战斗最多生效4次"
+    },
+    "skill_level3_test_32": {
+        "id": "skill_level3_test_32",
+        "chinese": "对一个随机敌人造成4点伤害"
+    },
+    "skill_level3_test_33": {
+        "id": "skill_level3_test_33",
+        "chinese": "使后方角色获得+4生命值"
+    },
+    "skill_level3_test_34": {
+        "id": "skill_level3_test_34",
+        "chinese": "花费至多4金币，并在下回合重新获得之"
+    },
+    "skill_level3_test_35": {
+        "id": "skill_level3_test_35",
+        "chinese": "使后方角色和随机两名角色经验值+3"
+    },
+    "skill_level3_test_36": {
+        "id": "skill_level3_test_36",
+        "chinese": "如果上一轮战斗获胜，获得4金币"
+    },
+    "skill_level3_test_37": {
+        "id": "skill_level3_test_37",
+        "chinese": "对其造成3点远程伤害"
+    },
+    "skill_level3_test_38": {
+        "id": "skill_level3_test_38",
+        "chinese": "将最后排的3名敌人推动到前排（每场战斗生效一次）"
+    },
+    "skill_level3_test_39": {
+        "id": "skill_level3_test_39",
+        "chinese": "使4名敌人位置发生改变"
+    },
+    "skill_level3_test_40": {
+        "id": "skill_level3_test_40",
+        "chinese": "对敌方所有敌人造成4点伤害"
+    },
+    "skill_level3_test_41": {
+        "id": "skill_level3_test_41",
+        "chinese": "使一个随机角色获得+3生命值"
+    },
+    "skill_level3_test_42": {
+        "id": "skill_level3_test_42",
+        "chinese": "对后方角色造成三次1点远程伤害"
+    },
+    "skill_level3_test_43": {
+        "id": "skill_level3_test_43",
+        "chinese": "如果场上拥有3级的角色，其获得+4攻击力和+4生命值"
+    },
+    "skill_level3_test_44": {
+        "id": "skill_level3_test_44",
+        "chinese": "使两个随机角色获得+3生命值"
+    },
+    "skill_level3_test_45": {
+        "id": "skill_level3_test_45",
+        "chinese": "对一个随机敌人造成此角色攻击40%的伤害"
+    },
+    "skill_level3_test_46": {
+        "id": "skill_level3_test_46",
+        "chinese": "金币数每比10多1，获得+2攻击力和+1生命值"
+    },
+    "skill_level3_test_47": {
+        "id": "skill_level3_test_47",
+        "chinese": "如果有空位，下回合获得+4金币"
+    },
+    "skill_level3_test_48": {
+        "id": "skill_level3_test_48",
+        "chinese": "本回合每花费5金币，就使一名随机角色获得+3攻击"
+    },
+    "skill_level3_test_49": {
+        "id": "skill_level3_test_49",
+        "chinese": "召唤三级鲨女仆和三级（草原系中间人角色）（24）各一只"
+    },
+    "skill_level3_test_50": {
+        "id": "skill_level3_test_50",
+        "chinese": "使其获得+4攻击力和+4生命值"
+    },
+    "skill_level3_test_51": {
+        "id": "skill_level3_test_51",
+        "chinese": "前方角色的能力额外触发一次（视为3级效果）"
+    },
+    "skill_level3_test_52": {
+        "id": "skill_level3_test_52",
+        "chinese": "使攻击等于生命+3"
+    },
+    "skill_level3_test_53": {
+        "id": "skill_level3_test_53",
+        "chinese": "使所有有装备的伙伴获得+3攻击力和+3生命值"
+    },
+    "skill_level3_test_54": {
+        "id": "skill_level3_test_54",
+        "chinese": "使三名敌人获得虚弱特性"
+    },
+    "skill_level3_test_101": {
+        "id": "skill_level3_test_101",
+        "chinese": ""
+    },
+    "skill_timeing_text_1": {
+        "id": "skill_timeing_text_1",
+        "chinese": "购买时"
+    },
+    "skill_timeing_text_2": {
+        "id": "skill_timeing_text_2",
+        "chinese": "击倒后"
+    },
+    "skill_timeing_text_3": {
+        "id": "skill_timeing_text_3",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_4": {
+        "id": "skill_timeing_text_4",
+        "chinese": "受伤时"
+    },
+    "skill_timeing_text_5": {
+        "id": "skill_timeing_text_5",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_6": {
+        "id": "skill_timeing_text_6",
+        "chinese": "晕厥时"
+    },
+    "skill_timeing_text_7": {
+        "id": "skill_timeing_text_7",
+        "chinese": "晕厥时"
+    },
+    "skill_timeing_text_8": {
+        "id": "skill_timeing_text_8",
+        "chinese": "休整结束时"
+    },
+    "skill_timeing_text_9": {
+        "id": "skill_timeing_text_9",
+        "chinese": "休整结束时"
+    },
+    "skill_timeing_text_10": {
+        "id": "skill_timeing_text_10",
+        "chinese": "出售时"
+    },
+    "skill_timeing_text_11": {
+        "id": "skill_timeing_text_11",
+        "chinese": "升级时"
+    },
+    "skill_timeing_text_12": {
+        "id": "skill_timeing_text_12",
+        "chinese": "右方吃掉食物时"
+    },
+    "skill_timeing_text_13": {
+        "id": "skill_timeing_text_13",
+        "chinese": "受伤时"
+    },
+    "skill_timeing_text_14": {
+        "id": "skill_timeing_text_14",
+        "chinese": "吃掉食物时"
+    },
+    "skill_timeing_text_15": {
+        "id": "skill_timeing_text_15",
+        "chinese": "受伤时"
+    },
+    "skill_timeing_text_16": {
+        "id": "skill_timeing_text_16",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_17": {
+        "id": "skill_timeing_text_17",
+        "chinese": "晕厥时"
+    },
+    "skill_timeing_text_18": {
+        "id": "skill_timeing_text_18",
+        "chinese": "休整开始时"
+    },
+    "skill_timeing_text_19": {
+        "id": "skill_timeing_text_19",
+        "chinese": "晕厥时"
+    },
+    "skill_timeing_text_20": {
+        "id": "skill_timeing_text_20",
+        "chinese": "晕厥时"
+    },
+    "skill_timeing_text_21": {
+        "id": "skill_timeing_text_21",
+        "chinese": "购买时"
+    },
+    "skill_timeing_text_22": {
+        "id": "skill_timeing_text_22",
+        "chinese": "友方攻击三次时"
+    },
+    "skill_timeing_text_23": {
+        "id": "skill_timeing_text_23",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_24": {
+        "id": "skill_timeing_text_24",
+        "chinese": "出售时"
+    },
+    "skill_timeing_text_25": {
+        "id": "skill_timeing_text_25",
+        "chinese": "受伤时"
+    },
+    "skill_timeing_text_26": {
+        "id": "skill_timeing_text_26",
+        "chinese": "休整开始时"
+    },
+    "skill_timeing_text_27": {
+        "id": "skill_timeing_text_27",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_28": {
+        "id": "skill_timeing_text_28",
+        "chinese": "友方攻击三次后"
+    },
+    "skill_timeing_text_29": {
+        "id": "skill_timeing_text_29",
+        "chinese": "前方伙伴受伤时"
+    },
+    "skill_timeing_text_30": {
+        "id": "skill_timeing_text_30",
+        "chinese": "伙伴晕厥时"
+    },
+    "skill_timeing_text_31": {
+        "id": "skill_timeing_text_31",
+        "chinese": "攻击前"
+    },
+    "skill_timeing_text_32": {
+        "id": "skill_timeing_text_32",
+        "chinese": "受伤时"
+    },
+    "skill_timeing_text_33": {
+        "id": "skill_timeing_text_33",
+        "chinese": "晕厥时"
+    },
+    "skill_timeing_text_34": {
+        "id": "skill_timeing_text_34",
+        "chinese": "休整结束时"
+    },
+    "skill_timeing_text_35": {
+        "id": "skill_timeing_text_35",
+        "chinese": "晕厥时"
+    },
+    "skill_timeing_text_36": {
+        "id": "skill_timeing_text_36",
+        "chinese": "休整开始时"
+    },
+    "skill_timeing_text_37": {
+        "id": "skill_timeing_text_37",
+        "chinese": "敌人被召唤或推动时"
+    },
+    "skill_timeing_text_38": {
+        "id": "skill_timeing_text_38",
+        "chinese": "伙伴晕厥时"
+    },
+    "skill_timeing_text_39": {
+        "id": "skill_timeing_text_39",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_40": {
+        "id": "skill_timeing_text_40",
+        "chinese": "击倒时"
+    },
+    "skill_timeing_text_41": {
+        "id": "skill_timeing_text_41",
+        "chinese": "伙伴被出售时"
+    },
+    "skill_timeing_text_42": {
+        "id": "skill_timeing_text_42",
+        "chinese": "攻击前"
+    },
+    "skill_timeing_text_43": {
+        "id": "skill_timeing_text_43",
+        "chinese": "休整结束时"
+    },
+    "skill_timeing_text_44": {
+        "id": "skill_timeing_text_44",
+        "chinese": "出售时"
+    },
+    "skill_timeing_text_45": {
+        "id": "skill_timeing_text_45",
+        "chinese": "前方伙伴攻击时"
+    },
+    "skill_timeing_text_46": {
+        "id": "skill_timeing_text_46",
+        "chinese": "休整开始时"
+    },
+    "skill_timeing_text_47": {
+        "id": "skill_timeing_text_47",
+        "chinese": "休整结束时"
+    },
+    "skill_timeing_text_48": {
+        "id": "skill_timeing_text_48",
+        "chinese": "休整结束时"
+    },
+    "skill_timeing_text_49": {
+        "id": "skill_timeing_text_49",
+        "chinese": "出售时"
+    },
+    "skill_timeing_text_50": {
+        "id": "skill_timeing_text_50",
+        "chinese": "伙伴被召唤时"
+    },
+    "skill_timeing_text_51": {
+        "id": "skill_timeing_text_51",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_52": {
+        "id": "skill_timeing_text_52",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_53": {
+        "id": "skill_timeing_text_53",
+        "chinese": "休整结束时"
+    },
+    "skill_timeing_text_54": {
+        "id": "skill_timeing_text_54",
+        "chinese": "战斗开始时"
+    },
+    "skill_timeing_text_101": {
+        "id": "skill_timeing_text_101",
+        "chinese": "攻击后"
+    }
+}

@@ -48,12 +48,46 @@ namespace Player
             player_quest_Module.on_confirm_quest_victory += Player_quest_Module_on_confirm_quest_victory;
             player_quest_Module.on_get_quest_shop_data += Player_quest_Module_on_get_quest_shop_data;
             player_quest_Module.on_check_finish_pve_level += Player_quest_Module_on_check_finish_pve_level;
+            player_quest_Module.on_start_quest_shop_ready1 += Player_quest_Module_on_start_quest_shop_ready1;
 
             player_shop_Module = new();
             player_shop_Module.on_buy_card_packet += Player_shop_Module_on_buy_card_packet;
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Player_quest_Module_on_start_quest_shop_ready1(int quest)
+        {
+            Log.Log.trace("on_start_quest_ready begin!");
+
+            try
+            {
+                var rsp = player_quest_Module.rsp as player_quest_start_quest_shop_ready_rsp;
+                var uuid = Hub.Hub._gates.current_client_uuid;
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                if (_avatar != null)
+                {
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    var (err, eventIdList) = _data.Data.StartQuestReady1(quest, uuid, client_mng.BattleClientCaller);
+                    Log.Log.trace("on_start_quest_ready quest:{2} err:{0} eventId List:{1}", err, eventIdList, _data.Data.Info().quest);
+                    if (err == em_error.success)
+                    {
+                        Log.Log.trace("on_start_quest_ready eventId List:{0}", eventIdList.ToJson());
+                        rsp.rsp(_data.Data.TmpBattleShopPlayer.BattleData, _data.Data.TmpBattleShopPlayer.ShopData, eventIdList);
+                    }
+                    else
+                    {
+                        rsp.err((int)err);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err($"Player_quest_Module_on_start_quest_ready err:{ex}");
+            }
+
+            Log.Log.trace("on_start_quest_ready end!");
         }
 
         private async void Player_quest_Module_on_check_finish_pve_level()
@@ -87,12 +121,18 @@ namespace Player
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _data = _avatar.get_real_hosting_data<PlayerInfo>();
 
-                _data.Data.BattleShopPlayer.evs.Add(new shop_event()
+                var BattleShopPlayer = _data.Data.battleShopPlayer;
+                if (_data.Data.TmpBattleShopPlayer != null)
+                {
+                    BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                }
+
+                BattleShopPlayer.evs.Add(new shop_event()
                 {
                     ev = EMRoleShopEvent.end_round
                 });
-                _data.Data.BattleShopPlayer.clear_skill_tag();
-                _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
+                BattleShopPlayer.clear_skill_tag();
+                BattleShopPlayer.do_skill(_data.Data.GetStage());
 
                 rsp.rsp();
             }
@@ -113,7 +153,12 @@ namespace Player
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _data = _avatar.get_real_hosting_data<PlayerInfo>();
 
-                rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, _data.Data.BattleShopPlayer.check_fetters());
+                var BattleShopPlayer = _data.Data.battleShopPlayer;
+                if (_data.Data.TmpBattleShopPlayer != null)
+                {
+                    BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                }
+                rsp.rsp(BattleShopPlayer.BattleData, BattleShopPlayer.ShopData, BattleShopPlayer.check_fetters());
             }
             catch (System.Exception ex)
             {
@@ -131,9 +176,14 @@ namespace Player
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                _data.Data.BattleShopPlayer.freeze(shop_index, index, is_freeze);
 
-                rsp.rsp(_data.Data.BattleShopPlayer.ShopData);
+                var BattleShopPlayer = _data.Data.battleShopPlayer;
+                if (_data.Data.TmpBattleShopPlayer != null)
+                {
+                    BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                }
+                BattleShopPlayer.freeze(shop_index, index, is_freeze);
+                rsp.rsp(BattleShopPlayer.ShopData);
             }
             catch (System.Exception ex)
             {
@@ -154,11 +204,21 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    if (_data.Data.Info().PVELevelIndex < _data.Data.PVELevelCfg.Level.Count)
+
+                    var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    var PVELevelCfgImpl = _data.Data.PVELevelCfg;
+                    var PVELevelIndexImpl = _data.Data.Info().PVELevelIndex;
+                    if (_data.Data.TmpBattleShopPlayer != null)
                     {
-                        if (config.Config.PVERoundConfigs.TryGetValue(_data.Data.PVELevelCfg.Level[_data.Data.Info().PVELevelIndex], out var rcfg))
+                        BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                        PVELevelCfgImpl = _data.Data.TmpPVELevelCfg;
+                        PVELevelIndexImpl = _data.Data.TmpPVELevelIndex;
+                    }
+                    if (PVELevelIndexImpl < PVELevelCfgImpl.Level.Count)
+                    {
+                        if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfgImpl.Level[PVELevelIndexImpl], out var rcfg))
                         {
-                            rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, rcfg.EventID);
+                            rsp.rsp(BattleShopPlayer.BattleData, BattleShopPlayer.ShopData, rcfg.EventID);
                         }
                     }
                     else
@@ -188,13 +248,19 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    _data.Data.BattleShopPlayer.lastBattleResults = is_victory;
+
+                    var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    if (_data.Data.TmpBattleShopPlayer != null)
+                    {
+                        BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                    }
+                    BattleShopPlayer.lastBattleResults = is_victory;
                     if (is_victory == BattleVictory.faild)
                     {
-                        _data.Data.BattleShopPlayer.BattleData.faild--;
+                        BattleShopPlayer.BattleData.faild--;
                     }
 
-                    if (_data.Data.BattleShopPlayer.BattleData.faild > 0)
+                    if (BattleShopPlayer.BattleData.faild > 0)
                     {
                         _data.Data.Info().PVELevelIndex++;
                         if (_data.Data.Info().PVELevelIndex >= _data.Data.PVELevelCfg.Level.Count)
@@ -253,8 +319,13 @@ namespace Player
                     }
                     else
                     {
-                        _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
-                        rsp.rsp(_data.Data.BattleShopPlayer.ShopData, _data.Data.BattleShopPlayer.BattleData);
+                        var BattleShopPlayer = _data.Data.battleShopPlayer;
+                        if (_data.Data.TmpBattleShopPlayer != null)
+                        {
+                            BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                        }
+                        BattleShopPlayer.do_skill(_data.Data.GetStage());
+                        rsp.rsp(BattleShopPlayer.ShopData, BattleShopPlayer.BattleData);
                     }
                 }
             }
@@ -279,9 +350,14 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    _data.Data.BattleShopPlayer.move(role_index1, role_index2);
 
-                    rsp.rsp(_data.Data.BattleShopPlayer.BattleData);
+                    var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    if (_data.Data.TmpBattleShopPlayer != null)
+                    {
+                        BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                    }
+                    BattleShopPlayer.move(role_index1, role_index2);
+                    rsp.rsp(BattleShopPlayer.BattleData);
                 }
             }
             catch (System.Exception ex)
@@ -305,9 +381,15 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    if (_data.Data.BattleShopPlayer.sale_role(index, _data.Data.GetStage()))
+
+                    var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    if (_data.Data.TmpBattleShopPlayer != null)
                     {
-                        rsp.rsp(_data.Data.BattleShopPlayer.BattleData);
+                        BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                    }
+                    if (BattleShopPlayer.sale_role(index, _data.Data.GetStage()))
+                    {
+                        rsp.rsp(BattleShopPlayer.BattleData);
                     }
                     else
                     {
@@ -338,8 +420,14 @@ namespace Player
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     var err = _data.Data.buy(_avatar.ClientUUID, shop_index, index, role_index);
-                    _data.Data.BattleShopPlayer.do_skill(_data.Data.GetStage());
-                    rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData);
+
+                    var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    if (_data.Data.TmpBattleShopPlayer != null)
+                    {
+                        BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                    }
+                    BattleShopPlayer.do_skill(_data.Data.GetStage());
+                    rsp.rsp(BattleShopPlayer.BattleData, BattleShopPlayer.ShopData);
                 }
             }
             catch (System.Exception ex)
@@ -362,7 +450,12 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.StartQuestBattle());
+                    var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    if (_data.Data.TmpBattleShopPlayer != null)
+                    {
+                        BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                    }
+                    rsp.rsp(BattleShopPlayer.BattleData, _data.Data.StartQuestBattle());
                 }
             }
             catch (System.Exception ex)
@@ -386,7 +479,12 @@ namespace Player
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
                     _data.Data.StartQuestShop(event_id);
-                    rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData);
+                    var BattleShopPlayer = _data.Data.battleShopPlayer;
+                    if (_data.Data.TmpBattleShopPlayer != null)
+                    {
+                        BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                    }
+                    rsp.rsp(BattleShopPlayer.BattleData, BattleShopPlayer.ShopData);
                 }
             }
             catch (System.Exception ex)
@@ -409,12 +507,17 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-                    var (err, eventIdList) = _data.Data.StartQuestReady(0, uuid, client_mng.BattleClientCaller);
+                    var (err, eventIdList) = _data.Data.StartQuestReady(uuid, client_mng.BattleClientCaller);
                     Log.Log.trace("on_start_quest_ready quest:{2} err:{0} eventId List:{1}", err, eventIdList, _data.Data.Info().quest);
                     if (err == em_error.success)
                     {
                         Log.Log.trace("on_start_quest_ready eventId List:{0}", eventIdList.ToJson());
-                        rsp.rsp(_data.Data.BattleShopPlayer.BattleData, _data.Data.BattleShopPlayer.ShopData, eventIdList);
+                        var BattleShopPlayer = _data.Data.battleShopPlayer;
+                        if (_data.Data.TmpBattleShopPlayer != null)
+                        {
+                            BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
+                        }
+                        rsp.rsp(BattleShopPlayer.BattleData, BattleShopPlayer.ShopData, eventIdList);
                     }
                     else
                     {
