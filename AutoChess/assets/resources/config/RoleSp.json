@@ -212,7 +212,7 @@
         "intensifierColony": "skill_0010",
         "Admission": "null",
         "UseSkill": "skill_0007",
-        "OnSkill": "skill_0021;career_008",
+        "OnSkill": "skill_0021;null",
         "Projectiles": "skill_0008_7;skill_0008"
     },
     "100025": {
@@ -275,7 +275,7 @@
         "intensifierColony": "skill_0010",
         "Admission": "null",
         "UseSkill": "null",
-        "OnSkill": "skill_0021;career_008",
+        "OnSkill": "skill_0021;null",
         "Projectiles": "skill_0008_7;skill_0008"
     },
     "100032": {

@@ -1,219 +1,315 @@
 {
     "role_100001_name": {
         "id": "role_100001_name",
-        "chinese": "暂无"
+        "chinese": "鲨女仆"
     },
     "role_100002_name": {
         "id": "role_100002_name",
-        "chinese": "暂无"
+        "chinese": "银龙.四海庇佑"
     },
     "role_100003_name": {
         "id": "role_100003_name",
-        "chinese": "暂无"
+        "chinese": "见习炮手"
     },
     "role_100004_name": {
         "id": "role_100004_name",
-        "chinese": "暂无"
+        "chinese": "兔兔护士"
     },
     "role_100005_name": {
         "id": "role_100005_name",
-        "chinese": "暂无"
+        "chinese": "船长.杰克"
     },
     "role_100006_name": {
         "id": "role_100006_name",
-        "chinese": "暂无"
+        "chinese": "海兽祭祀"
     },
     "role_100007_name": {
         "id": "role_100007_name",
-        "chinese": "暂无"
+        "chinese": "渊海长老"
     },
     "role_100008_name": {
         "id": "role_100008_name",
-        "chinese": "暂无"
+        "chinese": "东海博士"
     },
     "role_100009_name": {
         "id": "role_100009_name",
-        "chinese": "暂无"
+        "chinese": "沙滩教练"
     },
     "role_100010_name": {
         "id": "role_100010_name",
-        "chinese": "暂无"
+        "chinese": "摸鱼鼠"
     },
     "role_100011_name": {
         "id": "role_100011_name",
-        "chinese": "暂无"
+        "chinese": "陷阱修理师"
     },
     "role_100012_name": {
         "id": "role_100012_name",
-        "chinese": "暂无"
+        "chinese": "卓尔.老独眼"
     },
     "role_100013_name": {
         "id": "role_100013_name",
-        "chinese": "暂无"
+        "chinese": "莉莉丝"
     },
     "role_100014_name": {
         "id": "role_100014_name",
-        "chinese": "暂无"
+        "chinese": "皇室主厨"
     },
     "role_100015_name": {
         "id": "role_100015_name",
-        "chinese": "暂无"
+        "chinese": "二副.琼斯"
     },
     "role_100016_name": {
         "id": "role_100016_name",
-        "chinese": "暂无"
+        "chinese": "虚空先知"
     },
     "role_100017_name": {
         "id": "role_100017_name",
-        "chinese": "暂无"
+        "chinese": "沙暴祭祀"
     },
     "role_100018_name": {
         "id": "role_100018_name",
-        "chinese": "暂无"
+        "chinese": "沙漠魔术师"
     },
     "role_100019_name": {
         "id": "role_100019_name",
-        "chinese": "暂无"
+        "chinese": "贵族骑士"
     },
     "role_100020_name": {
         "id": "role_100020_name",
-        "chinese": "暂无"
+        "chinese": "狮王近卫"
     },
     "role_100021_name": {
         "id": "role_100021_name",
-        "chinese": "暂无"
+        "chinese": "冒险者.妮娜"
     },
     "role_100022_name": {
         "id": "role_100022_name",
-        "chinese": "暂无"
+        "chinese": "医疗精灵"
     },
     "role_100023_name": {
         "id": "role_100023_name",
-        "chinese": "暂无"
+        "chinese": "风祭祀"
     },
     "role_100024_name": {
         "id": "role_100024_name",
-        "chinese": "暂无"
+        "chinese": "走私人.卡尔"
     },
     "role_100025_name": {
         "id": "role_100025_name",
-        "chinese": "暂无"
+        "chinese": "冰霜.大祭司"
     },
     "role_100026_name": {
         "id": "role_100026_name",
-        "chinese": "暂无"
+        "chinese": "幼龙"
     },
     "role_100027_name": {
         "id": "role_100027_name",
-        "chinese": "暂无"
+        "chinese": "鸢尾花密使"
     },
     "role_100028_name": {
         "id": "role_100028_name",
-        "chinese": "暂无"
+        "chinese": "南风博士"
     },
     "role_100029_name": {
         "id": "role_100029_name",
-        "chinese": "暂无"
+        "chinese": "圣堂卫"
     },
     "role_100030_name": {
         "id": "role_100030_name",
-        "chinese": "暂无"
+        "chinese": "神庭骑士"
     },
     "role_100031_name": {
         "id": "role_100031_name",
-        "chinese": "暂无"
+        "chinese": "战争贩.兰斯"
     },
     "role_100032_name": {
         "id": "role_100032_name",
-        "chinese": "暂无"
+        "chinese": "水手长"
     },
     "role_100033_name": {
         "id": "role_100033_name",
-        "chinese": "暂无"
+        "chinese": "小屋学徒"
     },
     "role_100034_name": {
         "id": "role_100034_name",
-        "chinese": "暂无"
+        "chinese": "内庭管家"
     },
     "role_100035_name": {
         "id": "role_100035_name",
-        "chinese": "暂无"
+        "chinese": "DR.麦哲蔻"
     },
     "role_100036_name": {
         "id": "role_100036_name",
-        "chinese": "暂无"
+        "chinese": "大副.威尔"
     },
     "role_100037_name": {
         "id": "role_100037_name",
-        "chinese": "暂无"
+        "chinese": "剧团新人"
     },
     "role_100038_name": {
         "id": "role_100038_name",
-        "chinese": "暂无"
+        "chinese": "剧团主理人"
     },
     "role_100039_name": {
         "id": "role_100039_name",
-        "chinese": "暂无"
+        "chinese": "魔术助手"
     },
     "role_100040_name": {
         "id": "role_100040_name",
-        "chinese": "暂无"
+        "chinese": "丛林黑医"
     },
     "role_100041_name": {
         "id": "role_100041_name",
-        "chinese": "暂无"
+        "chinese": "森林祭祀"
     },
     "role_100042_name": {
         "id": "role_100042_name",
-        "chinese": "暂无"
+        "chinese": "丛林战士"
     },
     "role_100043_name": {
         "id": "role_100043_name",
-        "chinese": "暂无"
+        "chinese": "密林锻手"
     },
     "role_100044_name": {
         "id": "role_100044_name",
-        "chinese": "暂无"
+        "chinese": "花精灵"
     },
     "role_100045_name": {
         "id": "role_100045_name",
-        "chinese": "暂无"
+        "chinese": "亚马逊猎手"
     },
     "role_100046_name": {
         "id": "role_100046_name",
-        "chinese": "暂无"
+        "chinese": "金融之主"
     },
     "role_100047_name": {
         "id": "role_100047_name",
-        "chinese": "暂无"
+        "chinese": "林中行商"
     },
     "role_100048_name": {
         "id": "role_100048_name",
-        "chinese": "暂无"
+        "chinese": "皇家财政总管"
     },
     "role_100049_name": {
         "id": "role_100049_name",
-        "chinese": "暂无"
+        "chinese": "阿福"
     },
     "role_100050_name": {
         "id": "role_100050_name",
-        "chinese": "暂无"
+        "chinese": "辰光.神佑"
     },
     "role_100051_name": {
         "id": "role_100051_name",
-        "chinese": "暂无"
+        "chinese": "剧团团长"
     },
     "role_100052_name": {
         "id": "role_100052_name",
-        "chinese": "暂无"
+        "chinese": "机修师"
     },
     "role_100053_name": {
         "id": "role_100053_name",
-        "chinese": "暂无"
+        "chinese": "圣城军需长"
     },
     "role_100054_name": {
         "id": "role_100054_name",
-        "chinese": "暂无"
+        "chinese": "村好匠"
+    },
+    "role_100055_name": {
+        "id": "role_100055_name",
+        "chinese": "影杀"
+    },
+    "role_100056_name": {
+        "id": "role_100056_name",
+        "chinese": "绝杀"
+    },
+    "role_100057_name": {
+        "id": "role_100057_name",
+        "chinese": "蛮杀"
+    },
+    "role_100058_name": {
+        "id": "role_100058_name",
+        "chinese": "信风使者"
+    },
+    "role_100059_name": {
+        "id": "role_100059_name",
+        "chinese": "邮寄员"
+    },
+    "role_100060_name": {
+        "id": "role_100060_name",
+        "chinese": "芙兰朵院长"
+    },
+    "role_100061_name": {
+        "id": "role_100061_name",
+        "chinese": "经济学导师"
+    },
+    "role_100062_name": {
+        "id": "role_100062_name",
+        "chinese": "黑魔法导师"
+    },
+    "role_100063_name": {
+        "id": "role_100063_name",
+        "chinese": "实习辅导员"
+    },
+    "role_100064_name": {
+        "id": "role_100064_name",
+        "chinese": "牛仔.买命财"
+    },
+    "role_100065_name": {
+        "id": "role_100065_name",
+        "chinese": "牛仔.路我开"
+    },
+    "role_100066_name": {
+        "id": "role_100066_name",
+        "chinese": "牛仔.树我栽"
+    },
+    "role_100067_name": {
+        "id": "role_100067_name",
+        "chinese": "太阳之子"
+    },
+    "role_100068_name": {
+        "id": "role_100068_name",
+        "chinese": "萝拉.冥海宠爱"
+    },
+    "role_100069_name": {
+        "id": "role_100069_name",
+        "chinese": "虚空讲师"
+    },
+    "role_100070_name": {
+        "id": "role_100070_name",
+        "chinese": "焚火长"
+    },
+    "role_100071_name": {
+        "id": "role_100071_name",
+        "chinese": "圣城提灯人"
+    },
+    "role_100072_name": {
+        "id": "role_100072_name",
+        "chinese": "天界之门"
+    },
+    "role_100073_name": {
+        "id": "role_100073_name",
+        "chinese": "养花匠"
+    },
+    "role_100074_name": {
+        "id": "role_100074_name",
+        "chinese": "奇异果农"
+    },
+    "role_100075_name": {
+        "id": "role_100075_name",
+        "chinese": "朱莉.警官"
+    },
+    "role_100076_name": {
+        "id": "role_100076_name",
+        "chinese": "米娅.警队长"
+    },
+    "role_100077_name": {
+        "id": "role_100077_name",
+        "chinese": "佐菲警司"
+    },
+    "role_100078_name": {
+        "id": "role_100078_name",
+        "chinese": "木法警长"
     },
     "role_200001_name": {
         "id": "role_200001_name",
@@ -361,7 +457,7 @@
     },
     "equip_3005_name": {
         "id": "equip_3005_name",
-        "chinese": "无"
+        "chinese": "奇兵"
     },
     "equip_3006_name": {
         "id": "equip_3006_name",
@@ -422,710 +518,6 @@
     "equip_3010_desc": {
         "id": "equip_3010_desc",
         "chinese": "直接攻击后会对受击单位身后的角色造成5伤害"
-    },
-    "skill_2_name": {
-        "id": "skill_2_name",
-        "chinese": "Unknown"
-    },
-    "skill_3_name": {
-        "id": "skill_3_name",
-        "chinese": "Unknown"
-    },
-    "skill_4_name": {
-        "id": "skill_4_name",
-        "chinese": "Unknown"
-    },
-    "skill_5_name": {
-        "id": "skill_5_name",
-        "chinese": "Unknown"
-    },
-    "skill_6_name": {
-        "id": "skill_6_name",
-        "chinese": "Unknown"
-    },
-    "skill_7_name": {
-        "id": "skill_7_name",
-        "chinese": "Unknown"
-    },
-    "skill_13_name": {
-        "id": "skill_13_name",
-        "chinese": "Unknown"
-    },
-    "skill_15_name": {
-        "id": "skill_15_name",
-        "chinese": "Unknown"
-    },
-    "skill_16_name": {
-        "id": "skill_16_name",
-        "chinese": "Unknown"
-    },
-    "skill_17_name": {
-        "id": "skill_17_name",
-        "chinese": "Unknown"
-    },
-    "skill_19_name": {
-        "id": "skill_19_name",
-        "chinese": "Unknown"
-    },
-    "skill_20_name": {
-        "id": "skill_20_name",
-        "chinese": "Unknown"
-    },
-    "skill_22_name": {
-        "id": "skill_22_name",
-        "chinese": "Unknown"
-    },
-    "skill_23_name": {
-        "id": "skill_23_name",
-        "chinese": "Unknown"
-    },
-    "skill_25_name": {
-        "id": "skill_25_name",
-        "chinese": "Unknown"
-    },
-    "skill_27_name": {
-        "id": "skill_27_name",
-        "chinese": "Unknown"
-    },
-    "skill_28_name": {
-        "id": "skill_28_name",
-        "chinese": "Unknown"
-    },
-    "skill_29_name": {
-        "id": "skill_29_name",
-        "chinese": "Unknown"
-    },
-    "skill_30_name": {
-        "id": "skill_30_name",
-        "chinese": "Unknown"
-    },
-    "skill_31_name": {
-        "id": "skill_31_name",
-        "chinese": "Unknown"
-    },
-    "skill_32_name": {
-        "id": "skill_32_name",
-        "chinese": "Unknown"
-    },
-    "skill_33_name": {
-        "id": "skill_33_name",
-        "chinese": "Unknown"
-    },
-    "skill_37_name": {
-        "id": "skill_37_name",
-        "chinese": "Unknown"
-    },
-    "skill_38_name": {
-        "id": "skill_38_name",
-        "chinese": "Unknown"
-    },
-    "skill_39_name": {
-        "id": "skill_39_name",
-        "chinese": "Unknown"
-    },
-    "skill_40_name": {
-        "id": "skill_40_name",
-        "chinese": "Unknown"
-    },
-    "skill_42_name": {
-        "id": "skill_42_name",
-        "chinese": "Unknown"
-    },
-    "skill_45_name": {
-        "id": "skill_45_name",
-        "chinese": "Unknown"
-    },
-    "skill_50_name": {
-        "id": "skill_50_name",
-        "chinese": "Unknown"
-    },
-    "skill_51_name": {
-        "id": "skill_51_name",
-        "chinese": "Unknown"
-    },
-    "skill_52_name": {
-        "id": "skill_52_name",
-        "chinese": "Unknown"
-    },
-    "skill_54_name": {
-        "id": "skill_54_name",
-        "chinese": "Unknown"
-    },
-    "skill_55_name": {
-        "id": "skill_55_name",
-        "chinese": "Unknown"
-    },
-    "skill_56_name": {
-        "id": "skill_56_name",
-        "chinese": "Unknown"
-    },
-    "skill_57_name": {
-        "id": "skill_57_name",
-        "chinese": "Unknown"
-    },
-    "skill_60_name": {
-        "id": "skill_60_name",
-        "chinese": ""
-    },
-    "skill_61_name": {
-        "id": "skill_61_name",
-        "chinese": ""
-    },
-    "skill_62_name": {
-        "id": "skill_62_name",
-        "chinese": ""
-    },
-    "skill_64_name": {
-        "id": "skill_64_name",
-        "chinese": ""
-    },
-    "skill_65_name": {
-        "id": "skill_65_name",
-        "chinese": ""
-    },
-    "skill_66_name": {
-        "id": "skill_66_name",
-        "chinese": ""
-    },
-    "skill_67_name": {
-        "id": "skill_67_name",
-        "chinese": ""
-    },
-    "skill_68_name": {
-        "id": "skill_68_name",
-        "chinese": ""
-    },
-    "skill_69_name": {
-        "id": "skill_69_name",
-        "chinese": ""
-    },
-    "skill_71_name": {
-        "id": "skill_71_name",
-        "chinese": ""
-    },
-    "skill_72_name": {
-        "id": "skill_72_name",
-        "chinese": ""
-    },
-    "skill_77_name": {
-        "id": "skill_77_name",
-        "chinese": ""
-    },
-    "skill_78_name": {
-        "id": "skill_78_name",
-        "chinese": ""
-    },
-    "skill_2_desc": {
-        "id": "skill_2_desc",
-        "chinese": "击倒后\t获得+5攻击力和+5生命值"
-    },
-    "skill_3_desc": {
-        "id": "skill_3_desc",
-        "chinese": "战斗开始时\t对敌方随机角色造成1点远程伤害"
-    },
-    "skill_4_desc": {
-        "id": "skill_4_desc",
-        "chinese": "受伤时\t己方全部角色+1生命值"
-    },
-    "skill_5_desc": {
-        "id": "skill_5_desc",
-        "chinese": "战斗开始时\t对敌方三名角色造成2点远程伤害"
-    },
-    "skill_6_desc": {
-        "id": "skill_6_desc",
-        "chinese": "晕厥时\t召唤一个2/2的虚空虫"
-    },
-    "skill_7_desc": {
-        "id": "skill_7_desc",
-        "chinese": "晕厥时\t召唤一个5/5的虚空虫"
-    },
-    "skill_13_desc": {
-        "id": "skill_13_desc",
-        "chinese": "受伤时\t获得圣盾特性（每场生效一次）"
-    },
-    "skill_15_desc": {
-        "id": "skill_15_desc",
-        "chinese": "受伤时\t获得+4攻击力"
-    },
-    "skill_16_desc": {
-        "id": "skill_16_desc",
-        "chinese": "战斗开始时\t此回合所有虚空虫获得+2攻击力值和+2生命值"
-    },
-    "skill_17_desc": {
-        "id": "skill_17_desc",
-        "chinese": "晕厥时\t使所有伙伴获得+1攻击力和+1生命值"
-    },
-    "skill_19_desc": {
-        "id": "skill_19_desc",
-        "chinese": "晕厥时\t使己方随机一个无护盾角色获得护盾buff"
-    },
-    "skill_20_desc": {
-        "id": "skill_20_desc",
-        "chinese": "晕厥时\t使后方角色增加5点生命值"
-    },
-    "skill_22_desc": {
-        "id": "skill_22_desc",
-        "chinese": "友方攻击三次时\t为己方所有单位增加2点生命值"
-    },
-    "skill_23_desc": {
-        "id": "skill_23_desc",
-        "chinese": "战斗开始时\t对一个随机敌人造成此兵种攻击值50%的伤害"
-    },
-    "skill_25_desc": {
-        "id": "skill_25_desc",
-        "chinese": "受伤时\t对所有单位造成2点伤害"
-    },
-    "skill_27_desc": {
-        "id": "skill_27_desc",
-        "chinese": "战斗开始时\t使后方角色经验值+1（临时）"
-    },
-    "skill_28_desc": {
-        "id": "skill_28_desc",
-        "chinese": "友方攻击三次后\t对敌方随机一名敌人造成5点伤害"
-    },
-    "skill_29_desc": {
-        "id": "skill_29_desc",
-        "chinese": "前方伙伴受伤时\t替前方单位承受此次伤害"
-    },
-    "skill_30_desc": {
-        "id": "skill_30_desc",
-        "chinese": "伙伴晕厥时\t获得+1攻击力和+2生命值。在战斗外翻倍"
-    },
-    "skill_31_desc": {
-        "id": "skill_31_desc",
-        "chinese": "攻击前\t下一个休整开始时，获得+1金币。每场战斗最多生效2次"
-    },
-    "skill_32_desc": {
-        "id": "skill_32_desc",
-        "chinese": "受伤时\t对一个随机敌人造成2点伤害"
-    },
-    "skill_33_desc": {
-        "id": "skill_33_desc",
-        "chinese": "晕厥时\t使后方角色获得+2生命值"
-    },
-    "skill_37_desc": {
-        "id": "skill_37_desc",
-        "chinese": "敌人被召唤或推动时\t对其造成1点远程伤害"
-    },
-    "skill_38_desc": {
-        "id": "skill_38_desc",
-        "chinese": "伙伴晕厥时\t将最后排的1名敌人推动到前排（每场战斗生效一次）"
-    },
-    "skill_39_desc": {
-        "id": "skill_39_desc",
-        "chinese": "战斗开始时\t使2名敌人位置发生改变"
-    },
-    "skill_40_desc": {
-        "id": "skill_40_desc",
-        "chinese": "击倒时\t对敌方所有敌人造成2点伤害"
-    },
-    "skill_42_desc": {
-        "id": "skill_42_desc",
-        "chinese": "攻击前\t对后方角色造成1点远程伤害"
-    },
-    "skill_45_desc": {
-        "id": "skill_45_desc",
-        "chinese": "前方伙伴攻击时\t对一个随机敌人造成此角色攻击20%的伤害"
-    },
-    "skill_50_desc": {
-        "id": "skill_50_desc",
-        "chinese": "伙伴被召唤时\t使其获得+2攻击力和+2生命值"
-    },
-    "skill_51_desc": {
-        "id": "skill_51_desc",
-        "chinese": "战斗开始时\t前方角色的能力额外触发一次（视为1级效果）"
-    },
-    "skill_52_desc": {
-        "id": "skill_52_desc",
-        "chinese": "战斗开始时\t使攻击等于生命+1"
-    },
-    "skill_54_desc": {
-        "id": "skill_54_desc",
-        "chinese": "战斗开始时\t使一名敌人获得虚弱特性"
-    },
-    "skill_55_desc": {
-        "id": "skill_55_desc",
-        "chinese": ""
-    },
-    "skill_56_desc": {
-        "id": "skill_56_desc",
-        "chinese": ""
-    },
-    "skill_57_desc": {
-        "id": "skill_57_desc",
-        "chinese": ""
-    },
-    "skill_60_desc": {
-        "id": "skill_60_desc",
-        "chinese": ""
-    },
-    "skill_61_desc": {
-        "id": "skill_61_desc",
-        "chinese": ""
-    },
-    "skill_62_desc": {
-        "id": "skill_62_desc",
-        "chinese": ""
-    },
-    "skill_64_desc": {
-        "id": "skill_64_desc",
-        "chinese": ""
-    },
-    "skill_65_desc": {
-        "id": "skill_65_desc",
-        "chinese": ""
-    },
-    "skill_66_desc": {
-        "id": "skill_66_desc",
-        "chinese": ""
-    },
-    "skill_67_desc": {
-        "id": "skill_67_desc",
-        "chinese": ""
-    },
-    "skill_68_desc": {
-        "id": "skill_68_desc",
-        "chinese": ""
-    },
-    "skill_69_desc": {
-        "id": "skill_69_desc",
-        "chinese": ""
-    },
-    "skill_71_desc": {
-        "id": "skill_71_desc",
-        "chinese": ""
-    },
-    "skill_72_desc": {
-        "id": "skill_72_desc",
-        "chinese": ""
-    },
-    "skill_77_desc": {
-        "id": "skill_77_desc",
-        "chinese": ""
-    },
-    "skill_78_desc": {
-        "id": "skill_78_desc",
-        "chinese": ""
-    },
-    "shop_skill_1_name": {
-        "id": "shop_skill_1_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_8_name": {
-        "id": "shop_skill_8_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_9_name": {
-        "id": "shop_skill_9_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_10_name": {
-        "id": "shop_skill_10_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_11_name": {
-        "id": "shop_skill_11_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_12_name": {
-        "id": "shop_skill_12_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_14_name": {
-        "id": "shop_skill_14_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_18_name": {
-        "id": "shop_skill_18_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_21_name": {
-        "id": "shop_skill_21_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_24_name": {
-        "id": "shop_skill_24_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_26_name": {
-        "id": "shop_skill_26_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_34_name": {
-        "id": "shop_skill_34_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_35_name": {
-        "id": "shop_skill_35_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_36_name": {
-        "id": "shop_skill_36_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_41_name": {
-        "id": "shop_skill_41_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_43_name": {
-        "id": "shop_skill_43_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_44_name": {
-        "id": "shop_skill_44_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_46_name": {
-        "id": "shop_skill_46_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_47_name": {
-        "id": "shop_skill_47_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_48_name": {
-        "id": "shop_skill_48_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_49_name": {
-        "id": "shop_skill_49_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_53_name": {
-        "id": "shop_skill_53_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_58_name": {
-        "id": "shop_skill_58_name",
-        "chinese": ""
-    },
-    "shop_skill_59_name": {
-        "id": "shop_skill_59_name",
-        "chinese": ""
-    },
-    "shop_skill_63_name": {
-        "id": "shop_skill_63_name",
-        "chinese": ""
-    },
-    "shop_skill_70_name": {
-        "id": "shop_skill_70_name",
-        "chinese": ""
-    },
-    "shop_skill_73_name": {
-        "id": "shop_skill_73_name",
-        "chinese": ""
-    },
-    "shop_skill_74_name": {
-        "id": "shop_skill_74_name",
-        "chinese": ""
-    },
-    "shop_skill_75_name": {
-        "id": "shop_skill_75_name",
-        "chinese": ""
-    },
-    "shop_skill_76_name": {
-        "id": "shop_skill_76_name",
-        "chinese": ""
-    },
-    "shop_skill_6_name": {
-        "id": "shop_skill_6_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_7_name": {
-        "id": "shop_skill_7_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_17_name": {
-        "id": "shop_skill_17_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_19_name": {
-        "id": "shop_skill_19_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_20_name": {
-        "id": "shop_skill_20_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_33_name": {
-        "id": "shop_skill_33_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_56_name": {
-        "id": "shop_skill_56_name",
-        "chinese": "Unknown"
-    },
-    "shop_skill_61_name": {
-        "id": "shop_skill_61_name",
-        "chinese": ""
-    },
-    "shop_skill_66_name": {
-        "id": "shop_skill_66_name",
-        "chinese": ""
-    },
-    "shop_skill_77_name": {
-        "id": "shop_skill_77_name",
-        "chinese": ""
-    },
-    "shop_skill_1_desc": {
-        "id": "shop_skill_1_desc",
-        "chinese": "购买时\t随机友方角色获得+1生命值和+1攻击力"
-    },
-    "shop_skill_8_desc": {
-        "id": "shop_skill_8_desc",
-        "chinese": "休整结束时\t复制前方角色的1级能力，直到下次休整开始"
-    },
-    "shop_skill_9_desc": {
-        "id": "shop_skill_9_desc",
-        "chinese": "休整结束时\t使前方角色获得+1攻击力和+1生命值"
-    },
-    "shop_skill_10_desc": {
-        "id": "shop_skill_10_desc",
-        "chinese": "出售时\t从前往后依次使所有角色获得+1攻击力，次数等于此兵种参与的战斗数"
-    },
-    "shop_skill_11_desc": {
-        "id": "shop_skill_11_desc",
-        "chinese": "升级时\t使所有角色获得+2生命值和+2攻击力"
-    },
-    "shop_skill_12_desc": {
-        "id": "shop_skill_12_desc",
-        "chinese": "友方吃掉食物时\t使其额外获得+1生命值"
-    },
-    "shop_skill_14_desc": {
-        "id": "shop_skill_14_desc",
-        "chinese": "吃掉食物时\t使随机两个角色获得+1攻击和+1生命值"
-    },
-    "shop_skill_18_desc": {
-        "id": "shop_skill_18_desc",
-        "chinese": "休整开始时\t使商店左列角色获得+1攻击力和+1生命值"
-    },
-    "shop_skill_21_desc": {
-        "id": "shop_skill_21_desc",
-        "chinese": "购买时\t此单位获得装备圣剑（攻击敌人后直接致死）"
-    },
-    "shop_skill_24_desc": {
-        "id": "shop_skill_24_desc",
-        "chinese": "出售时\t额外获得1金币"
-    },
-    "shop_skill_26_desc": {
-        "id": "shop_skill_26_desc",
-        "chinese": "休整开始时\t使商店食物价格-1"
-    },
-    "shop_skill_34_desc": {
-        "id": "shop_skill_34_desc",
-        "chinese": "休整结束时\t花费至多2金币，并在下回合重新获得之"
-    },
-    "shop_skill_35_desc": {
-        "id": "shop_skill_35_desc",
-        "chinese": "晕厥时\t使后方角色经验值+1"
-    },
-    "shop_skill_36_desc": {
-        "id": "shop_skill_36_desc",
-        "chinese": "休整开始时\t如果上一轮战斗获胜，获得2金币"
-    },
-    "shop_skill_41_desc": {
-        "id": "shop_skill_41_desc",
-        "chinese": "伙伴被出售时\t使一个随机角色获得+1生命值"
-    },
-    "shop_skill_43_desc": {
-        "id": "shop_skill_43_desc",
-        "chinese": "休整结束时\t如果场上拥有3级的角色，其获得+2攻击力和+2生命值"
-    },
-    "shop_skill_44_desc": {
-        "id": "shop_skill_44_desc",
-        "chinese": "出售时\t使两个随机角色获得+1生命值"
-    },
-    "shop_skill_46_desc": {
-        "id": "shop_skill_46_desc",
-        "chinese": "休整开始时\t金币数每比10多1，获得+1攻击力"
-    },
-    "shop_skill_47_desc": {
-        "id": "shop_skill_47_desc",
-        "chinese": "休整结束时\t如果有空位，下回合获得+2金币"
-    },
-    "shop_skill_48_desc": {
-        "id": "shop_skill_48_desc",
-        "chinese": "休整结束时\t本回合每花费5金币，就使一名随机角色获得+1攻击"
-    },
-    "shop_skill_49_desc": {
-        "id": "shop_skill_49_desc",
-        "chinese": "出售时\t召唤鲨女仆（和（草原系中间人角色）（24）各一只"
-    },
-    "shop_skill_53_desc": {
-        "id": "shop_skill_53_desc",
-        "chinese": "休整结束时\t使所有有装备的角色获得+2攻击力和+2生命值"
-    },
-    "shop_skill_58_desc": {
-        "id": "shop_skill_58_desc",
-        "chinese": ""
-    },
-    "shop_skill_59_desc": {
-        "id": "shop_skill_59_desc",
-        "chinese": ""
-    },
-    "shop_skill_63_desc": {
-        "id": "shop_skill_63_desc",
-        "chinese": ""
-    },
-    "shop_skill_70_desc": {
-        "id": "shop_skill_70_desc",
-        "chinese": ""
-    },
-    "shop_skill_73_desc": {
-        "id": "shop_skill_73_desc",
-        "chinese": ""
-    },
-    "shop_skill_74_desc": {
-        "id": "shop_skill_74_desc",
-        "chinese": ""
-    },
-    "shop_skill_75_desc": {
-        "id": "shop_skill_75_desc",
-        "chinese": ""
-    },
-    "shop_skill_76_desc": {
-        "id": "shop_skill_76_desc",
-        "chinese": ""
-    },
-    "shop_skill_6_desc": {
-        "id": "shop_skill_6_desc",
-        "chinese": ""
-    },
-    "shop_skill_7_desc": {
-        "id": "shop_skill_7_desc",
-        "chinese": ""
-    },
-    "shop_skill_17_desc": {
-        "id": "shop_skill_17_desc",
-        "chinese": ""
-    },
-    "shop_skill_19_desc": {
-        "id": "shop_skill_19_desc",
-        "chinese": ""
-    },
-    "shop_skill_20_desc": {
-        "id": "shop_skill_20_desc",
-        "chinese": ""
-    },
-    "shop_skill_33_desc": {
-        "id": "shop_skill_33_desc",
-        "chinese": ""
-    },
-    "shop_skill_56_desc": {
-        "id": "shop_skill_56_desc",
-        "chinese": ""
-    },
-    "shop_skill_61_desc": {
-        "id": "shop_skill_61_desc",
-        "chinese": ""
-    },
-    "shop_skill_66_desc": {
-        "id": "shop_skill_66_desc",
-        "chinese": ""
-    },
-    "shop_skill_77_desc": {
-        "id": "shop_skill_77_desc",
-        "chinese": ""
     },
     "task_1001_name": {
         "id": "task_1001_name",
