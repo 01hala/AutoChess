@@ -417,8 +417,10 @@ export class GameManager extends Component
                 if(this.node.getChildByPath("ReadyPanel/RoleArea").getComponent(RoleArea).GetRolesNumber()>0 && this.second>=3000)
                 {
                     if(common.GuideStep.RoleInfo == GameManager.Instance.guide.next)
-                    this.second = 0;
-                    GameManager.Instance.guide.OnGuide(common.GuideStep.RoleInfo);
+                    {
+                        this.second = 0;
+                        GameManager.Instance.guide.OnGuide(common.GuideStep.RoleInfo);
+                    }
                 }
             }
             else
