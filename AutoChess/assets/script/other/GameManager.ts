@@ -143,7 +143,7 @@ export class GameManager extends Component
         /* 消息来源
          * RoleIcon.ts : 第 215 行 
          * MainInterface.ts : 第 349 行
-         * 
+         * QuestPanel.ts : 第 54 行
          * 
          * 
          * 
