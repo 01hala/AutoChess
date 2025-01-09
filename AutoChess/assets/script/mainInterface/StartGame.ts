@@ -99,7 +99,7 @@ export class StartGame extends Component
             {
                 this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    GameManager.Instance.guide.step++;
+                    //GameManager.Instance.guide.step++;
                 });
             }
             this.amusementWindow.active=false;

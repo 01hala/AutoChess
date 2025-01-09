@@ -17,7 +17,7 @@ export class PopUps extends Component
     public set subheading(value:string)
     {
         this.subheadingStr=value;
-        this.node.getChildByPath("Board/Subheading").getComponent(RichText).string="<color=#ffff00><outline width=3>- "+this.subheadingStr+" -</outline></color>";
+        this.node.getChildByPath("Board/Subheading").getComponent(RichText).string="<color=#ff8888><outline width=3>- "+this.subheadingStr+" -</outline></color>";
     }
     
     private bar:Node;

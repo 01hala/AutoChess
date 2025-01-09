@@ -51,7 +51,7 @@ export class MainInterface
     public userData:common.UserData;
     //玩家头像
     private userAvatar:Node;
-
+    //各功能界面
     public cardEditPanel:Node;
     public storePanel:Node;
     public cardLibraryPanel:Node;
@@ -191,13 +191,13 @@ export class MainInterface
         try
         {
             this.startGamePart.active=false;
+            if (GameManager.Instance.guide)
+            {
+                
+            }
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
-                if (GameManager.Instance.guide)
-                {
-                    //GameManager.Instance.guide.Checkguide();
-                }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePart.active=true;
@@ -434,7 +434,10 @@ export class MainInterface
             }
         }
     }
-
+    /**
+     * 显示头像
+     * @param _url 路径
+     */
     public async ShowAvatar(_url:string)
     {
         try
@@ -455,7 +458,6 @@ export class MainInterface
         {
             console.error('MainInterface 下 ShowAvatar 错误 err: ',error);
         }
-        
     }
 }
 

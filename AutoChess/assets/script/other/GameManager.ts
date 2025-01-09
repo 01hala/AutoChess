@@ -18,6 +18,7 @@ import { sleep } from './sleep';
 import { LevelInfo } from '../secondaryPanel/LevelInfo';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { OptionsData, User } from '../login/User';
+import { RoleArea } from '../ready/display/RoleArea';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -36,6 +37,8 @@ export class GameManager extends Component
     private waitingPanel:Node=null;
     //新手引导
     public guide:Guide=null;
+    //侦听计时器
+    private listening=null;
     
     protected onLoad()
     {
@@ -360,6 +363,7 @@ export class GameManager extends Component
         this.guide=gnode.getComponent(Guide);
 
         this.guide.Init(_step);
+        this.OnGuideListening();
     }
 
     //获取文本
@@ -382,6 +386,48 @@ export class GameManager extends Component
             return temp;
         }
         return "null";
+    }
+
+    private second = 0;
+    /**
+     * 引导界面侦听
+     */
+    private OnGuideListening()
+    {
+        this.listening = setInterval(() =>
+        {
+            if (GameManager.Instance.guide)
+            {
+                this.second += 10;
+                if (this.node.getChildByPath("MainInterface/MainPanel").active && this.second >= 3000)
+                {
+                    this.second = 0;
+                    GameManager.Instance.guide.OnGuide(common.GuideStep.ClickGameLobby);
+                }
+                if (this.node.getChildByPath("MainInterface/StartGamePanel").active && this.second >= 3000)
+                {
+                    this.second = 0;
+                    GameManager.Instance.guide.OnGuide(common.GuideStep.ClickMatch);
+                }
+                if(this.node.getChildByPath("ReadyPanel").active && this.second>=3000)
+                {
+                    this.second = 0;
+                    GameManager.Instance.guide.OnGuide(common.GuideStep.BuyRole);
+                }
+                if(this.node.getChildByPath("ReadyPanel/RoleArea").getComponent(RoleArea).GetRolesNumber()>0 && this.second>=3000)
+                {
+                    if(common.GuideStep.RoleInfo == GameManager.Instance.guide.next)
+                    {
+                        this.second = 0;
+                        GameManager.Instance.guide.OnGuide(common.GuideStep.RoleInfo);
+                    }
+                }
+            }
+            else
+            {
+                clearInterval(this.listening);
+            }
+        }, 10);
     }
 }
 
