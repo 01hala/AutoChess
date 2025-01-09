@@ -3,7 +3,7 @@ import * as singleton from '../netDriver/netSingleton';
 import { GameDifficulty } from '../other/enums';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
-import { BattleMod } from '../battle/AutoChessBattle/common';
+import * as common from "../battle/AutoChessBattle/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('StartGame')
@@ -97,9 +97,11 @@ export class StartGame extends Component
         {
             if(GameManager.Instance.guide)
             {
+                GameManager.Instance.guide.step=common.GuideStep.ClickMatch;
+                
                 this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
                 {
-                    //GameManager.Instance.guide.step++;
+                    
                 });
             }
             this.amusementWindow.active=false;
@@ -109,7 +111,7 @@ export class StartGame extends Component
             this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
-                singleton.netSingleton.game.start_match_battle_ready(BattleMod.RankBattle);
+                singleton.netSingleton.game.start_match_battle_ready(common.BattleMod.RankBattle);
             },this);
             //匹配
             this.athleticsWindow.getChildByPath("Normal/Button").on(Button.EventType.CLICK, async ()=>
@@ -120,7 +122,7 @@ export class StartGame extends Component
                 }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 console.log("Normal_Btn start_battle!");
-                singleton.netSingleton.game.start_match_battle_ready(BattleMod.Battle);
+                singleton.netSingleton.game.start_match_battle_ready(common.BattleMod.Battle);
                 //this.node.parent.active=false;
             },this);
         }

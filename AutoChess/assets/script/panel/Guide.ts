@@ -12,11 +12,11 @@ const { ccclass, property } = _decorator;
 export class Guide extends Component
 {
     //步骤
-    public step:number;
+    public step:common.GuideStep;
     //结束步骤
-    public end:number;
+    public end:common.GuideStep;
     //当前步骤
-    public next:number;
+    public next:common.GuideStep;
     //面板
     private panel:Node;
     //步骤文本
@@ -79,6 +79,13 @@ export class Guide extends Component
     public async Init(_step:common.GuideStep)
     {   
         this.step = _step;
+        if(common.GuideStep.None==this.step)
+        {
+            this.next=common.GuideStep.ClickGameLobby;
+        }
+        this.panel.active=false;
+        this.skipBtn.active=false;
+        this.node.getChildByPath("BG").active=false;
         // this.next = _step;
         // this.end = common.GuideStep.Done;
         // this.node.setSiblingIndex(101);
@@ -133,37 +140,61 @@ export class Guide extends Component
         // }, 50);
     }
 
-    private CheckGuide()
+    public CheckGuide()
     {
-        if(this.tnode)
+        try
         {
-            this.tnode.destroy();
+            if (this.tnode)
+            {
+                this.tnode.destroy();
+            }
+            if (this.tween)
+            {
+                this.tween.stop();
+            }
+            this.hand.active = false;
+            this.tween = null;
+
+            switch(this.step)
+            {
+                case common.GuideStep.ClickGameLobby: this.next = common.GuideStep.ClickMatch;break;
+                case common.GuideStep.ClickMatch: this.next = common.GuideStep.BuyRole;break;
+                case common.GuideStep.RoleInfo: this.next = common.GuideStep.HPInfo;break;
+                case common.GuideStep.BuyRole: this.next = common.GuideStep.CoinInfo;break;
+                case common.GuideStep.CoinInfo: this.next = common.GuideStep.RoleInfo;break;
+                case common.GuideStep.HPInfo: this.next = common.GuideStep.TrophyInfo;break;
+                case common.GuideStep.TrophyInfo: this.next = common.GuideStep.RoundInfo;break;
+                case common.GuideStep.RoundInfo: this.next = common.GuideStep.Done;break;
+            }
+
+            switch (this.step)
+            {
+                case common.GuideStep.ClickGameLobby:
+                case common.GuideStep.ClickMatch:
+                case common.GuideStep.RoleInfo:
+                case common.GuideStep.BuyRole:
+                    {
+                        this.panel.getComponent(BlockInputEvents).enabled = false;
+                        this.node.getChildByPath("BG").active = false;
+                        this.skipBtn.active=false;
+                        this.panel.active = false;   //此处必须关闭panel中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
+                    }
+                    break;
+                case common.GuideStep.CoinInfo:
+                case common.GuideStep.HPInfo:
+                case common.GuideStep.TrophyInfo:
+                case common.GuideStep.RoundInfo:
+                    {
+                        this.OnGuide(this.next);
+                    }
+                    break;
+                default: break;
+            }
+            console.warn(this.next);
         }
-
-        this.tween.stop();
-        this.hand.active = false;
-        this.tween = null;
-
-        switch (this.step)
+        catch (error)
         {
-            case common.GuideStep.ClickGameLobby: this.next = common.GuideStep.ClickMatch;
-            case common.GuideStep.ClickMatch: this.next = common.GuideStep.BuyRole;
-            case common.GuideStep.RoleInfo: this.next = common.GuideStep.HPInfo;
-            case common.GuideStep.BuyRole: this.next = common.GuideStep.CoinInfo;
-                {
-                    this.panel.getComponent(BlockInputEvents).enabled = false;
-                    this.panel.active = false;   //此处必须关闭mask中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
-                }
-                break;
-            case common.GuideStep.CoinInfo: this.next = common.GuideStep.RoleInfo;
-            case common.GuideStep.HPInfo: this.next = common.GuideStep.TrophyInfo;
-            case common.GuideStep.TrophyInfo: this.next = common.GuideStep.RoundInfo;
-            case common.GuideStep.RoundInfo: this.next = common.GuideStep.Done;
-                {
-                    this.OnGuide(this.next);
-                }
-                break;
-            default:break;
+            console.error("Guide 下的 CheckGuide 错误:",error);
         }
     }
 
@@ -171,9 +202,10 @@ export class Guide extends Component
     {
         try
         {
-            singleton.netSingleton.player.guide_step_ntf(_step);
+            //singleton.netSingleton.player.guide_step_ntf(_step);
             this.step=_step;
             this.panel.active=true;
+            this.skipBtn.active = true;
             this.node.getChildByPath("BG").active=true;
             this.node.setSiblingIndex(101);
             this.panel.getComponent(BlockInputEvents).enabled=true;
@@ -194,10 +226,10 @@ export class Guide extends Component
                 case common.GuideStep.BuyRole:
                     {
                         t = this.node.parent.getChildByPath("ReadyPanel/Shop/ShopArea").getComponent(ShopArea).shopRoleNodes[0];
-                        let target = this.node.parent.getChildByPath("ReadyPanel/RoleArea/Location_4").worldPosition;
+                        let target = this.node.parent.getChildByPath("ReadyPanel/RoleArea/Node/Location_4").worldPosition;
                         this.hand.active = true;
                         this.tween = tween(this.hand).to(0, { worldPosition: t.worldPosition, scale: new Vec3(0.8, 0.8, 1) }).
-                            to(0.7, { worldPosition: target }).to(0, { scale: new Vec3(1, 1, 1) }).repeatForever().start();
+                            to(0.7, { worldPosition: target }).to(0, { scale: new Vec3(1, 1, 1) }).repeatForever(this.tween).start();
                         this.guideText.setPosition(new Vec3(0, -637.995, 0));
                         this.guideText.getComponent(RichText).string = "拖拽购买角色";
                     }
@@ -221,7 +253,7 @@ export class Guide extends Component
                         }
                         this.hand.active = true;
                         this.tween=tween(this.hand).to(0, { worldPosition: t.worldPosition, scale: new Vec3(1, 1, 1) }).
-                            to(0.5, { scale: new Vec3(0.8, 0.8, 1) }).repeatForever().start();
+                            to(0.5, { scale: new Vec3(0.8, 0.8, 1) }).repeatForever(this.tween).start();
                         this.guideText.setPosition(new Vec3(0, -85.498, 0));
                         this.guideText.getComponent(RichText).string = "点击角色查看详细界面";
                     }
@@ -269,7 +301,7 @@ export class Guide extends Component
                     this.tnode.getComponent(RoleIcon).destroy();
                 }
                 
-                this.tnode.setParent(this.node);
+                this.tnode.setParent(this.panel);
                 this.tnode.setWorldPosition(t.worldPosition);
                 sleep(100).then(() =>
                 {

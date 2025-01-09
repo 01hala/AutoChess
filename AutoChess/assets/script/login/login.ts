@@ -240,13 +240,16 @@ export class login extends Component {
             singleton.netSingleton.mainInterface = new MainInterface();
             await singleton.netSingleton.mainInterface.start(this.bk.node, async (event) =>
             {
+                let step=null;
                 await singleton.netSingleton.player.get_user_data(true,(_step) =>
                 {
-                    console.log("guide step:", _step);
-                    if(common.GuideStep.Done != _step)
-                    {
-                        GameManager.Instance.StartGuide(_step);
-                    }
+                    // console.log("guide step:", _step);
+                    // if(common.GuideStep.Done != _step)
+                    // {
+                    //     GameManager.Instance.StartGuide(_step);
+                    // }
+                    //GameManager.Instance.StartGuide(common.GuideStep.None);
+                    step=common.GuideStep.None;
                 });
                 
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
@@ -265,7 +268,11 @@ export class login extends Component {
                             break;
                         }
                 }
-                
+                if(step!=null)
+                {
+                    GameManager.Instance.StartGuide(common.GuideStep.None);
+                    singleton.netSingleton.mainInterface.SwitchBtnlist(false);
+                }
             });
         }
        

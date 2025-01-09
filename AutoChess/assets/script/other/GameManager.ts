@@ -19,6 +19,7 @@ import { LevelInfo } from '../secondaryPanel/LevelInfo';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { OptionsData, User } from '../login/User';
 import { RoleArea } from '../ready/display/RoleArea';
+import * as singleton from '../netDriver/netSingleton';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -399,24 +400,44 @@ export class GameManager extends Component
             if (GameManager.Instance.guide)
             {
                 this.second += 10;
-                if (this.node.getChildByPath("MainInterface/MainPanel").active && this.second >= 3000)
+                if (this.node.getChildByPath("MainInterface/MainPanel")?.active && this.second >= 3000)
                 {
-                    this.second = 0;
-                    GameManager.Instance.guide.OnGuide(common.GuideStep.ClickGameLobby);
+                    //GameManager.Instance.guide.CheckGuide();
+                    if((common.GuideStep.ClickGameLobby == GameManager.Instance.guide.next) && (common.GuideStep.ClickGameLobby!=GameManager.Instance.guide.step))
+                    {
+                        this.second = 0;
+                        GameManager.Instance.guide.OnGuide(common.GuideStep.ClickGameLobby);
+                    }
                 }
-                if (this.node.getChildByPath("MainInterface/StartGamePanel").active && this.second >= 3000)
+                if (this.node.getChildByPath("MainInterface/StartGamePanel")?.active && this.second >= 3000)
                 {
-                    this.second = 0;
-                    GameManager.Instance.guide.OnGuide(common.GuideStep.ClickMatch);
+                    //GameManager.Instance.guide.CheckGuide();
+                    if((common.GuideStep.ClickMatch == GameManager.Instance.guide.next) && (common.GuideStep.ClickMatch!=GameManager.Instance.guide.step))
+                    {
+                        console.log("StartGamePanel is active");
+                        this.second = 0;
+                        GameManager.Instance.guide.OnGuide(common.GuideStep.ClickMatch);
+                    }
                 }
-                if(this.node.getChildByPath("ReadyPanel").active && this.second>=3000)
+                if(this.node.getChildByPath("ReadyPanel")?.active && this.second>=3000)
                 {
-                    this.second = 0;
-                    GameManager.Instance.guide.OnGuide(common.GuideStep.BuyRole);
+                    //GameManager.Instance.guide.CheckGuide();
+                    if((common.GuideStep.BuyRole == GameManager.Instance.guide.next) && (common.GuideStep.BuyRole!=GameManager.Instance.guide.step))
+                    {
+                        this.second = 0;
+                        GameManager.Instance.guide.OnGuide(common.GuideStep.BuyRole);
+                        
+                    }
                 }
-                if(this.node.getChildByPath("ReadyPanel/RoleArea").getComponent(RoleArea).GetRolesNumber()>0 && this.second>=3000)
+                if(this.node.getChildByPath("ReadyPanel/RoleArea")?.getComponent(RoleArea).GetRolesNumber()>0 && this.second>=3000)
                 {
-                    if(common.GuideStep.RoleInfo == GameManager.Instance.guide.next)
+                    //GameManager.Instance.guide.CheckGuide();
+                    if((common.GuideStep.CoinInfo == GameManager.Instance.guide.next) && (common.GuideStep.CoinInfo!=GameManager.Instance.guide.step))
+                    {
+                        this.second = 0;
+                        GameManager.Instance.guide.OnGuide(common.GuideStep.CoinInfo);
+                    }
+                    if((common.GuideStep.RoleInfo == GameManager.Instance.guide.next) && (common.GuideStep.RoleInfo!=GameManager.Instance.guide.step))
                     {
                         this.second = 0;
                         GameManager.Instance.guide.OnGuide(common.GuideStep.RoleInfo);
@@ -426,6 +447,10 @@ export class GameManager extends Component
             else
             {
                 clearInterval(this.listening);
+            }
+            if(this.second>10000)
+            {
+                this.second=0;
             }
         }, 10);
     }

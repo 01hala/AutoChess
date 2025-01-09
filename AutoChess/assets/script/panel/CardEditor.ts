@@ -4,7 +4,7 @@
  * 2024/05/16
  * 牌组编辑界面
  */
-import { _decorator, Animation, Button, Component, EventHandler, instantiate, Node, Prefab, Toggle, ToggleContainer, UITransform, Vec2, Vec3 } from 'cc';
+import { _decorator, Animation, Button, Component, EventHandler, instantiate, Node, Prefab, ScrollView, Toggle, ToggleContainer, UITransform, Vec2, Vec3 } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import * as common from '../battle/AutoChessBattle/common';
 import * as singleton from '../netDriver/netSingleton';
@@ -117,6 +117,7 @@ export class CardEditor extends Component
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
                 console.log("check");
+                this.node.getChildByPath("Panel/ScrollViet").getComponent(ScrollView).brake=1;
                 let targetY=0;
                 let contentHight=this.content.getComponent(UITransform).contentSize.height;
                 this.viewHight=this.content.parent.getComponent(UITransform).contentSize.height;
@@ -162,6 +163,7 @@ export class CardEditor extends Component
                         this.content.setPosition(new Vec3(0, this.oriContentPosY + offset, 0));
                     }
                 }
+                this.node.getChildByPath("Panel/ScrollViet").getComponent(ScrollView).brake=0.75;
             }
             catch (error)
             {

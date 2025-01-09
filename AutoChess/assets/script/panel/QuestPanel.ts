@@ -43,20 +43,22 @@ export class QuestPanel extends Component
     public OnLevelBtnClick(_event,_data)
     {
         let levelId = parseInt(_data);
-        //singleton.netSingleton.game.start_quest_battle_ready();
-        //this.Exit();
-        this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.OpenLevelInfo, true,
-            {
-                levelId: levelId
-            },
-            (flag) =>
-            {
-                if (flag)
-                {
-                    this.Exit();
-                }
-            }
-        ));
+        singleton.netSingleton.game.start_quest_battle_ready().then(()=>
+        {
+            this.Exit();
+        });
+        // this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.OpenLevelInfo, true,
+        //     {
+        //         levelId: levelId
+        //     },
+        //     (flag) =>
+        //     {
+        //         if (flag)
+        //         {
+        //             this.Exit();
+        //         }
+        //     }
+        // ));
     }
 
     Open()
