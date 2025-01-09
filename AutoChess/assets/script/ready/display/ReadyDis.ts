@@ -114,7 +114,7 @@ export class ReadyDis
                 });
                 if (GameManager.Instance.guide)
                 {
-                    GameManager.Instance.guide.step++;
+                    //GameManager.Instance.guide.step++;
                 }
                 login.panelOnReady=true;
                 this.Init();

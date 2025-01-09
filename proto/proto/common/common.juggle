@@ -37,13 +37,14 @@ enum GuideStep {
 	None = 0;
 	ClickGameLobby = 1;
 	ClickMatch = 2;
-	HPInfo = 3;
-	TrophyInfo = 4;
-	CoinInfo = 5;
-	RoundInfo = 6;
-	BuyRole = 7;
-	RoleInfo = 8;
-	Done = 9;
+	BuyRole = 3;
+	CoinInfo = 4;
+	RoleInfo = 5;
+	HPInfo = 6;
+	TrophyInfo = 7;
+	RoundInfo = 8;
+	MergeRole = 9;
+	Done = 10;
 }
 
 struct BattleInfo {

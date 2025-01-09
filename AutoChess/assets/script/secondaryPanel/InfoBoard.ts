@@ -49,6 +49,11 @@ export class InfoBoard extends Component
         });
     }
 
+    protected update(dt: number): void
+    {
+        
+    }
+
     protected onDestroy(): void
     {
         this.destroy();
@@ -171,7 +176,7 @@ export class InfoBoard extends Component
             }
             if (GameManager.Instance.guide)
             {
-                GameManager.Instance.guide.step++;
+                //GameManager.Instance.guide.step++;
             }
         }
         catch(error)
