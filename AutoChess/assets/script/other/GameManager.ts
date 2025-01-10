@@ -429,7 +429,7 @@ export class GameManager extends Component
                         
                     }
                 }
-                if(singleton.netSingleton.ready?.activity && singleton.netSingleton.ready?.roleArea.getComponent(RoleArea).GetRolesNumber()>0 && this.second>=10000)
+                if(singleton.netSingleton.ready?.activity && singleton.netSingleton.ready?.roleArea.GetRolesNumber()>0 && this.second>=10000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.CoinInfo == GameManager.Instance.guide.next) && (common.GuideStep.CoinInfo!=GameManager.Instance.guide.step))
