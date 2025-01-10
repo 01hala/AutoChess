@@ -60,10 +60,11 @@ export class UserInfo extends Component
     {
         try
         {
+            singleton.netSingleton.mainInterface.activity=true;
             this.panelNode.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
-                this.node.active=false;
                 this.panelNode.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.destroy();
             });
             this.panelNode.getComponent(Animation).play("PanelDisappear");
         }

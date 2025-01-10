@@ -173,6 +173,7 @@ export class CardEditor extends Component
 
     public Exit()
     {
+        singleton.netSingleton.mainInterface.activity=true;
         for (let t of this.content.children)
         {
             t.destroy();

@@ -58,6 +58,8 @@ export class MainInterface
     public achievePanel:Node;
     public wxGroupPanel:Node;
 
+    public activity:boolean=false;
+
     constructor()
     {
         this.RegCallBack();
@@ -190,10 +192,12 @@ export class MainInterface
     {
         try
         {
+            this.activity=true;
             this.startGamePart.active=false;
             //打开匹配
             this.startBtn.on(Button.EventType.CLICK,()=>
             {
+                this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 console.log("startBtn OpenAthleticsWindow!");
                 this.startGamePart.active=true;
@@ -209,6 +213,7 @@ export class MainInterface
             //打开商店界面
             this.storeBtn.on(Button.EventType.CLICK,async ()=>
             {
+                this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 let st = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "StorePanel") as Prefab;
                 this.storePanel =instantiate(st);
@@ -220,6 +225,7 @@ export class MainInterface
             //打开牌库界面
             this.cardlibraryBtn.on(Button.EventType.CLICK,async ()=>
             {
+                this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 let cl = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","CardLibPanel") as Prefab;
                 this.cardLibraryPanel = instantiate(cl);
@@ -230,6 +236,7 @@ export class MainInterface
             //打开卡组编辑界面
             this.cardEditorBtn.on(Button.EventType.CLICK,async ()=>
             {
+                this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 let ce = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs" , "CardEditor") as Prefab;
                 this.cardEditPanel = instantiate(ce);
@@ -242,6 +249,7 @@ export class MainInterface
             {
                 new Promise<void>(async (resolve, reject) =>
                 {
+                    this.activity=false;
                     let tick=0;
                     let interval= setInterval(()=>
                     {
@@ -256,7 +264,7 @@ export class MainInterface
                     let panel = instantiate(vt);
                     panel.setParent(this.parentNode);
                     panel.getComponent(QuestPanel).Open();
-                    this.panelNode.active = false;
+                    this.panelNode.active = this.activity;
                     clearInterval(interval);
                     resolve();
                 }).then(()=>
@@ -268,6 +276,7 @@ export class MainInterface
             //打开任务、成就
             this.achieveBtn.on(Button.EventType.CLICK, async () =>
             {
+                this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 //this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true,this.userAccount));
                 let ap = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "AchievePanel") as Prefab;
@@ -278,7 +287,7 @@ export class MainInterface
             }, this);
             this.wxGroupBtn.on(Node.EventType.TOUCH_START, async () =>
             {
-                console.log("wxGroupBtn CLICK OpenJoinWXGroup:", config.HotFixedConfig.OpenJoinWXGroup);
+                this.activity=false;
                 if (config.HotFixedConfig.OpenJoinWXGroup) {
                     AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                     let wgp = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "WxGroup") as Prefab;
@@ -286,7 +295,9 @@ export class MainInterface
                     this.wxGroupPanel.setParent(this.parentNode);
                 }
             }, this);
-            this.panelNode.on(Node.EventType.TOUCH_START, () => {
+            this.panelNode.on(Node.EventType.TOUCH_START, () => 
+            {
+                this.activity=true;
                 if (this.wxGroupPanel) {
                     this.wxGroupPanel.destroy();
                     this.wxGroupPanel = null;
@@ -311,13 +322,6 @@ export class MainInterface
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
                 this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,User.UserData));
             },this);
-
-            //后台下载
-            let allAwait = [];
-            // allAwait.push(BundleManager.Instance.PreLoadBundleDir("Panel", "/"));
-            // allAwait.push(BundleManager.Instance.PreLoadBundleDir("Board", "/"));
-
-            //Promise.all(allAwait);
         }
         catch(error)
         {

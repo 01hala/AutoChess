@@ -461,7 +461,7 @@ export class RoleIcon extends Component
         }
         if(GameManager.Instance.guide && GameManager.Instance.guide.step <=7)
         {
-            return;
+            //return;
         }
         //AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
         AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");

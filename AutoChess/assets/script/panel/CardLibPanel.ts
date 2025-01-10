@@ -187,6 +187,7 @@ export class CardLibPanel extends Component
 
     public Exit()
     {
+        singleton.netSingleton.mainInterface.activity=true;
         this.node.destroy();
     }
 
