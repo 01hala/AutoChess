@@ -216,7 +216,7 @@ export class RoleIcon extends Component
                     }
                     else {
                         this.roleNode.active = false;
-                        await this.roleArea.SaleRole(beforeIndex);
+                        this.roleArea.SaleRole(beforeIndex);
                         this.roleNode.destroy();
                         this.node.destroy();
                         return;

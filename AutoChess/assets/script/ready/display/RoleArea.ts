@@ -118,12 +118,13 @@ export class RoleArea extends Component
         }
     }
 
-    async SaleRole(index:number)
+    public SaleRole(index:number)
     {
+        this.rolesNode[index]=null;
         AudioManager.Instance.PlayerOnShot("Sound/sound_charsolded_01");
         console.log("SaleRole index:" + index);
         singleton.netSingleton.ready.readyData.Sale(index);
-        this.rolesNode[index]=null;
+        
         // for(let i:number=0;i<this.rolesNode.length;i++)
         // {
         //     if(this.rolesNode[i].getComponent(RoleIcon).index==index)

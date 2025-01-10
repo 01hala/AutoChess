@@ -552,7 +552,7 @@ export class ReadyDis
                 console.warn("fetters:"+this.readyData.GetFetters().length);
                 if(_battle_info.FettersList.length<this.readyData.GetFetters().length)
                 {
-                    for(let i=_battle_info.FettersList.length-1;i<6;i++)
+                    for(let i=_battle_info.FettersList.length;i<6;i++)
                     {
                         this.fetters[i].active = false;
                     }
