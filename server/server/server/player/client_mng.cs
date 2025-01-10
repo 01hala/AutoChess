@@ -110,7 +110,7 @@ namespace Player
                     score = 0,
                     quest = 10001,
                     bag = new Abelkhan.Bag() { ItemList = new() },
-                    guideStep = 0,
+                    guideStep = GuideStep.Done,
                     RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,
                 },
@@ -267,7 +267,8 @@ namespace Player
 
             if (data.Contains("guideStep"))
             {
-                info.info.guideStep = (GuideStep)data.GetValue("guideStep").AsInt32;
+                //info.info.guideStep = (GuideStep)data.GetValue("guideStep").AsInt32;
+                info.info.guideStep = GuideStep.Done;
             }
 
             if (data.Contains("lastTickStrengthTime"))
@@ -405,7 +406,7 @@ namespace Player
 
         public void UpdateGuideStep(GuideStep step)
         {
-            info.guideStep = step;
+            info.guideStep = GuideStep.Done;
             guideSteps.Add(step);
         }
 
