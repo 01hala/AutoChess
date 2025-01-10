@@ -249,7 +249,7 @@ export class login extends Component {
                     //     GameManager.Instance.StartGuide(_step);
                     // }
                     //GameManager.Instance.StartGuide(common.GuideStep.None);
-                    step=common.GuideStep.None;
+                    step=_step;
                 });
                 
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
@@ -270,7 +270,7 @@ export class login extends Component {
                 }
                 if(step!=null)
                 {
-                    GameManager.Instance.StartGuide(common.GuideStep.None);
+                    GameManager.Instance.StartGuide(step);
                     singleton.netSingleton.mainInterface.SwitchBtnlist(false);
                 }
             });

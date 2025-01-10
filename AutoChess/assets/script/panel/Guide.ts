@@ -209,7 +209,7 @@ export class Guide extends Component
     {
         try
         {
-            //singleton.netSingleton.player.guide_step_ntf(_step);
+            singleton.netSingleton.player.guide_step_ntf(_step);
             this.step=_step;
             this.panel.active=true;
             this.skipBtn.active = true;
