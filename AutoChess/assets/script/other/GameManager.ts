@@ -397,10 +397,10 @@ export class GameManager extends Component
     {
         this.listening = setInterval(() =>
         {
-            if (GameManager.Instance.guide)
+            if (GameManager.Instance.guide && GameManager.Instance.guide.step!=common.GuideStep.Done)
             {
                 this.second += 100;
-                if (singleton.netSingleton.mainInterface?.activity && this.second >= 3000)
+                if (singleton.netSingleton.mainInterface?.activity && this.second >= 10000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.ClickGameLobby == GameManager.Instance.guide.next) && (common.GuideStep.ClickGameLobby!=GameManager.Instance.guide.step))
@@ -409,7 +409,7 @@ export class GameManager extends Component
                         GameManager.Instance.guide.OnGuide(common.GuideStep.ClickGameLobby);
                     }
                 }
-                if (this.node.getChildByPath("MainInterface/StartGamePanel")?.active && this.second >= 3000)
+                if (this.node.getChildByPath("MainInterface/StartGamePanel")?.active && this.second >= 10000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.ClickMatch == GameManager.Instance.guide.next) && (common.GuideStep.ClickMatch!=GameManager.Instance.guide.step))
@@ -419,7 +419,7 @@ export class GameManager extends Component
                         GameManager.Instance.guide.OnGuide(common.GuideStep.ClickMatch);
                     }
                 }
-                if(singleton.netSingleton.ready?.activity && this.second>=3000)
+                if(singleton.netSingleton.ready?.activity && this.second>=10000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.BuyRole == GameManager.Instance.guide.next) && (common.GuideStep.BuyRole!=GameManager.Instance.guide.step))
@@ -429,7 +429,7 @@ export class GameManager extends Component
                         
                     }
                 }
-                if(singleton.netSingleton.ready?.activity && this.node.getChildByPath("ReadyPanel/RoleArea")?.getComponent(RoleArea).GetRolesNumber()>0 && this.second>=3000)
+                if(singleton.netSingleton.ready?.activity && singleton.netSingleton.ready?.roleArea.GetRolesNumber()>0 && this.second>=10000)
                 {
                     //GameManager.Instance.guide.CheckGuide();
                     if((common.GuideStep.CoinInfo == GameManager.Instance.guide.next) && (common.GuideStep.CoinInfo!=GameManager.Instance.guide.step))
@@ -448,7 +448,7 @@ export class GameManager extends Component
             {
                 clearInterval(this.listening);
             }
-            if(this.second>3000)
+            if(this.second>10000)
             {
                 this.second=0;
             }
