@@ -243,7 +243,7 @@ export class login extends Component {
                 let step=null;
                 await singleton.netSingleton.player.get_user_data(true,(_step) =>
                 {
-                    // console.log("guide step:", _step);
+                    console.log("get_user_data guide step:", _step);
                     // if(common.GuideStep.Done != _step)
                     // {
                     //     GameManager.Instance.StartGuide(_step);

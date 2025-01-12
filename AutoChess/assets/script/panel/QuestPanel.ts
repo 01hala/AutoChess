@@ -38,7 +38,11 @@ export class QuestPanel extends Component
 
     public Exit()
     {
-        singleton.netSingleton.mainInterface.activity=true;
+        console.log("QuestPanel Exit!");
+
+        if (singleton.netSingleton.mainInterface) {
+            singleton.netSingleton.mainInterface.activity=true;
+        }
         this.node.destroy();
     }
 

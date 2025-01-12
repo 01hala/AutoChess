@@ -49,8 +49,8 @@ namespace Player
         public bool isQuestEvent;
         public long PeakStrengthID = 0;
 
-        public battle_shop_player BattleShopPlayer;
-        public PVELevelConfig PVELevelCfg;
+        public battle_shop_player battleShopPlayer;
+        public PVELevelConfig pveLevelCfg;
 
         public battle_shop_player TmpBattleShopPlayer;
         public PVELevelConfig TmpPVELevelCfg;
@@ -110,7 +110,7 @@ namespace Player
                     score = 0,
                     quest = 10001,
                     bag = new Abelkhan.Bag() { ItemList = new() },
-                    guideStep = 0,
+                    guideStep = GuideStep.Done,
                     RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,
                 },
@@ -267,7 +267,8 @@ namespace Player
 
             if (data.Contains("guideStep"))
             {
-                info.info.guideStep = (GuideStep)data.GetValue("guideStep").AsInt32;
+                //info.info.guideStep = (GuideStep)data.GetValue("guideStep").AsInt32;
+                info.info.guideStep = GuideStep.Done;
             }
 
             if (data.Contains("lastTickStrengthTime"))
@@ -296,8 +297,8 @@ namespace Player
             if (data.Contains("BattleData"))
             {
                 var BattleData = data.GetValue("BattleData").AsBsonDocument;
-                info.BattleShopPlayer = new battle_shop_player(null, null, info.BattleRoleGroup(), info.info.User);
-                info.BattleShopPlayer.BattleData = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserBattleData>(BattleData);
+                info.battleShopPlayer = new battle_shop_player(null, null, info.BattleRoleGroup(), info.info.User);
+                info.battleShopPlayer.BattleData = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<UserBattleData>(BattleData);
             }
 
             return info;
@@ -367,9 +368,9 @@ namespace Player
                 { "PVELevelIndex", info.PVELevelIndex },
             };
 
-            if (BattleShopPlayer != null)
+            if (battleShopPlayer != null)
             {
-                doc.Add("BattleData", BattleShopPlayer.BattleData.ToBsonDocument());
+                doc.Add("BattleData", battleShopPlayer.BattleData.ToBsonDocument());
             }
 
             return doc;
@@ -405,7 +406,7 @@ namespace Player
 
         public void UpdateGuideStep(GuideStep step)
         {
-            info.guideStep = step;
+            info.guideStep = GuideStep.Done;
             guideSteps.Add(step);
         }
 
@@ -1156,29 +1157,35 @@ namespace Player
 
         public bool refresh(int stage)
         {
-            if (BattleShopPlayer.BattleData.coin <= 0)
+            var BattleShopPlayerImpl = battleShopPlayer;
+            if (TmpBattleShopPlayer != null)
+            {
+                BattleShopPlayerImpl = TmpBattleShopPlayer;
+            }
+
+            if (BattleShopPlayerImpl.BattleData.coin <= 0)
             {
                 return false;
             }
 
-            BattleShopPlayer.BattleData.coin--;
-            BattleShopPlayer.ShopData = BattleShopPlayer.refresh(stage);
+            BattleShopPlayerImpl.BattleData.coin--;
+            BattleShopPlayerImpl.ShopData = BattleShopPlayerImpl.refresh(stage);
 
             return true;
         }
 
         public int GetStage()
         {
-            Log.Log.trace("GetStage PVELevelCfg:{0} PVELevelIndex:{1}", PVELevelCfg.ToJson(), info.PVELevelIndex);
-            if (PVELevelCfg == null)
+            var PVELevelCfgImpl = pveLevelCfg;
+            var PVELevelIndex = info.PVELevelIndex;
+            if (TmpPVELevelCfg != null)
             {
-                if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfgPVELevelCfg))
-                {
-                    Log.Log.trace("PVELevelConfigs TryGetValue quest:{0}", info.quest);
-                    PVELevelCfg = cfgPVELevelCfg;
-                }
+                PVELevelCfgImpl = TmpPVELevelCfg;
+                PVELevelIndex = TmpPVELevelIndex;
             }
-            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var cfg))
+
+            Log.Log.trace("GetStage PVELevelCfg:{0} PVELevelIndex:{1}", PVELevelCfgImpl.ToJson(), PVELevelIndex);
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfgImpl.Level[PVELevelIndex], out var cfg))
             {
                 return cfg.Stage;
             }
@@ -1188,14 +1195,22 @@ namespace Player
 
         public void ClearPVEState()
         {
-            BattleShopPlayer = null;
-            PVELevelCfg = null;
+            battleShopPlayer = null;
+            pveLevelCfg = null;
             info.PVELevelIndex = 0;
         }
 
         public void StartPVERound(int addCoin)
         {
-            foreach (var r in BattleShopPlayer.BattleData.RoleList)
+            var BattleShopPlayerImpl = battleShopPlayer;
+            var PVELevelCfg = pveLevelCfg;
+            if (TmpBattleShopPlayer != null)
+            {
+                BattleShopPlayerImpl = TmpBattleShopPlayer;
+                PVELevelCfg = TmpPVELevelCfg;
+            }
+
+            foreach (var r in BattleShopPlayerImpl.BattleData.RoleList)
             {
                 if (r != null)
                 {
@@ -1205,44 +1220,59 @@ namespace Player
                 }
             }
 
-            BattleShopPlayer.ShopData = BattleShopPlayer.refresh(GetStage());
+            BattleShopPlayerImpl.ShopData = BattleShopPlayerImpl.refresh(GetStage());
 
             if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var cfg))
             {
-                BattleShopPlayer.BattleData.coin = cfg.Gold + BattleShopPlayer.bankCpin + addCoin;
-                BattleShopPlayer.bankCpin = 0;
+                BattleShopPlayerImpl.BattleData.coin = cfg.Gold + BattleShopPlayerImpl.bankCpin + addCoin;
+                BattleShopPlayerImpl.bankCpin = 0;
             }
 
-            BattleShopPlayer.evs.Add(new shop_event()
+            BattleShopPlayerImpl.evs.Add(new shop_event()
             {
                 ev = EMRoleShopEvent.start_round
             });
 
-            BattleShopPlayer.clear_skill_tag();
-            BattleShopPlayer.do_skill(GetStage());
+            BattleShopPlayerImpl.clear_skill_tag();
+            BattleShopPlayerImpl.do_skill(GetStage());
         }
 
         public void EndPVERound()
         {
-            BattleShopPlayer.evs.Add(new shop_event()
+            var BattleShopPlayerImpl = battleShopPlayer;
+            if (TmpBattleShopPlayer != null)
+            {
+                BattleShopPlayerImpl = TmpBattleShopPlayer;
+            }
+
+            BattleShopPlayerImpl.evs.Add(new shop_event()
             {
                 ev = EMRoleShopEvent.end_round
             });
 
-            BattleShopPlayer.clear_skill_tag();
-            BattleShopPlayer.do_skill(GetStage());
+            BattleShopPlayerImpl.clear_skill_tag();
+            BattleShopPlayerImpl.do_skill(GetStage());
         }
 
-        public Tuple<em_error, List<int>> StartQuestReady(int quest, string _clientUUID, battle_client_caller battleClientCaller)
+        private void ResetTmpBattleShop()
         {
-            if (BattleShopPlayer == null)
+            TmpBattleShopPlayer = null;
+            TmpPVELevelCfg = null;
+            TmpPVELevelIndex = 0;
+        }
+
+        public Tuple<em_error, List<int>> StartQuestReady(string _clientUUID, battle_client_caller battleClientCaller)
+        {
+            ResetTmpBattleShop();
+
+            if (battleShopPlayer == null)
             {
-                BattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
+                battleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
             }
             else
             {
-                BattleShopPlayer.ClientUUID = _clientUUID;
-                BattleShopPlayer.BattleClientCaller = battleClientCaller;
+                battleShopPlayer.ClientUUID = _clientUUID;
+                battleShopPlayer.BattleClientCaller = battleClientCaller;
             }
 
             if (config.Config.PVELevelConfigs.TryGetValue(info.quest, out var cfg))
@@ -1254,22 +1284,64 @@ namespace Player
                     return Tuple.Create(em_error.last_quest, new List<int>());
                 }
 
-                PVELevelCfg = cfg;
+                pveLevelCfg = cfg;
                 if (info.PVELevelIndex == 0)
                 {
-                    BattleShopPlayer.BattleData.faild = PVELevelCfg.Hp;
+                    battleShopPlayer.BattleData.faild = pveLevelCfg.Hp;
                     StartPVERound(0);
                 }
-                if (BattleShopPlayer.ShopData.SaleRoleList.Count == 0 || BattleShopPlayer.ShopData.SalePropList.Count == 0)
+                if (battleShopPlayer.ShopData.SaleRoleList.Count == 0 || battleShopPlayer.ShopData.SalePropList.Count == 0)
                 {
-                    BattleShopPlayer.refresh(GetStage());
+                    battleShopPlayer.refresh(GetStage());
                 }
 
                 Log.Log.trace("PVELevelConfigs TryGetValue isQuestEvent:{0}", isQuestEvent);
                 if (!isQuestEvent)
                 {
                     Log.Log.trace("PVELevelConfigs TryGetValue info.PVELevelIndex:{0}", info.PVELevelIndex);
-                    if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var rcfg))
+                    if (config.Config.PVERoundConfigs.TryGetValue(pveLevelCfg.Level[info.PVELevelIndex], out var rcfg))
+                    {
+                        return Tuple.Create(em_error.success, rcfg.EventID);
+                    }
+                }
+                return Tuple.Create(em_error.success, new List<int>());
+            }
+
+            return Tuple.Create(em_error.not_exist_quest, new List<int>());
+        }
+
+        public Tuple<em_error, List<int>> StartQuestReady1(int quest, string _clientUUID, battle_client_caller battleClientCaller)
+        {
+            if (TmpBattleShopPlayer == null || quest != TmpPVELevelCfg.ID)
+            {
+                TmpBattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
+            }
+
+            if (config.Config.PVELevelConfigs.TryGetValue(quest, out var cfg))
+            {
+                Log.Log.trace("PVELevelConfigs TryGetValue quest:{0}", info.quest);
+
+                if (cfg.Level.Count <= 0)
+                {
+                    return Tuple.Create(em_error.last_quest, new List<int>());
+                }
+
+                TmpPVELevelCfg = cfg;
+                if (TmpPVELevelIndex == 0)
+                {
+                    TmpBattleShopPlayer.BattleData.faild = TmpPVELevelCfg.Hp;
+                    StartPVERound(0);
+                }
+                if (TmpBattleShopPlayer.ShopData.SaleRoleList.Count == 0 || TmpBattleShopPlayer.ShopData.SalePropList.Count == 0)
+                {
+                    TmpBattleShopPlayer.refresh(GetStage());
+                }
+
+                Log.Log.trace("PVELevelConfigs TryGetValue isQuestEvent:{0}", isQuestEvent);
+                if (!isQuestEvent)
+                {
+                    Log.Log.trace("PVELevelConfigs TryGetValue info.PVELevelIndex:{0}", TmpPVELevelIndex);
+                    if (config.Config.PVERoundConfigs.TryGetValue(TmpPVELevelCfg.Level[TmpPVELevelIndex], out var rcfg))
                     {
                         return Tuple.Create(em_error.success, rcfg.EventID);
                     }
@@ -1298,7 +1370,14 @@ namespace Player
                         r.HP = cfg.RoleHP;
                         r.Attack = cfg.RoleAttack;
                         r.equipID = cfg.RoleEquip;
-                        BattleShopPlayer.ShopData.SaleRoleList[5] = r;
+                        if (TmpBattleShopPlayer != null)
+                        {
+                            TmpBattleShopPlayer.ShopData.SaleRoleList[5] = r;
+                        }
+                        else
+                        {
+                            battleShopPlayer.ShopData.SaleRoleList[5] = r;
+                        }
                     }
                 }
             }
@@ -1306,10 +1385,18 @@ namespace Player
 
         public UserBattleData StartQuestBattle()
         {
+            var PVELevelCfgImpl = pveLevelCfg;
+            var PVELevelIndex = info.PVELevelIndex;
+            if (TmpBattleShopPlayer != null)
+            {
+                PVELevelCfgImpl = TmpPVELevelCfg;
+                PVELevelIndex = TmpPVELevelIndex;
+            }
+
             var target = new UserBattleData();
             target.RoleList = new List<Role>();
 
-            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfg.Level[info.PVELevelIndex], out var cfg))
+            if (config.Config.PVERoundConfigs.TryGetValue(PVELevelCfgImpl.Level[PVELevelIndex], out var cfg))
             {
                 foreach(var rInfo in cfg.Enemys)
                 {
@@ -1345,7 +1432,13 @@ namespace Player
 
         public bool add_role(string ClientUUID, int role_index, int index)
         {
-            var r = BattleShopPlayer.add_role(role_index, index);
+            var BattleShopPlayerImpl = battleShopPlayer;
+            if (TmpBattleShopPlayer != null)
+            {
+                BattleShopPlayerImpl = TmpBattleShopPlayer;
+            }
+
+            var r = BattleShopPlayerImpl.add_role(role_index, index);
             if (r != null)
             {
                 if (CheckBuyRole(r))
@@ -1361,19 +1454,25 @@ namespace Player
 
         public em_error buy_role(string ClientUUID, int index, int role_index)
         {
-            var r = BattleShopPlayer.BattleData.RoleList[role_index];
-            var s = BattleShopPlayer.ShopData.SaleRoleList[index];
+            var BattleShopPlayerImpl = battleShopPlayer;
+            if (TmpBattleShopPlayer != null)
+            {
+                BattleShopPlayerImpl = TmpBattleShopPlayer;
+            }
+
+            var r = BattleShopPlayerImpl.BattleData.RoleList[role_index];
+            var s = BattleShopPlayerImpl.ShopData.SaleRoleList[index];
 
             if (s == null)
             {
                 return em_error.db_error;
             }
 
-            if (BattleShopPlayer.BattleData.coin < s.Price)
+            if (BattleShopPlayerImpl.BattleData.coin < s.Price)
             {
                 return em_error.no_enough_coin;
             }
-            BattleShopPlayer.BattleData.coin -= s.Price;
+            BattleShopPlayerImpl.BattleData.coin -= s.Price;
 
             if (r == null)
             {
@@ -1384,7 +1483,7 @@ namespace Player
             }
             else
             {
-                var err = BattleShopPlayer.merge_role(index, role_index);
+                var err = BattleShopPlayerImpl.merge_role(index, role_index);
                 if (err != em_error.success)
                 {
                     return err;
@@ -1401,7 +1500,13 @@ namespace Player
 
         public em_error buy_equip(string ClientUUID, ShopProp p, int index, int role_index)
         {
-            var err = BattleShopPlayer.buy_equip(p, index, role_index);
+            var BattleShopPlayerImpl = battleShopPlayer;
+            if (TmpBattleShopPlayer != null)
+            {
+                BattleShopPlayerImpl = TmpBattleShopPlayer;
+            }
+
+            var err = BattleShopPlayerImpl.buy_equip(p, index, role_index);
             if (err != em_error.success)
             {
                 return err;
@@ -1417,6 +1522,12 @@ namespace Player
 
         public em_error buy(string ClientUUID, ShopIndex shop_index, int index, int role_index)
         {
+            var BattleShopPlayerImpl = battleShopPlayer;
+            if (TmpBattleShopPlayer != null)
+            {
+                BattleShopPlayerImpl = TmpBattleShopPlayer;
+            }
+
             if (shop_index == ShopIndex.Role)
             {
                 var result = buy_role(ClientUUID, index, role_index);
@@ -1427,21 +1538,21 @@ namespace Player
             }
             else if (shop_index == ShopIndex.Prop)
             {
-                var p = BattleShopPlayer.ShopData.SalePropList[index];
+                var p = BattleShopPlayerImpl.ShopData.SalePropList[index];
                 if (p == null)
                 {
                     return em_error.db_error;
                 }
 
-                if (BattleShopPlayer.BattleData.coin < p.Price)
+                if (BattleShopPlayerImpl.BattleData.coin < p.Price)
                 {
                     return em_error.no_enough_coin;
                 }
-                BattleShopPlayer.BattleData.coin -= p.Price;
+                BattleShopPlayerImpl.BattleData.coin -= p.Price;
 
                 if (p.PropID >= config.Config.FoodIDMin && p.PropID <= config.Config.FoodIDMax)
                 {
-                    var result = BattleShopPlayer.buy_food(p, index, role_index, GetStage());
+                    var result = BattleShopPlayerImpl.buy_food(p, index, role_index, GetStage());
                     if (result != em_error.success)
                     {
                         return result;
@@ -1460,14 +1571,14 @@ namespace Player
                     return em_error.db_error;
                 }
 
-                BattleShopPlayer.ShopData.SalePropList[index] = null;
+                BattleShopPlayerImpl.ShopData.SalePropList[index] = null;
             }
             else
             {
                 return em_error.db_error;
             }
 
-            BattleShopPlayer.clear_skill_tag();
+            BattleShopPlayerImpl.clear_skill_tag();
 
             return em_error.success;
         }
