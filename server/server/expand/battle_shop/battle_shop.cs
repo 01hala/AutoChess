@@ -714,6 +714,10 @@ namespace battle_shop
             {
                 return em_error.not_same_role_to_update;
             }
+            if (r.Level >= 3)
+            {
+                return em_error.max_role_level;
+            }
 
             r.Number += 1;
             var oldLevel = r.Level;
@@ -953,8 +957,12 @@ namespace battle_shop
                     r2.Number += r1.Number;
                     var oldLevel = r2.Level;
                     r2.Level = r2.Number / 3 + 1;
-                    r2.HP += r1.Number;
-                    r2.Attack += r1.Number;
+                    if (r2.Level > 3)
+                    {
+                        r2.Level = 3;
+                    }
+                    r2.HP += r1.HP - 1;
+                    r2.Attack += r1.Attack - 1;
 
                     if (r2.Level > oldLevel)
                     {

@@ -356,9 +356,13 @@ export class SkillDis
 
                 for (let element of _ev.recipient)
                 {
-                    await spList.roleNodes[element.index].getComponent(RoleDis).DeflexionDamage();
+                    if (spList.roleNodes[element.index]) {
+                        await spList.roleNodes[element.index].getComponent(RoleDis).DeflexionDamage();
+                    }
                 }
-                await this.parent.getComponent(RoleDis).SubstituteDamage();
+                if (this.parent) {
+                    await this.parent.getComponent(RoleDis).SubstituteDamage();
+                }
                 resolve();
             } catch (error)
             {

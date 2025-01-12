@@ -24,7 +24,8 @@ export enum em_error{
     not_exist_quest = 17,
     token_out_time = 18,
     not_exist_quest_level = 19,
-    last_quest = 20
+    last_quest = 20,
+    max_role_level = 21
 }
 
 /*this struct code is codegen by abelkhan codegen for typescript*/

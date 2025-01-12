@@ -22,6 +22,7 @@ enum em_error{
 	token_out_time = 18;
 	not_exist_quest_level = 19;
 	last_quest = 20;
+	max_role_level = 21;
 }
 
 module error_code_ntf{
