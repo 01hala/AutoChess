@@ -97,10 +97,8 @@ export class SkillDis
 
                 if(_ev.objCount>=6)
                 {
-                    await this.RemoteAttackColony(_ev).then(()=>
-                    {
-                        resolve();
-                    });
+                    await this.RemoteAttackColony(_ev);
+                    resolve();
                 }
 
                 for (let element of _ev.recipient)
