@@ -536,7 +536,7 @@ export class RoleIcon extends Component
                     {
                         //this.tempTarget = otherCollider.node;
                         this.tempMergeRole = this.roleArea.rolesNode[this.tempIndex];
-                        let r = this.roleNode.getComponent(RoleDis);
+                        let r = this.tempMergeRole.getComponent(RoleDis);
                         //console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
                         if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId && this.tempMergeRole !=this.node && r.Level < 3) {
                             this.isMerge = true;
