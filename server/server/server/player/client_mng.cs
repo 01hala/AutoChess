@@ -1210,6 +1210,11 @@ namespace Player
                 PVELevelCfg = TmpPVELevelCfg;
             }
 
+            if (info.PVELevelIndex >= PVELevelCfg.Level.Count)
+            {
+                info.PVELevelIndex = 0;
+            }
+
             foreach (var r in BattleShopPlayerImpl.BattleData.RoleList)
             {
                 if (r != null)
