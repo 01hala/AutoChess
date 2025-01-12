@@ -35,6 +35,7 @@ export class RoleIcon extends Component
     //角色信息
     public roleId:number;
     public index:number;
+    public roleLv:number;
     //父级面板
     private panel:Node;
     //图标碰撞体
@@ -118,6 +119,7 @@ export class RoleIcon extends Component
             this.roleNode=await this.SpawnRole(r);
             this.originalPos=this.node.getPosition();
             this.roleId=_Id;
+            this.roleLv=_level;
             //通过配置文件加载资源
             await this.LoadOnConfig(); 
             this.freezeLock=_freeze;
@@ -195,16 +197,19 @@ export class RoleIcon extends Component
                     //重新注册按钮事件
                     //this.RegBtn(true);
                     //移动角色且判断是否出售
-                    if (!this.isSale) {
-                        if (this.isBuy) {
+                    if (!this.isSale)
+                    {
+                        if (this.isBuy)
+                        {
                             console.log(this.index, this.tempIndex);
-                            this.roleArea.MovePos(this.index, this.tempIndex ,this.isMerge); 
+                            this.roleArea.MovePos(this.index, this.tempIndex, this.isMerge);
                         }
 
                         //换位
                         if (this.isSwitch && !this.isSale)//是否交换位置
                         {
-                            if (!this.isMerge) {
+                            if (!this.isMerge)
+                            {
                                 //console.log('switch : ',this.t.getComponent(RoleIcon).roleId);
                                 this.roleArea.SwitchPos(beforeIndex, berforeTarget, this.tempMergeRole);
                                 //this.roleArea.targets.set(this.target.name, this.node);
@@ -214,7 +219,8 @@ export class RoleIcon extends Component
                         this.index = this.tempIndex;
                         this.target = this.tempTarget;
                     }
-                    else {
+                    else
+                    {
                         this.roleNode.active = false;
                         this.roleArea.SaleRole(beforeIndex);
                         this.roleNode.destroy();
@@ -222,14 +228,18 @@ export class RoleIcon extends Component
                         return;
                     }
                     //购买、合并角色
-                    if (null != this.index) {
+                    if (null != this.index)
+                    {
                         console.log("欲购买或者移动角色");
-                        if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() >= 3) {
+                        if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() >= 3)
+                        {
                             console.log("角色未购买并且金币数量大于等于3");
                             this.freezeSprite.active = false;
-                            if (null != this.target || this.isMerge) {
-                                if (null == this.roleArea.rolesNode[this.tempIndex] || this.isMerge) {
-                                    this.isBuy = true;                                    
+                            if (null != this.target || this.isMerge)
+                            {
+                                if (null == this.roleArea.rolesNode[this.tempIndex] || this.isMerge)
+                                {
+                                    this.isBuy = true;
                                     // if(!this.isMerge)
                                     // {
                                     //     this.roleArea.targets.set(this.target.name,this.node);
@@ -238,13 +248,14 @@ export class RoleIcon extends Component
                                     this.Adsorption();
                                     //这个await延迟太明显了导致购买角色手感很差，需要调整购买效果的执行位置
                                     await this.shopArea.BuyRole(this.index, this.node, this.isMerge);
-                                    
+
                                     console.log(`购买时，欲在 ${this.index} 购买位置角色信息：` + this.roleArea.rolesNode[this.tempIndex].name + "是否合并" + this.isMerge);
                                 }
                                 else console.log("purchase failed, there is already a character at the purchase location");
                             }
 
-                            if (this.isMerge) {
+                            if (this.isMerge)
+                            {
                                 this.roleNode.destroy();
                                 this.node.destroy();
                                 return;
@@ -252,7 +263,8 @@ export class RoleIcon extends Component
                         }
                         else if (!this.isBuy && singleton.netSingleton.ready.readyData.GetCoins() < 3) 
                         {
-                            this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip,true,"<outline color=black width=4>金 币 不 足</outline>"));
+                            this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip, true, "<outline color=black width=4>金 币 不 足</outline>"));
+                            this.isMerge = false;
                             //GameManager.Instance.ShowTip("<outline color=black width=4>金 币 不 足</outline>");
                         }
                     }
@@ -537,8 +549,13 @@ export class RoleIcon extends Component
                         //this.tempTarget = otherCollider.node;
                         this.tempMergeRole = this.roleArea.rolesNode[this.tempIndex];
                         //console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
-                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId && this.tempMergeRole !=this.node) {
-                            this.isMerge = true;
+                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId && this.tempMergeRole !=this.node) 
+                        {
+                            if(this.tempMergeRole.getComponent(RoleIcon).roleLv<3)
+                            {
+                                this.isMerge = true;
+                            }
+                            
                         }
                         else {
                             this.isMerge = false;
