@@ -937,12 +937,6 @@ namespace battle_shop
             var r1 = battleData.RoleList[role_index1];
             var r2 = battleData.RoleList[role_index2];
 
-            if (r1.Level >= 3 || r2.Level >= 3)
-            {
-                return;
-            }
-
-
             if ((r1 == null && r2 != null) ||
                 (r1 != null && r2 == null))
             {
@@ -958,6 +952,11 @@ namespace battle_shop
                 }
                 else
                 {
+                    if (r1.Level >= 3 || r2.Level >= 3)
+                    {
+                        return;
+                    }
+
                     battleData.RoleList[role_index1] = null;
 
                     r2.Number += r1.Number;
