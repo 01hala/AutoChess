@@ -270,6 +270,7 @@ namespace Player
                         PVELevelIndex++;
                         if (PVELevelIndex >= pveLevelCfg.Level.Count)
                         {
+                            PVELevelIndex = 0;
                             if (_data.Data.TmpBattleShopPlayer == null)
                             {
                                 _data.Data.Info().quest++;

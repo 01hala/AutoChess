@@ -549,32 +549,31 @@ export class RoleIcon extends Component
                         //this.tempTarget = otherCollider.node;
                         this.tempMergeRole = this.roleArea.rolesNode[this.tempIndex];
                         //console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
-                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId && this.tempMergeRole !=this.node) 
+                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId && this.tempMergeRole !=this.node &&
+                            (this.tempMergeRole.getComponent(RoleIcon).roleLv<3 && this.roleLv < 3)) 
                         {
-                            if(this.tempMergeRole.getComponent(RoleIcon).roleLv<3)
-                            {
-                                this.isMerge = true;
-                            }
-                            
+                            this.isMerge = true;
                         }
                         else {
                             this.isMerge = false;
                             this.isSwitch = true;
                         }
-                        //console.log(this.isMerge);
+                        console.log("isBuy isMerge:", this.isMerge);
                     }
                     else 
                     {
                         this.target = null;
                         this.tempMergeRole = this.roleArea.rolesNode[this.tempIndex];
                         //console.log(this.t.getComponent(RoleIcon).roleId,this.roleId)
-                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId) {
+                        if (this.tempMergeRole.getComponent(RoleIcon).roleId == this.roleId && 
+                            (this.tempMergeRole.getComponent(RoleIcon).roleLv<3 && this.roleLv < 3)) 
+                        {
                             this.isMerge = true;
                         }
                         else {
                             this.isMerge = false;
                         }
-                        //console.log(this.isMerge);
+                        console.log("isMerge:", this.isMerge);
                     }
                 }
                 //商店区域
