@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from './MessageEvent';
@@ -40,6 +40,8 @@ export class GameManager extends Component
     public guide:Guide=null;
     //侦听计时器
     public listening=null;
+
+    private boards:Map<string,Node>=null;
     
     protected onLoad()
     {
@@ -52,6 +54,7 @@ export class GameManager extends Component
         try
         {
            User.OptionsData=new OptionsData();
+           this.boards=new Map<string,Node>();
         }
         catch(error)
         {
@@ -101,7 +104,7 @@ export class GameManager extends Component
             let board=instantiate(ib);
             board.setParent(this.node);
             board.getComponent(InfoBoard).OpenCardInfo(event.detail.id);
-
+            this.boards.set(board.name,board);
         },this);
 
         //打开羁绊信息
@@ -120,6 +123,7 @@ export class GameManager extends Component
             let board=instantiate(ib);
             board.setParent(this.node);
             board.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
+            this.boards.set(board.name,board);
         },this);
 
         /* 消息来源
@@ -137,6 +141,7 @@ export class GameManager extends Component
             let board=instantiate(ib);
             board.setParent(this.node);
             board.getComponent(InfoBoard).OpenEntityInfo(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
+            this.boards.set(board.name,board);
         },this);
 
         //消息提示
@@ -170,6 +175,7 @@ export class GameManager extends Component
             let board = instantiate(st);
             board.setParent(this.node);
             board.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
+            this.boards.set(board.name,board);
         },this);
 
         //打开升阶面板
@@ -189,6 +195,7 @@ export class GameManager extends Component
             let board=instantiate(up);
             board.setParent(this.node);
             board.getComponent(UpStage).OpenUpStageBoard(event.detail);
+            this.boards.set(board.name,board);
         },this);
 
         //打开用户信息面板+
@@ -208,6 +215,7 @@ export class GameManager extends Component
             let board=instantiate(us);
             board.setParent(this.node);
             board.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
+            this.boards.set(board.name,board);
         },this);
 
         /* 消息来源
@@ -226,6 +234,7 @@ export class GameManager extends Component
             let board=instantiate(ta);
             board.setParent(this.node);
             board.getComponent(TaskAchieve).OpenTaskAchieveBoard();
+            this.boards.set(board.name,board);
         },this);
 
         /* 消息来源
@@ -262,6 +271,7 @@ export class GameManager extends Component
             let board = instantiate(rk);
             board.setParent(this.node);
             board.getComponent(RankList).OpenRankListBoard(event.detail);
+            this.boards.set(board.name,board);
         },this);
 
         /* 消息来源
@@ -279,7 +289,7 @@ export class GameManager extends Component
         },this);
 
         /** 消息来源
-         * ReadyDis.ts ：第169行
+         * ReadyDis.ts ：第129行
          * 
          * 
          */
@@ -287,12 +297,14 @@ export class GameManager extends Component
         {
             console.log("on message OpenChooseTag");
             event.propagationStopped=true;
+            this.node.getChildByPath("ChooseTagBoard")?.destroy();
             let ct = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", "ChooseTagBoard") as Prefab;
             let board = instantiate(ct);
             board.setParent(this.node);
             await sleep(100);
             console.log("ChooseTags：",event.detail.events);
             board.getComponent(ChooseTag).Open(event.detail.events);
+            this.boards.set(board.name,board);
         },this);
 
         /**打开关卡信息面板 消息来源：
@@ -305,7 +317,16 @@ export class GameManager extends Component
             let board = instantiate(ct);
             board.setParent(this.node);
             board.getComponent(LevelInfo).Open(event.detail.levelId, event.callBack);
+            this.boards.set(board.name,board);
         })
+    }
+
+    public RemoveAllBoard()
+    {
+        for(let t of this.boards.values())
+        {
+            t.destroy();
+        }
     }
 
     //显示等待
@@ -352,6 +373,7 @@ export class GameManager extends Component
         board.getComponent(PopUps).title=_title;
         board.getComponent(PopUps).subheading=_subheading;
         board.getComponent(PopUps).Open(_type , _items , _callBack);
+        this.boards.set(board.name,board);
     }
 
     //开始新手引导

@@ -234,6 +234,8 @@ export class login extends Component {
         //登录进入主界面
         singleton.netSingleton.player.cb_player_login_sucess = async () => 
         {
+            GameManager.Instance.RemoveAllBoard();
+
             this._progress += 0.1;
             this._setProgress(this._progress);
             
@@ -370,6 +372,8 @@ export class login extends Component {
 
     private async GameStart(_gamemode:enmus.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[],events?:number[])
     {
+        GameManager.Instance.RemoveAllBoard();
+
         console.log("start game!");
         this._progress = 0.1;
         this._setProgress = this._loading.load(this.ld.node);
@@ -424,6 +428,8 @@ export class login extends Component {
 
     private async BattleStart(_self: common.UserBattleData, _target: common.UserBattleData , _gamemode:enmus.GameMode)
     {
+        GameManager.Instance.RemoveAllBoard();
+
         console.log("cb_battle start round!");
 
         this._progress = 0.1;
@@ -456,6 +462,8 @@ export class login extends Component {
     public async BackMainInterface(panelName?:string)
     {
         console.log("BackMainInterface begin!");
+
+        GameManager.Instance.RemoveAllBoard();
 
         this._progress=0.1;
         this._setProgress = this._loading.load(this.ld.node);
