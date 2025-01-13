@@ -620,10 +620,12 @@ export class netGame {
                         {
                             this.cb_confirm_quest_victory(state);
                         }
+                        break;
                     case player_login.em_quest_state.next_level:
                         {
                             this.get_quest_shop_data();
                         }
+                        break;
                 }
                 resolve("finish");
             },()=>
