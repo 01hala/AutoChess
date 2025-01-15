@@ -8,7 +8,6 @@ export class BundleManager
     private bundles:Map<string, AssetManager.Bundle> = new Map();
 
     public static _instance:BundleManager=null;
-
     static get Instance()
     {
         if(this._instance==null)
@@ -19,12 +18,19 @@ export class BundleManager
     public loadBundle(bundleRes:string) : Promise<AssetManager.Bundle> {
         return new Promise((resolve) => {
             try {
+                if(this.bundles.has(bundleRes))
+                {
+                    let bundle = this.bundles.get(bundleRes);
+                    resolve(bundle);
+                }
+
                 assetManager.loadBundle(bundleRes,(error,bundle) => {
                     if(error) {
                         console.warn(error.message);
                         resolve(null);
                     }
                     else {
+                        this.bundles.set(bundleRes, bundle);
                         resolve(bundle);
                     }
                 });
@@ -60,31 +66,29 @@ export class BundleManager
             else
             {
                 assetManager.loadBundle(bundleRes,(error,bundle)=>
+                {
+                    if(error)
                     {
-                        if(error)
+                        console.warn("loadAssetsFromBundleSync 读取bundle失败 :  ", error.message);
+                        _callBack(null);
+                    }
+                    else
+                    {
+                        bundle.load(assetsRes, type ,(error,data)=>
                         {
-                            console.warn("loadAssetsFromBundleSync 读取bundle失败 :  ", error.message);
-                            _callBack(null);
-                        }
-                        else
-                        {
-                            this.bundles.set(bundleRes, bundle);
-                            bundle.load(assetsRes, type ,(error,data)=>
+                            if(error)
                             {
-                                if(error)
-                                {
-                                    console.warn("loadAssetsFromBundleSync 读取资源失败 :  ", error.message);
-                                    _callBack(null);
-                                }
-                                else
-                                {
-                                    _callBack(data);
-                                }
-                            });
-                        }
-                    });
+                                console.warn("loadAssetsFromBundleSync 读取资源失败 :  ", error.message);
+                                _callBack(null);
+                            }
+                            else
+                            {
+                                _callBack(data);
+                            }
+                        });
+                    }
+                });
             }
-            
         }
         catch(error)
         {
@@ -97,20 +101,11 @@ export class BundleManager
     loadAssetsFromBundle(bundleRes:string, assetsRes:string) : Promise<Asset> {   
         return new Promise(async (resolve) => {
             try {
-                let bundle : AssetManager.Bundle = null;
-                if (this.bundles.has(bundleRes)) {
-                    bundle = this.bundles.get(bundleRes);
-                }
-                else {
-                    bundle = await this.loadBundle(bundleRes);
-                    this.bundles.set(bundleRes, bundle);
-                }
+                let bundle = await this.loadBundle(bundleRes);
                 
-               //console.log("bundles:", this.bundles);
-                //console.log(`bundleRes:${bundleRes} assetsRes:${assetsRes}`)
                 bundle.load(assetsRes, Asset, (error, asset) => {
                     if(error) {
-                        console.warn(`loadAssets '${assetsRes}' error:`, error.message);
+                        console.warn(`loadAssets '${bundleRes}' '${assetsRes}' error:`, error.message);
                         resolve(null);
                     }
                     else {
@@ -130,14 +125,7 @@ export class BundleManager
         return new Promise(async (resolve) =>
         {
             try {
-                let bundle : AssetManager.Bundle = null;
-                if (this.bundles.has(bundleRes)) {
-                    bundle = this.bundles.get(bundleRes);
-                }
-                else {
-                    bundle = await this.loadBundle(bundleRes);
-                    this.bundles.set(bundleRes, bundle);
-                }
+                let bundle = await this.loadBundle(bundleRes);
 
                 bundle.load(assetsRes, ImageAsset, (error, img) => {
                     if(error) {
@@ -184,37 +172,35 @@ export class BundleManager
         {
             try
             {
-                console.log("开始预加载资源");
-                let allAwait = [];
-                for (let i: number = 0; i < config.BundleConfig.size; i++) 
-                {
-                    let bundleRes = config.BundleConfig.get(i).Path;
-                    console.log("正在加载：", bundleRes);
-                    if (!this.bundles.has(bundleRes))
-                    {
-                        assetManager.loadBundle(bundleRes, async (err, bundle) =>
-                        {
-                            if (err)
-                            {
-                                console.warn(bundleRes + "加载失败 err:" + err);
-                            }
-                            else
-                            {
-                                this.bundles.set(bundleRes, bundle);
-                            }
-                        });
-                    }
-                }
                 await this.PreLoadBundleDir("Sound", "",_callBack);
                 await this.PreLoadBundleDir("RoleSpine","",_callBack);
                 await this.PreLoadBundleDir("EffectSpine","",_callBack);
+                await this.PreLoadBundleDir("SceneSpine","",_callBack);
+                await this.PreLoadBundleDir("SpecialSpine","",_callBack);
+                await this.PreLoadBundleDir("MainInterface","",_callBack);
 
-                allAwait.push(this.PreLoadBundleDir("IconTexture",""));
+                let allAwait = [];
                 allAwait.push(this.PreLoadBundleDir("BackGroungTexture",""));
+                allAwait.push(this.PreLoadBundleDir("IconTexture",""));
                 allAwait.push(this.PreLoadBundleDir("ButtonTexture",""));
                 allAwait.push(this.PreLoadBundleDir("OtherTexture",""));
+                allAwait.push(this.PreLoadBundleDir("FrameTexture",""));
+                allAwait.push(this.PreLoadBundleDir("PanelTexture",""));
+                allAwait.push(this.PreLoadBundleDir("PropsTexture",""));
+                allAwait.push(this.PreLoadBundleDir("RoleAvatarTexture",""));
+                allAwait.push(this.PreLoadBundleDir("RolesTexture",""));
+                allAwait.push(this.PreLoadBundleDir("PanelPrefabs",""));
+                allAwait.push(this.PreLoadBundleDir("BoardPrefabs",""));
+                allAwait.push(this.PreLoadBundleDir("IconPrefabs",""));
+                allAwait.push(this.PreLoadBundleDir("PartPrefabs",""));
+                allAwait.push(this.PreLoadBundleDir("BulletPrefabs",""));
+                allAwait.push(this.PreLoadBundleDir("TextTipPrefabs",""));
                 allAwait.push(this.PreLoadBundleDir("Quest",""));
+                allAwait.push(this.PreLoadBundleDir("Ready",""));
                 allAwait.push(this.PreLoadBundleDir("CardLib",""));
+                allAwait.push(this.PreLoadBundleDir("Battle",""));
+                allAwait.push(this.PreLoadBundleDir("CareEdit",""));
+                allAwait.push(this.PreLoadBundleDir("Typeface",""));
 
                 Promise.all(allAwait);
                 
@@ -238,11 +224,7 @@ export class BundleManager
     {
         return new Promise<void>(async (resolve, reject) =>
         {
-            let bundle = this.bundles.get(_bundle);
-            if (!bundle)
-            {
-                bundle = await this.loadBundle(_bundle);
-            }
+            let bundle = await this.loadBundle(_bundle);
             let info = bundle.getDirWithPath(_res);
 
             if (info)
