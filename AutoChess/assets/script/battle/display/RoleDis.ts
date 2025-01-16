@@ -508,6 +508,7 @@ export class RoleDis extends Component
     {
         try 
         {
+            AudioManager.Instance.PlayerOnShot("Sound/battle_attribute_increment");
             if (stack)
             {
                 this.Exp = stack % 3;
@@ -578,6 +579,7 @@ export class RoleDis extends Component
     {
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_herolvup_01");
             //let str="lvl_"+_level;
             //let sf:SpriteFrame=await this.LoadImg("LvRing",str);
             tween(this.node).to(0.1,

@@ -259,7 +259,7 @@ export class MainInterface
                             GameManager.Instance.Waitting(true);
                         }
                     });
-                    AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
+                    AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                     let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "QuestPanel") as Prefab;
                     let panel = instantiate(vt);
                     panel.setParent(this.parentNode);

@@ -110,7 +110,7 @@ export class Settlement extends Component
                     this.outCome.getChildByPath("Spine").getComponent(sp.Skeleton).setAnimation(0, "loss", true);
                     break;
                 case BattleVictory.tie:
-                    AudioManager.Instance.PlayerOnShot("Sound/battle_failed_01");
+                    AudioManager.Instance.PlayerOnShot("Sound/battle_draw");
                     this.banners.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#2b7c41 width=20>平<size=30></size>局</color>";
                     this.cupNum.getChildByPath("RichText").getComponent(RichText).string = "<color=#ffffff>+0</color>"
                     this.banners.getComponent(Sprite).spriteFrame = this.drwaBanners;

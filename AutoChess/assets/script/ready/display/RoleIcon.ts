@@ -697,6 +697,7 @@ export class RoleIcon extends Component
     public async EatFood(t:common.Role,food_id:number,is_update: boolean , is_syncope : boolean){
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/battle_eatfood");
             console.log("人物尝试吃食物");
             console.log("role"+t.RoleID+"eat food"+food_id);
             let foodInfo=config.FoodConfig.get(food_id);
@@ -752,6 +753,7 @@ export class RoleIcon extends Component
     public async Equipping(t:common.Role,equip_id:number){
         try
         {
+            AudioManager.Instance.PlayerOnShot("Sound/sound_hero_01");
             console.log("人物尝试装备");
             let equipInfo=config.EquipConfig.get(equip_id);
             if(!equipInfo){

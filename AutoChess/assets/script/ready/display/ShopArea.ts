@@ -317,7 +317,7 @@ export class ShopArea extends Component
     async BuyRole(_index:number, _obj:Node ,_isMerge:boolean)
     {
         console.log('buy Role');
-        AudioManager.Instance.PlayerOnShot("Sound/battle_buy_01");
+        AudioManager.Instance.PlayerOnShot("Sound/battle_coin_expend");
         for(let i=0;i<this.shopRoleNodes.length;i++)
         {
             if(this.shopRoleNodes[i] == _obj)
@@ -325,10 +325,6 @@ export class ShopArea extends Component
                 if(!_isMerge)
                 {
                     this.roleArea.rolesNode[_index]=_obj;
-                }
-                else
-                {
-                    AudioManager.Instance.PlayerOnShot("Sound/sound_herolvup_01");
                 }
                 singleton.netSingleton.ready.readyData.Buy(ShopIndex.Role, i, _index);
                 this.shopRoleNodes[i] = null;
@@ -338,21 +334,6 @@ export class ShopArea extends Component
 
     async BuyProp(_index:number,_obj:Node)
     {
-        
-        let propType=_obj.getComponent(PropIcon).propType;
-        switch(propType)
-        {
-            case PropsType.Food:
-                {
-                    AudioManager.Instance.PlayerOnShot("Sound/battle_eatfood");
-                }
-                break;
-            case PropsType.Equip:
-                {
-                    AudioManager.Instance.PlayerOnShot("Sound/sound_hero_01");
-                }
-                break;
-        }
         for(let i=0;i<this.shopPropNodes.length;i++)
         {
             if(this.shopPropNodes[i] == _obj)

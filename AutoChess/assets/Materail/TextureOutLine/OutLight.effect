@@ -1,0 +1,221 @@
+// Effect Syntax Guide: https://docs.cocos.com/creator/manual/zh/shader/index.html
+
+CCEffect %{
+  techniques:
+  - name: opaque
+    passes:
+    - vert: vs:vert
+      frag: fs:frag
+      properties: &props
+        _outlineColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        _outlineWidth:      { value: 0.01,editor: { type: float , slide: true , range : [0,1], step: 0.01  } } #宽度
+  - name: transparent
+    passes:
+    - vert: vs:vert
+      frag: fs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendSrcAlpha: src_alpha
+          blendDstAlpha: one_minus_src_alpha
+        rasterizerState:
+          cullMode: back
+      properties: *props
+}%
+
+CCProgram vs %{
+  
+  precision highp float;
+  #include <cc-global>
+  #if USE_LOCAL
+    #include <cc-local>
+  #endif
+  
+  #if SAMPLE_FROM_RT
+    #include <common/common-define>
+    //老版本引用
+    //#include <common>
+  #endif
+  
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+
+  out vec4 i_color;
+  out vec2 uv0;
+  out vec2 uv1;
+  out vec3 v_position;
+
+ vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+
+    #if USE_LOCAL
+      pos = cc_matWorld * pos;
+    #endif
+
+    #if USE_PIXEL_ALIGNMENT
+      pos = cc_matView * pos;
+      pos.xyz = floor(pos.xyz);
+      pos = cc_matProj * pos;
+    #else
+      pos = cc_matViewProj * pos;
+    #endif
+
+    uv0 = a_texCoord;
+    //uv0.x -= 1.0;
+    #if SAMPLE_FROM_RT
+      uv1 = uv0;
+      CC_HANDLE_RT_SAMPLE_FLIP(uv1);
+    #endif
+    i_color = a_color;
+
+    #if USE_EXPAND 
+      //扩充范围
+      pos.x *= 2.0;
+      pos.y *= 2.0;
+    #endif 
+  
+    return pos;
+  }
+}%
+
+
+CCProgram fs %{
+  precision highp float;
+  #include <cc-global>
+
+  #if USE_TEXTURE  
+    #include <sprite-texture>
+    //老版本引用
+    //#include <cc-sprite-texture>
+  #endif
+
+  in vec4 i_color;
+  in vec2 uv0;
+  in vec2 uv1;
+
+  uniform Constant {
+    vec4 _outlineColor;
+    float _outlineWidth;
+  };
+
+
+  #if SHOW_OUT_LINE
+   // 将图像往8个方向偏移后，得到一个类似放大的效果，然后取放大后的图像的透明度，即可得到一个放大后的区域，可以很方便填充（描边）颜色
+  // 取当前点上、下、左、右、上左、上右、下左、下右共计8个方向，距离为 outlineWidth 的8个点，求他们的透明度之和
+  // 由此可以得到当前点是否属于图像往八个方向做偏移后得到的放大图区域，并且能得到该点最终透明度值
+  // 最终对应的为图像偏移/放大后的背景区域
+  float getBgAlpha(vec2 uv) {
+    vec2 uv_up = uv + vec2(0, _outlineWidth);
+    vec2 uv_down =uv - vec2(_outlineWidth, 0);
+    vec2 uv_left = uv + vec2(_outlineWidth, 0);
+    vec2 uv_right = uv + vec2(0, _outlineWidth);
+    vec2 uv_up_left = uv + vec2(_outlineWidth,-_outlineWidth);
+    vec2 uv_up_right = uv + vec2(_outlineWidth, _outlineWidth);
+    vec2 uv_down_left = uv + vec2(-_outlineWidth, -_outlineWidth);
+    vec2 uv_down_right = uv + vec2(-_outlineWidth, _outlineWidth);
+
+    float blank_up = 0.0;
+    float blank_down = 0.0;
+    float blank_left = 0.0;
+    float blank_right = 0.0;
+    float blank_up_left = 0.0;
+    float blank_up_right = 0.0;
+    float blank_down_left = 0.0;
+    float blank_down_right = 0.0;
+     
+    {
+      if(uv_up.x >= 0.0 && uv_up.x <= 1.0  && uv_up.y >= 0.0 && uv_up.y <= 1.0)
+      {
+        blank_up = 1.0;
+      }
+
+      if(uv_down.x >= 0.0 && uv_down.x <= 1.0  && uv_down.y >= 0.0 && uv_down.y <= 1.0)
+      {
+        blank_down = 1.0;
+      }
+
+      if(uv_left.x >= 0.0 && uv_left.x <= 1.0  && uv_left.y >= 0.0 && uv_left.y <= 1.0)
+      {
+        blank_left = 1.0;
+      }
+
+      if(uv_right.x >= 0.0 && uv_right.x <= 1.0  && uv_right.y >= 0.0 && uv_right.y <= 1.0)
+      {
+        blank_right = 1.0;
+      }
+
+      if(uv_up_left.x >= 0.0 && uv_up_left.x <= 1.0  && uv_up_left.y >= 0.0 && uv_up_left.y <= 1.0)
+      {
+        blank_up_left = 1.0;
+      }
+
+      if(uv_up_right.x >= 0.0 && uv_up_right.x <= 1.0  && uv_up_right.y >= 0.0 && uv_up_right.y <= 1.0)
+      {
+        blank_up_right = 1.0;
+      }
+
+      if(uv_down_left.x >= 0.0 && uv_down_left.x <= 1.0  && uv_down_left.y >= 0.0 && uv_down_left.y <= 1.0)
+      {
+        blank_down_left = 1.0;
+      }
+
+      if(uv_down_right.x >= 0.0 && uv_down_right.x <= 1.0  && uv_down_right.y >= 0.0 && uv_down_right.y <= 1.0)
+      {
+        blank_down_right = 1.0;
+      }
+    }
+
+    vec4 color_up = texture(cc_spriteTexture, uv_up) * blank_up; 
+    vec4 color_down = texture(cc_spriteTexture, uv_down) * blank_down; 
+    vec4 color_left = texture(cc_spriteTexture, uv_left) * blank_left; 
+    vec4 color_right = texture(cc_spriteTexture, uv_right) * blank_right; 
+    vec4 color_up_left = texture(cc_spriteTexture, uv_up_left) * blank_up_left; 
+    vec4 color_up_right = texture(cc_spriteTexture, uv_up_right)* blank_up_right; 
+    vec4 color_down_left = texture(cc_spriteTexture,  uv_down_left) * blank_down_left; 
+    vec4 color_down_right = texture(cc_spriteTexture,  uv_down_right) * blank_down_right; 
+
+    float total = color_right.a + color_left.a + color_down.a + color_up.a + color_up_left.a + color_up_right.a + color_down_left.a + color_down_right.a; 
+    return clamp(total, 0.0, 1.0);
+  }
+  #endif
+
+    vec4 frag() {
+      vec4 col = vec4(0.0);
+        #if USE_TEXTURE
+          vec2 uv;
+          #if SAMPLE_FROM_RT
+            uv = uv1;
+          #else
+            uv = uv0;
+          #endif 
+          #if USE_EXPAND 
+            //扩充范围 uv对应的扩充
+            uv = (uv-0.5) *2.0 + 0.5;
+          #endif
+          #if USE_TEXTURE  
+              if(uv.x >= 0.0 && uv.x <= 1.0  && uv.y >= 0.0 && uv.y <= 1.0)
+              {
+                col = texture(cc_spriteTexture, uv);
+              }
+          #endif
+          #if SHOW_OUT_LINE
+            // 无描边宽度即结束
+            if (_outlineWidth > 0.0) {
+          
+            // 先画背景色
+            vec4 color_dest = _outlineColor * getBgAlpha(uv);
+
+            // 然后在背景色上方画图案颜色
+            vec4 color_src = col;
+            
+            col = color_src * color_src.a + color_dest * (1.0 - color_src.a);
+          }
+          #endif
+        #endif
+      return col;
+    }
+
+}%

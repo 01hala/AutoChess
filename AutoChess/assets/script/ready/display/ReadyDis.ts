@@ -194,9 +194,9 @@ export class ReadyDis
             this.refreshBtn = this.panelNode.getChildByPath("Shop/ShopArea/Falsh_Btn").getComponent(Button);
             this.refreshBtn.node.on(Button.EventType.CLICK, () =>
             {
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_reflush");
                 if(this.readyData.GetCoins()>0)
                 {
-                    AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                     this.RefreshShop();
                 }
             }, this);
@@ -216,11 +216,9 @@ export class ReadyDis
             this.setBtn.node.on(Button.EventType.CLICK, () =>
             {
                 this.activity=false;
-                AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
+                AudioManager.Instance.PlayerOnShot("Sound/sound_click_setting");
                 this.PauseBoard.active=true;
                 this.PauseBoard.getComponent(Pause).Open();
-                //AudioManager.Instance.PlayerOnShot("Sound/sound_click_close_01");
-                //_father.getComponent(login).BackMainInterface();
             }, this);
 
             if (GameManager.Instance.guide)
@@ -593,6 +591,7 @@ export class ReadyDis
                     this.fetters[i].getChildByName("Button").off(Button.EventType.CLICK);
                     this.fetters[i].getChildByName("Button").on(Button.EventType.CLICK, () =>
                     {
+                        AudioManager.Instance.PlayerOnShot("Sound/sound_click_fetter");
                         this.fetters[i].getChildByName("Button").
                             dispatchEvent(new SendMessage('OpenFetterInfo', true,
                                 { id: _battle_info.FettersList[i].fetters_id, spritePath: infoStr, level: _battle_info.FettersList[i].fetters_level }));

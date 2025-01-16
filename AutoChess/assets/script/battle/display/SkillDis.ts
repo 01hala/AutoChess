@@ -157,11 +157,11 @@ export class SkillDis
                         }));
                     }
                 }
-                await this.parent.getComponent(RoleDis).OnSkill(_ev.isFetter).then(()=>
+                await this.parent.getComponent(RoleDis).OnSkill(_ev.isFetter).then(async ()=>
                 {
-                    Promise.all(allAwait);
+                    await Promise.all(allAwait);
+                    resolve();
                 });
-                resolve();
             }
             catch(err)
             {

@@ -121,7 +121,7 @@ export class RoleArea extends Component
     public SaleRole(index:number)
     {
         this.rolesNode[index]=null;
-        AudioManager.Instance.PlayerOnShot("Sound/sound_charsolded_01");
+        AudioManager.Instance.PlayerOnShot("Sound/battle_coin_increase");
         console.log("SaleRole index:" + index);
         singleton.netSingleton.ready.readyData.Sale(index);
         
