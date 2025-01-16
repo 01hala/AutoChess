@@ -161,7 +161,7 @@ export class ReadyData
         console.log("设置角色信息 SetRoles",data);
         if(data)
         {
-            ReadyData.roles=data;
+            ReadyData.roles=data.slice();
         }
     }
 /*

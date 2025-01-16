@@ -6,7 +6,7 @@ import { RoleInfo } from '../battle/AutoChessBattle/skill/skill_base';
 import { config } from '../battle/AutoChessBattle/config/config';
 import * as singleton from '../netDriver/netSingleton';
 import { loadAssets } from '../bundle/LoadAsset';
-import { Role } from '../battle/AutoChessBattle/common';
+import { Role } from '../battle/AutoChessBattle/role';
 import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
@@ -359,7 +359,7 @@ export class InfoBoard extends Component
         
     }
 
-    private async LoadRoleImage(_r:Role)
+    private async LoadRoleImage(_r:common.Role)
     {
         try
         {

@@ -160,7 +160,7 @@ export class RoleDis extends Component
                 {
                     singleton.netSingleton.battle.puase = true;
                     AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                    this.node.dispatchEvent(new SendMessage('OpenInfoBoard', true, { id: this.RoleId, role: this.node.getComponent(RoleDis), isBuy: true }));
+                    this.node.dispatchEvent(new SendMessage('OpenInfoBoard', true, { id: this.RoleId, role: this, isBuy: true }));
                 }
             })
         }
