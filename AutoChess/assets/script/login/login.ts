@@ -138,22 +138,7 @@ export class login extends Component {
             console.log("login non_account create role");
             singleton.netSingleton.player.create_role(code, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().avatarUrl);
         };
-        this.netNode.on("connect", (e) => {
-            console.log("on net connect!");
 
-            this._progress += 0.3;
-            this._setProgress(this._progress);
-            //this.wxLogin();
-            SdkManager.SDK.login((e: boolean) =>
-            {
-                if(e!=null)
-                {
-                    this._loading.progressBar.active = e;
-                    this._loading.log.node.active=e;
-                }
-            }, null);
-        });
-    
         //重连
         this.netNode.on("reconnect", () => {
             console.log("on net reconnect!");
@@ -226,7 +211,6 @@ export class login extends Component {
                         this._loading.progressBar.active = e;
                         this._loading.log.node.active=e;
                     }
-                    //this._setProgress(0.5);
                 }, null);
             });
         });
@@ -246,11 +230,6 @@ export class login extends Component {
                 await singleton.netSingleton.player.get_user_data(true,(_step) =>
                 {
                     console.log("get_user_data guide step:", _step);
-                    // if(common.GuideStep.Done != _step)
-                    // {
-                    //     GameManager.Instance.StartGuide(_step);
-                    // }
-                    //GameManager.Instance.StartGuide(common.GuideStep.None);
                     step=_step;
                 });
                 
@@ -281,19 +260,21 @@ export class login extends Component {
         //注册回调
         this.RegGameCallBack();
         
-        if (singleton.netSingleton.is_conn_gate)
-        {
-            this._progress += 0.1;
+        singleton.netSingleton.connect_server(() => {
+            console.log("on net connect!");
+
+            this._progress += 0.3;
             this._setProgress(this._progress);
-            
+            //this.wxLogin();
             SdkManager.SDK.login((e: boolean) =>
             {
-                if (e != null)
+                if(e!=null)
                 {
                     this._loading.progressBar.active = e;
+                    this._loading.log.node.active=e;
                 }
             }, null);
-        }
+        });
     }
 
     private RegGameCallBack()

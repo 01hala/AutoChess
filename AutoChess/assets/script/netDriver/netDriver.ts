@@ -3,7 +3,7 @@ const { ccclass, property } = _decorator;
 
 import * as cli from '../serverSDK/client_handle';
 
-import { netSingleton } from "./netSingleton"
+import { netSingleton, game_url } from "./netSingleton"
 
 /**
  * Predefined variables
@@ -17,8 +17,6 @@ import { netSingleton } from "./netSingleton"
  *
  */
 
-let game_url:string = "wss://zzq.ucat.games:3001";
- 
  @ccclass('netDriver')
  export class netDriver extends Component {
     // [1]
@@ -28,17 +26,6 @@ let game_url:string = "wss://zzq.ucat.games:3001";
     // @property
     // serializableDummy = 0;
 
-    private conn_gate_svr(url:string) {
-        return new Promise<void>((resolve, reject) => {
-            cli.cli_handle.onGateConnect = () => {
-                resolve();
-            };
-            cli.cli_handle.connect_gate(url, () => {
-                reject();
-            });
-        });
-    }
-
     private async reconnect() {
         if (netSingleton.is_conn_gate) {
             return;
@@ -46,7 +33,7 @@ let game_url:string = "wss://zzq.ucat.games:3001";
         setTimeout(this.reconnect.bind(this), 3000);
 
         try {
-            await this.conn_gate_svr(game_url);
+            await netSingleton.conn_gate_svr();
 
             this.node.emit("reconnect", 1);
             netSingleton.is_conn_gate = true;
@@ -59,12 +46,6 @@ let game_url:string = "wss://zzq.ucat.games:3001";
         // [3]
         director.addPersistRootNode(this.node);
         
-        await this.conn_gate_svr(game_url);
-
-        console.log("conn_gate_svr complete!");
-        this.node.emit("connect", 1);
-        netSingleton.is_conn_gate = true;
-
         cli.cli_handle.onGateDisConnect = async () => {
             console.log("onGateDisConnect!");
             if (netSingleton.is_conn_gate) {
