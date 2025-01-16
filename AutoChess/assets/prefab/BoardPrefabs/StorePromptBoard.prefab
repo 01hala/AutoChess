@@ -174,10 +174,7 @@
       "b": 255,
       "a": 255
     },
-    "_spriteFrame": {
-      "__uuid__": "5c7ca101-9f72-4c8a-b398-d5bc70835662@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_fillType": 0,
     "_sizeMode": 0,
@@ -924,6 +921,7 @@
       "__id__": 0
     },
     "fileId": "9ciXDuRipIHrTIjBd7/jak",
+    "instance": null,
     "targetOverrides": null
   }
 ]
