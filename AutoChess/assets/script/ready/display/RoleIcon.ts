@@ -475,8 +475,13 @@ export class RoleIcon extends Component
         {
             //return;
         }
+        //AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
         AudioManager.Instance.PlayerOnShot("Sound/sound_character_select_01");
-        this.node.dispatchEvent(new SendMessage('OpenInfoBoard',true,{id:this.roleId , index:this.index , role:null , isBuy:this.isBuy}));
+        let role :RoleDis=null;
+        if(null!=this.roleNode) role=this.roleNode.getComponent(RoleDis);
+        
+        //singleton.netSingleton.ready.infoPanel.getComponent(InfoPanel).OpenInfoBoard(this.roleId,roleInfo,this.isBuy);
+        this.node.dispatchEvent(new SendMessage('OpenInfoBoard',true,{id:this.roleId , index:this.index , role:role , isBuy:this.isBuy}));
     }
 
 /*----------------------------------------------------------------------------------------------------------------*/
