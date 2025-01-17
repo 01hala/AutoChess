@@ -937,52 +937,54 @@ namespace battle_shop
             var r1 = battleData.RoleList[role_index1];
             var r2 = battleData.RoleList[role_index2];
 
+            if (r1 == null && r2 == null)
+            {
+                return;
+            }
+
             if ((r1 == null && r2 != null) ||
                 (r1 != null && r2 == null))
             {
                 battleData.RoleList[role_index1] = r2;
                 battleData.RoleList[role_index2] = r1;
+                return;
             }
-            else if (r1 != null && r2 != null)
+
+            if (r1.RoleID != r2.RoleID)
             {
-                if (r1.RoleID != r2.RoleID)
-                {
-                    battleData.RoleList[role_index1] = r2;
-                    battleData.RoleList[role_index2] = r1;
-                }
-                else
-                {
-                    if (r1.Level >= 3 || r2.Level >= 3)
-                    {
-                        battleData.RoleList[role_index1] = r2;
-                        battleData.RoleList[role_index2] = r1;
-                    }
-                    else
-                    {
-                        battleData.RoleList[role_index1] = null;
+                battleData.RoleList[role_index1] = r2;
+                battleData.RoleList[role_index2] = r1;
+                return;
+            }
 
-                        r2.Number += r1.Number;
-                        var oldLevel = r2.Level;
-                        r2.Level = r2.Number / 3 + 1;
-                        if (r2.Level > 3)
-                        {
-                            r2.Level = 3;
-                        }
-                        r2.HP += r1.HP - 1;
-                        r2.Attack += r1.Attack - 1;
+            if (r1.Level >= 3 || r2.Level >= 3)
+            {
+                battleData.RoleList[role_index1] = r2;
+                battleData.RoleList[role_index2] = r1;
+                return;
+            }
 
-                        if (r2.Level > oldLevel)
-                        {
-                            check_update_skip_level(role_index2);
+            battleData.RoleList[role_index1] = null;
 
-                            BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, true);
-                        }
-                        else
-                        {
-                            BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, false);
-                        }
-                    }
-                }
+            r2.Number += r1.Number;
+            var oldLevel = r2.Level;
+            r2.Level = r2.Number / 3 + 1;
+            if (r2.Level > 3)
+            {
+                r2.Level = 3;
+            }
+            r2.HP += r1.HP - 1;
+            r2.Attack += r1.Attack - 1;
+
+            if (r2.Level > oldLevel)
+            {
+                check_update_skip_level(role_index2);
+
+                BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, true);
+            }
+            else
+            {
+                BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, false);
             }
         }
     }
