@@ -1435,7 +1435,7 @@ namespace Player
             return target;
         }
 
-        public bool add_role(string ClientUUID, int role_index, int index)
+        private bool add_role(string ClientUUID, int role_index, int index)
         {
             var BattleShopPlayerImpl = battleShopPlayer;
             if (TmpBattleShopPlayer != null)
@@ -1457,7 +1457,7 @@ namespace Player
             return false;
         }
 
-        public em_error buy_role(string ClientUUID, int index, int role_index)
+        private em_error buy_role(string ClientUUID, int index, int role_index)
         {
             var BattleShopPlayerImpl = battleShopPlayer;
             if (TmpBattleShopPlayer != null)
@@ -1503,7 +1503,7 @@ namespace Player
             return em_error.success;
         }
 
-        public em_error buy_equip(string ClientUUID, ShopProp p, int index, int role_index)
+        private em_error buy_equip(string ClientUUID, ShopProp p, int index, int role_index)
         {
             var BattleShopPlayerImpl = battleShopPlayer;
             if (TmpBattleShopPlayer != null)
