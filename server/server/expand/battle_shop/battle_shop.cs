@@ -593,7 +593,6 @@ namespace battle_shop
                     fetters_id = r.FettersSkillID.fetters_id,
                     fetters_level = r.FettersSkillID.fetters_level,
                 });
-                do_skill(stage);
 
                 battleData.RoleList[index] = null;
                 shop_skill_roles[index] = null;

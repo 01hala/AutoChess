@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using System;
 using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Player
 {
@@ -399,14 +400,16 @@ namespace Player
                 if (_avatar != null)
                 {
                     var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    var stage = _data.Data.GetStage();
 
                     var BattleShopPlayer = _data.Data.battleShopPlayer;
                     if (_data.Data.TmpBattleShopPlayer != null)
                     {
                         BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
                     }
-                    if (BattleShopPlayer.sale_role(index, _data.Data.GetStage()))
+                    if (BattleShopPlayer.sale_role(index, stage))
                     {
+                        BattleShopPlayer.do_skill(stage);
                         rsp.rsp(BattleShopPlayer.BattleData);
                     }
                     else

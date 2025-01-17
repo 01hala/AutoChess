@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using battle_shop;
 
 namespace Match
 {
@@ -448,8 +449,10 @@ namespace Match
             try
             {
                 var self = Match.battle_Mng.get_battle_player(uuid);
-                if (self.BattleShopPlayer.sale_role(index, self.baseStage()))
+                var stage = self.baseStage();
+                if (self.BattleShopPlayer.sale_role(index, stage))
                 {
+                    self.BattleShopPlayer.do_skill(stage);
                     rsp.rsp(self.BattleShopPlayer.BattleData);
                 }
                 else
