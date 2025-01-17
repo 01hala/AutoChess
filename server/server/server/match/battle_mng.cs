@@ -115,7 +115,7 @@ namespace Match
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(stage);
         }
 
-        public bool add_role(int role_index, int shop_index)
+        private bool add_role(int role_index, int shop_index)
         {
             var r = BattleShopPlayer.add_role(role_index, shop_index);
             if (r != null)
@@ -129,7 +129,7 @@ namespace Match
             return false;
         }
 
-        public em_error buy_role(int index, int role_index)
+        private em_error buy_role(int index, int role_index)
         {
             var r = BattleShopPlayer.BattleData.RoleList[role_index];
             var s = BattleShopPlayer.ShopData.SaleRoleList[index];
@@ -167,7 +167,7 @@ namespace Match
             return em_error.success;
         }
 
-        public em_error buy_equip(ShopProp p, int index, int role_index)
+        private em_error buy_equip(ShopProp p, int index, int role_index)
         {
             var err = BattleShopPlayer.buy_equip(p, index, role_index);
             if (err != em_error.success)
