@@ -1238,7 +1238,6 @@ namespace Player
                 ev = EMRoleShopEvent.start_round
             });
 
-            BattleShopPlayerImpl.clear_skill_tag();
             BattleShopPlayerImpl.do_skill(GetStage());
         }
 
@@ -1255,7 +1254,6 @@ namespace Player
                 ev = EMRoleShopEvent.end_round
             });
 
-            BattleShopPlayerImpl.clear_skill_tag();
             BattleShopPlayerImpl.do_skill(GetStage());
         }
 
@@ -1582,8 +1580,6 @@ namespace Player
             {
                 return em_error.db_error;
             }
-
-            BattleShopPlayerImpl.clear_skill_tag();
 
             return em_error.success;
         }

@@ -452,7 +452,6 @@ namespace Match
                 var stage = self.baseStage();
                 if (self.BattleShopPlayer.sale_role(index, stage))
                 {
-                    self.BattleShopPlayer.do_skill(stage);
                     rsp.rsp(self.BattleShopPlayer.BattleData);
                 }
                 else

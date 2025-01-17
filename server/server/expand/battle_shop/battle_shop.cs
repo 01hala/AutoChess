@@ -436,17 +436,6 @@ namespace battle_shop
             } while (evs.Count > 0);
         }
 
-        public void clear_skill_tag()
-        {
-            foreach (var _skill_role in shop_skill_roles)
-            {
-                if (_skill_role != null)
-                {
-                    _skill_role.is_trigger = false;
-                }
-            }
-        }
-
         public void add_shop_item(int refresh_item_id, int refresh_item_num)
         {
             for (var i = 0; i < shopData.SalePropList.Count; i++)
@@ -593,11 +582,11 @@ namespace battle_shop
                     fetters_id = r.FettersSkillID.fetters_id,
                     fetters_level = r.FettersSkillID.fetters_level,
                 });
+                do_skill(stage);
 
                 battleData.RoleList[index] = null;
                 shop_skill_roles[index] = null;
 
-                clear_skill_tag();
                 check_fetters();
 
                 return true;

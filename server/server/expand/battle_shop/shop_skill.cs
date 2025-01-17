@@ -67,8 +67,6 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
 
-            is_trigger = true;
-
             Log.Log.trace("AddProperty end");
         }
 
@@ -136,8 +134,6 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
 
-            is_trigger = true;
-
             Log.Log.trace("AddAllPropertyByBattleRound end");
         }
 
@@ -199,8 +195,6 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
-
-            is_trigger = true;
 
             Log.Log.trace("AddAllPropertyByBattleRound end");
         }
@@ -336,8 +330,6 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
 
-            is_trigger = true;
-
             Log.Log.trace("AddCoin end");
         }
 
@@ -377,8 +369,6 @@ namespace battle_shop
             skilleffect.value = new List<int>() { addCoin };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-
-            is_trigger = true;
 
             Log.Log.trace("NextRoundCoin end");
         }
@@ -434,8 +424,6 @@ namespace battle_shop
             skilleffect.value = new List<int>() { PropID };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-
-            is_trigger = true;
         }
 
         private void CopySkill(ShopSkillConfig skill, battle_shop_player _player)

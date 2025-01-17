@@ -52,8 +52,6 @@ namespace battle_shop
                         }
                         break;
                     }
-
-                    is_trigger = true;
                 }
             }
 
@@ -101,8 +99,6 @@ namespace battle_shop
             skilleffect.value = new List<int>() { addCoin };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-
-            is_trigger = true;
         }
 
         private void RefreshShop(FettersConfig fetters, battle_shop_player _player, int stage)
@@ -123,8 +119,6 @@ namespace battle_shop
             skilleffect.value = new List<int>();
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-
-            is_trigger = true;
         }
 
         private void FettersSummonShop(battle_shop_player _player, shop_event trigger_ev)
@@ -275,8 +269,6 @@ namespace battle_shop
             skilleffect.value = new List<int>() { PropID };
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_fetters_effect(skilleffect);
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-
-            is_trigger = true;
         }
 
         private void UseFettersSkill(battle_shop_player _player, shop_event trigger_ev, int stage)

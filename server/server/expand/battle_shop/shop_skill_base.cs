@@ -31,7 +31,6 @@ namespace battle_shop
         public int fettersSkillID;
         public int fettersLevel;
         public int spawnRound;
-        public bool is_trigger = false;
 
         public shop_skill_role(int _index, int _roleID, int _skillID, int _fettersSkillID, int _fettersLevel, int _spawnRound)
         {
@@ -384,8 +383,6 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
 
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-
-            is_trigger = true;
         }
 
         private void UpdateLevel(battle_shop_player _player)

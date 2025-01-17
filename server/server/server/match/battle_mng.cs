@@ -96,8 +96,6 @@ namespace Match
             {
                 ev = EMRoleShopEvent.start_round
             });
-
-            BattleShopPlayer.clear_skill_tag();
         }
 
         public void end_round()
@@ -106,8 +104,6 @@ namespace Match
             {
                 ev = EMRoleShopEvent.end_round
             });
-
-            BattleShopPlayer.clear_skill_tag();
         }
 
         public void refresh(int stage)
@@ -232,8 +228,6 @@ namespace Match
             {
                 return em_error.db_error;
             }
-
-            BattleShopPlayer.clear_skill_tag();
 
             return em_error.success;
         }

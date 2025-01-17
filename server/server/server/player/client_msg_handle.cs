@@ -132,7 +132,6 @@ namespace Player
                 {
                     ev = EMRoleShopEvent.end_round
                 });
-                BattleShopPlayer.clear_skill_tag();
                 BattleShopPlayer.do_skill(_data.Data.GetStage());
 
                 rsp.rsp();
@@ -409,7 +408,6 @@ namespace Player
                     }
                     if (BattleShopPlayer.sale_role(index, stage))
                     {
-                        BattleShopPlayer.do_skill(stage);
                         rsp.rsp(BattleShopPlayer.BattleData);
                     }
                     else
