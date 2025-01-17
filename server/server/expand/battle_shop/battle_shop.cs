@@ -131,7 +131,7 @@ namespace battle_shop
             return 5;
         }
 
-        public ShopRole randomShopRole(int stage)
+        private ShopRole randomShopRole(int stage)
         {
             if (config.Config.RoleStageConfigs.TryGetValue(stage, out var basePool))
             {
@@ -166,7 +166,7 @@ namespace battle_shop
             return null;
         }
 
-        public ShopProp randomFood(int stage)
+        private ShopProp randomFood(int stage)
         {
             if (config.Config.FoodStageConfigs.TryGetValue(stage, out var basePool))
             {
@@ -185,7 +185,7 @@ namespace battle_shop
             return null;
         }
 
-        public ShopProp randomEquip(int stage)
+        private ShopProp randomEquip(int stage)
         {
             if (config.Config.EquipStageConfigs.TryGetValue(stage, out var basePool))
             {
