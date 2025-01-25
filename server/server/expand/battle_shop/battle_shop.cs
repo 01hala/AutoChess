@@ -954,25 +954,28 @@ namespace battle_shop
 
             battleData.RoleList[role_index1] = null;
 
-            r2.Number += r1.Number;
-            var oldLevel = r2.Level;
-            r2.Level = r2.Number / 3 + 1;
-            if (r2.Level > 3)
+            if (config.Config.RoleConfigs.TryGetValue(r2.RoleID, out RoleConfig rcfg))
             {
-                r2.Level = 3;
-            }
-            r2.HP += r1.HP - 1;
-            r2.Attack += r1.Attack - 1;
+                r2.Number += r1.Number;
+                var oldLevel = r2.Level;
+                r2.Level = r2.Number / 3 + 1;
+                if (r2.Level > 3)
+                {
+                    r2.Level = 3;
+                }
+                r2.HP += r1.HP - rcfg.Hp + 1;
+                r2.Attack += r1.Attack - rcfg.Attack + 1;
 
-            if (r2.Level > oldLevel)
-            {
-                check_update_skip_level(role_index2);
+                if (r2.Level > oldLevel)
+                {
+                    check_update_skip_level(role_index2);
 
-                BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, true);
-            }
-            else
-            {
-                BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, false);
+                    BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, true);
+                }
+                else
+                {
+                    BattleClientCaller.get_client(ClientUUID).role_merge(role_index1, role_index2, r2, false);
+                }
             }
         }
     }
