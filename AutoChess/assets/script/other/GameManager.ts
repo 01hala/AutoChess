@@ -85,30 +85,20 @@ export class GameManager extends Component
         }
     }
 
-    public getBoard(str:string):Promise<Node>
+    public async getBoard(str:string):Promise<Node>
     {
-        return new Promise(async (resolve,reject)=>
+        if (this.boardList.has(str))
         {
-            try
-            {
-                if (this.boardList.has(str))
-                {
-                    resolve(this.boardList.get(str));
-                }
-                else
-                {
-                    let prefab = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", str) as Prefab;
-                    let board = instantiate(prefab);
-                    board.setParent(this.node);
-                    this.boardList.set(board.name, board);
-                    resolve(board);
-                }
-            } catch (error)
-            {
-                console.error("GameManager 下的 getBoard 错误 error: ",error);
-                reject(null);
-            }
-        })
+            return this.boardList.get(str);
+        }
+        else
+        {
+            let prefab = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", str) as Prefab;
+            let board = instantiate(prefab);
+            board.setParent(this.node);
+            this.boardList.set(board.name, board);
+            return board;
+        }
     }
 
     public removeBoards()
@@ -134,11 +124,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenCardInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let board;
-            this.getBoard("InformationBoard").then((value)=>
-            {
-                board=value;
-            });
+            let board= await this.getBoard("InformationBoard");
             board?.getComponent(InfoBoard).OpenCardInfo(event.detail.id);
         },this);
 
@@ -154,11 +140,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenFetterInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let board;
-            this.getBoard("InformationBoard").then((value)=>
-            {
-                board=value;
-            });
+            let board = await this.getBoard("InformationBoard");
             board?.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
         },this);
 
@@ -174,11 +156,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenInfoBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let board;
-            this.getBoard("InformationBoard").then((value)=>
-            {
-                board=value;
-            });
+            let board = await this.getBoard("InformationBoard");
             board?.getComponent(InfoBoard).OpenEntityInfo(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
         },this);
 
@@ -209,11 +187,7 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenSettlement,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let board; 
-            this.getBoard("SettlementBoard").then((value)=>
-            {
-                board=value;
-            });
+            let board = await this.getBoard("SettlementBoard");
             board?.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
         },this);
 
