@@ -117,6 +117,7 @@ export class InfoBoard extends Component
         try
         {
             this.node.setSiblingIndex(100);
+            this.node.active=true;
 
             this.simpleBoard.active=false;
             this.detailedBoard.active=false;
@@ -186,14 +187,18 @@ export class InfoBoard extends Component
         
     }
 
-    async OpenFetterInfo(_id:number,spritePath:string,level:number){
+    async OpenFetterInfo(_id:number,spritePath:string,level:number)
+    {
+        this.node.setSiblingIndex(100);
+        this.node.active=true;
+
         this.simpleBoard.active=false;
         this.detailedBoard.active=false;
         this.propBoard.active=false;
         this.fetterBoard.active=true;
 
         this.fetterBoard.getComponent(Animation).play("PanelAppear");
-        this.node.setSiblingIndex(100);
+        
         this.node.getComponent(BlockInputEvents).enabled=true;
 
         let cf=config.FetterIntroduceConfig.get(_id);
@@ -219,6 +224,7 @@ export class InfoBoard extends Component
     async OpenCardInfo(_id:number)
     {
         this.node.setSiblingIndex(100);
+        this.node.active=true;
         this.node.getComponent(BlockInputEvents).enabled=true;
         
         this.detailedBoard.active=false;

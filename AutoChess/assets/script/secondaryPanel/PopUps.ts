@@ -72,7 +72,7 @@ export class PopUps extends Component
             this.board.getComponent(Animation).on(Animation.EventType.FINISHED, () =>
             {
                 this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.node.destroy();
+                this.node.active=false;
             });
             this.board.getComponent(Animation).play("PanelDisappear");
         }

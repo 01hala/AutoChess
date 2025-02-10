@@ -4,7 +4,7 @@
  * 2023/10/12
  * 战斗展示类
  */
-import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, Vec3, sp } from 'cc';
+import { _decorator, instantiate, Node, Prefab, Label, Button, UITransform, Vec3, sp, game, Game } from 'cc';
 import { Queue } from './Queue';
 import { Battle } from '../AutoChessBattle/battle';
 import * as skill from '../AutoChessBattle/skill/skill_base'
@@ -75,6 +75,7 @@ export class BattleDis
 
     public destory() 
     {
+        GameManager.Instance.removeBoards();
         this.selfQueue.destroy();
         this.enemyQueue.destroy();
         this.panelNode.destroy();

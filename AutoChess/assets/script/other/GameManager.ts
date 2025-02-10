@@ -87,17 +87,23 @@ export class GameManager extends Component
 
     public async getBoard(str:string):Promise<Node>
     {
-        if (this.boardList.has(str))
+        try
         {
-            return this.boardList.get(str);
-        }
-        else
+            if (this.boardList.has(str))
+            {
+                return this.boardList.get(str);
+            }
+            else
+            {
+                let prefab = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", str) as Prefab;
+                let board = instantiate(prefab);
+                board.setParent(this.node);
+                this.boardList.set(board.name, board);
+                return board;
+            }
+        } catch (error)
         {
-            let prefab = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", str) as Prefab;
-            let board = instantiate(prefab);
-            board.setParent(this.node);
-            this.boardList.set(board.name, board);
-            return board;
+            console.error("GameManager 下的 getBoard 错误 error: ",error);
         }
     }
 
@@ -191,7 +197,7 @@ export class GameManager extends Component
             board?.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
         },this);
 
-        //打开升阶面板
+        //打开升阶面板(暂时无用)
         /* 消息来源
          *  
          * 
@@ -200,16 +206,16 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on(enums.SendMseeageType.OpenUpStageBoard,async (event:SendMessage)=>
-        {
-            event.propagationStopped=true;
+        // this.node.on(enums.SendMseeageType.OpenUpStageBoard, async (event: SendMessage) =>
+        // {
+        //     event.propagationStopped = true;
 
-            let up = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","UpStageBoard") as Prefab;
-            let board=instantiate(up);
-            board.setParent(this.node);
-            board.getComponent(UpStage).OpenUpStageBoard(event.detail);
-            this.boardList.set(board.name,board);
-        },this);
+        //     let up = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", "UpStageBoard") as Prefab;
+        //     let board = instantiate(up);
+        //     board.setParent(this.node);
+        //     board.getComponent(UpStage).OpenUpStageBoard(event.detail);
+        //     this.boardList.set(board.name, board);
+        // }, this);
 
         //打开用户信息面板+
         /* 消息来源
@@ -223,14 +229,11 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenUserInfoBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-
-            let us = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","UserInfoBoard") as Prefab;
-            let board=instantiate(us);
-            board.setParent(this.node);
+            let board=await this.getBoard("UserInfoBoard");
             board.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
-            this.boardList.set(board.name,board);
         },this);
 
+        //打开任务面板(暂时无用)
         /* 消息来源
          * MainInterface.ts : 第 214 行
          * 
@@ -239,17 +242,18 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on(enums.SendMseeageType.OpenTaskAchieveBoard,async (event:SendMessage)=>
-        {
-            event.propagationStopped=true;
+        // this.node.on(enums.SendMseeageType.OpenTaskAchieveBoard,async (event:SendMessage)=>
+        // {
+        //     event.propagationStopped=true;
 
-            let ta = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","TaskAchieveBoard") as Prefab;
-            let board=instantiate(ta);
-            board.setParent(this.node);
-            board.getComponent(TaskAchieve).OpenTaskAchieveBoard();
-            this.boardList.set(board.name,board);
-        },this);
+        //     let ta = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","TaskAchieveBoard") as Prefab;
+        //     let board=instantiate(ta);
+        //     board.setParent(this.node);
+        //     board.getComponent(TaskAchieve).OpenTaskAchieveBoard();
+        //     this.boardList.set(board.name,board);
+        // },this);
 
+        //刷新任务面板(暂时无用)
         /* 消息来源
          * MainInterface.ts : 第 277 行
          * 
@@ -258,16 +262,17 @@ export class GameManager extends Component
          * 
          * 
          */
-        this.node.on(enums.SendMseeageType.RefreshTaskAchieveBoard,(event:SendMessage)=>
-        {
-            event.propagationStopped=true;
-            let board=this.node.getChildByName("TaskAchieveBoard");
-            if(null!= board && true == board.activeInHierarchy)
-            {
-                board.getComponent(TaskAchieve).RefreshList();
-            }
-        },this);
+        // this.node.on(enums.SendMseeageType.RefreshTaskAchieveBoard,(event:SendMessage)=>
+        // {
+        //     event.propagationStopped=true;
+        //     let board=this.node.getChildByName("TaskAchieveBoard");
+        //     if(null!= board && true == board.activeInHierarchy)
+        //     {
+        //         board.getComponent(TaskAchieve).RefreshList();
+        //     }
+        // },this);
 
+        //打开排行榜
         /* 消息来源
          * MainInterface.ts : 第 221 行
          * 
@@ -279,14 +284,11 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenRankListBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-
-            let rk = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","RankListBoard") as Prefab;
-            let board = instantiate(rk);
-            board.setParent(this.node);
-            board.getComponent(RankList).OpenRankListBoard(event.detail);
-            this.boardList.set(board.name,board);
+            let board = await this.getBoard("RankListBoard");
+            board?.getComponent(RankList).OpenRankListBoard(event.detail);
         },this);
 
+        //打开提示弹窗
         /* 消息来源
          * MainInterface.ts : 第 303 行
          * CardEditor.ts : 第 43 行
@@ -301,6 +303,7 @@ export class GameManager extends Component
             this.OpenPopUps(event.detail.type , event.detail.title , event.detail.subheading , event.detail.items , event.callBack)
         },this);
 
+        //打开事件选择面板
         /** 消息来源
          * ReadyDis.ts ：第129行
          * 
@@ -310,14 +313,10 @@ export class GameManager extends Component
         {
             console.log("on message OpenChooseTag");
             event.propagationStopped=true;
-            this.node.getChildByPath("ChooseTagBoard")?.destroy();
-            let ct = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", "ChooseTagBoard") as Prefab;
-            let board = instantiate(ct);
-            board.setParent(this.node);
+            let board = await this.getBoard("ChooseTagBoard");
             await sleep(100);
             console.log("ChooseTags：",event.detail.events);
             board.getComponent(ChooseTag).Open(event.detail.events);
-            this.boardList.set(board.name,board);
         },this);
 
         /**打开关卡信息面板 消息来源：
@@ -326,11 +325,8 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenLevelInfo ,async (event:SendMessage)=>
         {
             event.propagationStopped = true;
-            let ct = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", "LevelInfoBoard") as Prefab;
-            let board = instantiate(ct);
-            board.setParent(this.node);
+            let board = await this.getBoard("LevelInfoBoard");
             board.getComponent(LevelInfo).Open(event.detail.levelId, event.callBack);
-            this.boardList.set(board.name,board);
         })
     }
 
@@ -380,13 +376,10 @@ export class GameManager extends Component
     private async OpenPopUps(_type:enums.PopUpsType ,_title:string , _subheading:string , _items:Map<string,number> ,  _callBack?:(e?:boolean)=>void)
     {
         console.log("弹窗类型：",_type);
-        let ups = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","PopUpsBoard") as Prefab;
-        let board=instantiate(ups);
-        board.setParent(this.node);
+        let board=await this.getBoard("PopUpsBoard");
         board.getComponent(PopUps).title=_title;
         board.getComponent(PopUps).subheading=_subheading;
         board.getComponent(PopUps).Open(_type , _items , _callBack);
-        this.boardList.set(board.name,board);
     }
 
     //开始新手引导

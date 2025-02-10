@@ -197,7 +197,7 @@ export class Settlement extends Component
                     netSingleton.game.confirm_quest_victory(this.isVictory, this.addCoin);
                 }
             }
-            this.node.destroy();
+            this.node.active=false;
         });
         this.midArea.getComponent(Animation).play("PanelDisappear");
         // for (let t of this.hpGroup.children)

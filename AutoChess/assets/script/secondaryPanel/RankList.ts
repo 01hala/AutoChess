@@ -50,6 +50,24 @@ export class RankList extends Component
         this.listStartY=this.listcontent.position.y;
     }
 
+    private Close()
+    {
+        try
+        {
+            singleton.netSingleton.mainInterface.activity=true;
+            this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
+            {
+                this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
+                this.node.active=false;
+            });
+            this.board.getComponent(Animation).play("PanelDisappear");
+        }
+        catch(error)
+        {
+            console.error("RankList 下的 Close 错误 : ",error);
+        }
+    }
+
     protected onDestroy(): void
     {
         this.destroy();
@@ -228,23 +246,6 @@ export class RankList extends Component
         }
     }
 
-    private Close()
-    {
-        try
-        {
-            singleton.netSingleton.mainInterface.activity=true;
-            this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
-            {
-                this.board.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.destroy();
-            });
-            this.board.getComponent(Animation).play("PanelDisappear");
-        }
-        catch(error)
-        {
-            console.error("RankList 下的 Close 错误 : ",error);
-        }
-    }
 }
 
 

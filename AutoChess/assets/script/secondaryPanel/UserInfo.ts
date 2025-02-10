@@ -64,7 +64,7 @@ export class UserInfo extends Component
             this.panelNode.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
                 this.panelNode.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.node.destroy();
+                this.node.active=false
             });
             this.panelNode.getComponent(Animation).play("PanelDisappear");
         }

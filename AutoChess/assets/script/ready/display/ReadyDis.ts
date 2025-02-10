@@ -236,6 +236,7 @@ export class ReadyDis
 
     public destory() 
     {
+        GameManager.Instance.removeBoards();
         this.roleArea.node.destroy();
         this.shopArea.node.destroy();
         this.panelNode.destroy();

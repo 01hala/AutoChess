@@ -80,7 +80,7 @@ export class LevelInfo extends Component
     {
         this.anim.on(Animation.EventType.FINISHED, () =>
         {
-            this.node.destroy();
+            this.node.active=false;
         }, this);
         this.anim.play("PanelDisappear");
     }

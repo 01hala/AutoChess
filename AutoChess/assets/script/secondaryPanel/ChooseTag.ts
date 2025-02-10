@@ -129,7 +129,7 @@ export class ChooseTag extends Component
     {
         this.board.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
         {
-            this.node.destroy();
+            this.node.active=false;
         })
         this.board.getComponent(Animation).play("PanelDisappear");
     }

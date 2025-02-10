@@ -129,6 +129,7 @@ export class MainInterface
 
     public destory() 
     {
+        GameManager.Instance.removeBoards();
         this.panelNode.destroy();
     }
 
@@ -416,7 +417,7 @@ export class MainInterface
                 //this.userDiamonds.getChildByPath("RichText").getComponent(RichText).string=""+this.userData.diamond;
                 if(null!=this.panelNode)
                 {
-                    this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true));
+                    //this.panelNode.dispatchEvent(new SendMessage('RefreshTaskAchieveBoard',true));
                 }
             }
         }
