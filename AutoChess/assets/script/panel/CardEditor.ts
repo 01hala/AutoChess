@@ -30,7 +30,6 @@ export class CardEditor extends Component
     private saveBtn:Node=null;
     //事件句柄
     private containerEventHandler:EventHandler=null;
-
     //toggle预制体
     public roleTogglePre:Prefab=null;
     //标签栏
@@ -39,7 +38,7 @@ export class CardEditor extends Component
     private oriContentPosY:number=0;
     private viewHight:number=0;
 
-    protected async onLoad(): Promise<void>
+    protected onLoad()
     {
         this.content=this.node.getChildByPath("Panel/ScrollView/view/content");
         this.exitBtn=this.node.getChildByPath("Close_Btn");
@@ -83,7 +82,8 @@ export class CardEditor extends Component
                 }
                 catch(error)
                 {
-                    console.error("返回按钮 错误:",error);
+                    this.node.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip,true,"<outline color=black width=4>卡 组 保 存 失 败</outline>"))
+                    console.error("卡组保存失败 错误:",error);
                 }
                 
             },this);
@@ -111,13 +111,21 @@ export class CardEditor extends Component
         this.destroy();
     }
 
+    protected onDisable(): void
+    {
+        for (let t of this.content.children)
+        {
+            t.destroy();
+        }
+    }
+
      private OnCheckToggleEvent(event: Event, customEventData: string)
         {
             try
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_bookmark_select_01");
                 console.log("check");
-                this.node.getChildByPath("Panel/ScrollViet").getComponent(ScrollView).brake=1;
+                this.node.getChildByPath("Panel/ScrollView").getComponent(ScrollView).brake=1;
                 let targetY=0;
                 let contentHight=this.content.getComponent(UITransform).contentSize.height;
                 this.viewHight=this.content.parent.getComponent(UITransform).contentSize.height;
@@ -163,7 +171,7 @@ export class CardEditor extends Component
                         this.content.setPosition(new Vec3(0, this.oriContentPosY + offset, 0));
                     }
                 }
-                this.node.getChildByPath("Panel/ScrollViet").getComponent(ScrollView).brake=0.75;
+                this.node.getChildByPath("Panel/ScrollView").getComponent(ScrollView).brake=0.75;
             }
             catch (error)
             {
@@ -174,20 +182,22 @@ export class CardEditor extends Component
     public Exit()
     {
         singleton.netSingleton.mainInterface.activity=true;
-        for (let t of this.content.children)
-        {
-            t.destroy();
-        }
-
-        this.node.destroy();
+        this.node.active=false;
     }
 
     public async OpenCardEditor()
     {
         try
         {
-            this.framePre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggleFarme")as Prefab;
-            this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggel") as Prefab;
+            this.node.active=true;
+            if(null == this.framePre)
+            {
+                this.framePre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggleFarme")as Prefab;
+            }
+            if(null == this.roleTogglePre)
+            {
+                this.roleTogglePre=await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs","RoleToggel") as Prefab;
+            }
             await this.LoadGroup();
             this.oriContentPosY=this.content.position.y;
         }
@@ -197,7 +207,7 @@ export class CardEditor extends Component
         }
     }
     
-    private async LoadGroup(_cardDeck:number=1)
+    private async LoadGroup()
     {
         try
         {

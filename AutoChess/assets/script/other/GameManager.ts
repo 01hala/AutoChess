@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool, error } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from './MessageEvent';
@@ -42,6 +42,7 @@ export class GameManager extends Component
     public listening=null;
 
     private boardList:Map<string,Node>=null;
+    private panelList:Map<string,Node>=null;
     
     protected onLoad()
     {
@@ -55,6 +56,7 @@ export class GameManager extends Component
         {
            User.OptionsData=new OptionsData();
            this.boardList=new Map<string,Node>();
+           this.panelList=new Map<string,Node>();
         }
         catch(error)
         {
@@ -85,6 +87,11 @@ export class GameManager extends Component
         }
     }
 
+    /**
+     * 查找或加载二级面板
+     * @param str 面板名
+     * @returns 实例化的面板
+     */
     public async getBoard(str:string):Promise<Node>
     {
         try
@@ -107,9 +114,44 @@ export class GameManager extends Component
         }
     }
 
+    /**
+     * 移除所有二级面板
+     */
     public removeBoards()
     {
         for (let t of this.boardList.values()) 
+        {
+            t.destroy();
+        }
+    }
+
+    /**
+     * 查找或加载界面
+     * @param str 界面名
+     * @returns 实例化的界面
+     */
+    public async getPanel(str:string)
+    {
+        if(this.panelList.has(str))
+        {
+            return this.panelList.get(str);
+        }
+        else
+        {
+            let prefab=await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", str) as Prefab;
+            let panel=instantiate(prefab);
+            panel.setParent(this.node);
+            this.panelList.set(panel.name,panel);
+            return panel;
+        }
+    }
+
+    /**
+     * 移除所有界面
+     */
+    public removePanels()
+    {
+        for(let t of this.panelList.values())
         {
             t.destroy();
         }

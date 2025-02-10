@@ -60,12 +60,18 @@ export class CardLibPanel extends Component
         this.destroy();
     }
 
+    protected onDisable(): void
+    {
+        this.toggleGroup.getChildByPath("Jungle").getComponent(Toggle).isChecked = true;
+        this.RemoveAll();
+    }
+
     public async OpenCardLib()
     {
         try
         {
-            this.toggleGroup.getChildByPath("Jungle").getComponent(Toggle).isChecked = true;
-            this.toggleGroup.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
+            this.node.active=true;
+            //this.toggleGroup.getComponent(ToggleContainer).checkEvents.push(this.containerEventHandler);
             this.LoadCard(enums.Biomes.Jungle);
         }
         catch (error)
@@ -188,7 +194,7 @@ export class CardLibPanel extends Component
     public Exit()
     {
         singleton.netSingleton.mainInterface.activity=true;
-        this.node.destroy();
+        this.node.active=false;
     }
 
 }

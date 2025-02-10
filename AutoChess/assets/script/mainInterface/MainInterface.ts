@@ -91,10 +91,9 @@ export class MainInterface
         {
             this.parentNode=_father;
             //加载
-            let assets = await this.Load();
-            let MainInterfacepanel = assets[0] as Prefab;
+            //let assets = await this.Load();
             //主界面
-            this.panelNode=instantiate(MainInterfacepanel);
+            this.panelNode=await GameManager.Instance.getPanel("MainInterface");
             //各区域面板
             this.mainPanel=this.panelNode.getChildByPath("MainPanel")
             this.startGamePart=this.panelNode.getChildByPath("StartGamePanel");
@@ -130,7 +129,8 @@ export class MainInterface
     public destory() 
     {
         GameManager.Instance.removeBoards();
-        this.panelNode.destroy();
+        GameManager.Instance.removePanels();
+        //this.panelNode.destroy();
     }
 
 
@@ -228,10 +228,8 @@ export class MainInterface
             {
                 this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                let cl = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","CardLibPanel") as Prefab;
-                this.cardLibraryPanel = instantiate(cl);
-                this.cardLibraryPanel.setParent(this.parentNode);
-                this.cardLibraryPanel.getComponent(CardLibPanel).OpenCardLib();
+                let panel=await GameManager.Instance.getPanel("CardLibPanel");
+                panel.getComponent(CardLibPanel).OpenCardLib();
                 this.panelNode.active=false;
             },this);
             //打开卡组编辑界面
@@ -239,10 +237,12 @@ export class MainInterface
             {
                 this.activity=false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                let ce = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs" , "CardEditor") as Prefab;
-                this.cardEditPanel = instantiate(ce);
-                this.cardEditPanel.setParent(this.parentNode);
-                this.cardEditPanel.getComponent(CardEditor).OpenCardEditor();
+                let panel=await GameManager.Instance.getPanel("CardEditor");
+                panel.getComponent(CardEditor).OpenCardEditor();
+                //let ce = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs" , "CardEditor") as Prefab;
+                //this.cardEditPanel = instantiate(ce);
+                //this.cardEditPanel.setParent(this.parentNode);
+                //this.cardEditPanel.getComponent(CardEditor).OpenCardEditor();
                 this.panelNode.active=false;
             },this);
             //打开冒险模式界面
