@@ -59,7 +59,7 @@ export class InfoBoard extends Component
         this.destroy();
     }
 
-    Exit()
+    public Exit()
     {
         //this.simpleBoard.active=false;
         //this.detailedBoard.active=false;
@@ -68,9 +68,9 @@ export class InfoBoard extends Component
         {
             this.simpleBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
-                //this.node.active=false;
                 this.simpleBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.node.destroy();
+                //this.node.destroy();
+                this.node.active=false;
             });
             this.simpleBoard.getComponent(Animation).play("PanelDisappear");
         }
@@ -79,9 +79,9 @@ export class InfoBoard extends Component
         {
             this.propBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
-                //this.node.active=false;
                 this.propBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.node.destroy();
+                //this.node.destroy();
+                this.node.active=false;
             });
             this.propBoard.getComponent(Animation).play("PanelDisappear");
         }
@@ -94,9 +94,9 @@ export class InfoBoard extends Component
                 {
                     singleton.netSingleton.battle.puase = false;
                 }
-                //this.node.active=false;
                 this.detailedBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.node.destroy();
+                //this.node.destroy();
+                this.node.active=false;
             });
             this.detailedBoard.getComponent(Animation).play("PanelDisappear");
         }
@@ -104,9 +104,9 @@ export class InfoBoard extends Component
         if(this.fetterBoard.active){
             this.fetterBoard.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
             {
-                //this.node.active=false;
                 this.fetterBoard.getComponent(Animation).off(Animation.EventType.FINISHED);
-                this.node.destroy();
+                //this.node.destroy();
+                this.node.active=false;
             });
             this.fetterBoard.getComponent(Animation).play("PanelDisappear");
         } 

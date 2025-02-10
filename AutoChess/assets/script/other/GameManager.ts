@@ -41,7 +41,7 @@ export class GameManager extends Component
     //侦听计时器
     public listening=null;
 
-    private boards:Map<string,Node>=null;
+    private boardList:Map<string,Node>=null;
     
     protected onLoad()
     {
@@ -54,7 +54,7 @@ export class GameManager extends Component
         try
         {
            User.OptionsData=new OptionsData();
-           this.boards=new Map<string,Node>();
+           this.boardList=new Map<string,Node>();
         }
         catch(error)
         {
@@ -85,6 +85,40 @@ export class GameManager extends Component
         }
     }
 
+    public getBoard(str:string):Promise<Node>
+    {
+        return new Promise(async (resolve,reject)=>
+        {
+            try
+            {
+                if (this.boardList.has(str))
+                {
+                    resolve(this.boardList.get(str));
+                }
+                else
+                {
+                    let prefab = await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs", str) as Prefab;
+                    let board = instantiate(prefab);
+                    board.setParent(this.node);
+                    this.boardList.set(board.name, board);
+                    resolve(board);
+                }
+            } catch (error)
+            {
+                console.error("GameManager 下的 getBoard 错误 error: ",error);
+                reject(null);
+            }
+        })
+    }
+
+    public removeBoards()
+    {
+        for (let t of this.boardList.values()) 
+        {
+            t.destroy();
+        }
+    }
+
     //消息监听
     private InitEvent()
     {
@@ -100,11 +134,12 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenCardInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
-            let board=instantiate(ib);
-            board.setParent(this.node);
-            board.getComponent(InfoBoard).OpenCardInfo(event.detail.id);
-            this.boards.set(board.name,board);
+            let board;
+            this.getBoard("InformationBoard").then((value)=>
+            {
+                board=value;
+            });
+            board?.getComponent(InfoBoard).OpenCardInfo(event.detail.id);
         },this);
 
         //打开羁绊信息
@@ -119,13 +154,15 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenFetterInfo,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
-            let board=instantiate(ib);
-            board.setParent(this.node);
-            board.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
-            this.boards.set(board.name,board);
+            let board;
+            this.getBoard("InformationBoard").then((value)=>
+            {
+                board=value;
+            });
+            board?.getComponent(InfoBoard).OpenFetterInfo(event.detail.id,event.detail.spritePath,event.detail.level);
         },this);
 
+        //打开角色详细信息
         /* 消息来源
          * RoleIcon.ts : 第 453 行 
          * RoleDis.ts : 第 157 行
@@ -137,11 +174,12 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenInfoBoard,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let ib=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","InformationBoard") as Prefab;
-            let board=instantiate(ib);
-            board.setParent(this.node);
-            board.getComponent(InfoBoard).OpenEntityInfo(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
-            this.boards.set(board.name,board);
+            let board;
+            this.getBoard("InformationBoard").then((value)=>
+            {
+                board=value;
+            });
+            board?.getComponent(InfoBoard).OpenEntityInfo(event.detail.id , event.detail.index , event.detail.role , event.detail.isBuy , event.detail.propType);
         },this);
 
         //消息提示
@@ -171,11 +209,12 @@ export class GameManager extends Component
         this.node.on(enums.SendMseeageType.OpenSettlement,async (event:SendMessage)=>
         {
             event.propagationStopped=true;
-            let st=await BundleManager.Instance.loadAssetsFromBundle("BoardPrefabs","SettlementBoard") as Prefab;
-            let board = instantiate(st);
-            board.setParent(this.node);
-            board.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
-            this.boards.set(board.name,board);
+            let board; 
+            this.getBoard("SettlementBoard").then((value)=>
+            {
+                board=value;
+            });
+            board?.getComponent(Settlement).OpenSettlementBoard(event.detail.outcome, event.detail.GameMode, event.detail.addCoin, event.detail.hpNum, event.detail.isAddTime);
         },this);
 
         //打开升阶面板
@@ -195,7 +234,7 @@ export class GameManager extends Component
             let board=instantiate(up);
             board.setParent(this.node);
             board.getComponent(UpStage).OpenUpStageBoard(event.detail);
-            this.boards.set(board.name,board);
+            this.boardList.set(board.name,board);
         },this);
 
         //打开用户信息面板+
@@ -215,7 +254,7 @@ export class GameManager extends Component
             let board=instantiate(us);
             board.setParent(this.node);
             board.getComponent(UserInfo).OpenUserInfoBoard(event.detail);
-            this.boards.set(board.name,board);
+            this.boardList.set(board.name,board);
         },this);
 
         /* 消息来源
@@ -234,7 +273,7 @@ export class GameManager extends Component
             let board=instantiate(ta);
             board.setParent(this.node);
             board.getComponent(TaskAchieve).OpenTaskAchieveBoard();
-            this.boards.set(board.name,board);
+            this.boardList.set(board.name,board);
         },this);
 
         /* 消息来源
@@ -271,7 +310,7 @@ export class GameManager extends Component
             let board = instantiate(rk);
             board.setParent(this.node);
             board.getComponent(RankList).OpenRankListBoard(event.detail);
-            this.boards.set(board.name,board);
+            this.boardList.set(board.name,board);
         },this);
 
         /* 消息来源
@@ -304,7 +343,7 @@ export class GameManager extends Component
             await sleep(100);
             console.log("ChooseTags：",event.detail.events);
             board.getComponent(ChooseTag).Open(event.detail.events);
-            this.boards.set(board.name,board);
+            this.boardList.set(board.name,board);
         },this);
 
         /**打开关卡信息面板 消息来源：
@@ -317,13 +356,13 @@ export class GameManager extends Component
             let board = instantiate(ct);
             board.setParent(this.node);
             board.getComponent(LevelInfo).Open(event.detail.levelId, event.callBack);
-            this.boards.set(board.name,board);
+            this.boardList.set(board.name,board);
         })
     }
 
     public RemoveAllBoard()
     {
-        for(let t of this.boards.values())
+        for(let t of this.boardList.values())
         {
             t.destroy();
         }
@@ -373,7 +412,7 @@ export class GameManager extends Component
         board.getComponent(PopUps).title=_title;
         board.getComponent(PopUps).subheading=_subheading;
         board.getComponent(PopUps).Open(_type , _items , _callBack);
-        this.boards.set(board.name,board);
+        this.boardList.set(board.name,board);
     }
 
     //开始新手引导
@@ -476,6 +515,8 @@ export class GameManager extends Component
             }
         }, 100);
     }
+
+
 }
 
 
