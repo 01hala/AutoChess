@@ -47,7 +47,8 @@ export class Queue extends Component
                     this.roleNodes[i].destroy();
                 }
             }
-        } catch (error) 
+        } 
+        catch (error) 
         {
             console.log("Queue 下的 destroyRole 错误:",error);
         }

@@ -75,10 +75,11 @@ export class BattleDis
 
     public destory() 
     {
-        GameManager.Instance.removeBoards();
+        this.panelNode.active=false;
         this.selfQueue.destroy();
         this.enemyQueue.destroy();
-        this.panelNode.destroy();
+        GameManager.Instance.removeBoards();
+        GameManager.Instance.removePanels();
     }
 
 /*
@@ -92,8 +93,7 @@ export class BattleDis
         try
         {
             console.log("battledis start");
-            let panel = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "BattlePanel") as Prefab;
-            this.panelNode = instantiate(panel);
+            this.panelNode = await GameManager.Instance.getPanel("BattlePanel");
 
             this.selfQueue = this.panelNode.getChildByName("Self_Queue").getComponent(Queue);
             this.enemyQueue = this.panelNode.getChildByName("Enemy_Queue").getComponent(Queue);
@@ -177,6 +177,7 @@ export class BattleDis
 
             let addTime=false;
             let settlement=false;
+            console.log("准备战斗结算");
             if(this.battleCentre.round<=15 && 10 == this.battleCentre.victory)
             {
                 addTime=true;

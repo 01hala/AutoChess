@@ -40,7 +40,7 @@ export class GameManager extends Component
     public guide:Guide=null;
     //侦听计时器
     public listening=null;
-
+    //对象列表
     private boardList:Map<string,Node>=null;
     private panelList:Map<string,Node>=null;
     
@@ -119,9 +119,16 @@ export class GameManager extends Component
      */
     public removeBoards()
     {
-        for (let t of this.boardList.values()) 
+        try
         {
-            t.destroy();
+            for (let t of this.boardList.values()) 
+            {
+                t.destroy();
+            }
+            this.boardList.clear();
+        } catch (error)
+        {
+            console.error("GameManager 下的 removeBoards 错误 error: ",error);
         }
     }
 
@@ -132,17 +139,23 @@ export class GameManager extends Component
      */
     public async getPanel(str:string)
     {
-        if(this.panelList.has(str))
+        try
         {
-            return this.panelList.get(str);
-        }
-        else
+            if (this.panelList.has(str))
+            {
+                return this.panelList.get(str);
+            }
+            else
+            {
+                let prefab = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", str) as Prefab;
+                let panel = instantiate(prefab);
+                panel.setParent(this.node);
+                this.panelList.set(panel.name, panel);
+                return panel;
+            }
+        } catch (error)
         {
-            let prefab=await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", str) as Prefab;
-            let panel=instantiate(prefab);
-            panel.setParent(this.node);
-            this.panelList.set(panel.name,panel);
-            return panel;
+            console.error("GameManager 下的 getPanel 错误 error: ",error);
         }
     }
 
@@ -151,9 +164,16 @@ export class GameManager extends Component
      */
     public removePanels()
     {
-        for(let t of this.panelList.values())
+        try
         {
-            t.destroy();
+            for (let t of this.panelList.values())
+            {
+                t.destroy();
+            }
+            this.panelList.clear();
+        } catch (error)
+        {
+            console.error("GameManager 下的 removePanels 错误 error: ",error);
         }
     }
 

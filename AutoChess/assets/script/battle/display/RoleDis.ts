@@ -703,16 +703,22 @@ export class RoleDis extends Component
      */
     public async ReceptionBuff(_buff: BattleEnums.BufferType)
     {
-        let key = "";
-        switch (_buff)
+        try
         {
-            case BattleEnums.BufferType.Weak: key = "skill_0015"; break;
-        }
-        if (key.length > 0)
+            let key = "";
+            switch (_buff)
+            {
+                case BattleEnums.BufferType.Weak: key = "skill_0015"; break;
+            }
+            if (key.length > 0)
+            {
+                await this.RoleSpEffect.CheckSkillEffect(new spEffectObj(key, null));
+            }
+            await this.RoleSpEffect.BuffEffect(_buff);
+        } catch (error)
         {
-            await this.RoleSpEffect.CheckSkillEffect(new spEffectObj(key, null));
+            console.error("RoleDis 下的 ReceptionBuff 错误:",error);
         }
-        await this.RoleSpEffect.BuffEffect(_buff);
     }
     /**
      * -转移伤害-

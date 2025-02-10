@@ -138,9 +138,7 @@ export class ReadyDis
     async load()
     {
         //主要界面
-        let panel = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "ReadyPanel") as Prefab;
-        this.panelNode = instantiate(panel);
-        this.panelNode.setParent(this.parent);
+        this.panelNode = await GameManager.Instance.getPanel("ReadyPanel");
         //金币预制体
         this.coinPre = await BundleManager.Instance.loadAssetsFromBundle("PartPrefabs", "CoinPre") as Prefab;
         //操作区域
@@ -236,10 +234,12 @@ export class ReadyDis
 
     public destory() 
     {
+        this.panelNode.active=false;
         GameManager.Instance.removeBoards();
-        this.roleArea.node.destroy();
-        this.shopArea.node.destroy();
-        this.panelNode.destroy();
+        GameManager.Instance.removePanels();
+        //this.roleArea.node.destroy();
+        //this.shopArea.node.destroy();
+        //this.panelNode.destroy();
     }
 
     private InterfaceAdjust()
