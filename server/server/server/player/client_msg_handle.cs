@@ -121,19 +121,7 @@ namespace Player
             {
                 var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
                 var _data = _avatar.get_real_hosting_data<PlayerInfo>();
-
-                var BattleShopPlayer = _data.Data.battleShopPlayer;
-                if (_data.Data.TmpBattleShopPlayer != null)
-                {
-                    BattleShopPlayer = _data.Data.TmpBattleShopPlayer;
-                }
-
-                BattleShopPlayer.evs.Add(new shop_event()
-                {
-                    ev = EMRoleShopEvent.end_round
-                });
-                BattleShopPlayer.do_skill(_data.Data.GetStage());
-
+                _data.Data.EndPVERound();
                 rsp.rsp();
             }
             catch (System.Exception ex)

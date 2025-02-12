@@ -443,7 +443,7 @@
         "Priority": "Normal",
         "desc": "shop_skill_48_desc",
         "EffectTime": 2,
-        "Effect": 1,
+        "Effect": 31,
         "ObjCount": 1,
         "ObjDirection": 0,
         "EffectScope": 2,

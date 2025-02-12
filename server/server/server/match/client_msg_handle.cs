@@ -45,7 +45,6 @@ namespace Match
             {
                 var _player = Match.battle_Mng.get_battle_player(uuid);
                 _player.end_round();
-                _player.BattleShopPlayer.do_skill(_player.baseStage());
                 rsp.rsp();
             }
             catch (System.Exception ex)

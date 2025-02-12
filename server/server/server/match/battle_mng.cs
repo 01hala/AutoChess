@@ -86,8 +86,9 @@ namespace Match
 
         public void start_round(int stage, int addCoin)
         {
-            BattleShopPlayer.BattleData.coin = 10 + BattleShopPlayer.bankCpin + addCoin;
-            BattleShopPlayer.bankCpin = 0;
+            BattleShopPlayer.BattleData.coin = 10 + BattleShopPlayer.bankCoin + addCoin;
+            BattleShopPlayer.bankCoin = 0;
+            BattleShopPlayer.Coin = BattleShopPlayer.BattleData.coin;
 
             _reset();
             BattleShopPlayer.ShopData = BattleShopPlayer.refresh(stage);
@@ -104,6 +105,7 @@ namespace Match
             {
                 ev = EMRoleShopEvent.end_round
             });
+            BattleShopPlayer.do_skill(baseStage());
         }
 
         public void refresh(int stage)

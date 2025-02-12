@@ -266,6 +266,7 @@ enum SkillEffectEM {
 	CopySkill = 28;
 	NextRoundCoin = 29;
 	AttackCoin = 30;
+	AddPropertyCoin5 = 31;
 }
 
 struct UserBattleData
