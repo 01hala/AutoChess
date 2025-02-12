@@ -261,9 +261,7 @@ export class MainInterface
                         }
                     });
                     AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                    let vt = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "QuestPanel") as Prefab;
-                    let panel = instantiate(vt);
-                    panel.setParent(this.parentNode);
+                    let panel = await GameManager.Instance.getPanel("QuestPanel");
                     panel.getComponent(QuestPanel).Open();
                     this.panelNode.active = this.activity;
                     clearInterval(interval);
@@ -272,7 +270,6 @@ export class MainInterface
                 {
                     GameManager.Instance.Waitting(false);
                 })
-                
             },this);
             //打开任务、成就
             this.achieveBtn.on(Button.EventType.CLICK, async () =>
