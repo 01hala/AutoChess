@@ -95,7 +95,7 @@ namespace battle_shop
             skilleffect.skill_id = skill.Id;
             skilleffect.spellcaster = index;
             skilleffect.recipient = new List<int>();
-            skilleffect.effect = SkillEffectEM.AddProperty;
+            skilleffect.effect = SkillEffectEM.AddPropertyCoin5;
 
             var n = (_player.Coin - _player.BattleData.coin) / 5;
             var r = _player.BattleData.RoleList[index];
@@ -200,13 +200,13 @@ namespace battle_shop
 
         private void AddPropertyLevel3(ShopSkillConfig skill, battle_shop_player _player)
         {
-            Log.Log.trace("AddAllPropertyByBattleRound begin");
+            Log.Log.trace("AddPropertyLevel3 begin");
 
             var skilleffect = new ShopSkillEffect();
             skilleffect.skill_id = skill.Id;
             skilleffect.spellcaster = index;
             skilleffect.recipient = new List<int>();
-            skilleffect.effect = SkillEffectEM.AddAllPropertyByBattleRound;
+            skilleffect.effect = SkillEffectEM.AddPropertyLevel3;
 
             var v1 = skill.Level1Value_1;
             var v2 = skill.Level1Value_2;
@@ -257,7 +257,7 @@ namespace battle_shop
             _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
             _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
 
-            Log.Log.trace("AddAllPropertyByBattleRound end");
+            Log.Log.trace("AddPropertyLevel3 end");
         }
 
         private void AddPropertyShopLeft(ShopSkillConfig skill, battle_shop_player _player)
