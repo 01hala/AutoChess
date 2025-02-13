@@ -91,42 +91,45 @@ namespace battle_shop
                 }
             }
 
-            var skilleffect = new ShopSkillEffect();
-            skilleffect.skill_id = skill.Id;
-            skilleffect.spellcaster = index;
-            skilleffect.recipient = new List<int>();
-            skilleffect.effect = SkillEffectEM.AddProperty;
-
             var n = (_player.Coin - _player.BattleData.coin) / 5;
-            var r = _player.BattleData.RoleList[index];
-            var Level = r.Level;
-            switch (Level)
+            if (n > 0)
             {
-                case 1:
-                    {
-                        AddProperty(_player, target_index, skill.EffectScope, skill.Level1Value_1 * n, skill.Level1Value_2 * n);
-                        skilleffect.value = new List<int>() { skill.Level1Value_1 * n, skill.Level1Value_2 * n };
-                    }
-                    break;
+                var skilleffect = new ShopSkillEffect();
+                skilleffect.skill_id = skill.Id;
+                skilleffect.spellcaster = index;
+                skilleffect.recipient = new List<int>();
+                skilleffect.effect = SkillEffectEM.AddProperty;
 
-                case 2:
-                    {
-                        AddProperty(_player, target_index, skill.EffectScope, skill.Level2Value_1 * n, skill.Level2Value_2 * n);
-                        skilleffect.value = new List<int>() { skill.Level2Value_1 * n, skill.Level2Value_2 * n };
-                    }
-                    break;
+                var r = _player.BattleData.RoleList[index];
+                var Level = r.Level;
+                switch (Level)
+                {
+                    case 1:
+                        {
+                            AddProperty(_player, target_index, skill.EffectScope, skill.Level1Value_1 * n, skill.Level1Value_2 * n);
+                            skilleffect.value = new List<int>() { skill.Level1Value_1 * n, skill.Level1Value_2 * n };
+                        }
+                        break;
 
-                case 3:
-                    {
-                        AddProperty(_player, target_index, skill.EffectScope, skill.Level3Value_1 * n, skill.Level3Value_2 * n);
-                        skilleffect.value = new List<int>() { skill.Level3Value_1 * n, skill.Level3Value_2 * n };
-                    }
-                    break;
+                    case 2:
+                        {
+                            AddProperty(_player, target_index, skill.EffectScope, skill.Level2Value_1 * n, skill.Level2Value_2 * n);
+                            skilleffect.value = new List<int>() { skill.Level2Value_1 * n, skill.Level2Value_2 * n };
+                        }
+                        break;
+
+                    case 3:
+                        {
+                            AddProperty(_player, target_index, skill.EffectScope, skill.Level3Value_1 * n, skill.Level3Value_2 * n);
+                            skilleffect.value = new List<int>() { skill.Level3Value_1 * n, skill.Level3Value_2 * n };
+                        }
+                        break;
+                }
+
+                _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+                _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+                _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
             }
-
-            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
-            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-            _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
 
             Log.Log.trace("AddPropertyCoin5 end");
         }
