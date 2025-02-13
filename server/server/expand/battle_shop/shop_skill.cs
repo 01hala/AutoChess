@@ -205,12 +205,6 @@ namespace battle_shop
         {
             Log.Log.trace("AddPropertyLevel3 begin");
 
-            var skilleffect = new ShopSkillEffect();
-            skilleffect.skill_id = skill.Id;
-            skilleffect.spellcaster = index;
-            skilleffect.recipient = new List<int>();
-            skilleffect.effect = SkillEffectEM.AddPropertyLevel3;
-
             var v1 = skill.Level1Value_1;
             var v2 = skill.Level1Value_2;
             var r = _player.BattleData.RoleList[index];
@@ -237,12 +231,19 @@ namespace battle_shop
                     }
                     break;
             }
-            skilleffect.value = new List<int>() { v1, v2 };
 
             foreach (var target_r in _player.BattleData.RoleList)
             {
                 if (target_r != null && target_r.Level >= 3)
                 {
+                    var skilleffect = new ShopSkillEffect();
+                    skilleffect.skill_id = skill.Id;
+                    skilleffect.spellcaster = index;
+                    skilleffect.recipient = new List<int>();
+                    skilleffect.effect = SkillEffectEM.AddPropertyLevel3;
+
+                    skilleffect.value = new List<int>() { v1, v2 };
+
                     if (skill.EffectScope == EffectScope.SingleBattle)
                     {
                         target_r.TempHP += v1;
@@ -253,12 +254,12 @@ namespace battle_shop
                         target_r.HP += v1;
                         target_r.Attack += v2;
                     }
+
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
+                    _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
                 }
             }
-
-            _player.BattleClientCaller.get_client(_player.ClientUUID).shop_skill_effect(skilleffect);
-            _player.BattleClientCaller.get_client(_player.ClientUUID).refresh(_player.BattleData, _player.ShopData);
-            _player.BattleClientCaller.get_client(_player.ClientUUID).role_add_property(_player.BattleData);
 
             Log.Log.trace("AddPropertyLevel3 end");
         }
