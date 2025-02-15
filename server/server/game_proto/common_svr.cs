@@ -159,7 +159,9 @@ namespace Abelkhan
         CopySkill = 28,
         NextRoundCoin = 29,
         AttackCoin = 30,
-        AddPropertyCoin5 = 31
+        AddPropertyCoin5 = 31,
+        AddPropertyMoreCoin = 32,
+        AddPropertyHasEquip = 33
     }
     public enum ShopIndex{
         Role = 0,
