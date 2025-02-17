@@ -42,7 +42,6 @@ namespace Player
     public class PlayerInfo : IHostingData
     {
         private UserData info;
-        private List<GuideStep> guideSteps;
         private int currentRolrGroup = 101;
         private long lastTickStrengthTime;
 
@@ -113,8 +112,8 @@ namespace Player
                     guideStep = GuideStep.Done,
                     RoleList = new List<int>(roleList),
                     roleGroup = RoleGroup,
+                    GuideSteps = new (),
                 },
-                guideSteps = new List<GuideStep>(),
                 isQuestEvent = false,
                 lastTickStrengthTime = Timerservice.Tick
             };
@@ -145,8 +144,8 @@ namespace Player
                     score = 0,
                     RoleList = new (),
                     roleGroup = new(),
+                    GuideSteps = new(),
                 },
-                guideSteps = new List<GuideStep>()
             };
 
             var user = data.GetValue("User").AsBsonDocument;
@@ -211,7 +210,7 @@ namespace Player
             {
                 foreach (var g in data.GetValue("guideSteps").AsBsonArray)
                 {
-                    info.guideSteps.Add((GuideStep)g.AsInt32);
+                    info.info.GuideSteps.Add((GuideStep)g.AsInt32);
                 }
             }
 
@@ -338,9 +337,9 @@ namespace Player
             }
 
             var tmpGuideSteps = new BsonArray();
-            if (guideSteps != null)
+            if (info.GuideSteps != null)
             {
-                foreach (var g in guideSteps)
+                foreach (var g in info.GuideSteps)
                 {
                     tmpGuideSteps.Add(g);
                 }
@@ -407,7 +406,7 @@ namespace Player
         public void UpdateGuideStep(GuideStep step)
         {
             info.guideStep = GuideStep.Done;
-            guideSteps.Add(step);
+            info.GuideSteps.Add(step);
         }
 
         private void AddCardItem(RoleCardInfo infoCard)

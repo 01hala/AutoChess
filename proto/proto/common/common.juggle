@@ -139,6 +139,7 @@ struct UserData
 	GuideStep guideStep;		 // 新手引导进度
 	int32[] RoleList; 		     // 已有角色列表
 	RoleGroup[] roleGroup;	     // 卡组 玩家自行编辑
+	GuideStep[] GuideSteps;		 // 新手引导完成数组
 }
 
 struct Fetters {

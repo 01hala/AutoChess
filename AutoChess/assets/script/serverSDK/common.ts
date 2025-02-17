@@ -512,6 +512,7 @@ export class UserData
     public guideStep : GuideStep = GuideStep.None;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
+    public GuideSteps : GuideStep[] = [];
 
 }
 
@@ -575,6 +576,12 @@ export function protcol_to_UserData(_protocol:any){
             _struct.roleGroup = [];
             for(let v_ of val as any) {
                 _struct.roleGroup.push(protcol_to_RoleGroup(v_));
+            }
+        }
+        else if (key === "GuideSteps"){
+            _struct.GuideSteps = [];
+            for(let v_ of val as any) {
+                _struct.GuideSteps.push(v_);
             }
         }
     }

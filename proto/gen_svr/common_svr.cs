@@ -600,6 +600,7 @@ namespace Abelkhan
         public GuideStep guideStep;
         public List<Int32> RoleList;
         public List<RoleGroup> roleGroup;
+        public List<GuideStep> GuideSteps;
         public static MsgPack.MessagePackObjectDictionary UserData_to_protcol(UserData _struct){
         if (_struct == null) {
             return null;
@@ -632,6 +633,13 @@ namespace Abelkhan
                     _array_roleGroup.Add( new MsgPack.MessagePackObject(RoleGroup.RoleGroup_to_protcol(v_)));
                 }
                 _protocol.Add("roleGroup", new MsgPack.MessagePackObject(_array_roleGroup));
+            }
+            if (_struct.GuideSteps != null) {
+                var _array_GuideSteps = new List<MsgPack.MessagePackObject>();
+                foreach(var v_ in _struct.GuideSteps){
+                    _array_GuideSteps.Add((Int32)v_);
+                }
+                _protocol.Add("GuideSteps", new MsgPack.MessagePackObject(_array_GuideSteps));
             }
             return _protocol;
         }
@@ -693,6 +701,13 @@ namespace Abelkhan
                     var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
                     foreach (var v_ in _protocol_array){
                         _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.roleGroup.Add(RoleGroup.protcol_to_RoleGroup(((MsgPack.MessagePackObject)v_).AsDictionary()));
+                    }
+                }
+                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "GuideSteps"){
+                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.GuideSteps = new List<GuideStep>();
+                    var _protocol_array = ((MsgPack.MessagePackObject)i.Value).AsList();
+                    foreach (var v_ in _protocol_array){
+                        _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.GuideSteps.Add((GuideStep)((MsgPack.MessagePackObject)v_).AsInt32());
                     }
                 }
             }
