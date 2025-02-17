@@ -1,1 +1,287 @@
-{}
+{
+    "skill_0002": {
+        "Id": "skill_0002",
+        "Name": "圣盾",
+        "Path": ""
+    },
+    "skill_0003": {
+        "Id": "skill_0003",
+        "Name": "单体强化升级",
+        "Path": "SkillSound\\buff_buff"
+    },
+    "skill_0005": {
+        "Id": "skill_0005",
+        "Name": "护盾",
+        "Path": ""
+    },
+    "skill_0006": {
+        "Id": "skill_0006",
+        "Name": "受击",
+        "Path": ""
+    },
+    "skill_0006_1": {
+        "Id": "skill_0006_1",
+        "Name": "受击",
+        "Path": ""
+    },
+    "skill_0006_2": {
+        "Id": "skill_0006_2",
+        "Name": "受击",
+        "Path": ""
+    },
+    "skill_0007": {
+        "Id": "skill_0007",
+        "Name": "技能发动",
+        "Path": ""
+    },
+    "skill_0009": {
+        "Id": "skill_0009",
+        "Name": "即死",
+        "Path": ""
+    },
+    "skill_0010": {
+        "Id": "skill_0010",
+        "Name": "群体强化升级",
+        "Path": ""
+    },
+    "skill_0011": {
+        "Id": "skill_0011",
+        "Name": "复制属性",
+        "Path": ""
+    },
+    "skill_0012": {
+        "Id": "skill_0012",
+        "Name": "商店格提醒",
+        "Path": ""
+    },
+    "skill_0013_1": {
+        "Id": "skill_0013_1",
+        "Name": "转移伤害",
+        "Path": ""
+    },
+    "skill_0013_2": {
+        "Id": "skill_0013_2",
+        "Name": "抗伤",
+        "Path": ""
+    },
+    "skill_0014": {
+        "Id": "skill_0014",
+        "Name": "换位",
+        "Path": ""
+    },
+    "skill_0015": {
+        "Id": "skill_0015",
+        "Name": "受到虚弱buff",
+        "Path": ""
+    },
+    "skill_0016": {
+        "Id": "skill_0016",
+        "Name": "刺客领域",
+        "Path": ""
+    },
+    "skill_0017": {
+        "Id": "skill_0017",
+        "Name": "获得圣光",
+        "Path": ""
+    },
+    "skill_0018": {
+        "Id": "skill_0018",
+        "Name": "商店格刷新",
+        "Path": ""
+    },
+    "skill_0019": {
+        "Id": "skill_0019",
+        "Name": "玻璃碎开（召唤物特效）",
+        "Path": ""
+    },
+    "skill_0020": {
+        "Id": "skill_0020",
+        "Name": "全屏寒冰弹",
+        "Path": ""
+    },
+    "skill_0021": {
+        "Id": "skill_0021",
+        "Name": "仆人技能",
+        "Path": ""
+    },
+    "skill_0022": {
+        "Id": "skill_0022",
+        "Name": "护士大招",
+        "Path": ""
+    },
+    "skill_0023": {
+        "Id": "skill_0023",
+        "Name": "刺客斩击",
+        "Path": ""
+    },
+    "skill_0024": {
+        "Id": "skill_0024",
+        "Name": "交换属性",
+        "Path": ""
+    },
+    "skill_0025": {
+        "Id": "skill_0025",
+        "Name": "减疗",
+        "Path": ""
+    },
+    "skill_0026": {
+        "Id": "skill_0026",
+        "Name": "减攻击力",
+        "Path": ""
+    },
+    "skill_0027": {
+        "Id": "skill_0027",
+        "Name": "圣光",
+        "Path": ""
+    },
+    "skill_0008": {
+        "Id": "skill_0008",
+        "Name": "远程攻击火球",
+        "Path": ""
+    },
+    "skill_0008_1": {
+        "Id": "skill_0008_1",
+        "Name": "远程攻击绿火",
+        "Path": ""
+    },
+    "skill_0008_2": {
+        "Id": "skill_0008_2",
+        "Name": "远程攻击光波",
+        "Path": ""
+    },
+    "skill_0008_3": {
+        "Id": "skill_0008_3",
+        "Name": "远程攻击机器鹰",
+        "Path": ""
+    },
+    "skill_0008_4": {
+        "Id": "skill_0008_4",
+        "Name": "远程攻击卡片",
+        "Path": ""
+    },
+    "skill_0008_5": {
+        "Id": "skill_0008_5",
+        "Name": "远程攻击拳头",
+        "Path": ""
+    },
+    "skill_0008_6": {
+        "Id": "skill_0008_6",
+        "Name": "远程攻击长矛",
+        "Path": ""
+    },
+    "skill_0008_7": {
+        "Id": "skill_0008_7",
+        "Name": "远程增益魔法",
+        "Path": ""
+    },
+    "skill_0008_8": {
+        "Id": "skill_0008_8",
+        "Name": "远程攻击魔法",
+        "Path": ""
+    },
+    "career_001": {
+        "Id": "career_001",
+        "Name": "厨师buff",
+        "Path": "SkillSound\\Career_001_cstb"
+    },
+    "career_002": {
+        "Id": "career_002",
+        "Name": "健身",
+        "Path": "SkillSound\\Career_002_jianshen"
+    },
+    "career_003": {
+        "Id": "career_003",
+        "Name": "狂战士buff（不知道采不采用）",
+        "Path": ""
+    },
+    "career_004": {
+        "Id": "career_004",
+        "Name": "魔术师buff",
+        "Path": "SkillSound\\Career_004_moshushi"
+    },
+    "career_005": {
+        "Id": "career_005",
+        "Name": "审判官平分平分伤害",
+        "Path": "SkillSound\\Career_005_tianping"
+    },
+    "career_006": {
+        "Id": "career_006",
+        "Name": "打铁",
+        "Path": "SkillSound\\Career_006_dt"
+    },
+    "career_007": {
+        "Id": "career_007",
+        "Name": "护士治愈",
+        "Path": "SkillSound\\Career_007_hushi"
+    },
+    "career_008": {
+        "Id": "career_008",
+        "Name": "出售中间人特效",
+        "Path": "SkillSound\\Career_008_jinbi"
+    },
+    "career_009": {
+        "Id": "career_009",
+        "Name": "炸弹",
+        "Path": "SkillSound\\Career_009_zd"
+    },
+    "career_009_1": {
+        "Id": "career_009_1",
+        "Name": "爆炸",
+        "Path": "SkillSound\\Career_009_1_bz"
+    },
+    "career_010": {
+        "Id": "career_010",
+        "Name": "魔法召唤阵",
+        "Path": "SkillSound\\Career_013_xunkongfazhen"
+    },
+    "career_011": {
+        "Id": "career_011",
+        "Name": "buff给到人物的飞行物",
+        "Path": "SkillSound\\Career_011_bo"
+    },
+    "career_012": {
+        "Id": "career_012",
+        "Name": "机械类的召唤阵",
+        "Path": "SkillSound\\Career_012_zh"
+    },
+    "career_013": {
+        "Id": "career_013",
+        "Name": "道具召唤阵",
+        "Path": "SkillSound\\Career_013_xunkongfazhen"
+    },
+    "career_014": {
+        "Id": "career_014",
+        "Name": "道具盾特效",
+        "Path": "SkillSound\\Career_0014_dun"
+    },
+    "career_015": {
+        "Id": "career_015",
+        "Name": "双截棍打击",
+        "Path": ""
+    },
+    "career_016": {
+        "Id": "career_016",
+        "Name": "牛奶特效",
+        "Path": ""
+    },
+    "career_016_1": {
+        "Id": "career_016_1",
+        "Name": "锤特效",
+        "Path": ""
+    },
+    "career_016_2": {
+        "Id": "career_016_2",
+        "Name": "喇叭特效",
+        "Path": "SkillSound\\Career_0016_2_laba"
+    },
+    "career_016_3": {
+        "Id": "career_016_3",
+        "Name": "铃铛特效",
+        "Path": "SkillSound\\Career_0016_3_lingdang"
+    },
+    "career_016_4": {
+        "Id": "career_016_4",
+        "Name": "哑铃特效",
+        "Path": "SkillSound\\Career_0016_4_yaling"
+    }
+}
