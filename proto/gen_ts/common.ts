@@ -162,7 +162,10 @@ export enum SkillEffectEM{
     AddPropertyLevel3 = 27,
     CopySkill = 28,
     NextRoundCoin = 29,
-    AttackCoin = 30
+    AttackCoin = 30,
+    AddPropertyCoin5 = 31,
+    AddPropertyMoreCoin = 32,
+    AddPropertyHasEquip = 33
 }
 
 export enum ShopIndex{
