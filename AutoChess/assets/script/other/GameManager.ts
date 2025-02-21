@@ -352,7 +352,7 @@ export class GameManager extends Component
 
         //打开提示弹窗
         /* 消息来源
-         * MainInterface.ts : 第 303 行
+         * MainInterface.ts : 第 460 行
          * CardEditor.ts : 第 43 行
          * 
          * 

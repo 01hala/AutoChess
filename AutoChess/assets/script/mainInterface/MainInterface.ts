@@ -236,7 +236,7 @@ export class MainInterface
             
             this.RegButton();
 
-            if(GameManager.Instance.guide != null && common.GuideStep.None == User.UserData.guideStep)
+            if(GameManager.Instance.guide != null)
             {
                 this.GuideEventListener();
             }

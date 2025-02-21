@@ -18,11 +18,12 @@ import { MainInterface } from '../mainInterface/MainInterface';
 import { sleep } from '../other/sleep';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
-import * as enmus from '../other/enums';
+import * as enums from '../other/enums';
 import SdkManager from '../SDK/SdkManager';
 import * as player_login from "../serverSDK/ccallplayer"
 import { QuestPanel } from '../panel/QuestPanel';
 import { User } from './User';
+import { SendMessage } from '../other/MessageEvent';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -97,10 +98,10 @@ export class login extends Component {
     {  
         if(sys.platform === sys.Platform.WECHAT_GAME)
         {
-            SdkManager.SetPlatform(enmus.SDK_TYPE.WX)
+            SdkManager.SetPlatform(enums.SDK_TYPE.WX)
         }
         else {
-            SdkManager.SetPlatform(enmus.SDK_TYPE.Default)
+            SdkManager.SetPlatform(enums.SDK_TYPE.Default)
         }
 
         await config.config.load();
@@ -111,7 +112,7 @@ export class login extends Component {
 
         this.progressBar = this._loading.progressBar;
         this.progressBar.active = true;
-        this._loading.ShowLog("",0);
+        this._loading.ShowLog("null",0);
 
         this.interval = setInterval(() =>
         {
@@ -128,7 +129,7 @@ export class login extends Component {
         }).then(() => {
             this._progress += 0.1;
             this._setProgress(this._progress);
-            this._loading.ShowLog("",0);
+            this._loading.ShowLog("null",0);
             GameManager.Instance.Init();
         });
         //连接
@@ -137,6 +138,7 @@ export class login extends Component {
             this._setProgress(this._progress);
 
             console.log("login non_account create role");
+            this._loading.ShowLog("尝试连接服务器...",0);
             singleton.netSingleton.player.create_role(code, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().nickName, SdkManager.SDK.getUserInfo().avatarUrl);
         };
 
@@ -159,9 +161,10 @@ export class login extends Component {
                 return;
             }
 
-            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack(async (info, match_name) => {
+            singleton.netSingleton.player.reconnect(singleton.netSingleton.player.UserData.User.UserGuid).callBack(async (info, match_name) => 
+            {
                 singleton.netSingleton.player.UserData = info;
-
+                this._loading.ShowLog("正在连接中...",0);
                 if (match_name != "")
                 {
                     singleton.netSingleton.game.match_name = match_name;
@@ -176,6 +179,12 @@ export class login extends Component {
                         }).timeout(3000, () =>
                         {
                             console.log("on net reconnect get_battle_data timeout!");
+                            this.node.dispatchEvent(new SendMessage('OpenPopUps', true,
+                                {
+                                    type: enums.PopUpsType.Other,
+                                    title: "",
+                                    subheading: "服务器连接超时",
+                                }));
                         })
                     }
                 }
@@ -249,11 +258,11 @@ export class login extends Component {
                             break;
                         }
                 }
-                if(User.UserData.guideStep != common.GuideStep.Done)
-                {
-                    GameManager.Instance.StartGuide();
-                    singleton.netSingleton.mainInterface.SwitchBtnlist(false);
-                }
+                // if (User.UserData.guideStep != common.GuideStep.Done)
+                // {
+                //     GameManager.Instance.StartGuide();
+                //     singleton.netSingleton.mainInterface.SwitchBtnlist(false);
+                // }
             });
         }
        
@@ -262,7 +271,7 @@ export class login extends Component {
         
         singleton.netSingleton.connect_server(() => {
             console.log("on net connect!");
-
+            this._loading.ShowLog("正在连接中...",0);
             this._progress += 0.3;
             this._setProgress(this._progress);
             //this.wxLogin();
@@ -282,13 +291,13 @@ export class login extends Component {
         //pvp准备阶段
         singleton.netSingleton.game.cb_start_match_battle_ready = (battle_info: common.UserBattleData, shop_info: common.ShopData, fetters_info: common.Fetters[]) => 
         {
-            this.GameStart(enmus.GameMode.PVP, battle_info, shop_info, fetters_info);
+            this.GameStart(enums.GameMode.PVP, battle_info, shop_info, fetters_info);
         };
 
         //pvp战斗阶段
         singleton.netSingleton.game.cb_start_match_battle = (self: common.UserBattleData, target: common.UserBattleData) =>
         {
-            this.BattleStart(self,target,enmus.GameMode.PVP);
+            this.BattleStart(self,target,enums.GameMode.PVP);
         };
 
         //pvp结算
@@ -319,13 +328,13 @@ export class login extends Component {
         //pve准备阶段
         singleton.netSingleton.game.cb_start_quest_battle_ready = (battle_info,shop_info,events,fetters_info) =>
         {
-            this.GameStart(enmus.GameMode.PVE,battle_info,shop_info,fetters_info,events);
+            this.GameStart(enums.GameMode.PVE,battle_info,shop_info,fetters_info,events);
         };
 
         //pve战斗阶段
         singleton.netSingleton.game.cb_start_quest_battle = (_self, _target) =>
         {
-            this.BattleStart(_self,_target ,enmus.GameMode.PVE);
+            this.BattleStart(_self,_target ,enums.GameMode.PVE);
         };
 
         singleton.netSingleton.game.cb_confirm_quest_victory=async (state)=>
@@ -351,7 +360,7 @@ export class login extends Component {
         }
     }
 
-    private async GameStart(_gamemode:enmus.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[],events?:number[])
+    private async GameStart(_gamemode:enums.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[],events?:number[])
     {
         GameManager.Instance.RemoveAllBoard();
 
@@ -407,7 +416,7 @@ export class login extends Component {
         }
     }
 
-    private async BattleStart(_self: common.UserBattleData, _target: common.UserBattleData , _gamemode:enmus.GameMode)
+    private async BattleStart(_self: common.UserBattleData, _target: common.UserBattleData , _gamemode:enums.GameMode)
     {
         GameManager.Instance.RemoveAllBoard();
 

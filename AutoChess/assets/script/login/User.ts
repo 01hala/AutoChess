@@ -1,4 +1,4 @@
-import * as common from "../battle/AutoChessBattle/common"
+import * as common from "../serverSDK/common"
 import * as enums from '../other/enums'
 
 export class User

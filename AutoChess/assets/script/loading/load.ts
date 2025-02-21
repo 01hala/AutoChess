@@ -47,10 +47,15 @@ export class Loading {
         return null;
     }
 
-    public ShowLog(_bundleName:string,_progress:number)
+    public ShowLog(_msg:string,_progress:number)
     {
-        switch (_bundleName)
+        switch (_msg)
         {
+            case "null":
+                {
+                    this.log.string="加载中 请稍后...";
+                }
+                break;
             case "Sound":
                 {
                     this.log.string = "正在加载 音效 " + "(" + _progress + "%)";
@@ -66,9 +71,23 @@ export class Loading {
                     this.log.string = "正在加载 特效 " + "(" + _progress + "%)";
                 }
                 break;
+            case "SceneSpine":
+                {
+                    this.log.string = "正在加载 场景 " + "(" + _progress + "%)";
+                }
+                break;
+            case "SpecialSpine":
+                {
+                    this.log.string = "正在加载 装饰 " + "(" + _progress + "%)";
+                }
+                break;
+            case "MainInterface":
+                {
+                    this.log.string = "正在加载 主界面 " + "(" + _progress + "%)";
+                }
             default:
                 {
-                    this.log.string="加载中 请稍后...";
+                    this.log.string=_msg;
                 }
         }
     }
