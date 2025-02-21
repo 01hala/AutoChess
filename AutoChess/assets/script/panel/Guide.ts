@@ -6,6 +6,7 @@ import { RoleIcon } from '../ready/display/RoleIcon';
 import * as common from "../battle/AutoChessBattle/common"
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
+import { StartGame } from '../mainInterface/StartGame';
 const { ccclass, property } = _decorator;
 
 @ccclass('Guide')
@@ -43,21 +44,7 @@ export class Guide extends Component
     }
 
     protected start(): void
-    {
-        this.panel.on(Button.EventType.CLICK, () =>
-        {
-            switch(this.step)
-            {
-                case common.GuideStep.CoinInfo: 
-                case common.GuideStep.HPInfo: 
-                case common.GuideStep.TrophyInfo:
-                case common.GuideStep.RoundInfo:
-                    {
-                        this.CheckGuide();
-                    }
-            }
-        }, this);
-        
+    {   
         this.panel.on(Node.EventType.TOUCH_END,this.OnTouch,this);
         this.panel.on(Node.EventType.TOUCH_START,this.OnTouch,this);
 
@@ -76,13 +63,8 @@ export class Guide extends Component
         this.destroy();
     }
     
-    public async Init(_step:common.GuideStep)
+    public async Init()
     {   
-        this.step = _step;
-        if(common.GuideStep.None==this.step)
-        {
-            this.next=common.GuideStep.ClickGameLobby;
-        }
         this.panel.active=false;
         this.skipBtn.active=false;
         this.node.getChildByPath("BG").active=false;
@@ -90,7 +72,7 @@ export class Guide extends Component
         // this.end = common.GuideStep.Done;
         // this.node.setSiblingIndex(101);
         // this.StartGuide();
-        this.CheckGuide();
+        //this.CheckGuide();
     }
 
     private OnTouch(event:EventTouch)
@@ -99,6 +81,10 @@ export class Guide extends Component
         {
             case common.GuideStep.ClickGameLobby:
             case common.GuideStep.ClickMatch:
+                {
+                    event.preventSwallow = true;
+                }
+                break;
             case common.GuideStep.RoleInfo:
             case common.GuideStep.BuyRole: 
             {
@@ -119,8 +105,9 @@ export class Guide extends Component
                 {
                     if(touchPos.y > (tpos.y - contentSizeY) && touchPos.y < (tpos.y + contentSizeY))
                     {
-                        event.preventSwallow = true;
-                        this.CheckGuide();
+                        //event.preventSwallow = true;
+                        //this.CheckGuide();
+                        this.ClickOnArea();
                     }
                 }
             }
@@ -128,82 +115,90 @@ export class Guide extends Component
         }
     }
 
-    private StartGuide()
+    private ClickOnArea()
     {
-        // this.interval=setInterval(()=>
-        // {
-        //     if(this.next!=this.step)
-        //     {
-        //         this.OnGuide();
-        //         this.next = this.step;
-        //     }
-        //     if(this.step>=this.end)
-        //     {
-        //         GameManager.Instance.guide = null;
-        //         clearInterval(this.interval);
-        //         singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
-        //         this.node.destroy();
-        //     }
-        // }, 50);
-    }
-
-    public CheckGuide()
-    {
-        try
+        switch(this.step)
         {
-            if (this.tnode)
-            {
-                this.tnode.destroy();
-            }
-            if (this.tween)
-            {
-                this.tween.stop();
-            }
-            this.hand.active = false;
-            this.tween = null;
 
-            switch(this.step)
-            {
-                case common.GuideStep.ClickGameLobby: this.next = common.GuideStep.ClickMatch;break;
-                case common.GuideStep.ClickMatch: this.next = common.GuideStep.BuyRole;break;
-                case common.GuideStep.RoleInfo: this.next = common.GuideStep.HPInfo;break;
-                case common.GuideStep.BuyRole: this.next = common.GuideStep.CoinInfo;break;
-                case common.GuideStep.CoinInfo: this.next = common.GuideStep.RoleInfo;break;
-                case common.GuideStep.HPInfo: this.next = common.GuideStep.TrophyInfo;break;
-                case common.GuideStep.TrophyInfo: this.next = common.GuideStep.RoundInfo;break;
-                case common.GuideStep.RoundInfo: this.next = common.GuideStep.Done;break;
-            }
-
-            switch (this.step)
-            {
-                case common.GuideStep.ClickGameLobby:
-                case common.GuideStep.ClickMatch:
-                case common.GuideStep.RoleInfo:
-                case common.GuideStep.BuyRole:
-                    {
-                        this.panel.getComponent(BlockInputEvents).enabled = false;
-                        this.node.getChildByPath("BG").active = false;
-                        this.skipBtn.active=false;
-                        this.panel.active = false;   //此处必须关闭panel中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
-                    }
-                    break;
-                case common.GuideStep.CoinInfo:
-                case common.GuideStep.HPInfo:
-                case common.GuideStep.TrophyInfo:
-                case common.GuideStep.RoundInfo:
-                    {
-                        this.OnGuide(this.next);
-                    }
-                    break;
-                default: break;
-            }
-            console.warn(this.next);
-        }
-        catch (error)
-        {
-            console.error("Guide 下的 CheckGuide 错误:",error);
         }
     }
+
+    // private StartGuide()
+    // {
+    //     // this.interval=setInterval(()=>
+    //     // {
+    //     //     if(this.next!=this.step)
+    //     //     {
+    //     //         this.OnGuide();
+    //     //         this.next = this.step;
+    //     //     }
+    //     //     if(this.step>=this.end)
+    //     //     {
+    //     //         GameManager.Instance.guide = null;
+    //     //         clearInterval(this.interval);
+    //     //         singleton.netSingleton.player.guide_step_ntf(common.GuideStep.Done);
+    //     //         this.node.destroy();
+    //     //     }
+    //     // }, 50);
+    // }
+
+    // public CheckGuide()
+    // {
+    //     try
+    //     {
+    //         if (this.tnode)
+    //         {
+    //             this.tnode.destroy();
+    //         }
+    //         if (this.tween)
+    //         {
+    //             this.tween.stop();
+    //         }
+    //         this.hand.active = false;
+    //         this.tween = null;
+
+    //         switch(this.step)
+    //         {
+    //             case common.GuideStep.ClickGameLobby: this.next = common.GuideStep.ClickMatch;break;
+    //             case common.GuideStep.ClickMatch: this.next = common.GuideStep.BuyRole;break;
+    //             case common.GuideStep.RoleInfo: this.next = common.GuideStep.HPInfo;break;
+    //             case common.GuideStep.BuyRole: this.next = common.GuideStep.CoinInfo;break;
+    //             case common.GuideStep.CoinInfo: this.next = common.GuideStep.RoleInfo;break;
+    //             case common.GuideStep.HPInfo: this.next = common.GuideStep.TrophyInfo;break;
+    //             case common.GuideStep.TrophyInfo: this.next = common.GuideStep.RoundInfo;break;
+    //             case common.GuideStep.RoundInfo: this.next = common.GuideStep.Done;break;
+    //         }
+
+    //         switch (this.step)
+    //         {
+    //             case common.GuideStep.ClickGameLobby:
+    //             case common.GuideStep.ClickMatch:
+    //             case common.GuideStep.RoleInfo:
+    //             case common.GuideStep.BuyRole:
+    //                 {
+    //                     this.panel.getComponent(BlockInputEvents).enabled = false;
+    //                     this.node.getChildByPath("BG").active = false;
+    //                     this.skipBtn.active=false;
+    //                     this.panel.active = false;   //此处必须关闭panel中断touch侦听，不然OnTouch会多执行一次导致报错，也不能删掉这行，不然就判断不到触点位置是否处于范围内
+    //                 }
+    //                 break;
+    //             case common.GuideStep.CoinInfo:
+    //             case common.GuideStep.HPInfo:
+    //             case common.GuideStep.TrophyInfo:
+    //             case common.GuideStep.RoundInfo:
+    //                 {
+    //                     this.OnGuide(this.next);
+    //                 }
+    //                 break;
+    //             default: break;
+    //         }
+    //         console.warn(this.next);
+    //     }
+    //     catch (error)
+    //     {
+    //         console.error("Guide 下的 CheckGuide 错误:",error);
+    //     }
+    // }
 
     public OnGuide(_step:common.GuideStep)
     {

@@ -95,13 +95,6 @@ export class StartGame extends Component
     {
         try
         {
-            if(GameManager.Instance.guide)
-            {
-                this.athleticsWindow.getComponent(Animation).on(Animation.EventType.FINISHED,()=>
-                {
-                    GameManager.Instance.guide.next=common.GuideStep.ClickMatch;
-                });
-            }
             this.amusementWindow.active=false;
             this.athleticsWindow.active=true;
             this.athleticsWindow.getComponent(Animation).play("PanelAppear");
@@ -114,10 +107,6 @@ export class StartGame extends Component
             //匹配
             this.athleticsWindow.getChildByPath("Normal/Button").on(Button.EventType.CLICK, async ()=>
             {
-                if (GameManager.Instance.guide)
-                {
-                    //GameManager.Instance.guide.Checkguide();
-                }
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 console.log("Normal_Btn start_battle!");
                 singleton.netSingleton.game.start_match_battle_ready(common.BattleMod.Battle);

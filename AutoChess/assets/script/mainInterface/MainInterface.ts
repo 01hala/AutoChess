@@ -65,21 +65,6 @@ export class MainInterface
         this.RegCallBack();
     }
 /*
- * 添加Load
- * author：Hotaru
- * 2024/03/20
- * 整理代码
- */
-    private async Load()
-    {
-        let MainInterfacePromise= BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "MainInterface");
-        let awaitResult= await Promise.all([
-            MainInterfacePromise
-        ]);;
-
-        return awaitResult;
-    }
-/*
  * 修改start
  * author：Hotaru
  * 2024/03/07
@@ -133,6 +118,59 @@ export class MainInterface
         GameManager.Instance.removePanels();
     }
 
+    /**
+     * 显示头像
+     * @param _url 路径
+     */
+    public async ShowAvatar(_url:string)
+    {
+        try
+        {
+            console.log("尝试加载头像：",_url);
+            this.avatarUrl=_url;
+            let sprite=this.mainPanel.getChildByPath("UiLayer/TopArea/UserAvatar/Mask/Sprite").getComponent(Sprite);
+            await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
+            {
+                let sp = new SpriteFrame();
+                let texture = new Texture2D();
+                texture.image = image;
+                sp.texture = texture
+                sprite.spriteFrame = sp;
+            });
+        }
+        catch(error)
+        {
+            console.error('MainInterface 下 ShowAvatar 错误 err: ',error);
+        }
+    }
+    //按钮条伸缩切换
+    public SwitchBtnlist(_flag?:boolean)
+    {
+        if(_flag)
+        {
+            this.btnListSwitch=_flag;
+        }
+        else
+        {
+            this.btnListSwitch=!this.btnListSwitch;
+        }
+        tween(this.btnList).to(0,{}).call(()=>
+        {
+            if(this.btnListSwitch)
+            {
+                this.btnList.getComponent(Animation).play("ListDown");
+            }
+            else
+            {
+                this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
+                this.btnList.getComponent(Animation).play("ListUp");
+            }
+        }).delay(0.4).call(()=>
+        {
+            this.btnList.getComponent(Animation).resume();
+            this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
+        }).start();
+    }
 
 /*
  * 添加Adaptation
@@ -195,15 +233,36 @@ export class MainInterface
         {
             this.activity=true;
             this.startGamePart.active=false;
-            //打开匹配
-            this.startBtn.on(Button.EventType.CLICK,()=>
+            
+            this.RegButton();
+
+            if(GameManager.Instance.guide != null && common.GuideStep.None == User.UserData.guideStep)
             {
-                this.activity=false;
+                this.GuideEventListener();
+            }
+        }
+        catch(error)
+        {
+            console.error('MainInterface 下 Init 错误 err: ',error);
+        }
+    }
+
+    
+
+    //注册按钮
+    private RegButton()
+    {
+        try
+        {
+            //打开匹配
+            this.startBtn.on(Button.EventType.CLICK, () =>
+            {
+                this.activity = false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
                 console.log("startBtn OpenAthleticsWindow!");
-                this.startGamePart.active=true;
+                this.startGamePart.active = true;
                 this.startGamePart.getComponent(StartGame).OpenAthleticsWindow();
-            },this);
+            }, this);
             //打开自定义模式
             // this.amusementBtn.on(Button.EventType.CLICK,()=>
             // {
@@ -212,50 +271,44 @@ export class MainInterface
             //     this.startGamePart.getComponent(StartGame).OpenAmusementWindow();
             // },this);
             //打开商店界面
-            this.storeBtn.on(Button.EventType.CLICK,async ()=>
+            this.storeBtn.on(Button.EventType.CLICK, async () =>
             {
-                this.activity=false;
+                this.activity = false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                let st = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "StorePanel") as Prefab;
-                this.storePanel =instantiate(st);
-                this.storePanel.setParent(this.parentNode);
-                this.storePanel.getComponent(StorePanel).CheckStoreToggle(true);
-                this.storePanel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked = true;
-                this.panelNode.active = false;
-            },this);
+                let panel = await GameManager.Instance.getPanel("StorePanel");
+                panel.getComponent(StorePanel).CheckStoreToggle(true);
+                panel.getComponent(StorePanel).toggleGroup.getChildByPath("Store").getComponent(Toggle).isChecked = true;
+                this.panelNode.active = this.activity;
+            }, this);
             //打开牌库界面
-            this.cardlibraryBtn.on(Button.EventType.CLICK,async ()=>
+            this.cardlibraryBtn.on(Button.EventType.CLICK, async () =>
             {
-                this.activity=false;
+                this.activity = false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-                let panel=await GameManager.Instance.getPanel("CardLibPanel");
+                let panel = await GameManager.Instance.getPanel("CardLibPanel");
                 panel.getComponent(CardLibPanel).OpenCardLib();
-                this.panelNode.active=false;
-            },this);
+                this.panelNode.active = this.activity;
+            }, this);
             //打开卡组编辑界面
-            this.cardEditorBtn.on(Button.EventType.CLICK,async ()=>
+            this.cardEditorBtn.on(Button.EventType.CLICK, async () =>
             {
-                this.activity=false;
+                this.activity = false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                let panel=await GameManager.Instance.getPanel("CardEditor");
+                let panel = await GameManager.Instance.getPanel("CardEditor");
                 panel.getComponent(CardEditor).OpenCardEditor();
-                //let ce = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs" , "CardEditor") as Prefab;
-                //this.cardEditPanel = instantiate(ce);
-                //this.cardEditPanel.setParent(this.parentNode);
-                //this.cardEditPanel.getComponent(CardEditor).OpenCardEditor();
-                this.panelNode.active=false;
-            },this);
+                this.panelNode.active = this.activity;
+            }, this);
             //打开冒险模式界面
-            this.questBtn.on(Button.EventType.CLICK,async ()=>
+            this.questBtn.on(Button.EventType.CLICK, async () =>
             {
                 new Promise<void>(async (resolve, reject) =>
                 {
-                    this.activity=false;
-                    let tick=0;
-                    let interval= setInterval(()=>
+                    this.activity = false;
+                    let tick = 0;
+                    let interval = setInterval(() =>
                     {
                         tick++;
-                        if(tick>100)
+                        if (tick > 100)
                         {
                             GameManager.Instance.Waitting(true);
                         }
@@ -266,27 +319,25 @@ export class MainInterface
                     this.panelNode.active = this.activity;
                     clearInterval(interval);
                     resolve();
-                }).then(()=>
+                }).then(() =>
                 {
                     GameManager.Instance.Waitting(false);
                 })
-            },this);
+            }, this);
             //打开任务、成就
             this.achieveBtn.on(Button.EventType.CLICK, async () =>
             {
-                this.activity=false;
+                this.activity = false;
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
-                //this.panelNode.dispatchEvent(new SendMessage('OpenTaskAchieveBoard',true,this.userAccount));
-                let ap = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "AchievePanel") as Prefab;
-                this.achievePanel = instantiate(ap);
-                this.achievePanel.setParent(this.parentNode);
-                this.achievePanel.getComponent(AchievePanel).Open();
-                this.panelNode.active = false;
+                let panel = await GameManager.Instance.getPanel("AchievePanel");
+                panel.getComponent(AchievePanel).Open();
+                this.panelNode.active = this.activity;
             }, this);
             this.wxGroupBtn.on(Node.EventType.TOUCH_START, async () =>
             {
-                this.activity=false;
-                if (config.HotFixedConfig.OpenJoinWXGroup) {
+                this.activity = false;
+                if (config.HotFixedConfig.OpenJoinWXGroup)
+                {
                     AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                     let wgp = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs", "WxGroup") as Prefab;
                     this.wxGroupPanel = instantiate(wgp);
@@ -295,66 +346,37 @@ export class MainInterface
             }, this);
             this.panelNode.on(Node.EventType.TOUCH_START, () => 
             {
-                this.activity=true;
-                if (this.wxGroupPanel) {
+                this.activity = true;
+                if (this.wxGroupPanel)
+                {
                     this.wxGroupPanel.destroy();
                     this.wxGroupPanel = null;
                 }
             }, this);
             //按钮条切换
-            this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK,()=>
+            this.btnList.getChildByPath("Switch_Btn").on(Button.EventType.CLICK, () =>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_01");
                 this.SwitchBtnlist();
-    
-            },this);
+
+            }, this);
             //打开用户信息
-            this.userAvatar.on(Button.EventType.CLICK,()=>
+            this.userAvatar.on(Button.EventType.CLICK, () =>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
-                this.panelNode.dispatchEvent(new SendMessage('OpenUserInfoBoard',true,this.avatarUrl));
-            },this);
+                this.panelNode.dispatchEvent(new SendMessage('OpenUserInfoBoard', true, this.avatarUrl));
+            }, this);
             //打开排行榜
-            this.rankListBtn.on(Button.EventType.CLICK,()=>
+            this.rankListBtn.on(Button.EventType.CLICK, () =>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_player_homepage_01");
-                this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard',true,User.UserData));
-            },this);
-        }
-        catch(error)
+                this.panelNode.dispatchEvent(new SendMessage('OpenRankListBoard', true, User.UserData));
+            }, this);
+        } catch (error)
         {
-            console.error('MainInterface 下 Init 错误 err: ',error);
+            console.error('MainInterface 下 RegButton 错误 err: ',error);
         }
     }
-
-    public SwitchBtnlist(_flag?:boolean)
-    {
-        if(_flag)
-        {
-            this.btnListSwitch=_flag;
-        }
-        else
-        {
-            this.btnListSwitch=!this.btnListSwitch;
-        }
-        tween(this.btnList).to(0,{}).call(()=>
-        {
-            if(this.btnListSwitch)
-            {
-                this.btnList.getComponent(Animation).play("ListDown");
-            }
-            else
-            {
-                this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
-                this.btnList.getComponent(Animation).play("ListUp");
-            }
-        }).delay(0.4).call(()=>
-        {
-            this.btnList.getComponent(Animation).resume();
-            this.btnList.getChildByPath("BtnLayout").active=this.btnListSwitch;
-        }).start();
-    }
-
 /*
  * 修改RegCallBack
  * author：Hotaru
@@ -379,9 +401,10 @@ export class MainInterface
             
         }
         //回调编辑卡组
-        singleton.netSingleton.player.cb_edit_role_group=(_userInfo:common.UserData)=>
+        singleton.netSingleton.player.cb_edit_role_group=async (_userInfo:common.UserData)=>
         {
-            if(this.cardEditPanel)
+            let panel=await GameManager.Instance.getPanel("CardEditor");
+            if(panel)
             {
                 this.panelNode.dispatchEvent(new SendMessage(enums.SendMseeageType.ShowTip , true ,"<outline color=black width=4>保 存 成 功</outline>"));
             }
@@ -444,30 +467,19 @@ export class MainInterface
             }
         }
     }
-    /**
-     * 显示头像
-     * @param _url 路径
-     */
-    public async ShowAvatar(_url:string)
+
+    private GuideEventListener()
     {
-        try
+        let delay=0;
+        let interval=setInterval(()=>
         {
-            console.log("尝试加载头像：",_url);
-            this.avatarUrl=_url;
-            let sprite=this.mainPanel.getChildByPath("UiLayer/TopArea/UserAvatar/Mask/Sprite").getComponent(Sprite);
-            await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
+            delay+=10;
+            if(delay>=5000)
             {
-                let sp = new SpriteFrame();
-                let texture = new Texture2D();
-                texture.image = image;
-                sp.texture = texture
-                sprite.spriteFrame = sp;
-            });
-        }
-        catch(error)
-        {
-            console.error('MainInterface 下 ShowAvatar 错误 err: ',error);
-        }
+                GameManager.Instance.guide.OnGuide(common.GuideStep.ClickGameLobby);
+                clearInterval(interval);
+            }
+        },10);
     }
 }
 

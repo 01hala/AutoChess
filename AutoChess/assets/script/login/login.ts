@@ -22,6 +22,7 @@ import * as enmus from '../other/enums';
 import SdkManager from '../SDK/SdkManager';
 import * as player_login from "../serverSDK/ccallplayer"
 import { QuestPanel } from '../panel/QuestPanel';
+import { User } from './User';
 
 function unicodeToUtf8(unicode:any) {
     let utf8str = "";
@@ -226,11 +227,10 @@ export class login extends Component {
             singleton.netSingleton.mainInterface = new MainInterface();
             await singleton.netSingleton.mainInterface.start(this.bk.node, async (event) =>
             {
-                let step=null;
                 await singleton.netSingleton.player.get_user_data(true,(_step) =>
                 {
                     console.log("get_user_data guide step:", _step);
-                    step=_step;
+                    
                 });
                 
                 singleton.netSingleton.mainInterface.ShowAvatar(SdkManager.SDK.getUserInfo().avatarUrl);
@@ -249,9 +249,9 @@ export class login extends Component {
                             break;
                         }
                 }
-                if(step!=null)
+                if(User.UserData.guideStep != common.GuideStep.Done)
                 {
-                    GameManager.Instance.StartGuide(step);
+                    GameManager.Instance.StartGuide();
                     singleton.netSingleton.mainInterface.SwitchBtnlist(false);
                 }
             });

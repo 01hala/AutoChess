@@ -445,16 +445,13 @@ export class GameManager extends Component
     }
 
     //开始新手引导
-    public async StartGuide(_step:common.GuideStep)
+    public async StartGuide()
     {
-        let tnode=await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","GuidePanel") as Prefab;
-        let gnode=instantiate(tnode);
-
+        let gnode=await this.getPanel("GuidePanel");
         gnode.setParent(this.node);
         this.guide=gnode.getComponent(Guide);
-
-        this.guide.Init(_step);
-        this.OnGuideListening();
+        this.guide.Init();
+        //this.OnGuideListening();
     }
 
     //获取文本
