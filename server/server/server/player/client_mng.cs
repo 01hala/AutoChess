@@ -1365,6 +1365,11 @@ namespace Player
             {
                 TmpBattleShopPlayer = new battle_shop_player(_clientUUID, battleClientCaller, BattleRoleGroup(), info.User);
             }
+            else
+            {
+                TmpBattleShopPlayer.ClientUUID = _clientUUID;
+                TmpBattleShopPlayer.BattleClientCaller = battleClientCaller;
+            }
 
             if (config.Config.PVELevelConfigs.TryGetValue(quest, out var cfg))
             {

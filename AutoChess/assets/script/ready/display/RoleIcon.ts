@@ -249,6 +249,7 @@ export class RoleIcon extends Component
 
                     if (this.isMerge)
                     {
+                        console.log("合并角色");
                         this.roleNode.destroy();
                         this.node.destroy();
                         return;
@@ -552,6 +553,7 @@ export class RoleIcon extends Component
                         (this.tempMergeRole.getComponent(RoleIcon).roleLv<3 && this.roleLv < 3)) 
                     {
                         this.isMerge = true;
+                        this.isSwitch = false;
                     }
                     else {
                         this.isMerge = false;

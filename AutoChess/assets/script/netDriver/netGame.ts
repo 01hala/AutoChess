@@ -59,11 +59,13 @@ export class netGame {
             }
         }
         this.match_c.cb_role_buy_merge = (target_role_index:number, target_role:common.Role, is_update:boolean) => {
+            console.log("cb_role_buy_merge begin!");
             if (this.cb_role_buy_merge) {
                 this.cb_role_buy_merge.call(null, target_role_index, target_role, is_update);
             }
         }
         this.match_c.cb_role_merge = (source_role_index:number, target_role_index:number, target_role:common.Role, is_update:boolean) => {
+            console.log("cb_role_merge begin!");
             if (this.cb_role_merge) {
                 this.cb_role_merge.call(null, source_role_index, target_role_index, target_role, is_update);
             }
