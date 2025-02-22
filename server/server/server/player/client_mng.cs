@@ -704,12 +704,19 @@ namespace Player
             }
 
             var check = true;
-            foreach(var r in battleInfo.RoleList)
+            if (battleInfo.RoleList == null)
             {
-                if (r.Level < 3)
+                check = false;
+            }
+            else
+            {
+                foreach (var r in battleInfo.RoleList)
                 {
-                    check = false;
-                    break;
+                    if (r != null && r.Level < 3)
+                    {
+                        check = false;
+                        break;
+                    }
                 }
             }
 
@@ -730,12 +737,19 @@ namespace Player
             }
 
             var check = true;
-            foreach (var r in battleInfo.RoleList)
+            if (battleInfo.RoleList == null)
             {
-                if (r.FettersSkillID.fetters_id != 6)
+                check = false;
+            }
+            else
+            {
+                foreach (var r in battleInfo.RoleList)
                 {
-                    check = false;
-                    break;
+                    if (r != null && r.FettersSkillID.fetters_id != 6)
+                    {
+                        check = false;
+                        break;
+                    }
                 }
             }
 
@@ -756,12 +770,19 @@ namespace Player
             }
 
             var check = true;
-            foreach (var r in battleInfo.RoleList)
+            if (battleInfo.RoleList == null)
             {
-                if (r.Attack >= 50 && r.HP >= 50)
+                check = false;
+            }
+            else
+            {
+                foreach (var r in battleInfo.RoleList)
                 {
-                    check = false;
-                    break;
+                    if (r != null && r.Attack >= 50 && r.HP >= 50)
+                    {
+                        check = false;
+                        break;
+                    }
                 }
             }
 
@@ -782,12 +803,19 @@ namespace Player
             }
 
             var check = true;
-            foreach (var r in battleInfo.RoleList)
+            if (battleInfo.RoleList == null)
             {
-                if (r.equipID != 0)
+                check = false;
+            }
+            else
+            {
+                foreach (var r in battleInfo.RoleList)
                 {
-                    check = false;
-                    break;
+                    if (r != null && r.equipID != 0)
+                    {
+                        check = false;
+                        break;
+                    }
                 }
             }
 
@@ -845,13 +873,28 @@ namespace Player
             }
             if (config.Config.TaskConfigs.TryGetValue(Enum.GetName(typeof(Achievement), Achievement.EMNotGivenAllYet), out var task1))
             {
-                if (battleInfo.RoleList.Count < task1.Value)
+                if (battleInfo.RoleList == null)
                 {
-                    var data = GetAchievementData(Achievement.EMNotGivenAllYet);
-                    if (data.status != AchievementAwardStatus.EMRecv)
+                    check = false;
+                }
+                else
+                {
+                    var count = 0;
+                    foreach(var r in battleInfo.RoleList)
                     {
-                        data.status = AchievementAwardStatus.EMComplete;
-                        check = true;
+                        if (r != null)
+                        {
+                            count++;
+                        }
+                    }
+                    if (count < task1.Value)
+                    {
+                        var data = GetAchievementData(Achievement.EMNotGivenAllYet);
+                        if (data.status != AchievementAwardStatus.EMRecv)
+                        {
+                            data.status = AchievementAwardStatus.EMComplete;
+                            check = true;
+                        }
                     }
                 }
             }
@@ -889,11 +932,14 @@ namespace Player
 
         private bool CheckFullLevelRole(BattleInfo battleInfo)
         {
-            foreach (var role in battleInfo.RoleList)
+            if (battleInfo.RoleList != null)
             {
-                if (role.Level >= 3)
+                foreach (var role in battleInfo.RoleList)
                 {
-                    return true;
+                    if (role != null && role.Level >= 3)
+                    {
+                        return true;
+                    }
                 }
             }
 

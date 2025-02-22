@@ -879,10 +879,6 @@ namespace Player
                 var _avatar = Player.client_Mng.guid_get_client_proxy(guid);
                 if (_avatar != null)
                 {
-                    rsp.err((int)em_error.player_offline);
-                }
-                else
-                {
                     var match_key = RedisHelp.BuildPlayerMatchSvrCache(_avatar.Guid);
                     string match_name = await Player._redis_handle.GetStrData(match_key);
 
@@ -917,7 +913,10 @@ namespace Player
                         rsp.rsp(_avatar.PlayerInfo().Info(), "");
                     }
                     _avatar.ClientUUID = uuid;
-
+                }
+                else
+                {
+                    rsp.err((int)em_error.player_offline);
                 }
             }
             catch (System.Exception ex)
