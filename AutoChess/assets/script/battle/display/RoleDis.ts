@@ -238,7 +238,7 @@ export class RoleDis extends Component
     */
     public Equipping(equipId: number)
     {
-        this.roleInfo.equip[0] = equipId;
+        this.roleInfo.equip = equipId;
     }
 
     public Attack(readyLocation: Vec3, battleLocation: Vec3, camp: BattleEnums.Camp) 
