@@ -768,36 +768,34 @@ export class RoleIcon extends Component
                 console.log("can not find config of equip:"+equip_id);
                 return;
             }
-            for(let effect of equipInfo.Effect){
-                switch(effect){
-                    case 1:case 2:{
-                        let value =[equipInfo.HpBonus,equipInfo.AttackBonus];
-                        await this.roleNode.getComponent(RoleDis).Intensifier(value,false,t.Number);
-                    }break;
-                    case 3:{
-                        let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP+t.TempHP).set(battleEmums.Property.Attack,t.Attack+t.TempAttack);
-                        for(let temp of equipInfo.Vaule){
-                            t.additionBuffer.push(temp);
-                        }
-                        let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,[-1],t.additionBuffer);
-                        await this.roleNode.getComponent(RoleDis).Refresh(r);
-                    }break;
-                    case 4:break;
-                    case 5:break;
-                    case 6:break;
-                    case 7:{
-                        //如果召唤的效果等同于id为x的召唤技能，特殊效果值是召唤技能的id，则使用下面的代码
-                        // let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
-                        // let additionSkill:number[] =[];
-                        // for(let temp of equipInfo.Vaule){
-                        //     additionSkill.push(temp);
-                        // }
-                        // let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer,additionSkill);
-                        // this.roleNode.getComponent(RoleDis).Refresh(r);
-                    }break;
-                }
-                this.roleNode.getComponent(RoleDis).Equipping(equip_id);
+            switch(equipInfo.Effect){
+                case 1:case 2:{
+                    let value =[equipInfo.HpBonus,equipInfo.AttackBonus];
+                    await this.roleNode.getComponent(RoleDis).Intensifier(value,false,t.Number);
+                }break;
+                case 3:{
+                    let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP+t.TempHP).set(battleEmums.Property.Attack,t.Attack+t.TempAttack);
+                    for(let temp of equipInfo.Vaule){
+                        t.additionBuffer.push(temp);
+                    }
+                    let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,[-1],t.additionBuffer);
+                    await this.roleNode.getComponent(RoleDis).Refresh(r);
+                }break;
+                case 4:break;
+                case 5:break;
+                case 6:break;
+                case 7:{
+                    //如果召唤的效果等同于id为x的召唤技能，特殊效果值是召唤技能的id，则使用下面的代码
+                    // let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,t.HP).set(battleEmums.Property.Attack,t.Attack);
+                    // let additionSkill:number[] =[];
+                    // for(let temp of equipInfo.Vaule){
+                    //     additionSkill.push(temp);
+                    // }
+                    // let r=new role.Role(null,this.index,this.roleId,t.Level,t.Number,battleEmums.Camp.Self,map,t.FettersSkillID,-1,t.additionBuffer,additionSkill);
+                    // this.roleNode.getComponent(RoleDis).Refresh(r);
+                }break;
             }
+            this.roleNode.getComponent(RoleDis).Equipping(equip_id);
 
             this.upgradeLock=false;
         }
