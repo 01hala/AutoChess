@@ -18,6 +18,7 @@ import { User } from '../login/User';
 import { QuestPanel } from '../panel/QuestPanel';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { CardLibPanel } from '../panel/CardLibPanel';
+import { StartHouseRender } from '../part/StartHouseReader';
 const { ccclass, property } = _decorator;
 
 export class MainInterface 
@@ -235,6 +236,8 @@ export class MainInterface
             this.startGamePart.active=false;
             
             this.RegButton();
+
+            this.mainPanel.getChildByPath("BottomLayer/StartHouseRender").getComponent(StartHouseRender).setOutline(true);
 
             if(GameManager.Instance.guide != null)
             {

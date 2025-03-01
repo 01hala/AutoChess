@@ -10,14 +10,14 @@
   "_techIdx": 1,
   "_defines": [
     {
-      "USE_EXPAND": true,
+      "SAMPLE_FROM_RT": true,
+      "USE_PIXEL_ALIGNMENT": true,
       "USE_TEXTURE": true,
       "SHOW_OUT_LINE": true
     }
   ],
   "_states": [
     {
-      "stage": 200,
       "rasterizerState": {
         "cullMode": 0
       },
@@ -33,6 +33,8 @@
     }
   ],
   "_props": [
-    {}
+    {
+      "_outlineWidth": 0.005
+    }
   ]
 }
