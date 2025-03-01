@@ -1,0 +1,40 @@
+{
+  "ver": "1.2.2",
+  "importer": "render-texture",
+  "imported": true,
+  "uuid": "38d7ced2-fa1c-4ad5-bd29-01c1899ddbf3",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {
+    "f9941": {
+      "importer": "rt-sprite-frame",
+      "uuid": "38d7ced2-fa1c-4ad5-bd29-01c1899ddbf3@f9941",
+      "displayName": "Starthouse",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "imageUuidOrDatabaseUri": "38d7ced2-fa1c-4ad5-bd29-01c1899ddbf3",
+        "width": 900,
+        "height": 1600
+      },
+      "ver": "1.0.0",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "width": 900,
+    "height": 1600,
+    "anisotropy": 0,
+    "minfilter": "linear",
+    "magfilter": "linear",
+    "mipfilter": "none",
+    "wrapModeS": "repeat",
+    "wrapModeT": "repeat",
+    "redirect": "38d7ced2-fa1c-4ad5-bd29-01c1899ddbf3@f9941"
+  }
+}
