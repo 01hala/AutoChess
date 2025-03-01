@@ -20,6 +20,11 @@ export class StartHouseRender extends Component
         
     }
 
+    protected onDestroy(): void
+    {
+        clearInterval(this.interval);
+    }
+
     public setOutline(flag:boolean)
     {
         if(flag)
