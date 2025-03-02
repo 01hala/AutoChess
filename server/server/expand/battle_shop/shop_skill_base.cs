@@ -30,15 +30,17 @@ namespace battle_shop
         public int skillID;
         public int fettersSkillID;
         public int fettersLevel;
+        public int equipID;
         public int spawnRound;
 
-        public shop_skill_role(int _index, int _roleID, int _skillID, int _fettersSkillID, int _fettersLevel, int _spawnRound)
+        public shop_skill_role(int _index, int _roleID, int _skillID, int _fettersSkillID, int _fettersLevel, int equip, int _spawnRound)
         {
             index = _index;
             roleID = _roleID;
             skillID = _skillID;
             fettersSkillID = _fettersSkillID;
             fettersLevel = _fettersLevel;
+            equipID = equip;
             spawnRound = _spawnRound;
         }
 
@@ -180,7 +182,16 @@ namespace battle_shop
                             trigger_ev = ev;
                             return true;
                         }
-                    }
+                        else
+                        {
+                            if (equipID == 3002)
+                            {
+                                Log.Log.trace("TriggerSkill equipID == 3002 EMSkillEvent.end_round");
+                                trigger_ev = ev;
+                                return true;
+                            }
+                        }
+                        }
                     break;
                     case EMRoleShopEvent.syncope:
                     {

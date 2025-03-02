@@ -23,7 +23,7 @@ namespace battle_shop
                     {
                         continue;
                     }
-                    shop_skill_roles[i] = new shop_skill_role(i, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, battleData.round);
+                    shop_skill_roles[i] = new shop_skill_role(i, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, r.equipID, battleData.round);
                 }
             }
             get
@@ -636,7 +636,7 @@ namespace battle_shop
 
                 battleData.RoleList[role_index] = r;
                 check_fetters();
-                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, battleData.round);
+                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, r.equipID, battleData.round);
 
                 return true;
             }
@@ -675,7 +675,7 @@ namespace battle_shop
 
                 battleData.RoleList[role_index] = r;
                 check_fetters();
-                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, battleData.round);
+                shop_skill_roles[role_index] = new shop_skill_role(role_index, r.RoleID, r.SkillID, r.FettersSkillID.fetters_id, r.FettersSkillID.fetters_level, r.equipID, battleData.round);
                 ShopData.SaleRoleList[index] = null;
 
                 evs.Add(new shop_event()

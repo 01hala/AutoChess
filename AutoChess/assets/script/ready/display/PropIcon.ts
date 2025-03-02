@@ -31,7 +31,7 @@ export class PropIcon extends Component
     public hpBonus:number;
     public vaule:number;
     //道具效果
-    public effect:number[]=[];
+    public effect:number;
     //目标位置
     public index:number;
     private tempIndex:number;
@@ -227,10 +227,10 @@ export class PropIcon extends Component
                             //console.log('buy food');
                             let value=[this.hpBonus,this.attackBonus];
                             //this.target.getComponent(RoleIcon).upgradeLock=true;
-                            if(this.effect.includes(1) || this.effect.includes(2))
-                            {
+                            //if(this.effect.includes(1) || this.effect.includes(2))
+                            //{
                                 //this.target.getComponent(RoleIcon).GetIntensifier(value);
-                            }
+                            //}
                             await this.shopArea.BuyProp(this.index,this.node);
                             console.log('道具使用成功！');
                             this.node.destroy();
