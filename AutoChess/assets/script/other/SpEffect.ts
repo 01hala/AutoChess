@@ -600,6 +600,7 @@ export class SpEffectOnRole
                         {
 
                         }
+                        break;
                     case BattleEnums.BufferType.InevitableKill:
                     case BattleEnums.BufferType.ReductionDamage:
                     case BattleEnums.BufferType.ShareDamage:
@@ -607,9 +608,10 @@ export class SpEffectOnRole
                         {
 
                         }
+                        break;
                     default:
                         {
-                            this.parent.getChildByName("EffectSpine/Buff").destroy();
+                            this.parent.getChildByName("EffectSpine/Buff")?.destroy();
                             node.name = "Buff";
                         }
                         break;
