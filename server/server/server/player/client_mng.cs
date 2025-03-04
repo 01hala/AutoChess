@@ -1240,6 +1240,7 @@ namespace Player
 
         public void ClearPVEState()
         {
+            TmpBattleShopPlayer = null;
             battleShopPlayer = null;
             pveLevelCfg = null;
             info.PVELevelIndex = 0;

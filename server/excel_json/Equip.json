@@ -7,7 +7,7 @@
         "Effect": 7,
         "AttackBonus": 0,
         "HpBonus": 0,
-        "Value": "1|1",
+        "Value": "200001|1|1",
         "Res": "PropsTexture/battle_icon_3001",
         "Introduce": "equip_3001_desc"
     },
@@ -55,7 +55,7 @@
         "Effect": 9,
         "AttackBonus": 0,
         "HpBonus": 0,
-        "Value": "1|1",
+        "Value": "0|1|1",
         "Res": "PropsTexture/battle_icon_3005",
         "Introduce": "equip_3005_desc"
     },

@@ -82,6 +82,22 @@ namespace battle_shop
                 }
             }
 
+            EquipConfig equip;
+            if (config.Config.EquipConfigs.TryGetValue(equipID, out equip))
+            {
+                if (TriggerSkill(evs, 0, _player, out var ev))
+                {
+                    ret.Add(new skill_execute()
+                    {
+                        Priority = Priority.Normal,
+                        execute = () =>
+                        {
+                            UseEquipSkill(_player, ev, stage);
+                        }
+                    });
+                }
+            }
+
             return ret;
         }
 
