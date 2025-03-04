@@ -584,14 +584,14 @@ export class SpEffectOnRole
                 {
                     case BattleEnums.BufferType.Shields:
                         {
-                            this.parent.getChildByName("EffectSpine/Shields").destroy();
+                            this.parent.getChildByName("EffectSpine/Shields")?.destroy();
                             node.name = "Shields";
                             spEffect.skeletonData = this.buff.get("skill_0005");
                         }
                         break;
                     case BattleEnums.BufferType.OffsetDamage:
                         {
-                            this.parent.getChildByName("EffectSpine/SaintShields").destroy();
+                            this.parent.getChildByName("EffectSpine/SaintShields")?.destroy();
                             node.name = "SaintShields";
                             spEffect.skeletonData = this.buff.get("skill_0002");
                         }
