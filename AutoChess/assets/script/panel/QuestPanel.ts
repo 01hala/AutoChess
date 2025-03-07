@@ -44,7 +44,7 @@ export class QuestPanel extends Component
         {
             singleton.netSingleton.mainInterface.activity=true;
         }
-        this.node.destroy();
+        this.node.active=false;
     }
 
     public OnLevelBtnClick(_event,_data)

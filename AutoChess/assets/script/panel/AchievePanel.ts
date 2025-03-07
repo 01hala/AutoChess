@@ -52,7 +52,7 @@ export class AchievePanel extends Component
     {
         singleton.netSingleton.mainInterface.activity=true;
         this.RemoveAllLables();
-        this.node.destroy();
+        this.node.active=false;
     }
 
     async Open()
