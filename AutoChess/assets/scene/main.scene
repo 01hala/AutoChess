@@ -660,10 +660,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "loading": {
-      "__uuid__": "2d0c011c-cd39-4b7a-a9d0-f1304d99461b",
-      "__expectedType__": "cc.Prefab"
-    },
+    "loading": null,
     "_id": "c5T145v7RClL7fYLykN8T8"
   },
   {
