@@ -257,10 +257,10 @@ export class InfoBoard extends Component
         //角色名
         this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _id;
         let ro = config.RoleConfig.get(_id);
-        this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = GameManager.Instance.GetText(ro.Name);
-        this.simpleBoard.getChildByName("Sculpture/HP/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#670004 width=10>"+ro.Hp+"</color>";
-        this.simpleBoard.getChildByName("Sculpture/Attack/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#670004 width=10>"+ro.Attack+"</color>";
-        this.simpleBoard.getChildByName("Sculpture/Stage/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#114224 width=10>"+ro.Stage+"</color>";
+        this.simpleBoard.getChildByPath("RoleName").getComponent(Label).string = GameManager.Instance.GetText(ro.Name);
+        this.simpleBoard.getChildByPath("Sculpture/HP/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#670004 width=10>"+ro.Hp+"</color>";
+        this.simpleBoard.getChildByPath("Sculpture/Attack/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#670004 width=10>"+ro.Attack+"</color>";
+        this.simpleBoard.getChildByPath("Sculpture/Stage/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#114224 width=10>"+ro.Stage+"</color>";
         //技能介绍
         let str = config.SkillIntroduceConfig.get(_id%100000);
         console.log(str.Id);
