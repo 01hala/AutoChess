@@ -31,7 +31,7 @@ export class loadInit extends Component {
     async start () {
         // [3]
         await BundleManager.Instance.PreLoadBundleDir("PanelSpine", "");
-        await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","loading");
+        this.loading = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","loading") as Prefab;
         load.Loading.loading = this.loading;
     }
  
