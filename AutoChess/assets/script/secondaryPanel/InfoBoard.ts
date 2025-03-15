@@ -221,7 +221,11 @@ export class InfoBoard extends Component
         this.fetterBoard.getChildByName("Text").getComponent(RichText).string=content;
     }
 
-    async OpenCardInfo(_id:number)
+    /**
+     * 打开角色卡信息
+     * @param _id 角色id
+     */
+    public async OpenCardInfo(_id:number)
     {
         this.node.setSiblingIndex(100);
         this.node.active=true;
@@ -254,18 +258,39 @@ export class InfoBoard extends Component
         this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _id;
         let ro = config.RoleConfig.get(_id);
         this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = GameManager.Instance.GetText(ro.Name);
+        this.simpleBoard.getChildByName("Sculpture/HP/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#670004 width=10>"+ro.Hp+"</color>";
+        this.simpleBoard.getChildByName("Sculpture/Attack/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#670004 width=10>"+ro.Attack+"</color>";
+        this.simpleBoard.getChildByName("Sculpture/Stage/RichText").getComponent(RichText).string="<color=#ffffff><outline color=#114224 width=10>"+ro.Stage+"</color>";
         //技能介绍
         let str = config.SkillIntroduceConfig.get(_id%100000);
         console.log(str.Id);
-        this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = GameManager.Instance.GetText(str.Leve1Text);
-        this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(str.Timeing_Text) + ":</color>";
+        let introduce=
+        "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>1</color></outline>"+
+        "<color=#1F0000><size=30><b> "+GameManager.Instance.GetText(str.Timeing_Text)+"→"+ GameManager.Instance.GetText(str.Leve1Text)+"</size>";
+
+        this.simpleBoard.getChildByPath("RoleIntroduce").children[0].getComponent(RichText).string=introduce;
+
+        introduce=
+        "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>2</color></outline>"+
+        "<color=#1F0000><size=30><b> "+GameManager.Instance.GetText(str.Timeing_Text)+"→"+ GameManager.Instance.GetText(str.Leve2Text)+"</size>";
+
+        this.simpleBoard.getChildByPath("RoleIntroduce").children[1].getComponent(RichText).string=introduce;
+
+        introduce=
+        "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>3</color></outline>"+
+        "<color=#1F0000><size=30><b> "+GameManager.Instance.GetText(str.Timeing_Text)+"→"+ GameManager.Instance.GetText(str.Leve3Text)+"</size>";
+
+        this.simpleBoard.getChildByPath("RoleIntroduce").children[2].getComponent(RichText).string=introduce;
+
+        //this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = GameManager.Instance.GetText(str.Leve1Text);
+        //this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(str.Timeing_Text) + ":</color>";
         //羁绊
-        let ft = config.FettersConfig.get(ro.Fetters);
-        this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#ffffff><outline color=#000000 width = 4>" + GameManager.Instance.GetText(ft.Name) + "</outline></color>";
+        //let ft = config.FettersConfig.get(ro.Fetters);
+        //this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#ffffff><outline color=#000000 width = 4>" + GameManager.Instance.GetText(ft.Name) + "</outline></color>";
         //羁绊图标
-        let fe=config.FettersConfig.get(ro.Fetters);
-        let fettersImg = await loadAssets.LoadImg(fe.Res);
-        this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
+        //let fe=config.FettersConfig.get(ro.Fetters);
+        //let fettersImg = await loadAssets.LoadImg(fe.Res);
+        //this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
     }
 
     private async ShowDetailed(_index:number,_role?:RoleDis)
