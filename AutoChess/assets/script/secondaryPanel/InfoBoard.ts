@@ -268,19 +268,19 @@ export class InfoBoard extends Component
         "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>1</color></outline>"+
         "<color=#1F0000><size=30><b> "+GameManager.Instance.GetText(str.Timeing_Text)+"→"+ GameManager.Instance.GetText(str.Leve1Text)+"</size>";
 
-        this.simpleBoard.getChildByPath("RoleIntroduce").children[0].getComponent(RichText).string=introduce;
+        this.simpleBoard.getChildByPath("RoleIntroduce/RichText").getComponent(RichText).string=introduce;
 
         introduce=
         "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>2</color></outline>"+
         "<color=#1F0000><size=30><b> "+GameManager.Instance.GetText(str.Timeing_Text)+"→"+ GameManager.Instance.GetText(str.Leve2Text)+"</size>";
 
-        this.simpleBoard.getChildByPath("RoleIntroduce").children[1].getComponent(RichText).string=introduce;
+        this.simpleBoard.getChildByPath("RoleIntroduce/RichText-001").getComponent(RichText).string=introduce;
 
         introduce=
         "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>3</color></outline>"+
         "<color=#1F0000><size=30><b> "+GameManager.Instance.GetText(str.Timeing_Text)+"→"+ GameManager.Instance.GetText(str.Leve3Text)+"</size>";
 
-        this.simpleBoard.getChildByPath("RoleIntroduce").children[2].getComponent(RichText).string=introduce;
+        this.simpleBoard.getChildByPath("RoleIntroduce/RichText-002").getComponent(RichText).string=introduce;
 
         //this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = GameManager.Instance.GetText(str.Leve1Text);
         //this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(str.Timeing_Text) + ":</color>";

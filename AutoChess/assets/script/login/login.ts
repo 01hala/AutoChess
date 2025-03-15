@@ -112,7 +112,6 @@ export class login extends Component {
         await config.config.load();
         console.log("login start!");
         //初始化加载界面
-        await BundleManager.Instance.PreLoadBundleDir("PanelSpine", "");
         this._loading = new load.Loading();
         this._setProgress = this._loading.load(this.ld.node, true);
 
