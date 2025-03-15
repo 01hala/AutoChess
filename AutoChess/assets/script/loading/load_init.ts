@@ -2,6 +2,7 @@ import { _decorator, Component, Prefab } from 'cc';
 const { ccclass, property } = _decorator;
 
 import * as load from './load';
+import { BundleManager } from '../bundle/BundleManager';
 
 /**
  * Predefined variables
@@ -29,6 +30,8 @@ export class loadInit extends Component {
 
     async start () {
         // [3]
+        await BundleManager.Instance.PreLoadBundleDir("PanelSpine", "Loading");
+        await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","loading");
         load.Loading.loading = this.loading;
     }
  
