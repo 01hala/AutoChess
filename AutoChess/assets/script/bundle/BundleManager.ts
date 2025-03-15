@@ -172,7 +172,6 @@ export class BundleManager
         {
             try
             {
-                await this.PreLoadBundleDir("PanelSpine", "");
                 await this.PreLoadBundleDir("Sound", "",_callBack);
                 await this.PreLoadBundleDir("RoleSpine","",_callBack);
                 await this.PreLoadBundleDir("EffectSpine","",_callBack);

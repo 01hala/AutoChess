@@ -94,6 +94,11 @@ export class login extends Component {
         });
     }
 
+    protected onLoad(): void 
+    {
+        BundleManager.Instance.PreLoadBundleDir("PanelSpine", "Loading");
+    }
+
     async start() 
     {  
         if(sys.platform === sys.Platform.WECHAT_GAME)
