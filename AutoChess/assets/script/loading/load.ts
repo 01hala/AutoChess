@@ -85,9 +85,10 @@ export class Loading {
                 {
                     this.log.string = "正在加载 主界面 " + "(" + _progress + "%)";
                 }
+                break;
             default:
                 {
-                    this.log.string=_msg;
+                    this.log.string="加载中 请稍后...";
                 }
         }
     }
