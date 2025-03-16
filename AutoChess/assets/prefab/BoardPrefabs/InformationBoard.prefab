@@ -2963,7 +2963,10 @@
       "__expectedType__": "cc.TTFFont"
     },
     "_cacheMode": 0,
-    "_imageAtlas": null,
+    "_imageAtlas": {
+      "__uuid__": "d59426b3-3819-4186-878b-bbb24e5ba633",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
     "_handleTouchEvent": true,
     "_id": ""
   },
@@ -3088,7 +3091,10 @@
       "__expectedType__": "cc.TTFFont"
     },
     "_cacheMode": 0,
-    "_imageAtlas": null,
+    "_imageAtlas": {
+      "__uuid__": "d59426b3-3819-4186-878b-bbb24e5ba633",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
     "_handleTouchEvent": true,
     "_id": ""
   },
@@ -3213,7 +3219,10 @@
       "__expectedType__": "cc.TTFFont"
     },
     "_cacheMode": 0,
-    "_imageAtlas": null,
+    "_imageAtlas": {
+      "__uuid__": "d59426b3-3819-4186-878b-bbb24e5ba633",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
     "_handleTouchEvent": true,
     "_id": ""
   },
