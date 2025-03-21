@@ -110,9 +110,11 @@ export class login extends Component {
         }
 
         await config.config.load();
+       
         console.log("login start!");
         //初始化加载界面
         this._loading = new load.Loading();
+        await this._loading.loadAsset();
         this._setProgress = this._loading.load(this.ld.node, true);
 
         this.progressBar = this._loading.progressBar;

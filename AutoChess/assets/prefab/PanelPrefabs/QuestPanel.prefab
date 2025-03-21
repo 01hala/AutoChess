@@ -3722,6 +3722,8 @@
       "__id__": 0
     },
     "fileId": "43du+84uBPw6hPqZVj6Gnn",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -3946,7 +3948,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.8,
+      "width": 93.8,
       "height": 75.6
     },
     "_anchorPoint": {
@@ -11434,7 +11436,7 @@
     },
     "_premultipliedAlpha": true,
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "animation",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,

@@ -1,4 +1,5 @@
 import { _decorator, instantiate, Label, Node, Prefab, ProgressBar, RichText } from 'cc';
+import { BundleManager } from '../bundle/BundleManager';
 const { ccclass, property } = _decorator;
 
 export class Loading {
@@ -7,7 +8,14 @@ export class Loading {
     public log:Label = null;
     public _load:Node = null;
 
-    public load(father:Node, desc:boolean = false) : (progress:number) => void {
+    public async loadAsset()
+    {
+        await BundleManager.Instance.PreLoadBundleDir("PanelSpine", "");
+        Loading.loading = await BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","loading") as Prefab;
+    }
+
+    public load(father:Node, desc:boolean = false) : (progress:number) => void 
+    {
         console.log("Loading load begin!");
 
         try {
@@ -41,7 +49,7 @@ export class Loading {
             return (progress:number) => { progressBar.progress = 0 + progress; }
         }
         catch(err) {
-            console.log(err);
+            console.error("Loading 下的 Load 错误 err:",err);
         }
 
         return null;

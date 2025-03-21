@@ -658,7 +658,7 @@
     "node": {
       "__id__": 15
     },
-    "_enabled": true,
+    "_enabled": false,
     "__prefab": null,
     "loading": null,
     "_id": "c5T145v7RClL7fYLykN8T8"
