@@ -1,0 +1,55 @@
+
+skeleton.png
+size: 2962,1204
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+TX_xg_0000
+  rotate: true
+  xy: 2714, 747
+  size: 206, 168
+  orig: 206, 168
+  offset: 0, 0
+  index: -1
+dalu
+  rotate: false
+  xy: 2, 53
+  size: 1802, 1149
+  orig: 1802, 1149
+  offset: 0, 0
+  index: -1
+feng
+  rotate: false
+  xy: 2714, 955
+  size: 246, 247
+  orig: 256, 256
+  offset: 5, 4
+  index: -1
+greenfire
+  rotate: false
+  xy: 2714, 595
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+guncao
+  rotate: true
+  xy: 2714, 130
+  size: 102, 89
+  orig: 102, 89
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 2714, 234
+  size: 106, 359
+  orig: 106, 359
+  offset: 0, 0
+  index: -1
+shazi
+  rotate: true
+  xy: 1806, 2
+  size: 1200, 906
+  orig: 1200, 906
+  offset: 0, 0
+  index: -1

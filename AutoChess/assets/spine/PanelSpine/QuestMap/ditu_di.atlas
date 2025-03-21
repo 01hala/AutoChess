@@ -1,0 +1,167 @@
+
+ditu_di.png
+size: 2787,1922
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bol
+  rotate: true
+  xy: 2562, 982
+  size: 167, 100
+  orig: 167, 100
+  offset: 0, 0
+  index: -1
+bolan
+  rotate: false
+  xy: 2641, 638
+  size: 143, 32
+  orig: 143, 32
+  offset: 0, 0
+  index: -1
+bolan_1
+  rotate: false
+  xy: 2562, 2
+  size: 69, 34
+  orig: 71, 36
+  offset: 1, 1
+  index: -1
+chuan
+  rotate: false
+  xy: 2562, 38
+  size: 73, 64
+  orig: 75, 66
+  offset: 1, 1
+  index: -1
+haixin
+  rotate: true
+  xy: 2562, 672
+  size: 84, 82
+  orig: 86, 84
+  offset: 1, 1
+  index: -1
+haocao_0
+  rotate: true
+  xy: 2651, 815
+  size: 48, 85
+  orig: 49, 87
+  offset: 1, 2
+  index: -1
+haocao_1
+  rotate: false
+  xy: 2730, 728
+  size: 47, 85
+  orig: 49, 87
+  offset: 1, 1
+  index: -1
+haocao_2
+  rotate: true
+  xy: 2562, 1290
+  size: 116, 104
+  orig: 117, 105
+  offset: 0, 1
+  index: -1
+jingyu
+  rotate: false
+  xy: 2646, 696
+  size: 82, 60
+  orig: 84, 62
+  offset: 1, 1
+  index: -1
+konglong
+  rotate: false
+  xy: 2615, 408
+  size: 64, 66
+  orig: 66, 68
+  offset: 1, 1
+  index: -1
+ku
+  rotate: true
+  xy: 2562, 1151
+  size: 137, 103
+  orig: 137, 103
+  offset: 0, 0
+  index: -1
+moyu
+  rotate: true
+  xy: 2634, 508
+  size: 62, 149
+  orig: 62, 149
+  offset: 0, 0
+  index: -1
+pao_0
+  rotate: true
+  xy: 2633, 2
+  size: 34, 41
+  orig: 36, 43
+  offset: 1, 1
+  index: -1
+shanghu_0
+  rotate: false
+  xy: 2562, 1408
+  size: 113, 143
+  orig: 115, 145
+  offset: 1, 1
+  index: -1
+shanghu_1
+  rotate: false
+  xy: 2562, 865
+  size: 91, 115
+  orig: 93, 117
+  offset: 1, 1
+  index: -1
+shanghu_2
+  rotate: false
+  xy: 2562, 758
+  size: 87, 105
+  orig: 89, 107
+  offset: 1, 1
+  index: -1
+shayu
+  rotate: true
+  xy: 2562, 476
+  size: 94, 70
+  orig: 94, 70
+  offset: 0, 0
+  index: -1
+taiyan
+  rotate: true
+  xy: 2562, 104
+  size: 370, 51
+  orig: 370, 51
+  offset: 0, 0
+  index: -1
+taiyan1
+  rotate: true
+  xy: 2562, 1553
+  size: 367, 220
+  orig: 367, 220
+  offset: 0, 0
+  index: -1
+yu_0
+  rotate: false
+  xy: 2730, 698
+  size: 55, 28
+  orig: 57, 30
+  offset: 1, 1
+  index: -1
+yu_1
+  rotate: false
+  xy: 2651, 787
+  size: 52, 26
+  orig: 54, 28
+  offset: 1, 1
+  index: -1
+yuchi
+  rotate: false
+  xy: 2562, 572
+  size: 77, 98
+  orig: 77, 98
+  offset: 0, 0
+  index: -1
+底图
+  rotate: false
+  xy: 2, 2
+  size: 2558, 1918
+  orig: 2558, 1918
+  offset: 0, 0
+  index: -1
