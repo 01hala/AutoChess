@@ -801,7 +801,7 @@ export class SpEffectOnUI
         }
         let node = new Node();
         node.layer = Layers.Enum.UI_2D;
-        GameManager.Instance.node.addChild(node);
+        GameManager.Instance.clickSpCanvas.addChild(node);
         node.setWorldPosition(clickPos);
         node.setSiblingIndex(999);
         let spEffect = node.addComponent(sp.Skeleton);

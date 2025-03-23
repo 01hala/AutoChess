@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool, error, input, Input, EventTouch, Vec2, Vec3, Camera } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool, error, input, Input, EventTouch, Vec2, Vec3, Camera, find } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from './MessageEvent';
@@ -44,6 +44,8 @@ export class GameManager extends Component
     //对象列表
     private boardList:Map<string,Node>=null;
     private panelList:Map<string,Node>=null;
+
+    public clickSpCanvas:Node=null;
     
     protected onLoad()
     {
@@ -58,17 +60,24 @@ export class GameManager extends Component
            User.OptionsData=new OptionsData();
            this.boardList=new Map<string,Node>();
            this.panelList=new Map<string,Node>();
+
+           this.clickSpCanvas=find("ClickSpCanvas");
         }
         catch(error)
         {
             console.error("GameManager 下的 start 错误 error: ",error);
         }
 
-        this.node.on(Input.EventType.TOUCH_START,(event:EventTouch)=>
+        this.clickSpCanvas.on(Input.EventType.TOUCH_START,(event)=>
         {
+            event.preventSwallow=true;
             let sceenPos=event.getLocation();
             let uiPos=this.node.getChildByPath("Camera").getComponent(Camera).screenToWorld(new Vec3(sceenPos.x,sceenPos.y,0));
             SpEffectOnUI.OnClickEffect(uiPos);
+        });
+        this.clickSpCanvas.on(Input.EventType.TOUCH_END,(event)=>
+        {
+            event.preventSwallow=true;
         });
     }
 
