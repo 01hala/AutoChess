@@ -94,7 +94,7 @@ export class MainInterface
             this.btnList=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList");//下拉列表
             this.cardEditorBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Card_Btn");//卡组编辑
             this.achieveBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Task_Btn");//任务
-            this.wxGroupBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Other_Btn");
+            //this.wxGroupBtn=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/BtnList/BtnLayout/Other_Btn");
             //玩家信息
             this.userMoney=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserMoney");
             this.userDiamonds=this.panelNode.getChildByPath("MainPanel/UiLayer/TopArea/UserDiamonds");
@@ -130,7 +130,7 @@ export class MainInterface
             console.log("尝试加载头像：",_url);
             this.avatarUrl=_url;
             let sprite=this.mainPanel.getChildByPath("UiLayer/TopArea/UserAvatar/Mask/Sprite").getComponent(Sprite);
-            await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
+            await assetManager.loadRemote<ImageAsset>(_url,{ext:'.png'},(_err,image)=>
             {
                 let sp = new SpriteFrame();
                 let texture = new Texture2D();
@@ -336,7 +336,7 @@ export class MainInterface
                 panel.getComponent(AchievePanel).Open();
                 this.panelNode.active = this.activity;
             }, this);
-            this.wxGroupBtn.on(Node.EventType.TOUCH_START, async () =>
+            /*this.wxGroupBtn.on(Node.EventType.TOUCH_START, async () =>
             {
                 this.activity = false;
                 if (config.HotFixedConfig.OpenJoinWXGroup)
@@ -346,7 +346,7 @@ export class MainInterface
                     this.wxGroupPanel = instantiate(wgp);
                     this.wxGroupPanel.setParent(this.parentNode);
                 }
-            }, this);
+            }, this);*/
             this.panelNode.on(Node.EventType.TOUCH_START, () => 
             {
                 this.activity = true;

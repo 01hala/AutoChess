@@ -182,7 +182,7 @@ export class RankList extends Component
         {
             console.log("尝试加载头像：",_url);
             let sprite=_avatar.getComponent(Sprite);
-            await assetManager.loadRemote<ImageAsset>(_url,{ext:'.jpg'},(_err,image)=>
+            await assetManager.loadRemote<ImageAsset>(_url,{ext:'.png'},(_err,image)=>
             {
                 let sp = new SpriteFrame();
                 let texture = new Texture2D();
