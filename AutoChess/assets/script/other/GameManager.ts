@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool, error } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool, error, input, Input, EventTouch, Vec2, Vec3, Camera } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from './MessageEvent';
@@ -20,6 +20,7 @@ import { config } from '../battle/AutoChessBattle/config/config';
 import { OptionsData, User } from '../login/User';
 import { RoleArea } from '../ready/display/RoleArea';
 import * as singleton from '../netDriver/netSingleton';
+import { SpEffectOnUI } from './SpEffect';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -62,6 +63,13 @@ export class GameManager extends Component
         {
             console.error("GameManager 下的 start 错误 error: ",error);
         }
+
+        this.node.on(Input.EventType.TOUCH_START,(event:EventTouch)=>
+        {
+            let sceenPos=event.getLocation();
+            let uiPos=this.node.getChildByPath("Camera").getComponent(Camera).screenToWorld(new Vec3(sceenPos.x,sceenPos.y,0));
+            SpEffectOnUI.OnClickEffect(uiPos);
+        });
     }
 
     //初始化
@@ -117,7 +125,7 @@ export class GameManager extends Component
     /**
      * 移除所有二级面板
      */
-    public removeBoards()
+    public RemoveBoards()
     {
         try
         {
@@ -162,7 +170,7 @@ export class GameManager extends Component
     /**
      * 移除所有界面
      */
-    public removePanels()
+    public RemovePanels()
     {
         try
         {
@@ -390,14 +398,6 @@ export class GameManager extends Component
             let board = await this.getBoard("LevelInfoBoard");
             board.getComponent(LevelInfo).Open(event.detail.levelId, event.callBack);
         })
-    }
-
-    public RemoveAllBoard()
-    {
-        for(let t of this.boardList.values())
-        {
-            t.destroy();
-        }
     }
 
     //显示等待

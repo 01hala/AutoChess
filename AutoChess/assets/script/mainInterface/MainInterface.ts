@@ -115,8 +115,8 @@ export class MainInterface
     public destory() 
     {
         this.panelNode.active=false;
-        GameManager.Instance.removeBoards();
-        GameManager.Instance.removePanels();
+        GameManager.Instance.RemoveBoards();
+        GameManager.Instance.RemovePanels();
     }
 
     /**
