@@ -1,5 +1,5 @@
 
-import { _decorator, assetManager, Component, director, instantiate, Layers, Node, sp, UITransform, Vec3 } from 'cc';
+import { _decorator, assetManager, Camera, Component, director, instantiate, Layers, Node, sp, UITransform, Vec3 } from 'cc';
 import * as enums from './enums';
 import * as common from '../battle/AutoChessBattle/common';
 import { loadAssets } from '../bundle/LoadAsset';
@@ -765,11 +765,58 @@ export class SpEffectOnUI
 {
     private canvas:Node=null;
 
+    private static clickSp : sp.SkeletonData=null; 
+
     constructor()
     {
         this.canvas=GameManager.Instance.node;
+        
     }
 
+    /**
+     * 屏幕点击特效
+     * @param clickPos 屏幕点击位置
+     * @author Hotaru
+     * @CreateTime 2025/03/23
+     */
+    public static async OnClickEffect(clickPos:Vec3)
+    {
+        if (SpEffectOnUI.clickSp == null)
+        {
+            let allAwait = []
+            allAwait.push(new Promise<void>(async (resolve) =>
+            {
+                //点击屏幕特效
+                let address = "SpecialSpine/Ckick/click";
+                await loadAssets.LoadSkeletonData(address, (data) =>
+                {
+                    if (data)
+                    {
+                        SpEffectOnUI.clickSp = data;
+                    }
+                    resolve();
+                });
+            }));
+            await Promise.all(allAwait);
+        }
+        let node = new Node();
+        node.layer = Layers.Enum.UI_2D;
+        GameManager.Instance.clickSpCanvas.addChild(node);
+        node.setWorldPosition(clickPos);
+        node.setSiblingIndex(999);
+        let spEffect = node.addComponent(sp.Skeleton);
+        spEffect.skeletonData=SpEffectOnUI.clickSp;
+        let anim=spEffect.skeletonData.getAnimsEnum();
+
+        spEffect.setAnimation(0, String(anim[1]), false);
+        spEffect.setCompleteListener((trackEntry) =>
+        {
+            if (trackEntry.animation.name === String(anim[1]))
+            {
+                node.destroy();
+            }
+        });
+    }
 
 }
 

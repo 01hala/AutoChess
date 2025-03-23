@@ -94,6 +94,11 @@ export class login extends Component {
         });
     }
 
+    protected onLoad(): void 
+    {
+       
+    }
+
     async start() 
     {  
         if(sys.platform === sys.Platform.WECHAT_GAME)
@@ -105,9 +110,11 @@ export class login extends Component {
         }
 
         await config.config.load();
+       
         console.log("login start!");
         //初始化加载界面
         this._loading = new load.Loading();
+        await this._loading.loadAsset();
         this._setProgress = this._loading.load(this.ld.node, true);
 
         this.progressBar = this._loading.progressBar;
@@ -228,7 +235,7 @@ export class login extends Component {
         //登录进入主界面
         singleton.netSingleton.player.cb_player_login_sucess = async () => 
         {
-            GameManager.Instance.RemoveAllBoard();
+            GameManager.Instance.RemoveBoards();
 
             this._progress += 0.1;
             this._setProgress(this._progress);
@@ -362,7 +369,7 @@ export class login extends Component {
 
     private async GameStart(_gamemode:enums.GameMode , _battle_info:common.UserBattleData, _shop_info:common.ShopData, _fetters_info?:common.Fetters[],events?:number[])
     {
-        GameManager.Instance.RemoveAllBoard();
+        GameManager.Instance.RemoveBoards();
 
         console.log("start game!");
         this._progress = 0.1;
@@ -418,7 +425,7 @@ export class login extends Component {
 
     private async BattleStart(_self: common.UserBattleData, _target: common.UserBattleData , _gamemode:enums.GameMode)
     {
-        GameManager.Instance.RemoveAllBoard();
+        GameManager.Instance.RemoveBoards();
 
         console.log("cb_battle start round!");
 
@@ -453,7 +460,7 @@ export class login extends Component {
     {
         console.log("BackMainInterface begin!");
 
-        GameManager.Instance.RemoveAllBoard();
+        GameManager.Instance.RemoveBoards();
 
         this._progress=0.1;
         this._setProgress = this._loading.load(this.ld.node);

@@ -1,0 +1,41 @@
+
+ditu_ding.png
+size: 1054,501
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+yun1
+  rotate: false
+  xy: 545, 3
+  size: 435, 236
+  orig: 435, 236
+  offset: 0, 0
+  index: -1
+yun2
+  rotate: false
+  xy: 2, 2
+  size: 337, 162
+  orig: 337, 162
+  offset: 0, 0
+  index: -1
+yun3
+  rotate: false
+  xy: 2, 166
+  size: 541, 333
+  orig: 541, 333
+  offset: 0, 0
+  index: -1
+yun4
+  rotate: false
+  xy: 545, 241
+  size: 507, 258
+  orig: 507, 258
+  offset: 0, 0
+  index: -1
+yun5
+  rotate: false
+  xy: 341, 85
+  size: 121, 79
+  orig: 121, 79
+  offset: 0, 0
+  index: -1

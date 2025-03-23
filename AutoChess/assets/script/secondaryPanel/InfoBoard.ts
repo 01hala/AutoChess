@@ -182,7 +182,7 @@ export class InfoBoard extends Component
         }
         catch(error)
         {
-            console.error('InfoPanel 下 OpenInfoBoard 错误 err: ',error);
+            console.error('InfoPanel 下 OpenEntityInfo 错误 err: ',error);
         }
         
     }
@@ -221,51 +221,92 @@ export class InfoBoard extends Component
         this.fetterBoard.getChildByName("Text").getComponent(RichText).string=content;
     }
 
-    async OpenCardInfo(_id:number)
+    /**
+     * 打开角色卡信息
+     * @param _id 角色id
+     */
+    public async OpenCardInfo(_id:number)
     {
-        this.node.setSiblingIndex(100);
-        this.node.active=true;
-        this.node.getComponent(BlockInputEvents).enabled=true;
-        
-        this.detailedBoard.active=false;
-        this.propBoard.active=false;
-        this.fetterBoard.active=false;
-
-        //立绘
-        let tSp = this.simpleBoard.getChildByPath("Sculpture/Spine").getComponent(sp.Skeleton);
-        loadAssets.LoadSkeletonData(config.RoleConfig.get(_id).Skel,( data )=>
+        try
         {
-            if(data)
-            {
-                tSp.skeletonData=data
-                let anims= tSp.skeletonData.getAnimsEnum()
-                tSp.setAnimation(0, String(anims[1]), true);
-            }
-        })
+            this.node.setSiblingIndex(100);
+            this.node.active = true;
+            this.node.getComponent(BlockInputEvents).enabled = true;
 
-        await this.ShowSimpel(_id);
-        this.simpleBoard.active=true;
-        this.simpleBoard.getComponent(Animation).play("PanelAppear");
+            this.detailedBoard.active = false;
+            this.propBoard.active = false;
+            this.fetterBoard.active = false;
+
+            //立绘
+            let tSp = this.simpleBoard.getChildByPath("Sculpture/Spine").getComponent(sp.Skeleton);
+            loadAssets.LoadSkeletonData(config.RoleConfig.get(_id).Skel, (data) =>
+            {
+                if (data)
+                {
+                    tSp.skeletonData = data
+                    let anims = tSp.skeletonData.getAnimsEnum()
+                    tSp.setAnimation(0, String(anims[1]), true);
+                }
+            })
+
+            await this.ShowSimpel(_id);
+            this.simpleBoard.active = true;
+            this.simpleBoard.getComponent(Animation).play("PanelAppear");
+        } catch (error)
+        {
+            console.error('InfoPanel 下 OpenCardInfo 错误 err: ',error);
+        }
     }
 
     private async ShowSimpel(_id:number)
     {
-        //角色名
-        this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _id;
-        let ro = config.RoleConfig.get(_id);
-        this.simpleBoard.getChildByName("RoleName").getComponent(Label).string = GameManager.Instance.GetText(ro.Name);
-        //技能介绍
-        let str = config.SkillIntroduceConfig.get(_id%100000);
-        console.log(str.Id);
-        this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = GameManager.Instance.GetText(str.Leve1Text);
-        this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string = "<color=#00ff00>" + GameManager.Instance.GetText(str.Timeing_Text) + ":</color>";
-        //羁绊
-        let ft = config.FettersConfig.get(ro.Fetters);
-        this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#ffffff><outline color=#000000 width = 4>" + GameManager.Instance.GetText(ft.Name) + "</outline></color>";
-        //羁绊图标
-        let fe=config.FettersConfig.get(ro.Fetters);
-        let fettersImg = await loadAssets.LoadImg(fe.Res);
-        this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
+        try
+        {
+            //角色名
+            this.simpleBoard.getChildByPath("ID").getComponent(Label).string = "id: " + _id;
+            let ro = config.RoleConfig.get(_id);
+            this.simpleBoard.getChildByPath("RoleName").getComponent(Label).string = GameManager.Instance.GetText(ro.Name);
+            this.simpleBoard.getChildByPath("Sculpture/HP/RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#670004 width=10>" + ro.Hp + "</color>";
+            this.simpleBoard.getChildByPath("Sculpture/Attack/RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#670004 width=10>" + ro.Attack + "</color>";
+            this.simpleBoard.getChildByPath("Sculpture/Stage/RichText").getComponent(RichText).string = "<color=#ffffff><outline color=#114224 width=10>" + ro.Stage + "</color>";
+            //技能介绍
+            let str = config.SkillIntroduceConfig.get(_id % 100000);
+            console.log(str.Id);
+
+            this.simpleBoard.getChildByPath("TimeText").getComponent(RichText).string =
+                "<color=#ffffff><outline width=5 color=#1F0000><b>发动时机：</outline></color><color=#FFB518><outline width =5 color=#1F0000><size=20><b>" +
+                GameManager.Instance.GetText(str.Timeing_Text) + "</outline></color>";
+
+            let introduce =
+                "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>1</color></outline>" +
+                "<color=#1F0000><size=30><b> " + GameManager.Instance.GetText(str.Leve1Text) + "</size>";
+
+            this.simpleBoard.getChildByPath("RoleIntroduce/RichText").getComponent(RichText).string = introduce;
+
+            introduce =
+                "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>2</color></outline>" +
+                "<color=#1F0000><size=30><b> " + GameManager.Instance.GetText(str.Leve2Text) + "</size>";
+
+            this.simpleBoard.getChildByPath("RoleIntroduce/RichText-001").getComponent(RichText).string = introduce;
+
+            introduce =
+                "<size=50><color=#896646><outline width=5 color=#1F0000>L</outline></color></size><color=#FFB518><outline width=5 color=#1F0000>3</color></outline>" +
+                "<color=#1F0000><size=30><b> " + GameManager.Instance.GetText(str.Leve3Text) + "</size>";
+
+            this.simpleBoard.getChildByPath("RoleIntroduce/RichText-002").getComponent(RichText).string = introduce;
+
+            //this.simpleBoard.getChildByPath("RoleIntroduce").getComponent(Label).string = GameManager.Instance.GetText(str.Leve1Text);
+            //羁绊
+            //let ft = config.FettersConfig.get(ro.Fetters);
+            //this.simpleBoard.getChildByPath("Fetters").getComponent(RichText).string = "<color=#ffffff><outline color=#000000 width = 4>" + GameManager.Instance.GetText(ft.Name) + "</outline></color>";
+            //羁绊图标
+            //let fe=config.FettersConfig.get(ro.Fetters);
+            //let fettersImg = await loadAssets.LoadImg(fe.Res);
+            //this.simpleBoard.getChildByPath("Fetters/FettersSprite/Icon").getComponent(Sprite).spriteFrame=fettersImg;
+        } catch (error)
+        {
+            console.error('InfoPanel 下 ShowSimpel 错误 err: ',error);
+        }
     }
 
     private async ShowDetailed(_index:number,_role?:RoleDis)

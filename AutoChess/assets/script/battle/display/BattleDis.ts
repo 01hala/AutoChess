@@ -78,8 +78,8 @@ export class BattleDis
         this.panelNode.active=false;
         this.selfQueue.destroy();
         this.enemyQueue.destroy();
-        GameManager.Instance.removeBoards();
-        GameManager.Instance.removePanels();
+        GameManager.Instance.RemoveBoards();
+        GameManager.Instance.RemovePanels();
     }
 
 /*
