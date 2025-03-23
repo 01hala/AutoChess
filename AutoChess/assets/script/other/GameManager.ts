@@ -1,4 +1,4 @@
-import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, BaseNode, Pool, error, input, Input, EventTouch, Vec2, Vec3, Camera, find } from 'cc';
+import { _decorator, Animation, animation, Asset, Component, instantiate, Node, TTFFont, Prefab, resources, RichText, primitives, AudioSource, builtinResMgr, Canvas, Scene, Pool, error, input, Input, EventTouch, Vec2, Vec3, Camera, find } from 'cc';
 import { BundleManager } from '../bundle/BundleManager';
 import { InfoBoard } from '../secondaryPanel/InfoBoard';
 import { SendMessage } from './MessageEvent';
