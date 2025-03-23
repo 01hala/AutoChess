@@ -75,9 +75,17 @@ export class GameManager extends Component
             let uiPos=this.node.getChildByPath("Camera").getComponent(Camera).screenToWorld(new Vec3(sceenPos.x,sceenPos.y,0));
             SpEffectOnUI.OnClickEffect(uiPos);
         });
+        this.clickSpCanvas.on(Input.EventType.TOUCH_MOVE,(event)=>
+        {
+            event.preventSwallow=true;
+        });
         this.clickSpCanvas.on(Input.EventType.TOUCH_END,(event)=>
         {
             event.preventSwallow=true;
+        });
+        this.clickSpCanvas.on(Input.EventType.TOUCH_CANCEL, (event) =>
+        {
+            event.preventSwallow = true;
         });
     }
 
