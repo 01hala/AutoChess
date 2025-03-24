@@ -7,7 +7,7 @@
     },
     "renderPipeline": "fd8ec536-a354-4a17-9c74-4f3883c378c8"
   },
-  "__version__": "1.0.4",
+  "__version__": "1.0.6",
   "fbx": {
     "legacyFbxImporter": {
       "visible": true
@@ -45,5 +45,8 @@
       }
     ],
     "increaseId": 3
+  },
+  "script": {
+    "preserveSymlinks": true
   }
 }

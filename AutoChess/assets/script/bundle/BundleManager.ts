@@ -42,7 +42,7 @@ export class BundleManager
         });
     }
 
-    loadAssetsFromBundleSync(type: __private._types_globals__Constructor<Asset> ,bundleRes:string, assetsRes:string ,_callBack:(data)=>void)
+    loadAssetsFromBundleSync(type: __private.__types_globals__Constructor<Asset> ,bundleRes:string, assetsRes:string ,_callBack:(data)=>void)
     {
         try
         {
@@ -224,7 +224,7 @@ export class BundleManager
         return new Promise<void>(async (resolve, reject) =>
         {
             let bundle = await this.loadBundle(_bundle);
-            /*let info = bundle.getDirWithPath(_res);
+            let info = bundle.getDirWithPath(_res);
 
             if (info)
             {
@@ -246,7 +246,7 @@ export class BundleManager
                     }
                     resolve();
                 }
-            }*/
+            }
 
             bundle.preloadDir(_res, null, (finished, total, item) =>
             {
@@ -254,13 +254,12 @@ export class BundleManager
                 {
                     _callBack(_bundle, Math.floor(finished / total * 100));
                 }
-                resolve();
             }, (err, data) =>
             {
                 if (err)
                 {
                     console.warn("预下载 ",bundle,"/",_res," 错误 ",err);
-                    reject();
+                    resolve();
                 }
                 else
                 {

@@ -1,5 +1,5 @@
 {
-  "ver": "1.0.25",
+  "ver": "1.0.27",
   "importer": "image",
   "imported": true,
   "uuid": "ee499660-8177-4fb2-97d2-e19a3ab367ac",
@@ -129,7 +129,7 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "ee499660-8177-4fb2-97d2-e19a3ab367ac@f9941",
+    "redirect": "ee499660-8177-4fb2-97d2-e19a3ab367ac@6c48a",
     "compressSettings": {
       "useCompressTexture": true,
       "presetId": "afL5IO2NNJZ6fVB/UlTTvt"
