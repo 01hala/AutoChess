@@ -27,22 +27,7 @@
             }
           }
         },
-        "overwrite": {
-          "wechatgame": {
-            "png": {
-              "quality": 50
-            },
-            "jpg": {
-              "quality": 80
-            },
-            "astc_4x4": {
-              "quality": "medium"
-            },
-            "etc2_rgba": {
-              "quality": "fast"
-            }
-          }
-        }
+        "overwrite": {}
       }
     }
   },
