@@ -9,7 +9,7 @@
         "_value": true
       },
       "gfx-webgl2": {
-        "_value": true
+        "_value": false
       },
       "gfx-webgpu": {
         "_value": false
@@ -186,7 +186,6 @@
       "audio",
       "base",
       "gfx-webgl",
-      "gfx-webgl2",
       "intersection-2d",
       "legacy-pipeline",
       "light-probe",
@@ -203,6 +202,8 @@
       "value": false,
       "version": ""
     },
-    "flags": {}
+    "flags": {
+      "LOAD_SPINE_MANUALLY": false
+    }
   }
 }

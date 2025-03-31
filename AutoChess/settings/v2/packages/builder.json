@@ -11,14 +11,14 @@
         "name": "Mini",
         "options": {
           "miniGame": {
-            "png": {
-              "quality": 50
-            },
             "astc_4x4": {
               "quality": "medium"
             },
             "etc2_rgba": {
               "quality": "fast"
+            },
+            "png": {
+              "quality": 50
             }
           },
           "web": {
