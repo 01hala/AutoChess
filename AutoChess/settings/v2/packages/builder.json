@@ -18,7 +18,7 @@
               "quality": "fast"
             },
             "png": {
-              "quality": 10
+              "quality": 50
             }
           },
           "web": {
