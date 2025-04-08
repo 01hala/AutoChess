@@ -13,6 +13,6 @@
     "isRemoteBundle": {
       "wechatgame": true
     },
-    "priority": 2
+    "priority": 10
   }
 }
