@@ -7,6 +7,7 @@
   "subMetas": {},
   "userData": {
     "isBundle": true,
-    "bundleConfigID": "auto_08KAz873NOmLIPA8Btj8dD"
+    "bundleConfigID": "auto_08KAz873NOmLIPA8Btj8dD",
+    "priority": 10
   }
 }
