@@ -128,7 +128,7 @@
   "userData": {
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
-    "hasAlpha": true,
+    "hasAlpha": false,
     "redirect": "6ea4d736-5ed5-47b0-80db-ee618a637711@6c48a",
     "compressSettings": {
       "useCompressTexture": true,
