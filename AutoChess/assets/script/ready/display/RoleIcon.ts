@@ -313,7 +313,7 @@ export class RoleIcon extends Component
                     //如果角色未被购买则缩小角色图标，静止动画
                     this.roleNode.scale=
                         new Vec3(this.roleNode.scale.x*(2/3),this.roleNode.scale.y*(2/3),this.roleNode.scale.z);
-                    this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=0;
+                    this.roleNode.getChildByName("Frame/Mask/Sprite").getComponent(sp.Skeleton).timeScale=0;
                     this.shopArea.ShowFreezeArea(true);
                 }
                 else

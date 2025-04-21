@@ -75,15 +75,15 @@ export class RoleDis extends Component
     //死亡锁
     private isDead = false;
     //初始位置
-    private originalPos: Vec3;
+    private originalPos: Vec3=null;
     //id字符
-    private idText: RichText;
+    private idText: RichText=null;
     //字体
-    private typeface: TTFFont;
+    private typeface: TTFFont=null;
     //特效效果
-    private effectSpine: Node;
+    private effectSpine: Node=null;
     //技能表现类
-    private skillDis: SkillDis;
+    private skillDis: SkillDis=null;
     //受伤数字设置器
     public set BeHurtedNum(value: number)
     {
@@ -94,8 +94,10 @@ export class RoleDis extends Component
     private hurtedNum: number = 0;
     //受伤缓动
     private tBeHurted: Tween<Node> = null;
-
-    private RoleSpEffect: SpEffectOnRole;
+    //特效类
+    private RoleSpEffect: SpEffectOnRole = null;
+    //羁绊图标
+    private fetterSpr:Sprite=null;
 
     protected async onLoad(): Promise<void> 
     {
@@ -135,9 +137,9 @@ export class RoleDis extends Component
         {
             if (this.hpText && this.atkText)
             {
-                this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + this.Hp + "</outline></color>";
-                this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + this.AtkNum + "</outline></color>";
-                this.levelText.string = "<color=#7CFC0><outline color=#7FFF00 width=4>" + this.Level + "</outline></color>";
+                this.hpText.string = "<color=#ffffff><outline color=#000000 width=4>" + this.Hp + "</outline></color>";
+                this.atkText.string = "<color=#ffffff><outline color=#000000 width=4>" + this.AtkNum + "</outline></color>";
+                this.levelText.string = "<color=#ffffff><outline color=#000000 width=4>" + this.Level + "</outline></color>";
 
                 this.idText.string = "<color=#9d0c27>" + this.roleInfo.id;
             }
@@ -316,7 +318,7 @@ export class RoleDis extends Component
             {
                 tween(this.hpText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
-                    this.hpText.string = "<color=#9d0c27><outline color=#e93552 width=4>" + _hp + "</outline></color>";
+                    this.hpText.string = "<color=#ffffff><outline color=#000000 width=4>" + _hp + "</outline></color>";
                     this.Hp = _hp;
                 }).by(0.2, { scale: new Vec3(0.5, 0.5, 0.5) }).start();
 
@@ -326,7 +328,7 @@ export class RoleDis extends Component
             {
                 tween(this.atkText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
-                    this.atkText.string = "<color=#f99b08><outline color=#fff457 width=4>" + _atk + "</outline></color>";
+                    this.atkText.string = "<color=#ffffff><outline color=#000000 width=4>" + _atk + "</outline></color>";
                     this.AtkNum = _atk
                 }).by(0.2, { scale: new Vec3(0.5, 0.5, 0.5) }).start();
             }
@@ -334,7 +336,7 @@ export class RoleDis extends Component
             {
                 tween(this.levelText.node).to(0.1, { scale: new Vec3(0, 0, 0) }).call(() =>
                 {
-                    this.levelText.string = "<color=#7CFC0><outline color=#7FFF00 width=4>" + this.roleInfo.level + "</outline></color>";
+                    this.levelText.string = "<color=#ffffff><outline color=#000000 width=4>" + this.roleInfo.level + "</outline></color>";
                     this.Level = this.roleInfo.level;
                 }).by(0.2, { scale: new Vec3(0.5, 0.5, 0.5) }).start();
             }
@@ -775,12 +777,16 @@ export class RoleDis extends Component
      */
     private LoadOnConfig()
     {
-        return new Promise<void>((resolve, reject) =>
+        return new Promise<void>(async (resolve, reject) =>
         {
             try
             {
                 let jconfig = config.RoleConfig.get(this.RoleId);
-                this.roleSprite = this.node.getChildByPath("Sprite").getComponent(sp.Skeleton);
+                let fconfig=config.FettersConfig.get(jconfig.Fetters);
+                this.roleSprite = this.node.getChildByPath("Frame/Mask/Sprite").getComponent(sp.Skeleton);
+                this.fetterSpr=this.node.getChildByPath("Fetter/Icon").getComponent(Sprite);
+                let fetterRes=fconfig.Res;
+                this.fetterSpr.spriteFrame=await loadAssets.LoadImg(fetterRes) as SpriteFrame;
                 loadAssets.LoadSkeletonData(jconfig.Skel, (data) =>
                 {
                     if (data)

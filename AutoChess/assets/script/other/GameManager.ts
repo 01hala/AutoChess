@@ -420,8 +420,14 @@ export class GameManager extends Component
     //显示等待
     public Waitting(_flag:boolean)
     {
-        this.waitingPanel.active=_flag;
-        this.waitingPanel.setSiblingIndex(999);
+        try
+        {
+            this.waitingPanel.active = _flag;
+            this.waitingPanel.setSiblingIndex(999);
+        } catch (error)
+        {
+        console.error("Gammemager 下的 Watting 错误：",error);
+        }
     }
 
     //显示提示信息
