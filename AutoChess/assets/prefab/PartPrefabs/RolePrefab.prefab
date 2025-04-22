@@ -1128,7 +1128,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 12.30499999999995,
       "z": 0
     },
     "_lrot": {
@@ -1183,8 +1183,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -0.0010000000003174137,
-      "y": 5.810999999999979,
+      "x": -1.1368683772161603e-13,
+      "y": -4.677142857142599,
       "z": 0
     },
     "_lrot": {
@@ -1224,7 +1224,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 62.59,
+      "width": 51.6279296875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1251,26 +1251,26 @@
       "__id__": 53
     },
     "_lineHeight": 40,
-    "_string": "<color=#ad0003><outline color=#f05856 width=4\n>+0</outline></color>",
-    "_horizontalAlign": 0,
-    "_verticalAlign": 0,
+    "_string": "<color=#FD7A7A><outline color=#000000 width=3\n>-0</outline></color>",
+    "_horizontalAlign": 1,
+    "_verticalAlign": 1,
     "_fontSize": 50,
     "_fontColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 253,
+      "g": 122,
+      "b": 122,
       "a": 255
     },
     "_maxWidth": 0,
     "_fontFamily": "Arial",
     "_font": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__uuid__": "b23391b6-52eb-46a6-8da1-6244d9d315fb",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
     "_userDefinedFont": {
-      "__uuid__": "2f404ab9-cc63-4938-badc-1331bc71bca6",
+      "__uuid__": "b23391b6-52eb-46a6-8da1-6244d9d315fb",
       "__expectedType__": "cc.TTFFont"
     },
     "_cacheMode": 0,
@@ -1380,8 +1380,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 143.8542857142857,
-      "height": 102.39040336134454
+      "width": 289.2157142857143,
+      "height": 212.22040336134452
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
