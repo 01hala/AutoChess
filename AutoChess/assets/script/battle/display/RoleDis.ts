@@ -87,7 +87,7 @@ export class RoleDis extends Component
     //受伤数字设置器
     public set BeHurtedNum(value: number)
     {
-        this.beHurtedText.getComponent(RichText).font = this.typeface;
+        //this.beHurtedText.getComponent(RichText).font = this.typeface;
         this.beHurtedText.getComponent(RichText).string = "<color=#ad0003><outline color=#f05856 width=4>-" + value + "</outline></color>";
     }
     //总受伤值
@@ -363,7 +363,7 @@ export class RoleDis extends Component
 
             let offset = -1000;
             if (BattleEnums.Camp.Self != this.roleInfo.selfCamp) offset = 1000;
-            let hitAnim: Animation = this.node.getChildByName("Sprite").getComponent(Animation);
+            let hitAnim: Animation = this.node.getChildByPath("Frame/Mask/Sprite").getComponent(Animation);
             tween(this.node)
                 .call(() =>
                 {
@@ -371,7 +371,7 @@ export class RoleDis extends Component
                     // this.hurtedSpine.getComponent(sp.Skeleton).animation="animation";
                     // this.hurtedSpine.active=true;
                     // hitAnim.play();
-                    this.node.getChildByName("Sprite").getComponent(sp.Skeleton).color = color(110, 110, 110, 255);
+                    this.node.getChildByPath("Frame/Mask/Sprite").getComponent(sp.Skeleton).color = color(110, 110, 110, 255);
                     this.RoleRotate();
                 })
                 // .delay(0.2).call(()=>
@@ -427,7 +427,7 @@ export class RoleDis extends Component
                 this.behurtedTextEffect.active = false;
                 hurtedTextAnim.resume();
             }, this);
-            let hitAnim: Animation = this.node.getChildByName("Sprite").getComponent(Animation);
+            let hitAnim: Animation = this.node.getChildByPath("Frame/Mask/Sprite").getComponent(Animation);
             this.tBeHurted = tween(this.node).to(0, {}).call(() =>
             {
                 hurtedTextAnim.resume();
@@ -472,7 +472,7 @@ export class RoleDis extends Component
             {
                 this.hurtedNum = 0;
                 this.tBeHurted = null;
-                this.hurtedSpine.active = false;
+                //this.hurtedSpine.active = false;
             });
         }
         catch (err)

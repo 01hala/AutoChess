@@ -422,7 +422,15 @@ export class GameManager extends Component
     {
         try
         {
-            this.waitingPanel.active = _flag;
+            if(this.waitingPanel)
+            {
+                this.waitingPanel.active = _flag;
+            }
+            else
+            {
+                this.node.getChildByPath("waiting").active=_flag;
+            }
+            
             this.waitingPanel.setSiblingIndex(999);
         } catch (error)
         {
