@@ -87,7 +87,7 @@ export class RoleIcon extends Component
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.visiableArea=this.panel.getChildByPath("RoleArea/visiable");
             this.shopArea=this.panel.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
-            this.farme=this.node.getChildByPath("Farme");
+            this.farme=this.node.getChildByPath("kamian");
             this.farme.active=false;
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
@@ -441,7 +441,7 @@ export class RoleIcon extends Component
         try
         {
             let jconfig = config.RoleConfig.get(this.roleId);
-            let img = await loadAssets.LoadImg(jconfig.Avatar);
+            let img = await loadAssets.LoadImg(jconfig.Res);
             if(img)
             {
                 if(null==this.iconMask)
