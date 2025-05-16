@@ -172,6 +172,7 @@ export class BundleManager
         {
             try
             {
+                await this.PreLoadBundleDir("Typeface","");
                 await this.PreLoadBundleDir("Sound", "",_callBack);
                 await this.PreLoadBundleDir("RoleSpine","",_callBack);
                 await this.PreLoadBundleDir("EffectSpine","",_callBack);
@@ -180,7 +181,7 @@ export class BundleManager
                 await this.PreLoadBundleDir("MainInterface","",_callBack);
 
                 let allAwait = [];
-                allAwait.push(this.PreLoadBundleDir("Typeface",""));
+                //allAwait.push(this.PreLoadBundleDir("Typeface",""));
                 allAwait.push(this.PreLoadBundleDir("BackGroungTexture",""));
                 allAwait.push(this.PreLoadBundleDir("IconTexture",""));
                 allAwait.push(this.PreLoadBundleDir("ButtonTexture",""));

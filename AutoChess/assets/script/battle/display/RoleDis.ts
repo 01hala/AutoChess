@@ -103,7 +103,7 @@ export class RoleDis extends Component
     {
         try
         {
-            this.typeface = (await BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
+            //this.typeface = (await BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS")) as TTFFont;
 
             //this.levelSprite = this.node.getChildByName("LevelSprite");
             this.bandage = this.node.getChildByName("Bandage");

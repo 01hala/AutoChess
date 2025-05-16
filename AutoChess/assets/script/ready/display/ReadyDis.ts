@@ -526,10 +526,10 @@ export class ReadyDis
                 await sleep(50); //延后一帧刷新richtext
                 if(this.coinText && this.heathText && this.roundText && this.trophyText)
                 {
-                    this.coinText.string="<color=000000>"+_battle_info.coin+"</color>";
-                    this.heathText.string="<color=000000>"+_battle_info.faild+"</color>";
-                    this.roundText.string="<color=000000>"+_battle_info.round+"</color>";
-                    this.trophyText.string="<color=000000>"+_battle_info.victory+"</color>";
+                    this.coinText.string="<color=ffffff>"+_battle_info.coin+"</color>";
+                    this.heathText.string="<color=ffffff>"+_battle_info.faild+"</color>";
+                    this.roundText.string="<color=ffffff>"+_battle_info.round+"</color>";
+                    this.trophyText.string="<color=ffffff>"+_battle_info.victory+"</color>";
                 }
                 relolve();
             }
