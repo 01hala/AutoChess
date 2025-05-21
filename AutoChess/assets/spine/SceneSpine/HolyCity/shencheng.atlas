@@ -1,0 +1,48 @@
+
+shencheng.png
+size: 1702,945
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sc
+  rotate: true
+  xy: 2, 2
+  size: 941, 1620
+  orig: 941, 1620
+  offset: 0, 0
+  index: -1
+sj_0
+  rotate: false
+  xy: 1624, 348
+  size: 75, 197
+  orig: 75, 197
+  offset: 0, 0
+  index: -1
+sj_1
+  rotate: false
+  xy: 1624, 149
+  size: 75, 197
+  orig: 75, 197
+  offset: 0, 0
+  index: -1
+sj_2
+  rotate: false
+  xy: 1624, 746
+  size: 76, 197
+  orig: 76, 197
+  offset: 0, 0
+  index: -1
+sj_3
+  rotate: false
+  xy: 1624, 547
+  size: 76, 197
+  orig: 76, 197
+  offset: 0, 0
+  index: -1
+yuandian
+  rotate: false
+  xy: 1624, 129
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
