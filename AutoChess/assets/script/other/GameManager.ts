@@ -94,12 +94,12 @@ export class GameManager extends Component
     {
         try
         {
-            let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
+            //let tf = BundleManager.Instance.loadAssetsFromBundle("Typeface", "MAOKENASSORTEDSANS");
             let wt=BundleManager.Instance.loadAssetsFromBundle("PanelPrefabs","waiting");
             //加载
-            let awaitResult = await Promise.all([tf,wt]);
-            this.typeface = awaitResult[0] as TTFFont;
-            let tpre=awaitResult[1] as Prefab;
+            let awaitResult = await Promise.all([wt]);
+            //this.typeface = awaitResult[0] as TTFFont;
+            let tpre=awaitResult[0] as Prefab;
             this.waitingPanel=instantiate(tpre);
             this.waitingPanel.setParent(this.node);
             this.waitingPanel.active=false;
@@ -422,7 +422,16 @@ export class GameManager extends Component
     {
         try
         {
-            this.waitingPanel.active = _flag;
+            console.log("Before Waitting active:",this.waitingPanel.active);
+            if(this.waitingPanel)
+            {
+                this.waitingPanel.active = _flag;
+            }
+            else
+            {
+                this.node.getChildByPath("waiting").active=_flag;
+            }
+            
             this.waitingPanel.setSiblingIndex(999);
         } catch (error)
         {

@@ -87,7 +87,7 @@ export class RoleIcon extends Component
             this.roleArea=this.panel.getChildByPath("RoleArea").getComponent(RoleArea);
             this.visiableArea=this.panel.getChildByPath("RoleArea/visiable");
             this.shopArea=this.panel.getChildByPath("Shop/ShopArea").getComponent(ShopArea);
-            this.farme=this.node.getChildByPath("Farme");
+            this.farme=this.node.getChildByPath("kamian");
             this.farme.active=false;
             this.iconMask=this.node.getChildByName("IconMask");
             this.iconMask.active=false;
@@ -313,7 +313,7 @@ export class RoleIcon extends Component
                     //如果角色未被购买则缩小角色图标，静止动画
                     this.roleNode.scale=
                         new Vec3(this.roleNode.scale.x*(2/3),this.roleNode.scale.y*(2/3),this.roleNode.scale.z);
-                    this.roleNode.getChildByName("Frame/Mask/Sprite").getComponent(sp.Skeleton).timeScale=0;
+                    this.roleNode.getChildByPath("Frame/Mask/Sprite").getComponent(sp.Skeleton).timeScale=0;
                     this.shopArea.ShowFreezeArea(true);
                 }
                 else
@@ -403,7 +403,7 @@ export class RoleIcon extends Component
     //购买角色时的动画效果
     private async BuyRole()
     {
-        this.roleNode.getChildByName("Sprite").getComponent(sp.Skeleton).timeScale=1;
+        this.roleNode.getChildByPath("Frame/Mask/Sprite").getComponent(sp.Skeleton).timeScale=1;
         tween(this.roleNode)
         .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) })
         .call(()=>
@@ -441,7 +441,7 @@ export class RoleIcon extends Component
         try
         {
             let jconfig = config.RoleConfig.get(this.roleId);
-            let img = await loadAssets.LoadImg(jconfig.Avatar);
+            let img = await loadAssets.LoadImg(jconfig.Res);
             if(img)
             {
                 if(null==this.iconMask)

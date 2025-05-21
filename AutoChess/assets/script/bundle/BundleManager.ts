@@ -172,6 +172,7 @@ export class BundleManager
         {
             try
             {
+                await this.PreLoadBundleDir("Typeface","");
                 await this.PreLoadBundleDir("Sound", "",_callBack);
                 await this.PreLoadBundleDir("RoleSpine","",_callBack);
                 await this.PreLoadBundleDir("EffectSpine","",_callBack);
@@ -180,6 +181,7 @@ export class BundleManager
                 await this.PreLoadBundleDir("MainInterface","",_callBack);
 
                 let allAwait = [];
+                //allAwait.push(this.PreLoadBundleDir("Typeface",""));
                 allAwait.push(this.PreLoadBundleDir("BackGroungTexture",""));
                 allAwait.push(this.PreLoadBundleDir("IconTexture",""));
                 allAwait.push(this.PreLoadBundleDir("ButtonTexture",""));
@@ -200,7 +202,6 @@ export class BundleManager
                 allAwait.push(this.PreLoadBundleDir("CardLib",""));
                 allAwait.push(this.PreLoadBundleDir("Battle",""));
                 allAwait.push(this.PreLoadBundleDir("CareEdit",""));
-                allAwait.push(this.PreLoadBundleDir("Typeface",""));
                 Promise.all(allAwait);
 
                 console.log("预加载资源完成");
