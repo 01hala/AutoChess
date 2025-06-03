@@ -1,4 +1,6 @@
 import { _decorator, Component, Node, sp, Tween, tween, UITransform, Vec3 } from 'cc';
+import { RoleIcon } from '../ready/display/RoleIcon';
+import { PropIcon } from '../ready/display/PropIcon';
 const { ccclass, property } = _decorator;
 
 export class CardDynaLayout
@@ -11,9 +13,12 @@ export class CardDynaLayout
     //物体数组
     public cards: Node[] = [];
 
-    constructor(originPos: Vec3)
+    private node:Node=null;
+
+    constructor(originPos: Vec3 , node:Node)
     {
         this.originPos = originPos;
+        this.node=node;
     }
 
     public AddCard(card: Node)
@@ -33,6 +38,21 @@ export class CardDynaLayout
             }
         }
         this.Updata();
+    }
+
+    public ResetSindex()
+    {
+        for(let i=0;i<this.cards.length;i++)
+        {
+            if (this.cards[i].getComponent(RoleIcon))
+            {
+                this.cards[i].setSiblingIndex(this.cards[i].getComponent(RoleIcon).originSiblingIndex);
+            }
+            if (this.cards[i].getComponent(PropIcon))
+            {
+                this.cards[i].setSiblingIndex(this.cards[i].getComponent(PropIcon).originSiblingIndex);
+            }
+        }
     }
 
     private Updata()
@@ -59,6 +79,16 @@ export class CardDynaLayout
         }
     }
 
+    private Refresh()
+    {
+        let tweens:Tween[]=[];
+        for(let t of this.cards)
+        {
+            let tw=new Tween(t).to(0.2,{worldPosition:this.originPos}).start();
+        }
+
+    }
+
     private ComputePos(tCards: Node[], offset:number)
     {
         let px = this.spacingX;
@@ -69,6 +99,7 @@ export class CardDynaLayout
         {
             //tCards[0].setWorldPosition(new Vec3(this.originPos.x, this.originPos.y - this.spacingY));
             let pos = new Vec3(new Vec3(this.originPos.x, this.originPos.y +offset));
+            this.ResetCardOriginPos(tCards[0],pos);
             let tw = new Tween(tCards[0]).to(0.2, { worldPosition: pos });
             tweens.push(tw);
         }
@@ -90,6 +121,7 @@ export class CardDynaLayout
                     //tCards[i].setWorldPosition(new Vec3(tPos.x + px / 2, this.originPos.y, 0));
                     //添加缓动
                     pos = new Vec3(tPos.x + px / 2, this.originPos.y+offset, 0);
+                    this.ResetCardOriginPos(tCards[i],pos);
                     let tw = new Tween(tCards[i]).to(0.2, { worldPosition: pos });
                     tweens.push(tw);
                 }
@@ -97,6 +129,7 @@ export class CardDynaLayout
                 {
                     //tCards[i].setWorldPosition(new Vec3(tPos.x + px, this.originPos.y, 0));
                     pos = new Vec3(tPos.x + px, this.originPos.y+offset, 0);
+                    this.ResetCardOriginPos(tCards[i],pos);
                     let tw = new Tween(tCards[i]).to(0.2, { worldPosition: pos });
                     tweens.push(tw);
                 }
@@ -112,6 +145,7 @@ export class CardDynaLayout
                     //同上
                     //tCards[i].setWorldPosition(new Vec3(tPos.x - px / 2, this.originPos.y, 0));
                     pos = new Vec3(tPos.x - px / 2, this.originPos.y+offset, 0);
+                    this.ResetCardOriginPos(tCards[i],pos);
                     let tw = new Tween(tCards[i]).to(0.2, { worldPosition: pos });
                     tweens.push(tw);
                 }
@@ -119,6 +153,7 @@ export class CardDynaLayout
                 {
                     //tCards[i].setWorldPosition(new Vec3(tPos.x - px, this.originPos.y, 0));
                     pos = new Vec3(tPos.x - px, this.originPos.y+offset, 0);
+                    this.ResetCardOriginPos(tCards[i],pos);
                     let tw = new Tween(tCards[i]).to(0.2, { worldPosition: pos });
                     tweens.push(tw);
                 }
@@ -131,6 +166,7 @@ export class CardDynaLayout
         {
             let pos = new Vec3(this.originPos.x,this.originPos.y+offset,0);
             //tCards[Math.floor(tCards.length / 2)].setWorldPosition(this.originPos);
+            this.ResetCardOriginPos(tCards[Math.floor(tCards.length / 2)],pos);
             let tw = new Tween(tCards[Math.floor(tCards.length / 2)]).to(0.2, { worldPosition: pos });
             tweens.push(tw);
             //左半部分
@@ -138,6 +174,7 @@ export class CardDynaLayout
             {
                 //tCards[i].setWorldPosition(new Vec3(tPos.x + px, this.originPos.y, 0));
                 pos = new Vec3(tPos.x + px, this.originPos.y+offset, 0);
+                this.ResetCardOriginPos(tCards[i],pos);
                 let tw = new Tween(tCards[i]).to(0.2, { worldPosition: pos });
                 tweens.push(tw);
                 tPos = pos;
@@ -148,6 +185,7 @@ export class CardDynaLayout
             {
                 //tCards[i].setWorldPosition(new Vec3(tPos.x - px, this.originPos.y, 0));
                 pos = new Vec3(tPos.x - px, this.originPos.y+offset, 0);
+                this.ResetCardOriginPos(tCards[i],pos);
                 let tw = new Tween(tCards[i]).to(0.2, { worldPosition: pos });
                 tweens.push(tw);
                 tPos = pos;
@@ -161,6 +199,20 @@ export class CardDynaLayout
                 t = null;
             });
         });
+    }
+
+    private ResetCardOriginPos(card:Node,pos:Vec3)
+    {
+        //spos=this.node.getComponent(UITransform).convertToWorldSpaceAR(pos);
+        console.log("坐标:",pos);
+        if (card.getComponent(RoleIcon))
+        {
+            card.getComponent(RoleIcon).originalPos = pos;
+        }
+        if (card.getComponent(PropIcon))
+        {
+            card.getComponent(PropIcon).originalPos = pos;
+        }
     }
 }
 

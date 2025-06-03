@@ -51,6 +51,7 @@ export class PropIcon extends Component
     private shopArea:ShopArea;
     //初始位置
     public originalPos:Vec3;
+    public originSiblingIndex:number;
     //缓动
     private tweenNode:Tween<Node>;
     //图标
@@ -97,46 +98,52 @@ export class PropIcon extends Component
     //初始化
     async Init(_id:number, _freeze:boolean)
     {
-        try
-        {
-            this.originalPos = this.node.getPosition();
-            this.propId = _id;
+        return new Promise<void>(async (resolve, reject) => {
+            try
+            {
+                //this.originalPos = this.node.getPosition();
+                this.originSiblingIndex=this.node.getSiblingIndex();
+                this.propId = _id;
+    
+                
+                this.propType = this.checkPropType(this.propId);
+                //let jconfig = null;
+                // if (_type == PropsType.Food) 
+                // {
+                //     jconfig = config.FoodConfig.get(_id);
+                //     this.effect = jconfig.Effect;
+                //     this.hpBonus = jconfig.HpBonus;
+                //     this.attackBonus = jconfig.AttackBonus;
+                //     //这句从下面移到if里来了，因为还要写装备的逻辑，但是没仔细看不知道会不会出问题，所以写个注释标记一下
+                //     this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+                // }
+                // else if(_type == PropsType.Equip)
+                // {
+                //     jconfig = config.EquipConfig.get(_id);
+                //     this.effect = jconfig.Effect;
+                //     this.hpBonus = jconfig.HpBonus;
+                //     this.attackBonus = jconfig.AttackBonus;
+                //     this.vaule=jconfig.value;
+                //     //差一个载入图标的逻辑，因为还不清楚装备区域
+                //     //this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
+                // }
+    			await this.LoadOnConfig();
+    
+                this.freezeLock = _freeze;
+                this.freezeSprite.active = _freeze;
+    
+                this.DragEvent();
+    
+                this.iconMask.active = true;
 
-            
-            this.propType = this.checkPropType(this.propId);
-            //let jconfig = null;
-            // if (_type == PropsType.Food) 
-            // {
-            //     jconfig = config.FoodConfig.get(_id);
-            //     this.effect = jconfig.Effect;
-            //     this.hpBonus = jconfig.HpBonus;
-            //     this.attackBonus = jconfig.AttackBonus;
-            //     //这句从下面移到if里来了，因为还要写装备的逻辑，但是没仔细看不知道会不会出问题，所以写个注释标记一下
-            //     this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
-            // }
-            // else if(_type == PropsType.Equip)
-            // {
-            //     jconfig = config.EquipConfig.get(_id);
-            //     this.effect = jconfig.Effect;
-            //     this.hpBonus = jconfig.HpBonus;
-            //     this.attackBonus = jconfig.AttackBonus;
-            //     this.vaule=jconfig.value;
-            //     //差一个载入图标的逻辑，因为还不清楚装备区域
-            //     //this.iconMask.getChildByPath("FoodSprite").getComponent(Sprite).spriteFrame = await this.LoadImg("battle_icon_", _id);
-            // }
-			await this.LoadOnConfig();
-
-            this.freezeLock = _freeze;
-            this.freezeSprite.active = _freeze;
-
-            this.DragEvent();
-
-            this.iconMask.active = true;
-        }
-        catch(error)
-        {
-            console.error('PropIcon 下 Init 错误 err: ',error);
-        }
+                resolve();
+            }
+            catch(error)
+            {
+                console.error('PropIcon 下 Init 错误 err: ',error);
+                reject();
+            }
+        })
         
     }
 
@@ -307,15 +314,20 @@ export class PropIcon extends Component
 /*------------------------------------------------拖拽事件---------------------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------------------*/
 
-    private Adsorption() {
-        try {
-            this.tweenNode = tween(this.node).to(0.1, { position: this.originalPos })
-                .call(() => {
+    private Adsorption()
+    {
+        try
+        {
+            console.log("父节点：",this.node.parent.name,"坐标：",this.originalPos);
+            this.tweenNode = tween(this.node).to(0.1, { worldPosition: this.originalPos })
+                .call(() =>
+                {
                     this.tweenNode.stop();
                 })
                 .start();
         }
-        catch (error) {
+        catch (error)
+        {
             console.error('PropIcon 下 Adsorption 错误 err: ', error);
         }
     }

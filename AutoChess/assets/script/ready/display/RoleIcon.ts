@@ -56,6 +56,7 @@ export class RoleIcon extends Component
     private farme:Node;
     //初始位置
     public originalPos:Vec3;
+    public originSiblingIndex:number;
     private tweenNode:Tween<Node>;
     //判定flag
     public isBuy:boolean=false;
@@ -115,38 +116,45 @@ export class RoleIcon extends Component
     //初始化
     async Init(_Id:number , _Hp:number , _Atk:number , _level:number , _exp:number , _freeze:boolean, _fetters:common.Fetters=null , _teamindex:number=-1)
     {
-        try
+        return new Promise<void>(async (resolve, reject) =>
         {
-            let map=new Map<battleEmums.Property,number>().set(battleEmums.Property.HP,_Hp).set(battleEmums.Property.Attack,_Atk);
-            console.log("new role");
-            let r=new role.Role(null,_teamindex, _Id, _level, _exp, battleEmums.Camp.Self, map, _fetters , -1);
-            console.log('RoleIcon spawn role: ',_Id);
-            this.roleNode=await this.SpawnRole(r);
-            this.originalPos=this.node.getPosition();
-            this.roleId=_Id;
-            this.roleLv=_level;
-            //通过配置文件加载资源
-            await this.LoadOnConfig(); 
-            this.freezeLock=_freeze;
-            this.freezeSprite.active=_freeze;
-            this.visiableArea.active=false;
+            try
+            {
+                let map = new Map<battleEmums.Property, number>().set(battleEmums.Property.HP, _Hp).set(battleEmums.Property.Attack, _Atk);
+                console.log("new role");
+                let r = new role.Role(null, _teamindex, _Id, _level, _exp, battleEmums.Camp.Self, map, _fetters, -1);
+                console.log('RoleIcon spawn role: ', _Id);
+                this.roleNode = await this.SpawnRole(r);
+                //this.originalPos = this.node.getPosition();
+                this.originSiblingIndex=this.node.getSiblingIndex();
+                this.roleId = _Id;
+                this.roleLv = _level;
+                //通过配置文件加载资源
+                await this.LoadOnConfig();
+                this.freezeLock = _freeze;
+                this.freezeSprite.active = _freeze;
+                this.visiableArea.active = false;
 
-            this.DragEvent();
-            if(!this.isBuy)
-            {
-                this.iconMask.active=true;
-                this.farme.active=true;
+                this.DragEvent();
+                if (!this.isBuy)
+                {
+                    this.iconMask.active = true;
+                    this.farme.active = true;
+                }
+                else
+                {
+                    this.roleNode.setScale(new Vec3(1.2, 1.2, 1));
+                }
+                this.tempIndex = this.index;
+
+                resolve();
             }
-            else
+            catch (error)
             {
-                this.roleNode.setScale(new Vec3(1.2,1.2,1));
+                console.error('RoleIcon 下 Ini 错误 err: ', error);
+                reject();
             }
-            this.tempIndex=this.index;
-        }
-        catch (error)
-        {
-            console.error('RoleIcon 下 Ini 错误 err: ',error);
-        }
+        });
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -170,7 +178,7 @@ export class RoleIcon extends Component
     private async EndDrag() {
         try
         {
-            //this.node.setSiblingIndex(90);
+            this.shopArea.cardsLayout.ResetSindex();
             this.OffTirrger();
             singleton.netSingleton.ready.HideRoleInfo();
             //隐藏人物放置可视化区域                                                                  // 修改函数
@@ -311,8 +319,7 @@ export class RoleIcon extends Component
                 if (!this.isBuy) 
                 {
                     //如果角色未被购买则缩小角色图标，静止动画
-                    this.roleNode.scale=
-                        new Vec3(this.roleNode.scale.x*(2/3),this.roleNode.scale.y*(2/3),this.roleNode.scale.z);
+                    //this.roleNode.scale=new Vec3(0.8,0.8,1);
                     this.roleNode.getChildByPath("Frame/Mask/Sprite").getComponent(sp.Skeleton).timeScale=0;
                     this.shopArea.ShowFreezeArea(true);
                 }
@@ -340,7 +347,8 @@ export class RoleIcon extends Component
         node.setPosition(x, y, 0);
     }
 
-    private StartDrag(event: EventTouch) {
+    private StartDrag(event: EventTouch) 
+    {
         this.node.setSiblingIndex(99);
         this.lastClickTime=Date.now();
         this.Ontirrger();
@@ -628,36 +636,36 @@ export class RoleIcon extends Component
     //拖拽吸附
     private Adsorption()
     {
+        console.log("当前层级：",this.node.getSiblingIndex());
         if(null!=this.target && !this.isSale && null!=this.index && this.isBuy)
         {
             AudioManager.Instance.PlayerOnShot("Sound/sound_move_01");
             this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.target.worldPosition})
              .call(()=>
              {
-                this.originalPos=this.node.getPosition();
+                this.originalPos=this.node.getWorldPosition();
              }).delay(0.1).call(()=>
              {
                 tween(this.roleNode).to(0.1,{scale:new Vec3(1.2,1.2,1)}).start();
                 this.tweenNode.stop();
              }).start();
-            //this.node.setWorldPosition(this.target.worldPosition);
         }
         else
         {
-            this.tweenNode=tween(this.node).to(0.1,{position:this.originalPos})
+            console.log("父节点：",this.node.parent.name,"坐标：",this.originalPos);
+            this.tweenNode=tween(this.node).to(0.1,{worldPosition:this.originalPos})
             .call(()=>
             {
                 this.tweenNode.stop();
             })
             .start();
-            //this.node.setPosition(this.originalPos);
             if(!this.isBuy)
             {
+                this.roleNode.scale= new Vec3(1,1,1);
                 this.roleNode.active=false;
                 this.iconMask.active=true;
             }
         }
-        
     }
     //互相换位
     public TransPos(_target:Node , _index:number)
@@ -670,7 +678,7 @@ export class RoleIcon extends Component
         this.tweenNode=tween(this.node).to(0.1,{worldPosition:_target.worldPosition})
         .call(()=>
         {
-            this.originalPos=this.node.getPosition();
+            this.originalPos=this.node.getWorldPosition();
             this.tweenNode.stop();
         })
         .start();

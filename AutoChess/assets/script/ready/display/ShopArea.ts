@@ -49,13 +49,13 @@ export class ShopArea extends Component
     private tempRoles:ShopRole[]=[];
     private tempProps:ShopProp[]=[];
 
-    private cardsLayout:CardDynaLayout=null;
+    public cardsLayout:CardDynaLayout=null;
     protected onLoad(): void 
     {
         try
         {
             this.OriginPos=this.node.getChildByPath("TopArea/OriginPos").worldPosition;
-            this.cardsLayout=new CardDynaLayout(this.OriginPos);
+            this.cardsLayout=new CardDynaLayout(this.OriginPos,this.panel);
             for(let t of this.node.getChildByPath("TopArea/Role").children)
             {
                 this.rolesSquare.push(t);
@@ -181,7 +181,6 @@ export class ShopArea extends Component
                             newNode.setWorldPosition(new Vec3(-2000,0,0));
                             allAwait.push(newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, 1, 1, roles[i].IsFreeze));
                             this.shopRoleNodes.push(newNode);
-                            //将物体添加进排列队伍
                             this.cardsLayout.AddCard(newNode);
                             tmpCnt--;
                         }
@@ -209,6 +208,7 @@ export class ShopArea extends Component
                         {
                             let newNode = instantiate(this.propIcon);
                             newNode.setParent(this.panel);
+                            newNode.setWorldPosition(new Vec3(-2000,0,0));
                             //console.log(newNode.parent.name);
                             if (props[i].PropID >= 1001 && props[i].PropID <= 1999 && tmpFoodCnt > 0)
                             {
@@ -227,7 +227,6 @@ export class ShopArea extends Component
                             allAwait.push(newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze));
                             this.shopPropNodes.push(newNode);
                             this.cardsLayout.AddCard(newNode);
-                            newNode.setParent(this.panel);
                         }
                     }
                 }
@@ -276,6 +275,7 @@ export class ShopArea extends Component
                         }
                         let newNode = instantiate(this.roleIcon);
                         newNode.setParent(this.panel);
+                        newNode.setWorldPosition(new Vec3(-2000,0,0));
                         //newNode.setWorldPosition(this.rolesSquare[i].worldPosition);
                         await newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, roles[i].Level, 1, roles[i].IsFreeze);
                         this.shopRoleNodes[i] = newNode;
@@ -308,6 +308,7 @@ export class ShopArea extends Component
                         }
                         let newNode = instantiate(this.propIcon);
                         newNode.setParent(this.panel);
+                        newNode.setWorldPosition(new Vec3(-2000,0,0));
                         if (props[i].PropID >= 1001 && props[i].PropID <= 1999/*&&tmpFoodCnt>0*/)
                         {
                             //newNode.setWorldPosition(this.FoodSquare[i].worldPosition);
@@ -321,7 +322,6 @@ export class ShopArea extends Component
                         await newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze);
                         this.shopPropNodes.push(newNode);
                         this.cardsLayout.AddCard(newNode);
-                        newNode.setParent(this.panel);
                     }
                 }
             }
