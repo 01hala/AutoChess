@@ -181,7 +181,7 @@ export class ShopArea extends Component
                             newNode.setWorldPosition(new Vec3(-2000,0,0));
                             allAwait.push(newNode.getComponent(RoleIcon).Init(roles[i].RoleID, roles[i].HP, roles[i].Attack, 1, 1, roles[i].IsFreeze));
                             this.shopRoleNodes.push(newNode);
-                            this.cardsLayout.AddCard(newNode);
+                            //this.cardsLayout.AddCard(newNode);
                             tmpCnt--;
                         }
                         else
@@ -226,11 +226,35 @@ export class ShopArea extends Component
                             }
                             allAwait.push(newNode.getComponent(PropIcon).Init(props[i].PropID, props[i].IsFreeze));
                             this.shopPropNodes.push(newNode);
-                            this.cardsLayout.AddCard(newNode);
+                            //this.cardsLayout.AddCard(newNode);
                         }
                     }
                 }
-                await Promise.all(allAwait);
+                await Promise.all(allAwait).then(()=>
+                {
+                    let tlist=[];
+                    for(let t of this.shopRoleNodes)
+                    {
+                        if(t) tlist.push(t);
+                    }
+                    for(let t of this.shopPropNodes)
+                    {
+                        if(t) tlist.push(t);
+                    }
+                    let i=0;
+                    let interval_1= setInterval(() => 
+                    {
+                        if(i<tlist.length)
+                        {
+                            this.cardsLayout.AddCard(tlist[i]);
+                            i++;
+                        }
+                        else
+                        {
+                            clearInterval(interval_1);
+                        }
+                    }, 200);
+                });
 
                 clearInterval(interval);
                 resolve();
