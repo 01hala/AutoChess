@@ -1,4 +1,0 @@
-<!--index.wxml-->
-<view class="container">
-  <image class="avatar" src="main.jpg"></image>
-</view>
