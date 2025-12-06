@@ -431,3 +431,4 @@ config_node.txt
 /AutoChess/assets/scene/scene-2d-001.scene.meta
 start.bat
 /Output
+/server remote
