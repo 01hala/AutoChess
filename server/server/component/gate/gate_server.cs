@@ -62,7 +62,7 @@ namespace Gate {
             _center_config = _root_config.get_value_dict("center");
             _config = _root_config.get_value_dict(config_name);
 
-            gate_name_info.name = $"{config_name}_{Guid.NewGuid().ToString("N")}";
+            gate_name_info.name = $"{config_name}";
             reconn_count = 0;
             tick = 0;
 

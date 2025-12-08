@@ -25,7 +25,7 @@ namespace Hub
 			_center_config = _config.get_value_dict("center");
 			_root_config = _config;
             _config = _config.get_value_dict(_hub_name);
-            name = $"{_hub_name}_{Guid.NewGuid().ToString("N")}";
+            name = $"{_hub_name}";
             type = _hub_type;
             router_type = _router_type;
 

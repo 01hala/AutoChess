@@ -22,7 +22,7 @@ namespace DBProxy
             _center_config = _root_config.get_value_dict("center");
             _config = _root_config.get_value_dict(cfg_name);
 
-            name = $"{cfg_name}_{Guid.NewGuid().ToString("N")}";
+            name = $"{cfg_name}";
 
             var log_level = _config.get_value_string("log_level");
             if (log_level == "trace")
