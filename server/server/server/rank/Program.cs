@@ -46,7 +46,7 @@ namespace RankSvr
             };
 
             Hub.Hub._timer.addloopweekdaytime(System.DayOfWeek.Monday, 0, 0, 0, reset_peak_strength_rank);
-            Hub.Hub._timer.addloopweekdaytime(System.DayOfWeek.Friday, 17, 0, 0, peak_strength_rank_reward);
+            Hub.Hub._timer.addloopweekdaytime(System.DayOfWeek.Sunday, 18, 0, 0, peak_strength_rank_reward);
 
             Log.Log.trace("rank svr start ok");
 
