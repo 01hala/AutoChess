@@ -25,6 +25,7 @@ import { BundleManager } from "../bundle/BundleManager";
 import { Role, UserData, UserRankInfo } from "../battle/AutoChessBattle/common";
 import { loadAssets } from "../bundle/LoadAsset";
 import { config } from "../battle/AutoChessBattle/config/config";
+import { netSingleton } from "../netDriver/netSingleton";
 const { ccclass, property } = _decorator;
 
 @ccclass("RankList")
@@ -106,6 +107,8 @@ export class RankList extends Component {
   private RegCallBack() {
     singleton.netSingleton.player.cb_get_rank_guid = (_rank, _info) => {
       //获取个人排行、展示代码写这
+      let avatar = this.board.getChildByPath("UserAvatar");
+      this.ShowUserData(netSingleton.player.UserData, avatar);
     };
     singleton.netSingleton.player.cb_get_rank_range = (_rank_info) => {
       //获取区间排行、展示代码写这
