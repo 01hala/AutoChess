@@ -34,6 +34,7 @@ import * as player_login from "../serverSDK/ccallplayer";
 import { QuestPanel } from "../panel/QuestPanel";
 import { User } from "./User";
 import { SendMessage } from "../other/MessageEvent";
+import "minigame-api-typings";
 
 function unicodeToUtf8(unicode: any) {
   let utf8str = "";
