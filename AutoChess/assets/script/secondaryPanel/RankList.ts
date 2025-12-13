@@ -109,9 +109,13 @@ export class RankList extends Component {
       //获取个人排行、展示代码写这
       let avatar = this.board.getChildByPath("UserAvatar");
       this.ShowUserData(netSingleton.player.UserData, avatar);
+      console.log(
+        `cb_get_rank_guid:${JSON.stringify(netSingleton.player.UserData)} ${avatar}`,
+      );
     };
     singleton.netSingleton.player.cb_get_rank_range = (_rank_info) => {
       //获取区间排行、展示代码写这
+      console.log(`cb_get_rank_range:${JSON.stringify(_rank_info)}`);
       this.ShowRankList(_rank_info);
     };
   }
@@ -177,6 +181,12 @@ export class RankList extends Component {
 
   public OpenRankListBoard(_userInfo: UserData) {
     try {
+      console.log("OpenRankListBoard begin!");
+      singleton.netSingleton.player.get_rank_guid(
+        "rank",
+        _userInfo.User.UserGuid,
+      );
+      singleton.netSingleton.player.get_rank_range("rank", 1, 24);
       AudioManager.Instance.PlayerOnShot("Sound/sound_home_return_feedback_01");
       this.node.getComponent(BlockInputEvents).enabled = true;
       this.node.setSiblingIndex(98);

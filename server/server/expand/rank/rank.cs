@@ -148,7 +148,7 @@ namespace Rank
         }
     }
 
-    public static class RankModule
+    public class RankModule
     {
         private static string dbName;
         private static string dbCollection;
@@ -277,12 +277,16 @@ namespace Rank
                 }
                 else
                 {
-                    rsp.err();
+                    rankIns = new Rank(100);
+                    var rank = rankIns.UpdateRankItem(item);
+                    rankDict.Add(rankNmae, rankIns);
+                    rsp.rsp(rank);
                 }
             }
             catch(System.Exception ex)
             {
                 Log.Log.err("on_update_rank_item:{0}", ex);
+                rsp.err();
             }
         }
 
