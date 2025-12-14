@@ -220,7 +220,7 @@ export class gm extends Component {
     for (let r of self.RoleList) {
       console.log("角色血量：" + r.HP + "角色攻击力：" + r.Attack);
     }
-    let _battle = new battle.Battle(self, target, enums.GameMode.PVE);
+    let _battle = new battle.Battle(self, target, enums.GameMode.PVP);
     let _father = singleton.netSingleton.battle.father;
     singleton.netSingleton.battle.destory();
     singleton.netSingleton.battle = new battleDis.BattleDis(_battle);

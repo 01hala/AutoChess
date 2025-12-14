@@ -71,6 +71,10 @@ namespace Match
                 {
                     timeout_battle_player.Add(it.Value);
                 }
+                else
+                {
+                    it.Value.LastActiveTime = Timerservice.Tick;
+                }
             }
             foreach (var _player in timeout_battle_player)
             {
@@ -100,8 +104,10 @@ namespace Match
 
         public peak_strength_player get_battle_player(string clientUUID)
         {
-            peak_strength_battles.TryGetValue(clientUUID, out var _player);
-            _player.LastActiveTime = Timerservice.Tick;
+            if (peak_strength_battles.TryGetValue(clientUUID, out var _player))
+            {
+                _player.LastActiveTime = Timerservice.Tick;
+            }
             return _player;
         }
     }

@@ -113,7 +113,7 @@ namespace Match
             }
             catch (System.Exception ex)
             {
-                Log.Log.err("Peak_Strength_Module_on_del_peak_strength_formation error:{0}", ex);
+                Log.Log.err("Peak_Strength_Module_on_start_peak_strength error:{0}", ex);
                 rsp.err((int)em_error.db_error);
             }
         }
@@ -206,7 +206,7 @@ namespace Match
                 }
 
                 var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
-                if (_player.BattleShopPlayer.BattleData.victory >= 10)
+                if (_player.BattleShopPlayer.BattleData.victory >= 0) //10)
                 {
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(_player.mod, true);
                     player_proxy.battle_victory(_player.mod, true, _player.BattleShopPlayer.BattleData);

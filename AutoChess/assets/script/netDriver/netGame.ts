@@ -14,6 +14,7 @@ export class netGame {
     private c_player_battle__caller : player_login.player_battle_caller;
     private c_player_quest_caller:player_login.player_quest_caller;
     private c_match_gm : match.gm_caller;
+    private c_match_peak_strength_caller : match.peak_strength_caller;
 
     private match_c : match_c.battle_client_module;
 
@@ -30,10 +31,12 @@ export class netGame {
     public cb_role_add_property : (battle_info:common.UserBattleData) => void;
     public cb_add_coin : (coin:number) => void;
     public cb_shop_summon : (role_index:number, _role:common.Role) => void;
+    public cb_replace_peak_strength : ()=>void | null;
     public constructor() {
         this.c_player_battle__caller = new player_login.player_battle_caller(cli.cli_handle);
         this.c_player_quest_caller = new player_login.player_quest_caller(cli.cli_handle);
         this.c_match_gm = new match.gm_caller(cli.cli_handle);
+        this.c_match_peak_strength_caller = new match.peak_strength_caller(cli.cli_handle);
 
         this.match_c = new match_c.battle_client_module(cli.cli_handle);
         this.match_c.cb_battle_victory = (mod:common.BattleMod, is_victory:boolean) => {
@@ -108,6 +111,11 @@ export class netGame {
         this.match_c.cb_shop_summon = (role_index:number, _role:common.Role) => {
             if (this.cb_shop_summon) {
                 this.cb_shop_summon.call(null, role_index, _role);
+            }
+        }
+        this.match_c.cb_replace_peak_strength = () => {
+            if (this.cb_replace_peak_strength) {
+                this.cb_replace_peak_strength.call(null);
             }
         }
     }
@@ -307,6 +315,20 @@ export class netGame {
         }).timeout(3000, () =>
         {
             console.log("confirm_round_victory timeout!");
+        })
+    }
+
+    public confirm_peak_strength_victory(is_victory:common.BattleVictory, addCoin:number)
+    {
+        this.c_match_peak_strength_caller.get_hub(this.match_name).confirm_peak_strength_victory(is_victory, addCoin).callBack(() =>
+        {
+            console.log("confirm_peak_strength_victory succeed!");
+        }, () =>
+        {
+            console.log("confirm_peak_strength_victory err");
+        }).timeout(3000, () =>
+        {
+            console.log("confirm_peak_strength_victory timeout!");
         })
     }
 
