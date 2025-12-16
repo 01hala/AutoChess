@@ -70,19 +70,7 @@ namespace Player
             {
                 var _avatar = Player.client_Mng.guid_get_client_proxy(user.User.UserGuid);
                 var _player_info = _avatar.get_real_hosting_data<PlayerInfo>();
-                //if (is_victory == BattleVictory.victory)
-                //{
-                //    _player_info.Data.Info().score += 5;
-                //}
-                //else if (is_victory == BattleVictory.tie)
-                //{
-                //    _player_info.Data.Info().score += 1;
-                //}
-                //else
-                //{
-                //    _player_info.Data.Info().score -= 3;
-                //}
-
+                
                 var battleInfo = new BattleInfo
                 {
                     mod = BattleMod.PeakStrength,

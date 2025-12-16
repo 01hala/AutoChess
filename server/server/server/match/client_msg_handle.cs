@@ -67,6 +67,8 @@ namespace Match
                 var player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
                 player_proxy.peak_strength_victory(is_victory, formation).callBack(async (userRankInfo) =>
                 {
+                    Log.Log.trace("Peak_Strength_Module_on_confirm_peak_strength_victory peak_strength_victory begin!");
+
                     userRankInfo.battle_data = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.GUID));
                     using var st = MemoryStreamPool.mstMgr.GetStream();
                     var _serializer = MessagePackSerializer.Get<MessagePackObjectDictionary>();
@@ -211,23 +213,40 @@ namespace Match
                     _player.BattleClientCaller.get_client(_player.ClientUUID).battle_victory(_player.mod, true);
                     player_proxy.battle_victory(_player.mod, true, _player.BattleShopPlayer.BattleData);
 
+                    var formation = _player.BattleShopPlayer.BattleData;
                     if (_player.BattleShopPlayer.BattleData.round <= 15)
                     {
-                        _player.BattleClientCaller.get_client(_player.ClientUUID).replace_peak_strength().callBack(async (isConfirm) =>
-                        {
-                            if (isConfirm)
-                            {
-                                await Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleShopPlayer.BattleData);
-                                await Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.BattleShopPlayer.BattleData.User.UserGuid), _player.BattleShopPlayer.BattleData);
-                            }
-                        }, () =>
-                        {
-                            Log.Log.err("replace_peak_strength error!");
-                        }).timeout(1000, () =>
-                        {
-                            Log.Log.err("replace_peak_strength timeout!");
-                        });
+                        await Match._redis_handle.PushList(RedisHelp.BuildPeakStrengthCache(), _player.BattleShopPlayer.BattleData);
+                        await Match._redis_handle.SetData(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player.BattleShopPlayer.BattleData.User.UserGuid), formation);
                     }
+
+                    var _player_strength = Match.peak_strength_mng.get_battle_player(uuid);
+                    player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
+                    player_proxy.peak_strength_victory(is_victory, formation).callBack(async (userRankInfo) =>
+                    {
+                        Log.Log.trace("Peak_Strength_Module_on_confirm_peak_strength_victory peak_strength_victory begin!");
+
+                        userRankInfo.battle_data = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player_strength.GUID));
+                        using var st = MemoryStreamPool.mstMgr.GetStream();
+                        var _serializer = MessagePackSerializer.Get<MessagePackObjectDictionary>();
+                        _serializer.Pack(st, UserRankInfo.UserRankInfo_to_protcol(userRankInfo));
+
+                        var r = new rank_item
+                        {
+                            guid = _player_strength.GUID,
+                            score = userRankInfo.score,
+                            item = st.ToArray()
+                        };
+                        Match._rank_proxy.update_rank_item(r);
+                    }, (err) =>
+                    {
+                        Log.Log.err("confirm_round_victory err:{0}", err);
+                        rsp.err();
+                    }).timeout(1500, () =>
+                    {
+                        Log.Log.err("confirm_round_victory timeout!");
+                        rsp.err();
+                    });
                 }
                 else
                 {
@@ -244,7 +263,6 @@ namespace Match
                         _player.BattleClientCaller.get_client(_player.ClientUUID).battle_plan_refresh(_player.BattleShopPlayer.BattleData, _player.BattleShopPlayer.ShopData, _player.BattleShopPlayer.check_fetters());
                     }
                 }
-
                 rsp.rsp();
             }
             catch (System.Exception ex)

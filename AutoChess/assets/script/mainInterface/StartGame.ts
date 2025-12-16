@@ -99,11 +99,11 @@ export class StartGame extends Component
             this.athleticsWindow.active=true;
             this.athleticsWindow.getComponent(Animation).play("PanelAppear");
             //排位
-            this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").on(Button.EventType.CLICK,()=>
+            /*this.athleticsWindow.getChildByPath("Athletics/Athletics_Btn").on(Button.EventType.CLICK,()=>
             {
                 AudioManager.Instance.PlayerOnShot("Sound/sound_click_wooden_01");
                 singleton.netSingleton.game.start_match_battle_ready(common.BattleMod.RankBattle);
-            },this);
+            },this);*/
             //匹配
             this.athleticsWindow.getChildByPath("Normal/Button").on(Button.EventType.CLICK, async ()=>
             {

@@ -320,6 +320,8 @@ export class netGame {
 
     public confirm_peak_strength_victory(is_victory:common.BattleVictory, addCoin:number)
     {
+        console.log("confirm_peak_strength_victory begin!");
+
         this.c_match_peak_strength_caller.get_hub(this.match_name).confirm_peak_strength_victory(is_victory, addCoin).callBack(() =>
         {
             console.log("confirm_peak_strength_victory succeed!");
@@ -330,6 +332,8 @@ export class netGame {
         {
             console.log("confirm_peak_strength_victory timeout!");
         })
+        
+        console.log("confirm_peak_strength_victory end!");
     }
 
     //巅峰挑战
