@@ -224,7 +224,7 @@ namespace Match
                     player_proxy = Match._player_proxy_mng.get_player(_player.PlayerHubName);
                     player_proxy.peak_strength_victory(is_victory, formation).callBack(async (userRankInfo) =>
                     {
-                        Log.Log.trace("Peak_Strength_Module_on_confirm_peak_strength_victory peak_strength_victory begin!");
+                        Log.Log.trace("Plan_Module_on_confirm_round_victory peak_strength_victory begin! _player_strength:{0} userRankInfo:{1}", _player_strength, userRankInfo);
 
                         userRankInfo.battle_data = await Match._redis_handle.GetData<UserBattleData>(RedisHelp.BuildPlayerPeakStrengthFormationCache(_player_strength.GUID));
                         using var st = MemoryStreamPool.mstMgr.GetStream();

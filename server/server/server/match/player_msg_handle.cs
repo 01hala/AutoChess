@@ -72,6 +72,7 @@ namespace Match
             try
             {
                 var _player = Match.battle_Mng.add_player_to_battle(mod, clientUUID, roleList, user_info);
+                Match.peak_strength_mng.add_player_to_battle(Hub.Hub._hubs.current_hubproxy.name, clientUUID, user_info.UserGuid);
                 _player.PlayerHubName = Hub.Hub._hubs.current_hubproxy.name;
                 rsp.rsp(_player.BattleShopPlayer.BattleData, _player.BattleShopPlayer.ShopData);
             }

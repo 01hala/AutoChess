@@ -62,7 +62,7 @@ namespace Player
 
         private void Match_Player_Module_on_peak_strength_victory(BattleVictory is_victory, UserBattleData user)
         {
-            Log.Log.trace("on_battle_victory begin!");
+            Log.Log.trace("on_peak_strength_victory begin!");
 
             var rsp = match_Player_Module.rsp as match_player_peak_strength_victory_rsp;
 
