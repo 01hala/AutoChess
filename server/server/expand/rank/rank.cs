@@ -282,6 +282,7 @@ namespace Rank
                     rankDict.Add(rankNmae, rankIns);
                     rsp.rsp(rank);
                 }
+                Log.Log.trace("on_update_rank_item rankDict:{0} {1}", rankDict.Count, rankDict.ToJson());
             }
             catch(System.Exception ex)
             {
@@ -318,6 +319,7 @@ namespace Rank
 
             try
             {
+                Log.Log.trace("on_get_rank_range rankDict:{0} {1}", rankDict.Count, rankDict.ToJson());
                 if (rankDict.TryGetValue(rankNmae, out var rankIns))
                 {
                     var rank = rankIns.GetRankRange(start, end);
@@ -340,6 +342,7 @@ namespace Rank
 
             try
             {
+                Log.Log.trace("on_get_rank_guid rankDict:{0} {1}", rankDict.Count, rankDict.ToJson());
                 if (rankDict.TryGetValue(rankNmae, out var rankIns))
                 {
                     var rank = rankIns.GetRankGuid(guid);
