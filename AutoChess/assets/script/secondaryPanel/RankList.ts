@@ -260,7 +260,7 @@ export class RankList extends Component {
       t.getChildByPath("RoundInfo").getComponent(Label).string =
         `${value.battle_data.victory}\n${value.battle_data.faild}\n${value.battle_data.round}`;
       this.ShowAvatar(value.avatar, t.getChildByPath("UserAvatar/Mask/Sprite"));
-      this.node.getChildByPath("RankView/view/content").addChild(t);
+      this.listcontent.addChild(t);
       this.ShowRoleList(
         value.battle_data.RoleList,
         t.getChildByPath("RoleList"),
@@ -271,6 +271,10 @@ export class RankList extends Component {
 
   private async ShowRoleList(_roleList: Role[], _parent: Node) {
     for (let i = 0; i < _roleList.length; i++) {
+      if (!_roleList[i]) {
+        continue;
+      }
+
       let jconfig = config.RoleConfig.get(_roleList[i].RoleID);
       let str = jconfig.Avatar;
       let t = instantiate(this.roleFarmePre);
