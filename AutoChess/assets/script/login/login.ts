@@ -355,9 +355,9 @@ export class login extends Component {
         else if (player_login.em_quest_state.next_quest == state) {
           await singleton.netSingleton.battle.SetGameVictory(true);
         }
-        console.log("返回主界面");
-        this.BackMainInterface("VenturePanel");
       }
+      console.log("返回主界面");
+      this.BackMainInterface("VenturePanel");
     };
   }
 
