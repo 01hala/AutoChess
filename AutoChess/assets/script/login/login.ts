@@ -348,15 +348,11 @@ export class login extends Component {
     };
 
     singleton.netSingleton.game.cb_confirm_quest_victory = async (state) => {
-      if (player_login.em_quest_state.faild == state) {
-        if (singleton.netSingleton.battle) {
+      if (singleton.netSingleton.battle) {
+        if (player_login.em_quest_state.faild == state) {
           await singleton.netSingleton.battle.SetGameVictory(false);
         }
-        console.log("返回主界面");
-        this.BackMainInterface("VenturePanel");
-      }
-      if (player_login.em_quest_state.next_quest == state) {
-        if (singleton.netSingleton.battle) {
+        else if (player_login.em_quest_state.next_quest == state) {
           await singleton.netSingleton.battle.SetGameVictory(true);
         }
         console.log("返回主界面");
