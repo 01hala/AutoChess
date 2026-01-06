@@ -16,6 +16,7 @@ namespace Player
         private readonly player_battle_module player_battle_Module;
         private readonly player_shop_module player_shop_Module;
         private readonly player_quest_module player_quest_Module;
+        private readonly battle_revive_module battle_Revive_Module;
         private plan_module plan_Module;
 
         public client_msg_handle()
@@ -28,6 +29,9 @@ namespace Player
             plan_Module.on_freeze += Plan_Module_on_freeze;
             plan_Module.on_get_battle_data += Plan_Module_on_get_battle_data;
             plan_Module.on_end_round += Plan_Module_on_end_round;
+
+            battle_Revive_Module = new battle_revive_module();
+            battle_Revive_Module.on_battle_failed_back += Battle_Revive_Module_on_battle_failed_back;
 
             player_login_Module = new();
             player_login_Module.on_player_login += Login_Player_Module_on_player_login;
@@ -56,6 +60,28 @@ namespace Player
             player_shop_Module.on_buy_card_merge += Player_shop_Module_on_buy_card_merge;
             player_shop_Module.on_edit_role_group += Player_shop_Module_on_edit_role_group;
             player_shop_Module.on_get_user_data += Player_shop_Module_on_get_user_data;
+        }
+
+        private async void Battle_Revive_Module_on_battle_failed_back()
+        {
+            var rsp = battle_Revive_Module.rsp as battle_revive_battle_failed_back_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _avatar = await Player.client_Mng.uuid_get_client_proxy(uuid);
+                if (_avatar != null)
+                {
+                    var _data = _avatar.get_real_hosting_data<PlayerInfo>();
+                    _data.Data.battleShopPlayer.BattleData.faild++;
+                    rsp.rsp(_data.Data.battleShopPlayer.BattleData);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Battle_Revive_Module_on_battle_failed_back error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private async void Player_quest_Module_on_start_quest_shop_ready1(int quest)

@@ -65,6 +65,11 @@ namespace Match
             refresh(baseStage());
         }
 
+        public void battle_failed_back()
+        {
+            BattleShopPlayer.BattleData.faild--;
+        }
+
         public int baseStage()
         {
             var _base = (BattleShopPlayer.BattleData.round + 1) / 2;

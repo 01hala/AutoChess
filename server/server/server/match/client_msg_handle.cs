@@ -14,6 +14,7 @@ namespace Match
     class client_msg_handle
     {
         private plan_module plan_Module = new plan_module();
+        private battle_revive_module battle_revive_Module = new battle_revive_module();
         private peak_strength_module peak_Strength_Module = new peak_strength_module();
         private gm_module gm_Module = new gm_module();
 
@@ -30,10 +31,30 @@ namespace Match
             plan_Module.on_get_battle_data += Plan_Module_on_get_battle_data;
             plan_Module.on_end_round += Plan_Module_on_end_round;
 
+            battle_revive_Module.on_battle_failed_back += Battle_revive_Module_on_battle_failed_back;
+
             peak_Strength_Module.on_start_peak_strength += Peak_Strength_Module_on_start_peak_strength;
             peak_Strength_Module.on_confirm_peak_strength_victory += Peak_Strength_Module_on_confirm_peak_strength_victory;
 
             gm_Module.on_set_formation += Gm_Module_on_set_formation;
+        }
+
+        private void Battle_revive_Module_on_battle_failed_back()
+        {
+            var rsp = battle_revive_Module.rsp as battle_revive_battle_failed_back_rsp;
+            var uuid = Hub.Hub._gates.current_client_uuid;
+
+            try
+            {
+                var _player = Match.battle_Mng.get_battle_player(uuid);
+                _player.battle_failed_back();
+                rsp.rsp(_player.BattleShopPlayer.BattleData);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Log.err("Battle_revive_Module_on_battle_failed_back error:{0}", ex);
+                rsp.err((int)em_error.db_error);
+            }
         }
 
         private void Plan_Module_on_end_round()
