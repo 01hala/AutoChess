@@ -756,5 +756,47 @@ namespace Abelkhan
         }
 
     }
+    public class battle_revive_battle_failed_back_rsp : Common.Response {
+        private string _client_uuid_bbd7c04f_5149_3f3f_b344_a42693fe7364;
+        private UInt64 uuid_02f76fc9_4a33_3697_87a7_f945c6ece830;
+        public battle_revive_battle_failed_back_rsp(string client_uuid, UInt64 _uuid)
+        {
+            _client_uuid_bbd7c04f_5149_3f3f_b344_a42693fe7364 = client_uuid;
+            uuid_02f76fc9_4a33_3697_87a7_f945c6ece830 = _uuid;
+        }
+
+        public void rsp(UserBattleData self_809515b8_3e31_3feb_a08c_462fee09f6ef){
+            var _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364 = new ArrayList();
+            _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364.Add(uuid_02f76fc9_4a33_3697_87a7_f945c6ece830);
+            _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364.Add(UserBattleData.UserBattleData_to_protcol(self_809515b8_3e31_3feb_a08c_462fee09f6ef));
+            Hub.Hub._gates.call_client(_client_uuid_bbd7c04f_5149_3f3f_b344_a42693fe7364, "battle_revive_rsp_cb_battle_failed_back_rsp", _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364);
+        }
+
+        public void err(Int32 err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696){
+            var _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364 = new ArrayList();
+            _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364.Add(uuid_02f76fc9_4a33_3697_87a7_f945c6ece830);
+            _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364.Add(err_ad2710a2_3dd2_3a8f_a4c8_a7ebbe1df696);
+            Hub.Hub._gates.call_client(_client_uuid_bbd7c04f_5149_3f3f_b344_a42693fe7364, "battle_revive_rsp_cb_battle_failed_back_err", _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364);
+        }
+
+    }
+
+    public class battle_revive_module : Common.IModule {
+        public battle_revive_module()
+        {
+            Hub.Hub._modules.add_mothed("battle_revive_battle_failed_back", battle_failed_back);
+        }
+
+        public event Action on_battle_failed_back;
+        public void battle_failed_back(IList<MsgPack.MessagePackObject> inArray){
+            var _cb_uuid = ((MsgPack.MessagePackObject)inArray[0]).AsUInt64();
+            rsp = new battle_revive_battle_failed_back_rsp(Hub.Hub._gates.current_client_uuid, _cb_uuid);
+            if (on_battle_failed_back != null){
+                on_battle_failed_back();
+            }
+            rsp = null;
+        }
+
+    }
 
 }

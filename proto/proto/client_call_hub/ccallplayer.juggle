@@ -47,3 +47,7 @@ module player_quest {
     confirm_quest_victory req(BattleVictory is_victory, int32 addCoin) rsp(em_quest_state state) err();
 	check_finish_pve_level req() rsp(bool is_finish_pve_level) err(int32 err);
 }
+
+module battle_revive {
+	battle_failed_back req() rsp(UserBattleData self) err(int32 err);
+}

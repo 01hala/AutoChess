@@ -1622,3 +1622,122 @@ export class player_quest_hubproxy
     }
 
 }
+export class battle_revive_battle_failed_back_cb{
+    private cb_uuid : number;
+    private module_rsp_cb : battle_revive_rsp_cb;
+
+    public event_battle_failed_back_handle_cb : (self:common.UserBattleData)=>void | null;
+    public event_battle_failed_back_handle_err : (err:number)=>void | null;
+    public event_battle_failed_back_handle_timeout : ()=>void | null;
+    constructor(_cb_uuid : number, _module_rsp_cb : battle_revive_rsp_cb){
+        this.cb_uuid = _cb_uuid;
+        this.module_rsp_cb = _module_rsp_cb;
+        this.event_battle_failed_back_handle_cb = null;
+        this.event_battle_failed_back_handle_err = null;
+        this.event_battle_failed_back_handle_timeout = null;
+    }
+
+    callBack(_cb:(self:common.UserBattleData)=>void, _err:(err:number)=>void)
+    {
+        this.event_battle_failed_back_handle_cb = _cb;
+        this.event_battle_failed_back_handle_err = _err;
+        return this;
+    }
+
+    timeout(tick:number, timeout_cb:()=>void)
+    {
+        setTimeout(()=>{ this.module_rsp_cb.battle_failed_back_timeout(this.cb_uuid); }, tick);
+        this.event_battle_failed_back_handle_timeout = timeout_cb;
+    }
+
+}
+
+/*this cb code is codegen by abelkhan for ts*/
+export class battle_revive_rsp_cb extends client_handle.imodule {
+    public map_battle_failed_back:Map<number, battle_revive_battle_failed_back_cb>;
+    constructor(modules:client_handle.modulemng){
+        super();
+        this.map_battle_failed_back = new Map<number, battle_revive_battle_failed_back_cb>();
+        modules.add_method("battle_revive_rsp_cb_battle_failed_back_rsp", this.battle_failed_back_rsp.bind(this));
+        modules.add_method("battle_revive_rsp_cb_battle_failed_back_err", this.battle_failed_back_err.bind(this));
+    }
+    public battle_failed_back_rsp(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364:any[] = [];
+        _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364.push(common.protcol_to_UserBattleData(inArray[1]));
+        var rsp = this.try_get_and_del_battle_failed_back_cb(uuid);
+        if (rsp && rsp.event_battle_failed_back_handle_cb) {
+            rsp.event_battle_failed_back_handle_cb.apply(null, _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364);
+        }
+    }
+
+    public battle_failed_back_err(inArray:any[]){
+        let uuid = inArray[0];
+        let _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364:any[] = [];
+        _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364.push(inArray[1]);
+        var rsp = this.try_get_and_del_battle_failed_back_cb(uuid);
+        if (rsp && rsp.event_battle_failed_back_handle_err) {
+            rsp.event_battle_failed_back_handle_err.apply(null, _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364);
+        }
+    }
+
+    public battle_failed_back_timeout(cb_uuid : number){
+        let rsp = this.try_get_and_del_battle_failed_back_cb(cb_uuid);
+        if (rsp){
+            if (rsp.event_battle_failed_back_handle_timeout) {
+                rsp.event_battle_failed_back_handle_timeout.apply(null);
+            }
+        }
+    }
+
+    private try_get_and_del_battle_failed_back_cb(uuid : number){
+        var rsp = this.map_battle_failed_back.get(uuid);
+        this.map_battle_failed_back.delete(uuid);
+        return rsp;
+    }
+
+}
+
+let rsp_cb_battle_revive_handle : battle_revive_rsp_cb | null = null;
+export class battle_revive_caller {
+    private _hubproxy:battle_revive_hubproxy;
+    constructor(_client:client_handle.client){
+        if (rsp_cb_battle_revive_handle == null){
+            rsp_cb_battle_revive_handle = new battle_revive_rsp_cb(_client._modulemng);
+        }
+        this._hubproxy = new battle_revive_hubproxy(_client);
+    }
+
+    public get_hub(hub_name:string)
+    {
+        this._hubproxy.hub_name_f2d265d1_65aa_30e8_8dac_24af2e157285 = hub_name;
+        return this._hubproxy;
+    }
+
+}
+
+export class battle_revive_hubproxy
+{
+    private uuid_f2d265d1_65aa_30e8_8dac_24af2e157285 : number = Math.round(Math.random() * 1000);
+
+    public hub_name_f2d265d1_65aa_30e8_8dac_24af2e157285:string;
+    private _client_handle:client_handle.client;
+
+    constructor(client_handle_:client_handle.client)
+    {
+        this._client_handle = client_handle_;
+    }
+
+    public battle_failed_back(){
+        let uuid_35593092_7772_5301_b88e_e12614504cd7 = Math.round(this.uuid_f2d265d1_65aa_30e8_8dac_24af2e157285++);
+
+        let _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364:any[] = [uuid_35593092_7772_5301_b88e_e12614504cd7];
+        this._client_handle.call_hub(this.hub_name_f2d265d1_65aa_30e8_8dac_24af2e157285, "battle_revive_battle_failed_back", _argv_bbd7c04f_5149_3f3f_b344_a42693fe7364);
+        let cb_battle_failed_back_obj = new battle_revive_battle_failed_back_cb(uuid_35593092_7772_5301_b88e_e12614504cd7, rsp_cb_battle_revive_handle);
+        if (rsp_cb_battle_revive_handle){
+            rsp_cb_battle_revive_handle.map_battle_failed_back.set(uuid_35593092_7772_5301_b88e_e12614504cd7, cb_battle_failed_back_obj);
+        }
+        return cb_battle_failed_back_obj;
+    }
+
+}
