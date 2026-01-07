@@ -1,7 +1,7 @@
 import { _decorator, Button, Component, Label, Node, primitives, RichText, Sprite } from 'cc';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { TaskConfig } from '../battle/AutoChessBattle/config/task_config';
-import { Achievement, AchievementAwardStatus } from '../battle/AutoChessBattle/common';
+import { Achievement, AchievementAwardStatus } from '../serverSDK/common';
 import * as singleton from '../netDriver/netSingleton';
 import { loadAssets } from '../bundle/LoadAsset';
 import { GameManager } from '../other/GameManager';

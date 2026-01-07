@@ -2,7 +2,7 @@ import { _decorator, Component, Button, EditBox, Node } from "cc";
 
 const { ccclass, property } = _decorator;
 
-import * as common from "../../battle/AutoChessBattle/common";
+import * as common from "../../serverSDK/common";
 import * as match from "../../serverSDK/ccallmatch";
 import * as battle from "../../battle/AutoChessBattle/battle";
 import * as battleDis from "../../battle/display/BattleDis";

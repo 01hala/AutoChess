@@ -5,7 +5,7 @@
  */
 import { JsonAsset, resources, error } from 'cc';
 import * as enums from '../BattleEnums';
-import { Direction, Priority } from '../common';
+import { Direction, Priority } from '../../../serverSDK/common';
 import * as config from './config'
 
 export class SkillConfig {

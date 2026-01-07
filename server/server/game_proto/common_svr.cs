@@ -19,7 +19,6 @@ namespace Abelkhan
         PeakStrength = 3
     }
     public enum GuideStep{
-        None = 0,
         ClickGameLobby = 1,
         ClickMatch = 2,
         BuyRole = 3,
@@ -29,7 +28,8 @@ namespace Abelkhan
         TrophyInfo = 7,
         RoundInfo = 8,
         MergeRole = 9,
-        Done = 10
+        Battle = 10,
+        Done = 11
     }
     public enum Achievement{
         EMSuccessiveFiveVictory = 1,
@@ -597,7 +597,6 @@ namespace Abelkhan
         public Int32 quest;
         public Int32 PVELevelIndex;
         public Bag bag;
-        public GuideStep guideStep;
         public List<Int32> RoleList;
         public List<RoleGroup> roleGroup;
         public List<GuideStep> GuideSteps;
@@ -619,7 +618,6 @@ namespace Abelkhan
             _protocol.Add("quest", _struct.quest);
             _protocol.Add("PVELevelIndex", _struct.PVELevelIndex);
             _protocol.Add("bag", new MsgPack.MessagePackObject(Bag.Bag_to_protcol(_struct.bag)));
-            _protocol.Add("guideStep", (Int32)_struct.guideStep);
             if (_struct.RoleList != null) {
                 var _array_RoleList = new List<MsgPack.MessagePackObject>();
                 foreach(var v_ in _struct.RoleList){
@@ -685,9 +683,6 @@ namespace Abelkhan
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "bag"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.bag = Bag.protcol_to_Bag(((MsgPack.MessagePackObject)i.Value).AsDictionary());
-                }
-                else if (((MsgPack.MessagePackObject)i.Key).AsString() == "guideStep"){
-                    _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.guideStep = (GuideStep)((MsgPack.MessagePackObject)i.Value).AsInt32();
                 }
                 else if (((MsgPack.MessagePackObject)i.Key).AsString() == "RoleList"){
                     _structc2d657c3_3c93_3c3c_b65f_adc45e6eed7b.RoleList = new List<Int32>();

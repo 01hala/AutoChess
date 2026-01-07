@@ -30,7 +30,7 @@ import {
 import * as singleton from "../netDriver/netSingleton";
 import { BundleManager } from "../bundle/BundleManager";
 import { StorePanel } from "../panel/StorePanel";
-import * as common from "../battle/AutoChessBattle/common";
+import * as common from "../serverSDK/common";
 import { CardPacket } from "../serverSDK/ccallplayer";
 import { CardLibrary } from "../panel/CardLibrary";
 import { SendMessage } from "../other/MessageEvent";
@@ -582,7 +582,7 @@ export class MainInterface {
     let interval = setInterval(() => {
       delay += 10;
       if (delay >= 5000) {
-        GameManager.Instance.guide.OnGuide(common.GuideStep.ClickGameLobby);
+        //GameManager.Instance.guide.OnGuide(common.GuideStep.ClickGameLobby);
         clearInterval(interval);
       }
     }, 10);

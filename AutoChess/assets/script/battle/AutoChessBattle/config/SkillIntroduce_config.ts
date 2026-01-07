@@ -4,7 +4,7 @@
  * 2024/3/11
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction, Priority } from '../common';
+import { Direction, Priority } from '../../../serverSDK/common';
 
 export class SkillIntroduceConfig {
     public Id: number;

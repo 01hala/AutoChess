@@ -8,7 +8,7 @@ import { _decorator, Component, debug, log, Node, random } from 'cc';
 import { SkillBase,Event, RoleInfo,SkillTriggerBase } from '../skill/skill_base';
 import * as enums from '../BattleEnums';
 import { Battle } from '../battle';
-import { Fetters } from '../common';
+import { Fetters } from '../../../serverSDK/common';
 import { Role } from '../role';
 import * as config from '../config/config'
 

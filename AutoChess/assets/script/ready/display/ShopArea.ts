@@ -4,10 +4,10 @@
  * 2023/11/11
  */
 import { _decorator, Animation, BlockInputEvents, Camera, Canvas, Component, game, instantiate, Node, Prefab, tween, Tween, UITransform, Vec3, view, Widget } from 'cc';
-import { ShopIndex, ShopProp, ShopRole } from '../../battle/AutoChessBattle/common';
+import { ShopIndex, ShopProp, ShopRole } from '../../serverSDK/common';
 import { RoleIcon } from './RoleIcon';
 import * as singleton from '../../netDriver/netSingleton';
-import * as common from "../../battle/AutoChessBattle/common"
+import * as common from "../../serverSDK/common"
 import { RoleArea } from './RoleArea';
 import { PropIcon } from './PropIcon';
 import { PropsType } from '../../other/enums';

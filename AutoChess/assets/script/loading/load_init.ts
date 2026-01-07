@@ -25,7 +25,6 @@ export class loadInit extends Component {
     // @property
     // serializableDummy = 0;
 
-    @property(Prefab)
     loading:Prefab = null;
 
     async start () {

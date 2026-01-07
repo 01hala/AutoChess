@@ -25,17 +25,16 @@ import { delay, sleep } from "../../other/sleep";
 import { RoleDis } from "./RoleDis";
 import { BundleManager } from "../../bundle/BundleManager";
 import { hub_call_gate_reverse_reg_client_hub_rsp } from "../../serverSDK/gate";
-import { Role } from "../AutoChessBattle/common";
 import { Role as rRole } from "../AutoChessBattle/role";
 import { netSingleton } from "../../netDriver/netSingleton";
 import * as singleton from "../../netDriver/netSingleton";
-import { BattleVictory } from "../AutoChessBattle/common";
+import { BattleVictory, Role } from "../../serverSDK/common";
 import { Team } from "../AutoChessBattle/team";
 import { GameManager } from "../../other/GameManager";
 import { SendMessage } from "../../other/MessageEvent";
 import { AudioManager } from "../../other/AudioManager";
 import * as enums from "../../other/enums";
-import * as common from "../../battle/AutoChessBattle/common";
+import * as common from "../../serverSDK/common";
 const { ccclass, property } = _decorator;
 
 export class BattleDis {

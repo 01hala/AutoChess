@@ -7,7 +7,7 @@ import { InfoBoard } from '../../secondaryPanel/InfoBoard';
 import { RoleIcon } from './RoleIcon';
 import { config } from '../../battle/AutoChessBattle/config/config';
 import { BundleManager } from '../../bundle/BundleManager';
-import * as common from '../../battle/AutoChessBattle/common';
+import * as common from '../../serverSDK/common';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { GameManager } from '../../other/GameManager';
 import { SendMessage } from '../../other/MessageEvent';

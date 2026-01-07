@@ -10,8 +10,8 @@ import { BundleManager } from '../bundle/BundleManager';
 import { AudioManager } from '../other/AudioManager';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { TaskLable } from '../part/TaskLable';
-import { Achievement, AchievementAwardStatus, AchievementData, AchievementReward } from '../battle/AutoChessBattle/common';
-import * as common from "../battle/AutoChessBattle/common"
+import { Achievement, AchievementAwardStatus, AchievementData, AchievementReward } from '../serverSDK/common';
+import * as common from "../serverSDK/common"
 import { User } from '../login/User';
 const { ccclass, property } = _decorator;
 

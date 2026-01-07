@@ -5,8 +5,8 @@
  */
 import { _decorator, Component, error, Node } from 'cc';
 import * as skill from '../battle/AutoChessBattle/skill/skill_base'
-import * as common from "../battle/AutoChessBattle/common"
-import { ShopProp, ShopRole } from '../battle/AutoChessBattle/common';
+import * as common from "../serverSDK/common"
+import { ShopProp, ShopRole } from '../serverSDK/common';
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
 import * as enmus from '../other/enums';

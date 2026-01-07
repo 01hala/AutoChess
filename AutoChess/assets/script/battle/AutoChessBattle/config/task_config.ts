@@ -4,7 +4,7 @@
  * 2024/5/3
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Achievement } from '../common';
+import { Achievement } from '../../../serverSDK/common';
 import * as config from './config'
 
 export class TaskConfig {

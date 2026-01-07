@@ -11,7 +11,7 @@ import * as RoleDis from '../display/RoleDis'
 import { BundleManager } from '../../bundle/BundleManager';
 import * as role from '../AutoChessBattle/role'
 import { Battle } from '../AutoChessBattle/battle';
-import { Role } from '../AutoChessBattle/common';
+import { Role } from '../../serverSDK/common';
 import { RoleInfo } from '../AutoChessBattle/skill/skill_base';
 import { delay, sleep } from '../../other/sleep';
 import * as enums from '../../other/enums';

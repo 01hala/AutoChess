@@ -1,6 +1,6 @@
 import { JsonAsset, resources, error, builtinResMgr } from 'cc';
 import * as enums from '../BattleEnums';
-import { Direction, Priority } from '../common';
+import { Direction, Priority } from '../../../serverSDK/common';
 
 /**
  * @class 角色特效配置

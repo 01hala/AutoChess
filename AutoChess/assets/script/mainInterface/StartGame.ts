@@ -3,7 +3,7 @@ import * as singleton from '../netDriver/netSingleton';
 import { GameDifficulty } from '../other/enums';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
-import * as common from "../battle/AutoChessBattle/common"
+import * as common from "../serverSDK/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('StartGame')

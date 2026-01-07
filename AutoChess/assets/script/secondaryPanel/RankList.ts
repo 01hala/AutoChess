@@ -22,7 +22,7 @@ import { AudioManager } from "../other/AudioManager";
 import { rank_item } from "../serverSDK/rank_comm";
 import * as singleton from "../netDriver/netSingleton";
 import { BundleManager } from "../bundle/BundleManager";
-import { Role, UserData, UserRankInfo } from "../battle/AutoChessBattle/common";
+import { Role, UserData, UserRankInfo } from "../serverSDK/common";
 import { loadAssets } from "../bundle/LoadAsset";
 import { config } from "../battle/AutoChessBattle/config/config";
 import { netSingleton } from "../netDriver/netSingleton";

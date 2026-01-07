@@ -3,7 +3,7 @@ import { GameManager } from '../other/GameManager';
 import { ShopArea } from '../ready/display/ShopArea';
 import { RoleArea } from '../ready/display/RoleArea';
 import { RoleIcon } from '../ready/display/RoleIcon';
-import * as common from "../battle/AutoChessBattle/common"
+import * as common from "../serverSDK/common"
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
 import { StartGame } from '../mainInterface/StartGame';
@@ -14,10 +14,6 @@ export class Guide extends Component
 {
     //步骤
     public step:common.GuideStep;
-    //结束步骤
-    public end:common.GuideStep;
-    //当前步骤
-    public next:common.GuideStep;
     //面板
     private panel:Node;
     //步骤文本
@@ -45,8 +41,8 @@ export class Guide extends Component
 
     protected start(): void
     {   
-        this.panel.on(Node.EventType.TOUCH_END,this.OnTouch,this);
-        this.panel.on(Node.EventType.TOUCH_START,this.OnTouch,this);
+        //this.panel.on(Node.EventType.TOUCH_END,this.OnTouch,this);
+        //this.panel.on(Node.EventType.TOUCH_START,this.OnTouch,this);
 
         this.skipBtn.on(Button.EventType.CLICK, () =>
         {
@@ -75,7 +71,7 @@ export class Guide extends Component
         //this.CheckGuide();
     }
 
-    private OnTouch(event:EventTouch)
+ /*    private OnTouch(event:EventTouch)
     {
         switch(this.step)
         {
@@ -122,7 +118,7 @@ export class Guide extends Component
 
         }
     }
-
+ */
     // private StartGuide()
     // {
     //     // this.interval=setInterval(()=>
@@ -200,11 +196,10 @@ export class Guide extends Component
     //     }
     // }
 
-    public OnGuide(_step:common.GuideStep)
+/*     public OnGuide(_step:common.GuideStep)
     {
         try
         {
-            return;
             singleton.netSingleton.player.guide_step_ntf(_step);
             this.step=_step;
             this.panel.active=true;
@@ -317,7 +312,7 @@ export class Guide extends Component
         {
             console.error("Guide 下的 OnGuide 错误 err:",error);
         }
-    }
+    } */
 }
 
 

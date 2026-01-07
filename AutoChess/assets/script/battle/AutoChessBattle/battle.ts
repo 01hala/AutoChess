@@ -3,7 +3,7 @@
  * author: qianqians
  * 2023/9/24
  */
-import * as common from "./common";
+import * as common from "../../serverSDK/common";
 import * as skill from "./skill/skill_base";
 import * as role from "./role";
 import * as team from "./team";

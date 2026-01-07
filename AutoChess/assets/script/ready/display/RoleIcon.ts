@@ -10,7 +10,7 @@ import { RoleArea } from './RoleArea';
 import { BundleManager } from '../../bundle/BundleManager';
 import { sleep } from '../../other/sleep';
 import * as role from '../../battle/AutoChessBattle/role'
-import * as common from '../../battle/AutoChessBattle/common';
+import * as common from '../../serverSDK/common';
 import { RoleDis } from '../../battle/display/RoleDis';
 import { ReadyDis } from './ReadyDis';
 import * as singleton from '../../netDriver/netSingleton';
@@ -408,10 +408,10 @@ export class RoleIcon extends Component
         .to(0.2, { scale: new Vec3(this.roleNode.scale.x*1.5,this.roleNode.scale.y*1.5,this.roleNode.scale.z) })
         .call(()=>
         {
-            if (GameManager.Instance.guide)
+            /* if (GameManager.Instance.guide)
             {
                 GameManager.Instance.guide.next=common.GuideStep.CoinInfo;
-            }
+            } */
         }) // 在0.5秒内将缩放变为原来的两倍
         .start();
     }

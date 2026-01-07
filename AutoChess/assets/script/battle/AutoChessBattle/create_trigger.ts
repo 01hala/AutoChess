@@ -4,7 +4,7 @@
  * 2023/10/3
  */
 import * as skill from './skill/skill_base'
-import * as common from './common'
+import * as common from '../../serverSDK/common'
 import * as SkillTrigger_RoundStarts from './trigger/SkillTrigger_RoundStarts'
 import * as SkillTrigger_RoundEnd from './trigger/SkillTrigger_RoundEnd'
 import * as SkillTrigger_BattleBegin from './trigger/SkillTrigger_BattleBegin'

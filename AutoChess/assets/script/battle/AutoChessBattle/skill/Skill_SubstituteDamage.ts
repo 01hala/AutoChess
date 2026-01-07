@@ -12,7 +12,7 @@ import { Role} from '../role';
 import * as BattleEnums from '../BattleEnums';
 import { random } from '../util';
 import { Buffer } from '../buffer/buffer';
-import { Direction } from '../common';
+import { Direction } from '../../../serverSDK/common';
 
 export class Skill_SubstituteDamage extends SkillBase 
 {

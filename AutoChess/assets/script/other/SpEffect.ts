@@ -1,7 +1,7 @@
 
 import { _decorator, assetManager, Camera, Component, director, instantiate, Layers, Node, sp, UITransform, Vec3 } from 'cc';
 import * as enums from './enums';
-import * as common from '../battle/AutoChessBattle/common';
+import * as common from '../serverSDK/common';
 import { loadAssets } from '../bundle/LoadAsset';
 import { config } from '../battle/AutoChessBattle/config/config';
 import * as BattleEnums from '../battle/AutoChessBattle/BattleEnums'

@@ -13,7 +13,7 @@ import {
 
 const { ccclass, property } = _decorator;
 
-import * as common from "../battle/AutoChessBattle/common";
+import * as common from "../serverSDK/common";
 
 import * as singleton from "../netDriver/netSingleton";
 import * as load from "../loading/load";
@@ -241,8 +241,8 @@ export class login extends Component {
       await singleton.netSingleton.mainInterface.start(
         this.bk.node,
         async (event) => {
-          singleton.netSingleton.player.get_user_data(true, async (_step) => {
-            console.log("get_user_data guide step:", _step);
+          singleton.netSingleton.player.get_user_data(true, async (_steps) => {
+            console.log("get_user_data guide step:", _steps);
 
             while (true) {
               if (login.panelOnReady) {

@@ -1,7 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { Event, RoleInfo, SkillTriggerBase } from '../skill/skill_base';
 import * as enums from '../BattleEnums';
-import { Direction } from '../common';
+import { Direction } from '../../../serverSDK/common';
 import * as battle from '../battle'
 
 /**

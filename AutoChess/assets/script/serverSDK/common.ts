@@ -14,7 +14,6 @@ export enum BattleMod{
 }
 
 export enum GuideStep{
-    None = 0,
     ClickGameLobby = 1,
     ClickMatch = 2,
     BuyRole = 3,
@@ -24,7 +23,8 @@ export enum GuideStep{
     TrophyInfo = 7,
     RoundInfo = 8,
     MergeRole = 9,
-    Done = 10
+    Battle = 10,
+    Done = 11
 }
 
 export enum Achievement{
@@ -509,7 +509,6 @@ export class UserData
     public quest : number = 0;
     public PVELevelIndex : number = 0;
     public bag : Bag | null = null;
-    public guideStep : GuideStep = GuideStep.None;
     public RoleList : number[] = [];
     public roleGroup : RoleGroup[] = [];
     public GuideSteps : GuideStep[] = [];
@@ -562,9 +561,6 @@ export function protcol_to_UserData(_protocol:any){
         }
         else if (key === "bag"){
             _struct.bag = protcol_to_Bag(val);
-        }
-        else if (key === "guideStep"){
-            _struct.guideStep = val as GuideStep;
         }
         else if (key === "RoleList"){
             _struct.RoleList = [];

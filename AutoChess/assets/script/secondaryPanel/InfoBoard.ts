@@ -10,7 +10,7 @@ import { Role } from '../battle/AutoChessBattle/role';
 import { RoleConfig } from '../battle/AutoChessBattle/config/role_config';
 import { AudioManager } from '../other/AudioManager';
 import { GameManager } from '../other/GameManager';
-import * as common from "../battle/AutoChessBattle/common"
+import * as common from "../serverSDK/common"
 import * as battleEnums from '../battle/AutoChessBattle/BattleEnums';
 import { BundleManager } from '../bundle/BundleManager';
 const { ccclass, property } = _decorator;
@@ -175,10 +175,10 @@ export class InfoBoard extends Component
                     this.node.getComponent(BlockInputEvents).enabled=true;
                 }   
             }
-            if (GameManager.Instance.guide)
+            /* if (GameManager.Instance.guide)
             {
                 GameManager.Instance.guide.next=common.GuideStep.HPInfo;
-            }
+            } */
         }
         catch(error)
         {

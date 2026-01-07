@@ -10,7 +10,7 @@ import { BundleManager } from '../../bundle/BundleManager';
 import { ShopArea } from './ShopArea';
 import * as skill from '../../battle/AutoChessBattle/skill/skill_base'
 import * as singleton from '../../netDriver/netSingleton';
-import * as common from '../../battle/AutoChessBattle/common';
+import * as common from '../../serverSDK/common';
 import { login } from '../../login/login';
 import { RoleIcon } from './RoleIcon';
 import { config } from '../../battle/AutoChessBattle/config/config';
@@ -219,10 +219,10 @@ export class ReadyDis
                 this.PauseBoard.getComponent(Pause).Open();
             }, this);
 
-            if (GameManager.Instance.guide)
+/*             if (GameManager.Instance.guide)
             {
                 GameManager.Instance.guide.next = common.GuideStep.BuyRole;
-            }
+            } */
 
             console.log("ReadyDis Init end!");
         }

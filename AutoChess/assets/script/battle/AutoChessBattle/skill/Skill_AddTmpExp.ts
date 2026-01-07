@@ -10,7 +10,7 @@ import { Battle } from '../battle';
 import { Team } from '../team';
 import { Role } from '../role';
 import * as BattleEnums from '../BattleEnums'
-import { Direction } from '../common'
+import { Direction } from '../../../serverSDK/common'
 import { random } from '../util';
 
 export class Skill_AddTmpExp extends SkillBase 

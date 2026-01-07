@@ -1,7 +1,7 @@
 import { _decorator, Component, Node, sp } from 'cc';
 import * as enums from '../../other/enums';
 const { ccclass, property } = _decorator;
-import * as common from '../../battle/AutoChessBattle/common';
+import * as common from '../../serverSDK/common';
 import { loadAssets } from '../../bundle/LoadAsset';
 import { config } from '../AutoChessBattle/config/config';
 

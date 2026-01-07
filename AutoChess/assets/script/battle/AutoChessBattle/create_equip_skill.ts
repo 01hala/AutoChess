@@ -5,7 +5,7 @@
  */
 import * as config from './config/config'
 import * as enums from './BattleEnums'
-import * as common from './common'
+import * as common from '../../serverSDK/common'
 import * as skill from './skill/skill_base'
 import * as Skill_Summon from './skill/Skill_Summon'
 import * as create_trigger from './create_trigger'

@@ -5,7 +5,7 @@
  * 2024/03/30
  */
 import { _decorator, Animation, BlockInputEvents, Button, Component, Node, RichText, sp, Sprite, spriteAssembler, SpriteFrame, Toggle } from 'cc';
-import { BattleVictory } from '../battle/AutoChessBattle/common';
+import { BattleVictory } from '../serverSDK/common';
 import { netSingleton } from '../netDriver/netSingleton';
 import { AudioManager } from '../other/AudioManager';
 import * as enums from '../other/enums';

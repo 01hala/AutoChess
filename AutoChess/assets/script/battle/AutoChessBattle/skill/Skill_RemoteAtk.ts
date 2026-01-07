@@ -7,7 +7,7 @@
 import { _decorator, Component, DirectionalLight, Node } from 'cc';
 
 import { SkillBase,Event, RoleInfo, SkillTriggerBase } from './skill_base';
-import { Direction, Priority } from '../common';
+import { Direction, Priority } from '../../../serverSDK/common';
 import * as BattleEnums from '../BattleEnums';
 import { Battle } from '../battle';
 import { Role } from '../role';

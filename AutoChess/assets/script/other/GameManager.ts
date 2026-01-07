@@ -12,7 +12,7 @@ import { Loading } from '../loading/load';
 import * as enums from '../other/enums';
 import { PopUps } from '../secondaryPanel/PopUps';
 import { Guide } from '../panel/Guide';
-import * as common from "../battle/AutoChessBattle/common"
+import * as common from "../serverSDK/common"
 import { ChooseTag } from '../secondaryPanel/ChooseTag';
 import { sleep } from './sleep';
 import { LevelInfo } from '../secondaryPanel/LevelInfo';
@@ -497,7 +497,7 @@ export class GameManager extends Component
     /**
      * 引导界面侦听
      */
-    private OnGuideListening()
+    /* private OnGuideListening()
     {
         this.listening = setInterval(() =>
         {
@@ -557,7 +557,7 @@ export class GameManager extends Component
                 this.second=0;
             }
         }, 100);
-    }
+    } */
 
 
 }

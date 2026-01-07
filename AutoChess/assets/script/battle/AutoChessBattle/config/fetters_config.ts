@@ -4,7 +4,7 @@
  * 2023/10/2
  */
 import { JsonAsset, resources, error } from 'cc';
-import { Direction, Priority, Role } from '../common';
+import { Direction, Priority, Role } from '../../../serverSDK/common';
 
 export class FettersConfig {
     public Id: number;

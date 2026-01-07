@@ -6,7 +6,7 @@ import { TaskLable } from '../part/TaskLable';
 import * as singleton from '../netDriver/netSingleton';
 import { sleep } from '../other/sleep';
 import { User } from '../login/User';
-import * as common from "../battle/AutoChessBattle/common"
+import * as common from "../serverSDK/common"
 const { ccclass, property } = _decorator;
 
 @ccclass('AchievePanel')

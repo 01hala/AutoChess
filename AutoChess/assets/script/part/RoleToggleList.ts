@@ -5,7 +5,7 @@
  * 牌库复选栏
  */
 import { _decorator, assetManager, Button, CCInteger, Color, color, Component, EventHandler, instantiate, Label, Node, Prefab, RichText, Sprite, Toggle } from 'cc';
-import * as common from '../battle/AutoChessBattle/common';
+import * as common from '../serverSDK/common';
 import { BundleManager } from '../bundle/BundleManager';
 import { config } from '../battle/AutoChessBattle/config/config';
 import { loadAssets } from '../bundle/LoadAsset';

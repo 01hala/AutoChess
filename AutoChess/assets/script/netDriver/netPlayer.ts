@@ -1,6 +1,6 @@
 import * as cli from "../serverSDK/client_handle";
-import * as common from "../battle/AutoChessBattle/common";
 import * as error from "../serverSDK/error";
+import * as common from "../serverSDK/common";
 
 import * as login from "../serverSDK/ccalllogin";
 import * as player_login from "../serverSDK/ccallplayer";
@@ -238,7 +238,7 @@ export class netPlayer {
   ) => void;
   public get_user_data(
     _onLoad?: boolean,
-    _onCallBack?: (_step: common.GuideStep) => void,
+    _onCallBack?: (_step: common.GuideStep[]) => void,
   ): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.c_player_shop_caller
@@ -248,7 +248,7 @@ export class netPlayer {
           (_userInfo: common.UserData) => {
             this.cb_get_user_data(_userInfo, _onLoad);
             if (_onCallBack) {
-              _onCallBack(_userInfo.guideStep);
+              _onCallBack(_userInfo.GuideSteps);
             }
             resolve();
           },
