@@ -41,9 +41,6 @@ export class Battle {
   private selfTeam: team.Team;
   private enemyTeam: team.Team;
 
-  private selfBattleData: common.UserBattleData;
-  private enemtBattleData: common.UserBattleData;
-
   public evs: skill.Event[] = [];
 
   public victory = 0;
@@ -63,9 +60,6 @@ export class Battle {
     enemy: common.UserBattleData,
     gamemode: enums.GameMode,
   ) {
-    this.selfBattleData = self;
-    this.enemtBattleData = enemy;
-
     this.selfTeam = new team.Team(battleEnums.Camp.Self, self, self.RoleList);
     this.enemyTeam = new team.Team(
       battleEnums.Camp.Enemy,
