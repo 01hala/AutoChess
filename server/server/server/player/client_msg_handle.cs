@@ -5,8 +5,6 @@ using config;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using System;
-using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Player
 {
@@ -279,9 +277,13 @@ namespace Player
                         BattleShopPlayer.BattleData.faild--;
                     }
 
-                    if (BattleShopPlayer.BattleData.faild > 0)
+                    if (is_victory == BattleVictory.victory)
                     {
                         PVELevelIndex++;
+                    }
+
+                    if (BattleShopPlayer.BattleData.faild > 0)
+                    {
                         if (PVELevelIndex >= pveLevelCfg.Level.Count)
                         {
                             PVELevelIndex = 0;
