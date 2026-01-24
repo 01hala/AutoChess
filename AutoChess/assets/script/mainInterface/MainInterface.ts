@@ -331,13 +331,6 @@ export class MainInterface {
         },
         this,
       );
-      //打开自定义模式
-      // this.amusementBtn.on(Button.EventType.CLICK,()=>
-      // {
-      //     AudioManager.Instance.PlayerOnShot("Sound/sound_base_select_01");
-      //     this.startGamePart.active=true;
-      //     this.startGamePart.getComponent(StartGame).OpenAmusementWindow();
-      // },this);
       //打开商店界面
       this.storeBtn.on(
         Button.EventType.CLICK,

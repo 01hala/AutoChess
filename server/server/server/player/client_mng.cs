@@ -398,7 +398,10 @@ namespace Player
 
         public void UpdateGuideStep(GuideStep step)
         {
-            info.GuideSteps.Add(step);
+            if (!info.GuideSteps.Contains(step))
+            {
+                info.GuideSteps.Add(step);
+            }
         }
 
         private void AddCardItem(RoleCardInfo infoCard)
