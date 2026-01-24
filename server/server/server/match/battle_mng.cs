@@ -67,7 +67,7 @@ namespace Match
 
         public void battle_failed_back()
         {
-            BattleShopPlayer.BattleData.faild--;
+            BattleShopPlayer.BattleData.faild++;
         }
 
         public int baseStage()

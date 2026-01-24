@@ -432,3 +432,4 @@ config_node.txt
 start.bat
 /Output
 /server remote
+.DS_Store
