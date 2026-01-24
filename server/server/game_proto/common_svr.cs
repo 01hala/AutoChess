@@ -21,15 +21,7 @@ namespace Abelkhan
     public enum GuideStep{
         ClickGameLobby = 1,
         ClickMatch = 2,
-        BuyRole = 3,
-        CoinInfo = 4,
-        RoleInfo = 5,
-        HPInfo = 6,
-        TrophyInfo = 7,
-        RoundInfo = 8,
-        MergeRole = 9,
-        Battle = 10,
-        Done = 11
+        Battle = 3
     }
     public enum Achievement{
         EMSuccessiveFiveVictory = 1,
