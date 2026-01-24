@@ -11,7 +11,7 @@ namespace Abelkhan
     public enum em_quest_state{
         next_level = 0,
         next_quest = 1,
-        faild = 2,
+        failed = 2,
         finish_pve_level = 3
     }
 /*this struct code is codegen by abelkhan codegen for c#*/

@@ -51,10 +51,3 @@ module player_quest {
 module battle_revive {
 	battle_failed_back req() rsp(UserBattleData self) err(int32 err);
 }
-
-module battle_tutorial {
-    start_tutorial_shop_ready req() rsp(UserBattleData self, ShopData shop_info, int32[] events) err(int32 err);
-    get_tutorial_shop_data req() rsp(UserBattleData self, ShopData shop_info, int32[] events) err(int32 err);
-    start_tutorial_battle req() rsp(UserBattleData self, UserBattleData target) err(int32 err);
-    confirm_tutorial_victory req(BattleVictory is_victory, int32 addCoin) rsp(em_quest_state state) err();
-}

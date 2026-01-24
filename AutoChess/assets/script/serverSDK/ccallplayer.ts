@@ -5,7 +5,7 @@ import * as common from "./common";
 export enum em_quest_state{
     next_level = 0,
     next_quest = 1,
-    faild = 2,
+    failed = 2,
     finish_pve_level = 3
 }
 

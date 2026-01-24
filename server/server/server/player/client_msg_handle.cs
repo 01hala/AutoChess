@@ -15,6 +15,7 @@ namespace Player
         private readonly player_shop_module player_shop_Module;
         private readonly player_quest_module player_quest_Module;
         private readonly battle_revive_module battle_Revive_Module;
+        private readonly battle_tutorial_module battle_Tutorial_Module;
         private plan_module plan_Module;
 
         public client_msg_handle()
@@ -30,6 +31,9 @@ namespace Player
 
             battle_Revive_Module = new battle_revive_module();
             battle_Revive_Module.on_battle_failed_back += Battle_Revive_Module_on_battle_failed_back;
+
+            battle_Tutorial_Module = new battle_tutorial_module();
+
 
             player_login_Module = new();
             player_login_Module.on_player_login += Login_Player_Module_on_player_login;
@@ -310,7 +314,7 @@ namespace Player
                     }
                     else
                     {
-                        rsp.rsp(em_quest_state.faild);
+                        rsp.rsp(em_quest_state.failed);
                         _data.Data.ClearPVEState();
                     }
 
